@@ -11,6 +11,7 @@ import AchievementsScreen from "./components/AchievementsScreen"
 import ProfileScreen from "./components/ProfileScreen"
 import FlashcardsScreen from "./components/FlashcardsScreen"
 import LanguageQuizScreen from "./components/LanguageQuizScreen"
+import CodexScreen from "./components/CodexScreen"
 import StarField from "./components/StarField"
 import { FLAGS } from "./data/flags"
 import type { FlagRecord } from "./data/flags"
@@ -20,7 +21,7 @@ import { buildDailyQuiz, buildSetQuiz } from "./utils/quiz"
 import type { Question } from "./utils/quiz"
 import { todayString } from "./utils/prng"
 
-type Screen = "splash" | "home" | "flags" | "quiz" | "reversequiz" | "result" | "achievements" | "profile" | "flashcards" | "language" | "capitalquiz" | "challenge"
+type Screen = "splash" | "home" | "flags" | "quiz" | "reversequiz" | "result" | "achievements" | "profile" | "flashcards" | "language" | "capitalquiz" | "challenge" | "codex"
 
 interface ActiveQuiz {
   questions: Question[]
@@ -107,7 +108,8 @@ export default function App() {
           onQuickPlay={startQuickPlay}
           onGoReverseQuiz={startReverseQuiz}
           onGoCapitalQuiz={() => setScreen("capitalquiz")}
-          onGoChallenge={() => setScreen("challenge")} />
+          onGoChallenge={() => setScreen("challenge")}
+          onGoCodex={() => setScreen("codex")} />
       )}
 
       {screen === "flags" && (
@@ -121,6 +123,7 @@ export default function App() {
       {screen === "language" && <LanguageQuizScreen onBack={() => setScreen("home")} />}
       {screen === "capitalquiz" && <CapitalQuizScreen onBack={() => setScreen("home")} />}
       {screen === "challenge" && <ChallengeScreen onBack={() => setScreen("home")} />}
+      {screen === "codex" && <CodexScreen onBack={() => setScreen("home")} />}
       {screen === "profile" && <ProfileScreen state={appState} onBack={() => setScreen("home")} />}
       {screen === "achievements" && <AchievementsScreen state={appState} onBack={() => setScreen("home")} />}
 

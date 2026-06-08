@@ -16,6 +16,7 @@ interface Props {
   onGoReverseQuiz: () => void
   onGoCapitalQuiz: () => void
   onGoChallenge: () => void
+  onGoCodex: () => void
 }
 
 const ComingSoonTile = ({ emoji, label, desc }: { emoji: string; label: string; desc: string }) => (
@@ -35,7 +36,7 @@ const ComingSoonTile = ({ emoji, label, desc }: { emoji: string; label: string; 
 
 export default function HomeScreen({
   state, onStartDaily, onGoFlags, onGoProfile, onGoFlashcards,
-  onGoLanguage, onQuickPlay, onGoReverseQuiz, onGoCapitalQuiz, onGoChallenge,
+  onGoLanguage, onQuickPlay, onGoReverseQuiz, onGoCapitalQuiz, onGoChallenge, onGoCodex,
 }: Props) {
   const today = todayString()
   const dailyDone = state.lastDailyDate === today
@@ -163,6 +164,21 @@ export default function HomeScreen({
 
         <ComingSoonTile emoji="🗺️" label="Geography" desc="Identify countries by shape" />
         <ComingSoonTile emoji="📜" label="History" desc="Flags through the ages" />
+
+        <h3 className="text-xs font-semibold uppercase tracking-widest pt-1" style={{ color: "#B8A9E0" }}>Reference</h3>
+
+        <button onClick={onGoCodex}
+          className="w-full flex items-center justify-between px-5 py-4 rounded-2xl transition-all active:scale-[0.98] hover:brightness-110"
+          style={{ background: "#2D1F52", border: "1px solid #34D39933" }}>
+          <div className="flex items-center gap-3">
+            <span className="text-2xl">📖</span>
+            <div className="text-left">
+              <div className="font-bold" style={{ color: "#F5F3FF" }}>Codex</div>
+              <div className="text-xs" style={{ color: "#B8A9E0" }}>Every country · flag histories in beta</div>
+            </div>
+          </div>
+          <span style={{ color: "#34D399" }}>›</span>
+        </button>
 
         <h3 className="text-xs font-semibold uppercase tracking-widest pt-1" style={{ color: "#B8A9E0" }}>Challenge</h3>
 
