@@ -1,8 +1,9 @@
 import { useEffect, useRef } from 'react'
 
-interface Star {
+interface Ember {
   x: number; y: number; r: number; opacity: number
   vx: number; vy: number; twinkleSpeed: number; twinkleOffset: number
+  life: number; maxLife: number
 }
 
 export default function StarField() {
@@ -21,48 +22,72 @@ export default function StarField() {
     resize()
     window.addEventListener('resize', resize)
 
-    const stars: Star[] = Array.from({ length: 80 }, () => ({
+    const makeEmber = (forceBottom = false): Ember => ({
       x: Math.random() * canvas.width,
-      y: Math.random() * canvas.height,
-      r: Math.random() * 1.5 + 0.4,
-      opacity: Math.random() * 0.5 + 0.1,
-      vx: (Math.random() - 0.5) * 0.08,
-      vy: (Math.random() - 0.5) * 0.08,
-      twinkleSpeed: Math.random() * 0.02 + 0.005,
+      y: forceBottom ? canvas.height + 10 : Math.random() * canvas.height,
+      r: Math.random() * 2.2 + 0.6,
+      opacity: Math.random() * 0.55 + 0.15,
+      vx: (Math.random() - 0.5) * 0.5,
+      vy: -(Math.random() * 0.6 + 0.25),   // drift upward like embers
+      twinkleSpeed: Math.random() * 0.04 + 0.01,
       twinkleOffset: Math.random() * Math.PI * 2,
-    }))
+      life: 0,
+      maxLife: Math.random() * 300 + 150,
+    })
+
+    const embers: Ember[] = Array.from({ length: 70 }, () => makeEmber(false))
 
     let t = 0
     const draw = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height)
 
-      // Subtle light beam
-      const grad = ctx.createRadialGradient(canvas.width * 0.7, 0, 0, canvas.width * 0.7, 0, canvas.height * 1.2)
-      grad.addColorStop(0, 'rgba(139,108,255,0.04)')
-      grad.addColorStop(1, 'rgba(139,108,255,0)')
-      ctx.fillStyle = grad
+      // Subtle light beams
+      const g1 = ctx.createRadialGradient(canvas.width * 0.75, 0, 0, canvas.width * 0.75, 0, canvas.height)
+      g1.addColorStop(0, 'rgba(139,108,255,0.055)')
+      g1.addColorStop(1, 'rgba(139,108,255,0)')
+      ctx.fillStyle = g1
       ctx.fillRect(0, 0, canvas.width, canvas.height)
 
-      // Second beam
-      const grad2 = ctx.createRadialGradient(canvas.width * 0.2, canvas.height, 0, canvas.width * 0.2, canvas.height, canvas.height)
-      grad2.addColorStop(0, 'rgba(167,139,250,0.03)')
-      grad2.addColorStop(1, 'rgba(167,139,250,0)')
-      ctx.fillStyle = grad2
+      const g2 = ctx.createRadialGradient(canvas.width * 0.15, canvas.height, 0, canvas.width * 0.15, canvas.height, canvas.height * 0.9)
+      g2.addColorStop(0, 'rgba(167,139,250,0.04)')
+      g2.addColorStop(1, 'rgba(167,139,250,0)')
+      ctx.fillStyle = g2
       ctx.fillRect(0, 0, canvas.width, canvas.height)
 
-      t += 1
-      for (const s of stars) {
-        s.x += s.vx
-        s.y += s.vy
-        if (s.x < 0) s.x = canvas.width
-        if (s.x > canvas.width) s.x = 0
-        if (s.y < 0) s.y = canvas.height
-        if (s.y > canvas.height) s.y = 0
+      t++
+      for (let i = 0; i < embers.length; i++) {
+        const e = embers[i]
+        e.x += e.vx + Math.sin(t * 0.012 + e.twinkleOffset) * 0.18
+        e.y += e.vy
+        e.life++
 
-        const twinkle = Math.sin(t * s.twinkleSpeed + s.twinkleOffset) * 0.3 + 0.7
+        // Fade in/out over lifetime
+        const lifePct = e.life / e.maxLife
+        const fadeFactor = lifePct < 0.15 ? lifePct / 0.15
+                         : lifePct > 0.75 ? 1 - (lifePct - 0.75) / 0.25
+                         : 1
+
+        if (e.life >= e.maxLife || e.y < -10) {
+          embers[i] = makeEmber(true)
+          continue
+        }
+
+        const twinkle = Math.sin(t * e.twinkleSpeed + e.twinkleOffset) * 0.35 + 0.65
+        const alpha = e.opacity * twinkle * fadeFactor
+
+        // Glow
+        const glow = ctx.createRadialGradient(e.x, e.y, 0, e.x, e.y, e.r * 3)
+        glow.addColorStop(0, `rgba(255,255,255,${alpha * 0.5})`)
+        glow.addColorStop(1, 'rgba(255,255,255,0)')
         ctx.beginPath()
-        ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2)
-        ctx.fillStyle = `rgba(255,255,255,${s.opacity * twinkle})`
+        ctx.arc(e.x, e.y, e.r * 3, 0, Math.PI * 2)
+        ctx.fillStyle = glow
+        ctx.fill()
+
+        // Core dot
+        ctx.beginPath()
+        ctx.arc(e.x, e.y, e.r, 0, Math.PI * 2)
+        ctx.fillStyle = `rgba(255,255,255,${alpha})`
         ctx.fill()
       }
 
@@ -77,10 +102,6 @@ export default function StarField() {
   }, [])
 
   return (
-    <canvas
-      ref={canvasRef}
-      className="fixed inset-0 pointer-events-none"
-      style={{ zIndex: 0 }}
-    />
+    <canvas ref={canvasRef} className="fixed inset-0 pointer-events-none" style={{ zIndex: 0 }} />
   )
 }

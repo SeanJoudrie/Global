@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import { FLAGS } from '../data/flags'
 import { shuffleWithSeed, todayString } from '../utils/prng'
 
@@ -13,79 +13,62 @@ export default function FlashcardsScreen({ onBack, onQuizSet }: Props) {
   const [mode, setMode] = useState<Mode>('menu')
   const [cardIdx, setCardIdx] = useState(0)
   const [flipped, setFlipped] = useState(false)
-  const [dragging, setDragging] = useState(false)
-  const [dragStart, setDragStart] = useState(0)
-  const [dragDelta, setDragDelta] = useState(0)
   const [exiting, setExiting] = useState<'left' | 'right' | null>(null)
+  const dragStartX = useRef<number | null>(null)
+  const isDragging = useRef(false)
 
   const cards = shuffleWithSeed(FLAGS, todayString() + 'flashcards')
-
   const card = cards[cardIdx % cards.length]
 
   const advance = (dir: 'left' | 'right') => {
+    if (exiting) return
     setExiting(dir)
     setTimeout(() => {
       setCardIdx(i => i + 1)
       setFlipped(false)
       setExiting(null)
-    }, 220)
+    }, 230)
   }
 
-  const onTouchStart = (e: React.TouchEvent) => {
-    setDragging(true)
-    setDragStart(e.touches[0].clientX)
-    setDragDelta(0)
-  }
-  const onTouchMove = (e: React.TouchEvent) => {
-    if (!dragging) return
-    setDragDelta(e.touches[0].clientX - dragStart)
-  }
-  const onTouchEnd = () => {
-    if (Math.abs(dragDelta) > 60) {
-      advance(dragDelta < 0 ? 'left' : 'right')
-    }
-    setDragging(false)
-    setDragDelta(0)
+  const handleDragStart = (clientX: number) => {
+    dragStartX.current = clientX
+    isDragging.current = true
   }
 
-  const cardTransform = () => {
-    if (exiting === 'left') return 'translateX(-110%) rotate(-8deg)'
-    if (exiting === 'right') return 'translateX(110%) rotate(8deg)'
-    if (dragging && Math.abs(dragDelta) > 10) return `translateX(${dragDelta * 0.4}px) rotate(${dragDelta * 0.03}deg)`
-    return 'translateX(0) rotate(0)'
+  const handleDragEnd = (clientX: number) => {
+    if (!isDragging.current || dragStartX.current === null) return
+    const delta = clientX - dragStartX.current
+    isDragging.current = false
+    dragStartX.current = null
+    if (Math.abs(delta) > 50) advance(delta < 0 ? 'left' : 'right')
+  }
+
+  const cardStyle = (): React.CSSProperties => {
+    if (exiting === 'left') return { transform: 'translateX(-120%) rotate(-12deg)', opacity: 0, transition: 'transform 0.23s ease-in, opacity 0.2s' }
+    if (exiting === 'right') return { transform: 'translateX(120%) rotate(12deg)', opacity: 0, transition: 'transform 0.23s ease-in, opacity 0.2s' }
+    return { transform: 'translateX(0) rotate(0)', opacity: 1, transition: 'transform 0.15s ease-out' }
   }
 
   if (mode === 'menu') {
     return (
       <div className="min-h-screen flex flex-col" style={{ background: 'linear-gradient(135deg,#1A1033 0%,#2A1A4A 100%)' }}>
-        <header className="flex items-center gap-3 px-5 pt-8 pb-4">
+        <header className="flex items-center gap-3 px-5 pt-8 pb-4" style={{ zIndex: 1, position: 'relative' }}>
           <button onClick={onBack} className="w-9 h-9 flex items-center justify-center rounded-full text-xl"
             style={{ background: '#2D1F52', color: '#B8A9E0' }}>‹</button>
           <h1 className="text-2xl font-black" style={{ color: '#F5F3FF' }}>Flashcards</h1>
         </header>
-
-        <div className="flex-1 flex flex-col items-center justify-center px-5 gap-5">
-          <div className="text-6xl mb-2">🃏</div>
-          <div className="text-center mb-6">
-            <p className="text-base" style={{ color: '#B8A9E0' }}>
-              Swipe through {FLAGS.length} flags from around the world
-            </p>
-          </div>
-
-          <button
-            onClick={() => setMode('learn')}
+        <div className="flex-1 flex flex-col items-center justify-center px-5 gap-5" style={{ zIndex: 1, position: 'relative' }}>
+          <div className="text-7xl">🃏</div>
+          <p className="text-base text-center" style={{ color: '#B8A9E0' }}>Swipe through {FLAGS.length} flags — tap to flip</p>
+          <button onClick={() => setMode('learn')}
             className="w-full max-w-sm py-4 rounded-2xl font-bold text-lg transition-all active:scale-95"
-            style={{ background: 'linear-gradient(135deg,#8B6CFF,#A78BFA)', color: '#fff', boxShadow: '0 4px 20px #8B6CFF55' }}
-          >
+            style={{ background: 'linear-gradient(135deg,#8B6CFF,#A78BFA)', color: '#fff', boxShadow: '0 4px 20px #8B6CFF55' }}>
             📖 Learn
             <div className="text-xs font-normal mt-0.5 opacity-75">Swipe through flags & facts</div>
           </button>
-
-          <button
-            onClick={() => onQuizSet(FLAGS)}
+          <button onClick={() => onQuizSet(FLAGS)}
             className="w-full max-w-sm py-4 rounded-2xl font-bold text-lg transition-all active:scale-95"
-            style={{ background: '#2D1F52', border: '1px solid #8B6CFF44', color: '#A78BFA' }}
-          >
+            style={{ background: '#2D1F52', border: '1px solid #8B6CFF44', color: '#A78BFA' }}>
             🧠 Quiz Me
             <div className="text-xs font-normal mt-0.5 opacity-75">Test yourself on all flags</div>
           </button>
@@ -96,84 +79,105 @@ export default function FlashcardsScreen({ onBack, onQuizSet }: Props) {
 
   return (
     <div className="min-h-screen flex flex-col" style={{ background: 'linear-gradient(135deg,#1A1033 0%,#2A1A4A 100%)' }}>
-      <header className="flex items-center gap-3 px-5 pt-8 pb-4">
+      <header className="flex items-center gap-3 px-5 pt-8 pb-4" style={{ zIndex: 1, position: 'relative' }}>
         <button onClick={() => setMode('menu')} className="w-9 h-9 flex items-center justify-center rounded-full text-xl"
           style={{ background: '#2D1F52', color: '#B8A9E0' }}>‹</button>
         <div className="flex-1">
           <h1 className="text-xl font-black" style={{ color: '#F5F3FF' }}>Flashcards</h1>
-          <div className="text-xs" style={{ color: '#B8A9E0' }}>#{(cardIdx % cards.length) + 1} of {cards.length} · swipe to continue</div>
+          <div className="text-xs" style={{ color: '#B8A9E0' }}>#{(cardIdx % cards.length) + 1} / {cards.length} · swipe or tap to flip</div>
         </div>
       </header>
 
-      {/* Card stack hint */}
-      <div className="flex-1 flex flex-col items-center justify-center px-5 pb-10">
-        {/* Background cards for depth */}
-        <div className="relative" style={{ width: '100%', maxWidth: 360 }}>
-          <div className="absolute inset-0 rounded-2xl" style={{ background: '#2D1F52', transform: 'rotate(3deg) scale(0.97)', top: 8, opacity: 0.5 }} />
-          <div className="absolute inset-0 rounded-2xl" style={{ background: '#2D1F52', transform: 'rotate(-1.5deg) scale(0.98)', top: 4, opacity: 0.7 }} />
+      <div className="flex-1 flex flex-col items-center justify-center px-5 pb-10" style={{ zIndex: 1, position: 'relative' }}>
+        <div style={{ width: '100%', maxWidth: 360, position: 'relative' }}>
+          {/* Stack depth cards */}
+          <div className="absolute inset-0 rounded-2xl" style={{ background: '#2D1F52', transform: 'rotate(3deg) scale(0.97) translateY(8px)', opacity: 0.4 }} />
+          <div className="absolute inset-0 rounded-2xl" style={{ background: '#2D1F52', transform: 'rotate(-1.5deg) scale(0.985) translateY(4px)', opacity: 0.65 }} />
 
-          {/* Main card */}
+          {/* 3D flip card */}
           <div
-            className="relative rounded-2xl overflow-hidden"
-            style={{
-              background: '#2D1F52',
-              border: '1px solid #8B6CFF44',
-              boxShadow: '0 8px 40px #00000060',
-              transform: cardTransform(),
-              transition: exiting ? 'transform 0.22s ease-in, opacity 0.22s' : dragging ? 'none' : 'transform 0.15s ease-out',
-              opacity: exiting ? 0 : 1,
-              cursor: 'grab',
-            }}
-            onTouchStart={onTouchStart}
-            onTouchMove={onTouchMove}
-            onTouchEnd={onTouchEnd}
-            onClick={() => !dragging && setFlipped(f => !f)}
+            style={{ perspective: 1000, ...cardStyle() }}
+            onMouseDown={e => handleDragStart(e.clientX)}
+            onMouseUp={e => handleDragEnd(e.clientX)}
+            onMouseLeave={() => { isDragging.current = false; dragStartX.current = null }}
+            onTouchStart={e => handleDragStart(e.touches[0].clientX)}
+            onTouchEnd={e => handleDragEnd(e.changedTouches[0].clientX)}
+            onClick={() => !isDragging.current && setFlipped(f => !f)}
           >
-            {/* Flag image */}
-            <div className="flex items-center justify-center p-6 pb-4">
-              <img
-                src={card.flagUrl}
-                alt={card.name}
-                className="rounded-xl object-cover"
-                style={{ width: '100%', height: 180, border: '2px solid #8B6CFF33' }}
-                onError={e => { (e.target as HTMLImageElement).style.visibility = 'hidden' }}
-              />
-            </div>
-
-            {/* Info */}
-            <div className="px-5 pb-6">
-              <div className="flex items-center justify-between mb-2">
-                <h2 className="text-2xl font-black" style={{ color: '#F5F3FF' }}>{card.name}</h2>
-                <span className="text-xs px-2 py-1 rounded-full" style={{ background: '#8B6CFF22', color: '#A78BFA' }}>{card.region}</span>
+            <div style={{
+              position: 'relative',
+              transformStyle: 'preserve-3d',
+              transition: 'transform 0.45s cubic-bezier(0.4,0,0.2,1)',
+              transform: flipped ? 'rotateY(180deg)' : 'rotateY(0deg)',
+              cursor: 'pointer',
+              borderRadius: 16,
+              minHeight: 320,
+            }}>
+              {/* FRONT — flag */}
+              <div style={{
+                backfaceVisibility: 'hidden',
+                position: flipped ? 'absolute' : 'relative',
+                inset: 0,
+                background: '#2D1F52',
+                border: '1px solid #8B6CFF44',
+                borderRadius: 16,
+                boxShadow: '0 8px 40px #00000060',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                padding: 24,
+                gap: 16,
+                minHeight: 320,
+              }}>
+                <img src={card.flagUrl} alt="flag"
+                  style={{ width: '100%', height: 190, objectFit: 'cover', borderRadius: 12, border: '2px solid #8B6CFF33' }}
+                  onError={e => { (e.target as HTMLImageElement).style.visibility = 'hidden' }} />
+                <p style={{ color: '#8B6CFF', fontSize: 14, margin: 0 }}>Tap to reveal · Swipe to skip</p>
               </div>
 
-              {flipped ? (
-                <div className="animate-slide-up">
-                  <p className="text-sm leading-relaxed mb-3" style={{ color: '#B8A9E0' }}>{card.funFact}</p>
-                  {card.distinguishingTip && (
-                    <div className="px-3 py-2 rounded-lg" style={{ background: '#FBBF2411', border: '1px solid #FBBF2433' }}>
-                      <div className="text-xs font-semibold mb-1" style={{ color: '#FBBF24' }}>💡 How to recognise it</div>
-                      <p className="text-xs" style={{ color: '#F5F3FF' }}>{card.distinguishingTip}</p>
-                    </div>
-                  )}
+              {/* BACK — info */}
+              <div style={{
+                backfaceVisibility: 'hidden',
+                transform: 'rotateY(180deg)',
+                position: flipped ? 'relative' : 'absolute',
+                inset: 0,
+                background: '#2D1F52',
+                border: '1px solid #A78BFA44',
+                borderRadius: 16,
+                boxShadow: '0 8px 40px #00000060',
+                padding: 24,
+                minHeight: 320,
+              }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 16 }}>
+                  <img src={card.flagUrl} alt={card.name}
+                    style={{ width: 56, height: 36, objectFit: 'cover', borderRadius: 6, border: '1.5px solid #8B6CFF33', flexShrink: 0 }}
+                    onError={e => { (e.target as HTMLImageElement).style.visibility = 'hidden' }} />
+                  <div>
+                    <div style={{ color: '#F5F3FF', fontWeight: 900, fontSize: 20 }}>{card.name}</div>
+                    <div style={{ color: '#8B6CFF', fontSize: 12 }}>{card.region}</div>
+                  </div>
                 </div>
-              ) : (
-                <p className="text-sm" style={{ color: '#8B6CFF' }}>Tap to reveal facts · Swipe to next</p>
-              )}
+                <p style={{ color: '#B8A9E0', fontSize: 14, lineHeight: 1.6, marginBottom: 16 }}>{card.funFact}</p>
+                {card.distinguishingTip && (
+                  <div style={{ background: '#FBBF2411', border: '1px solid #FBBF2433', borderRadius: 10, padding: '10px 12px' }}>
+                    <div style={{ color: '#FBBF24', fontSize: 12, fontWeight: 600, marginBottom: 4 }}>💡 How to recognise it</div>
+                    <p style={{ color: '#F5F3FF', fontSize: 13, margin: 0 }}>{card.distinguishingTip}</p>
+                  </div>
+                )}
+                <p style={{ color: '#8B6CFF55', fontSize: 12, marginTop: 16, textAlign: 'center' }}>Swipe to next</p>
+              </div>
             </div>
           </div>
         </div>
 
-        {/* Swipe hint buttons */}
-        <div className="flex gap-6 mt-8">
-          <button onClick={() => advance('right')} className="w-14 h-14 rounded-full flex items-center justify-center text-xl transition-all active:scale-90"
-            style={{ background: '#2D1F52', border: '1px solid #8B6CFF33' }}>←</button>
-          <button onClick={() => setFlipped(f => !f)} className="px-6 h-14 rounded-full flex items-center justify-center font-semibold text-sm transition-all active:scale-90"
-            style={{ background: '#8B6CFF', color: '#fff' }}>
-            {flipped ? 'Hide' : 'Reveal'}
-          </button>
-          <button onClick={() => advance('left')} className="w-14 h-14 rounded-full flex items-center justify-center text-xl transition-all active:scale-90"
-            style={{ background: '#2D1F52', border: '1px solid #8B6CFF33' }}>→</button>
+        {/* Progress dots */}
+        <div style={{ display: 'flex', gap: 4, marginTop: 24 }}>
+          {Array.from({ length: Math.min(7, cards.length) }).map((_, i) => {
+            const relIdx = cardIdx % cards.length
+            return <div key={i} style={{ width: i === relIdx % 7 ? 16 : 6, height: 6, borderRadius: 999,
+              background: i === relIdx % 7 ? '#8B6CFF' : '#8B6CFF33', transition: 'all 0.2s' }} />
+          })}
         </div>
       </div>
     </div>
