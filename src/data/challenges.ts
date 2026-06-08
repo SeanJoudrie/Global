@@ -1,4 +1,4 @@
-﻿export interface SubRegion {
+export interface SubRegion {
   code: string
   name: string
   flagUrl: string
@@ -22,6 +22,8 @@ export interface ChallengeContinent {
 }
 
 const flag = (iso: string) => `https://flagcdn.com/w320/${iso.toLowerCase()}.png`
+
+// ── NORTH AMERICA ─────────────────────────────────────────────────────────────
 
 const US_STATES: SubRegion[] = [
   { code: "us-al", name: "Alabama", flagUrl: flag("us-al") },
@@ -127,6 +129,67 @@ const MX_STATES: SubRegion[] = [
   { code: "mx-zac", name: "Zacatecas", flagUrl: flag("mx-zac") },
 ]
 
+// ── SOUTH AMERICA ─────────────────────────────────────────────────────────────
+
+const BR_STATES: SubRegion[] = [
+  { code: "br-ac", name: "Acre", flagUrl: flag("br-ac") },
+  { code: "br-al", name: "Alagoas", flagUrl: flag("br-al") },
+  { code: "br-am", name: "Amazonas", flagUrl: flag("br-am") },
+  { code: "br-ap", name: "Amapá", flagUrl: flag("br-ap") },
+  { code: "br-ba", name: "Bahia", flagUrl: flag("br-ba") },
+  { code: "br-ce", name: "Ceará", flagUrl: flag("br-ce") },
+  { code: "br-df", name: "Distrito Federal", flagUrl: flag("br-df") },
+  { code: "br-es", name: "Espírito Santo", flagUrl: flag("br-es") },
+  { code: "br-go", name: "Goiás", flagUrl: flag("br-go") },
+  { code: "br-ma", name: "Maranhão", flagUrl: flag("br-ma") },
+  { code: "br-mg", name: "Minas Gerais", flagUrl: flag("br-mg") },
+  { code: "br-ms", name: "Mato Grosso do Sul", flagUrl: flag("br-ms") },
+  { code: "br-mt", name: "Mato Grosso", flagUrl: flag("br-mt") },
+  { code: "br-pa", name: "Pará", flagUrl: flag("br-pa") },
+  { code: "br-pb", name: "Paraíba", flagUrl: flag("br-pb") },
+  { code: "br-pe", name: "Pernambuco", flagUrl: flag("br-pe") },
+  { code: "br-pi", name: "Piauí", flagUrl: flag("br-pi") },
+  { code: "br-pr", name: "Paraná", flagUrl: flag("br-pr") },
+  { code: "br-rj", name: "Rio de Janeiro", flagUrl: flag("br-rj") },
+  { code: "br-rn", name: "Rio Grande do Norte", flagUrl: flag("br-rn") },
+  { code: "br-ro", name: "Rondônia", flagUrl: flag("br-ro") },
+  { code: "br-rr", name: "Roraima", flagUrl: flag("br-rr") },
+  { code: "br-rs", name: "Rio Grande do Sul", flagUrl: flag("br-rs") },
+  { code: "br-sc", name: "Santa Catarina", flagUrl: flag("br-sc") },
+  { code: "br-se", name: "Sergipe", flagUrl: flag("br-se") },
+  { code: "br-sp", name: "São Paulo", flagUrl: flag("br-sp") },
+  { code: "br-to", name: "Tocantins", flagUrl: flag("br-to") },
+]
+
+const AR_PROVINCES: SubRegion[] = [
+  { code: "ar-a", name: "Salta", flagUrl: flag("ar-a") },
+  { code: "ar-b", name: "Buenos Aires Province", flagUrl: flag("ar-b") },
+  { code: "ar-c", name: "Buenos Aires City", flagUrl: flag("ar-c") },
+  { code: "ar-d", name: "San Luis", flagUrl: flag("ar-d") },
+  { code: "ar-e", name: "Entre Ríos", flagUrl: flag("ar-e") },
+  { code: "ar-f", name: "La Rioja", flagUrl: flag("ar-f") },
+  { code: "ar-g", name: "Santiago del Estero", flagUrl: flag("ar-g") },
+  { code: "ar-h", name: "Chaco", flagUrl: flag("ar-h") },
+  { code: "ar-j", name: "San Juan", flagUrl: flag("ar-j") },
+  { code: "ar-k", name: "Catamarca", flagUrl: flag("ar-k") },
+  { code: "ar-l", name: "La Pampa", flagUrl: flag("ar-l") },
+  { code: "ar-m", name: "Mendoza", flagUrl: flag("ar-m") },
+  { code: "ar-n", name: "Misiones", flagUrl: flag("ar-n") },
+  { code: "ar-p", name: "Formosa", flagUrl: flag("ar-p") },
+  { code: "ar-q", name: "Neuquén", flagUrl: flag("ar-q") },
+  { code: "ar-r", name: "Río Negro", flagUrl: flag("ar-r") },
+  { code: "ar-s", name: "Santa Fe", flagUrl: flag("ar-s") },
+  { code: "ar-t", name: "Tucumán", flagUrl: flag("ar-t") },
+  { code: "ar-u", name: "Chubut", flagUrl: flag("ar-u") },
+  { code: "ar-v", name: "Tierra del Fuego", flagUrl: flag("ar-v") },
+  { code: "ar-w", name: "Corrientes", flagUrl: flag("ar-w") },
+  { code: "ar-x", name: "Córdoba", flagUrl: flag("ar-x") },
+  { code: "ar-y", name: "Jujuy", flagUrl: flag("ar-y") },
+  { code: "ar-z", name: "Santa Cruz", flagUrl: flag("ar-z") },
+]
+
+// ── EUROPE ────────────────────────────────────────────────────────────────────
+
 const ES_COMMUNITIES: SubRegion[] = [
   { code: "es-an", name: "Andalusia", flagUrl: flag("es-an") },
   { code: "es-ar", name: "Aragon", flagUrl: flag("es-ar") },
@@ -135,7 +198,7 @@ const ES_COMMUNITIES: SubRegion[] = [
   { code: "es-pv", name: "Basque Country", flagUrl: flag("es-pv") },
   { code: "es-cn", name: "Canary Islands", flagUrl: flag("es-cn") },
   { code: "es-cb", name: "Cantabria", flagUrl: flag("es-cb") },
-  { code: "es-cl", name: "Castile and Leon", flagUrl: flag("es-cl") },
+  { code: "es-cl", name: "Castile and León", flagUrl: flag("es-cl") },
   { code: "es-cm", name: "Castile-La Mancha", flagUrl: flag("es-cm") },
   { code: "es-ct", name: "Catalonia", flagUrl: flag("es-ct") },
   { code: "es-ex", name: "Extremadura", flagUrl: flag("es-ex") },
@@ -154,39 +217,77 @@ const UK_NATIONS: SubRegion[] = [
   { code: "gb-nir", name: "Northern Ireland", flagUrl: flag("gb-nir") },
 ]
 
+// ─────────────────────────────────────────────────────────────────────────────
+
 export const CHALLENGE_CONTINENTS: ChallengeContinent[] = [
+  // ── NORTH AMERICA (Northern + Central America) ───────────────────────────
   {
     id: "north-america",
     name: "North America",
     emoji: "🌎",
     locked: false,
     countries: [
+      // Northern America
       { code: "US", name: "United States", emoji: "🇺🇸", subTitle: "50 States", subRegions: US_STATES, locked: false },
       { code: "CA", name: "Canada", emoji: "🇨🇦", subTitle: "13 Provinces & Territories", subRegions: CA_PROVINCES, locked: false },
       { code: "MX", name: "Mexico", emoji: "🇲🇽", subTitle: "32 States", subRegions: MX_STATES, locked: false },
+      // Central America
+      { code: "BZ", name: "Belize", emoji: "🇧🇿", subTitle: "6 Districts", subRegions: [], locked: true },
       { code: "GT", name: "Guatemala", emoji: "🇬🇹", subTitle: "22 Departments", subRegions: [], locked: true },
-      { code: "CU", name: "Cuba", emoji: "🇨🇺", subTitle: "15 Provinces", subRegions: [], locked: true },
-      { code: "DO", name: "Dominican Republic", emoji: "🇩🇴", subTitle: "32 Provinces", subRegions: [], locked: true },
+      { code: "HN", name: "Honduras", emoji: "🇭🇳", subTitle: "18 Departments", subRegions: [], locked: true },
+      { code: "SV", name: "El Salvador", emoji: "🇸🇻", subTitle: "14 Departments", subRegions: [], locked: true },
+      { code: "NI", name: "Nicaragua", emoji: "🇳🇮", subTitle: "15 Departments", subRegions: [], locked: true },
       { code: "CR", name: "Costa Rica", emoji: "🇨🇷", subTitle: "7 Provinces", subRegions: [], locked: true },
       { code: "PA", name: "Panama", emoji: "🇵🇦", subTitle: "10 Provinces", subRegions: [], locked: true },
     ],
   },
+
+  // ── CARIBBEAN ─────────────────────────────────────────────────────────────
+  {
+    id: "caribbean",
+    name: "Caribbean",
+    emoji: "🏝️",
+    locked: false,
+    countries: [
+      { code: "CU", name: "Cuba", emoji: "🇨🇺", subTitle: "15 Provinces", subRegions: [], locked: true },
+      { code: "JM", name: "Jamaica", emoji: "🇯🇲", subTitle: "14 Parishes", subRegions: [], locked: true },
+      { code: "HT", name: "Haiti", emoji: "🇭🇹", subTitle: "10 Departments", subRegions: [], locked: true },
+      { code: "DO", name: "Dominican Republic", emoji: "🇩🇴", subTitle: "32 Provinces", subRegions: [], locked: true },
+      { code: "TT", name: "Trinidad and Tobago", emoji: "🇹🇹", subTitle: "14 Regions", subRegions: [], locked: true },
+      { code: "BB", name: "Barbados", emoji: "🇧🇧", subTitle: "11 Parishes", subRegions: [], locked: true },
+      { code: "LC", name: "Saint Lucia", emoji: "🇱🇨", subTitle: "10 Districts", subRegions: [], locked: true },
+      { code: "VC", name: "St Vincent & Grenadines", emoji: "🇻🇨", subTitle: "6 Parishes", subRegions: [], locked: true },
+      { code: "GD", name: "Grenada", emoji: "🇬🇩", subTitle: "6 Parishes", subRegions: [], locked: true },
+      { code: "AG", name: "Antigua and Barbuda", emoji: "🇦🇬", subTitle: "8 Parishes", subRegions: [], locked: true },
+      { code: "DM", name: "Dominica", emoji: "🇩🇲", subTitle: "10 Parishes", subRegions: [], locked: true },
+      { code: "KN", name: "Saint Kitts and Nevis", emoji: "🇰🇳", subTitle: "14 Parishes", subRegions: [], locked: true },
+      { code: "BS", name: "Bahamas", emoji: "🇧🇸", subTitle: "32 Districts", subRegions: [], locked: true },
+    ],
+  },
+
+  // ── SOUTH AMERICA ─────────────────────────────────────────────────────────
   {
     id: "south-america",
     name: "South America",
     emoji: "🌎",
     locked: false,
     countries: [
-      { code: "BR", name: "Brazil", emoji: "🇧🇷", subTitle: "26 States", subRegions: [], locked: true },
-      { code: "AR", name: "Argentina", emoji: "🇦🇷", subTitle: "23 Provinces", subRegions: [], locked: true },
+      { code: "BR", name: "Brazil", emoji: "🇧🇷", subTitle: "27 States", subRegions: BR_STATES, locked: false },
+      { code: "AR", name: "Argentina", emoji: "🇦🇷", subTitle: "24 Provinces", subRegions: AR_PROVINCES, locked: false },
       { code: "CO", name: "Colombia", emoji: "🇨🇴", subTitle: "32 Departments", subRegions: [], locked: true },
+      { code: "VE", name: "Venezuela", emoji: "🇻🇪", subTitle: "23 States", subRegions: [], locked: true },
       { code: "PE", name: "Peru", emoji: "🇵🇪", subTitle: "25 Regions", subRegions: [], locked: true },
       { code: "CL", name: "Chile", emoji: "🇨🇱", subTitle: "16 Regions", subRegions: [], locked: true },
-      { code: "VE", name: "Venezuela", emoji: "🇻🇪", subTitle: "23 States", subRegions: [], locked: true },
       { code: "EC", name: "Ecuador", emoji: "🇪🇨", subTitle: "24 Provinces", subRegions: [], locked: true },
       { code: "BO", name: "Bolivia", emoji: "🇧🇴", subTitle: "9 Departments", subRegions: [], locked: true },
+      { code: "PY", name: "Paraguay", emoji: "🇵🇾", subTitle: "17 Departments", subRegions: [], locked: true },
+      { code: "UY", name: "Uruguay", emoji: "🇺🇾", subTitle: "19 Departments", subRegions: [], locked: true },
+      { code: "GY", name: "Guyana", emoji: "🇬🇾", subTitle: "10 Regions", subRegions: [], locked: true },
+      { code: "SR", name: "Suriname", emoji: "🇸🇷", subTitle: "10 Districts", subRegions: [], locked: true },
     ],
   },
+
+  // ── EUROPE ────────────────────────────────────────────────────────────────
   {
     id: "europe",
     name: "Europe",
@@ -195,15 +296,117 @@ export const CHALLENGE_CONTINENTS: ChallengeContinent[] = [
     countries: [
       { code: "ES", name: "Spain", emoji: "🇪🇸", subTitle: "17 Autonomous Communities", subRegions: ES_COMMUNITIES, locked: false },
       { code: "GB", name: "United Kingdom", emoji: "🇬🇧", subTitle: "4 Nations", subRegions: UK_NATIONS, locked: false },
-      { code: "PT", name: "Portugal", emoji: "🇵🇹", subTitle: "18 Districts", subRegions: [], locked: true },
+      { code: "DE", name: "Germany", emoji: "🇩🇪", subTitle: "16 States", subRegions: [], locked: true },
       { code: "FR", name: "France", emoji: "🇫🇷", subTitle: "18 Regions", subRegions: [], locked: true },
+      { code: "IT", name: "Italy", emoji: "🇮🇹", subTitle: "20 Regions", subRegions: [], locked: true },
+      { code: "PT", name: "Portugal", emoji: "🇵🇹", subTitle: "18 Districts", subRegions: [], locked: true },
+      { code: "NL", name: "Netherlands", emoji: "🇳🇱", subTitle: "12 Provinces", subRegions: [], locked: true },
+      { code: "BE", name: "Belgium", emoji: "🇧🇪", subTitle: "10 Provinces", subRegions: [], locked: true },
+      { code: "CH", name: "Switzerland", emoji: "🇨🇭", subTitle: "26 Cantons", subRegions: [], locked: true },
+      { code: "AT", name: "Austria", emoji: "🇦🇹", subTitle: "9 States", subRegions: [], locked: true },
+      { code: "PL", name: "Poland", emoji: "🇵🇱", subTitle: "16 Voivodeships", subRegions: [], locked: true },
+      { code: "SE", name: "Sweden", emoji: "🇸🇪", subTitle: "21 Counties", subRegions: [], locked: true },
+      { code: "NO", name: "Norway", emoji: "🇳🇴", subTitle: "15 Counties", subRegions: [], locked: true },
+      { code: "DK", name: "Denmark", emoji: "🇩🇰", subTitle: "5 Regions", subRegions: [], locked: true },
+      { code: "FI", name: "Finland", emoji: "🇫🇮", subTitle: "19 Regions", subRegions: [], locked: true },
       { code: "IE", name: "Ireland", emoji: "🇮🇪", subTitle: "4 Provinces", subRegions: [], locked: true },
       { code: "IS", name: "Iceland", emoji: "🇮🇸", subTitle: "8 Regions", subRegions: [], locked: true },
+      { code: "GR", name: "Greece", emoji: "🇬🇷", subTitle: "13 Regions", subRegions: [], locked: true },
+      { code: "RO", name: "Romania", emoji: "🇷🇴", subTitle: "41 Counties", subRegions: [], locked: true },
+      { code: "HU", name: "Hungary", emoji: "🇭🇺", subTitle: "19 Counties", subRegions: [], locked: true },
+      { code: "CZ", name: "Czech Republic", emoji: "🇨🇿", subTitle: "14 Regions", subRegions: [], locked: true },
       { code: "AD", name: "Andorra", emoji: "🇦🇩", subTitle: "7 Parishes", subRegions: [], locked: true },
     ],
   },
-  { id: "asia", name: "Asia", emoji: "🌏", locked: true, countries: [] },
-  { id: "africa", name: "Africa", emoji: "🌍", locked: true, countries: [] },
-  { id: "oceania", name: "Oceania", emoji: "🌊", locked: true, countries: [] },
-  { id: "middle-east", name: "Middle East", emoji: "🕌", locked: true, countries: [] },
+
+  // ── ASIA ──────────────────────────────────────────────────────────────────
+  {
+    id: "asia",
+    name: "Asia",
+    emoji: "🌏",
+    locked: false,
+    countries: [
+      { code: "CN", name: "China", emoji: "🇨🇳", subTitle: "34 Provinces & Regions", subRegions: [], locked: true },
+      { code: "IN", name: "India", emoji: "🇮🇳", subTitle: "28 States", subRegions: [], locked: true },
+      { code: "JP", name: "Japan", emoji: "🇯🇵", subTitle: "47 Prefectures", subRegions: [], locked: true },
+      { code: "KR", name: "South Korea", emoji: "🇰🇷", subTitle: "17 Provinces", subRegions: [], locked: true },
+      { code: "ID", name: "Indonesia", emoji: "🇮🇩", subTitle: "38 Provinces", subRegions: [], locked: true },
+      { code: "PH", name: "Philippines", emoji: "🇵🇭", subTitle: "17 Regions", subRegions: [], locked: true },
+      { code: "VN", name: "Vietnam", emoji: "🇻🇳", subTitle: "58 Provinces", subRegions: [], locked: true },
+      { code: "TH", name: "Thailand", emoji: "🇹🇭", subTitle: "77 Provinces", subRegions: [], locked: true },
+      { code: "MY", name: "Malaysia", emoji: "🇲🇾", subTitle: "13 States", subRegions: [], locked: true },
+      { code: "KZ", name: "Kazakhstan", emoji: "🇰🇿", subTitle: "17 Regions", subRegions: [], locked: true },
+      { code: "PK", name: "Pakistan", emoji: "🇵🇰", subTitle: "4 Provinces", subRegions: [], locked: true },
+      { code: "BD", name: "Bangladesh", emoji: "🇧🇩", subTitle: "8 Divisions", subRegions: [], locked: true },
+      { code: "MM", name: "Myanmar", emoji: "🇲🇲", subTitle: "14 States & Regions", subRegions: [], locked: true },
+      { code: "UZ", name: "Uzbekistan", emoji: "🇺🇿", subTitle: "12 Regions", subRegions: [], locked: true },
+      { code: "MN", name: "Mongolia", emoji: "🇲🇳", subTitle: "21 Provinces", subRegions: [], locked: true },
+    ],
+  },
+
+  // ── AFRICA ────────────────────────────────────────────────────────────────
+  {
+    id: "africa",
+    name: "Africa",
+    emoji: "🌍",
+    locked: false,
+    countries: [
+      { code: "NG", name: "Nigeria", emoji: "🇳🇬", subTitle: "36 States", subRegions: [], locked: true },
+      { code: "ZA", name: "South Africa", emoji: "🇿🇦", subTitle: "9 Provinces", subRegions: [], locked: true },
+      { code: "ET", name: "Ethiopia", emoji: "🇪🇹", subTitle: "12 Regions", subRegions: [], locked: true },
+      { code: "EG", name: "Egypt", emoji: "🇪🇬", subTitle: "27 Governorates", subRegions: [], locked: true },
+      { code: "CD", name: "DR Congo", emoji: "🇨🇩", subTitle: "26 Provinces", subRegions: [], locked: true },
+      { code: "TZ", name: "Tanzania", emoji: "🇹🇿", subTitle: "31 Regions", subRegions: [], locked: true },
+      { code: "KE", name: "Kenya", emoji: "🇰🇪", subTitle: "47 Counties", subRegions: [], locked: true },
+      { code: "GH", name: "Ghana", emoji: "🇬🇭", subTitle: "16 Regions", subRegions: [], locked: true },
+      { code: "MA", name: "Morocco", emoji: "🇲🇦", subTitle: "12 Regions", subRegions: [], locked: true },
+      { code: "DZ", name: "Algeria", emoji: "🇩🇿", subTitle: "58 Provinces", subRegions: [], locked: true },
+      { code: "AO", name: "Angola", emoji: "🇦🇴", subTitle: "18 Provinces", subRegions: [], locked: true },
+      { code: "MZ", name: "Mozambique", emoji: "🇲🇿", subTitle: "10 Provinces", subRegions: [], locked: true },
+      { code: "CM", name: "Cameroon", emoji: "🇨🇲", subTitle: "10 Regions", subRegions: [], locked: true },
+      { code: "SN", name: "Senegal", emoji: "🇸🇳", subTitle: "14 Regions", subRegions: [], locked: true },
+    ],
+  },
+
+  // ── OCEANIA ───────────────────────────────────────────────────────────────
+  {
+    id: "oceania",
+    name: "Oceania",
+    emoji: "🌊",
+    locked: false,
+    countries: [
+      { code: "AU", name: "Australia", emoji: "🇦🇺", subTitle: "8 States & Territories", subRegions: [], locked: true },
+      { code: "NZ", name: "New Zealand", emoji: "🇳🇿", subTitle: "16 Regions", subRegions: [], locked: true },
+      { code: "PG", name: "Papua New Guinea", emoji: "🇵🇬", subTitle: "22 Provinces", subRegions: [], locked: true },
+      { code: "FJ", name: "Fiji", emoji: "🇫🇯", subTitle: "14 Provinces", subRegions: [], locked: true },
+      { code: "SB", name: "Solomon Islands", emoji: "🇸🇧", subTitle: "10 Provinces", subRegions: [], locked: true },
+      { code: "VU", name: "Vanuatu", emoji: "🇻🇺", subTitle: "6 Provinces", subRegions: [], locked: true },
+      { code: "WS", name: "Samoa", emoji: "🇼🇸", subTitle: "11 Districts", subRegions: [], locked: true },
+      { code: "TO", name: "Tonga", emoji: "🇹🇴", subTitle: "5 Districts", subRegions: [], locked: true },
+    ],
+  },
+
+  // ── MIDDLE EAST ───────────────────────────────────────────────────────────
+  {
+    id: "middle-east",
+    name: "Middle East",
+    emoji: "🕌",
+    locked: false,
+    countries: [
+      { code: "TR", name: "Turkey", emoji: "🇹🇷", subTitle: "81 Provinces", subRegions: [], locked: true },
+      { code: "IR", name: "Iran", emoji: "🇮🇷", subTitle: "31 Provinces", subRegions: [], locked: true },
+      { code: "SA", name: "Saudi Arabia", emoji: "🇸🇦", subTitle: "13 Regions", subRegions: [], locked: true },
+      { code: "IQ", name: "Iraq", emoji: "🇮🇶", subTitle: "19 Governorates", subRegions: [], locked: true },
+      { code: "AE", name: "UAE", emoji: "🇦🇪", subTitle: "7 Emirates", subRegions: [], locked: true },
+      { code: "IL", name: "Israel", emoji: "🇮🇱", subTitle: "6 Districts", subRegions: [], locked: true },
+      { code: "JO", name: "Jordan", emoji: "🇯🇴", subTitle: "12 Governorates", subRegions: [], locked: true },
+      { code: "YE", name: "Yemen", emoji: "🇾🇪", subTitle: "22 Governorates", subRegions: [], locked: true },
+      { code: "SY", name: "Syria", emoji: "🇸🇾", subTitle: "14 Governorates", subRegions: [], locked: true },
+      { code: "LB", name: "Lebanon", emoji: "🇱🇧", subTitle: "8 Governorates", subRegions: [], locked: true },
+      { code: "OM", name: "Oman", emoji: "🇴🇲", subTitle: "11 Governorates", subRegions: [], locked: true },
+      { code: "KW", name: "Kuwait", emoji: "🇰🇼", subTitle: "6 Governorates", subRegions: [], locked: true },
+      { code: "QA", name: "Qatar", emoji: "🇶🇦", subTitle: "8 Municipalities", subRegions: [], locked: true },
+      { code: "BH", name: "Bahrain", emoji: "🇧🇭", subTitle: "4 Governorates", subRegions: [], locked: true },
+    ],
+  },
 ]
