@@ -9,6 +9,7 @@ interface Props {
   onStartDaily: () => void
   onGoFlags: () => void
   onGoAchievements: () => void
+  onGoProfile: () => void
   onGoFlashcards: () => void
   onGoLanguage: () => void
   onQuickPlay: () => void
@@ -17,8 +18,23 @@ interface Props {
   onGoChallenge: () => void
 }
 
+const ComingSoonTile = ({ emoji, label, desc }: { emoji: string; label: string; desc: string }) => (
+  <div className="w-full flex items-center justify-between px-5 py-4 rounded-2xl opacity-45 cursor-not-allowed"
+    style={{ background: "#2D1F52", border: "1px solid #8B6CFF22" }}>
+    <div className="flex items-center gap-3">
+      <span className="text-2xl">{emoji}</span>
+      <div className="text-left">
+        <div className="font-bold" style={{ color: "#F5F3FF" }}>{label}</div>
+        <div className="text-xs" style={{ color: "#B8A9E0" }}>{desc}</div>
+      </div>
+    </div>
+    <span className="text-xs px-2 py-0.5 rounded-full font-semibold"
+      style={{ background: "#8B6CFF22", color: "#8B6CFF" }}>Soon</span>
+  </div>
+)
+
 export default function HomeScreen({
-  state, onStartDaily, onGoFlags, onGoAchievements, onGoFlashcards,
+  state, onStartDaily, onGoFlags, onGoProfile, onGoFlashcards,
   onGoLanguage, onQuickPlay, onGoReverseQuiz, onGoCapitalQuiz, onGoChallenge,
 }: Props) {
   const today = todayString()
@@ -32,14 +48,13 @@ export default function HomeScreen({
           <EarthLogo size={34} />
           <span className="text-xl font-black" style={{ color: "#F5F3FF" }}>Globalio</span>
         </div>
-        <button onClick={onGoAchievements}
-          className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-semibold transition-all active:scale-95"
+        <button onClick={onGoProfile}
+          className="w-9 h-9 flex items-center justify-center rounded-full text-lg transition-all active:scale-95"
           style={{
             background: "linear-gradient(135deg, #2D1F52, #3D2A6A)",
-            color: "#FBBF24", border: "1px solid #FBBF2444",
-            boxShadow: "0 0 12px #FBBF2422",
+            border: "1px solid #8B6CFF44",
           }}>
-          👑 {state.crowns.length}
+          👤
         </button>
       </header>
 
@@ -57,6 +72,7 @@ export default function HomeScreen({
 
       <HomeCarousel state={state} onStartDaily={onStartDaily} dailyDone={dailyDone} todayScore={todayResult} />
 
+      {/* Quick Play */}
       <div className="mx-5 mt-3 mb-2">
         <button onClick={onQuickPlay}
           className="w-full flex items-center justify-between px-5 py-3.5 rounded-2xl transition-all active:scale-[0.98]"
@@ -84,7 +100,7 @@ export default function HomeScreen({
           className="w-full flex items-center justify-between px-5 py-4 rounded-2xl transition-all active:scale-[0.98] hover:brightness-110"
           style={{ background: "#2D1F52", border: "1px solid #8B6CFF33" }}>
           <div className="flex items-center gap-3">
-            <span className="text-2xl">🏳️</span>
+            <span className="text-2xl">🚩</span>
             <div className="text-left">
               <div className="font-bold" style={{ color: "#F5F3FF" }}>Flag Sets</div>
               <div className="text-xs" style={{ color: "#B8A9E0" }}>{state.learnedFlags.length}/{FLAGS.length} learned · {state.crowns.length} crowns</div>
@@ -97,7 +113,7 @@ export default function HomeScreen({
           className="w-full flex items-center justify-between px-5 py-4 rounded-2xl transition-all active:scale-[0.98] hover:brightness-110"
           style={{ background: "#2D1F52", border: "1px solid #8B6CFF33" }}>
           <div className="flex items-center gap-3">
-            <span className="text-2xl">🔁</span>
+            <span className="text-2xl">🎯</span>
             <div className="text-left">
               <div className="font-bold" style={{ color: "#F5F3FF" }}>Flag ID Challenge</div>
               <div className="text-xs" style={{ color: "#B8A9E0" }}>See the name, pick the flag</div>
@@ -110,7 +126,7 @@ export default function HomeScreen({
           className="w-full flex items-center justify-between px-5 py-4 rounded-2xl transition-all active:scale-[0.98] hover:brightness-110"
           style={{ background: "#2D1F52", border: "1px solid #8B6CFF33" }}>
           <div className="flex items-center gap-3">
-            <span className="text-2xl">🏛️</span>
+            <span className="text-2xl">🏙️</span>
             <div className="text-left">
               <div className="font-bold" style={{ color: "#F5F3FF" }}>Capital Cities</div>
               <div className="text-xs" style={{ color: "#B8A9E0" }}>Name that capital</div>
@@ -123,7 +139,7 @@ export default function HomeScreen({
           className="w-full flex items-center justify-between px-5 py-4 rounded-2xl transition-all active:scale-[0.98] hover:brightness-110"
           style={{ background: "#2D1F52", border: "1px solid #8B6CFF33" }}>
           <div className="flex items-center gap-3">
-            <span className="text-2xl">🃏</span>
+            <span className="text-2xl">🎴</span>
             <div className="text-left">
               <div className="font-bold" style={{ color: "#F5F3FF" }}>Flashcards</div>
               <div className="text-xs" style={{ color: "#B8A9E0" }}>Swipe and learn all {FLAGS.length} flags</div>
@@ -136,7 +152,7 @@ export default function HomeScreen({
           className="w-full flex items-center justify-between px-5 py-4 rounded-2xl transition-all active:scale-[0.98] hover:brightness-110"
           style={{ background: "#2D1F52", border: "1px solid #F59E0B33" }}>
           <div className="flex items-center gap-3">
-            <span className="text-2xl">🗣️</span>
+            <span className="text-2xl">🌐</span>
             <div className="text-left">
               <div className="font-bold" style={{ color: "#F5F3FF" }}>Guess the Language</div>
               <div className="text-xs" style={{ color: "#B8A9E0" }}>50 languages · 3 difficulties</div>
@@ -144,6 +160,9 @@ export default function HomeScreen({
           </div>
           <span style={{ color: "#F59E0B" }}>›</span>
         </button>
+
+        <ComingSoonTile emoji="🗺️" label="Geography" desc="Identify countries by shape" />
+        <ComingSoonTile emoji="📜" label="History" desc="Flags through the ages" />
 
         <h3 className="text-xs font-semibold uppercase tracking-widest pt-1" style={{ color: "#B8A9E0" }}>Challenge</h3>
 

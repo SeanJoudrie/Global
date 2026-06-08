@@ -8,6 +8,7 @@ import CapitalQuizScreen from "./components/CapitalQuizScreen"
 import ChallengeScreen from "./components/ChallengeScreen"
 import ResultScreen from "./components/ResultScreen"
 import AchievementsScreen from "./components/AchievementsScreen"
+import ProfileScreen from "./components/ProfileScreen"
 import FlashcardsScreen from "./components/FlashcardsScreen"
 import LanguageQuizScreen from "./components/LanguageQuizScreen"
 import StarField from "./components/StarField"
@@ -19,7 +20,7 @@ import { buildDailyQuiz, buildSetQuiz } from "./utils/quiz"
 import type { Question } from "./utils/quiz"
 import { todayString } from "./utils/prng"
 
-type Screen = "splash" | "home" | "flags" | "quiz" | "reversequiz" | "result" | "achievements" | "flashcards" | "language" | "capitalquiz" | "challenge"
+type Screen = "splash" | "home" | "flags" | "quiz" | "reversequiz" | "result" | "achievements" | "profile" | "flashcards" | "language" | "capitalquiz" | "challenge"
 
 interface ActiveQuiz {
   questions: Question[]
@@ -98,10 +99,15 @@ export default function App() {
 
       {screen === "home" && (
         <HomeScreen state={appState} onStartDaily={startDaily}
-          onGoFlags={() => setScreen("flags")} onGoAchievements={() => setScreen("achievements")}
-          onGoFlashcards={() => setScreen("flashcards")} onGoLanguage={() => setScreen("language")}
-          onQuickPlay={startQuickPlay} onGoReverseQuiz={startReverseQuiz}
-          onGoCapitalQuiz={() => setScreen("capitalquiz")} onGoChallenge={() => setScreen("challenge")} />
+          onGoFlags={() => setScreen("flags")}
+          onGoAchievements={() => setScreen("achievements")}
+          onGoProfile={() => setScreen("profile")}
+          onGoFlashcards={() => setScreen("flashcards")}
+          onGoLanguage={() => setScreen("language")}
+          onQuickPlay={startQuickPlay}
+          onGoReverseQuiz={startReverseQuiz}
+          onGoCapitalQuiz={() => setScreen("capitalquiz")}
+          onGoChallenge={() => setScreen("challenge")} />
       )}
 
       {screen === "flags" && (
@@ -113,10 +119,10 @@ export default function App() {
       )}
 
       {screen === "language" && <LanguageQuizScreen onBack={() => setScreen("home")} />}
-
       {screen === "capitalquiz" && <CapitalQuizScreen onBack={() => setScreen("home")} />}
-
       {screen === "challenge" && <ChallengeScreen onBack={() => setScreen("home")} />}
+      {screen === "profile" && <ProfileScreen state={appState} onBack={() => setScreen("home")} />}
+      {screen === "achievements" && <AchievementsScreen state={appState} onBack={() => setScreen("home")} />}
 
       {screen === "quiz" && activeQuiz && (
         <QuizScreen questions={activeQuiz.questions} title={activeQuiz.title}
@@ -133,8 +139,6 @@ export default function App() {
           isDaily={activeQuiz.isDaily} setLabel={activeQuiz.title}
           onHome={() => setScreen("home")} onRetry={activeQuiz.isDaily ? undefined : handleRetry} />
       )}
-
-      {screen === "achievements" && <AchievementsScreen state={appState} onBack={() => setScreen("home")} />}
     </div>
   )
 }

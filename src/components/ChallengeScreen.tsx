@@ -12,13 +12,12 @@ interface ChallengeQ {
   correctIndex: number
 }
 
-function buildQuiz(subRegions: SubRegion[], count = 10): ChallengeQ[] {
+function buildQuiz(subRegions: SubRegion[]): ChallengeQ[] {
+  if (subRegions.length < 4) return []
+  const count = Math.min(10, subRegions.length)
   const shuffled = [...subRegions].sort(() => Math.random() - 0.5).slice(0, count)
   return shuffled.map(target => {
-    const distractors = subRegions
-      .filter(r => r.code !== target.code)
-      .sort(() => Math.random() - 0.5)
-      .slice(0, 3)
+    const distractors = subRegions.filter(r => r.code !== target.code).sort(() => Math.random() - 0.5).slice(0, 3)
     const allChoices = [target, ...distractors].sort(() => Math.random() - 0.5)
     const correctIndex = allChoices.findIndex(r => r.code === target.code)
     return { target, choices: allChoices, correctIndex }
@@ -36,8 +35,6 @@ export default function ChallengeScreen({ onBack }: Props) {
   const [animating, setAnimating] = useState<number | null>(null)
   const [imgError, setImgError] = useState<Record<string, boolean>>({})
 
-  const TOTAL = 10
-
   const handleContinentClick = (c: ChallengeContinent) => {
     if (c.locked) return
     setActiveContinent(c)
@@ -45,9 +42,9 @@ export default function ChallengeScreen({ onBack }: Props) {
   }
 
   const handleCountryClick = (country: ChallengeCountry) => {
-    if (country.locked || country.subRegions.length === 0) return
+    if (country.locked || country.subRegions.length < 4) return
     setActiveCountry(country)
-    const qs = buildQuiz(country.subRegions, TOTAL)
+    const qs = buildQuiz(country.subRegions)
     setQuestions(qs)
     setIdx(0)
     setAnswers([])
@@ -60,6 +57,7 @@ export default function ChallengeScreen({ onBack }: Props) {
   const q = questions[idx]
   const answered = selected !== null
   const score = answers.filter(a => a === "correct").length
+  const total = questions.length
 
   const handleAnswer = (i: number) => {
     if (answered) return
@@ -108,7 +106,7 @@ export default function ChallengeScreen({ onBack }: Props) {
             style={{ background: "#2D1F52", color: "#B8A9E0" }}>&#8249;</button>
           <div>
             <h1 className="text-2xl font-black" style={{ color: "#F5F3FF" }}>Challenge Mode</h1>
-            <p className="text-xs" style={{ color: "#B8A9E0" }}>Master flags by region — states, provinces &amp; more</p>
+            <p className="text-xs" style={{ color: "#B8A9E0" }}>Master sub-national flags by region</p>
           </div>
         </header>
         <div className="px-5 pb-10 space-y-3" style={{ zIndex: 1, position: "relative" }}>
@@ -122,13 +120,13 @@ export default function ChallengeScreen({ onBack }: Props) {
                   <div className="font-bold" style={{ color: "#F5F3FF" }}>{c.name}</div>
                   {c.locked
                     ? <div className="text-xs" style={{ color: "#B8A9E0" }}>Coming soon</div>
-                    : <div className="text-xs" style={{ color: "#8B6CFF" }}>{c.countries.filter(co => !co.locked).length} countries unlocked</div>
+                    : <div className="text-xs" style={{ color: "#8B6CFF" }}>
+                        {c.countries.filter(co => !co.locked && co.subRegions.length >= 4).length} countries available
+                      </div>
                   }
                 </div>
               </div>
-              <span style={{ color: c.locked ? "#8B6CFF44" : "#8B6CFF" }}>
-                {c.locked ? "🔒" : "›"}
-              </span>
+              <span style={{ color: c.locked ? "#8B6CFF44" : "#8B6CFF" }}>{c.locked ? "🔒" : "›"}</span>
             </button>
           ))}
         </div>
@@ -144,15 +142,15 @@ export default function ChallengeScreen({ onBack }: Props) {
             style={{ background: "#2D1F52", color: "#B8A9E0" }}>&#8249;</button>
           <div>
             <h1 className="text-2xl font-black" style={{ color: "#F5F3FF" }}>{activeContinent.emoji} {activeContinent.name}</h1>
-            <p className="text-xs" style={{ color: "#B8A9E0" }}>Select a country to start</p>
+            <p className="text-xs" style={{ color: "#B8A9E0" }}>Select a country</p>
           </div>
         </header>
         <div className="px-5 pb-10 space-y-3" style={{ zIndex: 1, position: "relative" }}>
           {activeContinent.countries.map(country => (
             <button key={country.code} onClick={() => handleCountryClick(country)}
-              disabled={country.locked}
-              className={`w-full flex items-center justify-between px-5 py-4 rounded-2xl transition-all ${country.locked ? "opacity-40 cursor-not-allowed" : "active:scale-[0.98] hover:brightness-110"}`}
-              style={{ background: "#2D1F52", border: `1px solid ${country.locked ? "#8B6CFF22" : "#8B6CFF44"}` }}>
+              disabled={country.locked || country.subRegions.length < 4}
+              className={`w-full flex items-center justify-between px-5 py-4 rounded-2xl transition-all ${(country.locked || country.subRegions.length < 4) ? "opacity-40 cursor-not-allowed" : "active:scale-[0.98] hover:brightness-110"}`}
+              style={{ background: "#2D1F52", border: `1px solid ${(country.locked || country.subRegions.length < 4) ? "#8B6CFF22" : "#8B6CFF44"}` }}>
               <div className="flex items-center gap-3">
                 <span className="text-2xl">{country.emoji}</span>
                 <div className="text-left">
@@ -160,8 +158,8 @@ export default function ChallengeScreen({ onBack }: Props) {
                   <div className="text-xs" style={{ color: "#B8A9E0" }}>{country.subTitle}</div>
                 </div>
               </div>
-              <span style={{ color: country.locked ? "#8B6CFF44" : "#8B6CFF" }}>
-                {country.locked ? "🔒" : "›"}
+              <span style={{ color: (country.locked || country.subRegions.length < 4) ? "#8B6CFF44" : "#8B6CFF" }}>
+                {(country.locked || country.subRegions.length < 4) ? "🔒" : "›"}
               </span>
             </button>
           ))}
@@ -171,7 +169,7 @@ export default function ChallengeScreen({ onBack }: Props) {
   }
 
   if (phase === "result" && activeCountry) {
-    const pct = Math.round((score / TOTAL) * 100)
+    const pct = Math.round((score / total) * 100)
     return (
       <div className="min-h-screen flex flex-col items-center justify-center px-5"
         style={{ background: "linear-gradient(135deg,#1A1033 0%,#2A1A4A 100%)" }}>
@@ -179,7 +177,7 @@ export default function ChallengeScreen({ onBack }: Props) {
           <div className="rounded-2xl p-6 mb-4 text-center"
             style={{ background: "#2D1F52", border: "1px solid #8B6CFF44", boxShadow: "0 0 32px #8B6CFF22" }}>
             <div className="text-5xl mb-3">{pct >= 80 ? "🏆" : pct >= 50 ? "👍" : "📚"}</div>
-            <div className="text-6xl font-black mb-1" style={{ color: "#F5F3FF" }}>{score}/{TOTAL}</div>
+            <div className="text-6xl font-black mb-1" style={{ color: "#F5F3FF" }}>{score}/{total}</div>
             <div className="text-sm mb-3" style={{ color: "#B8A9E0" }}>{activeCountry.emoji} {activeCountry.name} · {activeCountry.subTitle}</div>
             <div className="flex justify-center gap-1 mb-4">
               {answers.map((a, i) => <span key={i}>{a === "correct" ? "🟩" : "🟥"}</span>)}
@@ -212,20 +210,20 @@ export default function ChallengeScreen({ onBack }: Props) {
             style={{ background: "#2D1F52", color: "#B8A9E0" }}>&#8249;</button>
           <div className="text-center">
             <div className="text-xs font-semibold uppercase tracking-widest" style={{ color: "#B8A9E0" }}>
-              {activeCountry?.emoji} {activeCountry?.name} · {activeCountry?.subTitle}
+              {activeCountry?.emoji} {activeCountry?.name}
             </div>
-            <div className="text-sm font-bold" style={{ color: "#F5F3FF" }}>{idx + 1} / {TOTAL}</div>
+            <div className="text-sm font-bold" style={{ color: "#F5F3FF" }}>{idx + 1} / {total}</div>
           </div>
           <div className="w-9" />
         </header>
 
         <div className="mx-5 mt-2 h-1.5 rounded-full overflow-hidden" style={{ background: "#2D1F52", zIndex: 1 }}>
           <div className="h-full rounded-full transition-all duration-500"
-            style={{ width: `${(idx / TOTAL) * 100}%`, background: "linear-gradient(90deg,#8B6CFF,#A78BFA)" }} />
+            style={{ width: `${(idx / total) * 100}%`, background: "linear-gradient(90deg,#8B6CFF,#A78BFA)" }} />
         </div>
 
         <div className="flex-1 flex flex-col items-center px-5 py-4" style={{ zIndex: 1 }}>
-          <div className="mb-4 relative">
+          <div className="mb-4">
             <div className="rounded-2xl overflow-hidden shadow-2xl" style={{ border: "2px solid #8B6CFF44" }}>
               {imgError[q.target.code] ? (
                 <div className="flex items-center justify-center text-4xl"
@@ -242,7 +240,7 @@ export default function ChallengeScreen({ onBack }: Props) {
             <div className="w-full max-w-sm mb-3 px-4 py-3 rounded-xl animate-slide-up"
               style={{ background: "#2D1F52", border: `1px solid ${selected === q.correctIndex ? "#34D39944" : "#F43F5E44"}` }}>
               <div className="text-xs font-semibold" style={{ color: selected === q.correctIndex ? "#34D399" : "#F43F5E" }}>
-                {selected === q.correctIndex ? `✓ Correct — ${q.target.name}` : `✗ That was the flag of ${q.target.name}`}
+                {selected === q.correctIndex ? `✓ Correct — ${q.target.name}` : `✗ That was ${q.target.name}`}
               </div>
             </div>
           )}
@@ -251,10 +249,7 @@ export default function ChallengeScreen({ onBack }: Props) {
             {q.choices.map((choice, i) => (
               <button key={choice.code} onClick={() => handleAnswer(i)} disabled={answered}
                 className={`py-3.5 px-3 rounded-xl font-semibold text-sm transition-colors active:scale-95 ${animClass(i)}`}
-                style={{
-                  background: bgColor(i), border: `1.5px solid ${borderColor(i)}`, color: textColor(i),
-                  cursor: answered ? "default" : "pointer",
-                }}>
+                style={{ background: bgColor(i), border: `1.5px solid ${borderColor(i)}`, color: textColor(i), cursor: answered ? "default" : "pointer" }}>
                 {choice.name}
               </button>
             ))}

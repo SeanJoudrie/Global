@@ -1,35 +1,54 @@
-import { useState, useEffect, useRef, useCallback } from 'react'
-import { FLAGS } from '../data/flags'
-import { todayString, seededRandom } from '../utils/prng'
-import type { AppState } from '../utils/storage'
+﻿import { useState, useEffect, useRef, useCallback } from "react"
+import { FLAGS } from "../data/flags"
+import { todayString, seededRandom } from "../utils/prng"
+import type { AppState } from "../utils/storage"
 
 interface Props {
   state: AppState
   onStartDaily: () => void
   dailyDone: boolean
-  todayScore?: { score: number; total: number; answers: ('correct' | 'wrong')[] }
+  todayScore?: { score: number; total: number; answers: ("correct" | "wrong")[] }
 }
 
-const DAILY_FACTS = [
-  "There are 195 countries in the world recognised by the United Nations.",
+const ALL_FACTS = [
+  "There are 195 countries recognised by the United Nations.",
   "The flag of Nepal is the only national flag that is not rectangular.",
-  "No two countries have the same flag — each one is legally distinct.",
-  "The US flag has been redesigned 27 times as new states joined.",
+  "No two countries have exactly the same flag — each one is legally distinct.",
+  "The US flag has been redesigned 27 times as new states joined the union.",
   "Scotland's national animal is the unicorn.",
   "The Olympic flag's five rings represent the five inhabited continents.",
   "Bhutan's flag is the only one featuring a dragon.",
   "Switzerland and Vatican City are the only countries with square flags.",
   "More than half the world's flags contain the colour blue.",
   "The flag of Cyprus shows a map of the island — unique in the world.",
+  "The Canadian flag was officially adopted in 1965, replacing the colonial design.",
+  "Libya's flag was plain green for 20 years — the simplest national flag ever.",
+  "The flag of Mozambique contains an AK-47 with a bayonet.",
+  "Denmark's flag, the Dannebrog, is the oldest national flag still in use.",
+  "The Union Jack is technically only a 'Union Flag' — it's called 'Jack' only at sea.",
+  "Brazil's flag has 27 stars, representing its 26 states and the federal district.",
+  "The flag of Belize features two men with tools — one of only a few with people.",
+  "Vatican City and Monaco have very similar flags — both red and yellow vertically split.",
+  "Russia and the Netherlands have almost identical flags, just reversed top-to-bottom.",
+  "The flags of Chad and Romania are nearly identical — both blue, yellow, and red stripes.",
+  "Papua New Guinea's flag features the Southern Cross and a Bird of Paradise.",
+  "Jamaica is the only Caribbean flag with no red, white, or blue.",
+  "The Albanian flag shows a double-headed black eagle on red — from medieval origins.",
+  "South Africa has six colours on its flag, more than most national flags.",
+  "The Philippines' flag is flown upside-down during wartime.",
+  "Cambodia's flag is the only one to feature a building: Angkor Wat.",
+  "Saudi Arabia's flag always flies right-side up — its text must be readable.",
+  "Bolivia has two official flags — one for public use, one for the government.",
+  "The flag of Kiribati shows a frigate bird flying over a rising sun and ocean.",
+  "Qatar's flag is the only national flag with a width-to-height ratio greater than 1:2.",
 ]
 
-function getDailyFact(dateStr: string): string {
-  const rng = seededRandom(dateStr + 'fact')
-  return DAILY_FACTS[Math.floor(rng() * DAILY_FACTS.length)]
+function getCurrentFact(minute: number): string {
+  return ALL_FACTS[minute % ALL_FACTS.length]
 }
 
 function getDailyFlag(dateStr: string) {
-  const rng = seededRandom(dateStr + 'flagofday')
+  const rng = seededRandom(dateStr + "flagofday")
   return FLAGS[Math.floor(rng() * FLAGS.length)]
 }
 
@@ -44,20 +63,30 @@ function formatCountdown(): string {
 }
 
 const SLIDE_COLORS = [
-  { border: '#8B6CFF', glow: '#8B6CFF22', accent: '#A78BFA' },  // Daily – violet
-  { border: '#F59E0B', glow: '#F59E0B18', accent: '#FBBF24' },  // Fact – amber
-  { border: '#34D399', glow: '#34D39918', accent: '#6EE7B7' },  // Flag – green
+  { border: "#8B6CFF", glow: "#8B6CFF22", accent: "#A78BFA" },
+  { border: "#F59E0B", glow: "#F59E0B18", accent: "#FBBF24" },
+  { border: "#34D399", glow: "#34D39918", accent: "#6EE7B7" },
 ]
+
+const CARD_HEIGHT = 210
+const CONTENT_HEIGHT = 160
 
 export default function HomeCarousel({ onStartDaily, dailyDone, todayScore }: Props) {
   const [idx, setIdx] = useState(0)
+  const [minute, setMinute] = useState(() => Math.floor(Date.now() / 60000))
   const dragStartX = useRef<number | null>(null)
   const isDragging = useRef(false)
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null)
   const today = todayString()
-  const dailyFact = getDailyFact(today)
   const dailyFlag = getDailyFlag(today)
   const NUM = 3
+
+  useEffect(() => {
+    const minuteTimer = setInterval(() => setMinute(Math.floor(Date.now() / 60000)), 60000)
+    return () => clearInterval(minuteTimer)
+  }, [])
+
+  const currentFact = getCurrentFact(minute)
 
   const goTo = (i: number) => setIdx(((i % NUM) + NUM) % NUM)
 
@@ -71,7 +100,6 @@ export default function HomeCarousel({ onStartDaily, dailyDone, todayScore }: Pr
     return () => { if (intervalRef.current) clearInterval(intervalRef.current) }
   }, [resetTimer])
 
-  // Unified drag handling (mouse + touch)
   const handleDragStart = (clientX: number) => {
     dragStartX.current = clientX
     isDragging.current = true
@@ -80,10 +108,7 @@ export default function HomeCarousel({ onStartDaily, dailyDone, todayScore }: Pr
   const handleDragEnd = (clientX: number) => {
     if (!isDragging.current || dragStartX.current === null) return
     const delta = clientX - dragStartX.current
-    if (Math.abs(delta) > 40) {
-      goTo(delta < 0 ? idx + 1 : idx - 1)
-      resetTimer()
-    }
+    if (Math.abs(delta) > 40) { goTo(delta < 0 ? idx + 1 : idx - 1); resetTimer() }
     isDragging.current = false
     dragStartX.current = null
   }
@@ -92,76 +117,80 @@ export default function HomeCarousel({ onStartDaily, dailyDone, todayScore }: Pr
 
   const slides = [
     // Slide 0 — Daily Game
-    <div key="daily" className="flex flex-col gap-3 h-full">
-      <div className="flex items-center justify-between">
+    <div key="daily" style={{ height: CONTENT_HEIGHT, display: "flex", flexDirection: "column", gap: 10 }}>
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
         <div>
-          <span className="text-xs font-semibold uppercase tracking-widest" style={{ color: '#B8A9E0' }}>Today's Challenge</span>
-          <h2 className="text-2xl font-black mt-0.5" style={{ color: '#F5F3FF' }}>Daily Game</h2>
+          <span style={{ fontSize: 10, fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.1em", color: "#B8A9E0" }}>Today's Challenge</span>
+          <div style={{ fontSize: 22, fontWeight: 900, color: "#F5F3FF", marginTop: 2 }}>Daily Game</div>
         </div>
-        <span className="text-3xl">🌍</span>
+        <span style={{ fontSize: 28 }}>🌍</span>
       </div>
       {dailyDone && todayScore ? (
-        <div className="flex-1 flex flex-col justify-between">
+        <div style={{ flex: 1, display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
           <div>
-            <div className="flex items-center gap-2 mb-2">
-              <span className="text-4xl font-black" style={{ color: '#34D399' }}>{todayScore.score}/{todayScore.total}</span>
-              <span className="text-sm" style={{ color: '#B8A9E0' }}>correct today</span>
+            <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 6 }}>
+              <span style={{ fontSize: 36, fontWeight: 900, color: "#34D399" }}>{todayScore.score}/{todayScore.total}</span>
+              <span style={{ fontSize: 13, color: "#B8A9E0" }}>correct today</span>
             </div>
-            <div className="flex gap-1 mb-2 flex-wrap">
-              {todayScore.answers.map((a, i) => <span key={i}>{a === 'correct' ? '🟩' : '🟥'}</span>)}
+            <div style={{ display: "flex", gap: 4, flexWrap: "wrap" }}>
+              {todayScore.answers.map((a, i) => <span key={i}>{a === "correct" ? "🟩" : "🟥"}</span>)}
             </div>
           </div>
-          <div className="text-xs" style={{ color: '#B8A9E0' }}>⏰ Next puzzle in {formatCountdown()}</div>
+          <div style={{ fontSize: 11, color: "#B8A9E0" }}>Next puzzle in {formatCountdown()}</div>
         </div>
       ) : (
-        <div className="flex-1 flex flex-col justify-between">
-          <p className="text-sm" style={{ color: '#B8A9E0' }}>10 flags · confusable distractors · shareable result</p>
+        <div style={{ flex: 1, display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
+          <p style={{ fontSize: 13, color: "#B8A9E0", margin: 0 }}>10 flags · confusable distractors · shareable result</p>
           <button onClick={onStartDaily}
-            className="w-full py-3 rounded-xl font-bold text-base transition-all active:scale-95 hover:brightness-110"
-            style={{ background: 'linear-gradient(135deg,#8B6CFF,#A78BFA)', color: '#fff', boxShadow: '0 4px 20px #8B6CFF55' }}>
+            style={{ width: "100%", padding: "11px 0", borderRadius: 14, fontWeight: 700, fontSize: 15,
+              background: "linear-gradient(135deg,#8B6CFF,#A78BFA)", color: "#fff",
+              boxShadow: "0 4px 20px #8B6CFF55", border: "none", cursor: "pointer" }}>
             Play Today's Game →
           </button>
         </div>
       )}
     </div>,
 
-    // Slide 1 — Fun Fact
-    <div key="fact" className="flex flex-col gap-3 h-full">
-      <div className="flex items-center justify-between">
+    // Slide 1 — Rotating Fun Fact
+    <div key="fact" style={{ height: CONTENT_HEIGHT, display: "flex", flexDirection: "column", gap: 10 }}>
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
         <div>
-          <span className="text-xs font-semibold uppercase tracking-widest" style={{ color: '#B8A9E0' }}>Did You Know?</span>
-          <h2 className="text-2xl font-black mt-0.5" style={{ color: '#F5F3FF' }}>Fact of the Day</h2>
+          <span style={{ fontSize: 10, fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.1em", color: "#B8A9E0" }}>Did You Know?</span>
+          <div style={{ fontSize: 22, fontWeight: 900, color: "#F5F3FF", marginTop: 2 }}>Fun Fact</div>
         </div>
-        <span className="text-3xl">💡</span>
+        <span style={{ fontSize: 28 }}>💡</span>
       </div>
-      <div className="flex-1 flex flex-col justify-between">
-        <p className="text-base leading-relaxed" style={{ color: '#F5F3FF' }}>{dailyFact}</p>
-        <p className="text-xs mt-2" style={{ color: '#B8A9E0' }}>New fact every day</p>
+      <div style={{ flex: 1, display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
+        <p style={{ fontSize: 14, lineHeight: 1.55, color: "#F5F3FF", margin: 0 }}>{currentFact}</p>
+        <p style={{ fontSize: 11, color: "#B8A9E0", margin: 0 }}>Changes every minute</p>
       </div>
     </div>,
 
     // Slide 2 — Flag of the Day
-    <div key="flagday" className="flex flex-col gap-3 h-full">
-      <div className="flex items-center justify-between">
+    <div key="flagday" style={{ height: CONTENT_HEIGHT, display: "flex", flexDirection: "column", gap: 8 }}>
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
         <div>
-          <span className="text-xs font-semibold uppercase tracking-widest" style={{ color: '#B8A9E0' }}>Daily Spotlight</span>
-          <h2 className="text-2xl font-black mt-0.5" style={{ color: '#F5F3FF' }}>Flag of the Day</h2>
+          <span style={{ fontSize: 10, fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.1em", color: "#B8A9E0" }}>Daily Spotlight</span>
+          <div style={{ fontSize: 22, fontWeight: 900, color: "#F5F3FF", marginTop: 2 }}>Flag of the Day</div>
         </div>
-        <span className="text-3xl">🏳️</span>
+        <span style={{ fontSize: 28 }}>🏳️</span>
       </div>
-      <div className="flex-1 flex flex-col gap-3">
+      <div style={{ display: "flex", alignItems: "flex-start", gap: 12, flex: 1 }}>
         <img
           src={dailyFlag.flagUrl}
           alt={dailyFlag.name}
-          className="rounded-xl object-cover w-full"
-          style={{ height: 110, border: `2px solid ${SLIDE_COLORS[2].border}44` }}
-          onError={e => { (e.target as HTMLImageElement).style.display = 'none' }}
+          style={{ height: 72, width: 115, objectFit: "cover", borderRadius: 10,
+            border: `2px solid ${SLIDE_COLORS[2].border}44`, flexShrink: 0 }}
+          onError={e => { (e.target as HTMLImageElement).style.display = "none" }}
         />
-        <div>
-          <div className="font-bold text-base" style={{ color: '#F5F3FF' }}>{dailyFlag.name}
-            <span className="ml-2 text-xs font-normal" style={{ color: '#B8A9E0' }}>{dailyFlag.region}</span>
+        <div style={{ flex: 1, minWidth: 0 }}>
+          <div style={{ fontWeight: 700, fontSize: 15, color: "#F5F3FF", marginBottom: 2 }}>{dailyFlag.name}
+            <span style={{ marginLeft: 6, fontSize: 11, fontWeight: 400, color: "#B8A9E0" }}>{dailyFlag.region}</span>
           </div>
-          <p className="text-xs mt-1 leading-relaxed" style={{ color: '#B8A9E0' }}>{dailyFlag.funFact}</p>
+          <p style={{ fontSize: 11, lineHeight: 1.5, color: "#B8A9E0", margin: 0,
+            display: "-webkit-box", WebkitLineClamp: 3, WebkitBoxOrient: "vertical", overflow: "hidden" }}>
+            {dailyFlag.funFact}
+          </p>
         </div>
       </div>
     </div>,
@@ -169,29 +198,24 @@ export default function HomeCarousel({ onStartDaily, dailyDone, todayScore }: Pr
 
   return (
     <div className="mx-5 mt-2 rounded-2xl overflow-hidden transition-all duration-300"
-      style={{ background: '#2D1F52', border: `1px solid ${color.border}66`, boxShadow: `0 0 32px ${color.glow}` }}>
-
-      {/* Slide area — fixed height, no layout shift */}
+      style={{ background: "#2D1F52", border: `1px solid ${color.border}66`, boxShadow: `0 0 32px ${color.glow}` }}>
       <div
         className="p-5 select-none"
-        style={{ minHeight: 220, cursor: 'grab' }}
+        style={{ height: CARD_HEIGHT, cursor: "grab", overflow: "hidden" }}
         onMouseDown={e => handleDragStart(e.clientX)}
         onMouseUp={e => handleDragEnd(e.clientX)}
         onMouseLeave={() => { isDragging.current = false; dragStartX.current = null }}
         onTouchStart={e => handleDragStart(e.touches[0].clientX)}
         onTouchEnd={e => handleDragEnd(e.changedTouches[0].clientX)}
       >
-        <div style={{ minHeight: 175 }}>
-          {slides[idx]}
-        </div>
+        {slides[idx]}
       </div>
-
-      {/* Dots */}
-      <div className="flex justify-center gap-2 pb-4">
+      <div style={{ display: "flex", justifyContent: "center", gap: 8, paddingBottom: 14 }}>
         {Array.from({ length: NUM }).map((_, i) => (
           <button key={i} onClick={() => { goTo(i); resetTimer() }}
-            className="rounded-full transition-all duration-300"
-            style={{ width: i === idx ? 20 : 7, height: 7, background: i === idx ? color.border : '#8B6CFF33' }} />
+            style={{ width: i === idx ? 20 : 7, height: 7, borderRadius: 999,
+              background: i === idx ? color.border : "#8B6CFF33",
+              border: "none", cursor: "pointer", transition: "all 0.3s", padding: 0 }} />
         ))}
       </div>
     </div>
