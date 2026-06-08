@@ -35,16 +35,22 @@ body {
   50% { opacity: 0.7; filter: drop-shadow(0 0 24px #8B6CFF); }
 }
 
-@keyframes correct-flash {
-  0% { background-color: transparent; }
-  30% { background-color: #34D399; }
-  100% { background-color: transparent; }
+@keyframes correct-bounce {
+  0%   { transform: scale(1); }
+  25%  { transform: scale(1.12); }
+  50%  { transform: scale(0.95); }
+  75%  { transform: scale(1.05); }
+  100% { transform: scale(1); }
 }
 
-@keyframes wrong-flash {
-  0% { background-color: transparent; }
-  30% { background-color: #F43F5E; }
-  100% { background-color: transparent; }
+@keyframes wrong-shake {
+  0%, 100% { transform: translateX(0); }
+  15%  { transform: translateX(-9px); }
+  30%  { transform: translateX(9px); }
+  45%  { transform: translateX(-6px); }
+  60%  { transform: translateX(6px); }
+  75%  { transform: translateX(-3px); }
+  90%  { transform: translateX(3px); }
 }
 
 @keyframes crown-pop {
@@ -68,3 +74,5 @@ body {
 .animate-crown-pop { animation: crown-pop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
 .animate-slide-up { animation: slide-up 0.3s ease-out forwards; }
 .animate-fade-in { animation: fade-in 0.4s ease-out forwards; }
+.animate-correct-bounce { animation: correct-bounce 0.4s ease-out forwards; }
+.animate-wrong-shake { animation: wrong-shake 0.45s ease-in-out forwards; }

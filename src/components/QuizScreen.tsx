@@ -15,6 +15,7 @@ export default function QuizScreen({ questions, title, onFinish, onBack }: Props
   const [answers, setAnswers] = useState<('correct' | 'wrong')[]>([])
   const [answerState, setAnswerState] = useState<AnswerState>('idle')
   const [selectedIdx, setSelectedIdx] = useState<number | null>(null)
+  const [animatingIdx, setAnimatingIdx] = useState<number | null>(null)
   const [showLightbulb, setShowLightbulb] = useState(false)
   const [imgError, setImgError] = useState(false)
 
@@ -23,6 +24,7 @@ export default function QuizScreen({ questions, title, onFinish, onBack }: Props
   useEffect(() => {
     setAnswerState('idle')
     setSelectedIdx(null)
+    setAnimatingIdx(null)
     setShowLightbulb(false)
     setImgError(false)
   }, [idx])
@@ -32,7 +34,8 @@ export default function QuizScreen({ questions, title, onFinish, onBack }: Props
     const isCorrect = choiceIdx === q.correctIndex
     setSelectedIdx(choiceIdx)
     setAnswerState(isCorrect ? 'correct' : 'wrong')
-    // Show tip automatically on wrong answer
+    setAnimatingIdx(choiceIdx)
+    setTimeout(() => setAnimatingIdx(null), 500)
     if (!isCorrect) setShowLightbulb(true)
     setAnswers(prev => [...prev, isCorrect ? 'correct' : 'wrong'])
   }
@@ -67,9 +70,13 @@ export default function QuizScreen({ questions, title, onFinish, onBack }: Props
     return '#B8A9E0'
   }
 
+  const choiceAnimClass = (i: number) => {
+    if (animatingIdx !== i) return ''
+    return i === q.correctIndex ? 'animate-correct-bounce' : 'animate-wrong-shake'
+  }
+
   return (
     <div className="min-h-screen flex flex-col" style={{ background: 'linear-gradient(135deg,#1A1033 0%,#2A1A4A 100%)' }}>
-      {/* Header */}
       <header className="flex items-center justify-between px-5 pt-8 pb-2" style={{ zIndex: 1 }}>
         <button onClick={onBack} className="w-9 h-9 flex items-center justify-center rounded-full text-xl"
           style={{ background: '#2D1F52', color: '#B8A9E0' }}>‹</button>
@@ -80,14 +87,12 @@ export default function QuizScreen({ questions, title, onFinish, onBack }: Props
         <div className="w-9" />
       </header>
 
-      {/* Progress bar */}
       <div className="mx-5 mt-2 h-1.5 rounded-full overflow-hidden" style={{ background: '#2D1F52', zIndex: 1 }}>
         <div className="h-full rounded-full transition-all duration-500"
           style={{ width: `${(idx / questions.length) * 100}%`, background: 'linear-gradient(90deg,#8B6CFF,#A78BFA)' }} />
       </div>
 
       <div className="flex-1 flex flex-col items-center px-5 py-4" style={{ zIndex: 1 }}>
-        {/* Flag */}
         <div className="mb-4 relative">
           <div className="rounded-2xl overflow-hidden shadow-2xl" style={{ border: '2px solid #8B6CFF44' }}>
             {imgError ? (
@@ -99,20 +104,15 @@ export default function QuizScreen({ questions, title, onFinish, onBack }: Props
             )}
           </div>
 
-          {/* Lightbulb — only visible after answering */}
           {answerState !== 'idle' && (
             <button
               onClick={() => setShowLightbulb(s => !s)}
               className="absolute -bottom-3 -right-3 w-9 h-9 rounded-full flex items-center justify-center text-lg transition-all active:scale-90 animate-fade-in"
               style={{ background: '#2D1F52', border: '1px solid #FBBF2466', boxShadow: '0 2px 8px #00000066' }}
-              title="Show distinguishing tip"
-            >
-              💡
-            </button>
+            >💡</button>
           )}
         </div>
 
-        {/* Feedback panels */}
         {answerState === 'correct' && (
           <div className="w-full max-w-sm mb-3 px-4 py-3 rounded-xl animate-slide-up"
             style={{ background: '#2D1F52', border: '1px solid #34D39944' }}>
@@ -129,7 +129,6 @@ export default function QuizScreen({ questions, title, onFinish, onBack }: Props
           </div>
         )}
 
-        {/* Lightbulb tip */}
         {showLightbulb && answerState !== 'idle' && (
           <div className="w-full max-w-sm mb-3 px-4 py-3 rounded-xl animate-slide-up"
             style={{ background: '#2D1F52', border: '1px solid #FBBF2444' }}>
@@ -138,14 +137,13 @@ export default function QuizScreen({ questions, title, onFinish, onBack }: Props
           </div>
         )}
 
-        {/* Choices */}
         <div className="w-full max-w-sm grid grid-cols-2 gap-3 mb-4">
           {q.choices.map((choice, i) => (
             <button
               key={choice.code}
               onClick={() => handleChoice(i)}
               disabled={answerState !== 'idle'}
-              className="py-3.5 px-3 rounded-xl font-semibold text-sm transition-all active:scale-95"
+              className={`py-3.5 px-3 rounded-xl font-semibold text-sm transition-colors active:scale-95 ${choiceAnimClass(i)}`}
               style={{
                 background: choiceBg(i),
                 border: `1.5px solid ${choiceBorder(i)}`,
@@ -158,7 +156,6 @@ export default function QuizScreen({ questions, title, onFinish, onBack }: Props
           ))}
         </div>
 
-        {/* Next button — only shown after answering */}
         {answerState !== 'idle' && (
           <button
             onClick={handleNext}
