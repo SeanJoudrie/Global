@@ -5,6 +5,8 @@ import FlagsScreen from './components/FlagsScreen'
 import QuizScreen from './components/QuizScreen'
 import ResultScreen from './components/ResultScreen'
 import AchievementsScreen from './components/AchievementsScreen'
+import FlashcardsScreen from './components/FlashcardsScreen'
+import StarField from './components/StarField'
 import { FLAGS } from './data/flags'
 import type { FlagRecord } from './data/flags'
 import { loadState, saveState, markFlagLearned, recordDailyResult, awardCrown } from './utils/storage'
@@ -13,13 +15,7 @@ import { buildDailyQuiz, buildSetQuiz } from './utils/quiz'
 import type { Question } from './utils/quiz'
 import { todayString } from './utils/prng'
 
-type Screen =
-  | 'splash'
-  | 'home'
-  | 'flags'
-  | 'quiz'
-  | 'result'
-  | 'achievements'
+type Screen = 'splash' | 'home' | 'flags' | 'quiz' | 'result' | 'achievements' | 'flashcards'
 
 interface ActiveQuiz {
   questions: Question[]
@@ -58,21 +54,16 @@ export default function App() {
 
     let newState = { ...appState }
 
-    // Mark flags as learned for correct answers
     activeQuiz.questions.forEach((q, i) => {
       if (answers[i] === 'correct') {
         newState = markFlagLearned(newState, q.target.code)
       }
     })
 
-    // Daily recording
     if (activeQuiz.isDaily) {
-      newState = recordDailyResult(newState, {
-        score, total, date: todayString(), answers,
-      })
+      newState = recordDailyResult(newState, { score, total, date: todayString(), answers })
     }
 
-    // Crown check — 100% of set learned
     const setFlags = activeQuiz.setFlags
     const allLearned = setFlags.every(f => newState.learnedFlags.includes(f.code))
     if (allLearned && !activeQuiz.isDaily) {
@@ -90,7 +81,10 @@ export default function App() {
   }, [activeQuiz, startSet])
 
   return (
-    <>
+    <div style={{ background: 'linear-gradient(135deg,#1A1033 0%,#2A1A4A 100%)', minHeight: '100vh' }}>
+      {/* Ambient starfield behind everything */}
+      {screen !== 'splash' && <StarField />}
+
       {screen === 'splash' && <SplashScreen onDone={() => setScreen('home')} />}
 
       {screen === 'home' && (
@@ -99,44 +93,32 @@ export default function App() {
           onStartDaily={startDaily}
           onGoFlags={() => setScreen('flags')}
           onGoAchievements={() => setScreen('achievements')}
+          onGoFlashcards={() => setScreen('flashcards')}
         />
       )}
 
       {screen === 'flags' && (
-        <FlagsScreen
-          state={appState}
-          onBack={() => setScreen('home')}
-          onStartSet={startSet}
-        />
+        <FlagsScreen state={appState} onBack={() => setScreen('home')} onStartSet={startSet} />
+      )}
+
+      {screen === 'flashcards' && (
+        <FlashcardsScreen onBack={() => setScreen('home')} onQuizSet={(flags) => startSet('flashcards-all', flags)} />
       )}
 
       {screen === 'quiz' && activeQuiz && (
-        <QuizScreen
-          questions={activeQuiz.questions}
-          title={activeQuiz.title}
-          onFinish={handleQuizFinish}
-          onBack={() => setScreen(activeQuiz.isDaily ? 'home' : 'flags')}
-        />
+        <QuizScreen questions={activeQuiz.questions} title={activeQuiz.title}
+          onFinish={handleQuizFinish} onBack={() => setScreen(activeQuiz.isDaily ? 'home' : 'flags')} />
       )}
 
       {screen === 'result' && lastResult && activeQuiz && (
-        <ResultScreen
-          score={lastResult.score}
-          total={lastResult.total}
-          answers={lastResult.answers}
-          isDaily={activeQuiz.isDaily}
-          setLabel={activeQuiz.title}
-          onHome={() => setScreen('home')}
-          onRetry={activeQuiz.isDaily ? undefined : handleRetry}
-        />
+        <ResultScreen score={lastResult.score} total={lastResult.total} answers={lastResult.answers}
+          isDaily={activeQuiz.isDaily} setLabel={activeQuiz.title}
+          onHome={() => setScreen('home')} onRetry={activeQuiz.isDaily ? undefined : handleRetry} />
       )}
 
       {screen === 'achievements' && (
-        <AchievementsScreen
-          state={appState}
-          onBack={() => setScreen('home')}
-        />
+        <AchievementsScreen state={appState} onBack={() => setScreen('home')} />
       )}
-    </>
+    </div>
   )
 }

@@ -1,39 +1,47 @@
 interface Props {
   size?: number
   className?: string
-  spin?: boolean
-  glow?: boolean
 }
 
-export default function EarthLogo({ size = 80, className = '', spin = false, glow = false }: Props) {
+export default function EarthLogo({ size = 80, className = '' }: Props) {
   return (
     <svg
       width={size}
       height={size}
-      viewBox="0 0 100 100"
+      viewBox="0 0 120 120"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      className={`${spin ? 'animate-spin-slow' : ''} ${glow ? 'animate-pulse-glow' : ''} ${className}`}
+      className={className}
     >
       {/* Globe body */}
-      <circle cx="50" cy="50" r="44" fill="#1E3A5F" stroke="#A78BFA" strokeWidth="3.5" />
+      <circle cx="60" cy="60" r="46" fill="#3BB8F0" stroke="#111" strokeWidth="5" />
 
-      {/* Continents — simplified blobs */}
+      {/* Continents */}
       {/* Americas */}
-      <path d="M22 30 Q18 38 22 46 Q26 52 24 60 Q22 68 28 72 Q34 76 36 68 Q38 60 34 52 Q30 44 32 36 Q34 28 28 26 Z" fill="#34D399" />
+      <path d="M28 35 Q22 44 26 56 Q30 66 27 76 Q24 84 31 88 Q39 92 42 82 Q45 72 40 62 Q35 52 38 42 Q40 32 34 30 Z"
+        fill="#4CAF50" stroke="#111" strokeWidth="3.5" strokeLinejoin="round" />
       {/* Europe/Africa */}
-      <path d="M46 22 Q52 20 56 26 Q60 32 56 40 Q52 46 56 54 Q60 62 56 70 Q52 76 46 72 Q40 68 42 60 Q44 52 40 44 Q36 36 40 28 Z" fill="#34D399" />
+      <path d="M54 22 Q62 19 67 26 Q72 34 68 44 Q64 52 68 62 Q73 72 68 82 Q63 90 55 86 Q47 82 50 72 Q53 62 49 52 Q44 42 48 32 Z"
+        fill="#4CAF50" stroke="#111" strokeWidth="3.5" strokeLinejoin="round" />
       {/* Asia */}
-      <path d="M60 24 Q68 20 74 26 Q80 32 78 40 Q76 48 72 50 Q68 52 64 46 Q58 40 60 32 Z" fill="#34D399" />
+      <path d="M72 24 Q82 20 90 28 Q97 36 94 46 Q91 56 85 58 Q79 60 74 52 Q67 44 70 34 Z"
+        fill="#4CAF50" stroke="#111" strokeWidth="3.5" strokeLinejoin="round" />
       {/* Australia */}
-      <path d="M68 58 Q74 56 78 62 Q82 68 76 72 Q70 76 66 70 Q62 64 68 58 Z" fill="#34D399" />
+      <path d="M80 68 Q88 65 93 73 Q98 81 91 86 Q84 91 79 83 Q73 75 80 68 Z"
+        fill="#4CAF50" stroke="#111" strokeWidth="3.5" strokeLinejoin="round" />
 
-      {/* Latitude lines */}
-      <ellipse cx="50" cy="50" rx="44" ry="15" stroke="#A78BFA" strokeWidth="1.2" fill="none" opacity="0.4" />
-      <line x1="6" y1="50" x2="94" y2="50" stroke="#A78BFA" strokeWidth="1.2" opacity="0.4" />
+      {/* Globe outline */}
+      <circle cx="60" cy="60" r="46" fill="none" stroke="#111" strokeWidth="5" />
 
-      {/* Subtle orbit ring */}
-      <ellipse cx="50" cy="50" rx="52" ry="14" stroke="#8B6CFF" strokeWidth="1.5" fill="none" opacity="0.3" transform="rotate(-20 50 50)" />
+      {/* Left cloud */}
+      <ellipse cx="18" cy="62" rx="13" ry="7" fill="white" stroke="#111" strokeWidth="3.5" />
+      <ellipse cx="12" cy="59" rx="9" ry="7" fill="white" stroke="#111" strokeWidth="3.5" />
+      <ellipse cx="22" cy="57" rx="9" ry="7" fill="white" stroke="#111" strokeWidth="3.5" />
+
+      {/* Right cloud */}
+      <ellipse cx="102" cy="54" rx="16" ry="9" fill="white" stroke="#111" strokeWidth="3.5" />
+      <ellipse cx="94" cy="50" rx="11" ry="9" fill="white" stroke="#111" strokeWidth="3.5" />
+      <ellipse cx="108" cy="48" rx="11" ry="9" fill="white" stroke="#111" strokeWidth="3.5" />
     </svg>
   )
 }
