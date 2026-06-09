@@ -310,8 +310,10 @@ const UNKNOWN_FLAG_HTML = 'width:100%;aspect-ratio:3/2;display:flex;align-items:
 // Countries whose first-level subdivisions are confirmed to have NO official flags —
 // their flagless tiles read "No flag" rather than the ambiguous 🏳️ placeholder.
 const NO_SUBDIVISION_FLAG_COUNTRIES = new Set<string>([
+  // Africa — first-level subdivisions verified to have no official flags.
   'DZ', 'BJ', 'BW', 'BF', 'BI', 'CF', 'TD', 'CG', 'CD', 'CI', 'DJ', 'GQ', 'ER', 'SZ',
-  'GH', 'MA', 'MZ', 'SN',
+  'GH', 'MA', 'MZ', 'SN', 'GM', 'GN', 'GW', 'LS', 'LY', 'MW', 'ML', 'MR', 'NA', 'NE',
+  'RW', 'TG', 'UG', 'ZM', 'MG', 'ZW', 'GA', 'SL', 'TN', 'SO', 'TZ', 'MU', 'ST',
 ])
 
 function SubRegionTile({ sr, confirmedNoFlags }: { sr: SubRegion; confirmedNoFlags?: boolean }) {
