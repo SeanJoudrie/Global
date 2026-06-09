@@ -32,22 +32,9 @@ interface Props {
   onGoFlagFamilies: () => void
   onGoFunFact: () => void
   onGoProgressMap: () => void
+  onGoHistorical: () => void
 }
 
-const ComingSoonTile = ({ emoji, label, desc }: { emoji: string; label: string; desc: string }) => (
-  <div className="w-full flex items-center justify-between px-5 py-4 rounded-2xl opacity-45 cursor-not-allowed"
-    style={{ background: "#2D1F52", border: "1px solid #8B6CFF22" }}>
-    <div className="flex items-center gap-3">
-      <span className="text-2xl">{emoji}</span>
-      <div className="text-left">
-        <div className="font-bold" style={{ color: "#F5F3FF" }}>{label}</div>
-        <div className="text-xs" style={{ color: "#B8A9E0" }}>{desc}</div>
-      </div>
-    </div>
-    <span className="text-xs px-2 py-0.5 rounded-full font-semibold"
-      style={{ background: "#8B6CFF22", color: "#8B6CFF" }}>Soon</span>
-  </div>
-)
 
 export default function HomeScreen({
   state, onStartDaily, onGoFlags, onGoProfile, onGoFlashcards,
@@ -55,7 +42,7 @@ export default function HomeScreen({
   onGoGeo, onGoGauntlet, onGoTierList, onGoSettings,
   onGoOddOneOut, onGoTheCrop, onGoFlagDNA, onGoBuildFlag, onGoThePeel, onGoLookalikes,
   onGoComposer, onGoSilhouette, onGoFlagFamilies, onGoFunFact,
-  onGoProgressMap,
+  onGoProgressMap, onGoHistorical,
 }: Props) {
   const today = todayString()
   const dailyDone = state.lastDailyDate === today
@@ -227,7 +214,18 @@ export default function HomeScreen({
           <span style={{ color: "#34D399" }}>›</span>
         </button>
 
-        <ComingSoonTile emoji="📜" label="History" desc="Flags through the ages" />
+        <button onClick={onGoHistorical}
+          className="w-full flex items-center justify-between px-5 py-4 rounded-2xl transition-all active:scale-[0.98] hover:brightness-110"
+          style={{ background: "#2D1F52", border: "1px solid #C084FC44" }}>
+          <div className="flex items-center gap-3">
+            <span className="text-2xl">📜</span>
+            <div className="text-left">
+              <div className="font-bold" style={{ color: "#F5F3FF" }}>Historical Flag</div>
+              <div className="text-xs" style={{ color: "#B8A9E0" }}>Guess the vanished empire or state</div>
+            </div>
+          </div>
+          <span style={{ color: "#C084FC" }}>›</span>
+        </button>
 
         <h3 className="text-xs font-semibold uppercase tracking-widest pt-1" style={{ color: "#B8A9E0" }}>Reference</h3>
 

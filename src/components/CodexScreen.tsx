@@ -2,6 +2,7 @@ import { useState, useMemo } from 'react'
 import { FLAGS } from '../data/flags'
 import { CODEX } from '../data/codex'
 import type { HistoricalFlag } from '../data/codex'
+import { historicalFor } from '../data/historicalFlags'
 import { CHALLENGE_CONTINENTS } from '../data/challenges'
 import type { SubRegion } from '../data/challenges'
 
@@ -31,6 +32,7 @@ export default function CodexScreen({ onBack }: Props) {
   const [historyExpanded, setHistoryExpanded] = useState(false)
   const [historyIdx, setHistoryIdx] = useState(0)
   const [subdivisionsExpanded, setSubdivisionsExpanded] = useState(false)
+  const [predecessorsExpanded, setPredecessorsExpanded] = useState(false)
 
   const filteredFlags = useMemo(() => {
     const q = search.trim().toLowerCase()
@@ -53,6 +55,7 @@ export default function CodexScreen({ onBack }: Props) {
     setHistoryExpanded(false)
     setHistoryIdx(0)
     setSubdivisionsExpanded(false)
+    setPredecessorsExpanded(false)
     setPhase('country')
   }
 
@@ -72,6 +75,7 @@ export default function CodexScreen({ onBack }: Props) {
     const hasHistory = selectedEntry.flagHistory.length > 0
     const subRegions = getSubRegions(selectedFlag.code)
     const hasSubdivisions = subRegions.length > 0
+    const predecessors = historicalFor(selectedFlag.code)
 
     return (
       <div className="min-h-screen flex flex-col" style={{ background: 'linear-gradient(135deg,var(--bg-from) 0%,var(--bg-to) 100%)', position: 'relative', zIndex: 1 }}>
@@ -239,6 +243,48 @@ export default function CodexScreen({ onBack }: Props) {
                   headerLabel={selectedFlag.code === 'IE' ? 'Province' : selectedFlag.code === 'GB' ? 'Nation' : undefined}
                   memberLabel={selectedFlag.code === 'IE' ? 'Counties' : selectedFlag.code === 'GB' ? 'Council areas' : undefined}
                 />
+              )}
+            </div>
+          )}
+
+          {/* Predecessor & related states — collapsible */}
+          {predecessors.length > 0 && (
+            <div className="mb-5">
+              <button
+                onClick={() => setPredecessorsExpanded(v => !v)}
+                className="w-full flex items-center justify-between px-4 py-3 rounded-xl transition-all active:scale-[0.98]"
+                style={{ background: '#2D1F52', border: '1px solid #C084FC33' }}
+              >
+                <div className="flex items-center gap-2">
+                  <h2 className="text-sm font-bold uppercase tracking-widest" style={{ color: '#C084FC' }}>Predecessor & Related States</h2>
+                  <span className="text-xs" style={{ color: '#B8A9E0' }}>{predecessors.length}</span>
+                </div>
+                <span style={{ color: '#C084FC', transition: 'transform 0.2s', transform: predecessorsExpanded ? 'rotate(90deg)' : 'rotate(0deg)' }}>›</span>
+              </button>
+
+              {predecessorsExpanded && (
+                <div className="mt-3">
+                  <p className="text-xs mb-3" style={{ color: '#C084FC88' }}>
+                    Vanished empires and states tied to this land's history — featured in the Historical Flag game.
+                  </p>
+                  <div className="space-y-2.5">
+                    {predecessors.map(h => (
+                      <div key={h.id} className="rounded-2xl overflow-hidden" style={{ background: '#2D1F52', border: '1px solid #C084FC22' }}>
+                        <FlagImg src={h.flagUrl} alt={h.name} height={140} />
+                        <div className="p-4">
+                          <div className="flex items-start justify-between gap-2 mb-1.5">
+                            <div className="font-bold text-sm" style={{ color: '#F5F3FF' }}>{h.name}</div>
+                            <span className="text-xs px-2 py-0.5 rounded-full flex-shrink-0"
+                              style={{ background: '#C084FC22', color: '#C084FC', border: '1px solid #C084FC33', whiteSpace: 'nowrap' }}>
+                              {h.era}
+                            </span>
+                          </div>
+                          <p className="text-xs leading-relaxed" style={{ color: '#B8A9E0', lineHeight: 1.65 }}>{h.note}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
               )}
             </div>
           )}
