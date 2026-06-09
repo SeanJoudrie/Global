@@ -60,7 +60,7 @@ export default function HomeScreen({
       </header>
 
       {state.currentStreak > 0 && (
-        <div className="mx-5 mb-2 flex items-center gap-3 px-4 py-3 rounded-2xl"
+        <div className="mx-5 mb-2 flex items-center gap-3 px-3 py-2 rounded-xl"
           style={{
             background: "linear-gradient(135deg, #2C1A00, #3D2508, #2C1A00)",
             border: "1px solid #FBBF2466",
@@ -75,16 +75,16 @@ export default function HomeScreen({
           }} />
           <style>{`@keyframes streakShimmer{0%,100%{opacity:0;transform:translateX(-100%)}50%{opacity:1;transform:translateX(100%)}}`}</style>
           <div style={{
-            width: 36, height: 36, borderRadius: 10, flexShrink: 0,
+            width: 30, height: 30, borderRadius: 8, flexShrink: 0,
             display: "flex", alignItems: "center", justifyContent: "center",
             background: "linear-gradient(135deg,#F59E0B,#FBBF24)",
-            boxShadow: "0 0 16px #FBBF2466", fontSize: 20,
+            boxShadow: "0 0 12px #FBBF2466", fontSize: 17,
           }}>🔥</div>
           <div style={{ flex: 1 }}>
-            <div style={{ color: "#FBBF24", fontWeight: 900, fontSize: 17, lineHeight: 1 }}>
+            <div style={{ color: "#FBBF24", fontWeight: 900, fontSize: 15, lineHeight: 1 }}>
               {state.currentStreak} day streak
             </div>
-            <div style={{ color: "#F59E0B88", fontSize: 11, marginTop: 1 }}>best: {state.longestStreak} days</div>
+            <div style={{ color: "#F59E0B88", fontSize: 10, marginTop: 1 }}>best: {state.longestStreak}</div>
           </div>
           <div style={{
             display: "flex", gap: 3, alignItems: "center",

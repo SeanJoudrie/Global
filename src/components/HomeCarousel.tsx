@@ -119,10 +119,7 @@ export default function HomeCarousel({ onStartDaily, dailyDone, todayScore }: Pr
     // Slide 0 — Daily Game
     <div key="daily" style={{ height: CONTENT_HEIGHT, display: "flex", flexDirection: "column", gap: 10 }}>
       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-        <div>
-          <span style={{ fontSize: 10, fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.12em", color: "#B8A9E0" }}>Today's Challenge</span>
-          <div style={{ fontSize: 22, fontWeight: 900, color: "#F5F3FF", marginTop: 2 }}>Daily Game</div>
-        </div>
+        <div style={{ fontSize: 22, fontWeight: 900, color: "#F5F3FF" }}>Daily Game</div>
         <div style={{
           width: 44, height: 44, borderRadius: 12, display: "flex", alignItems: "center", justifyContent: "center",
           background: "linear-gradient(135deg,#2D1F52,#3D2A6A)", border: "1px solid #8B6CFF44",
@@ -156,71 +153,52 @@ export default function HomeCarousel({ onStartDaily, dailyDone, todayScore }: Pr
     </div>,
 
     // Slide 1 — Rotating Fun Fact
-    <div key="fact" style={{ height: CONTENT_HEIGHT, display: "flex", flexDirection: "column", gap: 10 }}>
+    <div key="fact" style={{ height: CONTENT_HEIGHT, display: "flex", flexDirection: "column", gap: 12 }}>
       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-        <div>
-          <span style={{ fontSize: 10, fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.12em", color: "#B8A9E0" }}>Did You Know?</span>
-          <div style={{ fontSize: 22, fontWeight: 900, color: "#F5F3FF", marginTop: 2 }}>Fun Fact</div>
-        </div>
+        <div style={{ fontSize: 22, fontWeight: 900, color: "#F5F3FF" }}>Fun Fact</div>
         <div style={{
           width: 44, height: 44, borderRadius: 12, display: "flex", alignItems: "center", justifyContent: "center",
           background: "linear-gradient(135deg,#3A2A10,#4A3A18)", border: "1px solid #F59E0B44",
           fontSize: 24,
         }}>💡</div>
       </div>
-      <div style={{ flex: 1, display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
-        <div style={{
-          padding: "10px 12px", borderRadius: 12, lineHeight: 1.6,
-          background: "linear-gradient(135deg,#2A1F42,#321A2A)",
-          border: "1px solid #F59E0B22",
-        }}>
-          <p style={{ fontSize: 13.5, color: "#F5F3FF", margin: 0, fontStyle: "italic" }}>"{currentFact}"</p>
-        </div>
-        <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-          <span style={{
-            display: "inline-block", width: 6, height: 6, borderRadius: "50%",
-            background: "#F59E0B", boxShadow: "0 0 8px #F59E0B",
-            animation: "factPulse 2s ease-in-out infinite",
-          }} />
-          <span style={{ fontSize: 10, color: "#B8A9E088", letterSpacing: "0.05em" }}>FACT OF THE MINUTE</span>
-        </div>
+      <div style={{ flex: 1, display: "flex", flexDirection: "column", justifyContent: "center" }}>
+        <p style={{ fontSize: 14, color: "#F5F3FF", margin: 0, lineHeight: 1.65, fontStyle: "italic" }}>"{currentFact}"</p>
       </div>
-      <style>{`@keyframes factPulse{0%,100%{opacity:1}50%{opacity:0.3}}`}</style>
     </div>,
 
     // Slide 2 — Flag of the Day
-    <div key="flagday" style={{ height: CONTENT_HEIGHT, display: "flex", flexDirection: "column", gap: 8 }}>
-      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-        <div>
-          <span style={{ fontSize: 10, fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.12em", color: "#B8A9E0" }}>Daily Spotlight</span>
-          <div style={{ fontSize: 22, fontWeight: 900, color: "#F5F3FF", marginTop: 2 }}>Flag of the Day</div>
-        </div>
-      </div>
+    <div key="flagday" style={{ height: CONTENT_HEIGHT, display: "flex", flexDirection: "column", gap: 12 }}>
+      <div style={{ fontSize: 22, fontWeight: 900, color: "#F5F3FF" }}>Flag of the Day</div>
       <div style={{ flex: 1, display: "flex", gap: 14, alignItems: "center" }}>
         {/* Info left */}
-        <div style={{ flex: 1, minWidth: 0, display: "flex", flexDirection: "column", gap: 6 }}>
-          <div style={{ fontWeight: 800, fontSize: 16, color: "#F5F3FF" }}>{dailyFlag.name}</div>
-          <div style={{
-            display: "inline-flex", alignItems: "center", padding: "2px 8px", borderRadius: 999,
-            background: "#34D39922", border: "1px solid #34D39944",
-            fontSize: 10, fontWeight: 600, color: "#6EE7B7", letterSpacing: "0.05em",
-          }}>{dailyFlag.region}</div>
+        <div style={{ flex: 1, minWidth: 0, display: "flex", flexDirection: "column", gap: 5 }}>
+          <div style={{ fontWeight: 800, fontSize: 17, color: "#F5F3FF" }}>{dailyFlag.name}</div>
+          <div style={{ display: "flex" }}>
+            <span style={{
+              padding: "2px 8px", borderRadius: 999,
+              background: "#34D39922", border: "1px solid #34D39944",
+              fontSize: 10, fontWeight: 600, color: "#6EE7B7",
+            }}>{dailyFlag.region}</span>
+          </div>
           <p style={{
-            fontSize: 11, lineHeight: 1.55, color: "#B8A9E0", margin: 0,
+            fontSize: 12, lineHeight: 1.55, color: "#B8A9E0", margin: 0,
             display: "-webkit-box", WebkitLineClamp: 3, WebkitBoxOrient: "vertical", overflow: "hidden",
           }}>{dailyFlag.funFact}</p>
         </div>
-        {/* Flag right — tall and prominent */}
+        {/* Flag right */}
         <div style={{
-          flexShrink: 0, width: 110,
+          flexShrink: 0, width: 108, height: 72,
           borderRadius: 10, overflow: "hidden",
-          border: `2px solid #34D39944`,
+          border: "2px solid #34D39944",
           boxShadow: "0 0 20px #34D39930",
+          background: "#1A1033",
+          display: "flex", alignItems: "center", justifyContent: "center",
         }}>
           <img
             src={dailyFlag.flagUrl}
             alt={dailyFlag.name}
-            style={{ width: "100%", height: 80, objectFit: "contain", background: "#1A1033", display: "block" }}
+            style={{ maxWidth: "100%", maxHeight: "100%", objectFit: "contain", display: "block" }}
             onError={e => { (e.target as HTMLImageElement).style.display = "none" }}
           />
         </div>

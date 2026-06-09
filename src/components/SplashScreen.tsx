@@ -5,7 +5,7 @@ interface Props { onDone: () => void }
 
 export default function SplashScreen({ onDone }: Props) {
   useEffect(() => {
-    const t = setTimeout(onDone, 1800)
+    const t = setTimeout(onDone, 1600)
     return () => clearTimeout(t)
   }, [onDone])
 
@@ -16,7 +16,7 @@ export default function SplashScreen({ onDone }: Props) {
     >
       <div style={{
         display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 20,
-        animation: 'splashAnim 1.8s cubic-bezier(0.4,0,0.2,1) forwards',
+        animation: 'splashAnim 1.6s cubic-bezier(0.25,0.46,0.45,0.94) forwards',
       }}>
         <EarthLogo size={140} />
         <h1 style={{ color: '#F5F3FF', fontSize: 36, fontWeight: 900, letterSpacing: '-0.5px', margin: 0 }}>
@@ -25,10 +25,8 @@ export default function SplashScreen({ onDone }: Props) {
       </div>
       <style>{`
         @keyframes splashAnim {
-          0%   { transform: scale(0);    opacity: 0; }
-          22%  { transform: scale(1.1);  opacity: 1; }
-          38%  { transform: scale(1);    opacity: 1; }
-          72%  { transform: scale(1);    opacity: 1; }
+          0%   { transform: scale(0.05); opacity: 0; }
+          28%  { transform: scale(1.12); opacity: 1; }
           100% { transform: scale(0.05); opacity: 0; }
         }
       `}</style>

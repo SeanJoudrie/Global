@@ -84,12 +84,12 @@ export default function CodexScreen({ onBack }: Props) {
         </header>
 
         <div className="flex-1 overflow-y-auto px-5 pb-12">
-          {/* Flag image — contain so you see the whole flag */}
-          <div className="rounded-2xl overflow-hidden mb-5" style={{ border: '1px solid #8B6CFF33', background: '#111' }}>
+          {/* Flag image */}
+          <div className="rounded-2xl overflow-hidden mb-5" style={{ border: '1px solid #8B6CFF33' }}>
             <img
               src={selectedFlag.flagUrl}
               alt={selectedFlag.name}
-              style={{ width: '100%', height: 180, objectFit: 'contain', display: 'block', padding: '8px 0' }}
+              style={{ width: '100%', height: 180, objectFit: 'cover', display: 'block' }}
               onError={e => { (e.target as HTMLImageElement).style.opacity = '0' }}
             />
           </div>
@@ -175,31 +175,16 @@ export default function CodexScreen({ onBack }: Props) {
               </button>
 
               {subdivisionsExpanded && (
-                <div className="mt-3 grid grid-cols-4 gap-2">
+                <div className="mt-3" style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: '10px 6px' }}>
                   {subRegions.map(sr => (
-                    <div key={sr.code} className="flex flex-col items-center gap-1">
-                      <div style={{
-                        width: '100%', aspectRatio: '4/3', borderRadius: 6, overflow: 'hidden',
-                        border: '1px solid #8B6CFF22', background: '#111',
-                      }}>
-                        <img
-                          src={sr.flagUrl}
-                          alt={sr.name}
-                          style={{ width: '100%', height: '100%', objectFit: 'contain', display: 'block' }}
-                          onError={e => {
-                            const el = e.target as HTMLImageElement
-                            el.style.display = 'none'
-                            const parent = el.parentElement
-                            if (parent) {
-                              parent.style.display = 'flex'
-                              parent.style.alignItems = 'center'
-                              parent.style.justifyContent = 'center'
-                              parent.innerHTML = '<span style="color:#8B6CFF44;font-size:18px">🏳️</span>'
-                            }
-                          }}
-                        />
-                      </div>
-                      <span style={{ fontSize: 9, color: '#B8A9E0', textAlign: 'center', lineHeight: 1.2 }}>{sr.name}</span>
+                    <div key={sr.code} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4 }}>
+                      <img
+                        src={sr.flagUrl}
+                        alt={sr.name}
+                        style={{ width: '100%', aspectRatio: '3/2', objectFit: 'contain', borderRadius: 4, display: 'block' }}
+                        onError={e => { (e.target as HTMLImageElement).replaceWith(Object.assign(document.createElement('div'), { textContent: '🏳️', style: 'font-size:18px;text-align:center' })) }}
+                      />
+                      <span style={{ fontSize: 8.5, color: '#B8A9E0', textAlign: 'center', lineHeight: 1.2, wordBreak: 'break-word' }}>{sr.name}</span>
                     </div>
                   ))}
                 </div>
@@ -279,19 +264,13 @@ export default function CodexScreen({ onBack }: Props) {
                           onClick={() => openCountry(f.code)}
                           className="w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all active:scale-[0.98] hover:brightness-110 text-left"
                           style={{ background: '#2D1F52', border: '1px solid #8B6CFF22' }}>
-                          {/* Flag thumbnail — contain so whole flag shows */}
-                          <div style={{
-                            width: 48, height: 32, flexShrink: 0, borderRadius: 5, overflow: 'hidden',
-                            border: '1px solid #8B6CFF22', background: '#111',
-                            display: 'flex', alignItems: 'center', justifyContent: 'center',
-                          }}>
-                            <img
-                              src={f.flagUrl}
-                              alt={f.name}
-                              style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain', display: 'block' }}
-                              onError={e => { (e.target as HTMLImageElement).style.opacity = '0.3' }}
-                            />
-                          </div>
+                          {/* Flag thumbnail */}
+                          <img
+                            src={f.flagUrl}
+                            alt={f.name}
+                            style={{ width: 46, height: 30, objectFit: 'cover', borderRadius: 5, border: '1px solid #8B6CFF22', flexShrink: 0 }}
+                            onError={e => { (e.target as HTMLImageElement).style.opacity = '0.3' }}
+                          />
                           <div className="flex-1 min-w-0">
                             <div className="font-semibold text-sm truncate" style={{ color: '#F5F3FF' }}>{f.name}</div>
                           </div>
@@ -329,20 +308,20 @@ function FlagHistoryCard({ hf, isFirst }: { hf: HistoricalFlag; isFirst: boolean
           <span style={{ color: '#A78BFA', fontSize: 11, fontWeight: 600 }}>↑ Current flag</span>
         </div>
       )}
-      {/* Flag image — contain so the full flag is visible */}
-      <div style={{ background: '#111', width: '100%', height: 160, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      {/* Flag image */}
+      <div style={{ width: '100%', height: 160, position: 'relative', overflow: 'hidden' }}>
         <img
           src={hf.flagUrl}
           alt={hf.label}
-          style={{ maxWidth: '100%', maxHeight: 160, objectFit: 'contain', display: 'block' }}
+          style={{ width: '100%', height: 160, objectFit: 'cover', display: 'block' }}
           onError={e => {
             const el = e.target as HTMLImageElement
             el.style.display = 'none'
             const placeholder = el.parentElement?.querySelector('.flag-placeholder') as HTMLElement
-            if (placeholder) placeholder.style.display = 'flex'
+            if (placeholder) (placeholder as HTMLElement).style.display = 'flex'
           }}
         />
-        <div className="flag-placeholder" style={{ display: 'none', alignItems: 'center', justifyContent: 'center', width: '100%', height: 160 }}>
+        <div className="flag-placeholder" style={{ display: 'none', position: 'absolute', inset: 0, alignItems: 'center', justifyContent: 'center', background: '#1E1640' }}>
           <span style={{ color: '#8B6CFF44', fontSize: 40 }}>🏳️</span>
         </div>
       </div>

@@ -1,7 +1,7 @@
 ﻿import { useState, useEffect } from "react"
 import { LANGUAGES } from "../data/languages"
 import type { LanguageRecord, Difficulty } from "../data/languages"
-import { shuffleWithSeed, seededRandom, todayString } from "../utils/prng"
+import { shuffleWithSeed, seededRandom } from "../utils/prng"
 
 interface Props { onBack: () => void }
 
@@ -39,7 +39,7 @@ export default function LanguageQuizScreen({ onBack }: Props) {
   const startQuiz = (diff: Difficulty) => {
     setDifficulty(diff)
     const pool = LANGUAGES.filter(l => l.difficulty === diff)
-    const seed = todayString() + diff
+    const seed = Date.now().toString() + diff
     const shuffled = shuffleWithSeed(pool, seed).slice(0, TOTAL)
     const qs = shuffled.map((t, i) => ({ target: t, choices: getChoices(t, pool, seed + i) }))
     setQuestions(qs)
