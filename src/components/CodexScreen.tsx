@@ -287,8 +287,8 @@ export default function CodexScreen({ onBack }: Props) {
 }
 
 const NO_FLAG_PLACEHOLDER = (
-  <div style={{ width: '100%', aspectRatio: '3/2', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'rgba(255,255,255,0.07)', borderRadius: 4 }}>
-    <span style={{ fontSize: 14, opacity: 0.35 }}>🏳️</span>
+  <div style={{ width: '100%', aspectRatio: '3/2', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'rgba(0,0,0,0.45)', borderRadius: 4 }}>
+    <span style={{ fontSize: 7, color: 'rgba(255,255,255,0.35)', textAlign: 'center', lineHeight: 1.3 }}>no flag</span>
   </div>
 )
 
@@ -300,7 +300,7 @@ function SubRegionTile({ sr }: { sr: SubRegion }) {
             src={sr.flagUrl}
             alt={sr.name}
             style={{ width: '100%', aspectRatio: '3/2', objectFit: 'contain', borderRadius: 4, display: 'block' }}
-            onError={e => { (e.target as HTMLImageElement).replaceWith(Object.assign(document.createElement('div'), { style: 'width:100%;aspect-ratio:3/2;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,0.07);border-radius:4px', innerHTML: '<span style="font-size:14px;opacity:0.35">🏳️</span>' })) }}
+            onError={e => { (e.target as HTMLImageElement).replaceWith(Object.assign(document.createElement('div'), { style: 'width:100%;aspect-ratio:3/2;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.45);border-radius:4px', innerHTML: '<span style="font-size:7px;color:rgba(255,255,255,0.35);text-align:center;line-height:1.3">no flag</span>' })) }}
           />
         : NO_FLAG_PLACEHOLDER
       }

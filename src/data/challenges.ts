@@ -1354,7 +1354,7 @@ export const CHALLENGE_CONTINENTS: ChallengeContinent[] = [
           { code: "ro-gj", name: "Gorj",            flagUrl: wiki("Gorj flag.webp") },
           { code: "ro-hr", name: "Harghita",        flagUrl: wiki("Flag of Harghita County.gif") },
           { code: "ro-hd", name: "Hunedoara",       flagUrl: wiki("Hunedoara flag.webp") },
-          { code: "ro-il", name: "Ialomița",        flagUrl: wiki("Flag of Ialomița County, Romania.svg") },
+          { code: "ro-il", name: "Ialomița",        flagUrl: wiki("Flag of Ialomiţa County, Romania.svg") },
           { code: "ro-is", name: "Iași",            flagUrl: wiki("Iasi flag.gif") },
           { code: "ro-if", name: "Ilfov",           flagUrl: wiki("Ilfov flag.webp") },
           { code: "ro-mm", name: "Maramureș",       flagUrl: wiki("Flag of Maramureș County.svg") },
