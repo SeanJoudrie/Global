@@ -321,6 +321,8 @@ const NO_SUBDIVISION_FLAG_COUNTRIES = new Set<string>([
   'JM', 'BS', 'BB', 'LC', 'DM', 'VC', 'TT', 'KN', 'AG', 'GD',
   // Middle East — provinces/governorates with no official subdivision flags
   'TR', 'IR', 'SA', 'IL', 'JO', 'YE', 'SY', 'LB', 'OM', 'KW', 'QA', 'BH', 'PS',
+  // Oceania — small island nations with no subdivision flags
+  'KI', 'MH', 'NR', 'WS', 'TO', 'TV',
   // Only unofficial/proposed designs exist for these — no official subdivision flags.
   // (Countries with SOME official flags keep their flagged tiles; only flagless ones show "No flag".)
   'AO', 'CM', 'ZA',

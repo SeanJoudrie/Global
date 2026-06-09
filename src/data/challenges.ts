@@ -2195,7 +2195,7 @@ export const CHALLENGE_CONTINENTS: ChallengeContinent[] = [
           { code: "mh-alk", name: "Ailuk",         group: "Ratak Chain" },
           { code: "mh-arn", name: "Arno",          group: "Ratak Chain" },
           { code: "mh-aur", name: "Aur",           group: "Ratak Chain" },
-          { code: "mh-bik", name: "Bikini",        group: "Ratak Chain" },
+          { code: "mh-bik", name: "Bikini",        flagUrl: wiki("Flag of Bikini Atoll.svg"), group: "Ratak Chain" },
           { code: "mh-lkp", name: "Likiep",        group: "Ratak Chain" },
           { code: "mh-maj", name: "Majuro",        group: "Ratak Chain" },
           { code: "mh-mlo", name: "Maloelap",      group: "Ratak Chain" },
