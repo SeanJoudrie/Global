@@ -646,16 +646,207 @@ export const CHALLENGE_CONTINENTS: ChallengeContinent[] = [
       { code: "CU", name: "Cuba", emoji: "🇨🇺", subTitle: "15 Provinces", subRegions: CU_PROVINCES, locked: false },
       { code: "HT", name: "Haiti", emoji: "🇭🇹", subTitle: "10 Departments", subRegions: HT_DEPARTMENTS, locked: false },
       { code: "DO", name: "Dominican Republic", emoji: "🇩🇴", subTitle: "32 Provinces", subRegions: DO_PROVINCES, locked: false },
-      { code: "JM", name: "Jamaica", emoji: "🇯🇲", subTitle: "14 Parishes", subRegions: [], locked: true },
-      { code: "TT", name: "Trinidad and Tobago", emoji: "🇹🇹", subTitle: "9 Regions", subRegions: [], locked: true },
-      { code: "BB", name: "Barbados", emoji: "🇧🇧", subTitle: "11 Parishes", subRegions: [], locked: true },
-      { code: "LC", name: "Saint Lucia", emoji: "🇱🇨", subTitle: "10 Districts", subRegions: [], locked: true },
-      { code: "VC", name: "St Vincent & Grenadines", emoji: "🇻🇨", subTitle: "6 Parishes", subRegions: [], locked: true },
-      { code: "GD", name: "Grenada", emoji: "🇬🇩", subTitle: "6 Parishes", subRegions: [], locked: true },
-      { code: "AG", name: "Antigua and Barbuda", emoji: "🇦🇬", subTitle: "6 Parishes", subRegions: [], locked: true },
-      { code: "DM", name: "Dominica", emoji: "🇩🇲", subTitle: "10 Parishes", subRegions: [], locked: true },
-      { code: "KN", name: "Saint Kitts and Nevis", emoji: "🇰🇳", subTitle: "14 Parishes", subRegions: [], locked: true },
-      { code: "BS", name: "Bahamas", emoji: "🇧🇸", subTitle: "31 Districts", subRegions: [], locked: true },
+
+      // ── Jamaica (14 parishes, in 3 historic counties) ────────────────────
+      {
+        code: "JM", name: "Jamaica", emoji: "🇯🇲", subTitle: "14 Parishes", locked: false,
+        subRegions: [
+          { code: "jm-ha", name: "Hanover",        group: "Cornwall" },
+          { code: "jm-el", name: "St. Elizabeth",  group: "Cornwall" },
+          { code: "jm-ja", name: "St. James",      group: "Cornwall" },
+          { code: "jm-tr", name: "Trelawny",       group: "Cornwall" },
+          { code: "jm-we", name: "Westmoreland",   group: "Cornwall" },
+          { code: "jm-cl", name: "Clarendon",      group: "Middlesex" },
+          { code: "jm-ma", name: "Manchester",     group: "Middlesex" },
+          { code: "jm-an", name: "St. Ann",        group: "Middlesex" },
+          { code: "jm-ca", name: "St. Catherine",  group: "Middlesex" },
+          { code: "jm-my", name: "St. Mary",       group: "Middlesex" },
+          { code: "jm-ki", name: "Kingston",       group: "Surrey" },
+          { code: "jm-po", name: "Portland",       group: "Surrey" },
+          { code: "jm-ad", name: "St. Andrew",     group: "Surrey" },
+          { code: "jm-th", name: "St. Thomas",     group: "Surrey" },
+        ],
+      },
+
+      // ── Trinidad and Tobago (14 corporations + Tobago) ───────────────────
+      // Breaks down weird: Trinidad has 14 municipal corporations (2 cities, 3 boroughs,
+      // 9 regions); Tobago is self-governing under the Tobago House of Assembly and has
+      // its own flag.
+      {
+        code: "TT", name: "Trinidad and Tobago", emoji: "🇹🇹", subTitle: "14 Corporations + Tobago", locked: false,
+        subRegions: [
+          { code: "tt-pos", name: "Port of Spain",            group: "Trinidad" },
+          { code: "tt-sfo", name: "San Fernando",             group: "Trinidad" },
+          { code: "tt-ari", name: "Arima",                    group: "Trinidad" },
+          { code: "tt-cha", name: "Chaguanas",                group: "Trinidad" },
+          { code: "tt-ptf", name: "Point Fortin",             group: "Trinidad" },
+          { code: "tt-ctt", name: "Couva-Tabaquite-Talparo",  group: "Trinidad" },
+          { code: "tt-dmn", name: "Diego Martin",             group: "Trinidad" },
+          { code: "tt-mrc", name: "Mayaro-Rio Claro",         group: "Trinidad" },
+          { code: "tt-ped", name: "Penal-Debe",               group: "Trinidad" },
+          { code: "tt-ptn", name: "Princes Town",             group: "Trinidad" },
+          { code: "tt-sge", name: "Sangre Grande",            group: "Trinidad" },
+          { code: "tt-sjl", name: "San Juan-Laventille",      group: "Trinidad" },
+          { code: "tt-sip", name: "Siparia",                  group: "Trinidad" },
+          { code: "tt-tup", name: "Tunapuna-Piarco",          group: "Trinidad" },
+          { code: "tt-tob", name: "Tobago",                   group: "Tobago" },
+        ],
+      },
+
+      // ── Barbados (11 parishes) ───────────────────────────────────────────
+      {
+        code: "BB", name: "Barbados", emoji: "🇧🇧", subTitle: "11 Parishes", locked: false,
+        subRegions: [
+          { code: "bb-cc", name: "Christ Church" },
+          { code: "bb-an", name: "St. Andrew" },
+          { code: "bb-ge", name: "St. George" },
+          { code: "bb-ja", name: "St. James" },
+          { code: "bb-jo", name: "St. John" },
+          { code: "bb-js", name: "St. Joseph" },
+          { code: "bb-lu", name: "St. Lucy" },
+          { code: "bb-mi", name: "St. Michael" },
+          { code: "bb-pe", name: "St. Peter" },
+          { code: "bb-ph", name: "St. Philip" },
+          { code: "bb-th", name: "St. Thomas" },
+        ],
+      },
+
+      // ── Saint Lucia (10 districts) ───────────────────────────────────────
+      {
+        code: "LC", name: "Saint Lucia", emoji: "🇱🇨", subTitle: "10 Districts", locked: false,
+        subRegions: [
+          { code: "lc-alr", name: "Anse la Raye" },
+          { code: "lc-can", name: "Canaries" },
+          { code: "lc-cas", name: "Castries" },
+          { code: "lc-cho", name: "Choiseul" },
+          { code: "lc-den", name: "Dennery" },
+          { code: "lc-gro", name: "Gros Islet" },
+          { code: "lc-lab", name: "Laborie" },
+          { code: "lc-mic", name: "Micoud" },
+          { code: "lc-sou", name: "Soufrière" },
+          { code: "lc-vfo", name: "Vieux Fort" },
+        ],
+      },
+
+      // ── Saint Vincent and the Grenadines (6 parishes) ────────────────────
+      {
+        code: "VC", name: "St Vincent & Grenadines", emoji: "🇻🇨", subTitle: "6 Parishes", locked: false,
+        subRegions: [
+          { code: "vc-ch", name: "Charlotte" },
+          { code: "vc-gr", name: "Grenadines" },
+          { code: "vc-an", name: "Saint Andrew" },
+          { code: "vc-da", name: "Saint David" },
+          { code: "vc-ge", name: "Saint George" },
+          { code: "vc-pa", name: "Saint Patrick" },
+        ],
+      },
+
+      // ── Grenada (6 parishes + Carriacou) ─────────────────────────────────
+      {
+        code: "GD", name: "Grenada", emoji: "🇬🇩", subTitle: "6 Parishes + Carriacou", locked: false,
+        subRegions: [
+          { code: "gd-an", name: "Saint Andrew",  group: "Parishes" },
+          { code: "gd-da", name: "Saint David",   group: "Parishes" },
+          { code: "gd-ge", name: "Saint George",  group: "Parishes" },
+          { code: "gd-jo", name: "Saint John",    group: "Parishes" },
+          { code: "gd-ma", name: "Saint Mark",    group: "Parishes" },
+          { code: "gd-pa", name: "Saint Patrick", group: "Parishes" },
+          { code: "gd-ca", name: "Carriacou & Petite Martinique", group: "Dependency" },
+        ],
+      },
+
+      // ── Antigua and Barbuda (6 parishes + dependencies) ──────────────────
+      // The 6 parishes are all on Antigua; Barbuda and Redonda are separate dependencies.
+      {
+        code: "AG", name: "Antigua and Barbuda", emoji: "🇦🇬", subTitle: "6 Parishes + Dependencies", locked: false,
+        subRegions: [
+          { code: "ag-ge", name: "Saint George",  group: "Antigua" },
+          { code: "ag-jo", name: "Saint John",    group: "Antigua" },
+          { code: "ag-ma", name: "Saint Mary",    group: "Antigua" },
+          { code: "ag-pa", name: "Saint Paul",    group: "Antigua" },
+          { code: "ag-pe", name: "Saint Peter",   group: "Antigua" },
+          { code: "ag-ph", name: "Saint Philip",  group: "Antigua" },
+          { code: "ag-ba", name: "Barbuda",       group: "Dependencies" },
+          { code: "ag-re", name: "Redonda",       group: "Dependencies" },
+        ],
+      },
+
+      // ── Dominica (10 parishes) ───────────────────────────────────────────
+      {
+        code: "DM", name: "Dominica", emoji: "🇩🇲", subTitle: "10 Parishes", locked: false,
+        subRegions: [
+          { code: "dm-an", name: "Saint Andrew" },
+          { code: "dm-da", name: "Saint David" },
+          { code: "dm-ge", name: "Saint George" },
+          { code: "dm-jo", name: "Saint John" },
+          { code: "dm-js", name: "Saint Joseph" },
+          { code: "dm-lu", name: "Saint Luke" },
+          { code: "dm-ma", name: "Saint Mark" },
+          { code: "dm-pa", name: "Saint Patrick" },
+          { code: "dm-pl", name: "Saint Paul" },
+          { code: "dm-pe", name: "Saint Peter" },
+        ],
+      },
+
+      // ── Saint Kitts and Nevis (14 parishes across 2 islands) ─────────────
+      // Nevis is a self-governing island with its own assembly and flag.
+      {
+        code: "KN", name: "Saint Kitts and Nevis", emoji: "🇰🇳", subTitle: "14 Parishes", locked: false,
+        subRegions: [
+          { code: "kn-cc", name: "Christ Church Nichola Town", group: "Saint Kitts" },
+          { code: "kn-as", name: "Saint Anne Sandy Point",     group: "Saint Kitts" },
+          { code: "kn-gb", name: "Saint George Basseterre",    group: "Saint Kitts" },
+          { code: "kn-jc", name: "Saint John Capisterre",      group: "Saint Kitts" },
+          { code: "kn-mc", name: "Saint Mary Cayon",           group: "Saint Kitts" },
+          { code: "kn-pc", name: "Saint Paul Capisterre",      group: "Saint Kitts" },
+          { code: "kn-pb", name: "Saint Peter Basseterre",     group: "Saint Kitts" },
+          { code: "kn-mi", name: "Saint Thomas Middle Island", group: "Saint Kitts" },
+          { code: "kn-tp", name: "Trinity Palmetto Point",     group: "Saint Kitts" },
+          { code: "kn-gg", name: "Saint George Gingerland",    group: "Nevis" },
+          { code: "kn-jw", name: "Saint James Windward",       group: "Nevis" },
+          { code: "kn-jf", name: "Saint John Figtree",         group: "Nevis" },
+          { code: "kn-pch",name: "Saint Paul Charlestown",     group: "Nevis" },
+          { code: "kn-tl", name: "Saint Thomas Lowland",       group: "Nevis" },
+        ],
+      },
+
+      // ── Bahamas (31 districts) ───────────────────────────────────────────
+      {
+        code: "BS", name: "Bahamas", emoji: "🇧🇸", subTitle: "31 Districts", locked: false,
+        subRegions: [
+          { code: "bs-ack", name: "Acklins" },
+          { code: "bs-bry", name: "Berry Islands" },
+          { code: "bs-bim", name: "Bimini" },
+          { code: "bs-blk", name: "Black Point" },
+          { code: "bs-cat", name: "Cat Island" },
+          { code: "bs-cab", name: "Central Abaco" },
+          { code: "bs-can", name: "Central Andros" },
+          { code: "bs-cel", name: "Central Eleuthera" },
+          { code: "bs-fre", name: "City of Freeport" },
+          { code: "bs-crk", name: "Crooked Island & Long Cay" },
+          { code: "bs-egb", name: "East Grand Bahama" },
+          { code: "bs-exu", name: "Exuma" },
+          { code: "bs-grc", name: "Grand Cay" },
+          { code: "bs-hbr", name: "Harbour Island" },
+          { code: "bs-hop", name: "Hope Town" },
+          { code: "bs-ina", name: "Inagua" },
+          { code: "bs-lng", name: "Long Island" },
+          { code: "bs-man", name: "Mangrove Cay" },
+          { code: "bs-may", name: "Mayaguana" },
+          { code: "bs-mor", name: "Moore's Island" },
+          { code: "bs-nab", name: "North Abaco" },
+          { code: "bs-nan", name: "North Andros" },
+          { code: "bs-nel", name: "North Eleuthera" },
+          { code: "bs-rag", name: "Ragged Island" },
+          { code: "bs-rum", name: "Rum Cay" },
+          { code: "bs-sas", name: "San Salvador" },
+          { code: "bs-sab", name: "South Abaco" },
+          { code: "bs-san", name: "South Andros" },
+          { code: "bs-sel", name: "South Eleuthera" },
+          { code: "bs-spw", name: "Spanish Wells" },
+          { code: "bs-wgb", name: "West Grand Bahama" },
+        ],
+      },
     ],
   },
 
