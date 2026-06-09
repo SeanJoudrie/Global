@@ -3266,6 +3266,214 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       note: 'Adopted at the 1973 declaration of independence from Portugal, nearly identical to the PAIGC liberation party\'s flag, with a red hoist band bearing a black star for African unity. It has never been changed.',
     },
   ],
+
+  // ── Oceania ─────────────────────────────────────────────────────────────────
+  FJ: [
+    {
+      fromYear: 1970,
+      toYear: null,
+      flagUrl: 'https://flagcdn.com/w320/fj.png',
+      label: 'Flag of Fiji',
+      note: 'Adopted at independence in 1970, the colonial dark blue was lightened to a sky blue for the Pacific Ocean, keeping the shield and the Union Jack. Fiji formally proposed removing the Union Jack in 2005 and 2015, but both efforts were abandoned.',
+    },
+    {
+      fromYear: 1924,
+      toYear: 1970,
+      flagUrl: fp('Flag_of_Fiji_(1924–1970).svg'),
+      label: 'Colonial Blue Ensign (no disc)',
+      note: 'The white disc behind the badge was dropped in 1924, leaving the colonial arms directly on the dark blue ensign — Fiji\'s flag right up to independence.',
+    },
+    {
+      fromYear: 1908,
+      toYear: 1924,
+      flagUrl: fp('Flag_of_Fiji_(1908–1924).svg'),
+      label: 'Colonial Blue Ensign (with disc)',
+      note: 'A British Blue Ensign defaced with Fiji\'s colonial coat of arms, granted in 1908, set on a white disc.',
+    },
+  ],
+  PG: [
+    {
+      fromYear: 1971,
+      toYear: null,
+      flagUrl: 'https://flagcdn.com/w320/pg.png',
+      label: 'Flag of Papua New Guinea',
+      note: 'Designed by 15-year-old schoolgirl Susan Karike and adopted in 1971, it shows a yellow Raggiana bird of paradise and the white stars of the Southern Cross on a diagonally split red-and-black field. It has never changed.',
+    },
+    {
+      fromYear: 1970,
+      toYear: 1971,
+      flagUrl: fp('Flag_of_Papua_New_Guinea_(1970–1971).svg'),
+      label: 'Territory tricolour',
+      note: 'A blue-white-green vertical design with stars and a bird of paradise, used briefly for the Territory of Papua and New Guinea before being rejected as too "colonial".',
+    },
+  ],
+  SB: [
+    {
+      fromYear: 1977,
+      toYear: null,
+      flagUrl: 'https://flagcdn.com/w320/sb.png',
+      label: 'Flag of the Solomon Islands',
+      note: 'Adopted just before independence in 1977: a yellow diagonal stripe separates a blue triangle (sea and sky) from a green one (land), with five white stars for the island groups. One flag, never changed.',
+    },
+    {
+      fromYear: 1966,
+      toYear: 1977,
+      flagUrl: fp('Flag_of_the_Solomon_Islands_(1966–1977).svg'),
+      label: 'Protectorate Blue Ensign',
+      note: 'The final colonial ensign of the British Solomon Islands Protectorate, bearing the protectorate badge.',
+    },
+  ],
+  VU: [
+    {
+      fromYear: 1980,
+      toYear: null,
+      flagUrl: 'https://flagcdn.com/w320/vu.png',
+      label: 'Flag of Vanuatu',
+      note: 'Adopted at independence in 1980 in the colors of the Vanua\'aku Pati, with a black "Y" shape, a boar\'s tusk, and namele fern leaves. One flag, never changed.',
+    },
+    {
+      fromYear: 1953,
+      toYear: 1980,
+      flagUrl: fp('Flag_of_the_British_New_Hebrides_(1952–1980).svg'),
+      label: 'British New Hebrides',
+      note: 'Under the unusual Anglo-French Condominium, Britain and France each flew their own emblems; this is the British New Hebrides badge flag used until independence.',
+    },
+  ],
+  WS: [
+    {
+      fromYear: 1949,
+      toYear: null,
+      flagUrl: 'https://flagcdn.com/w320/ws.png',
+      label: 'Flag of Samoa',
+      note: 'In 1949 a fifth, smaller star was added to complete the Southern Cross on the red field. The design was kept after independence in 1962 and has remained unchanged.',
+    },
+    {
+      fromYear: 1948,
+      toYear: 1949,
+      flagUrl: fp('Flag_of_Samoa_(1948-1949).svg'),
+      label: 'Four-star flag',
+      note: 'Introduced in 1948, the first version of the red flag carried only four white stars of the Southern Cross in the blue canton.',
+    },
+    {
+      fromYear: 1925,
+      toYear: 1948,
+      flagUrl: fp('Flag_of_the_Samoa_Trust_Territory.svg'),
+      label: 'NZ Trust Territory',
+      note: 'Under New Zealand administration, a defaced British ensign with three palm trees in a white disc was used until the modern red flag was introduced.',
+    },
+    {
+      fromYear: 1900,
+      toYear: 1914,
+      flagUrl: fp('Flag_of_German_Samoa.svg'),
+      label: 'German Samoa',
+      note: 'Samoa was a German colony from 1900; German colonial ensigns were used until New Zealand forces occupied the islands in 1914.',
+    },
+  ],
+  TO: [
+    {
+      fromYear: 1866,
+      toYear: null,
+      flagUrl: 'https://flagcdn.com/w320/to.png',
+      label: 'Flag of Tonga',
+      note: 'The red flag with a white canton bearing a red couped cross was introduced in 1866 and entrenched in the 1875 constitution, which forbids it from ever being altered — one of the world\'s oldest unchanged flags.',
+    },
+    {
+      fromYear: 1862,
+      toYear: 1866,
+      flagUrl: fp('Flag_of_Tonga_(1862-1866).svg'),
+      label: 'First flag of Tonga',
+      note: 'Tonga\'s first national flag, approved by King George Tupou I around 1862, was white bearing a red cross. It was changed because it too closely resembled the Red Cross emblem then coming into international use.',
+    },
+  ],
+  KI: [
+    {
+      fromYear: 1979,
+      toYear: null,
+      flagUrl: 'https://flagcdn.com/w320/ki.png',
+      label: 'Flag of Kiribati',
+      note: 'Adopted at independence in 1979, the golden frigatebird flying over a rising sun and three white waves is based directly on the colonial coat of arms granted to the Gilbert and Ellice Islands in 1937.',
+    },
+  ],
+  MH: [
+    {
+      fromYear: 1979,
+      toYear: null,
+      flagUrl: 'https://flagcdn.com/w320/mh.png',
+      label: 'Flag of the Marshall Islands',
+      note: 'Hoisted in 1979 when the territory became self-governing: two diverging orange and white rays and a 24-point white star on deep blue, representing the nation\'s location near the equator.',
+    },
+    {
+      fromYear: 1962,
+      toYear: 1979,
+      flagUrl: fp('Flag_of_the_Trust_Territory_of_the_Pacific_Islands.svg'),
+      label: 'Trust Territory of the Pacific Islands',
+      note: 'A light-blue flag with six white stars in a circle, one for each district of the US-administered Trust Territory, flown until the Marshalls adopted their own flag.',
+    },
+  ],
+  FM: [
+    {
+      fromYear: 1978,
+      toYear: null,
+      flagUrl: 'https://flagcdn.com/w320/fm.png',
+      label: 'Flag of the Federated States of Micronesia',
+      note: 'Adopted in 1978, it keeps the light-blue field of the Trust Territory flag but reduces the stars from six to four — one for each FSM state: Yap, Chuuk, Pohnpei, and Kosrae.',
+    },
+    {
+      fromYear: 1962,
+      toYear: 1978,
+      flagUrl: fp('Flag_of_the_Trust_Territory_of_the_Pacific_Islands.svg'),
+      label: 'Trust Territory of the Pacific Islands',
+      note: 'The light-blue flag bearing six white stars for the six districts of the US-administered Trust Territory, from which the current FSM flag was directly derived.',
+    },
+  ],
+  NR: [
+    {
+      fromYear: 1968,
+      toYear: null,
+      flagUrl: 'https://flagcdn.com/w320/nr.png',
+      label: 'Flag of Nauru',
+      note: 'Adopted on independence day in 1968: a blue field with a gold stripe for the equator and a white 12-pointed star below it, depicting Nauru\'s position just south of the equator. The twelve points represent the island\'s original tribes.',
+    },
+  ],
+  PW: [
+    {
+      fromYear: 1981,
+      toYear: null,
+      flagUrl: 'https://flagcdn.com/w320/pw.png',
+      label: 'Flag of Palau',
+      note: 'Adopted in 1981 when Palau became self-governing: a golden-yellow full moon slightly off-center on a sky-blue field, the moon symbolizing peace and national unity.',
+    },
+    {
+      fromYear: 1962,
+      toYear: 1981,
+      flagUrl: fp('Flag_of_the_Trust_Territory_of_the_Pacific_Islands.svg'),
+      label: 'Trust Territory of the Pacific Islands',
+      note: 'The six-star light-blue flag of the US-administered Trust Territory, which flew over Palau before it adopted its own moon flag.',
+    },
+  ],
+  TV: [
+    {
+      fromYear: 1997,
+      toYear: null,
+      flagUrl: 'https://flagcdn.com/w320/tv.png',
+      label: 'Flag of Tuvalu (restored)',
+      note: 'In 1997 Tuvalu reverted to its original 1978 design — a light-blue ensign with the Union Jack and nine yellow stars mapping the geographic positions of the nine islands.',
+    },
+    {
+      fromYear: 1996,
+      toYear: 1997,
+      flagUrl: fp('Flag_of_Tuvalu_(1996–1997).svg'),
+      label: '1996 republican variant',
+      note: 'Following a 1995 push to end the monarchy, a new flag introduced in 1996 removed the Union Jack in favor of the national coat of arms on a red field. It proved unpopular and short-lived.',
+    },
+    {
+      fromYear: 1978,
+      toYear: 1995,
+      flagUrl: fp('Flag_of_Tuvalu_(1978–1995).svg'),
+      label: 'Independence flag',
+      note: 'Adopted at independence in 1978, the original light-blue ensign with the Union Jack and nine stars — the same design restored in 1997.',
+    },
+  ],
 }
 
 export const CODEX_SUMMARIES: Record<string, string> = {
