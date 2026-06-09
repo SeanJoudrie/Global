@@ -860,12 +860,12 @@ export const CHALLENGE_CONTINENTS: ChallengeContinent[] = [
       { code: "BR", name: "Brazil", emoji: "🇧🇷", subTitle: "27 States", subRegions: BR_STATES, locked: false },
       { code: "AR", name: "Argentina", emoji: "🇦🇷", subTitle: "24 Provinces", subRegions: AR_PROVINCES, locked: false },
       { code: "CO", name: "Colombia", emoji: "🇨🇴", subTitle: "32 Departments", subRegions: CO_DEPARTMENTS, locked: false },
-      { code: "VE", name: "Venezuela", emoji: "🇻🇪", subTitle: "23 States", subRegions: VE_STATES, locked: false },
+      { code: "VE", name: "Venezuela", emoji: "🇻🇪", subTitle: "23 States + Capital District", subRegions: VE_STATES, locked: false },
       { code: "PE", name: "Peru", emoji: "🇵🇪", subTitle: "25 Regions", subRegions: PE_REGIONS, locked: false },
       { code: "CL", name: "Chile", emoji: "🇨🇱", subTitle: "16 Regions", subRegions: CL_REGIONS, locked: false },
       { code: "EC", name: "Ecuador", emoji: "🇪🇨", subTitle: "24 Provinces", subRegions: EC_PROVINCES, locked: false },
       { code: "BO", name: "Bolivia", emoji: "🇧🇴", subTitle: "9 Departments", subRegions: BO_DEPARTMENTS, locked: false },
-      { code: "PY", name: "Paraguay", emoji: "🇵🇾", subTitle: "17 Departments", subRegions: PY_DEPARTMENTS, locked: false },
+      { code: "PY", name: "Paraguay", emoji: "🇵🇾", subTitle: "17 Departments + Asunción", subRegions: PY_DEPARTMENTS, locked: false },
       { code: "UY", name: "Uruguay", emoji: "🇺🇾", subTitle: "19 Departments", subRegions: UY_DEPARTMENTS, locked: false },
       { code: "GY", name: "Guyana", emoji: "🇬🇾", subTitle: "10 Regions", subRegions: GY_REGIONS, locked: true },
       { code: "SR", name: "Suriname", emoji: "🇸🇷", subTitle: "10 Districts", subRegions: SR_DISTRICTS, locked: true },
@@ -3187,18 +3187,25 @@ export const CHALLENGE_CONTINENTS: ChallengeContinent[] = [
       // ── Norway (15 counties) ─────────────────────────────────────────────
       {
         code: "NO", name: "Norway", emoji: "🇳🇴", subTitle: "15 Counties", locked: false,
+        // On 1 Jan 2024 Norway reversed the 2020 mergers: Viken split back into Østfold,
+        // Akershus & Buskerud; Vestfold og Telemark and Troms og Finnmark also split —
+        // returning to 15 counties. Innlandet, Agder, Vestland & Trøndelag stayed merged.
         subRegions: [
+          { code: "no-31", name: "Østfold" },
+          { code: "no-32", name: "Akershus" },
           { code: "no-03", name: "Oslo",                flagUrl: wiki("Flag of Oslo.svg") },
-          { code: "no-11", name: "Rogaland",            flagUrl: wiki("Flag of Rogaland.svg") },
-          { code: "no-15", name: "Møre og Romsdal",     flagUrl: wiki("Flag of Møre og Romsdal.svg") },
-          { code: "no-18", name: "Nordland",            flagUrl: wiki("Flag of Nordland.svg") },
-          { code: "no-30", name: "Viken" },
+          { code: "no-33", name: "Buskerud" },
           { code: "no-34", name: "Innlandet",           flagUrl: wiki("Flag of Innlandet.svg") },
-          { code: "no-38", name: "Vestfold og Telemark",flagUrl: wiki("Flag of Vestfold and Telemark.svg") },
+          { code: "no-39", name: "Vestfold" },
+          { code: "no-40", name: "Telemark" },
           { code: "no-42", name: "Agder",               flagUrl: wiki("Flag of Agder.svg") },
+          { code: "no-11", name: "Rogaland",            flagUrl: wiki("Flag of Rogaland.svg") },
           { code: "no-46", name: "Vestland",            flagUrl: wiki("Flag of Vestland.svg") },
+          { code: "no-15", name: "Møre og Romsdal",     flagUrl: wiki("Flag of Møre og Romsdal.svg") },
           { code: "no-50", name: "Trøndelag",           flagUrl: wiki("Flag of Nord-Trøndelag.svg") },
-          { code: "no-54", name: "Troms og Finnmark",   flagUrl: wiki("Flag of Troms og Finnmark County.svg") },
+          { code: "no-18", name: "Nordland",            flagUrl: wiki("Flag of Nordland.svg") },
+          { code: "no-55", name: "Troms" },
+          { code: "no-56", name: "Finnmark" },
         ],
       },
 
@@ -3937,6 +3944,9 @@ export const CHALLENGE_CONTINENTS: ChallengeContinent[] = [
           { code: "ru-bu",  name: "Buryatia",                 flagUrl: wiki("Flag of Buryatia.svg"),                        group: "Republics" },
           { code: "ru-ce",  name: "Chechnya",                 flagUrl: wiki("Flag of the Chechen Republic.svg"),            group: "Republics" },
           { code: "ru-cu",  name: "Chuvashia",                flagUrl: wiki("Flag of Chuvashia.svg"),                       group: "Republics" },
+          // Crimea: annexed from Ukraine in 2014; included here to match Russia's own
+          // "85 federal subjects" count (which also adds the federal city of Sevastopol).
+          { code: "ru-cr",  name: "Crimea",                   flagUrl: wiki("Flag of Crimea.svg"),                          group: "Republics" },
           { code: "ru-da",  name: "Dagestan",                 flagUrl: wiki("Flag of Dagestan.svg"),                        group: "Republics" },
           { code: "ru-in",  name: "Ingushetia",               flagUrl: wiki("Flag of Ingushetia.svg"),                      group: "Republics" },
           { code: "ru-kb",  name: "Kabardino-Balkaria",       flagUrl: wiki("Flag of Kabardino-Balkaria.svg"),              group: "Republics" },
