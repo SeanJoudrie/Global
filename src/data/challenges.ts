@@ -938,14 +938,162 @@ export const CHALLENGE_CONTINENTS: ChallengeContinent[] = [
         ],
       },
 
-      // ── United Kingdom (4 nations) ───────────────────────────────────────
+      // ── United Kingdom (England 9 regions · Scotland 32 · Wales 22 · NI 11) ──
       {
-        code: "GB", name: "United Kingdom", emoji: "🇬🇧", subTitle: "4 Nations", locked: false,
+        code: "GB", name: "United Kingdom", emoji: "🇬🇧", subTitle: "74 Regions & Districts", locked: false,
         subRegions: [
-          { code: "gb-eng", name: "England",          flagUrl: flag("gb-eng") },
-          { code: "gb-sct", name: "Scotland",         flagUrl: flag("gb-sct") },
-          { code: "gb-wls", name: "Wales",            flagUrl: flag("gb-wls") },
-          { code: "gb-nir", name: "Northern Ireland", flagUrl: flag("gb-nir") },
+          // England – 9 statistical regions
+          { code: "gb-ne",  name: "North East England",           flagUrl: flag("gb-eng") },
+          { code: "gb-nw",  name: "North West England",           flagUrl: flag("gb-eng") },
+          { code: "gb-yh",  name: "Yorkshire & the Humber",       flagUrl: flag("gb-eng") },
+          { code: "gb-em",  name: "East Midlands",                flagUrl: flag("gb-eng") },
+          { code: "gb-wm",  name: "West Midlands",                flagUrl: flag("gb-eng") },
+          { code: "gb-ee",  name: "East of England",              flagUrl: flag("gb-eng") },
+          { code: "gb-lon", name: "Greater London",               flagUrl: flag("gb-lon") },
+          { code: "gb-se",  name: "South East England",           flagUrl: flag("gb-eng") },
+          { code: "gb-sw",  name: "South West England",           flagUrl: flag("gb-eng") },
+          // Scotland – 32 council areas
+          { code: "gb-abd", name: "Aberdeen City",                flagUrl: flag("gb-abd") },
+          { code: "gb-abe", name: "Aberdeenshire",                flagUrl: flag("gb-abe") },
+          { code: "gb-ans", name: "Angus",                        flagUrl: flag("gb-ans") },
+          { code: "gb-agb", name: "Argyll and Bute",              flagUrl: flag("gb-agb") },
+          { code: "gb-clk", name: "Clackmannanshire",             flagUrl: flag("gb-clk") },
+          { code: "gb-dgy", name: "Dumfries and Galloway",        flagUrl: flag("gb-dgy") },
+          { code: "gb-dnd", name: "Dundee City",                  flagUrl: flag("gb-dnd") },
+          { code: "gb-eay", name: "East Ayrshire",                flagUrl: flag("gb-eay") },
+          { code: "gb-edu", name: "East Dunbartonshire",          flagUrl: flag("gb-edu") },
+          { code: "gb-eln", name: "East Lothian",                 flagUrl: flag("gb-eln") },
+          { code: "gb-erw", name: "East Renfrewshire",            flagUrl: flag("gb-erw") },
+          { code: "gb-edh", name: "Edinburgh",                    flagUrl: flag("gb-edh") },
+          { code: "gb-els", name: "Na h-Eileanan Siar",           flagUrl: flag("gb-els") },
+          { code: "gb-fal", name: "Falkirk",                      flagUrl: flag("gb-fal") },
+          { code: "gb-fif", name: "Fife",                         flagUrl: flag("gb-fif") },
+          { code: "gb-glg", name: "Glasgow City",                 flagUrl: flag("gb-glg") },
+          { code: "gb-hld", name: "Highland",                     flagUrl: flag("gb-hld") },
+          { code: "gb-ivc", name: "Inverclyde",                   flagUrl: flag("gb-ivc") },
+          { code: "gb-mln", name: "Midlothian",                   flagUrl: flag("gb-mln") },
+          { code: "gb-mry", name: "Moray",                        flagUrl: flag("gb-mry") },
+          { code: "gb-nay", name: "North Ayrshire",               flagUrl: flag("gb-nay") },
+          { code: "gb-nlk", name: "North Lanarkshire",            flagUrl: flag("gb-nlk") },
+          { code: "gb-ork", name: "Orkney Islands",               flagUrl: flag("gb-ork") },
+          { code: "gb-pkn", name: "Perth and Kinross",            flagUrl: flag("gb-pkn") },
+          { code: "gb-rfw", name: "Renfrewshire",                 flagUrl: flag("gb-rfw") },
+          { code: "gb-scb", name: "Scottish Borders",             flagUrl: flag("gb-scb") },
+          { code: "gb-zet", name: "Shetland Islands",             flagUrl: flag("gb-zet") },
+          { code: "gb-say", name: "South Ayrshire",               flagUrl: flag("gb-say") },
+          { code: "gb-slk", name: "South Lanarkshire",            flagUrl: flag("gb-slk") },
+          { code: "gb-stg", name: "Stirling",                     flagUrl: flag("gb-stg") },
+          { code: "gb-wdu", name: "West Dunbartonshire",          flagUrl: flag("gb-wdu") },
+          { code: "gb-wln", name: "West Lothian",                 flagUrl: flag("gb-wln") },
+          // Wales – 22 local authorities
+          { code: "gb-agy", name: "Isle of Anglesey",             flagUrl: flag("gb-agy") },
+          { code: "gb-bgw", name: "Blaenau Gwent",                flagUrl: flag("gb-bgw") },
+          { code: "gb-bge", name: "Bridgend",                     flagUrl: flag("gb-bge") },
+          { code: "gb-cay", name: "Caerphilly",                   flagUrl: flag("gb-cay") },
+          { code: "gb-crf", name: "Cardiff",                      flagUrl: flag("gb-crf") },
+          { code: "gb-cmn", name: "Carmarthenshire",              flagUrl: flag("gb-cmn") },
+          { code: "gb-cgn", name: "Ceredigion",                   flagUrl: flag("gb-cgn") },
+          { code: "gb-cwy", name: "Conwy",                        flagUrl: flag("gb-cwy") },
+          { code: "gb-den", name: "Denbighshire",                 flagUrl: flag("gb-den") },
+          { code: "gb-fln", name: "Flintshire",                   flagUrl: flag("gb-fln") },
+          { code: "gb-gwn", name: "Gwynedd",                      flagUrl: flag("gb-gwn") },
+          { code: "gb-mty", name: "Merthyr Tydfil",               flagUrl: flag("gb-mty") },
+          { code: "gb-mon", name: "Monmouthshire",                flagUrl: flag("gb-mon") },
+          { code: "gb-ntl", name: "Neath Port Talbot",            flagUrl: flag("gb-ntl") },
+          { code: "gb-nwp", name: "Newport",                      flagUrl: flag("gb-nwp") },
+          { code: "gb-pem", name: "Pembrokeshire",                flagUrl: flag("gb-pem") },
+          { code: "gb-pow", name: "Powys",                        flagUrl: flag("gb-pow") },
+          { code: "gb-rct", name: "Rhondda Cynon Taf",            flagUrl: flag("gb-rct") },
+          { code: "gb-swa", name: "Swansea",                      flagUrl: flag("gb-swa") },
+          { code: "gb-tof", name: "Torfaen",                      flagUrl: flag("gb-tof") },
+          { code: "gb-vgl", name: "Vale of Glamorgan",            flagUrl: flag("gb-vgl") },
+          { code: "gb-wrx", name: "Wrexham",                      flagUrl: flag("gb-wrx") },
+          // Northern Ireland – 11 districts
+          { code: "gb-abc", name: "Armagh, Banbridge & Craigavon", flagUrl: flag("gb-abc") },
+          { code: "gb-and", name: "Antrim & Newtownabbey",        flagUrl: flag("gb-and") },
+          { code: "gb-ann", name: "Ards & North Down",            flagUrl: flag("gb-ann") },
+          { code: "gb-bfs", name: "Belfast",                      flagUrl: flag("gb-bfs") },
+          { code: "gb-ccg", name: "Causeway Coast & Glens",       flagUrl: flag("gb-ccg") },
+          { code: "gb-drs", name: "Derry City & Strabane",        flagUrl: flag("gb-drs") },
+          { code: "gb-fmo", name: "Fermanagh & Omagh",            flagUrl: flag("gb-fmo") },
+          { code: "gb-lbc", name: "Lisburn & Castlereagh",        flagUrl: flag("gb-lbc") },
+          { code: "gb-mea", name: "Mid & East Antrim",            flagUrl: flag("gb-mea") },
+          { code: "gb-mul", name: "Mid Ulster",                   flagUrl: flag("gb-mul") },
+          { code: "gb-nmd", name: "Newry, Mourne & Down",         flagUrl: flag("gb-nmd") },
+        ],
+      },
+
+      // ── Isle of Man (6 sheadings) ─────────────────────────────────────────
+      {
+        code: "IM", name: "Isle of Man", emoji: "🇮🇲", subTitle: "6 Sheadings", locked: false,
+        subRegions: [
+          { code: "im-ay", name: "Ayre",     flagUrl: flag("im-ay") },
+          { code: "im-ga", name: "Garff",    flagUrl: flag("im-ga") },
+          { code: "im-gf", name: "Glenfaba", flagUrl: flag("im-gf") },
+          { code: "im-mi", name: "Michael",  flagUrl: flag("im-mi") },
+          { code: "im-md", name: "Middle",   flagUrl: flag("im-md") },
+          { code: "im-ru", name: "Rushen",   flagUrl: flag("im-ru") },
+        ],
+      },
+
+      // ── Jersey (12 parishes) ─────────────────────────────────────────────
+      {
+        code: "JE", name: "Jersey", emoji: "🇯🇪", subTitle: "12 Parishes", locked: false,
+        subRegions: [
+          { code: "je-gr", name: "Grouville",    flagUrl: flag("je-gr") },
+          { code: "je-sb", name: "St. Brelade",  flagUrl: flag("je-sb") },
+          { code: "je-sc", name: "St. Clement",  flagUrl: flag("je-sc") },
+          { code: "je-sh", name: "St. Helier",   flagUrl: flag("je-sh") },
+          { code: "je-sj", name: "St. John",     flagUrl: flag("je-sj") },
+          { code: "je-sl", name: "St. Lawrence", flagUrl: flag("je-sl") },
+          { code: "je-sm", name: "St. Martin",   flagUrl: flag("je-sm") },
+          { code: "je-sy", name: "St. Mary",     flagUrl: flag("je-sy") },
+          { code: "je-so", name: "St. Ouen",     flagUrl: flag("je-so") },
+          { code: "je-sp", name: "St. Peter",    flagUrl: flag("je-sp") },
+          { code: "je-ss", name: "St. Saviour",  flagUrl: flag("je-ss") },
+          { code: "je-tr", name: "Trinity",      flagUrl: flag("je-tr") },
+        ],
+      },
+
+      // ── Guernsey (10 parishes) ───────────────────────────────────────────
+      {
+        code: "GG", name: "Guernsey", emoji: "🇬🇬", subTitle: "10 Parishes", locked: false,
+        subRegions: [
+          { code: "gg-ca", name: "Castel",           flagUrl: flag("gg-ca") },
+          { code: "gg-fo", name: "Forest",           flagUrl: flag("gg-fo") },
+          { code: "gg-sa", name: "St. Andrew",       flagUrl: flag("gg-sa") },
+          { code: "gg-sm", name: "St. Martin",       flagUrl: flag("gg-sm") },
+          { code: "gg-sp", name: "St. Peter Port",   flagUrl: flag("gg-sp") },
+          { code: "gg-sd", name: "St. Pierre du Bois",flagUrl: flag("gg-sd") },
+          { code: "gg-ss", name: "St. Sampson",      flagUrl: flag("gg-ss") },
+          { code: "gg-sv", name: "St. Saviour",      flagUrl: flag("gg-sv") },
+          { code: "gg-to", name: "Torteval",         flagUrl: flag("gg-to") },
+          { code: "gg-va", name: "Vale",             flagUrl: flag("gg-va") },
+        ],
+      },
+
+      // ── Gibraltar (4 major areas) ────────────────────────────────────────
+      {
+        code: "GI", name: "Gibraltar", emoji: "🇬🇮", subTitle: "4 Areas", locked: false,
+        subRegions: [
+          { code: "gi-nr", name: "North District",  flagUrl: flag("gi-nr") },
+          { code: "gi-sw", name: "South District",  flagUrl: flag("gi-sw") },
+          { code: "gi-wt", name: "Town Area",       flagUrl: flag("gi-wt") },
+          { code: "gi-ea", name: "East Side",       flagUrl: flag("gi-ea") },
+        ],
+      },
+
+      // ── Faroe Islands (7 traditional regions) ───────────────────────────
+      {
+        code: "FO", name: "Faroe Islands", emoji: "🇫🇴", subTitle: "7 Regions", locked: false,
+        subRegions: [
+          { code: "fo-ea", name: "Eysturoy",    flagUrl: flag("fo-ea") },
+          { code: "fo-no", name: "Norðoyggjar", flagUrl: flag("fo-no") },
+          { code: "fo-os", name: "Osterø",      flagUrl: flag("fo-os") },
+          { code: "fo-sa", name: "Sandoy",      flagUrl: flag("fo-sa") },
+          { code: "fo-st", name: "Streymoy",    flagUrl: flag("fo-st") },
+          { code: "fo-su", name: "Suðuroy",     flagUrl: flag("fo-su") },
+          { code: "fo-va", name: "Vágar",       flagUrl: flag("fo-va") },
         ],
       },
 
@@ -1599,17 +1747,148 @@ export const CHALLENGE_CONTINENTS: ChallengeContinent[] = [
         ],
       },
 
-      // Smaller nations ──────────────────────────────────────────────────────
-      { code: "LU", name: "Luxembourg",   emoji: "🇱🇺", subTitle: "3 Cantons", subRegions: [], locked: true },
-      { code: "IS", name: "Iceland",      emoji: "🇮🇸", subTitle: "8 Regions", subRegions: [], locked: true },
-      { code: "MT", name: "Malta",        emoji: "🇲🇹", subTitle: "7 Regions", subRegions: [], locked: true },
-      { code: "CY", name: "Cyprus",       emoji: "🇨🇾", subTitle: "6 Districts", subRegions: [], locked: true },
-      { code: "MC", name: "Monaco",       emoji: "🇲🇨", subTitle: "4 Quarters", subRegions: [], locked: true },
-      { code: "LI", name: "Liechtenstein",emoji: "🇱🇮", subTitle: "11 Communes", subRegions: [], locked: true },
-      { code: "AD", name: "Andorra",      emoji: "🇦🇩", subTitle: "7 Parishes", subRegions: [], locked: true },
-      { code: "SM", name: "San Marino",   emoji: "🇸🇲", subTitle: "9 Castles", subRegions: [], locked: true },
-      { code: "VA", name: "Vatican City", emoji: "🇻🇦", subTitle: "1 State", subRegions: [], locked: true },
-      { code: "XK", name: "Kosovo",       emoji: "🇽🇰", subTitle: "7 Districts", subRegions: [], locked: true },
+      // ── Andorra (7 parishes) ─────────────────────────────────────────────
+      {
+        code: "AD", name: "Andorra", emoji: "🇦🇩", subTitle: "7 Parishes", locked: false,
+        subRegions: [
+          { code: "ad-02", name: "Canillo",              flagUrl: flag("ad-02") },
+          { code: "ad-03", name: "Encamp",               flagUrl: flag("ad-03") },
+          { code: "ad-04", name: "La Massana",           flagUrl: flag("ad-04") },
+          { code: "ad-05", name: "Ordino",               flagUrl: flag("ad-05") },
+          { code: "ad-06", name: "Sant Julià de Lòria",  flagUrl: flag("ad-06") },
+          { code: "ad-07", name: "Andorra la Vella",     flagUrl: flag("ad-07") },
+          { code: "ad-08", name: "Escaldes-Engordany",   flagUrl: flag("ad-08") },
+        ],
+      },
+
+      // ── Cyprus (6 districts) ─────────────────────────────────────────────
+      {
+        code: "CY", name: "Cyprus", emoji: "🇨🇾", subTitle: "6 Districts", locked: false,
+        subRegions: [
+          { code: "cy-01", name: "Nicosia",   flagUrl: flag("cy-01") },
+          { code: "cy-02", name: "Limassol",  flagUrl: flag("cy-02") },
+          { code: "cy-03", name: "Larnaca",   flagUrl: flag("cy-03") },
+          { code: "cy-04", name: "Famagusta", flagUrl: flag("cy-04") },
+          { code: "cy-05", name: "Paphos",    flagUrl: flag("cy-05") },
+          { code: "cy-06", name: "Kyrenia",   flagUrl: flag("cy-06") },
+        ],
+      },
+
+      // ── Iceland (8 regions) ──────────────────────────────────────────────
+      {
+        code: "IS", name: "Iceland", emoji: "🇮🇸", subTitle: "8 Regions", locked: false,
+        subRegions: [
+          { code: "is-1", name: "Capital Region",     flagUrl: flag("is-1") },
+          { code: "is-2", name: "Southern Peninsula", flagUrl: flag("is-2") },
+          { code: "is-3", name: "West",               flagUrl: flag("is-3") },
+          { code: "is-4", name: "Westfjords",         flagUrl: flag("is-4") },
+          { code: "is-5", name: "Northwest",          flagUrl: flag("is-5") },
+          { code: "is-6", name: "Northeast",          flagUrl: flag("is-6") },
+          { code: "is-7", name: "East",               flagUrl: flag("is-7") },
+          { code: "is-8", name: "South",              flagUrl: flag("is-8") },
+        ],
+      },
+
+      // ── Kosovo (7 districts) ─────────────────────────────────────────────
+      {
+        code: "XK", name: "Kosovo", emoji: "🇽🇰", subTitle: "7 Districts", locked: false,
+        subRegions: [
+          { code: "xk-pr", name: "Pristina",  flagUrl: flag("xk-pr") },
+          { code: "xk-pe", name: "Peja",      flagUrl: flag("xk-pe") },
+          { code: "xk-gj", name: "Gjakova",   flagUrl: flag("xk-gj") },
+          { code: "xk-mi", name: "Mitrovica", flagUrl: flag("xk-mi") },
+          { code: "xk-pz", name: "Prizren",   flagUrl: flag("xk-pz") },
+          { code: "xk-fe", name: "Ferizaj",   flagUrl: flag("xk-fe") },
+          { code: "xk-gi", name: "Gjilan",    flagUrl: flag("xk-gi") },
+        ],
+      },
+
+      // ── Liechtenstein (11 communes) ──────────────────────────────────────
+      {
+        code: "LI", name: "Liechtenstein", emoji: "🇱🇮", subTitle: "11 Communes", locked: false,
+        subRegions: [
+          { code: "li-01", name: "Balzers",       flagUrl: flag("li-01") },
+          { code: "li-02", name: "Eschen",        flagUrl: flag("li-02") },
+          { code: "li-03", name: "Gamprin",       flagUrl: flag("li-03") },
+          { code: "li-04", name: "Mauren",        flagUrl: flag("li-04") },
+          { code: "li-05", name: "Planken",       flagUrl: flag("li-05") },
+          { code: "li-06", name: "Ruggell",       flagUrl: flag("li-06") },
+          { code: "li-07", name: "Schaan",        flagUrl: flag("li-07") },
+          { code: "li-08", name: "Schellenberg",  flagUrl: flag("li-08") },
+          { code: "li-09", name: "Triesen",       flagUrl: flag("li-09") },
+          { code: "li-10", name: "Triesenberg",   flagUrl: flag("li-10") },
+          { code: "li-11", name: "Vaduz",         flagUrl: flag("li-11") },
+        ],
+      },
+
+      // ── Luxembourg (12 cantons) ──────────────────────────────────────────
+      {
+        code: "LU", name: "Luxembourg", emoji: "🇱🇺", subTitle: "12 Cantons", locked: false,
+        subRegions: [
+          { code: "lu-ca", name: "Capellen",        flagUrl: flag("lu-ca") },
+          { code: "lu-cl", name: "Clervaux",        flagUrl: flag("lu-cl") },
+          { code: "lu-di", name: "Diekirch",        flagUrl: flag("lu-di") },
+          { code: "lu-ec", name: "Echternach",      flagUrl: flag("lu-ec") },
+          { code: "lu-es", name: "Esch-sur-Alzette",flagUrl: flag("lu-es") },
+          { code: "lu-gr", name: "Grevenmacher",    flagUrl: flag("lu-gr") },
+          { code: "lu-lu", name: "Luxembourg",      flagUrl: flag("lu-lu") },
+          { code: "lu-me", name: "Mersch",          flagUrl: flag("lu-me") },
+          { code: "lu-rd", name: "Redange",         flagUrl: flag("lu-rd") },
+          { code: "lu-rm", name: "Remich",          flagUrl: flag("lu-rm") },
+          { code: "lu-vd", name: "Vianden",         flagUrl: flag("lu-vd") },
+          { code: "lu-wi", name: "Wiltz",           flagUrl: flag("lu-wi") },
+        ],
+      },
+
+      // ── Malta (5 regions) ────────────────────────────────────────────────
+      {
+        code: "MT", name: "Malta", emoji: "🇲🇹", subTitle: "5 Regions", locked: false,
+        subRegions: [
+          { code: "mt-01", name: "Gozo & Comino",    flagUrl: flag("mt-01") },
+          { code: "mt-02", name: "Northern",         flagUrl: flag("mt-02") },
+          { code: "mt-03", name: "Northern Harbour", flagUrl: flag("mt-03") },
+          { code: "mt-04", name: "South Eastern",    flagUrl: flag("mt-04") },
+          { code: "mt-05", name: "Southern Harbour", flagUrl: flag("mt-05") },
+        ],
+      },
+
+      // ── Monaco (4 quarters) ──────────────────────────────────────────────
+      {
+        code: "MC", name: "Monaco", emoji: "🇲🇨", subTitle: "4 Quarters", locked: false,
+        subRegions: [
+          { code: "mc-cl", name: "La Colle",     flagUrl: flag("mc-cl") },
+          { code: "mc-co", name: "La Condamine", flagUrl: flag("mc-co") },
+          { code: "mc-fo", name: "Fontvieille",  flagUrl: flag("mc-fo") },
+          { code: "mc-mc", name: "Monaco-Ville", flagUrl: flag("mc-mc") },
+        ],
+      },
+
+      // ── San Marino (9 municipalities) ────────────────────────────────────
+      {
+        code: "SM", name: "San Marino", emoji: "🇸🇲", subTitle: "9 Municipalities", locked: false,
+        subRegions: [
+          { code: "sm-01", name: "Acquaviva",      flagUrl: flag("sm-01") },
+          { code: "sm-02", name: "Borgo Maggiore", flagUrl: flag("sm-02") },
+          { code: "sm-03", name: "Chiesanuova",    flagUrl: flag("sm-03") },
+          { code: "sm-04", name: "Domagnano",      flagUrl: flag("sm-04") },
+          { code: "sm-05", name: "Faetano",        flagUrl: flag("sm-05") },
+          { code: "sm-06", name: "Fiorentino",     flagUrl: flag("sm-06") },
+          { code: "sm-07", name: "Montegiardino",  flagUrl: flag("sm-07") },
+          { code: "sm-08", name: "San Marino",     flagUrl: flag("sm-08") },
+          { code: "sm-09", name: "Serravalle",     flagUrl: flag("sm-09") },
+        ],
+      },
+
+      // ── Vatican City (4 areas) ───────────────────────────────────────────
+      {
+        code: "VA", name: "Vatican City", emoji: "🇻🇦", subTitle: "4 Areas", locked: false,
+        subRegions: [
+          { code: "va-vt", name: "Vatican Hill",   flagUrl: flag("va-vt") },
+          { code: "va-pa", name: "Papal Gardens",  flagUrl: flag("va-pa") },
+          { code: "va-st", name: "St. Peter's",    flagUrl: flag("va-st") },
+          { code: "va-ca", name: "Castel Gandolfo",flagUrl: flag("va-ca") },
+        ],
+      },
     ],
   },
 ]
