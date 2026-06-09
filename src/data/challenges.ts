@@ -737,14 +737,266 @@ export const CHALLENGE_CONTINENTS: ChallengeContinent[] = [
     emoji: "🌊",
     locked: false,
     countries: [
-      { code: "AU", name: "Australia", emoji: "🇦🇺", subTitle: "8 States & Territories", subRegions: [], locked: true },
-      { code: "NZ", name: "New Zealand", emoji: "🇳🇿", subTitle: "16 Regions", subRegions: [], locked: true },
-      { code: "PG", name: "Papua New Guinea", emoji: "🇵🇬", subTitle: "22 Provinces", subRegions: [], locked: true },
-      { code: "FJ", name: "Fiji", emoji: "🇫🇯", subTitle: "14 Provinces", subRegions: [], locked: true },
-      { code: "SB", name: "Solomon Islands", emoji: "🇸🇧", subTitle: "10 Provinces", subRegions: [], locked: true },
-      { code: "VU", name: "Vanuatu", emoji: "🇻🇺", subTitle: "6 Provinces", subRegions: [], locked: true },
-      { code: "WS", name: "Samoa", emoji: "🇼🇸", subTitle: "11 Districts", subRegions: [], locked: true },
-      { code: "TO", name: "Tonga", emoji: "🇹🇴", subTitle: "5 Districts", subRegions: [], locked: true },
+
+      // ── Australia (8 states & territories) ──────────────────────────────────
+      {
+        code: "AU", name: "Australia", emoji: "🇦🇺", subTitle: "8 States & Territories", locked: false,
+        subRegions: [
+          { code: "au-act", name: "Australian Capital Territory" },
+          { code: "au-nsw", name: "New South Wales" },
+          { code: "au-nt",  name: "Northern Territory" },
+          { code: "au-qld", name: "Queensland" },
+          { code: "au-sa",  name: "South Australia" },
+          { code: "au-tas", name: "Tasmania" },
+          { code: "au-vic", name: "Victoria" },
+          { code: "au-wa",  name: "Western Australia" },
+        ],
+      },
+
+      // ── Fiji (14 provinces) ──────────────────────────────────────────────────
+      {
+        code: "FJ", name: "Fiji", emoji: "🇫🇯", subTitle: "14 Provinces", locked: false,
+        subRegions: [
+          { code: "fj-ba",  name: "Ba",               group: "Western" },
+          { code: "fj-nr",  name: "Nadroga-Navosa",   group: "Western" },
+          { code: "fj-ra",  name: "Ra",               group: "Western" },
+          { code: "fj-ta",  name: "Tailevu",          group: "Western" },
+          { code: "fj-ni",  name: "Naitasiri",        group: "Central" },
+          { code: "fj-nm",  name: "Namosi",           group: "Central" },
+          { code: "fj-rw",  name: "Rewa",             group: "Central" },
+          { code: "fj-se",  name: "Serua",            group: "Central" },
+          { code: "fj-bu",  name: "Bua",              group: "Northern" },
+          { code: "fj-ca",  name: "Cakaudrove",       group: "Northern" },
+          { code: "fj-mc",  name: "Macuata",          group: "Northern" },
+          { code: "fj-kd",  name: "Kadavu",           group: "Eastern" },
+          { code: "fj-la",  name: "Lau",              group: "Eastern" },
+          { code: "fj-lm",  name: "Lomaiviti",        group: "Eastern" },
+        ],
+      },
+
+      // ── Kiribati (3 island groups) ───────────────────────────────────────────
+      {
+        code: "KI", name: "Kiribati", emoji: "🇰🇮", subTitle: "3 Island Groups", locked: false,
+        subRegions: [
+          { code: "ki-g", name: "Gilbert Islands" },
+          { code: "ki-l", name: "Line Islands" },
+          { code: "ki-p", name: "Phoenix Islands" },
+        ],
+      },
+
+      // ── Marshall Islands (24 municipalities) ────────────────────────────────
+      {
+        code: "MH", name: "Marshall Islands", emoji: "🇲🇭", subTitle: "24 Municipalities", locked: false,
+        subRegions: [
+          { code: "mh-alk", name: "Ailuk",         group: "Ratak Chain" },
+          { code: "mh-arn", name: "Arno",          group: "Ratak Chain" },
+          { code: "mh-aur", name: "Aur",           group: "Ratak Chain" },
+          { code: "mh-bik", name: "Bikini",        group: "Ratak Chain" },
+          { code: "mh-lkp", name: "Likiep",        group: "Ratak Chain" },
+          { code: "mh-maj", name: "Majuro",        group: "Ratak Chain" },
+          { code: "mh-mlo", name: "Maloelap",      group: "Ratak Chain" },
+          { code: "mh-mej", name: "Mejit",         group: "Ratak Chain" },
+          { code: "mh-mil", name: "Mili",          group: "Ratak Chain" },
+          { code: "mh-utr", name: "Utrik",         group: "Ratak Chain" },
+          { code: "mh-woj", name: "Wotje",         group: "Ratak Chain" },
+          { code: "mh-all", name: "Ailinglapalap", group: "Ralik Chain" },
+          { code: "mh-ebn", name: "Ebon",          group: "Ralik Chain" },
+          { code: "mh-enw", name: "Enewetak",      group: "Ralik Chain" },
+          { code: "mh-jab", name: "Jabat",         group: "Ralik Chain" },
+          { code: "mh-jal", name: "Jaluit",        group: "Ralik Chain" },
+          { code: "mh-kil", name: "Kili",          group: "Ralik Chain" },
+          { code: "mh-kwj", name: "Kwajalein",     group: "Ralik Chain" },
+          { code: "mh-lae", name: "Lae",           group: "Ralik Chain" },
+          { code: "mh-lib", name: "Lib",           group: "Ralik Chain" },
+          { code: "mh-nmd", name: "Namdrik",       group: "Ralik Chain" },
+          { code: "mh-nmu", name: "Namu",          group: "Ralik Chain" },
+          { code: "mh-uja", name: "Ujae",          group: "Ralik Chain" },
+          { code: "mh-wth", name: "Wotho",         group: "Ralik Chain" },
+        ],
+      },
+
+      // ── Micronesia (4 states) ────────────────────────────────────────────────
+      {
+        code: "FM", name: "Micronesia", emoji: "🇫🇲", subTitle: "4 States", locked: false,
+        subRegions: [
+          { code: "fm-ksa", name: "Kosrae" },
+          { code: "fm-pni", name: "Pohnpei" },
+          { code: "fm-trk", name: "Chuuk" },
+          { code: "fm-yap", name: "Yap" },
+        ],
+      },
+
+      // ── Nauru (14 districts) ─────────────────────────────────────────────────
+      {
+        code: "NR", name: "Nauru", emoji: "🇳🇷", subTitle: "14 Districts", locked: false,
+        subRegions: [
+          { code: "nr-01", name: "Aiwo" },
+          { code: "nr-02", name: "Anabar" },
+          { code: "nr-03", name: "Anetan" },
+          { code: "nr-04", name: "Anibare" },
+          { code: "nr-05", name: "Baiti" },
+          { code: "nr-06", name: "Boe" },
+          { code: "nr-07", name: "Buada" },
+          { code: "nr-08", name: "Denigomodu" },
+          { code: "nr-09", name: "Ewa" },
+          { code: "nr-10", name: "Ijuw" },
+          { code: "nr-11", name: "Meneng" },
+          { code: "nr-12", name: "Nibok" },
+          { code: "nr-13", name: "Uaboe" },
+          { code: "nr-14", name: "Yaren" },
+        ],
+      },
+
+      // ── New Zealand (16 regions) ─────────────────────────────────────────────
+      {
+        code: "NZ", name: "New Zealand", emoji: "🇳🇿", subTitle: "16 Regions", locked: false,
+        subRegions: [
+          { code: "nz-auk", name: "Auckland" },
+          { code: "nz-bop", name: "Bay of Plenty" },
+          { code: "nz-can", name: "Canterbury" },
+          { code: "nz-gis", name: "Gisborne" },
+          { code: "nz-hkb", name: "Hawke's Bay" },
+          { code: "nz-mbh", name: "Marlborough" },
+          { code: "nz-mwt", name: "Manawatu-Whanganui" },
+          { code: "nz-nsn", name: "Nelson" },
+          { code: "nz-ntl", name: "Northland" },
+          { code: "nz-ota", name: "Otago" },
+          { code: "nz-stl", name: "Southland" },
+          { code: "nz-tas", name: "Tasman" },
+          { code: "nz-tki", name: "Taranaki" },
+          { code: "nz-wgn", name: "Wellington" },
+          { code: "nz-wko", name: "Waikato" },
+          { code: "nz-wtc", name: "West Coast" },
+        ],
+      },
+
+      // ── Palau (16 states) ────────────────────────────────────────────────────
+      {
+        code: "PW", name: "Palau", emoji: "🇵🇼", subTitle: "16 States", locked: false,
+        subRegions: [
+          { code: "pw-002", name: "Aimeliik" },
+          { code: "pw-004", name: "Airai" },
+          { code: "pw-010", name: "Angaur" },
+          { code: "pw-050", name: "Hatohobei" },
+          { code: "pw-100", name: "Kayangel" },
+          { code: "pw-150", name: "Koror" },
+          { code: "pw-212", name: "Melekeok" },
+          { code: "pw-214", name: "Ngaraard" },
+          { code: "pw-218", name: "Ngarchelong" },
+          { code: "pw-222", name: "Ngardmau" },
+          { code: "pw-224", name: "Ngatpang" },
+          { code: "pw-226", name: "Ngchesar" },
+          { code: "pw-227", name: "Ngeremlengui" },
+          { code: "pw-228", name: "Ngiwal" },
+          { code: "pw-350", name: "Peleliu" },
+          { code: "pw-370", name: "Sonsorol" },
+        ],
+      },
+
+      // ── Papua New Guinea (22 provinces) ─────────────────────────────────────
+      {
+        code: "PG", name: "Papua New Guinea", emoji: "🇵🇬", subTitle: "22 Provinces", locked: false,
+        subRegions: [
+          { code: "pg-ncd", name: "National Capital District" },
+          { code: "pg-wpd", name: "Western" },
+          { code: "pg-gpk", name: "Gulf" },
+          { code: "pg-cpm", name: "Central" },
+          { code: "pg-mbp", name: "Milne Bay" },
+          { code: "pg-npp", name: "Northern (Oro)" },
+          { code: "pg-shm", name: "Southern Highlands" },
+          { code: "pg-hla", name: "Hela" },
+          { code: "pg-epw", name: "Enga" },
+          { code: "pg-whp", name: "Western Highlands" },
+          { code: "pg-jwk", name: "Jiwaka" },
+          { code: "pg-chm", name: "Chimbu" },
+          { code: "pg-ehg", name: "Eastern Highlands" },
+          { code: "pg-mpm", name: "Morobe" },
+          { code: "pg-mad", name: "Madang" },
+          { code: "pg-esp", name: "East Sepik" },
+          { code: "pg-san", name: "West Sepik" },
+          { code: "pg-mrl", name: "Manus" },
+          { code: "pg-nik", name: "New Ireland" },
+          { code: "pg-ebr", name: "East New Britain" },
+          { code: "pg-wbk", name: "West New Britain" },
+          { code: "pg-nsb", name: "Bougainville" },
+        ],
+      },
+
+      // ── Samoa (11 districts) ─────────────────────────────────────────────────
+      {
+        code: "WS", name: "Samoa", emoji: "🇼🇸", subTitle: "11 Districts", locked: false,
+        subRegions: [
+          { code: "ws-aa", name: "A'ana" },
+          { code: "ws-al", name: "Aiga-i-le-Tai" },
+          { code: "ws-at", name: "Atua" },
+          { code: "ws-fa", name: "Fa'asaleleaga" },
+          { code: "ws-ge", name: "Gaga'emauga" },
+          { code: "ws-gi", name: "Gagaifomauga" },
+          { code: "ws-pa", name: "Palauli" },
+          { code: "ws-sa", name: "Satupa'itea" },
+          { code: "ws-tu", name: "Tuamasaga" },
+          { code: "ws-vf", name: "Va'a-o-Fonoti" },
+          { code: "ws-vs", name: "Vaisigano" },
+        ],
+      },
+
+      // ── Solomon Islands (10 provinces) ──────────────────────────────────────
+      {
+        code: "SB", name: "Solomon Islands", emoji: "🇸🇧", subTitle: "10 Provinces", locked: false,
+        subRegions: [
+          { code: "sb-ct", name: "Capital Territory (Honiara)" },
+          { code: "sb-ce", name: "Central" },
+          { code: "sb-ch", name: "Choiseul" },
+          { code: "sb-gu", name: "Guadalcanal" },
+          { code: "sb-is", name: "Isabel" },
+          { code: "sb-mk", name: "Makira-Ulawa" },
+          { code: "sb-ml", name: "Malaita" },
+          { code: "sb-rb", name: "Rennell and Bellona" },
+          { code: "sb-te", name: "Temotu" },
+          { code: "sb-we", name: "Western" },
+        ],
+      },
+
+      // ── Tonga (5 divisions) ──────────────────────────────────────────────────
+      {
+        code: "TO", name: "Tonga", emoji: "🇹🇴", subTitle: "5 Divisions", locked: false,
+        subRegions: [
+          { code: "to-01", name: "'Eua" },
+          { code: "to-02", name: "Ha'apai" },
+          { code: "to-03", name: "Niuas" },
+          { code: "to-04", name: "Tongatapu" },
+          { code: "to-05", name: "Vava'u" },
+        ],
+      },
+
+      // ── Tuvalu (8 islands) ───────────────────────────────────────────────────
+      {
+        code: "TV", name: "Tuvalu", emoji: "🇹🇻", subTitle: "8 Islands", locked: false,
+        subRegions: [
+          { code: "tv-fun", name: "Funafuti" },
+          { code: "tv-nma", name: "Nanumea" },
+          { code: "tv-nmg", name: "Nanumanga" },
+          { code: "tv-nit", name: "Niutao" },
+          { code: "tv-nui", name: "Nui" },
+          { code: "tv-nkf", name: "Nukufetau" },
+          { code: "tv-nkl", name: "Nukulaelae" },
+          { code: "tv-vai", name: "Vaitupu" },
+        ],
+      },
+
+      // ── Vanuatu (6 provinces) ────────────────────────────────────────────────
+      {
+        code: "VU", name: "Vanuatu", emoji: "🇻🇺", subTitle: "6 Provinces", locked: false,
+        subRegions: [
+          { code: "vu-map", name: "Malampa" },
+          { code: "vu-pam", name: "Penama" },
+          { code: "vu-sam", name: "Sanma" },
+          { code: "vu-see", name: "Shefa" },
+          { code: "vu-tae", name: "Tafea" },
+          { code: "vu-tob", name: "Torba" },
+        ],
+      },
+
     ],
   },
 
