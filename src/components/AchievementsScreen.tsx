@@ -22,7 +22,7 @@ export default function AchievementsScreen({ state, onBack }: Props) {
   const pct = totalFlags ? Math.round((learned / totalFlags) * 100) : 0
 
   return (
-    <div className="min-h-screen flex flex-col" style={{ background: 'linear-gradient(135deg, #1A1033 0%, #2A1A4A 100%)' }}>
+    <div className="min-h-screen flex flex-col" style={{ background: 'linear-gradient(135deg,var(--bg-from) 0%,var(--bg-to) 100%)' }}>
       <header className="flex items-center gap-3 px-5 pt-8 pb-4">
         <button
           onClick={onBack}

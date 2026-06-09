@@ -24,7 +24,7 @@ export default function ProfileScreen({ state, onBack }: Props) {
   }
 
   return (
-    <div className="min-h-screen flex flex-col" style={{ background: "linear-gradient(135deg,#1A1033 0%,#2A1A4A 100%)", position: "relative", zIndex: 1 }}>
+    <div className="min-h-screen flex flex-col" style={{ background: "linear-gradient(135deg,var(--bg-from) 0%,var(--bg-to) 100%)", position: "relative", zIndex: 1 }}>
       <header className="flex items-center gap-3 px-5 pt-8 pb-4">
         <button onClick={onBack} className="w-9 h-9 flex items-center justify-center rounded-full text-xl"
           style={{ background: "#2D1F52", color: "#B8A9E0" }}>&#8249;</button>

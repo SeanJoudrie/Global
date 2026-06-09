@@ -95,7 +95,7 @@ export default function CapitalQuizScreen({ onBack }: Props) {
 
   if (phase === "menu") {
     return (
-      <div className="min-h-screen flex flex-col" style={{ background: "linear-gradient(135deg,#1A1033 0%,#2A1A4A 100%)" }}>
+      <div className="min-h-screen flex flex-col" style={{ background: "linear-gradient(135deg,var(--bg-from) 0%,var(--bg-to) 100%)" }}>
         <header className="flex items-center gap-3 px-5 pt-8 pb-4" style={{ zIndex: 1, position: "relative" }}>
           <button onClick={onBack} className="w-9 h-9 flex items-center justify-center rounded-full text-xl"
             style={{ background: "#2D1F52", color: "#B8A9E0" }}>&#8249;</button>
@@ -137,7 +137,7 @@ export default function CapitalQuizScreen({ onBack }: Props) {
     const pct = Math.round((score / TOTAL) * 100)
     return (
       <div className="min-h-screen flex flex-col items-center justify-center px-5"
-        style={{ background: "linear-gradient(135deg,#1A1033 0%,#2A1A4A 100%)" }}>
+        style={{ background: "linear-gradient(135deg,var(--bg-from) 0%,var(--bg-to) 100%)" }}>
         <div className="w-full max-w-sm" style={{ zIndex: 1, position: "relative" }}>
           <div className="rounded-2xl p-6 mb-4 text-center"
             style={{ background: "#2D1F52", border: "1px solid #8B6CFF44", boxShadow: "0 0 32px #8B6CFF22" }}>
@@ -167,7 +167,7 @@ export default function CapitalQuizScreen({ onBack }: Props) {
   if (!q) return null
 
   return (
-    <div className="min-h-screen flex flex-col" style={{ background: "linear-gradient(135deg,#1A1033 0%,#2A1A4A 100%)" }}>
+    <div className="min-h-screen flex flex-col" style={{ background: "linear-gradient(135deg,var(--bg-from) 0%,var(--bg-to) 100%)" }}>
       <header className="flex items-center justify-between px-5 pt-8 pb-2" style={{ zIndex: 1 }}>
         <button onClick={onBack} className="w-9 h-9 flex items-center justify-center rounded-full text-xl"
           style={{ background: "#2D1F52", color: "#B8A9E0" }}>&#8249;</button>

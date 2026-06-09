@@ -71,7 +71,7 @@ export default function CodexScreen({ onBack }: Props) {
     const hasSubdivisions = subRegions.length > 0
 
     return (
-      <div className="min-h-screen flex flex-col" style={{ background: 'linear-gradient(135deg,#1A1033 0%,#2A1A4A 100%)', position: 'relative', zIndex: 1 }}>
+      <div className="min-h-screen flex flex-col" style={{ background: 'linear-gradient(135deg,var(--bg-from) 0%,var(--bg-to) 100%)', position: 'relative', zIndex: 1 }}>
         <header className="flex items-center gap-3 px-5 pt-8 pb-4">
           <button onClick={() => setPhase('list')}
             className="w-9 h-9 flex items-center justify-center rounded-full text-xl"
@@ -197,7 +197,7 @@ export default function CodexScreen({ onBack }: Props) {
   }
 
   return (
-    <div className="min-h-screen flex flex-col" style={{ background: 'linear-gradient(135deg,#1A1033 0%,#2A1A4A 100%)', position: 'relative', zIndex: 1 }}>
+    <div className="min-h-screen flex flex-col" style={{ background: 'linear-gradient(135deg,var(--bg-from) 0%,var(--bg-to) 100%)', position: 'relative', zIndex: 1 }}>
       <header className="flex items-center gap-3 px-5 pt-8 pb-3">
         <button onClick={onBack}
           className="w-9 h-9 flex items-center justify-center rounded-full text-xl"

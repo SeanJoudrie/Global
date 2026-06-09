@@ -41,6 +41,13 @@ export const THEMES: Theme[] = [
     bgFrom: '#1A0808', bgTo: '#2A1010',
     cardBg: '#2D1212', accent: '#F43F5E', accentLight: '#FB7185', muted: '#FCA5A5',
   },
+  {
+    id: 'teal',
+    name: 'Arctic Teal',
+    icon: '🧊',
+    bgFrom: '#011C1A', bgTo: '#042E2B',
+    cardBg: '#063832', accent: '#14B8A6', accentLight: '#2DD4BF', muted: '#99F6E4',
+  },
 ]
 
 export const THEME_STORAGE_KEY = 'globalio_theme'
@@ -65,7 +72,7 @@ export default function SettingsScreen({ onBack }: Props) {
 
   return (
     <div className="min-h-screen flex flex-col" style={{
-      background: 'linear-gradient(135deg,#1A1033 0%,#2A1A4A 100%)',
+      background: 'linear-gradient(135deg,var(--bg-from) 0%,var(--bg-to) 100%)',
       position: 'relative', zIndex: 1,
     }}>
       <header className="flex items-center gap-3 px-5 pt-8 pb-6">

@@ -12,7 +12,7 @@ interface GeoQuestion {
 }
 
 function shapeUrl(code: string) {
-  return `https://raw.githubusercontent.com/djaiss/mapsicon/master/all/${code.toLowerCase()}/512.png`
+  return `https://cdn.jsdelivr.net/gh/djaiss/mapsicon@master/all/${code.toLowerCase()}/512.png`
 }
 
 function buildChoices(target: FlagRecord, seed: string): FlagRecord[] {
@@ -66,7 +66,7 @@ export default function GeoQuizScreen({ onBack }: Props) {
     const color = pct >= 0.8 ? '#34D399' : pct >= 0.5 ? '#F59E0B' : '#F43F5E'
     return (
       <div className="min-h-screen flex flex-col items-center justify-center px-5"
-        style={{ background: 'linear-gradient(135deg,#1A1033 0%,#2A1A4A 100%)' }}>
+        style={{ background: 'linear-gradient(135deg,var(--bg-from) 0%,var(--bg-to) 100%)' }}>
         <div style={{ fontSize: 64, marginBottom: 16 }}>🌍</div>
         <div style={{ fontSize: 48, fontWeight: 900, color }} className="mb-2">{score}/{questions.length}</div>
         <div style={{ color: '#B8A9E0', marginBottom: 32 }}>
@@ -89,7 +89,7 @@ export default function GeoQuizScreen({ onBack }: Props) {
   }
 
   return (
-    <div className="min-h-screen flex flex-col" style={{ background: 'linear-gradient(135deg,#1A1033 0%,#2A1A4A 100%)', position: 'relative', zIndex: 1 }}>
+    <div className="min-h-screen flex flex-col" style={{ background: 'linear-gradient(135deg,var(--bg-from) 0%,var(--bg-to) 100%)', position: 'relative', zIndex: 1 }}>
       <header className="flex items-center gap-3 px-5 pt-8 pb-4">
         <button onClick={onBack} className="w-9 h-9 flex items-center justify-center rounded-full text-xl"
           style={{ background: '#2D1F52', color: '#B8A9E0' }}>‹</button>

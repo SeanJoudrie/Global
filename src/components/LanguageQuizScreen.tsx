@@ -9,14 +9,28 @@ type Phase = "menu" | "quiz" | "result"
 
 function getChoices(target: LanguageRecord, all: LanguageRecord[], seed: string): LanguageRecord[] {
   const rng = seededRandom(seed + target.code)
+  // 1. Prefer languages explicitly listed as confusable
   const confusable = target.confusableWith
     .map(c => all.find(l => l.code === c))
     .filter((l): l is LanguageRecord => !!l && l.code !== target.code)
     .sort(() => rng() - 0.5).slice(0, 2)
-  const rest = all
-    .filter(l => l.code !== target.code && !confusable.find(c => c.code === l.code))
-    .sort(() => rng() - 0.5).slice(0, 3 - confusable.length)
-  return [target, ...confusable, ...rest].sort(() => rng() - 0.5)
+  if (confusable.length < 3) {
+    // 2. Fill with same-script languages before going fully random
+    const sameScript = all
+      .filter(l => l.code !== target.code
+        && l.isLatinScript === target.isLatinScript
+        && !confusable.find(c => c.code === l.code))
+      .sort(() => rng() - 0.5)
+    confusable.push(...sameScript.slice(0, 3 - confusable.length))
+  }
+  if (confusable.length < 3) {
+    // 3. Last resort: anything
+    const rest = all
+      .filter(l => l.code !== target.code && !confusable.find(c => c.code === l.code))
+      .sort(() => rng() - 0.5)
+    confusable.push(...rest.slice(0, 3 - confusable.length))
+  }
+  return [target, ...confusable.slice(0, 3)].sort(() => rng() - 0.5)
 }
 
 const DIFF_COLORS: Record<Difficulty, { bg: string; border: string; label: string }> = {
@@ -70,7 +84,7 @@ export default function LanguageQuizScreen({ onBack }: Props) {
 
   if (phase === "menu") {
     return (
-      <div className="min-h-screen flex flex-col" style={{ background: "linear-gradient(135deg,#1A1033 0%,#2A1A4A 100%)" }}>
+      <div className="min-h-screen flex flex-col" style={{ background: "linear-gradient(135deg,var(--bg-from) 0%,var(--bg-to) 100%)" }}>
         <header className="flex items-center gap-3 px-5 pt-8 pb-4" style={{ zIndex: 1, position: "relative" }}>
           <button onClick={onBack} className="w-9 h-9 flex items-center justify-center rounded-full text-xl"
             style={{ background: "#2D1F52", color: "#B8A9E0" }}>&#8249;</button>
@@ -105,7 +119,7 @@ export default function LanguageQuizScreen({ onBack }: Props) {
     const pct = Math.round((score / TOTAL) * 100)
     return (
       <div className="min-h-screen flex flex-col items-center justify-center px-5"
-        style={{ background: "linear-gradient(135deg,#1A1033 0%,#2A1A4A 100%)" }}>
+        style={{ background: "linear-gradient(135deg,var(--bg-from) 0%,var(--bg-to) 100%)" }}>
         <div className="w-full max-w-sm" style={{ zIndex: 1, position: "relative" }}>
           <div className="rounded-2xl p-6 mb-4 text-center"
             style={{ background: "#2D1F52", border: "1px solid #8B6CFF44", boxShadow: "0 0 32px #8B6CFF22" }}>
@@ -142,7 +156,7 @@ export default function LanguageQuizScreen({ onBack }: Props) {
   const diff = DIFF_COLORS[difficulty]
 
   return (
-    <div className="min-h-screen flex flex-col" style={{ background: "linear-gradient(135deg,#1A1033 0%,#2A1A4A 100%)" }}>
+    <div className="min-h-screen flex flex-col" style={{ background: "linear-gradient(135deg,var(--bg-from) 0%,var(--bg-to) 100%)" }}>
       <header className="flex items-center justify-between px-5 pt-8 pb-2" style={{ zIndex: 1, position: "relative" }}>
         <button onClick={onBack} className="w-9 h-9 flex items-center justify-center rounded-full text-xl"
           style={{ background: "#2D1F52", color: "#B8A9E0" }}>&#8249;</button>

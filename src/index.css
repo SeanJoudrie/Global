@@ -1,5 +1,14 @@
 @import "tailwindcss";
 
+:root {
+  --bg-from: #1A1033;
+  --bg-to: #2A1A4A;
+  --card-bg: #2D1F52;
+  --accent: #8B6CFF;
+  --accent-light: #A78BFA;
+  --text-muted: #B8A9E0;
+}
+
 @theme {
   --color-space-deep: #1A1033;
   --color-space-mid: #2A1A4A;
@@ -20,7 +29,7 @@
 }
 
 body {
-  background: linear-gradient(135deg, #1A1033 0%, #2A1A4A 100%);
+  background: linear-gradient(135deg, var(--bg-from) 0%, var(--bg-to) 100%);
   min-height: 100vh;
   color: #F5F3FF;
 }

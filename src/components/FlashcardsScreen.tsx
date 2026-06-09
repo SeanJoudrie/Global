@@ -100,7 +100,7 @@ export default function FlashcardsScreen({ onBack, onQuizSet }: Props) {
   if (mode === 'menu') {
     const recent = recentCodes.map(c => sourceFlags.find(f => f.code === c)).filter(Boolean) as typeof FLAGS
     return (
-      <div className="min-h-screen flex flex-col" style={{ background: 'linear-gradient(135deg,#1A1033 0%,#2A1A4A 100%)' }}>
+      <div className="min-h-screen flex flex-col" style={{ background: 'linear-gradient(135deg,var(--bg-from) 0%,var(--bg-to) 100%)' }}>
         <header className="flex items-center gap-3 px-5 pt-8 pb-4" style={{ zIndex: 1, position: 'relative' }}>
           <button onClick={onBack} className="w-9 h-9 flex items-center justify-center rounded-full text-xl"
             style={{ background: '#2D1F52', color: '#B8A9E0' }}>‹</button>
@@ -167,7 +167,7 @@ export default function FlashcardsScreen({ onBack, onQuizSet }: Props) {
   }
 
   return (
-    <div className="min-h-screen flex flex-col" style={{ background: 'linear-gradient(135deg,#1A1033 0%,#2A1A4A 100%)' }}>
+    <div className="min-h-screen flex flex-col" style={{ background: 'linear-gradient(135deg,var(--bg-from) 0%,var(--bg-to) 100%)' }}>
       <header className="flex items-center gap-3 px-5 pt-8 pb-2" style={{ zIndex: 1, position: 'relative' }}>
         <button onClick={() => setMode('menu')} className="w-9 h-9 flex items-center justify-center rounded-full text-xl"
           style={{ background: '#2D1F52', color: '#B8A9E0' }}>‹</button>

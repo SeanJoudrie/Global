@@ -96,10 +96,19 @@ export default function App() {
     startSet(activeQuiz.setId, activeQuiz.setFlags)
   }, [activeQuiz, startQuickPlay, startReverseQuiz, startSet])
 
-  const theme = loadTheme()
+  useEffect(() => {
+    const t = loadTheme()
+    const r = document.documentElement.style
+    r.setProperty('--bg-from', t.bgFrom)
+    r.setProperty('--bg-to', t.bgTo)
+    r.setProperty('--card-bg', t.cardBg)
+    r.setProperty('--accent', t.accent)
+    r.setProperty('--accent-light', t.accentLight)
+    r.setProperty('--text-muted', t.muted)
+  }, [])
 
   return (
-    <div style={{ background: `linear-gradient(135deg,${theme.bgFrom} 0%,${theme.bgTo} 100%)`, minHeight: "100vh" }}>
+    <div style={{ background: 'linear-gradient(135deg,var(--bg-from) 0%,var(--bg-to) 100%)', minHeight: "100vh" }}>
       {screen !== "splash" && <StarField />}
 
       {screen === "splash" && <SplashScreen onDone={() => setScreen("home")} />}

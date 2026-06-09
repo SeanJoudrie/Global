@@ -36,7 +36,7 @@ export default function ResultScreen({ score, total, answers, isDaily, setLabel,
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center px-5"
-      style={{ background: 'linear-gradient(135deg, #1A1033 0%, #2A1A4A 100%)' }}>
+      style={{ background: 'linear-gradient(135deg,var(--bg-from) 0%,var(--bg-to) 100%)' }}>
 
       <div className="w-full max-w-sm animate-slide-up">
         {/* Score card */}
