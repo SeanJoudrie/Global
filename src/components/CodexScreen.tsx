@@ -3,6 +3,7 @@ import { FLAGS } from '../data/flags'
 import { CODEX } from '../data/codex'
 import type { HistoricalFlag } from '../data/codex'
 import { CHALLENGE_CONTINENTS } from '../data/challenges'
+import type { SubRegion } from '../data/challenges'
 
 interface Props {
   onBack: () => void
@@ -175,19 +176,7 @@ export default function CodexScreen({ onBack }: Props) {
               </button>
 
               {subdivisionsExpanded && (
-                <div className="mt-3" style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: '10px 6px' }}>
-                  {subRegions.map(sr => (
-                    <div key={sr.code} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4 }}>
-                      <img
-                        src={sr.flagUrl}
-                        alt={sr.name}
-                        style={{ width: '100%', aspectRatio: '3/2', objectFit: 'contain', borderRadius: 4, display: 'block' }}
-                        onError={e => { (e.target as HTMLImageElement).replaceWith(Object.assign(document.createElement('div'), { textContent: '🏳️', style: 'font-size:18px;text-align:center' })) }}
-                      />
-                      <span style={{ fontSize: 8.5, color: '#B8A9E0', textAlign: 'center', lineHeight: 1.2, wordBreak: 'break-word' }}>{sr.name}</span>
-                    </div>
-                  ))}
-                </div>
+                <SubdivisionGrid subRegions={subRegions} />
               )}
             </div>
           )}
@@ -293,6 +282,58 @@ export default function CodexScreen({ onBack }: Props) {
           })
         )}
       </div>
+    </div>
+  )
+}
+
+function SubRegionTile({ sr }: { sr: SubRegion }) {
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4 }}>
+      <img
+        src={sr.flagUrl}
+        alt={sr.name}
+        style={{ width: '100%', aspectRatio: '3/2', objectFit: 'contain', borderRadius: 4, display: 'block' }}
+        onError={e => { (e.target as HTMLImageElement).replaceWith(Object.assign(document.createElement('div'), { textContent: '🏳️', style: 'font-size:18px;text-align:center' })) }}
+      />
+      <span style={{ fontSize: 8.5, color: '#B8A9E0', textAlign: 'center', lineHeight: 1.2, wordBreak: 'break-word' }}>{sr.name}</span>
+    </div>
+  )
+}
+
+function SubdivisionGrid({ subRegions }: { subRegions: SubRegion[] }) {
+  const hasGroups = subRegions.some(sr => sr.group)
+  if (!hasGroups) {
+    return (
+      <div className="mt-3" style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: '10px 6px' }}>
+        {subRegions.map(sr => <SubRegionTile key={sr.code} sr={sr} />)}
+      </div>
+    )
+  }
+  const groups: { label: string; items: SubRegion[] }[] = []
+  for (const sr of subRegions) {
+    const label = sr.group ?? 'Other'
+    let g = groups.find(g => g.label === label)
+    if (!g) { g = { label, items: [] }; groups.push(g) }
+    g.items.push(sr)
+  }
+  return (
+    <div className="mt-3" style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+      {groups.map(g => (
+        <div key={g.label}>
+          <div style={{
+            fontSize: 10, fontWeight: 700, color: '#34D399',
+            letterSpacing: '0.1em', textTransform: 'uppercase',
+            marginBottom: 8, paddingLeft: 2,
+            display: 'flex', alignItems: 'center', gap: 6,
+          }}>
+            {g.label}
+            <span style={{ color: '#34D39966', fontWeight: 400 }}>{g.items.length}</span>
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: '10px 6px' }}>
+            {g.items.map(sr => <SubRegionTile key={sr.code} sr={sr} />)}
+          </div>
+        </div>
+      ))}
     </div>
   )
 }
