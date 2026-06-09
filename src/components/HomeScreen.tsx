@@ -19,6 +19,7 @@ interface Props {
   onGoCodex: () => void
   onGoGeo: () => void
   onGoGauntlet: () => void
+  onGoTierList: () => void
   onGoSettings: () => void
 }
 
@@ -40,7 +41,7 @@ const ComingSoonTile = ({ emoji, label, desc }: { emoji: string; label: string; 
 export default function HomeScreen({
   state, onStartDaily, onGoFlags, onGoProfile, onGoFlashcards,
   onGoLanguage, onQuickPlay, onGoReverseQuiz, onGoCapitalQuiz, onGoChallenge, onGoCodex,
-  onGoGeo, onGoGauntlet, onGoSettings,
+  onGoGeo, onGoGauntlet, onGoTierList, onGoSettings,
 }: Props) {
   const today = todayString()
   const dailyDone = state.lastDailyDate === today
@@ -193,7 +194,7 @@ export default function HomeScreen({
             <span className="text-2xl">🌐</span>
             <div className="text-left">
               <div className="font-bold" style={{ color: "#F5F3FF" }}>Guess the Language</div>
-              <div className="text-xs" style={{ color: "#B8A9E0" }}>50 languages · 3 difficulties</div>
+              <div className="text-xs" style={{ color: "#B8A9E0" }}>76 languages · easy → extreme</div>
             </div>
           </div>
           <span style={{ color: "#F59E0B" }}>›</span>
@@ -242,6 +243,19 @@ export default function HomeScreen({
             </div>
           </div>
           <span style={{ color: "#F43F5E" }}>›</span>
+        </button>
+
+        <button onClick={onGoTierList}
+          className="w-full flex items-center justify-between px-5 py-4 rounded-2xl transition-all active:scale-[0.98] hover:brightness-110"
+          style={{ background: "#2D1F52", border: "1px solid #8B6CFF44" }}>
+          <div className="flex items-center gap-3">
+            <span className="text-2xl">🏅</span>
+            <div className="text-left">
+              <div className="font-bold" style={{ color: "#F5F3FF" }}>Tier List Maker</div>
+              <div className="text-xs" style={{ color: "#B8A9E0" }}>Rank flags S–F · drag &amp; drop</div>
+            </div>
+          </div>
+          <span style={{ color: "#8B6CFF" }}>›</span>
         </button>
 
         <button onClick={onGoChallenge}
