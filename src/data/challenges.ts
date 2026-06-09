@@ -707,26 +707,472 @@ export const CHALLENGE_CONTINENTS: ChallengeContinent[] = [
   },
 
   // ── AFRICA ────────────────────────────────────────────────────────────────
+  // NOTE ON FLAGS: Unlike Europe / the US, the great majority of African first-level
+  // subdivisions have NO official flag (provinces, governorates, counties, wilayas are
+  // usually purely administrative). Those tiles are name-only — same convention used for
+  // Irish counties and UK English regions above. Flags are added only where one genuinely
+  // exists (notably Ethiopia's regional states and Tanzania's Zanzibar).
   {
     id: "africa",
     name: "Africa",
     emoji: "🌍",
     locked: false,
     countries: [
-      { code: "NG", name: "Nigeria", emoji: "🇳🇬", subTitle: "36 States", subRegions: [], locked: true },
-      { code: "ZA", name: "South Africa", emoji: "🇿🇦", subTitle: "9 Provinces", subRegions: [], locked: true },
-      { code: "ET", name: "Ethiopia", emoji: "🇪🇹", subTitle: "12 Regions", subRegions: [], locked: true },
-      { code: "EG", name: "Egypt", emoji: "🇪🇬", subTitle: "27 Governorates", subRegions: [], locked: true },
-      { code: "CD", name: "DR Congo", emoji: "🇨🇩", subTitle: "26 Provinces", subRegions: [], locked: true },
-      { code: "TZ", name: "Tanzania", emoji: "🇹🇿", subTitle: "31 Regions", subRegions: [], locked: true },
-      { code: "KE", name: "Kenya", emoji: "🇰🇪", subTitle: "47 Counties", subRegions: [], locked: true },
-      { code: "GH", name: "Ghana", emoji: "🇬🇭", subTitle: "16 Regions", subRegions: [], locked: true },
-      { code: "MA", name: "Morocco", emoji: "🇲🇦", subTitle: "12 Regions", subRegions: [], locked: true },
-      { code: "DZ", name: "Algeria", emoji: "🇩🇿", subTitle: "58 Provinces", subRegions: [], locked: true },
-      { code: "AO", name: "Angola", emoji: "🇦🇴", subTitle: "18 Provinces", subRegions: [], locked: true },
-      { code: "MZ", name: "Mozambique", emoji: "🇲🇿", subTitle: "10 Provinces", subRegions: [], locked: true },
-      { code: "CM", name: "Cameroon", emoji: "🇨🇲", subTitle: "10 Regions", subRegions: [], locked: true },
-      { code: "SN", name: "Senegal", emoji: "🇸🇳", subTitle: "14 Regions", subRegions: [], locked: true },
+
+      // ── Nigeria (36 states + Federal Capital Territory) ──────────────────
+      // Breaks down weird: Abuja (FCT) is a federal territory, NOT a state, so it is
+      // grouped separately. Nigerian states have official seals but no flags.
+      {
+        code: "NG", name: "Nigeria", emoji: "🇳🇬", subTitle: "36 States + FCT", locked: false,
+        subRegions: [
+          { code: "ng-ab", name: "Abia",        group: "States" },
+          { code: "ng-ad", name: "Adamawa",     group: "States" },
+          { code: "ng-ak", name: "Akwa Ibom",   group: "States" },
+          { code: "ng-an", name: "Anambra",     group: "States" },
+          { code: "ng-ba", name: "Bauchi",      group: "States" },
+          { code: "ng-by", name: "Bayelsa",     group: "States" },
+          { code: "ng-be", name: "Benue",       group: "States" },
+          { code: "ng-bo", name: "Borno",       group: "States" },
+          { code: "ng-cr", name: "Cross River", group: "States" },
+          { code: "ng-de", name: "Delta",       group: "States" },
+          { code: "ng-eb", name: "Ebonyi",      group: "States" },
+          { code: "ng-ed", name: "Edo",         group: "States" },
+          { code: "ng-ek", name: "Ekiti",       group: "States" },
+          { code: "ng-en", name: "Enugu",       group: "States" },
+          { code: "ng-go", name: "Gombe",       group: "States" },
+          { code: "ng-im", name: "Imo",         group: "States" },
+          { code: "ng-ji", name: "Jigawa",      group: "States" },
+          { code: "ng-kd", name: "Kaduna",      group: "States" },
+          { code: "ng-kn", name: "Kano",        group: "States" },
+          { code: "ng-kt", name: "Katsina",     group: "States" },
+          { code: "ng-ke", name: "Kebbi",       group: "States" },
+          { code: "ng-ko", name: "Kogi",        group: "States" },
+          { code: "ng-kw", name: "Kwara",       group: "States" },
+          { code: "ng-la", name: "Lagos",       group: "States" },
+          { code: "ng-na", name: "Nasarawa",    group: "States" },
+          { code: "ng-ni", name: "Niger",       group: "States" },
+          { code: "ng-og", name: "Ogun",        group: "States" },
+          { code: "ng-on", name: "Ondo",        group: "States" },
+          { code: "ng-os", name: "Osun",        group: "States" },
+          { code: "ng-oy", name: "Oyo",         group: "States" },
+          { code: "ng-pl", name: "Plateau",     group: "States" },
+          { code: "ng-ri", name: "Rivers",      group: "States" },
+          { code: "ng-so", name: "Sokoto",      group: "States" },
+          { code: "ng-ta", name: "Taraba",      group: "States" },
+          { code: "ng-yo", name: "Yobe",        group: "States" },
+          { code: "ng-za", name: "Zamfara",     group: "States" },
+          { code: "ng-fc", name: "Abuja (FCT)", group: "Federal Capital Territory" },
+        ],
+      },
+
+      // ── South Africa (9 provinces) ───────────────────────────────────────
+      // Most provinces have coats of arms but no official flags; only Mpumalanga has one.
+      {
+        code: "ZA", name: "South Africa", emoji: "🇿🇦", subTitle: "9 Provinces", locked: false,
+        subRegions: [
+          { code: "za-ec",  name: "Eastern Cape" },
+          { code: "za-fs",  name: "Free State" },
+          { code: "za-gp",  name: "Gauteng" },
+          { code: "za-kzn", name: "KwaZulu-Natal" },
+          { code: "za-lp",  name: "Limpopo" },
+          { code: "za-mp",  name: "Mpumalanga", flagUrl: wiki("Flag of Mpumalanga Province.svg") },
+          { code: "za-nc",  name: "Northern Cape" },
+          { code: "za-nw",  name: "North West" },
+          { code: "za-wc",  name: "Western Cape" },
+        ],
+      },
+
+      // ── Ethiopia (12 regional states + 2 chartered cities) ───────────────
+      // Breaks down weird: Ethiopia has 12 ethnically-based regional states PLUS two
+      // self-governing chartered cities (Addis Ababa, Dire Dawa) — grouped separately.
+      // The old SNNPR has been split since 2020 into Sidama, South West, South & Central
+      // Ethiopia. Regional states are among the few African subdivisions with real flags.
+      {
+        code: "ET", name: "Ethiopia", emoji: "🇪🇹", subTitle: "12 Regions + 2 Cities", locked: false,
+        subRegions: [
+          { code: "et-ti", name: "Tigray",              flagUrl: wiki("Flag of the Tigray Region.svg"),                   group: "Regional States" },
+          { code: "et-af", name: "Afar",                flagUrl: wiki("Flag of the Afar Region.svg"),                     group: "Regional States" },
+          { code: "et-am", name: "Amhara",              flagUrl: wiki("Flag of the Amhara Region.svg"),                   group: "Regional States" },
+          { code: "et-or", name: "Oromia",              flagUrl: wiki("Flag of the Oromia Region.svg"),                   group: "Regional States" },
+          { code: "et-so", name: "Somali",              flagUrl: wiki("Flag of the Somali Region (1994-2008, 2018-).svg"),group: "Regional States" },
+          { code: "et-be", name: "Benishangul-Gumuz",   flagUrl: wiki("Flag of the Benishangul-Gumuz Region.svg"),        group: "Regional States" },
+          // Commons spells this "Gambella" (double-L) even though the region is "Gambela"
+          { code: "et-ga", name: "Gambela",             flagUrl: wiki("Flag of the Gambella Region.svg"),                 group: "Regional States" },
+          // Harari's file is literally "Harari Flag.svg", not the usual "Flag of the … Region" pattern
+          { code: "et-ha", name: "Harari",              flagUrl: wiki("Harari Flag.svg"),                                 group: "Regional States" },
+          { code: "et-si", name: "Sidama",              flagUrl: wiki("Flag of Sidama.svg"),                              group: "Regional States" },
+          { code: "et-sw", name: "South West Ethiopia", flagUrl: wiki("Flag of South West Ethiopia.svg"),                 group: "Regional States" },
+          // South Ethiopia (new 2023 region) only has a PNG on Commons, no SVG
+          { code: "et-se", name: "South Ethiopia",      flagUrl: wiki("Flag of Southern Ethiopia.png"),                   group: "Regional States" },
+          { code: "et-ce", name: "Central Ethiopia",    flagUrl: wiki("Flag of Central Ethiopia Regional State.svg"),     group: "Regional States" },
+          { code: "et-aa", name: "Addis Ababa",         flagUrl: wiki("Flag of Addis Ababa.svg"),                         group: "Chartered Cities" },
+          // Dire Dawa has a city flag in reality but no verified Commons file — left name-only
+          { code: "et-dd", name: "Dire Dawa",                                                                             group: "Chartered Cities" },
+        ],
+      },
+
+      // ── Egypt (27 governorates) ──────────────────────────────────────────
+      // Governorates use emblems, not flags.
+      {
+        code: "EG", name: "Egypt", emoji: "🇪🇬", subTitle: "27 Governorates", locked: false,
+        subRegions: [
+          { code: "eg-c",   name: "Cairo" },
+          { code: "eg-gz",  name: "Giza" },
+          { code: "eg-alx", name: "Alexandria" },
+          { code: "eg-dk",  name: "Dakahlia" },
+          { code: "eg-bh",  name: "Beheira" },
+          { code: "eg-fym", name: "Faiyum" },
+          { code: "eg-gh",  name: "Gharbia" },
+          { code: "eg-is",  name: "Ismailia" },
+          { code: "eg-mnf", name: "Monufia" },
+          { code: "eg-mn",  name: "Minya" },
+          { code: "eg-kb",  name: "Qalyubia" },
+          { code: "eg-wad", name: "New Valley" },
+          { code: "eg-suz", name: "Suez" },
+          { code: "eg-asn", name: "Aswan" },
+          { code: "eg-ast", name: "Asyut" },
+          { code: "eg-bns", name: "Beni Suef" },
+          { code: "eg-pts", name: "Port Said" },
+          { code: "eg-dt",  name: "Damietta" },
+          { code: "eg-shr", name: "Sharqia" },
+          { code: "eg-js",  name: "South Sinai" },
+          { code: "eg-kfs", name: "Kafr el-Sheikh" },
+          { code: "eg-mt",  name: "Matrouh" },
+          { code: "eg-lx",  name: "Luxor" },
+          { code: "eg-qna", name: "Qena" },
+          { code: "eg-sin", name: "North Sinai" },
+          { code: "eg-shg", name: "Sohag" },
+          { code: "eg-ba",  name: "Red Sea" },
+        ],
+      },
+
+      // ── DR Congo (26 provinces) ──────────────────────────────────────────
+      // Reorganised from 11 to 26 provinces in 2015; provinces have no official flags.
+      {
+        code: "CD", name: "DR Congo", emoji: "🇨🇩", subTitle: "26 Provinces", locked: false,
+        subRegions: [
+          { code: "cd-kn", name: "Kinshasa" },
+          { code: "cd-bc", name: "Kongo Central" },
+          { code: "cd-kg", name: "Kwango" },
+          { code: "cd-kl", name: "Kwilu" },
+          { code: "cd-mn", name: "Mai-Ndombe" },
+          { code: "cd-ks", name: "Kasaï" },
+          { code: "cd-kc", name: "Kasaï-Central" },
+          { code: "cd-ke", name: "Kasaï-Oriental" },
+          { code: "cd-lo", name: "Lomami" },
+          { code: "cd-sa", name: "Sankuru" },
+          { code: "cd-ma", name: "Maniema" },
+          { code: "cd-sk", name: "South Kivu" },
+          { code: "cd-nk", name: "North Kivu" },
+          { code: "cd-it", name: "Ituri" },
+          { code: "cd-hu", name: "Haut-Uélé" },
+          { code: "cd-to", name: "Tshopo" },
+          { code: "cd-bu", name: "Bas-Uélé" },
+          { code: "cd-nu", name: "Nord-Ubangi" },
+          { code: "cd-mo", name: "Mongala" },
+          { code: "cd-su", name: "Sud-Ubangi" },
+          { code: "cd-eq", name: "Équateur" },
+          { code: "cd-tu", name: "Tshuapa" },
+          { code: "cd-ta", name: "Tanganyika" },
+          { code: "cd-hl", name: "Haut-Lomami" },
+          { code: "cd-lu", name: "Lualaba" },
+          { code: "cd-hk", name: "Haut-Katanga" },
+        ],
+      },
+
+      // ── Tanzania (31 regions: 26 mainland + 5 Zanzibar) ──────────────────
+      // Breaks down weird: Zanzibar is a semi-autonomous archipelago with its own
+      // government and flag — its 5 regions are grouped apart from the 26 mainland ones.
+      {
+        code: "TZ", name: "Tanzania", emoji: "🇹🇿", subTitle: "31 Regions", locked: false,
+        subRegions: [
+          { code: "tz-arusha",     name: "Arusha",         group: "Mainland" },
+          { code: "tz-dar",        name: "Dar es Salaam",  group: "Mainland" },
+          { code: "tz-dodoma",     name: "Dodoma",         group: "Mainland" },
+          { code: "tz-geita",      name: "Geita",          group: "Mainland" },
+          { code: "tz-iringa",     name: "Iringa",         group: "Mainland" },
+          { code: "tz-kagera",     name: "Kagera",         group: "Mainland" },
+          { code: "tz-katavi",     name: "Katavi",         group: "Mainland" },
+          { code: "tz-kigoma",     name: "Kigoma",         group: "Mainland" },
+          { code: "tz-kilimanjaro",name: "Kilimanjaro",    group: "Mainland" },
+          { code: "tz-lindi",      name: "Lindi",          group: "Mainland" },
+          { code: "tz-manyara",    name: "Manyara",        group: "Mainland" },
+          { code: "tz-mara",       name: "Mara",           group: "Mainland" },
+          { code: "tz-mbeya",      name: "Mbeya",          group: "Mainland" },
+          { code: "tz-morogoro",   name: "Morogoro",       group: "Mainland" },
+          { code: "tz-mtwara",     name: "Mtwara",         group: "Mainland" },
+          { code: "tz-mwanza",     name: "Mwanza",         group: "Mainland" },
+          { code: "tz-njombe",     name: "Njombe",         group: "Mainland" },
+          { code: "tz-pwani",      name: "Pwani (Coast)",  group: "Mainland" },
+          { code: "tz-rukwa",      name: "Rukwa",          group: "Mainland" },
+          { code: "tz-ruvuma",     name: "Ruvuma",         group: "Mainland" },
+          { code: "tz-shinyanga",  name: "Shinyanga",      group: "Mainland" },
+          { code: "tz-simiyu",     name: "Simiyu",         group: "Mainland" },
+          { code: "tz-singida",    name: "Singida",        group: "Mainland" },
+          { code: "tz-songwe",     name: "Songwe",         group: "Mainland" },
+          { code: "tz-tabora",     name: "Tabora",         group: "Mainland" },
+          { code: "tz-tanga",      name: "Tanga",          group: "Mainland" },
+          { code: "tz-zn-north",   name: "Zanzibar North", group: "Zanzibar" },
+          { code: "tz-zn-central", name: "Zanzibar Central/South", group: "Zanzibar" },
+          { code: "tz-zn-urban",   name: "Zanzibar Urban/West",    group: "Zanzibar" },
+          { code: "tz-pemba-north",name: "Pemba North",    group: "Zanzibar" },
+          { code: "tz-pemba-south",name: "Pemba South",    group: "Zanzibar" },
+        ],
+      },
+
+      // ── Kenya (47 counties) ──────────────────────────────────────────────
+      // Counties (created by the 2010 constitution) have logos/seals but no flags.
+      {
+        code: "KE", name: "Kenya", emoji: "🇰🇪", subTitle: "47 Counties", locked: false,
+        subRegions: [
+          { code: "ke-mombasa",        name: "Mombasa" },
+          { code: "ke-kwale",          name: "Kwale" },
+          { code: "ke-kilifi",         name: "Kilifi" },
+          { code: "ke-tana-river",     name: "Tana River" },
+          { code: "ke-lamu",           name: "Lamu" },
+          { code: "ke-taita-taveta",   name: "Taita-Taveta" },
+          { code: "ke-garissa",        name: "Garissa" },
+          { code: "ke-wajir",          name: "Wajir" },
+          { code: "ke-mandera",        name: "Mandera" },
+          { code: "ke-marsabit",       name: "Marsabit" },
+          { code: "ke-isiolo",         name: "Isiolo" },
+          { code: "ke-meru",           name: "Meru" },
+          { code: "ke-tharaka-nithi",  name: "Tharaka-Nithi" },
+          { code: "ke-embu",           name: "Embu" },
+          { code: "ke-kitui",          name: "Kitui" },
+          { code: "ke-machakos",       name: "Machakos" },
+          { code: "ke-makueni",        name: "Makueni" },
+          { code: "ke-nyandarua",      name: "Nyandarua" },
+          { code: "ke-nyeri",          name: "Nyeri" },
+          { code: "ke-kirinyaga",      name: "Kirinyaga" },
+          { code: "ke-muranga",        name: "Murang'a" },
+          { code: "ke-kiambu",         name: "Kiambu" },
+          { code: "ke-turkana",        name: "Turkana" },
+          { code: "ke-west-pokot",     name: "West Pokot" },
+          { code: "ke-samburu",        name: "Samburu" },
+          { code: "ke-trans-nzoia",    name: "Trans-Nzoia" },
+          { code: "ke-uasin-gishu",    name: "Uasin Gishu" },
+          { code: "ke-elgeyo",         name: "Elgeyo-Marakwet" },
+          { code: "ke-nandi",          name: "Nandi" },
+          { code: "ke-baringo",        name: "Baringo" },
+          { code: "ke-laikipia",       name: "Laikipia" },
+          { code: "ke-nakuru",         name: "Nakuru" },
+          { code: "ke-narok",          name: "Narok" },
+          { code: "ke-kajiado",        name: "Kajiado" },
+          { code: "ke-kericho",        name: "Kericho" },
+          { code: "ke-bomet",          name: "Bomet" },
+          { code: "ke-kakamega",       name: "Kakamega" },
+          { code: "ke-vihiga",         name: "Vihiga" },
+          { code: "ke-bungoma",        name: "Bungoma" },
+          { code: "ke-busia",          name: "Busia" },
+          { code: "ke-siaya",          name: "Siaya" },
+          { code: "ke-kisumu",         name: "Kisumu" },
+          { code: "ke-homa-bay",       name: "Homa Bay" },
+          { code: "ke-migori",         name: "Migori" },
+          { code: "ke-kisii",          name: "Kisii" },
+          { code: "ke-nyamira",        name: "Nyamira" },
+          { code: "ke-nairobi",        name: "Nairobi" },
+        ],
+      },
+
+      // ── Ghana (16 regions) ───────────────────────────────────────────────
+      // Expanded from 10 to 16 regions in 2019 after referendums; no official flags.
+      {
+        code: "GH", name: "Ghana", emoji: "🇬🇭", subTitle: "16 Regions", locked: false,
+        subRegions: [
+          { code: "gh-ah",  name: "Ahafo" },
+          { code: "gh-as",  name: "Ashanti" },
+          { code: "gh-br",  name: "Bono" },
+          { code: "gh-be",  name: "Bono East" },
+          { code: "gh-cp",  name: "Central" },
+          { code: "gh-ep",  name: "Eastern" },
+          { code: "gh-aa",  name: "Greater Accra" },
+          { code: "gh-ne",  name: "North East" },
+          { code: "gh-np",  name: "Northern" },
+          { code: "gh-ot",  name: "Oti" },
+          { code: "gh-sv",  name: "Savannah" },
+          { code: "gh-ue",  name: "Upper East" },
+          { code: "gh-uw",  name: "Upper West" },
+          { code: "gh-tv",  name: "Volta" },
+          { code: "gh-wp",  name: "Western" },
+          { code: "gh-wn",  name: "Western North" },
+        ],
+      },
+
+      // ── Morocco (12 regions) ─────────────────────────────────────────────
+      // Note: the southern two regions (Laâyoune-Sakia El Hamra, Dakhla-Oued Ed-Dahab)
+      // lie in Western Sahara, a territory whose status is disputed.
+      {
+        code: "MA", name: "Morocco", emoji: "🇲🇦", subTitle: "12 Regions", locked: false,
+        subRegions: [
+          { code: "ma-01", name: "Tanger-Tétouan-Al Hoceïma" },
+          { code: "ma-02", name: "Oriental" },
+          { code: "ma-03", name: "Fès-Meknès" },
+          { code: "ma-04", name: "Rabat-Salé-Kénitra" },
+          { code: "ma-05", name: "Béni Mellal-Khénifra" },
+          { code: "ma-06", name: "Casablanca-Settat" },
+          { code: "ma-07", name: "Marrakesh-Safi" },
+          { code: "ma-08", name: "Drâa-Tafilalet" },
+          { code: "ma-09", name: "Souss-Massa" },
+          { code: "ma-10", name: "Guelmim-Oued Noun" },
+          { code: "ma-11", name: "Laâyoune-Sakia El Hamra" },
+          { code: "ma-12", name: "Dakhla-Oued Ed-Dahab" },
+        ],
+      },
+
+      // ── Algeria (58 provinces / wilayas) ─────────────────────────────────
+      // Expanded from 48 to 58 wilayas in 2019 (ten new provinces carved from the south).
+      {
+        code: "DZ", name: "Algeria", emoji: "🇩🇿", subTitle: "58 Provinces", locked: false,
+        subRegions: [
+          { code: "dz-01", name: "Adrar" },
+          { code: "dz-02", name: "Chlef" },
+          { code: "dz-03", name: "Laghouat" },
+          { code: "dz-04", name: "Oum El Bouaghi" },
+          { code: "dz-05", name: "Batna" },
+          { code: "dz-06", name: "Béjaïa" },
+          { code: "dz-07", name: "Biskra" },
+          { code: "dz-08", name: "Béchar" },
+          { code: "dz-09", name: "Blida" },
+          { code: "dz-10", name: "Bouïra" },
+          { code: "dz-11", name: "Tamanrasset" },
+          { code: "dz-12", name: "Tébessa" },
+          { code: "dz-13", name: "Tlemcen" },
+          { code: "dz-14", name: "Tiaret" },
+          { code: "dz-15", name: "Tizi Ouzou" },
+          { code: "dz-16", name: "Algiers" },
+          { code: "dz-17", name: "Djelfa" },
+          { code: "dz-18", name: "Jijel" },
+          { code: "dz-19", name: "Sétif" },
+          { code: "dz-20", name: "Saïda" },
+          { code: "dz-21", name: "Skikda" },
+          { code: "dz-22", name: "Sidi Bel Abbès" },
+          { code: "dz-23", name: "Annaba" },
+          { code: "dz-24", name: "Guelma" },
+          { code: "dz-25", name: "Constantine" },
+          { code: "dz-26", name: "Médéa" },
+          { code: "dz-27", name: "Mostaganem" },
+          { code: "dz-28", name: "M'Sila" },
+          { code: "dz-29", name: "Mascara" },
+          { code: "dz-30", name: "Ouargla" },
+          { code: "dz-31", name: "Oran" },
+          { code: "dz-32", name: "El Bayadh" },
+          { code: "dz-33", name: "Illizi" },
+          { code: "dz-34", name: "Bordj Bou Arréridj" },
+          { code: "dz-35", name: "Boumerdès" },
+          { code: "dz-36", name: "El Tarf" },
+          { code: "dz-37", name: "Tindouf" },
+          { code: "dz-38", name: "Tissemsilt" },
+          { code: "dz-39", name: "El Oued" },
+          { code: "dz-40", name: "Khenchela" },
+          { code: "dz-41", name: "Souk Ahras" },
+          { code: "dz-42", name: "Tipaza" },
+          { code: "dz-43", name: "Mila" },
+          { code: "dz-44", name: "Aïn Defla" },
+          { code: "dz-45", name: "Naâma" },
+          { code: "dz-46", name: "Aïn Témouchent" },
+          { code: "dz-47", name: "Ghardaïa" },
+          { code: "dz-48", name: "Relizane" },
+          { code: "dz-49", name: "Timimoun" },
+          { code: "dz-50", name: "Bordj Badji Mokhtar" },
+          { code: "dz-51", name: "Ouled Djellal" },
+          { code: "dz-52", name: "Béni Abbès" },
+          { code: "dz-53", name: "In Salah" },
+          { code: "dz-54", name: "In Guezzam" },
+          { code: "dz-55", name: "Touggourt" },
+          { code: "dz-56", name: "Djanet" },
+          { code: "dz-57", name: "El M'Ghair" },
+          { code: "dz-58", name: "El Menia" },
+        ],
+      },
+
+      // ── Angola (18 provinces) ────────────────────────────────────────────
+      // Note: a 2024 reform expanded Angola to 21 provinces; the classic 18 are listed
+      // here. Provinces have no official flags.
+      {
+        code: "AO", name: "Angola", emoji: "🇦🇴", subTitle: "18 Provinces", locked: false,
+        subRegions: [
+          { code: "ao-bgo", name: "Bengo" },
+          { code: "ao-bgu", name: "Benguela" },
+          { code: "ao-bie", name: "Bié" },
+          { code: "ao-cab", name: "Cabinda" },
+          { code: "ao-ccu", name: "Cuando Cubango" },
+          { code: "ao-cno", name: "Cuanza Norte" },
+          { code: "ao-cus", name: "Cuanza Sul" },
+          { code: "ao-cnn", name: "Cunene" },
+          { code: "ao-hua", name: "Huambo" },
+          { code: "ao-hui", name: "Huíla" },
+          { code: "ao-lua", name: "Luanda" },
+          { code: "ao-lno", name: "Lunda Norte" },
+          { code: "ao-lsu", name: "Lunda Sul" },
+          { code: "ao-mal", name: "Malanje" },
+          { code: "ao-mox", name: "Moxico" },
+          { code: "ao-nam", name: "Namibe" },
+          { code: "ao-uig", name: "Uíge" },
+          { code: "ao-zai", name: "Zaire" },
+        ],
+      },
+
+      // ── Mozambique (10 provinces + Maputo City) ──────────────────────────
+      // Breaks down weird: Maputo City has provincial status separate from the
+      // surrounding Maputo Province, making 11 first-level units in practice.
+      {
+        code: "MZ", name: "Mozambique", emoji: "🇲🇿", subTitle: "10 Provinces + Capital", locked: false,
+        subRegions: [
+          { code: "mz-p",   name: "Cabo Delgado",  group: "Provinces" },
+          { code: "mz-g",   name: "Gaza",          group: "Provinces" },
+          { code: "mz-i",   name: "Inhambane",     group: "Provinces" },
+          { code: "mz-b",   name: "Manica",        group: "Provinces" },
+          { code: "mz-l",   name: "Maputo",        group: "Provinces" },
+          { code: "mz-n",   name: "Nampula",       group: "Provinces" },
+          { code: "mz-a",   name: "Niassa",        group: "Provinces" },
+          { code: "mz-s",   name: "Sofala",        group: "Provinces" },
+          { code: "mz-t",   name: "Tete",          group: "Provinces" },
+          { code: "mz-q",   name: "Zambezia",      group: "Provinces" },
+          { code: "mz-mpm", name: "Maputo City",   group: "City (Provincial Status)" },
+        ],
+      },
+
+      // ── Cameroon (10 regions) ────────────────────────────────────────────
+      // Note: the North-West and South-West are the Anglophone regions at the centre of
+      // the ongoing Ambazonia conflict. Regions have no official flags.
+      {
+        code: "CM", name: "Cameroon", emoji: "🇨🇲", subTitle: "10 Regions", locked: false,
+        subRegions: [
+          { code: "cm-ad", name: "Adamawa" },
+          { code: "cm-ce", name: "Centre" },
+          { code: "cm-es", name: "East" },
+          { code: "cm-en", name: "Far North" },
+          { code: "cm-lt", name: "Littoral" },
+          { code: "cm-no", name: "North" },
+          { code: "cm-nw", name: "North-West" },
+          { code: "cm-su", name: "South" },
+          { code: "cm-sw", name: "South-West" },
+          { code: "cm-ou", name: "West" },
+        ],
+      },
+
+      // ── Senegal (14 regions) ─────────────────────────────────────────────
+      // Regions have no official flags.
+      {
+        code: "SN", name: "Senegal", emoji: "🇸🇳", subTitle: "14 Regions", locked: false,
+        subRegions: [
+          { code: "sn-dk", name: "Dakar" },
+          { code: "sn-db", name: "Diourbel" },
+          { code: "sn-fk", name: "Fatick" },
+          { code: "sn-ka", name: "Kaffrine" },
+          { code: "sn-kl", name: "Kaolack" },
+          { code: "sn-kd", name: "Kédougou" },
+          { code: "sn-kz", name: "Kolda" },
+          { code: "sn-lg", name: "Louga" },
+          { code: "sn-mt", name: "Matam" },
+          { code: "sn-sl", name: "Saint-Louis" },
+          { code: "sn-se", name: "Sédhiou" },
+          { code: "sn-tc", name: "Tambacounda" },
+          { code: "sn-th", name: "Thiès" },
+          { code: "sn-zg", name: "Ziguinchor" },
+        ],
+      },
     ],
   },
 
@@ -1366,9 +1812,9 @@ export const CHALLENGE_CONTINENTS: ChallengeContinent[] = [
         subRegions: [
           { code: "be-bru", name: "Brussels-Capital Region", flagUrl: wiki("Flag of the Brussels-Capital Region.svg") },
           { code: "be-van", name: "Antwerp",                 flagUrl: wiki("Flag of Antwerp.svg") },
-          { code: "be-wht", name: "Hainaut" },
+          { code: "be-wht", name: "Hainaut",                 flagUrl: wiki("Flag of Hainaut.svg") },
           { code: "be-vli", name: "Limburg",                 flagUrl: wiki("Flag of Limburg (Belgium).svg") },
-          { code: "be-wlg", name: "Liège" },
+          { code: "be-wlg", name: "Liège",                   flagUrl: wiki("Flag of the Province of Liège.svg") },
           { code: "be-wlx", name: "Luxembourg",              flagUrl: wiki("Official flag of the Arelerland.svg") },
           { code: "be-wna", name: "Namur",                   flagUrl: wiki("Flag of Namur Province.svg") },
           { code: "be-vwv", name: "West Flanders",           flagUrl: wiki("Flag of West Flanders.svg") },
@@ -1468,23 +1914,24 @@ export const CHALLENGE_CONTINENTS: ChallengeContinent[] = [
         code: "FI", name: "Finland", emoji: "🇫🇮", subTitle: "19 Regions", locked: false,
         subRegions: [
           { code: "fi-01", name: "Uusimaa",                    flagUrl: wiki("Flag of Uusimaa.svg") },
-          { code: "fi-02", name: "South Karelia",              flagUrl: wiki("Flag of South Karelia.svg") },
+          { code: "fi-02", name: "South Karelia",              flagUrl: wiki("Etelä-Karjala maakuntaviiri.svg") },
           { code: "fi-03", name: "South Ostrobothnia",         flagUrl: wiki("Flag of Southern Ostrobothnia.svg") },
           { code: "fi-04", name: "South Savo",                 flagUrl: wiki("Flag of South Savonia.svg") },
           { code: "fi-05", name: "Kainuu",                     flagUrl: wiki("Flag of Kainuu.svg") },
           { code: "fi-06", name: "Tavastia Proper",            flagUrl: wiki("Flag of Tavastia Proper.svg") },
           { code: "fi-07", name: "Central Ostrobothnia",       flagUrl: wiki("Keski-Pohjanmaa.lippu.svg") },
           { code: "fi-08", name: "Central Finland",            flagUrl: wiki("Keski-suomi lippu.svg") },
-          { code: "fi-09", name: "Kymenlaakso",                flagUrl: wiki("Flag of Kymenlaakso.svg") },
-          { code: "fi-10", name: "Lapland",                    flagUrl: wiki("Flag of Lapland (Finland).svg") },
+          { code: "fi-09", name: "Kymenlaakso",                flagUrl: wiki("Kymenlaakso.vaakunaviiri.svg") },
+          { code: "fi-10", name: "Lapland",                    flagUrl: wiki("Flag of Lapland.svg") },
           { code: "fi-11", name: "Pirkanmaa",                  flagUrl: wiki("Flag of Pirkanmaa.svg") },
-          { code: "fi-12", name: "Ostrobothnia",               flagUrl: wiki("Flag of Ostrobothnia (region).svg") },
+          // Admin region has no official flag; this is the historical Ostrobothnia province banner
+          { code: "fi-12", name: "Ostrobothnia",               flagUrl: wiki("Flag of Ostrobothnia.svg") },
           { code: "fi-13", name: "North Karelia",              flagUrl: wiki("North karelia flag.svg") },
-          { code: "fi-14", name: "North Ostrobothnia",         flagUrl: wiki("Flag of North Ostrobothnia.svg") },
+          { code: "fi-14", name: "North Ostrobothnia",         flagUrl: wiki("Pennant of Pohjois-Pohjanmaa.svg") },
           { code: "fi-15", name: "North Savo",                 flagUrl: wiki("Flag of Northern Savonia.svg") },
           { code: "fi-16", name: "Päijänne Tavastia",          flagUrl: wiki("Päijät-Häme.lippu.svg") },
           { code: "fi-17", name: "Satakunta",                  flagUrl: wiki("Satakunta-flag.svg") },
-          { code: "fi-18", name: "Southwest Finland",          flagUrl: wiki("Flag of Southwest Finland.svg") },
+          { code: "fi-18", name: "Southwest Finland",          flagUrl: wiki("Varsinais-Suomen maakuntaviiri.svg") },
           { code: "fi-19", name: "Åland Islands",              flagUrl: wiki("Flag of Åland.svg") },
         ],
       },
@@ -1516,19 +1963,21 @@ export const CHALLENGE_CONTINENTS: ChallengeContinent[] = [
       {
         code: "GR", name: "Greece", emoji: "🇬🇷", subTitle: "13 Regions", locked: false,
         subRegions: [
-          { code: "gr-a", name: "East Macedonia & Thrace" },
+          // The three "Macedonia" regions share the unofficial Vergina Sun flag of Greek Macedonia
+          { code: "gr-a", name: "East Macedonia & Thrace", flagUrl: wiki("Flag of Greek Macedonia.svg") },
           { code: "gr-b", name: "Central Macedonia",       flagUrl: wiki("Flag of Greek Macedonia.svg") },
-          { code: "gr-c", name: "West Macedonia" },
-          { code: "gr-d", name: "Epirus" },
-          { code: "gr-e", name: "Thessaly" },
-          { code: "gr-f", name: "Ionian Islands" },
-          { code: "gr-g", name: "West Greece" },
-          { code: "gr-h", name: "Central Greece" },
-          { code: "gr-i", name: "Attica" },
-          { code: "gr-j", name: "Peloponnese" },
-          { code: "gr-k", name: "North Aegean" },
-          { code: "gr-l", name: "South Aegean" },
-          { code: "gr-m", name: "Crete",                   flagUrl: wiki("Flag of Crete.svg") },
+          { code: "gr-c", name: "West Macedonia",          flagUrl: wiki("Flag of Greek Macedonia.svg") },
+          { code: "gr-d", name: "Epirus" },         // no official regional flag
+          { code: "gr-e", name: "Thessaly" },       // no official regional flag
+          { code: "gr-f", name: "Ionian Islands" }, // modern region has no flag (only a historical 19th-c. one)
+          { code: "gr-g", name: "West Greece",             flagUrl: wiki("Flag of the Region of Western Greece.svg") },
+          { code: "gr-h", name: "Central Greece" }, // no verified regional flag
+          { code: "gr-i", name: "Attica",                  flagUrl: wiki("Bandera d'Àtica.svg") },
+          { code: "gr-j", name: "Peloponnese" },    // no official regional flag
+          { code: "gr-k", name: "North Aegean" },   // no official regional flag
+          { code: "gr-l", name: "South Aegean",            flagUrl: wiki("Flag of the Region of South Aegean.svg") },
+          // Modern Crete region has no official flag — this is the historical Cretan State flag
+          { code: "gr-m", name: "Crete",                   flagUrl: wiki("Flag of Cretan State.svg") },
         ],
       },
 
@@ -1632,35 +2081,40 @@ export const CHALLENGE_CONTINENTS: ChallengeContinent[] = [
       // ── Bulgaria (28 provinces) ──────────────────────────────────────────
       {
         code: "BG", name: "Bulgaria", emoji: "🇧🇬", subTitle: "28 Provinces", locked: false,
+        // NOTE: Bulgarian provinces have no provincial flags of their own; these are the
+        // flags of the capital city/municipality that shares each province's name (the
+        // convention Wikipedia uses). Sofia Province is the exception — Sofia city is NOT
+        // in it, so it has no flag. Pernik has no flag file on Commons. Smolyan & Targovishte
+        // only exist as JPG photos of the municipal flag.
         subRegions: [
-          { code: "bg-01", name: "Blagoevgrad" },
-          { code: "bg-02", name: "Burgas" },
-          { code: "bg-03", name: "Varna" },
-          { code: "bg-04", name: "Veliko Tarnovo" },
-          { code: "bg-05", name: "Vidin" },
-          { code: "bg-06", name: "Vratsa" },
-          { code: "bg-07", name: "Gabrovo" },
-          { code: "bg-08", name: "Dobrich" },
-          { code: "bg-09", name: "Kardzhali" },
-          { code: "bg-10", name: "Kyustendil" },
-          { code: "bg-11", name: "Lovech" },
-          { code: "bg-12", name: "Montana" },
-          { code: "bg-13", name: "Pazardzhik" },
-          { code: "bg-14", name: "Pernik" },
-          { code: "bg-15", name: "Pleven" },
-          { code: "bg-16", name: "Plovdiv" },
-          { code: "bg-17", name: "Razgrad" },
-          { code: "bg-18", name: "Ruse" },
-          { code: "bg-19", name: "Silistra" },
-          { code: "bg-20", name: "Sliven" },
-          { code: "bg-21", name: "Smolyan" },
-          { code: "bg-22", name: "Sofia City" },
-          { code: "bg-23", name: "Sofia Province" },
-          { code: "bg-24", name: "Stara Zagora" },
-          { code: "bg-25", name: "Targovishte" },
-          { code: "bg-26", name: "Haskovo" },
-          { code: "bg-27", name: "Shumen" },
-          { code: "bg-28", name: "Yambol" },
+          { code: "bg-01", name: "Blagoevgrad",    flagUrl: wiki("Flag of Blagoevgrad.svg") },
+          { code: "bg-02", name: "Burgas",         flagUrl: wiki("BG-Burgas flag.png") },
+          { code: "bg-03", name: "Varna",          flagUrl: wiki("Знаме на Варна, България.svg") },
+          { code: "bg-04", name: "Veliko Tarnovo", flagUrl: wiki("Flag of Veliko Tarnovo.svg") },
+          { code: "bg-05", name: "Vidin",          flagUrl: wiki("Flag of Vidin.gif") },
+          { code: "bg-06", name: "Vratsa",         flagUrl: wiki("Flag of Vratsa.svg") },
+          { code: "bg-07", name: "Gabrovo",        flagUrl: wiki("BG Gabrovo flag.svg") },
+          { code: "bg-08", name: "Dobrich",        flagUrl: wiki("Flag of Dobrich.svg") },
+          { code: "bg-09", name: "Kardzhali",      flagUrl: wiki("Flag of Kardzhali.gif") },
+          { code: "bg-10", name: "Kyustendil",     flagUrl: wiki("Flag of Kyustendil.svg") },
+          { code: "bg-11", name: "Lovech",         flagUrl: wiki("Flag of Lovech.gif") },
+          { code: "bg-12", name: "Montana",        flagUrl: wiki("Flag of Montana, Bulgaria.svg") },
+          { code: "bg-13", name: "Pazardzhik",     flagUrl: wiki("Flag of Pazardzhik.gif") },
+          { code: "bg-14", name: "Pernik" }, // no flag file on Commons (coat of arms only)
+          { code: "bg-15", name: "Pleven",         flagUrl: wiki("Flag of Pleven.gif") },
+          { code: "bg-16", name: "Plovdiv",        flagUrl: wiki("Plovdiv flag.svg") },
+          { code: "bg-17", name: "Razgrad",        flagUrl: wiki("Razgrad flag.png") },
+          { code: "bg-18", name: "Ruse",           flagUrl: wiki("Ruse flag.png") },
+          { code: "bg-19", name: "Silistra",       flagUrl: wiki("Flag of Silistra.svg") },
+          { code: "bg-20", name: "Sliven",         flagUrl: wiki("Sliven flag.png") },
+          { code: "bg-21", name: "Smolyan",        flagUrl: wiki("Smolyan Municipality.jpg") },
+          { code: "bg-22", name: "Sofia City",     flagUrl: wiki("BG Sofia flag.svg") },
+          { code: "bg-23", name: "Sofia Province" }, // no flag (Sofia city is not in this province)
+          { code: "bg-24", name: "Stara Zagora",   flagUrl: wiki("Flag of Stara Zagora (obverse).svg") },
+          { code: "bg-25", name: "Targovishte",    flagUrl: wiki("Targovishte Municipality.jpg") },
+          { code: "bg-26", name: "Haskovo",        flagUrl: wiki("Flag of Haskovo.gif") },
+          { code: "bg-27", name: "Shumen",         flagUrl: wiki("Flag of Shumen.svg") },
+          { code: "bg-28", name: "Yambol",         flagUrl: wiki("Flag of Yambol.gif") },
         ],
       },
 
@@ -1712,12 +2166,13 @@ export const CHALLENGE_CONTINENTS: ChallengeContinent[] = [
         code: "LT", name: "Lithuania", emoji: "🇱🇹", subTitle: "10 Counties", locked: false,
         subRegions: [
           { code: "lt-al", name: "Alytus",      flagUrl: wiki("Alytus County flag.svg") },
-          { code: "lt-kl", name: "Klaipėda",   flagUrl: wiki("Klaipėda County flag.svg") },
-          { code: "lt-ku", name: "Kaunas",      flagUrl: wiki("Kaunas County flag.svg") },
-          { code: "lt-mr", name: "Marijampolė",flagUrl: wiki("Marijampolė County flag.svg") },
-          { code: "lt-pn", name: "Panevėžys",  flagUrl: wiki("Panevėžys County flag.svg") },
-          { code: "lt-sa", name: "Šiauliai",   flagUrl: wiki("Šiauliai County flag.svg") },
-          { code: "lt-ta", name: "Tauragė",    flagUrl: wiki("Tauragė County flag.svg") },
+          // Commons stores these six with ASCII (no-diacritic) spellings and mixed extensions
+          { code: "lt-kl", name: "Klaipėda",   flagUrl: wiki("Klaipeda County flag.png") },
+          { code: "lt-ku", name: "Kaunas",      flagUrl: wiki("Kaunas County flag.png") },
+          { code: "lt-mr", name: "Marijampolė",flagUrl: wiki("Marijampole County flag.svg") },
+          { code: "lt-pn", name: "Panevėžys",  flagUrl: wiki("Panevezys County flag.svg") },
+          { code: "lt-sa", name: "Šiauliai",   flagUrl: wiki("Siauliai County flag.svg") },
+          { code: "lt-ta", name: "Tauragė",    flagUrl: wiki("Taurage County flag.png") },
           { code: "lt-te", name: "Telšiai",    flagUrl: wiki("Telšiai County flag.svg") },
           { code: "lt-ut", name: "Utena",      flagUrl: wiki("Utena County flag.svg") },
           { code: "lt-vl", name: "Vilnius",    flagUrl: wiki("Vilnius County flag.svg") },
@@ -1729,11 +2184,11 @@ export const CHALLENGE_CONTINENTS: ChallengeContinent[] = [
         code: "LV", name: "Latvia", emoji: "🇱🇻", subTitle: "6 Regions", locked: false,
         subRegions: [
           { code: "lv-rix", name: "Riga",        flagUrl: wiki("Flag of Riga.svg") },
-          { code: "lv-pie", name: "Pierīga" },
-          { code: "lv-vid", name: "Vidzeme" },
-          { code: "lv-kur", name: "Kurzeme" },
-          { code: "lv-zem", name: "Zemgale" },
-          { code: "lv-lat", name: "Latgale" },
+          { code: "lv-pie", name: "Pierīga" }, // planning region, no flag
+          { code: "lv-vid", name: "Vidzeme" }, // no official flag (only an unofficial proposal exists)
+          { code: "lv-kur", name: "Kurzeme" }, // no official flag (only an unofficial proposal exists)
+          { code: "lv-zem", name: "Zemgale",     flagUrl: wiki("Official flag of Zemgale.svg") },
+          { code: "lv-lat", name: "Latgale",     flagUrl: wiki("Official flag of Latgale.svg") },
         ],
       },
 
@@ -1844,12 +2299,13 @@ export const CHALLENGE_CONTINENTS: ChallengeContinent[] = [
           { code: "ba-f05", name: "Bosnian Podrinje",    flagUrl: wiki("Flag of Bosnian Podrinje.svg") },
           { code: "ba-f06", name: "Central Bosnia",      flagUrl: wiki("Flag of Central Bosnia.svg") },
           { code: "ba-f07", name: "Herzegovina-Neretva", flagUrl: wiki("Flag of Herzegovina-Neretva.svg") },
-          { code: "ba-f08", name: "West Herzegovina" },
+          { code: "ba-f08", name: "West Herzegovina",    flagUrl: wiki("Flag of the Croatian Republic of Herzeg-Bosnia.svg") },
           { code: "ba-f09", name: "Sarajevo",            flagUrl: wiki("Flag of Sarajevo Canton.svg") },
-          { code: "ba-f10", name: "Canton 10 (Livno)" },
+          // West Herzegovina & Canton 10 share the (de facto) Herzeg-Bosnia tricolour
+          { code: "ba-f10", name: "Canton 10 (Livno)",   flagUrl: wiki("Flag of the Croatian Republic of Herzeg-Bosnia.svg") },
           // Other entities
           { code: "ba-srp", name: "Republika Srpska",    flagUrl: wiki("Flag of Republika Srpska.svg") },
-          { code: "ba-brc", name: "Brčko District",      flagUrl: wiki("Flag of Brčko District.svg") },
+          { code: "ba-brc", name: "Brčko District" }, // officially has no flag of its own (uses BiH's)
         ],
       },
 
@@ -1857,16 +2313,17 @@ export const CHALLENGE_CONTINENTS: ChallengeContinent[] = [
       {
         code: "AL", name: "Albania", emoji: "🇦🇱", subTitle: "12 Counties", locked: false,
         subRegions: [
+          // Albanian counties (qark) use "Flag of <Name> County.png" files
           { code: "al-br", name: "Berat",        flagUrl: wiki("Flag of Berat.svg") },
-          { code: "al-di", name: "Dibër" },
+          { code: "al-di", name: "Dibër",        flagUrl: wiki("Flag of Dibër County.png") },
           { code: "al-dl", name: "Durrës",       flagUrl: wiki("Flag of Durrës.svg") },
           { code: "al-el", name: "Elbasan",      flagUrl: wiki("Flag of Elbasan.svg") },
-          { code: "al-fr", name: "Fier" },
-          { code: "al-gj", name: "Gjirokastër" },
+          { code: "al-fr", name: "Fier",         flagUrl: wiki("Flag of Fier County.png") },
+          { code: "al-gj", name: "Gjirokastër",  flagUrl: wiki("Flag of Gjirokastër County.png") },
           { code: "al-ko", name: "Korçë",        flagUrl: wiki("Flag of Korçë.svg") },
           { code: "al-ku", name: "Kukës",        flagUrl: wiki("Flag of Kukës.svg") },
-          { code: "al-le", name: "Lezhë" },
-          { code: "al-mr", name: "Shkodër" },
+          { code: "al-le", name: "Lezhë",        flagUrl: wiki("Flag of Lezhë County.png") },
+          { code: "al-mr", name: "Shkodër",      flagUrl: wiki("Flag of Shkodër County.png") },
           { code: "al-ti", name: "Tirana",       flagUrl: wiki("Flag of Tirana.svg") },
           { code: "al-vl", name: "Vlorë",        flagUrl: wiki("Flag of Vlorë.svg") },
         ],
@@ -2076,13 +2533,15 @@ export const CHALLENGE_CONTINENTS: ChallengeContinent[] = [
       {
         code: "XK", name: "Kosovo", emoji: "🇽🇰", subTitle: "7 Districts", locked: false,
         subRegions: [
-          { code: "xk-pr", name: "Pristina" },
-          { code: "xk-pe", name: "Peja" },
-          { code: "xk-gj", name: "Gjakova" },
-          { code: "xk-mi", name: "Mitrovica" },
-          { code: "xk-pz", name: "Prizren" },
-          { code: "xk-fe", name: "Ferizaj" },
-          { code: "xk-gi", name: "Gjilan" },
+          // Kosovo's districts have no flags (only municipalities can); the two verified
+          // namesake municipality flags are shown, the rest are name-only.
+          { code: "xk-pr", name: "Pristina",  flagUrl: wiki("Prishtina-flag.svg") },
+          { code: "xk-pe", name: "Peja" },       // no district flag
+          { code: "xk-gj", name: "Gjakova",   flagUrl: wiki("Flag of Gjakova.svg") },
+          { code: "xk-mi", name: "Mitrovica" },  // no district flag
+          { code: "xk-pz", name: "Prizren" },    // no district flag (only a municipal emblem)
+          { code: "xk-fe", name: "Ferizaj" },    // no district flag (only a municipal emblem)
+          { code: "xk-gi", name: "Gjilan" },     // no district flag (only a municipal emblem)
         ],
       },
 
