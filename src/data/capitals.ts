@@ -25,6 +25,7 @@ export const CAPITALS: CapitalRecord[] = [
   { code: "HU", country: "Hungary", capital: "Budapest", region: "Europe" },
   { code: "IS", country: "Iceland", capital: "Reykjavik", region: "Europe" },
   { code: "IE", country: "Ireland", capital: "Dublin", region: "Europe" },
+  { code: "IT", country: "Italy", capital: "Rome", region: "Europe" },
   { code: "XK", country: "Kosovo", capital: "Pristina", region: "Europe" },
   { code: "LV", country: "Latvia", capital: "Riga", region: "Europe" },
   { code: "LI", country: "Liechtenstein", capital: "Vaduz", region: "Europe" },

@@ -22,6 +22,7 @@ import FlagDNAScreen from "./components/FlagDNAScreen"
 import BuildFlagScreen from "./components/BuildFlagScreen"
 import ThePeelScreen from "./components/ThePeelScreen"
 import ConfusablesScreen from "./components/ConfusablesScreen"
+import ProgressMapScreen from "./components/ProgressMapScreen"
 import StarField from "./components/StarField"
 import EarthLogo from "./components/EarthLogo"
 import { FLAGS } from "./data/flags"
@@ -33,7 +34,7 @@ import type { Question } from "./utils/quiz"
 import { todayString } from "./utils/prng"
 import { loadTheme } from "./components/SettingsScreen"
 
-type Screen = "splash" | "home" | "flags" | "quiz" | "reversequiz" | "result" | "achievements" | "profile" | "flashcards" | "language" | "capitalquiz" | "challenge" | "codex" | "geo" | "gauntlet" | "tierlist" | "settings" | "oddoneout" | "thecrop" | "flagdna" | "buildflag" | "thepeel" | "lookalikes"
+type Screen = "splash" | "home" | "flags" | "quiz" | "reversequiz" | "result" | "achievements" | "profile" | "flashcards" | "language" | "capitalquiz" | "challenge" | "codex" | "geo" | "gauntlet" | "tierlist" | "settings" | "oddoneout" | "thecrop" | "flagdna" | "buildflag" | "thepeel" | "lookalikes" | "progressmap"
 
 interface ActiveQuiz {
   questions: Question[]
@@ -162,7 +163,8 @@ export default function App() {
           onGoFlagDNA={() => setScreen("flagdna")}
           onGoBuildFlag={() => setScreen("buildflag")}
           onGoThePeel={() => setScreen("thepeel")}
-          onGoLookalikes={() => setScreen("lookalikes")} />
+          onGoLookalikes={() => setScreen("lookalikes")}
+          onGoProgressMap={() => setScreen("progressmap")} />
       )}
 
       {screen === "flags" && (
@@ -192,6 +194,7 @@ export default function App() {
           onSetUsername={name => setAppState(s => ({ ...s, username: name }))} />
       )}
       {screen === "achievements" && <AchievementsScreen state={appState} onBack={() => setScreen("home")} />}
+      {screen === "progressmap" && <ProgressMapScreen state={appState} onBack={() => setScreen("home")} />}
 
       {screen === "quiz" && activeQuiz && (
         <QuizScreen questions={activeQuiz.questions} title={activeQuiz.title}

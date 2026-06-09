@@ -27,6 +27,7 @@ interface Props {
   onGoBuildFlag: () => void
   onGoThePeel: () => void
   onGoLookalikes: () => void
+  onGoProgressMap: () => void
 }
 
 const ComingSoonTile = ({ emoji, label, desc }: { emoji: string; label: string; desc: string }) => (
@@ -49,6 +50,7 @@ export default function HomeScreen({
   onGoLanguage, onQuickPlay, onGoReverseQuiz, onGoCapitalQuiz, onGoChallenge, onGoCodex,
   onGoGeo, onGoGauntlet, onGoTierList, onGoSettings,
   onGoOddOneOut, onGoTheCrop, onGoFlagDNA, onGoBuildFlag, onGoThePeel, onGoLookalikes,
+  onGoProgressMap,
 }: Props) {
   const today = todayString()
   const dailyDone = state.lastDailyDate === today
@@ -235,6 +237,19 @@ export default function HomeScreen({
             </div>
           </div>
           <span style={{ color: "#34D399" }}>›</span>
+        </button>
+
+        <button onClick={onGoProgressMap}
+          className="w-full flex items-center justify-between px-5 py-4 rounded-2xl transition-all active:scale-[0.98] hover:brightness-110"
+          style={{ background: "#2D1F52", border: "1px solid #FBBF2433" }}>
+          <div className="flex items-center gap-3">
+            <span className="text-2xl">🗺️</span>
+            <div className="text-left">
+              <div className="font-bold" style={{ color: "#F5F3FF" }}>Progress Map</div>
+              <div className="text-xs" style={{ color: "#B8A9E0" }}>{state.learnedFlags.length}/{FLAGS.length} countries lit up</div>
+            </div>
+          </div>
+          <span style={{ color: "#FBBF24" }}>›</span>
         </button>
 
         <h3 className="text-xs font-semibold uppercase tracking-widest pt-1" style={{ color: "#B8A9E0" }}>Mini Games</h3>
