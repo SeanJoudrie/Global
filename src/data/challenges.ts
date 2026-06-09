@@ -1004,37 +1004,38 @@ export const CHALLENGE_CONTINENTS: ChallengeContinent[] = [
       },
 
       // ── Egypt (27 governorates) ──────────────────────────────────────────
-      // Governorates use emblems, not flags.
+      // Most governorates have a flag (filenames on Commons are inconsistent — some are
+      // misspelled, animated GIFs, or Catalan-named). Faiyum has no verified flag file.
       {
         code: "EG", name: "Egypt", emoji: "🇪🇬", subTitle: "27 Governorates", locked: false,
         subRegions: [
-          { code: "eg-c",   name: "Cairo" },
-          { code: "eg-gz",  name: "Giza" },
-          { code: "eg-alx", name: "Alexandria" },
-          { code: "eg-dk",  name: "Dakahlia" },
-          { code: "eg-bh",  name: "Beheira" },
+          { code: "eg-c",   name: "Cairo",          flagUrl: wiki("Flag of Cairo Governorate.svg") },
+          { code: "eg-gz",  name: "Giza",           flagUrl: wiki("Flag of Giza Governorate.png") },
+          { code: "eg-alx", name: "Alexandria",     flagUrl: wiki("Flag of Alexandria.svg") },
+          { code: "eg-dk",  name: "Dakahlia",       flagUrl: wiki("Governadorat de Daqahliya.png") },
+          { code: "eg-bh",  name: "Beheira",        flagUrl: wiki("Flag of Behira Govenorate.svg") },
           { code: "eg-fym", name: "Faiyum" },
-          { code: "eg-gh",  name: "Gharbia" },
-          { code: "eg-is",  name: "Ismailia" },
-          { code: "eg-mnf", name: "Monufia" },
-          { code: "eg-mn",  name: "Minya" },
-          { code: "eg-kb",  name: "Qalyubia" },
-          { code: "eg-wad", name: "New Valley" },
-          { code: "eg-suz", name: "Suez" },
-          { code: "eg-asn", name: "Aswan" },
-          { code: "eg-ast", name: "Asyut" },
-          { code: "eg-bns", name: "Beni Suef" },
-          { code: "eg-pts", name: "Port Said" },
-          { code: "eg-dt",  name: "Damietta" },
-          { code: "eg-shr", name: "Sharqia" },
-          { code: "eg-js",  name: "South Sinai" },
-          { code: "eg-kfs", name: "Kafr el-Sheikh" },
-          { code: "eg-mt",  name: "Matrouh" },
-          { code: "eg-lx",  name: "Luxor" },
-          { code: "eg-qna", name: "Qena" },
-          { code: "eg-sin", name: "North Sinai" },
-          { code: "eg-shg", name: "Sohag" },
-          { code: "eg-ba",  name: "Red Sea" },
+          { code: "eg-gh",  name: "Gharbia",        flagUrl: wiki("Flag of Gharbia Governorate.png") },
+          { code: "eg-is",  name: "Ismailia",       flagUrl: wiki("Governadorat d'Ismailiya.png") },
+          { code: "eg-mnf", name: "Monufia",        flagUrl: wiki("Flag of Menoufia Governorate.PNG") },
+          { code: "eg-mn",  name: "Minya",          flagUrl: wiki("Flag of Minya Govenorate.JPG") },
+          { code: "eg-kb",  name: "Qalyubia",       flagUrl: wiki("Flag of Qalubiya Governorate.png") },
+          { code: "eg-wad", name: "New Valley",      flagUrl: wiki("Old Flag of New Valley Governorate, Egypt.svg") },
+          { code: "eg-suz", name: "Suez",           flagUrl: wiki("Flag of Suez Governorate.svg") },
+          { code: "eg-asn", name: "Aswan",          flagUrl: wiki("Flag of Aswan Governorate.png") },
+          { code: "eg-ast", name: "Asyut",          flagUrl: wiki("Flag of Asyut Governorate.png") },
+          { code: "eg-bns", name: "Beni Suef",      flagUrl: wiki("Beni Suef Governorate New Flag.svg") },
+          { code: "eg-pts", name: "Port Said",      flagUrl: wiki("Flag of Port Said Governorate.PNG") },
+          { code: "eg-dt",  name: "Damietta",       flagUrl: wiki("Flag of Damietta Governorate.svg") },
+          { code: "eg-shr", name: "Sharqia",        flagUrl: wiki("Flag of Ash Sharqiyah.svg") },
+          { code: "eg-js",  name: "South Sinai",    flagUrl: wiki("Flag of the South Sinai Governorate.svg") },
+          { code: "eg-kfs", name: "Kafr el-Sheikh", flagUrl: wiki("Flag of Kafr El-Sheikh Governorate.svg") },
+          { code: "eg-mt",  name: "Matrouh",        flagUrl: wiki("Flag Of The Matrouh Governorate (High resolution).png") },
+          { code: "eg-lx",  name: "Luxor",          flagUrl: wiki("Eg luxor.png") },
+          { code: "eg-qna", name: "Qena",           flagUrl: wiki("Flag of Qena Governorate.png") },
+          { code: "eg-sin", name: "North Sinai",    flagUrl: wiki("Flag of North Sinai Governorate-Move.gif") },
+          { code: "eg-shg", name: "Sohag",          flagUrl: wiki("Flag of Sohag Governorate-Move.gif") },
+          { code: "eg-ba",  name: "Red Sea",        flagUrl: wiki("Red sea governorate flag.png") },
         ],
       },
 
@@ -1452,31 +1453,33 @@ export const CHALLENGE_CONTINENTS: ChallengeContinent[] = [
       },
 
       // ── Cape Verde (22 municipalities) ───────────────────────────────────
+      // Many municipalities have flags (Commons naming is inconsistent — mix of English
+      // "Flag of X municipality" and Portuguese "Bandeira X"). Unverified ones are placeholders.
       {
         code: "CV", name: "Cape Verde", emoji: "🇨🇻", subTitle: "22 Municipalities", locked: false,
         subRegions: [
-          { code: "cv-bv", name: "Boa Vista" },
-          { code: "cv-br", name: "Brava" },
-          { code: "cv-ma", name: "Maio" },
+          { code: "cv-bv", name: "Boa Vista",                  flagUrl: wiki("Flag of Boa Vista municipality.jpg") },
+          { code: "cv-br", name: "Brava",                      flagUrl: wiki("Flag of Brava municipality.gif") },
+          { code: "cv-ma", name: "Maio",                       flagUrl: wiki("Flag of Maio municipality.gif") },
           { code: "cv-mo", name: "Mosteiros" },
           { code: "cv-pa", name: "Paul" },
-          { code: "cv-pn", name: "Porto Novo" },
-          { code: "cv-pr", name: "Praia" },
+          { code: "cv-pn", name: "Porto Novo",                 flagUrl: wiki("Bandeira Porto Novo.gif") },
+          { code: "cv-pr", name: "Praia",                      flagUrl: wiki("Flag of Praia.svg") },
           { code: "cv-rb", name: "Ribeira Brava" },
-          { code: "cv-rg", name: "Ribeira Grande" },
+          { code: "cv-rg", name: "Ribeira Grande",             flagUrl: wiki("Flag of Ribeira Grande municipality.gif") },
           { code: "cv-rs", name: "Ribeira Grande de Santiago" },
-          { code: "cv-sl", name: "Sal" },
-          { code: "cv-ca", name: "Santa Catarina" },
+          { code: "cv-sl", name: "Sal",                        flagUrl: wiki("Flag of Sal municipality.gif") },
+          { code: "cv-ca", name: "Santa Catarina",             flagUrl: wiki("Flag of Santa Catarina municipality.gif") },
           { code: "cv-cf", name: "Santa Catarina do Fogo" },
           { code: "cv-cr", name: "Santa Cruz" },
           { code: "cv-sd", name: "São Domingos" },
-          { code: "cv-sf", name: "São Filipe" },
+          { code: "cv-sf", name: "São Filipe",                 flagUrl: wiki("Bandeira São Filipe.gif") },
           { code: "cv-so", name: "São Lourenço dos Órgãos" },
           { code: "cv-sm", name: "São Miguel" },
           { code: "cv-ss", name: "São Salvador do Mundo" },
-          { code: "cv-sv", name: "São Vicente" },
+          { code: "cv-sv", name: "São Vicente",                flagUrl: wiki("Flag of São Vicente municipality.gif") },
           { code: "cv-ta", name: "Tarrafal" },
-          { code: "cv-ts", name: "Tarrafal de São Nicolau" },
+          { code: "cv-ts", name: "Tarrafal de São Nicolau",    flagUrl: wiki("Flag of Tarrafal de São Nicolau municipality.gif") },
         ],
       },
 
@@ -1535,13 +1538,13 @@ export const CHALLENGE_CONTINENTS: ChallengeContinent[] = [
       },
 
       // ── Comoros (3 autonomous islands) ───────────────────────────────────
-      // Each island is autonomous and HAS its own flag (can be added later).
+      // Each island is autonomous and has its own official flag.
       {
         code: "KM", name: "Comoros", emoji: "🇰🇲", subTitle: "3 Islands", locked: false,
         subRegions: [
-          { code: "km-g", name: "Grande Comore (Ngazidja)" },
-          { code: "km-a", name: "Anjouan (Ndzuwani)" },
-          { code: "km-m", name: "Mohéli (Mwali)" },
+          { code: "km-g", name: "Grande Comore (Ngazidja)", flagUrl: wiki("Flag of Grande Comore.svg") },
+          { code: "km-a", name: "Anjouan (Ndzuwani)",       flagUrl: wiki("Flag of Anjouan (official).svg") },
+          { code: "km-m", name: "Mohéli (Mwali)",           flagUrl: wiki("Flag of Mohéli (official).svg") },
         ],
       },
 
