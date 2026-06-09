@@ -21,6 +21,9 @@ interface Props {
   onGoGauntlet: () => void
   onGoTierList: () => void
   onGoSettings: () => void
+  onGoOddOneOut: () => void
+  onGoTheCrop: () => void
+  onGoFlagDNA: () => void
 }
 
 const ComingSoonTile = ({ emoji, label, desc }: { emoji: string; label: string; desc: string }) => (
@@ -42,6 +45,7 @@ export default function HomeScreen({
   state, onStartDaily, onGoFlags, onGoProfile, onGoFlashcards,
   onGoLanguage, onQuickPlay, onGoReverseQuiz, onGoCapitalQuiz, onGoChallenge, onGoCodex,
   onGoGeo, onGoGauntlet, onGoTierList, onGoSettings,
+  onGoOddOneOut, onGoTheCrop, onGoFlagDNA,
 }: Props) {
   const today = todayString()
   const dailyDone = state.lastDailyDate === today
@@ -228,6 +232,47 @@ export default function HomeScreen({
             </div>
           </div>
           <span style={{ color: "#34D399" }}>›</span>
+        </button>
+
+        <h3 className="text-xs font-semibold uppercase tracking-widest pt-1" style={{ color: "#B8A9E0" }}>Mini Games</h3>
+
+        <button onClick={onGoOddOneOut}
+          className="w-full flex items-center justify-between px-5 py-4 rounded-2xl transition-all active:scale-[0.98] hover:brightness-110"
+          style={{ background: "#2D1F52", border: "1px solid #8B6CFF33" }}>
+          <div className="flex items-center gap-3">
+            <span className="text-2xl">🕵️</span>
+            <div className="text-left">
+              <div className="font-bold" style={{ color: "#F5F3FF" }}>Odd One Out</div>
+              <div className="text-xs" style={{ color: "#B8A9E0" }}>3 flags belong together — find the impostor</div>
+            </div>
+          </div>
+          <span style={{ color: "#8B6CFF" }}>›</span>
+        </button>
+
+        <button onClick={onGoTheCrop}
+          className="w-full flex items-center justify-between px-5 py-4 rounded-2xl transition-all active:scale-[0.98] hover:brightness-110"
+          style={{ background: "#2D1F52", border: "1px solid #8B6CFF33" }}>
+          <div className="flex items-center gap-3">
+            <span className="text-2xl">🔍</span>
+            <div className="text-left">
+              <div className="font-bold" style={{ color: "#F5F3FF" }}>The Crop</div>
+              <div className="text-xs" style={{ color: "#B8A9E0" }}>Name the flag from a tiny crop · zooms out with each miss</div>
+            </div>
+          </div>
+          <span style={{ color: "#8B6CFF" }}>›</span>
+        </button>
+
+        <button onClick={onGoFlagDNA}
+          className="w-full flex items-center justify-between px-5 py-4 rounded-2xl transition-all active:scale-[0.98] hover:brightness-110"
+          style={{ background: "#2D1F52", border: "1px solid #8B6CFF33" }}>
+          <div className="flex items-center gap-3">
+            <span className="text-2xl">🧬</span>
+            <div className="text-left">
+              <div className="font-bold" style={{ color: "#F5F3FF" }}>Flag DNA</div>
+              <div className="text-xs" style={{ color: "#B8A9E0" }}>Guess the flag by its colour &amp; feature attributes</div>
+            </div>
+          </div>
+          <span style={{ color: "#8B6CFF" }}>›</span>
         </button>
 
         <h3 className="text-xs font-semibold uppercase tracking-widest pt-1" style={{ color: "#B8A9E0" }}>Challenge</h3>

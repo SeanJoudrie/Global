@@ -16,6 +16,9 @@ import GeoQuizScreen from "./components/GeoQuizScreen"
 import GauntletScreen from "./components/GauntletScreen"
 import SettingsScreen from "./components/SettingsScreen"
 import TierListScreen from "./components/TierListScreen"
+import OddOneOutScreen from "./components/OddOneOutScreen"
+import TheCropScreen from "./components/TheCropScreen"
+import FlagDNAScreen from "./components/FlagDNAScreen"
 import StarField from "./components/StarField"
 import EarthLogo from "./components/EarthLogo"
 import { FLAGS } from "./data/flags"
@@ -27,7 +30,7 @@ import type { Question } from "./utils/quiz"
 import { todayString } from "./utils/prng"
 import { loadTheme } from "./components/SettingsScreen"
 
-type Screen = "splash" | "home" | "flags" | "quiz" | "reversequiz" | "result" | "achievements" | "profile" | "flashcards" | "language" | "capitalquiz" | "challenge" | "codex" | "geo" | "gauntlet" | "tierlist" | "settings"
+type Screen = "splash" | "home" | "flags" | "quiz" | "reversequiz" | "result" | "achievements" | "profile" | "flashcards" | "language" | "capitalquiz" | "challenge" | "codex" | "geo" | "gauntlet" | "tierlist" | "settings" | "oddoneout" | "thecrop" | "flagdna"
 
 interface ActiveQuiz {
   questions: Question[]
@@ -150,7 +153,10 @@ export default function App() {
           onGoGeo={() => setScreen("geo")}
           onGoGauntlet={() => setScreen("gauntlet")}
           onGoTierList={() => setScreen("tierlist")}
-          onGoSettings={() => setScreen("settings")} />
+          onGoSettings={() => setScreen("settings")}
+          onGoOddOneOut={() => setScreen("oddoneout")}
+          onGoTheCrop={() => setScreen("thecrop")}
+          onGoFlagDNA={() => setScreen("flagdna")} />
       )}
 
       {screen === "flags" && (
@@ -168,7 +174,10 @@ export default function App() {
       {screen === "geo" && <GeoQuizScreen onBack={() => setScreen("home")} />}
       {screen === "gauntlet" && <GauntletScreen onBack={() => setScreen("home")} />}
       {screen === "tierlist" && <TierListScreen onBack={() => setScreen("home")} />}
-      {screen === "settings" && <SettingsScreen onBack={() => setScreen("home")} />}
+      {screen === "settings"   && <SettingsScreen onBack={() => setScreen("home")} />}
+      {screen === "oddoneout"  && <OddOneOutScreen onBack={() => setScreen("home")} />}
+      {screen === "thecrop"    && <TheCropScreen   onBack={() => setScreen("home")} />}
+      {screen === "flagdna"    && <FlagDNAScreen    onBack={() => setScreen("home")} />}
       {screen === "profile" && (
         <ProfileScreen state={appState} onBack={() => setScreen("home")}
           onSetUsername={name => setAppState(s => ({ ...s, username: name }))} />
