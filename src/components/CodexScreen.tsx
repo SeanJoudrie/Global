@@ -29,6 +29,7 @@ export default function CodexScreen({ onBack }: Props) {
   // Regions start collapsed; store which are expanded
   const [expandedRegions, setExpandedRegions] = useState<Set<string>>(new Set())
   const [historyExpanded, setHistoryExpanded] = useState(false)
+  const [historyIdx, setHistoryIdx] = useState(0)
   const [subdivisionsExpanded, setSubdivisionsExpanded] = useState(false)
 
   const filteredFlags = useMemo(() => {
@@ -50,6 +51,7 @@ export default function CodexScreen({ onBack }: Props) {
   const openCountry = (code: string) => {
     setSelectedCode(code)
     setHistoryExpanded(false)
+    setHistoryIdx(0)
     setSubdivisionsExpanded(false)
     setPhase('country')
   }
@@ -134,24 +136,79 @@ export default function CodexScreen({ onBack }: Props) {
                   </div>
                 ) : (
                   <div>
-                    <p className="text-xs mb-4" style={{ color: '#8B6CFF88' }}>
-                      {selectedEntry.flagHistory.length} flag{selectedEntry.flagHistory.length !== 1 ? 's' : ''} · newest first · scroll to explore
-                    </p>
-                    <div className="space-y-0">
-                      {selectedEntry.flagHistory.map((hf: HistoricalFlag, i: number) => (
-                        <div key={i}>
-                          <FlagHistoryCard hf={hf} isFirst={i === 0} />
-                          {i < selectedEntry.flagHistory.length - 1 && (
-                            <div className="flex flex-col items-center py-1">
-                              <div style={{ width: 2, height: 12, background: '#8B6CFF44' }} />
-                              <div className="text-xs px-2 py-0.5 rounded-full"
-                                style={{ background: '#2D1F52', color: '#8B6CFF88', border: '1px solid #8B6CFF22', fontSize: 10 }}>
-                                ↓ older
-                              </div>
-                              <div style={{ width: 2, height: 12, background: '#8B6CFF44' }} />
+                    {/* Navigation row */}
+                    <div className="flex items-center justify-between mb-3">
+                      <span className="text-xs" style={{ color: '#8B6CFF88' }}>
+                        {historyIdx + 1} / {selectedEntry.flagHistory.length} · newest → oldest
+                      </span>
+                      <div className="flex gap-2">
+                        <button
+                          onClick={() => setHistoryIdx(i => Math.max(0, i - 1))}
+                          disabled={historyIdx === 0}
+                          className="w-8 h-8 flex items-center justify-center rounded-full transition-all active:scale-90"
+                          style={{
+                            background: historyIdx === 0 ? '#2D1F5266' : '#2D1F52',
+                            border: `1px solid ${historyIdx === 0 ? '#8B6CFF11' : '#8B6CFF44'}`,
+                            color: historyIdx === 0 ? '#8B6CFF22' : '#8B6CFF',
+                            fontSize: 18,
+                          }}>‹</button>
+                        <button
+                          onClick={() => setHistoryIdx(i => Math.min(selectedEntry.flagHistory.length - 1, i + 1))}
+                          disabled={historyIdx === selectedEntry.flagHistory.length - 1}
+                          className="w-8 h-8 flex items-center justify-center rounded-full transition-all active:scale-90"
+                          style={{
+                            background: historyIdx === selectedEntry.flagHistory.length - 1 ? '#2D1F5266' : '#2D1F52',
+                            border: `1px solid ${historyIdx === selectedEntry.flagHistory.length - 1 ? '#8B6CFF11' : '#8B6CFF44'}`,
+                            color: historyIdx === selectedEntry.flagHistory.length - 1 ? '#8B6CFF22' : '#8B6CFF',
+                            fontSize: 18,
+                          }}>›</button>
+                      </div>
+                    </div>
+
+                    {/* Main card */}
+                    <FlagHistoryCard
+                      hf={selectedEntry.flagHistory[historyIdx]}
+                      isFirst={historyIdx === 0}
+                    />
+
+                    {/* Timeline strip */}
+                    <div className="mt-4">
+                      <p className="text-xs mb-2" style={{ color: '#8B6CFF55' }}>Timeline — tap to jump</p>
+                      <div style={{ display: 'flex', gap: 8, overflowX: 'auto', paddingBottom: 6 }}>
+                        {selectedEntry.flagHistory.map((hf: HistoricalFlag, i: number) => (
+                          <button key={i} onClick={() => setHistoryIdx(i)}
+                            style={{
+                              flexShrink: 0, borderRadius: 8, overflow: 'hidden',
+                              border: `2px solid ${i === historyIdx ? '#8B6CFF' : '#8B6CFF22'}`,
+                              opacity: i === historyIdx ? 1 : 0.55,
+                              transition: 'opacity 0.2s, border-color 0.2s',
+                              background: '#1A1033',
+                            }}>
+                            <img src={hf.flagUrl} alt={hf.label}
+                              style={{ width: 72, height: 46, objectFit: 'cover', display: 'block' }}
+                              onError={e => { (e.target as HTMLImageElement).style.opacity = '0.15' }}
+                            />
+                            <div style={{ padding: '3px 5px', textAlign: 'center', background: '#2D1F52' }}>
+                              <span style={{ fontSize: 9, color: i === historyIdx ? '#A78BFA' : '#8B6CFF66', fontWeight: 600 }}>
+                                {hf.fromYear}
+                              </span>
                             </div>
-                          )}
-                        </div>
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Dot indicators */}
+                    <div className="flex justify-center gap-1.5 mt-3">
+                      {selectedEntry.flagHistory.map((_: HistoricalFlag, i: number) => (
+                        <button key={i} onClick={() => setHistoryIdx(i)}
+                          style={{
+                            width: i === historyIdx ? 20 : 7,
+                            height: 7, borderRadius: 4,
+                            background: i === historyIdx ? '#8B6CFF' : '#8B6CFF33',
+                            transition: 'width 0.25s, background 0.2s',
+                            border: 'none', padding: 0,
+                          }} />
                       ))}
                     </div>
                   </div>

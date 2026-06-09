@@ -828,6 +828,350 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       note: 'When Britain recognized Egyptian independence in 1922, King Fuad I adopted a green field with a white crescent enclosing three white stars — usually said to represent Egypt, Nubia, and Sudan.',
     },
   ],
+
+  // ── Nordics ────────────────────────────────────────────────────────────────
+  SE: [
+    {
+      fromYear: 1906, toYear: null,
+      flagUrl: 'https://flagcdn.com/w320/se.png',
+      label: 'Swedish Flag (colours standardised)',
+      note: 'In 1906 a royal decree fixed the exact shades of blue and yellow, ending a century of variation. The Nordic cross design itself stretches back to at least the early 16th century — one of the oldest unchanged national symbols in Europe.',
+    },
+    {
+      fromYear: 1844, toYear: 1905,
+      flagUrl: fp('Flag_of_Sweden_(1844-1905).svg'),
+      label: 'Swedish Flag with Union Mark',
+      note: 'During the personal union with Norway (1814–1905), a combined canton showing both national crosses appeared in the upper hoist corner. Sweden and Norway shared a king but remained separate kingdoms; the union mark was a constant reminder of that political arrangement.',
+      parallel: [
+        {
+          fromYear: 1844, toYear: 1899,
+          flagUrl: fp('Flag_of_Norway_(1844-1899).svg'),
+          label: 'Norwegian counterpart',
+          note: 'Norway\'s flag carried the same union mark in the same position — the two mirrors of a political arrangement that ended peacefully in 1905 when Norway voted for independence.',
+        },
+      ],
+      parallelCaption: 'Norwegian counterpart during the union',
+    },
+    {
+      fromYear: 1521, toYear: 1844,
+      flagUrl: fp('Flag_of_Sweden.svg'),
+      label: 'Classic Swedish Flag',
+      note: 'The golden Nordic cross on blue is virtually unchanged from the earliest recorded use under Gustav Vasa in the 1520s. Sweden is one of the very few countries whose flag design has remained stable for five centuries.',
+    },
+  ],
+
+  NO: [
+    {
+      fromYear: 1821, toYear: null,
+      flagUrl: 'https://flagcdn.com/w320/no.png',
+      label: 'Norwegian Flag (Meltzer design)',
+      note: 'Designed by merchant and politician Fredrik Meltzer, this flag cleverly incorporated the three colours of the French Tricolore (associated with liberty) into a Nordic cross — blue within white within red. The design was adopted by the Norwegian Storting in 1821, though Norway was in union with Sweden and the flag was slow to gain official recognition abroad.',
+    },
+    {
+      fromYear: 1814, toYear: 1821,
+      flagUrl: fp('Flag_of_Norway_(1814-1821).svg'),
+      label: 'First Norwegian Flag (Eidsvoll)',
+      note: 'When Norway\'s constitution was signed at Eidsvoll in May 1814, the country briefly gained independence before entering a union with Sweden. This first flag — a red field with a simple white cross — was used during that brief window and inspired the later, more distinctive design.',
+    },
+  ],
+
+  DK: [
+    {
+      fromYear: 1370, toYear: null,
+      flagUrl: 'https://flagcdn.com/w320/dk.png',
+      label: 'The Dannebrog',
+      note: 'The Dannebrog — a white Nordic cross on red — is the oldest national flag still in continuous use by an independent nation, reliably documented from at least 1370. Legend holds it fell from the sky during the Battle of Lyndanisse in 1219. Whatever its origin, the design has remained essentially unchanged for over 650 years, making it the template for every other Nordic cross flag.',
+    },
+  ],
+
+  FI: [
+    {
+      fromYear: 1918, toYear: null,
+      flagUrl: 'https://flagcdn.com/w320/fi.png',
+      label: 'Finnish Flag (blue cross)',
+      note: 'Adopted on May 29, 1918, shortly after Finland declared independence from Russia in December 1917. The blue Nordic cross on white was chosen through a design competition — the blue representing Finland\'s thousands of lakes and the clear sky, the white its snow. The exact proportions were refined several times, with the current form standardised in 1978.',
+    },
+    {
+      fromYear: 1809, toYear: 1917,
+      flagUrl: fp('Flag_of_the_Grand_Duchy_of_Finland.svg'),
+      label: 'Grand Duchy of Finland (Russian era)',
+      note: 'After Sweden ceded Finland to Russia in 1809, Finland became an autonomous Grand Duchy of the Russian Empire. The duchy used a red flag bearing the Finnish lion coat of arms. During this period Finnish national identity grew steadily — the Kalevala epic was compiled, the Finnish language was promoted, and the eventual push for independence gathered strength.',
+    },
+  ],
+
+  // ── East Asia ──────────────────────────────────────────────────────────────
+  KR: [
+    {
+      fromYear: 1984, toYear: null,
+      flagUrl: 'https://flagcdn.com/w320/kr.png',
+      label: 'Taegukgi (standardised)',
+      note: 'Korea\'s Taegukgi — white field, red-and-blue yin-yang (taegeuk) at centre, four black trigrams at corners — was formally standardised in 1984, fixing proportions and exact trigram arrangement. The design has been a Korean national symbol since its first use in 1882 and remained unchanged in concept through the Japanese occupation and the establishment of the Republic of Korea in 1948.',
+    },
+    {
+      fromYear: 1949, toYear: 1984,
+      flagUrl: fp('Flag_of_South_Korea_(1949-1984).svg'),
+      label: 'Taegukgi (1949 specification)',
+      note: 'When the Republic of Korea was proclaimed in 1948, the trigrams were initially placed in a slightly different orientation. The 1949 official specification corrected this, but minor inconsistencies in which trigrams appeared in which corners persisted in practice until the 1984 standardisation finally resolved the ambiguity.',
+    },
+    {
+      fromYear: 1897, toYear: 1910,
+      flagUrl: fp('Flag_of_the_Empire_of_Korea.svg'),
+      label: 'Korean Empire (Taegeukgi)',
+      note: 'When King Gojong declared the Korean Empire in 1897 to assert sovereignty against both China and Japan, the Taegeukgi continued as the national symbol. In 1910 Japan annexed Korea and suppressed the flag entirely. For 35 years under Japanese colonial rule, displaying this flag was an act of resistance — and it became a powerful symbol of the independence movement.',
+    },
+    {
+      fromYear: 1882, toYear: 1897,
+      flagUrl: fp('Flag_of_Korea_(1882-1910).svg'),
+      label: 'First Taegukgi (Joseon dynasty)',
+      note: 'Korea\'s first national flag was created in 1882 by diplomat Pak Yeong-hyo during a diplomatic mission to Japan, based on instructions from King Gojong. The taegeuk (yin-yang) symbol and trigrams draw on Confucian cosmology. This first version had eight trigrams; later versions reduced them to four.',
+    },
+  ],
+
+  VN: [
+    {
+      fromYear: 1976, toYear: null,
+      flagUrl: 'https://flagcdn.com/w320/vn.png',
+      label: 'Socialist Republic of Vietnam',
+      note: 'When North and South Vietnam were formally reunified in July 1976, the gold five-pointed star on red — previously the flag of North Vietnam since 1945 — became the flag of the unified country. The red represents the revolution and the blood of those who died fighting for independence; the gold star represents the five main classes of Vietnamese society.',
+      parallel: [
+        {
+          fromYear: 1955, toYear: 1975,
+          flagUrl: fp('Flag_of_South_Vietnam.svg'),
+          label: 'Republic of Vietnam (South)',
+          note: 'South Vietnam\'s flag featured three horizontal red stripes on a yellow field. Yellow symbolised the imperial tradition; the three stripes represented the three regions of Vietnam (North, Centre, South). The flag flew until April 30, 1975, when Saigon fell and South Vietnam ceased to exist.',
+        },
+      ],
+      parallelCaption: 'South Vietnam (existed at the same time)',
+    },
+    {
+      fromYear: 1945, toYear: 1976,
+      flagUrl: fp('Flag_of_the_Democratic_Republic_of_Vietnam.svg'),
+      label: 'Democratic Republic of Vietnam',
+      note: 'Ho Chi Minh proclaimed the Democratic Republic of Vietnam on September 2, 1945, adopting this red flag with a gold star. The same flag flew through the war with France (ending 1954), the division of Vietnam at the 17th parallel, and the long war with the United States and South Vietnam — making it one of the most recognised flags of 20th-century armed struggle.',
+    },
+    {
+      fromYear: 1802, toYear: 1945,
+      flagUrl: fp('Flag_of_Vietnam_1802-1885.svg'),
+      label: 'Nguyen Dynasty / French Indochina',
+      note: 'The Nguyen emperors, who unified Vietnam in 1802, used a plain yellow flag. Under French colonial rule from the 1880s, a dragon motif was sometimes used on yellow for the protectorate of Annam. Yellow remained Vietnam\'s imperial colour for over a century — which is why South Vietnam\'s post-independence flag also used yellow as its field.',
+    },
+  ],
+
+  IR: [
+    {
+      fromYear: 1980, toYear: null,
+      flagUrl: 'https://flagcdn.com/w320/ir.png',
+      label: 'Islamic Republic of Iran',
+      note: 'Adopted after the 1979 Islamic Revolution, this flag keeps the green-white-red tricolor (unchanged since the Qajar era) but replaces the imperial lion and sun with the emblem of the Islamic Republic — a stylised Allah in the shape of a tulip, symbolising martyrdom. Along the borders of the green and red bands, the phrase "Allahu Akbar" (God is Greatest) is repeated 22 times, commemorating the 22nd of Bahman (February 11, 1979), the day of the revolution\'s victory.',
+    },
+    {
+      fromYear: 1925, toYear: 1979,
+      flagUrl: fp('State_flag_of_Iran_(1925–1979).svg'),
+      label: 'Imperial Standard (Pahlavi era)',
+      note: 'The Pahlavi dynasty retained the ancient lion-and-sun emblem on the green-white-red tricolor: a lion holding a sword with a radiant sun rising behind it. This symbol of Persian royalty dated back to at least the 12th century. The 1979 revolution deliberately erased it — books and buildings bearing the lion and sun were defaced, making surviving examples historically significant.',
+    },
+    {
+      fromYear: 1907, toYear: 1925,
+      flagUrl: fp('Flag_of_Iran_(1907).svg'),
+      label: 'Constitutional Era',
+      note: 'The Constitutional Revolution of 1906 forced the Qajar shahs to accept a parliament and a constitution — and updated the flag with the emblem centered on the white stripe for the first time. The lion-and-sun device in this form dated from at least the Safavid empire of the 16th century and symbolised the power of the Persian monarchy and state.',
+    },
+    {
+      fromYear: 1501, toYear: 1907,
+      flagUrl: fp('Flag_of_Persia_(1500-1800).svg'),
+      label: 'Safavid / Qajar Persia',
+      note: 'The ancient Persian lion-and-sun motif predates any standardised tricolor. Under the Safavids and Qajars, the lion and sun appeared on battle standards, seals, and eventually on a green field. The familiar green-white-red arrangement was formalised only in the 19th century under the Qajars, but the lion and sun had represented Persian sovereignty for centuries before that.',
+    },
+  ],
+
+  // ── Gran Colombia lineage ──────────────────────────────────────────────────
+  AR: [
+    {
+      fromYear: 1818, toYear: null,
+      flagUrl: 'https://flagcdn.com/w320/ar.png',
+      label: 'Flag of Argentina (with Sun of May)',
+      note: 'The Sun of May — representing Inti, the Inca sun god, and commemorating the May Revolution of 1810 — was officially added to the flag on February 25, 1818. The sun is depicted with alternating straight and wavy rays and a human face, copied from the reverse of Argentina\'s first coin minted in 1813. It distinguishes the "official ceremonial flag" from the plain-striped civil flag.',
+    },
+    {
+      fromYear: 1816, toYear: 1818,
+      flagUrl: fp('Flag_of_Argentina_(alternative).svg'),
+      label: 'Flag without the Sun',
+      note: 'The plain horizontal tricolor of light blue-white-light blue was created by General Manuel Belgrano on February 27, 1812, using the cockade colours of the revolution. It flew at the Declaration of Independence on July 9, 1816 — before the Sun of May was incorporated. This simpler version remains in use today as the "civil flag" (without the sun) on non-official occasions.',
+    },
+    {
+      fromYear: 1812, toYear: 1816,
+      flagUrl: fp('Bandera_de_Belgrano_1812.svg'),
+      label: 'Belgrano\'s Original Flag (1812)',
+      note: 'Manuel Belgrano improvised the first Argentine flag in 1812 to rally troops at the Battle of Rosario, using the blue and white colours of the Buenos Aires revolutionary cockade. He raised it on February 27, 1812 — a date now celebrated as Flag Day in Argentina. Belgrano had to seek permission from the revolutionary government to use it officially, permission that came only gradually.',
+    },
+  ],
+
+  CO: [
+    {
+      fromYear: 1861, toYear: null,
+      flagUrl: 'https://flagcdn.com/w320/co.png',
+      label: 'Republic of Colombia',
+      note: 'Colombia\'s horizontal tricolor — yellow (half), blue (quarter), red (quarter) — descends directly from the flag of Gran Colombia designed by Francisco de Miranda in 1806. The wide yellow band represents sovereignty and wealth; blue the two oceans flanking Colombia; red the blood of independence fighters. The current proportions (2:1:1) have been official since 1861.',
+    },
+    {
+      fromYear: 1830, toYear: 1861,
+      flagUrl: fp('Flag_of_New_Granada.svg'),
+      label: 'Republic of New Granada',
+      note: 'After Gran Colombia dissolved in 1831, the central portion (modern Colombia, Panama, and parts of Ecuador) became the Republic of New Granada. It initially retained a version of the Gran Colombia tricolor, though with varying stripe proportions across different governments and constitutions.',
+    },
+    {
+      fromYear: 1819, toYear: 1830,
+      flagUrl: fp('Flag_of_Gran_Colombia.svg'),
+      label: 'Gran Colombia',
+      note: 'Simón Bolívar\'s Gran Colombia — uniting modern Venezuela, Colombia, Ecuador, and Panama — adopted a yellow-blue-red tricolor inspired by Francisco de Miranda\'s design. Miranda had chosen yellow for the gold of the Americas, blue for the ocean separating it from Spain, and red for the blood that would be shed in the fight for freedom. This shared ancestor explains why Colombia, Venezuela, and Ecuador all have nearly identical flag colours today.',
+    },
+  ],
+
+  VE: [
+    {
+      fromYear: 2006, toYear: null,
+      flagUrl: 'https://flagcdn.com/w320/ve.png',
+      label: 'Bolivarian Republic of Venezuela',
+      note: 'In 2006 President Hugo Chávez updated the flag by adding an eighth star (previously seven) to honour the province of Guayana, aligning the stars in an arc rather than a line, and moving the coat of arms to the hoist side. The horse in the coat of arms — which had previously been running to the right — was controversially reversed to gallop to the left, which critics read as a political statement.',
+    },
+    {
+      fromYear: 1954, toYear: 2006,
+      flagUrl: fp('Flag_of_Venezuela_(1954-2006).svg'),
+      label: 'Venezuela (seven stars, 1954–2006)',
+      note: 'This version carried seven stars in a straight horizontal line representing the seven provinces that signed the Declaration of Independence in 1811. The coat of arms appeared only on the state flag (not the civil flag). This flag flew from the Marcos Pérez Jiménez dictatorship through the democratic era up until Chávez\'s redesign.',
+    },
+    {
+      fromYear: 1863, toYear: 1954,
+      flagUrl: fp('Flag_of_Venezuela_(1863-1905).svg'),
+      label: 'Venezuela (various star counts)',
+      note: 'Throughout the 19th and early 20th centuries Venezuela\'s flag went through numerous versions with different numbers of stars (3, 5, 6, 7) and varying arrangements, reflecting the country\'s turbulent political history of civil wars, caudillo rule, and federal reorganisation. The yellow-blue-red tricolor inherited from Gran Colombia remained constant; everything else was negotiable.',
+    },
+    {
+      fromYear: 1819, toYear: 1830,
+      flagUrl: fp('Flag_of_Gran_Colombia.svg'),
+      label: 'Gran Colombia',
+      note: 'Venezuela was a founding component of Simón Bolívar\'s Gran Colombia alongside Colombia and Ecuador. The shared tricolor of yellow, blue, and red designed by Francisco de Miranda in 1806 became the common ancestor of all three nations\' flags — a visible reminder of the dream of a unified South American republic that collapsed in 1830.',
+    },
+  ],
+
+  // ── Western Europe ─────────────────────────────────────────────────────────
+  BE: [
+    {
+      fromYear: 1831, toYear: null,
+      flagUrl: 'https://flagcdn.com/w320/be.png',
+      label: 'Kingdom of Belgium',
+      note: 'Belgium\'s vertical black-yellow-red tricolor was adopted at independence in 1831. The colours derive from the ducal arms of Brabant — a golden lion on black — combined with red from the arms of Hainaut. It\'s unusually tall and narrow compared to most flags (13:15 ratio), and the black stripe is on the hoist side — the only national flag with black in that position.',
+    },
+    {
+      fromYear: 1815, toYear: 1830,
+      flagUrl: fp('Flag_of_the_Netherlands.svg'),
+      label: 'Under the Kingdom of the Netherlands',
+      note: 'After Napoleon\'s defeat, the Congress of Vienna merged the Austrian Netherlands (roughly modern Belgium) and the Dutch Republic into the United Kingdom of the Netherlands under King William I. The Dutch orange-white-blue flag (displayed as red-white-blue) flew over Belgian territory. The forced union proved deeply unpopular — language, religion, and economic policies all divided north from south, leading to the Belgian Revolution of 1830.',
+    },
+    {
+      fromYear: 1789, toYear: 1790,
+      flagUrl: fp('Flag_of_Brabant.svg'),
+      label: 'Brabantine Revolution',
+      note: 'The 1789 Brabantine Revolution against Austrian rule briefly created the United Belgian States. The revolutionary flag took the black, yellow, and red from the coat of arms of the Duchy of Brabant and arranged them horizontally (black on top, as in the Brabant arms). After Belgium\'s eventual independence in 1830, the revolutionary tradition was honoured but the stripes were turned vertical — creating today\'s distinctive flag.',
+    },
+  ],
+
+  CH: [
+    {
+      fromYear: 1889, toYear: null,
+      flagUrl: 'https://flagcdn.com/w320/ch.png',
+      label: 'Swiss Federal Flag (standardised)',
+      note: 'Switzerland officially standardised its federal flag in 1889 — a bold white cross on red, in a square format unique among sovereign nations (only Vatican City also uses a square flag). The equal-armed cross has represented the Swiss Confederation since at least the Battle of Laupen in 1339, when Swiss troops wore white crosses as field insignia. The Red Cross flag is its inverse — white field, red cross — created in 1863 by Swiss founder Henry Dunant as a deliberate tribute.',
+    },
+    {
+      fromYear: 1339, toYear: 1889,
+      flagUrl: fp('Flag_of_Switzerland_(Pantone).svg'),
+      label: 'Medieval Origins',
+      note: 'Swiss soldiers wore white crosses on red surcoats at the Battle of Laupen (1339) to identify themselves as a confederation. The cross appeared on cantonal battle flags long before Switzerland had a formal national banner. The proportions and exact shade of red varied for five centuries before 1889\'s standardisation made the current square flag official.',
+    },
+  ],
+
+  // ── Middle East redesigns ──────────────────────────────────────────────────
+  IQ: [
+    {
+      fromYear: 2008, toYear: null,
+      flagUrl: 'https://flagcdn.com/w320/iq.png',
+      label: 'Republic of Iraq (current)',
+      note: 'The 2008 revision updated the Kufic script "Allahu Akbar" to a standardised typeface (removing Saddam Hussein\'s handwriting) and removed the three green stars that had symbolised Ba\'athist pan-Arab unity. The basic red-white-black horizontal tricolor with green text remains, connecting the flag to the broader pan-Arab colour tradition shared with Egypt, Syria, and Yemen.',
+    },
+    {
+      fromYear: 1991, toYear: 2004,
+      flagUrl: fp('Flag_of_Iraq_(1991-2004).svg'),
+      label: 'Saddam\'s "Allahu Akbar" Flag',
+      note: 'On the eve of the Gulf War in January 1991, Saddam Hussein personally added the phrase "Allahu Akbar" (God is Greatest) to the flag — reportedly in his own handwriting — in green Kufic script between the three stars. The move was widely seen as a cynical appeal to Islamic sentiment to rally support for the invasion of Kuwait. This became the defining image of Saddam\'s Iraq and was immediately controversial.',
+    },
+    {
+      fromYear: 1963, toYear: 1991,
+      flagUrl: fp('Flag_of_Iraq_(1963-1991).svg'),
+      label: 'Ba\'ath Era (three stars)',
+      note: 'When the Ba\'ath Party took power in 1963, the flag gained three green stars representing the hoped-for union of Iraq, Syria, and Egypt into a single Arab state — an ambition that was never realised. The pan-Arab red-white-black tricolor was adopted, shared with Syria and Egypt under Gamal Abdel Nasser\'s pan-Arab ideology. Iraq\'s flag was effectively a statement of political aspiration rather than current reality.',
+    },
+    {
+      fromYear: 1958, toYear: 1963,
+      flagUrl: fp('Flag_of_Iraq_(1959-1963).svg'),
+      label: 'First Republic (after revolution)',
+      note: 'The Iraqi monarchy was overthrown in the bloody revolution of July 14, 1958. The new republic adopted a black-white-green horizontal tricolor with a yellow sun (the Kurdish sun symbol) and a red star, replacing the Hashemite-era flag. This flag lasted only until the Ba\'ath Party\'s 1963 coup, which replaced it with the pan-Arab design.',
+    },
+  ],
+
+  SY: [
+    {
+      fromYear: 1980, toYear: null,
+      flagUrl: 'https://flagcdn.com/w320/sy.png',
+      label: 'Syrian Arab Republic (current)',
+      note: 'Syria\'s current flag — red, white, and black horizontal stripes with two green stars — was readopted in 1980 after Syria\'s federation with Egypt and Libya ended. The two stars represent Syria and Egypt, a nod to the failed United Arab Republic of 1958–1961. This flag is simultaneously a symbol of Ba\'athist Arab nationalism and — because it was also used by the independence-era republic — was adopted by opposition forces during the 2011 civil war as an alternative to the Ba\'ath flag.',
+    },
+    {
+      fromYear: 1963, toYear: 1980,
+      flagUrl: fp('Flag_of_Syria_(1963-1972).svg'),
+      label: 'Ba\'ath Party Syria',
+      note: 'After the Ba\'ath coup of 1963, Syria adopted a pan-Arab tricolor with three red stars representing the hoped-for union of Syria, Egypt, and Iraq. Between 1972 and 1980, Syria joined a Federation of Arab Republics with Egypt and Libya, using a flag with the Hawk of Quraish. When that federation dissolved, Syria returned to the two-star design now in use.',
+    },
+    {
+      fromYear: 1958, toYear: 1961,
+      flagUrl: fp('Flag_of_the_United_Arab_Republic.svg'),
+      label: 'United Arab Republic (with Egypt)',
+      note: 'In 1958, Syria and Egypt merged into the United Arab Republic under President Nasser — a bold experiment in pan-Arab unity. The UAR flag combined the red-white-black tricolor with two green stars for the two constituent nations and the Nasser-era eagle. Syria broke away in 1961 after a military coup, finding Egyptian dominance of the union intolerable, and the UAR essentially ceased to exist.',
+    },
+    {
+      fromYear: 1946, toYear: 1958,
+      flagUrl: fp('Flag_of_Syria_(1932-1958).svg'),
+      label: 'Syrian Republic (independence era)',
+      note: 'When France\'s League of Nations mandate ended and Syria gained full independence in 1946, it flew this green-white-black tricolor with three red stars representing the three territories united as Syria: Damascus, Aleppo, and Deir ez-Zor (the Jabal al-Druze). This was Syria\'s flag at the time of independence and remained so until the ill-fated union with Egypt.',
+    },
+  ],
+
+  LY: [
+    {
+      fromYear: 2011, toYear: null,
+      flagUrl: 'https://flagcdn.com/w320/ly.png',
+      label: 'Restored Independence Flag',
+      note: 'After Muammar Gaddafi\'s regime fell in the 2011 civil war, Libya restored the flag of the original Kingdom of Libya — a black-red-green horizontal tricolor with a white crescent and star at the centre. The black represents the Cyrenaica region, red the blood of martyrs, and green the Fezzan region. Adopted originally in 1951, this flag had been suppressed for 42 years by Gaddafi\'s all-green design.',
+    },
+    {
+      fromYear: 1977, toYear: 2011,
+      flagUrl: fp('Flag_of_Libya_(1977-2011).svg'),
+      label: 'Gaddafi\'s All-Green Flag',
+      note: 'In 1977 Muammar Gaddafi declared the "Great Socialist People\'s Libyan Arab Jamahiriya" and adopted the world\'s only completely monochrome national flag — a plain, unadorned field of green. Green symbolised Islam and Gaddafi\'s "Green Book" political philosophy. For 34 years Libya was instantly recognisable on any map or chart by its solid green rectangle. No other sovereign nation has ever had or is likely to have a flag so radically minimal.',
+    },
+    {
+      fromYear: 1969, toYear: 1977,
+      flagUrl: fp('Flag_of_Libya_(1969-1972).svg'),
+      label: 'Arab Republic of Libya (Gaddafi coup)',
+      note: 'After the 27-year-old Colonel Gaddafi\'s bloodless coup deposed King Idris in September 1969, Libya adopted the pan-Arab red-white-black tricolor — the same colours used by Egypt, Syria, and Iraq. Between 1972 and 1977 Libya joined a short-lived Federation of Arab Republics with Egypt and Syria, using a flag with the Hawk of Quraish, before Gaddafi\'s dramatic switch to plain green.',
+    },
+    {
+      fromYear: 1951, toYear: 1969,
+      flagUrl: fp('Flag_of_Libya_(1951-1969).svg'),
+      label: 'Kingdom of Libya (independence)',
+      note: 'When Libya achieved independence from Italian and Allied administration on December 24, 1951 — becoming the first African country to gain independence via the United Nations — it adopted this flag under King Idris. The crescent and star are traditional Islamic symbols; the three horizontal bands represent the three historical regions: Cyrenaica (black), Fezzan (green), and Tripolitania (red). This flag was suppressed under Gaddafi and triumphantly restored in 2011.',
+    },
+  ],
 }
 
 export const CODEX_SUMMARIES: Record<string, string> = {
