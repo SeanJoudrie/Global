@@ -1172,6 +1172,417 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       note: 'When Libya achieved independence from Italian and Allied administration on December 24, 1951 — becoming the first African country to gain independence via the United Nations — it adopted this flag under King Idris. The crescent and star are traditional Islamic symbols; the three horizontal bands represent the three historical regions: Cyrenaica (black), Fezzan (green), and Tripolitania (red). This flag was suppressed under Gaddafi and triumphantly restored in 2011.',
     },
   ],
+
+  // ── Americas ────────────────────────────────────────────────────────────────
+
+  CL: [
+    {
+      fromYear: 1818, toYear: null,
+      flagUrl: 'https://flagcdn.com/w320/cl.png',
+      label: 'Chilean Flag (La Estrella Solitaria)',
+      note: 'Chile\'s flag — the "Lone Star" — was finalised on October 18, 1817, shortly before independence was formally declared. The white star represents a guide to progress and honour; red and blue are said to represent the blood of patriots and the sky and ocean. Superficially similar to the Texas flag (adopted 1839), the Chilean flag actually came first. The proportions were refined in 1854 but the design has been unchanged for over 200 years.',
+    },
+    {
+      fromYear: 1812, toYear: 1817,
+      flagUrl: fp('Flag_of_Chile_(1812-1814).svg'),
+      label: 'La Patria Vieja (Old Fatherland)',
+      note: 'During the first period of Chilean self-government (1810–1814, before the Spanish reconquest), Chile\'s early revolutionary flags used horizontal blue-white-yellow stripes — very different from today\'s design. After the Reconquista restored Spanish rule, patriots went into exile in Argentina, trained with San Martín\'s Army of the Andes, and returned in 1817 to liberate Chile and adopt an entirely new flag.',
+    },
+  ],
+
+  PE: [
+    {
+      fromYear: 1950, toYear: null,
+      flagUrl: 'https://flagcdn.com/w320/pe.png',
+      label: 'Republic of Peru (current)',
+      note: 'Peru\'s red-white-red vertical tricolor has been the national colour scheme since independence, but the coat of arms in the state flag was simplified and standardised in 1950. The arms feature a vicuña (national animal), a cinchona tree (source of quinine), and a cornucopia — three symbols of Peru\'s natural wealth. The civil flag (without arms) is among the oldest unchanged designs in the Americas.',
+    },
+    {
+      fromYear: 1825, toYear: 1950,
+      flagUrl: fp('Flag_of_Peru_(1825-1950).svg'),
+      label: 'Republic of Peru (19th century)',
+      note: 'After independence from Spain in 1821, Peru went through several flag designs. Simón Bolívar imposed a different coat of arms on the existing red-white-red. The 1825 constitution stabilised the tricolor format, though the exact coat of arms changed multiple times over the following century. The vertical red-white-red stripes were chosen to distinguish Peru from Spain\'s red-yellow-red, avoiding any visual association with the former colonial power.',
+    },
+    {
+      fromYear: 1820, toYear: 1825,
+      flagUrl: fp('Flag_of_Peru_(1820-1822).svg'),
+      label: 'San Martín\'s Original Design',
+      note: 'When General José de San Martín landed in Peru in 1820 to liberate it from Spain, he designed the first Peruvian flag with diagonal red and white stripes radiating from the centre. The story goes that San Martín was inspired by watching flamingos fly at dawn over Paracas Bay — the red of their wings against white sky suggesting Peru\'s colours. The diagonal design was quickly changed to vertical stripes but the red-and-white palette remained.',
+    },
+  ],
+
+  EC: [
+    {
+      fromYear: 1900, toYear: null,
+      flagUrl: 'https://flagcdn.com/w320/ec.png',
+      label: 'Republic of Ecuador (with coat of arms)',
+      note: 'Ecuador\'s flag is visually almost identical to Colombia\'s and Venezuela\'s — all three descend from Gran Colombia\'s yellow-blue-red tricolor. Ecuador distinguishes its state flag with a large coat of arms featuring Mount Chimborazo, a steamboat, and a condor. The proportions of the stripes (yellow taking half the flag) are also inherited directly from Francisco de Miranda\'s original Gran Colombia design.',
+    },
+    {
+      fromYear: 1845, toYear: 1900,
+      flagUrl: fp('Flag_of_Ecuador_(1845-1860).svg'),
+      label: 'Republic of Ecuador (early)',
+      note: 'After Gran Colombia dissolved in 1830, Ecuador struggled to differentiate its flag from those of Colombia and Venezuela. Various designs were tried with different coat of arms configurations. The tricolor stripes were maintained throughout but arrangements and arms changed with each new constitution and government.',
+    },
+    {
+      fromYear: 1819, toYear: 1830,
+      flagUrl: fp('Flag_of_Gran_Colombia.svg'),
+      label: 'Gran Colombia',
+      note: 'Ecuador (then known as the District of the South) was part of Simón Bolívar\'s Gran Colombia from 1819 to 1830. The yellow-blue-red tricolor designed by Francisco de Miranda was shared across what is now Venezuela, Colombia, and Ecuador — and it still unites all three visually today, more than 190 years after Gran Colombia dissolved.',
+    },
+  ],
+
+  BO: [
+    {
+      fromYear: 1851, toYear: null,
+      flagUrl: 'https://flagcdn.com/w320/bo.png',
+      label: 'Republic of Bolivia (red-yellow-green)',
+      note: 'Bolivia\'s horizontal red-yellow-green tricolor was established by law in 1851, though the colours had been in use since independence in 1825. Red represents the blood of independence heroes; yellow the country\'s mineral wealth (Bolivia has some of the world\'s largest lithium and tin deposits); green the fertile land. The Wiphala — a rainbow-chequered flag of the indigenous Aymara people — was added as a co-official state flag in the 2009 constitution.',
+    },
+    {
+      fromYear: 1825, toYear: 1851,
+      flagUrl: fp('Flag_of_Bolivia_(1825).svg'),
+      label: 'Early Republic of Bolivia',
+      note: 'Bolivia declared independence on August 6, 1825, named after its liberator Simón Bolívar. The earliest flags used different colour arrangements — some sources show green-red-yellow and other combinations — as the new republic experimented before settling on the current order. Bolivia\'s independence came partly through the campaigns of both Bolívar (from the north) and San Martín (from the south), making it a meeting point of two great liberation movements.',
+    },
+  ],
+
+  UY: [
+    {
+      fromYear: 1830, toYear: null,
+      flagUrl: 'https://flagcdn.com/w320/uy.png',
+      label: 'Oriental Republic of Uruguay',
+      note: 'Uruguay\'s flag takes its nine horizontal stripes (five white, four blue) from the United States flag — at the time of independence, the US model was enormously influential across the Americas. In the canton sits the Sun of May, identical in meaning to Argentina\'s: both nations recognise the same revolutionary sunrise of May 25, 1810. Uruguay was once part of the United Provinces of the Río de la Plata alongside Argentina, and the shared sun reflects that common origin.',
+    },
+    {
+      fromYear: 1828, toYear: 1830,
+      flagUrl: fp('Flag_of_Uruguay_(1828-1830).svg'),
+      label: 'Early Uruguayan Flag',
+      note: 'Uruguay\'s independence was formally recognised in 1828 after years of fighting involving Argentina, Brazil, and Great Britain (which brokered the peace). Early versions of the flag had different numbers of stripes — an 1828 design had 17, later reduced to 9. The Sun of May was added from the start, reflecting Uruguay\'s political and cultural ties to the Argentine independence tradition.',
+    },
+  ],
+
+  PY: [
+    {
+      fromYear: 1990, toYear: null,
+      flagUrl: 'https://flagcdn.com/w320/py.png',
+      label: 'Republic of Paraguay (current)',
+      note: 'Paraguay\'s flag is unique in the world: its obverse and reverse show different emblems. The front bears the national coat of arms (a star surrounded by olive and palm branches under the motto "Peace and Justice"); the back shows the Treasury Seal (a lion guarding a staff of liberty). This double-sided design has been official since 1842 and was last updated in 2013. The red-white-blue tricolor is said to have been inspired by the French Tricolore, which was associated with liberty across the Atlantic world.',
+    },
+    {
+      fromYear: 1842, toYear: 1990,
+      flagUrl: fp('Flag_of_Paraguay_(1842).svg'),
+      label: 'Republic of Paraguay (classic design)',
+      note: 'When Paraguay declared independence from Spain in 1811 under José Gaspar Rodríguez de Francia, the flag\'s design evolved through several versions before the distinctive double-sided design was codified in 1842. Francia ruled as "El Supremo" in near-total isolation from the outside world — he closed Paraguay\'s borders and severed contact with Argentina and Brazil — giving Paraguayan national symbols an unusually homegrown character.',
+    },
+  ],
+
+  CU: [
+    {
+      fromYear: 1902, toYear: null,
+      flagUrl: 'https://flagcdn.com/w320/cu.png',
+      label: 'Republic of Cuba',
+      note: 'Cuba\'s flag — designed by exile Narciso López in 1849 — pre-dates Cuban independence by 50 years. López wanted to annex Cuba to the United States; later Cuban independence leaders adopted the same flag but stripped it of that meaning. The three blue stripes represent the three colonial provinces; the two white stripes represent peace; the red triangle stands for liberty, equality, and fraternity; the white star is the Lone Star of an independent Cuba. This design has flown without any change since 1902.',
+    },
+    {
+      fromYear: 1869, toYear: 1898,
+      flagUrl: fp('Flag_of_Cuba_(1869).svg'),
+      label: 'Ten Years\' War rebel flag',
+      note: 'During the Ten Years\' War (1868–1878) — Cuba\'s first major independence uprising — rebels in the Oriente region used a flag of red, white, and blue horizontal stripes. The Bayamo flag, raised when rebels captured the town of Bayamo in 1868, is considered Cuba\'s first revolutionary banner. These regional rebel flags were eventually unified around López\'s 1849 design during the final push for independence.',
+    },
+    {
+      fromYear: 1516, toYear: 1898,
+      flagUrl: fp('Flag_of_New_Spain.svg'),
+      label: 'Spanish Colonial Cuba',
+      note: 'Cuba was Spain\'s richest and most strategically important colonial possession — the "Pearl of the Antilles" — and one of the last two Spanish colonies in the Americas (along with Puerto Rico), not achieving independence until 1898 after the Spanish-American War. For nearly four centuries the Spanish flag flew over Havana\'s fortresses, changed only by the particular ensigns of successive Spanish dynasties.',
+    },
+  ],
+
+  HT: [
+    {
+      fromYear: 1986, toYear: null,
+      flagUrl: 'https://flagcdn.com/w320/ht.png',
+      label: 'Republic of Haiti (restored)',
+      note: 'Haiti\'s distinctive blue-and-red bicolor was restored in 1986 after the fall of the Duvalier dictatorship. The flag is derived from the legendary act of 1803 in which Jean-Jacques Dessalines tore the white strip from a captured French Tricolore, stitching the remaining blue and red together as a symbol of the union between Black and mixed-race Haitians against the colonial power. The coat of arms — a palm tree, cannons, and the motto "L\'Union Fait La Force" — sits in the white centre band of the state flag.',
+    },
+    {
+      fromYear: 1964, toYear: 1986,
+      flagUrl: fp('Flag_of_Haiti_(1964-1986).svg'),
+      label: 'Duvalier Flag (black and red)',
+      note: 'In 1964, "Papa Doc" Duvalier changed the flag\'s horizontal blue-and-red to vertical black-and-red, claiming to revive the pre-independence flag used by some revolutionary leaders who favoured black over blue. The black stripe represented the Black population; red represented the mixed-race (mulatto) population. After Duvalier\'s son "Baby Doc" was overthrown in 1986, the blue-and-red was immediately restored.',
+    },
+    {
+      fromYear: 1806, toYear: 1820,
+      flagUrl: fp('Flag_of_Haiti_(1806-1811).svg'),
+      label: 'Early Haitian Republic',
+      note: 'Haiti declared independence on January 1, 1804 — the only successful slave rebellion in history to found a nation. In the chaotic early decades the country split between a black northern kingdom under Henri Christophe and a southern republic, each using different flags. The early horizontal blue-red bicolor was established by Pétion\'s republic and eventually became the national standard, though with continuing debates over whether the blue should be cobalt or midnight.',
+    },
+  ],
+
+  DO: [
+    {
+      fromYear: 1844, toYear: null,
+      flagUrl: 'https://flagcdn.com/w320/do.png',
+      label: 'Dominican Republic',
+      note: 'The Dominican flag — a white cross dividing blue and red quarters, with the coat of arms at centre — was designed by Juan Pablo Duarte for independence from Haiti in 1844. The white cross was deliberately chosen to set the Dominican flag apart from Haiti\'s blue-and-red (which had no cross), marking the cultural, religious, and political distinction the founders wanted to emphasise. The coat of arms features a Bible and cross, six Dominican flags, and the motto "God, Fatherland, Liberty."',
+    },
+    {
+      fromYear: 1822, toYear: 1844,
+      flagUrl: 'https://flagcdn.com/w320/ht.png',
+      label: 'Haitian Occupation',
+      note: 'From 1822 to 1844 the eastern two-thirds of Hispaniola (the future Dominican Republic) was occupied and incorporated into Haiti by President Jean-Pierre Boyer. For 22 years the Haitian blue-and-red flew over what is now the Dominican Republic, a period known in Dominican history as the Haitian Unification — an occupation that profoundly shaped Dominican national identity and the desire for separation.',
+    },
+  ],
+
+  // ── Central American Union family ──────────────────────────────────────────
+  GT: [
+    {
+      fromYear: 1871, toYear: null,
+      flagUrl: 'https://flagcdn.com/w320/gt.png',
+      label: 'Republic of Guatemala (blue-white-blue)',
+      note: 'Guatemala\'s vertical blue-white-blue tricolor with the quetzal and coat of arms was established by the 1871 Liberal Revolution. The blue stripes represent the Pacific and Atlantic oceans that flank Central America; the white represents peace. The resplendent quetzal — one of the world\'s most striking birds — is the national symbol; a quetzal has never successfully been kept in captivity, making it an emblem of liberty. The currency is also called the quetzal.',
+    },
+    {
+      fromYear: 1823, toYear: 1839,
+      flagUrl: fp('Flag_of_the_Federal_Republic_of_Central_America.svg'),
+      label: 'Federal Republic of Central America',
+      note: 'After independence from Spain in 1821, Guatemala was briefly part of the Mexican Empire before joining the Federal Republic of Central America (1823–1839) alongside El Salvador, Honduras, Nicaragua, and Costa Rica. The federation\'s flag — blue-white-blue horizontal stripes with a central emblem — is the ancestor of every Central American national flag today. The federation collapsed in civil war, but the colours survived in each successor state\'s flag.',
+    },
+  ],
+
+  HN: [
+    {
+      fromYear: 1866, toYear: null,
+      flagUrl: 'https://flagcdn.com/w320/hn.png',
+      label: 'Republic of Honduras',
+      note: 'Honduras\'s flag directly inherits the Central American Federal Republic\'s blue-white-blue horizontal tricolor. The five blue stars added in 1866 represent the five original nations of the Federal Republic — a quiet expression of the old dream of Central American unity. Honduras has held these colours continuously since the federation\'s collapse, with only the star design changing.',
+    },
+    {
+      fromYear: 1823, toYear: 1839,
+      flagUrl: fp('Flag_of_the_Federal_Republic_of_Central_America.svg'),
+      label: 'Federal Republic of Central America',
+      note: 'Honduras was one of five founding members of the Federal Republic of Central America (1823–1839). The federation\'s horizontal blue-white-blue tricolor became the visual template for every Central American country\'s flag. When the federation fragmented, each state kept some variant of the design — making Central American flags a uniquely coherent family among the world\'s national flags.',
+    },
+  ],
+
+  SV: [
+    {
+      fromYear: 1912, toYear: null,
+      flagUrl: 'https://flagcdn.com/w320/sv.png',
+      label: 'Republic of El Salvador (current)',
+      note: 'El Salvador\'s blue-white-blue horizontal tricolor and its coat of arms (five volcanoes between two oceans, a rainbow, and the motto "God, Union, Liberty") were standardised in 1912. Like all Central American nations, the design descends from the Federal Republic flag. The blue represents the Pacific and Atlantic; the white represents peace. El Salvador is the smallest and most densely populated country in Central America.',
+    },
+    {
+      fromYear: 1823, toYear: 1839,
+      flagUrl: fp('Flag_of_the_Federal_Republic_of_Central_America.svg'),
+      label: 'Federal Republic of Central America',
+      note: 'El Salvador was part of the five-nation Federal Republic of Central America after independence from Spain. The federation\'s flag became the shared ancestor of all five Central American states\' flags. El Salvador in particular saw intense conflict between Liberals and Conservatives throughout the 19th century, with the flag\'s exact form changing repeatedly before the 1912 standardisation.',
+    },
+  ],
+
+  NI: [
+    {
+      fromYear: 1908, toYear: null,
+      flagUrl: 'https://flagcdn.com/w320/ni.png',
+      label: 'Republic of Nicaragua (current)',
+      note: 'Nicaragua\'s blue-white-blue horizontal tricolor — again from the Central American Federation — was definitively standardised in 1908. The coat of arms uniquely shows a rainbow over five volcanoes between two bodies of water, with a Phrygian cap of liberty and the words "Republic of Nicaragua — Central America." Nicaragua is the largest country in Central America and its flag uniquely uses the word "Central America" in the arms, keeping alive the unification ideal.',
+    },
+    {
+      fromYear: 1823, toYear: 1839,
+      flagUrl: fp('Flag_of_the_Federal_Republic_of_Central_America.svg'),
+      label: 'Federal Republic of Central America',
+      note: 'Nicaragua was one of the founding members of the Central American federation. After its dissolution, Nicaragua experienced decades of political turmoil, US military interventions, the Somoza dynasty, the Sandinista Revolution of 1979, and the Contra war — each chapter in the country\'s flag history shaped by these events, though the Central American tricolor endured through all of them.',
+    },
+  ],
+
+  CR: [
+    {
+      fromYear: 1906, toYear: null,
+      flagUrl: 'https://flagcdn.com/w320/cr.png',
+      label: 'Republic of Costa Rica (current)',
+      note: 'Costa Rica distinguished its Central American tricolor in 1848 by adding a wide red horizontal stripe at the centre — inspired, according to tradition, by First Lady Pacífica Fernández, who admired the French Tricolore\'s colours. The result — blue-white-red-white-blue — is immediately distinct from its neighbours. The coat of arms on the state flag was standardised in 1906 and shows three volcanoes, two oceans, and rising sun.',
+    },
+    {
+      fromYear: 1823, toYear: 1848,
+      flagUrl: fp('Flag_of_the_Federal_Republic_of_Central_America.svg'),
+      label: 'Federal Republic of Central America',
+      note: 'Costa Rica was part of the Central American federation from 1823 to its dissolution in 1839. After the federation collapsed, Costa Rica spent years as part of various smaller unions before declaring itself a fully independent republic in 1848. That same year the flag was redesigned with the distinctive red stripe, marking a deliberate break from the plain blue-white-blue shared by the other former federation members.',
+    },
+  ],
+
+  PA: [
+    {
+      fromYear: 1903, toYear: null,
+      flagUrl: 'https://flagcdn.com/w320/pa.png',
+      label: 'Republic of Panama (independence)',
+      note: 'Panama\'s quartered flag — white with a blue star, white with a red star, blue, and red — was designed by Manuel Amador Guerrero\'s family and first flown on November 4, 1903, the day after independence from Colombia. The blue represents the Conservative Party; red represents the Liberal Party; white represents the peace between them. The design was chosen to symbolise national unity across political lines — an ambitious hope for a country whose independence was largely engineered by the United States to secure the Canal Zone.',
+    },
+    {
+      fromYear: 1821, toYear: 1903,
+      flagUrl: 'https://flagcdn.com/w320/co.png',
+      label: 'Department of Colombia',
+      note: 'Panama declared independence from Spain in 1821 and immediately joined Gran Colombia, later becoming a department of Colombia when Gran Colombia dissolved. Panama\'s attempts at independence in 1840, 1841, and later years were all unsuccessful. The 1903 independence was backed by the United States, which wanted to build a canal and found Colombia unwilling to cede the territory on American terms. Panama flew Colombia\'s yellow-blue-red tricolor for 82 years.',
+    },
+  ],
+
+  GY: [
+    {
+      fromYear: 1966, toYear: null,
+      flagUrl: 'https://flagcdn.com/w320/gy.png',
+      label: 'Cooperative Republic of Guyana',
+      note: 'Guyana\'s flag — nicknamed "The Golden Arrowhead" — was designed by American vexillologist Whitney Smith and adopted at independence from Britain in 1966. A gold arrowhead points from the hoist towards the fly, fringed in white; beneath it a red triangle fringed in black. Green represents the forests; gold the mineral wealth; white the rivers; black the endurance of the people; red the zeal for nation-building. It remains one of the most distinctive flag designs in the Americas.',
+    },
+    {
+      fromYear: 1814, toYear: 1966,
+      flagUrl: fp('Civil_Ensign_of_the_United_Kingdom.svg'),
+      label: 'British Guiana (colonial era)',
+      note: 'The Guiana coast was colonised by the Dutch in the 17th century before Britain took control during the Napoleonic Wars. British Guiana (as it was known) was the site of one of the deadliest incidents in American religious history — the 1978 Jonestown mass death of over 900 members of the Peoples Temple cult. Independence came in 1966 under Forbes Burnham\'s People\'s Progressive Party, and Guyana has since aligned more with South America than the Caribbean.',
+    },
+  ],
+
+  SR: [
+    {
+      fromYear: 1975, toYear: null,
+      flagUrl: 'https://flagcdn.com/w320/sr.png',
+      label: 'Republic of Suriname (independence)',
+      note: 'Suriname\'s flag — five horizontal stripes of green, white, red, white, and green, with a large yellow star at the centre — was adopted when the country gained independence from the Netherlands in 1975. Green represents the forests and agriculture; white represents justice and freedom; red represents progress and love; the yellow star represents the unity of all the ethnic groups in Suriname\'s famously diverse population (Hindustanis, Creoles, Maroons, Javanese, Amerindians, and others).',
+    },
+    {
+      fromYear: 1667, toYear: 1975,
+      flagUrl: fp('Flag_of_the_Netherlands.svg'),
+      label: 'Dutch Suriname (colonial era)',
+      note: 'Suriname was a Dutch colony from 1667 (when England traded it to the Netherlands in exchange for New Amsterdam — the future New York). The Dutch plantation economy relied on enslaved Africans and later indentured labourers from Asia, creating Suriname\'s extraordinary ethnic diversity. Suriname was one of the last countries in the Americas to gain independence, doing so in 1975 — though a significant portion of the population emigrated to the Netherlands before and after.',
+    },
+  ],
+
+  BZ: [
+    {
+      fromYear: 1981, toYear: null,
+      flagUrl: 'https://flagcdn.com/w320/bz.png',
+      label: 'Belize (independence)',
+      note: 'Belize\'s flag is unusual: a white circle with the national coat of arms sits on a blue field with red stripes top and bottom. The red stripes were added to include both political parties — the PUP (blue) and the UDP (red) — in the national symbol. The coat of arms depicts two woodcutters (logging was the colonial economy\'s foundation) beneath a mahogany tree and the motto "Sub Umbra Floreo" (I flourish in the shade). Belize was the last mainland American country to gain independence, in 1981.',
+    },
+    {
+      fromYear: 1862, toYear: 1981,
+      flagUrl: fp('Flag_of_British_Honduras.svg'),
+      label: 'British Honduras (colonial era)',
+      note: 'Britain established a settlement at the mouth of the Belize River in the 17th century, primarily for logwood extraction. The settlement became the Colony of British Honduras in 1862 and was renamed Belize only in 1973, eight years before independence. The colony\'s coat of arms — the two woodcutters — was carried into independence intact, making Belize\'s national emblem a direct inheritance from its British colonial history.',
+    },
+  ],
+
+  JM: [
+    {
+      fromYear: 1962, toYear: null,
+      flagUrl: 'https://flagcdn.com/w320/jm.png',
+      label: 'Jamaica (independence)',
+      note: 'Jamaica\'s flag is the only national flag in the world with neither red, white, nor blue. The gold diagonal cross (saltire) divides the flag into four triangles: green above and below, black left and right. Black represents the strength and creativity of the people; gold represents the natural wealth and the beauty of sunlight; green represents hope and the lush vegetation. The design won a national competition ahead of independence from Britain on August 6, 1962.',
+    },
+    {
+      fromYear: 1655, toYear: 1962,
+      flagUrl: fp('Blue_Ensign.svg'),
+      label: 'British Jamaica (colonial era)',
+      note: 'Britain captured Jamaica from Spain in 1655 and it became one of the most valuable plantation colonies in the Caribbean, dependent on enslaved African labour. Jamaica was a major centre of the transatlantic slave trade and the birthplace of maroon communities — formerly enslaved people who established autonomous settlements in the mountains. Independence in 1962 was achieved peacefully under Chief Minister Alexander Bustamante.',
+    },
+  ],
+
+  TT: [
+    {
+      fromYear: 1962, toYear: null,
+      flagUrl: 'https://flagcdn.com/w320/tt.png',
+      label: 'Trinidad and Tobago (independence)',
+      note: 'Trinidad and Tobago\'s flag features a black stripe edged in white running diagonally from the upper hoist to the lower fly on a red field. The designer, Carlisle Chang, intended red for the fire element and the warmth of the people; black for the dedication and strength that unifies the country; white for the equality of all under the sun. The two islands gained independence together from Britain on August 31, 1962.',
+    },
+    {
+      fromYear: 1797, toYear: 1962,
+      flagUrl: fp('Blue_Ensign.svg'),
+      label: 'British Trinidad & Tobago (colonial era)',
+      note: 'Trinidad was a Spanish colony until captured by Britain in 1797; Tobago changed hands between European powers 22 times — more than any other territory in the world — before being ceded to Britain in 1814. The islands were merged into a single crown colony in 1889. Trinidad and Tobago became one of the wealthiest Caribbean nations through oil production, and its multicultural society (African, Indian, European, and Chinese heritage) shaped a unique culture including calypso, soca, and steelband music.',
+    },
+  ],
+
+  BB: [
+    {
+      fromYear: 1966, toYear: null,
+      flagUrl: 'https://flagcdn.com/w320/bb.png',
+      label: 'Barbados (independence)',
+      note: 'Barbados\'s flag features three vertical bands of blue-gold-blue with a broken trident in the centre — the trident representing Barbados\'s maritime heritage (the country was known as "Little England" under colonial rule) and the "broken" lower shaft symbolising the break from colonial status. The flag was designed by Grantley Prescod and adopted at independence from Britain on November 30, 1966. In November 2021 Barbados became a republic, but kept the same flag — the trident remained.',
+    },
+    {
+      fromYear: 1627, toYear: 1966,
+      flagUrl: fp('Blue_Ensign.svg'),
+      label: 'British Barbados (colonial era)',
+      note: 'Barbados was an English colony from 1627, one of the earliest and most profitable British Caribbean possessions. At the height of the sugar era in the 18th century, Barbados was Britain\'s most valuable colonial asset per acre. The island\'s plantation economy was based entirely on enslaved African labour; by some estimates the island\'s enslaved population had a life expectancy of just seven years after arrival. Barbados achieved independence peacefully in 1966 and became a republic in 2021.',
+    },
+  ],
+
+  BS: [
+    {
+      fromYear: 1973, toYear: null,
+      flagUrl: 'https://flagcdn.com/w320/bs.png',
+      label: 'Commonwealth of the Bahamas',
+      note: 'The Bahamas\' flag — aquamarine and gold stripes with a black triangle at the hoist — was designed by Hervis Bain and adopted at independence from Britain on July 10, 1973. The aquamarine represents the surrounding sea; gold the beaches and the sun; black the strength and unity of the Bahamian people. The archipelago of some 700 islands was the site of Christopher Columbus\'s first landing in the Americas in 1492, on the island of Guanahani (San Salvador).',
+    },
+    {
+      fromYear: 1718, toYear: 1973,
+      flagUrl: fp('Blue_Ensign.svg'),
+      label: 'British Bahamas (colonial era)',
+      note: 'The Bahamas was a base for pirates (including Blackbeard and Charles Vane) until the British Crown asserted control in 1718. During American Prohibition (1920–1933) the islands became a transshipment point for rum, giving the Bahamas unexpected economic prosperity. The islands were of strategic importance during World War II, with the Duke of Windsor serving as Governor. Independence came in 1973 after a peaceful transition.',
+    },
+  ],
+
+  AG: [
+    {
+      fromYear: 1967, toYear: null,
+      flagUrl: 'https://flagcdn.com/w320/ag.png',
+      label: 'Antigua and Barbuda (independence)',
+      note: 'Antigua\'s flag was designed by Reginald Samuel and chosen through a national competition ahead of independence from Britain in 1981 (the flag was first used in 1967 for associated statehood). The rising golden sun on a black field, flanked by red, blue, and white, represents the dawn of a new era. Black represents African heritage; blue the sea; white the sand; red the energy of the people; gold the sun. The V-shape of the triangle echoes victory.',
+    },
+  ],
+
+  DM: [
+    {
+      fromYear: 1978, toYear: null,
+      flagUrl: 'https://flagcdn.com/w320/dm.png',
+      label: 'Commonwealth of Dominica (independence)',
+      note: 'Dominica\'s flag is one of the world\'s most distinctive — a green field with a cross of yellow, black, and white stripes, and at the centre a red circle bearing the rare Sisserou parrot (the imperial Amazon, found only in Dominica). The flag was adopted at independence from Britain in 1978 and is one of only two national flags to prominently feature purple (in the parrot). It was modified in 1981 and 1988 before reaching its current form.',
+    },
+  ],
+
+  GD: [
+    {
+      fromYear: 1974, toYear: null,
+      flagUrl: 'https://flagcdn.com/w320/gd.png',
+      label: 'Grenada (independence)',
+      note: 'Grenada\'s flag — red border surrounding four gold stars at top and bottom, with green and yellow triangles and a red circle bearing one gold star at centre, plus a nutmeg on the green triangle — was adopted at independence from Britain in 1974. The nutmeg reflects Grenada\'s status as one of the world\'s largest nutmeg producers. In 1983 the United States invaded Grenada ("Operation Urgent Fury"), temporarily replacing the government; the flag was maintained throughout.',
+    },
+  ],
+
+  KN: [
+    {
+      fromYear: 1983, toYear: null,
+      flagUrl: 'https://flagcdn.com/w320/kn.png',
+      label: 'Saint Kitts and Nevis (independence)',
+      note: 'Saint Kitts and Nevis gained independence from Britain on September 19, 1983 — the last British Caribbean territory on the mainland of the Lesser Antilles to do so. The flag\'s diagonal black stripe with two white stars on green and red was designed by Edrice Lewis. The stars represent the two islands; the green represents fertility; the red recalls the African heritage and the struggle for freedom; black is for the African heritage; yellow for the sunshine.',
+    },
+  ],
+
+  LC: [
+    {
+      fromYear: 1979, toYear: null,
+      flagUrl: 'https://flagcdn.com/w320/lc.png',
+      label: 'Saint Lucia (independence)',
+      note: 'Saint Lucia\'s distinctive flag — a blue field with a white-edged black isosceles triangle surmounted by a smaller gold triangle — depicts the twin Pitons, the country\'s iconic volcanic peaks and a UNESCO World Heritage Site. Blue represents the sky and sea; gold the sunshine; black and white the harmony of the two main ethnic groups. The flag was modified in 2002 to make the gold triangle more prominent. Saint Lucia is the only country named after a woman.',
+    },
+  ],
+
+  VC: [
+    {
+      fromYear: 1985, toYear: null,
+      flagUrl: 'https://flagcdn.com/w320/vc.png',
+      label: 'Saint Vincent and the Grenadines',
+      note: 'Saint Vincent\'s current flag — blue-gold-green vertical stripes with three green diamonds in a V formation on the gold — was adopted in 1985, replacing a version with a breadfruit leaf. The three diamonds represent the Grenadine islands; the blue represents the sky and sea; gold the warmth of the people; green the lush vegetation. Saint Vincent is known as the "Gem of the Antilles" and the last stronghold of the indigenous Caribs (now called Garifuna) in the Caribbean.',
+    },
+  ],
 }
 
 export const CODEX_SUMMARIES: Record<string, string> = {
