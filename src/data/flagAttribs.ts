@@ -1,10 +1,10 @@
 // Structural attributes used by the Flag DNA game.
-// colors: dominant colors visible on the flag
-// stripes: flag uses horizontal or vertical colour bands
-// cross:   flag has any type of cross symbol
-// star:    flag has one or more stars
-// crescent:flag has a crescent moon
-// emblem:  flag has a coat of arms / complex central symbol
+// colors:   dominant colors visible on the flag
+// stripes:  flag uses horizontal colour bands (triband, etc.)
+// cross:    flag has any type of cross symbol
+// star:     flag has one or more stars
+// crescent: flag has a crescent moon
+// emblem:   flag has a coat of arms / complex central symbol
 export interface FlagAttribs {
   colors: string[]
   stripes: boolean
@@ -13,6 +13,15 @@ export interface FlagAttribs {
   crescent: boolean
   emblem: boolean
 }
+
+// Countries whose flags use VERTICAL stripes/bands (not horizontal)
+export const STRIPES_V = new Set([
+  'FR','IE','IT','BE','RO','NG','ML','SN','GN','CI','CM','TD','BJ','GW',
+  'GA','CG','CD','AO','MZ','BI','DJ','EG',
+  'CA','MX','CO','VE','EC','PE','GT','CR',
+  'IN','AF','TJ','GE',
+  'AD','MC',
+])
 
 const a = (
   colors: string[],
