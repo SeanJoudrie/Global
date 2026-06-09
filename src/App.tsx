@@ -46,8 +46,8 @@ export default function App() {
   }, [])
 
   const startSet = useCallback((setId: string, flags: FlagRecord[]) => {
-    const seed = `${setId}-${todayString()}`
-    const questions = buildSetQuiz(flags, seed, 10)
+    const seed = `${setId}-${Date.now()}`
+    const questions = buildSetQuiz(flags, seed, flags.length)
     const label = setId.charAt(0).toUpperCase() + setId.slice(1).replace(/-/g, " ")
     setActiveQuiz({ questions, title: label, isDaily: false, setId, setFlags: flags })
     setScreen("quiz")
@@ -55,7 +55,7 @@ export default function App() {
 
   const startQuickPlay = useCallback(() => {
     const seed = Date.now().toString()
-    const questions = buildSetQuiz(FLAGS, seed, 5)
+    const questions = buildSetQuiz(FLAGS, seed, 10)
     setActiveQuiz({ questions, title: "Quick Play", isDaily: false, setId: "quickplay", setFlags: FLAGS })
     setScreen("quiz")
   }, [])

@@ -60,14 +60,43 @@ export default function HomeScreen({
       </header>
 
       {state.currentStreak > 0 && (
-        <div className="mx-5 mb-2 flex items-center gap-2 px-4 py-2 rounded-xl text-sm"
+        <div className="mx-5 mb-2 flex items-center gap-3 px-4 py-3 rounded-2xl"
           style={{
-            background: "linear-gradient(135deg, #2D1F52, #3A2460)",
-            border: "1px solid #FBBF2444", boxShadow: "0 0 16px #FBBF2418",
+            background: "linear-gradient(135deg, #2C1A00, #3D2508, #2C1A00)",
+            border: "1px solid #FBBF2466",
+            boxShadow: "0 0 28px #FBBF2430, inset 0 0 20px #FBBF2410",
+            position: "relative", overflow: "hidden",
           }}>
-          <span className="text-lg">🔥</span>
-          <span style={{ color: "#FBBF24" }} className="font-bold">{state.currentStreak} day streak</span>
-          <span style={{ color: "#B8A9E0" }} className="text-xs ml-auto">best: {state.longestStreak}</span>
+          {/* shimmer sweep */}
+          <div style={{
+            position: "absolute", inset: 0, pointerEvents: "none",
+            background: "linear-gradient(105deg,transparent 30%,#FBBF2418 50%,transparent 70%)",
+            animation: "streakShimmer 3s ease-in-out infinite",
+          }} />
+          <style>{`@keyframes streakShimmer{0%,100%{opacity:0;transform:translateX(-100%)}50%{opacity:1;transform:translateX(100%)}}`}</style>
+          <div style={{
+            width: 36, height: 36, borderRadius: 10, flexShrink: 0,
+            display: "flex", alignItems: "center", justifyContent: "center",
+            background: "linear-gradient(135deg,#F59E0B,#FBBF24)",
+            boxShadow: "0 0 16px #FBBF2466", fontSize: 20,
+          }}>🔥</div>
+          <div style={{ flex: 1 }}>
+            <div style={{ color: "#FBBF24", fontWeight: 900, fontSize: 17, lineHeight: 1 }}>
+              {state.currentStreak} day streak
+            </div>
+            <div style={{ color: "#F59E0B88", fontSize: 11, marginTop: 1 }}>best: {state.longestStreak} days</div>
+          </div>
+          <div style={{
+            display: "flex", gap: 3, alignItems: "center",
+          }}>
+            {Array.from({ length: Math.min(state.currentStreak, 7) }).map((_, i) => (
+              <div key={i} style={{
+                width: 5, height: 5 + i * 2, borderRadius: 2,
+                background: `hsl(${38 + i * 3},${80 + i * 3}%,${50 + i * 3}%)`,
+                opacity: 0.6 + i * 0.06,
+              }} />
+            ))}
+          </div>
         </div>
       )}
 

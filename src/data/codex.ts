@@ -59,6 +59,27 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       note: 'The longest-serving version of the US flag at 47 years, used from the admission of New Mexico and Arizona in 1912 until Alaska joined in 1959. This was the flag flown through both World Wars.',
     },
     {
+      fromYear: 1877,
+      toYear: 1912,
+      flagUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/00/US_flag_38_stars.svg/320px-US_flag_38_stars.svg.png',
+      label: '38-Star Flag (Centennial Era)',
+      note: 'Flown during the American centennial celebrations of 1876 and used through the Gilded Age. Colorado joined in 1876 to bring the count to 38. By 1912 five more states had joined, each adding a star on the following July 4th.',
+    },
+    {
+      fromYear: 1818,
+      toYear: 1877,
+      flagUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/df/US_flag_20_stars.svg/320px-US_flag_20_stars.svg.png',
+      label: 'Westward Expansion (20–37 Stars)',
+      note: 'The Act of 1818 froze the stripes at 13 — one per original colony — and added one new star per state admitted, effective each July 4th. Across this era the count rose from 20 to 37 as America expanded across the continent through the Civil War and Reconstruction.',
+    },
+    {
+      fromYear: 1795,
+      toYear: 1818,
+      flagUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/US_flag_15_stars.svg/320px-US_flag_15_stars.svg.png',
+      label: '15-Star, 15-Stripe Flag',
+      note: 'After Vermont (1791) and Kentucky (1792) joined, both the stars and stripes were bumped to 15. This is the flag that flew over Fort McHenry during the British bombardment in 1814 — the sight that inspired Francis Scott Key to write what became "The Star-Spangled Banner."',
+    },
+    {
       fromYear: 1777,
       toYear: 1795,
       flagUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/US_flag_13_stars_%E2%80%93_Betsy_Ross.svg/320px-US_flag_13_stars_%E2%80%93_Betsy_Ross.svg.png',

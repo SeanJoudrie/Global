@@ -1,4 +1,4 @@
-﻿import { useState, useEffect, useRef, useCallback } from "react"
+import { useState, useEffect, useRef, useCallback } from "react"
 import { FLAGS } from "../data/flags"
 import { todayString, seededRandom } from "../utils/prng"
 import type { AppState } from "../utils/storage"
@@ -25,22 +25,22 @@ const ALL_FACTS = [
   "Libya's flag was plain green for 20 years — the simplest national flag ever.",
   "The flag of Mozambique contains an AK-47 with a bayonet.",
   "Denmark's flag, the Dannebrog, is the oldest national flag still in use.",
-  "The Union Jack is technically only a 'Union Flag' — it's called 'Jack' only at sea.",
-  "Brazil's flag has 27 stars, representing its 26 states and the federal district.",
-  "The flag of Belize features two men with tools — one of only a few with people.",
-  "Vatican City and Monaco have very similar flags — both red and yellow vertically split.",
-  "Russia and the Netherlands have almost identical flags, just reversed top-to-bottom.",
-  "The flags of Chad and Romania are nearly identical — both blue, yellow, and red stripes.",
+  "The Union Jack is only called a 'Jack' when flown at sea.",
+  "Brazil's flag has 27 stars, one for each state and the federal district.",
+  "The flag of Belize features two men — one of only a few with people.",
+  "Russia and the Netherlands have almost identical flags, just reversed.",
+  "The flags of Chad and Romania are nearly identical — both tricolours.",
   "Papua New Guinea's flag features the Southern Cross and a Bird of Paradise.",
   "Jamaica is the only Caribbean flag with no red, white, or blue.",
-  "The Albanian flag shows a double-headed black eagle on red — from medieval origins.",
-  "South Africa has six colours on its flag, more than most national flags.",
+  "The Albanian flag shows a double-headed eagle from medieval origins.",
+  "South Africa has six colours on its flag — more than most.",
   "The Philippines' flag is flown upside-down during wartime.",
-  "Cambodia's flag is the only one to feature a building: Angkor Wat.",
+  "Cambodia's flag is the only one featuring a building: Angkor Wat.",
   "Saudi Arabia's flag always flies right-side up — its text must be readable.",
-  "Bolivia has two official flags — one for public use, one for the government.",
-  "The flag of Kiribati shows a frigate bird flying over a rising sun and ocean.",
-  "Qatar's flag is the only national flag with a width-to-height ratio greater than 1:2.",
+  "Bolivia has two official flags — one public, one for the government.",
+  "Qatar's flag is the only one with a width-to-height ratio greater than 1:2.",
+  "The Dannebrog is said to have fallen from the sky during the Battle of Lyndanisse in 1219.",
+  "Lesotho's flag is the only one changed for the 2006 World Cup — they updated the hat design.",
 ]
 
 function getCurrentFact(minute: number): string {
@@ -63,9 +63,9 @@ function formatCountdown(): string {
 }
 
 const SLIDE_COLORS = [
-  { border: "#8B6CFF", glow: "#8B6CFF22", accent: "#A78BFA" },
-  { border: "#F59E0B", glow: "#F59E0B18", accent: "#FBBF24" },
-  { border: "#34D399", glow: "#34D39918", accent: "#6EE7B7" },
+  { border: "#8B6CFF", glow: "#8B6CFF28", accent: "#A78BFA" },
+  { border: "#F59E0B", glow: "#F59E0B22", accent: "#FBBF24" },
+  { border: "#34D399", glow: "#34D39922", accent: "#6EE7B7" },
 ]
 
 const CARD_HEIGHT = 210
@@ -120,10 +120,14 @@ export default function HomeCarousel({ onStartDaily, dailyDone, todayScore }: Pr
     <div key="daily" style={{ height: CONTENT_HEIGHT, display: "flex", flexDirection: "column", gap: 10 }}>
       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
         <div>
-          <span style={{ fontSize: 10, fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.1em", color: "#B8A9E0" }}>Today's Challenge</span>
+          <span style={{ fontSize: 10, fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.12em", color: "#B8A9E0" }}>Today's Challenge</span>
           <div style={{ fontSize: 22, fontWeight: 900, color: "#F5F3FF", marginTop: 2 }}>Daily Game</div>
         </div>
-        <span style={{ fontSize: 28 }}>🌍</span>
+        <div style={{
+          width: 44, height: 44, borderRadius: 12, display: "flex", alignItems: "center", justifyContent: "center",
+          background: "linear-gradient(135deg,#2D1F52,#3D2A6A)", border: "1px solid #8B6CFF44",
+          fontSize: 24,
+        }}>🌍</div>
       </div>
       {dailyDone && todayScore ? (
         <div style={{ flex: 1, display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
@@ -155,42 +159,70 @@ export default function HomeCarousel({ onStartDaily, dailyDone, todayScore }: Pr
     <div key="fact" style={{ height: CONTENT_HEIGHT, display: "flex", flexDirection: "column", gap: 10 }}>
       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
         <div>
-          <span style={{ fontSize: 10, fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.1em", color: "#B8A9E0" }}>Did You Know?</span>
+          <span style={{ fontSize: 10, fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.12em", color: "#B8A9E0" }}>Did You Know?</span>
           <div style={{ fontSize: 22, fontWeight: 900, color: "#F5F3FF", marginTop: 2 }}>Fun Fact</div>
         </div>
-        <span style={{ fontSize: 28 }}>💡</span>
+        <div style={{
+          width: 44, height: 44, borderRadius: 12, display: "flex", alignItems: "center", justifyContent: "center",
+          background: "linear-gradient(135deg,#3A2A10,#4A3A18)", border: "1px solid #F59E0B44",
+          fontSize: 24,
+        }}>💡</div>
       </div>
       <div style={{ flex: 1, display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
-        <p style={{ fontSize: 14, lineHeight: 1.55, color: "#F5F3FF", margin: 0 }}>{currentFact}</p>
-        <p style={{ fontSize: 11, color: "#B8A9E0", margin: 0 }}>Changes every minute</p>
+        <div style={{
+          padding: "10px 12px", borderRadius: 12, lineHeight: 1.6,
+          background: "linear-gradient(135deg,#2A1F42,#321A2A)",
+          border: "1px solid #F59E0B22",
+        }}>
+          <p style={{ fontSize: 13.5, color: "#F5F3FF", margin: 0, fontStyle: "italic" }}>"{currentFact}"</p>
+        </div>
+        <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+          <span style={{
+            display: "inline-block", width: 6, height: 6, borderRadius: "50%",
+            background: "#F59E0B", boxShadow: "0 0 8px #F59E0B",
+            animation: "factPulse 2s ease-in-out infinite",
+          }} />
+          <span style={{ fontSize: 10, color: "#B8A9E088", letterSpacing: "0.05em" }}>FACT OF THE MINUTE</span>
+        </div>
       </div>
+      <style>{`@keyframes factPulse{0%,100%{opacity:1}50%{opacity:0.3}}`}</style>
     </div>,
 
     // Slide 2 — Flag of the Day
     <div key="flagday" style={{ height: CONTENT_HEIGHT, display: "flex", flexDirection: "column", gap: 8 }}>
       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
         <div>
-          <span style={{ fontSize: 10, fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.1em", color: "#B8A9E0" }}>Daily Spotlight</span>
+          <span style={{ fontSize: 10, fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.12em", color: "#B8A9E0" }}>Daily Spotlight</span>
           <div style={{ fontSize: 22, fontWeight: 900, color: "#F5F3FF", marginTop: 2 }}>Flag of the Day</div>
         </div>
-        <span style={{ fontSize: 28 }}>🏳️</span>
       </div>
-      <div style={{ display: "flex", alignItems: "flex-start", gap: 12, flex: 1 }}>
-        <img
-          src={dailyFlag.flagUrl}
-          alt={dailyFlag.name}
-          style={{ height: 72, width: 115, objectFit: "cover", borderRadius: 10,
-            border: `2px solid ${SLIDE_COLORS[2].border}44`, flexShrink: 0 }}
-          onError={e => { (e.target as HTMLImageElement).style.display = "none" }}
-        />
-        <div style={{ flex: 1, minWidth: 0 }}>
-          <div style={{ fontWeight: 700, fontSize: 15, color: "#F5F3FF", marginBottom: 2 }}>{dailyFlag.name}
-            <span style={{ marginLeft: 6, fontSize: 11, fontWeight: 400, color: "#B8A9E0" }}>{dailyFlag.region}</span>
-          </div>
-          <p style={{ fontSize: 11, lineHeight: 1.5, color: "#B8A9E0", margin: 0,
-            display: "-webkit-box", WebkitLineClamp: 3, WebkitBoxOrient: "vertical", overflow: "hidden" }}>
-            {dailyFlag.funFact}
-          </p>
+      <div style={{ flex: 1, display: "flex", gap: 14, alignItems: "center" }}>
+        {/* Info left */}
+        <div style={{ flex: 1, minWidth: 0, display: "flex", flexDirection: "column", gap: 6 }}>
+          <div style={{ fontWeight: 800, fontSize: 16, color: "#F5F3FF" }}>{dailyFlag.name}</div>
+          <div style={{
+            display: "inline-flex", alignItems: "center", padding: "2px 8px", borderRadius: 999,
+            background: "#34D39922", border: "1px solid #34D39944",
+            fontSize: 10, fontWeight: 600, color: "#6EE7B7", letterSpacing: "0.05em",
+          }}>{dailyFlag.region}</div>
+          <p style={{
+            fontSize: 11, lineHeight: 1.55, color: "#B8A9E0", margin: 0,
+            display: "-webkit-box", WebkitLineClamp: 3, WebkitBoxOrient: "vertical", overflow: "hidden",
+          }}>{dailyFlag.funFact}</p>
+        </div>
+        {/* Flag right — tall and prominent */}
+        <div style={{
+          flexShrink: 0, width: 110,
+          borderRadius: 10, overflow: "hidden",
+          border: `2px solid #34D39944`,
+          boxShadow: "0 0 20px #34D39930",
+        }}>
+          <img
+            src={dailyFlag.flagUrl}
+            alt={dailyFlag.name}
+            style={{ width: "100%", height: 80, objectFit: "contain", background: "#1A1033", display: "block" }}
+            onError={e => { (e.target as HTMLImageElement).style.display = "none" }}
+          />
         </div>
       </div>
     </div>,
