@@ -1560,9 +1560,9 @@ export const CHALLENGE_CONTINENTS: ChallengeContinent[] = [
         subRegions: [
           { code: "be-bru", name: "Brussels-Capital Region", flagUrl: wiki("Flag of the Brussels-Capital Region.svg") },
           { code: "be-van", name: "Antwerp",                 flagUrl: wiki("Flag of Antwerp.svg") },
-          { code: "be-wht", name: "Hainaut" },
+          { code: "be-wht", name: "Hainaut",                 flagUrl: wiki("Flag of Hainaut.svg") },
           { code: "be-vli", name: "Limburg",                 flagUrl: wiki("Flag of Limburg (Belgium).svg") },
-          { code: "be-wlg", name: "Liège" },
+          { code: "be-wlg", name: "Liège",                   flagUrl: wiki("Flag of the Province of Liège.svg") },
           { code: "be-wlx", name: "Luxembourg",              flagUrl: wiki("Official flag of the Arelerland.svg") },
           { code: "be-wna", name: "Namur",                   flagUrl: wiki("Flag of Namur Province.svg") },
           { code: "be-vwv", name: "West Flanders",           flagUrl: wiki("Flag of West Flanders.svg") },
@@ -1662,23 +1662,24 @@ export const CHALLENGE_CONTINENTS: ChallengeContinent[] = [
         code: "FI", name: "Finland", emoji: "🇫🇮", subTitle: "19 Regions", locked: false,
         subRegions: [
           { code: "fi-01", name: "Uusimaa",                    flagUrl: wiki("Flag of Uusimaa.svg") },
-          { code: "fi-02", name: "South Karelia",              flagUrl: wiki("Flag of South Karelia.svg") },
+          { code: "fi-02", name: "South Karelia",              flagUrl: wiki("Etelä-Karjala maakuntaviiri.svg") },
           { code: "fi-03", name: "South Ostrobothnia",         flagUrl: wiki("Flag of Southern Ostrobothnia.svg") },
           { code: "fi-04", name: "South Savo",                 flagUrl: wiki("Flag of South Savonia.svg") },
           { code: "fi-05", name: "Kainuu",                     flagUrl: wiki("Flag of Kainuu.svg") },
           { code: "fi-06", name: "Tavastia Proper",            flagUrl: wiki("Flag of Tavastia Proper.svg") },
           { code: "fi-07", name: "Central Ostrobothnia",       flagUrl: wiki("Keski-Pohjanmaa.lippu.svg") },
           { code: "fi-08", name: "Central Finland",            flagUrl: wiki("Keski-suomi lippu.svg") },
-          { code: "fi-09", name: "Kymenlaakso",                flagUrl: wiki("Flag of Kymenlaakso.svg") },
-          { code: "fi-10", name: "Lapland",                    flagUrl: wiki("Flag of Lapland (Finland).svg") },
+          { code: "fi-09", name: "Kymenlaakso",                flagUrl: wiki("Kymenlaakso.vaakunaviiri.svg") },
+          { code: "fi-10", name: "Lapland",                    flagUrl: wiki("Flag of Lapland.svg") },
           { code: "fi-11", name: "Pirkanmaa",                  flagUrl: wiki("Flag of Pirkanmaa.svg") },
-          { code: "fi-12", name: "Ostrobothnia",               flagUrl: wiki("Flag of Ostrobothnia (region).svg") },
+          // Admin region has no official flag; this is the historical Ostrobothnia province banner
+          { code: "fi-12", name: "Ostrobothnia",               flagUrl: wiki("Flag of Ostrobothnia.svg") },
           { code: "fi-13", name: "North Karelia",              flagUrl: wiki("North karelia flag.svg") },
-          { code: "fi-14", name: "North Ostrobothnia",         flagUrl: wiki("Flag of North Ostrobothnia.svg") },
+          { code: "fi-14", name: "North Ostrobothnia",         flagUrl: wiki("Pennant of Pohjois-Pohjanmaa.svg") },
           { code: "fi-15", name: "North Savo",                 flagUrl: wiki("Flag of Northern Savonia.svg") },
           { code: "fi-16", name: "Päijänne Tavastia",          flagUrl: wiki("Päijät-Häme.lippu.svg") },
           { code: "fi-17", name: "Satakunta",                  flagUrl: wiki("Satakunta-flag.svg") },
-          { code: "fi-18", name: "Southwest Finland",          flagUrl: wiki("Flag of Southwest Finland.svg") },
+          { code: "fi-18", name: "Southwest Finland",          flagUrl: wiki("Varsinais-Suomen maakuntaviiri.svg") },
           { code: "fi-19", name: "Åland Islands",              flagUrl: wiki("Flag of Åland.svg") },
         ],
       },
@@ -1710,19 +1711,21 @@ export const CHALLENGE_CONTINENTS: ChallengeContinent[] = [
       {
         code: "GR", name: "Greece", emoji: "🇬🇷", subTitle: "13 Regions", locked: false,
         subRegions: [
-          { code: "gr-a", name: "East Macedonia & Thrace" },
+          // The three "Macedonia" regions share the unofficial Vergina Sun flag of Greek Macedonia
+          { code: "gr-a", name: "East Macedonia & Thrace", flagUrl: wiki("Flag of Greek Macedonia.svg") },
           { code: "gr-b", name: "Central Macedonia",       flagUrl: wiki("Flag of Greek Macedonia.svg") },
-          { code: "gr-c", name: "West Macedonia" },
-          { code: "gr-d", name: "Epirus" },
-          { code: "gr-e", name: "Thessaly" },
-          { code: "gr-f", name: "Ionian Islands" },
-          { code: "gr-g", name: "West Greece" },
-          { code: "gr-h", name: "Central Greece" },
-          { code: "gr-i", name: "Attica" },
-          { code: "gr-j", name: "Peloponnese" },
-          { code: "gr-k", name: "North Aegean" },
-          { code: "gr-l", name: "South Aegean" },
-          { code: "gr-m", name: "Crete",                   flagUrl: wiki("Flag of Crete.svg") },
+          { code: "gr-c", name: "West Macedonia",          flagUrl: wiki("Flag of Greek Macedonia.svg") },
+          { code: "gr-d", name: "Epirus" },         // no official regional flag
+          { code: "gr-e", name: "Thessaly" },       // no official regional flag
+          { code: "gr-f", name: "Ionian Islands" }, // modern region has no flag (only a historical 19th-c. one)
+          { code: "gr-g", name: "West Greece",             flagUrl: wiki("Flag of the Region of Western Greece.svg") },
+          { code: "gr-h", name: "Central Greece" }, // no verified regional flag
+          { code: "gr-i", name: "Attica",                  flagUrl: wiki("Bandera d'Àtica.svg") },
+          { code: "gr-j", name: "Peloponnese" },    // no official regional flag
+          { code: "gr-k", name: "North Aegean" },   // no official regional flag
+          { code: "gr-l", name: "South Aegean",            flagUrl: wiki("Flag of the Region of South Aegean.svg") },
+          // Modern Crete region has no official flag — this is the historical Cretan State flag
+          { code: "gr-m", name: "Crete",                   flagUrl: wiki("Flag of Cretan State.svg") },
         ],
       },
 
@@ -1826,35 +1829,40 @@ export const CHALLENGE_CONTINENTS: ChallengeContinent[] = [
       // ── Bulgaria (28 provinces) ──────────────────────────────────────────
       {
         code: "BG", name: "Bulgaria", emoji: "🇧🇬", subTitle: "28 Provinces", locked: false,
+        // NOTE: Bulgarian provinces have no provincial flags of their own; these are the
+        // flags of the capital city/municipality that shares each province's name (the
+        // convention Wikipedia uses). Sofia Province is the exception — Sofia city is NOT
+        // in it, so it has no flag. Pernik has no flag file on Commons. Smolyan & Targovishte
+        // only exist as JPG photos of the municipal flag.
         subRegions: [
-          { code: "bg-01", name: "Blagoevgrad" },
-          { code: "bg-02", name: "Burgas" },
-          { code: "bg-03", name: "Varna" },
-          { code: "bg-04", name: "Veliko Tarnovo" },
-          { code: "bg-05", name: "Vidin" },
-          { code: "bg-06", name: "Vratsa" },
-          { code: "bg-07", name: "Gabrovo" },
-          { code: "bg-08", name: "Dobrich" },
-          { code: "bg-09", name: "Kardzhali" },
-          { code: "bg-10", name: "Kyustendil" },
-          { code: "bg-11", name: "Lovech" },
-          { code: "bg-12", name: "Montana" },
-          { code: "bg-13", name: "Pazardzhik" },
-          { code: "bg-14", name: "Pernik" },
-          { code: "bg-15", name: "Pleven" },
-          { code: "bg-16", name: "Plovdiv" },
-          { code: "bg-17", name: "Razgrad" },
-          { code: "bg-18", name: "Ruse" },
-          { code: "bg-19", name: "Silistra" },
-          { code: "bg-20", name: "Sliven" },
-          { code: "bg-21", name: "Smolyan" },
-          { code: "bg-22", name: "Sofia City" },
-          { code: "bg-23", name: "Sofia Province" },
-          { code: "bg-24", name: "Stara Zagora" },
-          { code: "bg-25", name: "Targovishte" },
-          { code: "bg-26", name: "Haskovo" },
-          { code: "bg-27", name: "Shumen" },
-          { code: "bg-28", name: "Yambol" },
+          { code: "bg-01", name: "Blagoevgrad",    flagUrl: wiki("Flag of Blagoevgrad.svg") },
+          { code: "bg-02", name: "Burgas",         flagUrl: wiki("BG-Burgas flag.png") },
+          { code: "bg-03", name: "Varna",          flagUrl: wiki("Знаме на Варна, България.svg") },
+          { code: "bg-04", name: "Veliko Tarnovo", flagUrl: wiki("Flag of Veliko Tarnovo.svg") },
+          { code: "bg-05", name: "Vidin",          flagUrl: wiki("Flag of Vidin.gif") },
+          { code: "bg-06", name: "Vratsa",         flagUrl: wiki("Flag of Vratsa.svg") },
+          { code: "bg-07", name: "Gabrovo",        flagUrl: wiki("BG Gabrovo flag.svg") },
+          { code: "bg-08", name: "Dobrich",        flagUrl: wiki("Flag of Dobrich.svg") },
+          { code: "bg-09", name: "Kardzhali",      flagUrl: wiki("Flag of Kardzhali.gif") },
+          { code: "bg-10", name: "Kyustendil",     flagUrl: wiki("Flag of Kyustendil.svg") },
+          { code: "bg-11", name: "Lovech",         flagUrl: wiki("Flag of Lovech.gif") },
+          { code: "bg-12", name: "Montana",        flagUrl: wiki("Flag of Montana, Bulgaria.svg") },
+          { code: "bg-13", name: "Pazardzhik",     flagUrl: wiki("Flag of Pazardzhik.gif") },
+          { code: "bg-14", name: "Pernik" }, // no flag file on Commons (coat of arms only)
+          { code: "bg-15", name: "Pleven",         flagUrl: wiki("Flag of Pleven.gif") },
+          { code: "bg-16", name: "Plovdiv",        flagUrl: wiki("Plovdiv flag.svg") },
+          { code: "bg-17", name: "Razgrad",        flagUrl: wiki("Razgrad flag.png") },
+          { code: "bg-18", name: "Ruse",           flagUrl: wiki("Ruse flag.png") },
+          { code: "bg-19", name: "Silistra",       flagUrl: wiki("Flag of Silistra.svg") },
+          { code: "bg-20", name: "Sliven",         flagUrl: wiki("Sliven flag.png") },
+          { code: "bg-21", name: "Smolyan",        flagUrl: wiki("Smolyan Municipality.jpg") },
+          { code: "bg-22", name: "Sofia City",     flagUrl: wiki("BG Sofia flag.svg") },
+          { code: "bg-23", name: "Sofia Province" }, // no flag (Sofia city is not in this province)
+          { code: "bg-24", name: "Stara Zagora",   flagUrl: wiki("Flag of Stara Zagora (obverse).svg") },
+          { code: "bg-25", name: "Targovishte",    flagUrl: wiki("Targovishte Municipality.jpg") },
+          { code: "bg-26", name: "Haskovo",        flagUrl: wiki("Flag of Haskovo.gif") },
+          { code: "bg-27", name: "Shumen",         flagUrl: wiki("Flag of Shumen.svg") },
+          { code: "bg-28", name: "Yambol",         flagUrl: wiki("Flag of Yambol.gif") },
         ],
       },
 
@@ -1906,12 +1914,13 @@ export const CHALLENGE_CONTINENTS: ChallengeContinent[] = [
         code: "LT", name: "Lithuania", emoji: "🇱🇹", subTitle: "10 Counties", locked: false,
         subRegions: [
           { code: "lt-al", name: "Alytus",      flagUrl: wiki("Alytus County flag.svg") },
-          { code: "lt-kl", name: "Klaipėda",   flagUrl: wiki("Klaipėda County flag.svg") },
-          { code: "lt-ku", name: "Kaunas",      flagUrl: wiki("Kaunas County flag.svg") },
-          { code: "lt-mr", name: "Marijampolė",flagUrl: wiki("Marijampolė County flag.svg") },
-          { code: "lt-pn", name: "Panevėžys",  flagUrl: wiki("Panevėžys County flag.svg") },
-          { code: "lt-sa", name: "Šiauliai",   flagUrl: wiki("Šiauliai County flag.svg") },
-          { code: "lt-ta", name: "Tauragė",    flagUrl: wiki("Tauragė County flag.svg") },
+          // Commons stores these six with ASCII (no-diacritic) spellings and mixed extensions
+          { code: "lt-kl", name: "Klaipėda",   flagUrl: wiki("Klaipeda County flag.png") },
+          { code: "lt-ku", name: "Kaunas",      flagUrl: wiki("Kaunas County flag.png") },
+          { code: "lt-mr", name: "Marijampolė",flagUrl: wiki("Marijampole County flag.svg") },
+          { code: "lt-pn", name: "Panevėžys",  flagUrl: wiki("Panevezys County flag.svg") },
+          { code: "lt-sa", name: "Šiauliai",   flagUrl: wiki("Siauliai County flag.svg") },
+          { code: "lt-ta", name: "Tauragė",    flagUrl: wiki("Taurage County flag.png") },
           { code: "lt-te", name: "Telšiai",    flagUrl: wiki("Telšiai County flag.svg") },
           { code: "lt-ut", name: "Utena",      flagUrl: wiki("Utena County flag.svg") },
           { code: "lt-vl", name: "Vilnius",    flagUrl: wiki("Vilnius County flag.svg") },
@@ -1923,11 +1932,11 @@ export const CHALLENGE_CONTINENTS: ChallengeContinent[] = [
         code: "LV", name: "Latvia", emoji: "🇱🇻", subTitle: "6 Regions", locked: false,
         subRegions: [
           { code: "lv-rix", name: "Riga",        flagUrl: wiki("Flag of Riga.svg") },
-          { code: "lv-pie", name: "Pierīga" },
-          { code: "lv-vid", name: "Vidzeme" },
-          { code: "lv-kur", name: "Kurzeme" },
-          { code: "lv-zem", name: "Zemgale" },
-          { code: "lv-lat", name: "Latgale" },
+          { code: "lv-pie", name: "Pierīga" }, // planning region, no flag
+          { code: "lv-vid", name: "Vidzeme" }, // no official flag (only an unofficial proposal exists)
+          { code: "lv-kur", name: "Kurzeme" }, // no official flag (only an unofficial proposal exists)
+          { code: "lv-zem", name: "Zemgale",     flagUrl: wiki("Official flag of Zemgale.svg") },
+          { code: "lv-lat", name: "Latgale",     flagUrl: wiki("Official flag of Latgale.svg") },
         ],
       },
 
@@ -2037,12 +2046,13 @@ export const CHALLENGE_CONTINENTS: ChallengeContinent[] = [
           { code: "ba-f05", name: "Bosnian Podrinje",    flagUrl: wiki("Flag of Bosnian Podrinje.svg") },
           { code: "ba-f06", name: "Central Bosnia",      flagUrl: wiki("Flag of Central Bosnia.svg") },
           { code: "ba-f07", name: "Herzegovina-Neretva", flagUrl: wiki("Flag of Herzegovina-Neretva.svg") },
-          { code: "ba-f08", name: "West Herzegovina" },
+          { code: "ba-f08", name: "West Herzegovina",    flagUrl: wiki("Flag of the Croatian Republic of Herzeg-Bosnia.svg") },
           { code: "ba-f09", name: "Sarajevo",            flagUrl: wiki("Flag of Sarajevo Canton.svg") },
-          { code: "ba-f10", name: "Canton 10 (Livno)" },
+          // West Herzegovina & Canton 10 share the (de facto) Herzeg-Bosnia tricolour
+          { code: "ba-f10", name: "Canton 10 (Livno)",   flagUrl: wiki("Flag of the Croatian Republic of Herzeg-Bosnia.svg") },
           // Other entities
           { code: "ba-srp", name: "Republika Srpska",    flagUrl: wiki("Flag of Republika Srpska.svg") },
-          { code: "ba-brc", name: "Brčko District",      flagUrl: wiki("Flag of Brčko District.svg") },
+          { code: "ba-brc", name: "Brčko District" }, // officially has no flag of its own (uses BiH's)
         ],
       },
 
@@ -2050,16 +2060,17 @@ export const CHALLENGE_CONTINENTS: ChallengeContinent[] = [
       {
         code: "AL", name: "Albania", emoji: "🇦🇱", subTitle: "12 Counties", locked: false,
         subRegions: [
+          // Albanian counties (qark) use "Flag of <Name> County.png" files
           { code: "al-br", name: "Berat",        flagUrl: wiki("Flag of Berat.svg") },
-          { code: "al-di", name: "Dibër" },
+          { code: "al-di", name: "Dibër",        flagUrl: wiki("Flag of Dibër County.png") },
           { code: "al-dl", name: "Durrës",       flagUrl: wiki("Flag of Durrës.svg") },
           { code: "al-el", name: "Elbasan",      flagUrl: wiki("Flag of Elbasan.svg") },
-          { code: "al-fr", name: "Fier" },
-          { code: "al-gj", name: "Gjirokastër" },
+          { code: "al-fr", name: "Fier",         flagUrl: wiki("Flag of Fier County.png") },
+          { code: "al-gj", name: "Gjirokastër",  flagUrl: wiki("Flag of Gjirokastër County.png") },
           { code: "al-ko", name: "Korçë",        flagUrl: wiki("Flag of Korçë.svg") },
           { code: "al-ku", name: "Kukës",        flagUrl: wiki("Flag of Kukës.svg") },
-          { code: "al-le", name: "Lezhë" },
-          { code: "al-mr", name: "Shkodër" },
+          { code: "al-le", name: "Lezhë",        flagUrl: wiki("Flag of Lezhë County.png") },
+          { code: "al-mr", name: "Shkodër",      flagUrl: wiki("Flag of Shkodër County.png") },
           { code: "al-ti", name: "Tirana",       flagUrl: wiki("Flag of Tirana.svg") },
           { code: "al-vl", name: "Vlorë",        flagUrl: wiki("Flag of Vlorë.svg") },
         ],
@@ -2269,13 +2280,15 @@ export const CHALLENGE_CONTINENTS: ChallengeContinent[] = [
       {
         code: "XK", name: "Kosovo", emoji: "🇽🇰", subTitle: "7 Districts", locked: false,
         subRegions: [
-          { code: "xk-pr", name: "Pristina" },
-          { code: "xk-pe", name: "Peja" },
-          { code: "xk-gj", name: "Gjakova" },
-          { code: "xk-mi", name: "Mitrovica" },
-          { code: "xk-pz", name: "Prizren" },
-          { code: "xk-fe", name: "Ferizaj" },
-          { code: "xk-gi", name: "Gjilan" },
+          // Kosovo's districts have no flags (only municipalities can); the two verified
+          // namesake municipality flags are shown, the rest are name-only.
+          { code: "xk-pr", name: "Pristina",  flagUrl: wiki("Prishtina-flag.svg") },
+          { code: "xk-pe", name: "Peja" },       // no district flag
+          { code: "xk-gj", name: "Gjakova",   flagUrl: wiki("Flag of Gjakova.svg") },
+          { code: "xk-mi", name: "Mitrovica" },  // no district flag
+          { code: "xk-pz", name: "Prizren" },    // no district flag (only a municipal emblem)
+          { code: "xk-fe", name: "Ferizaj" },    // no district flag (only a municipal emblem)
+          { code: "xk-gi", name: "Gjilan" },     // no district flag (only a municipal emblem)
         ],
       },
 
