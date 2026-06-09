@@ -2006,9 +2006,9 @@ export const CHALLENGE_CONTINENTS: ChallengeContinent[] = [
           { code: "ss-wr", name: "Warrap",                  flagUrl: wiki("Flag of Warrap State.png"),            group: "States" },
           { code: "ss-bw", name: "Western Bahr el Ghazal",  flagUrl: wiki("Flag of Western Bahr el Ghazal.png"),  group: "States" },
           { code: "ss-ew", name: "Western Equatoria",       flagUrl: wiki("Flag of Western Equatoria.png"),       group: "States" },
-          { code: "ss-ab", name: "Abyei",                   group: "Administrative Areas" },
-          { code: "ss-pi", name: "Pibor",                   group: "Administrative Areas" },
-          { code: "ss-ru", name: "Ruweng",                  group: "Administrative Areas" },
+          { code: "ss-ab", name: "Abyei",                   noFlag: true, group: "Administrative Areas" },
+          { code: "ss-pi", name: "Pibor",                   noFlag: true, group: "Administrative Areas" },
+          { code: "ss-ru", name: "Ruweng",                  noFlag: true, group: "Administrative Areas" },
         ],
       },
 

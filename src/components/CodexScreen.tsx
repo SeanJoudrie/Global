@@ -314,6 +314,9 @@ const NO_SUBDIVISION_FLAG_COUNTRIES = new Set<string>([
   'DZ', 'BJ', 'BW', 'BF', 'BI', 'CF', 'TD', 'CG', 'CD', 'CI', 'DJ', 'GQ', 'ER', 'SZ',
   'GH', 'MA', 'MZ', 'SN', 'GM', 'GN', 'GW', 'LS', 'LY', 'MW', 'ML', 'MR', 'NA', 'NE',
   'RW', 'TG', 'UG', 'ZM', 'MG', 'ZW', 'GA', 'SL', 'TN', 'SO', 'TZ', 'MU', 'ST',
+  // Only unofficial/proposed designs exist for these — no official subdivision flags.
+  // (Countries with SOME official flags keep their flagged tiles; only flagless ones show "No flag".)
+  'AO', 'CM', 'ZA',
 ])
 
 function SubRegionTile({ sr, confirmedNoFlags }: { sr: SubRegion; confirmedNoFlags?: boolean }) {
