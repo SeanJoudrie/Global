@@ -26,6 +26,7 @@ import TheComposerScreen from "./components/TheComposerScreen"
 import SilhouetteScreen from "./components/SilhouetteScreen"
 import FlagFamiliesScreen from "./components/FlagFamiliesScreen"
 import FunFactScreen from "./components/FunFactScreen"
+import ProgressMapScreen from "./components/ProgressMapScreen"
 import StarField from "./components/StarField"
 import EarthLogo from "./components/EarthLogo"
 import { FLAGS } from "./data/flags"
@@ -37,7 +38,7 @@ import type { Question } from "./utils/quiz"
 import { todayString } from "./utils/prng"
 import { loadTheme } from "./components/SettingsScreen"
 
-type Screen = "splash" | "home" | "flags" | "quiz" | "reversequiz" | "result" | "achievements" | "profile" | "flashcards" | "language" | "capitalquiz" | "challenge" | "codex" | "geo" | "gauntlet" | "tierlist" | "settings" | "oddoneout" | "thecrop" | "flagdna" | "buildflag" | "thepeel" | "lookalikes" | "composer" | "silhouette" | "flagfamilies" | "funfact"
+type Screen = "splash" | "home" | "flags" | "quiz" | "reversequiz" | "result" | "achievements" | "profile" | "flashcards" | "language" | "capitalquiz" | "challenge" | "codex" | "geo" | "gauntlet" | "tierlist" | "settings" | "oddoneout" | "thecrop" | "flagdna" | "buildflag" | "thepeel" | "lookalikes" | "composer" | "silhouette" | "flagfamilies" | "funfact" | "progressmap"
 
 interface ActiveQuiz {
   questions: Question[]
@@ -170,7 +171,8 @@ export default function App() {
           onGoComposer={() => setScreen("composer")}
           onGoSilhouette={() => setScreen("silhouette")}
           onGoFlagFamilies={() => setScreen("flagfamilies")}
-          onGoFunFact={() => setScreen("funfact")} />
+          onGoFunFact={() => setScreen("funfact")}
+          onGoProgressMap={() => setScreen("progressmap")} />
       )}
 
       {screen === "flags" && (
@@ -207,6 +209,7 @@ export default function App() {
           onSetUsername={name => setAppState(s => ({ ...s, username: name }))} />
       )}
       {screen === "achievements" && <AchievementsScreen state={appState} onBack={() => setScreen("home")} />}
+      {screen === "progressmap" && <ProgressMapScreen state={appState} onBack={() => setScreen("home")} />}
 
       {screen === "quiz" && activeQuiz && (
         <QuizScreen questions={activeQuiz.questions} title={activeQuiz.title}
