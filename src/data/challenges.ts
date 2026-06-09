@@ -1886,10 +1886,10 @@ export const CHALLENGE_CONTINENTS: ChallengeContinent[] = [
       {
         code: "VA", name: "Vatican City", emoji: "🇻🇦", subTitle: "4 Areas", locked: false,
         subRegions: [
-          { code: "va-vt", name: "Vatican Hill",   flagUrl: wiki("Flag of Vatican City.svg") },
-          { code: "va-pa", name: "Papal Gardens",  flagUrl: wiki("Flag of Vatican City.svg") },
-          { code: "va-st", name: "St. Peter's",    flagUrl: wiki("Flag of Vatican City.svg") },
-          { code: "va-ca", name: "Castel Gandolfo",flagUrl: wiki("Flag of Vatican City.svg") },
+          { code: "va-vt", name: "Vatican Hill" },
+          { code: "va-pa", name: "Papal Gardens" },
+          { code: "va-st", name: "St. Peter's" },
+          { code: "va-ca", name: "Castel Gandolfo" },
         ],
       },
     ],
