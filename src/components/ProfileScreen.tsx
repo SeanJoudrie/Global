@@ -1,6 +1,7 @@
 ﻿import { useState } from "react"
 import { FLAGS } from "../data/flags"
 import type { AppState } from "../utils/storage"
+import ShareCard from "./ShareCard"
 
 interface Props {
   state: AppState
@@ -138,6 +139,14 @@ export default function ProfileScreen({ state, onBack, onSetUsername }: Props) {
           ))}
         </div>
       </div>
+
+      {/* Last result share card */}
+      {state.lastShareResult && (
+        <div className="mx-5 mb-4">
+          <h3 className="text-xs font-semibold uppercase tracking-widest mb-3" style={{ color: "#B8A9E0" }}>Last Result</h3>
+          <ShareCard result={state.lastShareResult} showCopyButton />
+        </div>
+      )}
 
       {/* Daily history */}
       {dailyDates.length > 0 && (

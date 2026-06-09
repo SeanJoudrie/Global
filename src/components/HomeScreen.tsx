@@ -27,6 +27,10 @@ interface Props {
   onGoBuildFlag: () => void
   onGoThePeel: () => void
   onGoLookalikes: () => void
+  onGoComposer: () => void
+  onGoSilhouette: () => void
+  onGoFlagFamilies: () => void
+  onGoFunFact: () => void
 }
 
 const ComingSoonTile = ({ emoji, label, desc }: { emoji: string; label: string; desc: string }) => (
@@ -49,6 +53,7 @@ export default function HomeScreen({
   onGoLanguage, onQuickPlay, onGoReverseQuiz, onGoCapitalQuiz, onGoChallenge, onGoCodex,
   onGoGeo, onGoGauntlet, onGoTierList, onGoSettings,
   onGoOddOneOut, onGoTheCrop, onGoFlagDNA, onGoBuildFlag, onGoThePeel, onGoLookalikes,
+  onGoComposer, onGoSilhouette, onGoFlagFamilies, onGoFunFact,
 }: Props) {
   const today = todayString()
   const dailyDone = state.lastDailyDate === today
@@ -315,6 +320,62 @@ export default function HomeScreen({
             </div>
           </div>
           <span style={{ color: "#F43F5E88" }}>›</span>
+        </button>
+
+        <button onClick={onGoComposer}
+          className="w-full flex items-center justify-between px-5 py-4 rounded-2xl transition-all active:scale-[0.98] hover:brightness-110"
+          style={{ background: "#2D1F52", border: "1px solid #8B6CFF33" }}>
+          <div className="flex items-center gap-3">
+            <span className="text-2xl">🎼</span>
+            <div className="text-left">
+              <div className="font-bold" style={{ color: "#F5F3FF" }}>The Composer</div>
+              <div className="text-xs" style={{ color: "#B8A9E0" }}>Arrange the exact colours into the right order</div>
+            </div>
+          </div>
+          <span style={{ color: "#8B6CFF" }}>›</span>
+        </button>
+
+        <button onClick={onGoSilhouette}
+          className="w-full flex items-center justify-between px-5 py-4 rounded-2xl transition-all active:scale-[0.98] hover:brightness-110"
+          style={{ background: "#2D1F52", border: "1px solid #8B6CFF33" }}>
+          <div className="flex items-center gap-3">
+            <span className="text-2xl">🖤</span>
+            <div className="text-left">
+              <div className="font-bold" style={{ color: "#F5F3FF" }}>Silhouette</div>
+              <div className="text-xs" style={{ color: "#B8A9E0" }}>Guess the flag from its black shadow · reveals on wrong</div>
+            </div>
+          </div>
+          <span style={{ color: "#8B6CFF" }}>›</span>
+        </button>
+
+        <button onClick={onGoFlagFamilies}
+          className="w-full flex items-center justify-between px-5 py-4 rounded-2xl transition-all active:scale-[0.98] hover:brightness-110"
+          style={{ background: "#2D1F52", border: "1px solid #8B6CFF33" }}>
+          <div className="flex items-center gap-3">
+            <span className="text-2xl">🏷️</span>
+            <div className="text-left">
+              <div className="font-bold" style={{ color: "#F5F3FF" }}>Flag Families</div>
+              <div className="text-xs" style={{ color: "#B8A9E0" }}>Sort flags into their visual families</div>
+            </div>
+          </div>
+          <span style={{ color: "#8B6CFF" }}>›</span>
+        </button>
+
+        <button onClick={onGoFunFact}
+          className="w-full flex items-center justify-between px-5 py-4 rounded-2xl transition-all active:scale-[0.98] hover:brightness-110"
+          style={{
+            background: "linear-gradient(135deg,#1A1033,#2D1F52)",
+            border: "1px solid #FBBF2444",
+            boxShadow: "0 0 16px #FBBF2412",
+          }}>
+          <div className="flex items-center gap-3">
+            <span className="text-2xl">✨</span>
+            <div className="text-left">
+              <div className="font-bold" style={{ color: "#F5F3FF" }}>Fun Fact</div>
+              <div className="text-xs" style={{ color: "#B8A9E0" }}>Daily flag fact · visit every day to build your streak</div>
+            </div>
+          </div>
+          <span style={{ fontSize: 10, padding: '2px 8px', borderRadius: 999, fontWeight: 700, background: '#FBBF2422', color: '#FBBF24' }}>Daily</span>
         </button>
 
         <h3 className="text-xs font-semibold uppercase tracking-widest pt-1" style={{ color: "#B8A9E0" }}>Challenge</h3>

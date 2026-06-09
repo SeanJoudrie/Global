@@ -8,13 +8,24 @@ export interface DailyResult {
 }
 
 export interface AppState {
-  username: string                 // player's display name (stored locally only)
-  learnedFlags: string[]           // set of flag codes answered correctly at least once
-  crowns: string[]                 // set IDs that are 100% complete
+  username: string
+  learnedFlags: string[]
+  crowns: string[]
   currentStreak: number
   longestStreak: number
   lastDailyDate: string | null
   dailyHistory: Record<string, DailyResult>
+  funFactStreak: number
+  lastFunFactDate: string | null
+  lastShareResult: ShareResult | null
+}
+
+export interface ShareResult {
+  game: string
+  score: string        // e.g. "8/10" or "750 pts"
+  emojiGrid: string[]  // ['🟩','🟥',...]
+  date: string
+  streak?: number
 }
 
 const DEFAULT_STATE: AppState = {
@@ -25,6 +36,9 @@ const DEFAULT_STATE: AppState = {
   longestStreak: 0,
   lastDailyDate: null,
   dailyHistory: {},
+  funFactStreak: 0,
+  lastFunFactDate: null,
+  lastShareResult: null,
 }
 
 export function loadState(): AppState {
@@ -65,6 +79,18 @@ export function recordDailyResult(state: AppState, result: DailyResult): AppStat
     longestStreak: Math.max(state.longestStreak, newStreak),
     dailyHistory: { ...state.dailyHistory, [today]: result },
   }
+}
+
+export function recordFunFactViewed(state: AppState, date: string): AppState {
+  if (state.lastFunFactDate === date) return state
+  const yesterday = getPreviousDay(date)
+  const streakBroken = state.lastFunFactDate !== yesterday
+  const newStreak = streakBroken ? 1 : (state.funFactStreak ?? 0) + 1
+  return { ...state, lastFunFactDate: date, funFactStreak: newStreak }
+}
+
+export function saveShareResult(state: AppState, result: ShareResult): AppState {
+  return { ...state, lastShareResult: result }
 }
 
 export function awardCrown(state: AppState, setId: string): AppState {

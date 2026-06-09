@@ -22,18 +22,22 @@ import FlagDNAScreen from "./components/FlagDNAScreen"
 import BuildFlagScreen from "./components/BuildFlagScreen"
 import ThePeelScreen from "./components/ThePeelScreen"
 import ConfusablesScreen from "./components/ConfusablesScreen"
+import TheComposerScreen from "./components/TheComposerScreen"
+import SilhouetteScreen from "./components/SilhouetteScreen"
+import FlagFamiliesScreen from "./components/FlagFamiliesScreen"
+import FunFactScreen from "./components/FunFactScreen"
 import StarField from "./components/StarField"
 import EarthLogo from "./components/EarthLogo"
 import { FLAGS } from "./data/flags"
 import type { FlagRecord } from "./data/flags"
-import { loadState, saveState, markFlagLearned, recordDailyResult, awardCrown } from "./utils/storage"
-import type { AppState } from "./utils/storage"
+import { loadState, saveState, markFlagLearned, recordDailyResult, awardCrown, saveShareResult } from "./utils/storage"
+import type { AppState, ShareResult } from "./utils/storage"
 import { buildDailyQuiz, buildSetQuiz } from "./utils/quiz"
 import type { Question } from "./utils/quiz"
 import { todayString } from "./utils/prng"
 import { loadTheme } from "./components/SettingsScreen"
 
-type Screen = "splash" | "home" | "flags" | "quiz" | "reversequiz" | "result" | "achievements" | "profile" | "flashcards" | "language" | "capitalquiz" | "challenge" | "codex" | "geo" | "gauntlet" | "tierlist" | "settings" | "oddoneout" | "thecrop" | "flagdna" | "buildflag" | "thepeel" | "lookalikes"
+type Screen = "splash" | "home" | "flags" | "quiz" | "reversequiz" | "result" | "achievements" | "profile" | "flashcards" | "language" | "capitalquiz" | "challenge" | "codex" | "geo" | "gauntlet" | "tierlist" | "settings" | "oddoneout" | "thecrop" | "flagdna" | "buildflag" | "thepeel" | "lookalikes" | "composer" | "silhouette" | "flagfamilies" | "funfact"
 
 interface ActiveQuiz {
   questions: Question[]
@@ -162,7 +166,11 @@ export default function App() {
           onGoFlagDNA={() => setScreen("flagdna")}
           onGoBuildFlag={() => setScreen("buildflag")}
           onGoThePeel={() => setScreen("thepeel")}
-          onGoLookalikes={() => setScreen("lookalikes")} />
+          onGoLookalikes={() => setScreen("lookalikes")}
+          onGoComposer={() => setScreen("composer")}
+          onGoSilhouette={() => setScreen("silhouette")}
+          onGoFlagFamilies={() => setScreen("flagfamilies")}
+          onGoFunFact={() => setScreen("funfact")} />
       )}
 
       {screen === "flags" && (
@@ -184,9 +192,16 @@ export default function App() {
       {screen === "oddoneout"  && <OddOneOutScreen  onBack={() => setScreen("home")} />}
       {screen === "thecrop"    && <TheCropScreen    onBack={() => setScreen("home")} />}
       {screen === "flagdna"    && <FlagDNAScreen     onBack={() => setScreen("home")} />}
-      {screen === "buildflag"  && <BuildFlagScreen   onBack={() => setScreen("home")} />}
-      {screen === "thepeel"    && <ThePeelScreen     onBack={() => setScreen("home")} />}
-      {screen === "lookalikes" && <ConfusablesScreen onBack={() => setScreen("home")} />}
+      {screen === "buildflag"    && <BuildFlagScreen    onBack={() => setScreen("home")} />}
+      {screen === "thepeel"      && <ThePeelScreen      onBack={() => setScreen("home")} />}
+      {screen === "lookalikes"   && <ConfusablesScreen  onBack={() => setScreen("home")} />}
+      {screen === "composer"     && <TheComposerScreen  onBack={() => setScreen("home")} />}
+      {screen === "silhouette"   && <SilhouetteScreen   onBack={() => setScreen("home")} />}
+      {screen === "flagfamilies" && <FlagFamiliesScreen onBack={() => setScreen("home")} />}
+      {screen === "funfact"      && (
+        <FunFactScreen state={appState} onBack={() => setScreen("home")}
+          onStateChange={setAppState} />
+      )}
       {screen === "profile" && (
         <ProfileScreen state={appState} onBack={() => setScreen("home")}
           onSetUsername={name => setAppState(s => ({ ...s, username: name }))} />
@@ -206,7 +221,9 @@ export default function App() {
       {screen === "result" && lastResult && activeQuiz && (
         <ResultScreen score={lastResult.score} total={lastResult.total} answers={lastResult.answers}
           isDaily={activeQuiz.isDaily} setLabel={activeQuiz.title}
-          onHome={() => setScreen("home")} onRetry={activeQuiz.isDaily ? undefined : handleRetry} />
+          streak={appState.currentStreak}
+          onHome={() => setScreen("home")} onRetry={activeQuiz.isDaily ? undefined : handleRetry}
+          onSaveShare={(r: ShareResult) => setAppState(s => saveShareResult(s, r))} />
       )}
     </div>
   )
