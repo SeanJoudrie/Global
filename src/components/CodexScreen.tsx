@@ -325,6 +325,7 @@ const NO_SUBDIVISION_FLAG_COUNTRIES = new Set<string>([
   'KI', 'MH', 'NR', 'WS', 'TO', 'TV', 'NZ', 'FJ',
   // Asia — flagless subdivisions (countries with a few flagged ones keep those)
   'CN', 'IN', 'PH', 'MM', 'KH', 'LA', 'BN', 'SG', 'TL', 'KP',
+  'VN', 'KZ', 'KG', 'TJ', 'TM', 'AF', 'AM', 'AZ', 'BT', 'NP', 'BD', 'MV', 'UZ', 'GE', 'PK',
   // Only unofficial/proposed designs exist for these — no official subdivision flags.
   // (Countries with SOME official flags keep their flagged tiles; only flagless ones show "No flag".)
   'AO', 'CM', 'ZA',
