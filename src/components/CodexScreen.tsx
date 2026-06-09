@@ -176,7 +176,11 @@ export default function CodexScreen({ onBack }: Props) {
               </button>
 
               {subdivisionsExpanded && (
-                <SubdivisionGrid subRegions={subRegions} />
+                <SubdivisionGrid
+                  subRegions={subRegions}
+                  headerLabel={selectedFlag.code === 'IE' ? 'Province' : selectedFlag.code === 'GB' ? 'Nation' : undefined}
+                  memberLabel={selectedFlag.code === 'IE' ? 'Counties' : selectedFlag.code === 'GB' ? 'Council areas' : undefined}
+                />
               )}
             </div>
           )}
@@ -289,7 +293,7 @@ export default function CodexScreen({ onBack }: Props) {
 // Shown when a subdivision is positively confirmed to have no flag.
 const NO_FLAG_PLACEHOLDER = (
   <div style={{ width: '100%', aspectRatio: '3/2', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'rgba(0,0,0,0.45)', borderRadius: 4 }}>
-    <span style={{ fontSize: 7, color: 'rgba(255,255,255,0.35)', textAlign: 'center', lineHeight: 1.3 }}>no flag</span>
+    <span style={{ fontSize: 10, fontWeight: 600, color: 'rgba(255,255,255,0.55)', textAlign: 'center', lineHeight: 1.2 }}>No flag</span>
   </div>
 )
 
@@ -319,14 +323,16 @@ function SubRegionTile({ sr }: { sr: SubRegion }) {
   )
 }
 
-function SubdivisionGrid({ subRegions }: { subRegions: SubRegion[] }) {
+const SUBLABEL_STYLE: React.CSSProperties = {
+  fontSize: 9, fontWeight: 700, color: '#8B6CFF', letterSpacing: '0.08em',
+  textTransform: 'uppercase', margin: '0 0 6px 2px',
+}
+const GRID_STYLE: React.CSSProperties = { display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: '10px 6px' }
+
+function SubdivisionGrid({ subRegions, headerLabel, memberLabel }: { subRegions: SubRegion[]; headerLabel?: string; memberLabel?: string }) {
   const hasGroups = subRegions.some(sr => sr.group)
   if (!hasGroups) {
-    return (
-      <div className="mt-3" style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: '10px 6px' }}>
-        {subRegions.map(sr => <SubRegionTile key={sr.code} sr={sr} />)}
-      </div>
-    )
+    return <div className="mt-3" style={GRID_STYLE}>{subRegions.map(sr => <SubRegionTile key={sr.code} sr={sr} />)}</div>
   }
   const groups: { label: string; items: SubRegion[] }[] = []
   for (const sr of subRegions) {
@@ -337,22 +343,31 @@ function SubdivisionGrid({ subRegions }: { subRegions: SubRegion[] }) {
   }
   return (
     <div className="mt-3" style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-      {groups.map(g => (
-        <div key={g.label}>
-          <div style={{
-            fontSize: 10, fontWeight: 700, color: '#34D399',
-            letterSpacing: '0.1em', textTransform: 'uppercase',
-            marginBottom: 8, paddingLeft: 2,
-            display: 'flex', alignItems: 'center', gap: 6,
-          }}>
-            {g.label}
-            <span style={{ color: '#34D39966', fontWeight: 400 }}>{g.items.length}</span>
+      {groups.map(g => {
+        // A "header" tile is the province/nation flag itself, shown on its own row on top.
+        const headers = g.items.filter(s => s.groupHeader)
+        const members = g.items.filter(s => !s.groupHeader)
+        return (
+          <div key={g.label}>
+            <div style={{
+              fontSize: 10, fontWeight: 700, color: '#34D399',
+              letterSpacing: '0.1em', textTransform: 'uppercase',
+              marginBottom: 8, paddingLeft: 2, display: 'flex', alignItems: 'center', gap: 6,
+            }}>
+              {g.label}
+              <span style={{ color: '#34D39966', fontWeight: 400 }}>{members.length}</span>
+            </div>
+            {headers.length > 0 && (
+              <div style={{ marginBottom: 12 }}>
+                {headerLabel && <div style={SUBLABEL_STYLE}>{headerLabel}</div>}
+                <div style={GRID_STYLE}>{headers.map(sr => <SubRegionTile key={sr.code} sr={sr} />)}</div>
+              </div>
+            )}
+            {headers.length > 0 && memberLabel && members.length > 0 && <div style={SUBLABEL_STYLE}>{memberLabel}</div>}
+            <div style={GRID_STYLE}>{members.map(sr => <SubRegionTile key={sr.code} sr={sr} />)}</div>
           </div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: '10px 6px' }}>
-            {g.items.map(sr => <SubRegionTile key={sr.code} sr={sr} />)}
-          </div>
-        </div>
-      ))}
+        )
+      })}
     </div>
   )
 }

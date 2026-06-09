@@ -3,7 +3,8 @@
   name: string
   flagUrl?: string
   group?: string
-  noFlag?: boolean   // true only when we've positively confirmed no flag exists
+  noFlag?: boolean      // true only when we've positively confirmed no flag exists
+  groupHeader?: boolean // a province/nation-level flag shown on top of its group
 }
 
 export interface ChallengeCountry {
@@ -2892,6 +2893,12 @@ export const CHALLENGE_CONTINENTS: ChallengeContinent[] = [
       {
         code: "GB", name: "United Kingdom", emoji: "🇬🇧", subTitle: "74 Regions & Districts", locked: false,
         subRegions: [
+          // Nation flags — shown on top of each group. Northern Ireland has no official
+          // flag (the UK uses the Union Flag there), so it shows a placeholder.
+          { code: "gb-eng", name: "England",          flagUrl: wiki("Flag of England.svg"),  group: "England", groupHeader: true },
+          { code: "gb-sct", name: "Scotland",         flagUrl: wiki("Flag of Scotland.svg"), group: "Scotland", groupHeader: true },
+          { code: "gb-wls", name: "Wales",            flagUrl: wiki("Flag of Wales.svg"),    group: "Wales", groupHeader: true },
+          { code: "gb-nir", name: "Northern Ireland", group: "Northern Ireland", groupHeader: true },
           // England – 9 statistical regions (most are purely admin, no official flags)
           { code: "gb-ne",  name: "North East England",           group: "England" },
           { code: "gb-nw",  name: "North West England",           group: "England" },
@@ -3215,13 +3222,16 @@ export const CHALLENGE_CONTINENTS: ChallengeContinent[] = [
 
       // ── Denmark (5 regions) ──────────────────────────────────────────────
       {
-        code: "DK", name: "Denmark", emoji: "🇩🇰", subTitle: "5 Regions", locked: false,
+        code: "DK", name: "Denmark", emoji: "🇩🇰", subTitle: "5 Regions + 2 Territories", locked: false,
         subRegions: [
-          { code: "dk-81", name: "North Denmark",    flagUrl: wiki("Flag of Region Nordjylland.svg") },
-          { code: "dk-82", name: "Central Denmark",  flagUrl: wiki("Flag of Region Midtjylland.svg") },
-          { code: "dk-83", name: "Southern Denmark", flagUrl: wiki("Flag of Region Syddanmark.svg") },
-          { code: "dk-84", name: "Capital Region",   flagUrl: wiki("Flag of the Capital Region of Denmark.svg") },
-          { code: "dk-85", name: "Zealand",          flagUrl: wiki("Flag of Region Sjælland.svg") },
+          { code: "dk-81", name: "North Denmark",    flagUrl: wiki("Flag of Region Nordjylland.svg"),            group: "Regions" },
+          { code: "dk-82", name: "Central Denmark",  flagUrl: wiki("Flag of Region Midtjylland.svg"),            group: "Regions" },
+          { code: "dk-83", name: "Southern Denmark", flagUrl: wiki("Flag of Region Syddanmark.svg"),             group: "Regions" },
+          { code: "dk-84", name: "Capital Region",   flagUrl: wiki("Flag of the Capital Region of Denmark.svg"), group: "Regions" },
+          { code: "dk-85", name: "Zealand",          flagUrl: wiki("Flag of Region Sjælland.svg"),               group: "Regions" },
+          // Autonomous constituent countries of the Kingdom of Denmark — both have flags
+          { code: "dk-gl", name: "Greenland",        flagUrl: wiki("Flag of Greenland.svg"),          group: "Autonomous Territories" },
+          { code: "dk-fo", name: "Faroe Islands",    flagUrl: wiki("Flag of the Faroe Islands.svg"),  group: "Autonomous Territories" },
         ],
       },
 
@@ -3280,9 +3290,12 @@ export const CHALLENGE_CONTINENTS: ChallengeContinent[] = [
         code: "GR", name: "Greece", emoji: "🇬🇷", subTitle: "13 Regions", locked: false,
         subRegions: [
           // The three "Macedonia" regions share the unofficial Vergina Sun flag of Greek Macedonia
-          { code: "gr-a", name: "East Macedonia & Thrace", flagUrl: wiki("Flag of Greek Macedonia.svg") },
+          // The Vergina-Sun "Flag of Greek Macedonia" is a regional symbol for Macedonia as a
+          // whole, not an official flag of each periphery — so it's kept only on Central
+          // Macedonia; the other two have no distinct official flag (placeholder).
+          { code: "gr-a", name: "East Macedonia & Thrace" },
           { code: "gr-b", name: "Central Macedonia",       flagUrl: wiki("Flag of Greek Macedonia.svg") },
-          { code: "gr-c", name: "West Macedonia",          flagUrl: wiki("Flag of Greek Macedonia.svg") },
+          { code: "gr-c", name: "West Macedonia" },
           { code: "gr-d", name: "Epirus" },         // no official regional flag
           { code: "gr-e", name: "Thessaly" },       // no official regional flag
           { code: "gr-f", name: "Ionian Islands" }, // modern region has no flag (only a historical 19th-c. one)
@@ -3532,8 +3545,13 @@ export const CHALLENGE_CONTINENTS: ChallengeContinent[] = [
 
       // ── Ireland (26 counties) ────────────────────────────────────────────
       {
-        code: "IE", name: "Ireland", emoji: "🇮🇪", subTitle: "26 Counties", locked: false,
+        code: "IE", name: "Ireland", emoji: "🇮🇪", subTitle: "4 Provinces · 26 Counties", locked: false,
         subRegions: [
+          // Province flags — shown on top of each county group
+          { code: "ie-prov-l", name: "Leinster", flagUrl: wiki("Leinster flag.svg"),  group: "Leinster", groupHeader: true },
+          { code: "ie-prov-m", name: "Munster",  flagUrl: wiki("Munster flag.svg"),   group: "Munster",  groupHeader: true },
+          { code: "ie-prov-c", name: "Connacht", flagUrl: wiki("Connacht flag.svg"),  group: "Connacht", groupHeader: true },
+          { code: "ie-prov-u", name: "Ulster",   flagUrl: wiki("Flag of Ulster.svg"), group: "Ulster",   groupHeader: true },
           // Leinster – 12 counties (GAA colours, not official flags)
           { code: "ie-cw", name: "Carlow",    flagUrl: wiki("Colours_of_Carlow.svg"),      group: "Leinster" },
           { code: "ie-d",  name: "Dublin",    flagUrl: wiki("Colours_of_Dublin.svg"),      group: "Leinster" },
