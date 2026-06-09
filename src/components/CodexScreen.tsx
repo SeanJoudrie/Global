@@ -178,6 +178,7 @@ export default function CodexScreen({ onBack }: Props) {
               {subdivisionsExpanded && (
                 <SubdivisionGrid
                   subRegions={subRegions}
+                  confirmedNoFlags={NO_SUBDIVISION_FLAG_COUNTRIES.has(selectedFlag.code)}
                   headerLabel={selectedFlag.code === 'IE' ? 'Province' : selectedFlag.code === 'GB' ? 'Nation' : undefined}
                   memberLabel={selectedFlag.code === 'IE' ? 'Counties' : selectedFlag.code === 'GB' ? 'Council areas' : undefined}
                 />
@@ -306,7 +307,14 @@ const UNKNOWN_FLAG_PLACEHOLDER = (
 // HTML string version for the <img> onError fallback (a broken URL = unverified, not "no flag").
 const UNKNOWN_FLAG_HTML = 'width:100%;aspect-ratio:3/2;display:flex;align-items:center;justify-content:center;background:rgba(139,108,255,0.10);border:1px dashed rgba(139,108,255,0.30);border-radius:4px'
 
-function SubRegionTile({ sr }: { sr: SubRegion }) {
+// Countries whose first-level subdivisions are confirmed to have NO official flags —
+// their flagless tiles read "No flag" rather than the ambiguous 🏳️ placeholder.
+const NO_SUBDIVISION_FLAG_COUNTRIES = new Set<string>([
+  'DZ', 'BJ', 'BW', 'BF', 'BI', 'CF', 'TD', 'CG', 'CD', 'CI', 'DJ', 'GQ', 'ER', 'SZ',
+  'GH', 'MA', 'MZ', 'SN',
+])
+
+function SubRegionTile({ sr, confirmedNoFlags }: { sr: SubRegion; confirmedNoFlags?: boolean }) {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4 }}>
       {sr.flagUrl
@@ -316,7 +324,7 @@ function SubRegionTile({ sr }: { sr: SubRegion }) {
             style={{ width: '100%', aspectRatio: '3/2', objectFit: 'contain', borderRadius: 4, display: 'block' }}
             onError={e => { (e.target as HTMLImageElement).replaceWith(Object.assign(document.createElement('div'), { style: UNKNOWN_FLAG_HTML, innerHTML: '<span style="font-size:16px;line-height:1">🏳️</span>' })) }}
           />
-        : sr.noFlag ? NO_FLAG_PLACEHOLDER : UNKNOWN_FLAG_PLACEHOLDER
+        : (sr.noFlag || confirmedNoFlags) ? NO_FLAG_PLACEHOLDER : UNKNOWN_FLAG_PLACEHOLDER
       }
       <span style={{ fontSize: 8.5, color: '#B8A9E0', textAlign: 'center', lineHeight: 1.2, wordBreak: 'break-word' }}>{sr.name}</span>
     </div>
@@ -329,10 +337,10 @@ const SUBLABEL_STYLE: React.CSSProperties = {
 }
 const GRID_STYLE: React.CSSProperties = { display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: '10px 6px' }
 
-function SubdivisionGrid({ subRegions, headerLabel, memberLabel }: { subRegions: SubRegion[]; headerLabel?: string; memberLabel?: string }) {
+function SubdivisionGrid({ subRegions, headerLabel, memberLabel, confirmedNoFlags }: { subRegions: SubRegion[]; headerLabel?: string; memberLabel?: string; confirmedNoFlags?: boolean }) {
   const hasGroups = subRegions.some(sr => sr.group)
   if (!hasGroups) {
-    return <div className="mt-3" style={GRID_STYLE}>{subRegions.map(sr => <SubRegionTile key={sr.code} sr={sr} />)}</div>
+    return <div className="mt-3" style={GRID_STYLE}>{subRegions.map(sr => <SubRegionTile key={sr.code} sr={sr} confirmedNoFlags={confirmedNoFlags} />)}</div>
   }
   const groups: { label: string; items: SubRegion[] }[] = []
   for (const sr of subRegions) {
@@ -360,11 +368,11 @@ function SubdivisionGrid({ subRegions, headerLabel, memberLabel }: { subRegions:
             {headers.length > 0 && (
               <div style={{ marginBottom: 12 }}>
                 {headerLabel && <div style={SUBLABEL_STYLE}>{headerLabel}</div>}
-                <div style={GRID_STYLE}>{headers.map(sr => <SubRegionTile key={sr.code} sr={sr} />)}</div>
+                <div style={GRID_STYLE}>{headers.map(sr => <SubRegionTile key={sr.code} sr={sr} confirmedNoFlags={confirmedNoFlags} />)}</div>
               </div>
             )}
             {headers.length > 0 && memberLabel && members.length > 0 && <div style={SUBLABEL_STYLE}>{memberLabel}</div>}
-            <div style={GRID_STYLE}>{members.map(sr => <SubRegionTile key={sr.code} sr={sr} />)}</div>
+            <div style={GRID_STYLE}>{members.map(sr => <SubRegionTile key={sr.code} sr={sr} confirmedNoFlags={confirmedNoFlags} />)}</div>
           </div>
         )
       })}
