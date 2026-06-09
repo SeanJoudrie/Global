@@ -160,12 +160,12 @@ const GT_DEPARTMENTS: SubRegion[] = [
   { code: "gt-es", name: "Escuintla",       flagUrl: wiki("Flag of Escuintla Department.svg") },
   { code: "gt-gu", name: "Guatemala",       flagUrl: wiki("Flag of the Guatemala Department.svg") },
   { code: "gt-hu", name: "Huehuetenango",   flagUrl: wiki("Flag of Huehuetenango Department.svg") },
-  { code: "gt-iz", name: "Izabal" },
+  { code: "gt-iz", name: "Izabal", noFlag: true },
   { code: "gt-ja", name: "Jalapa",          flagUrl: wiki("Flag of Jalapa Department, Guatemala.svg") },
   { code: "gt-ju", name: "Jutiapa",         flagUrl: wiki("Flag of Jutiapa Department.svg") },
   { code: "gt-pe", name: "Petén",           flagUrl: wiki("Flag of Petén.svg") },
   { code: "gt-pr", name: "El Progreso",     flagUrl: wiki("Flag of El Progreso Department.svg") },
-  { code: "gt-qc", name: "Quiché" },
+  { code: "gt-qc", name: "Quiché", flagUrl: wiki("Flag of Quiché Department.svg") },
   { code: "gt-qz", name: "Quetzaltenango",  flagUrl: wiki("Flag of Quetzaltenango Department.svg") },
   { code: "gt-re", name: "Retalhuleu",      flagUrl: wiki("Flag of Retahuleu.svg") },
   { code: "gt-sa", name: "Sacatepéquez",    flagUrl: wiki("Bandera de Sacatepéquez.svg") },
@@ -179,7 +179,7 @@ const GT_DEPARTMENTS: SubRegion[] = [
 
 // ── HONDURAS (18 departments) ─────────────────────────────────────────────────
 const HN_DEPARTMENTS: SubRegion[] = [
-  { code: "hn-at", name: "Atlántida" },
+  { code: "hn-at", name: "Atlántida", flagUrl: wiki("Flag Of Atlantida Department.png") },
   { code: "hn-ch", name: "Choluteca" },
   { code: "hn-cl", name: "Colón" },
   { code: "hn-cm", name: "Comayagua" },
@@ -210,7 +210,7 @@ const SV_DEPARTMENTS: SubRegion[] = [
   { code: "sv-pa", name: "La Paz",        flagUrl: wiki("Bandera del Departamento de La Paz de El Salvador.PNG") },
   { code: "sv-sa", name: "Santa Ana",     flagUrl: wiki("Bandera de Santa Ana, El Salvador.svg") },
   { code: "sv-sm", name: "San Miguel" },
-  { code: "sv-so", name: "Sonsonate" },
+  { code: "sv-so", name: "Sonsonate", flagUrl: wiki("Bandera del Departamento de Sonsonate.jpg") },
   { code: "sv-ss", name: "San Salvador",  flagUrl: wiki("Bandera de San Salvador (2015).svg") },
   { code: "sv-sv", name: "San Vicente",   flagUrl: wiki("Flag of San Vicente Department.svg") },
   { code: "sv-un", name: "La Unión",      flagUrl: wiki("Bandera del Departamento de La Unión de El Salvador.PNG") },
@@ -222,9 +222,9 @@ const NI_DEPARTMENTS: SubRegion[] = [
   { code: "ni-an", name: "Costa Caribe Norte", flagUrl: wiki("Flag of Region Autonoma del Atlantico Norte.svg") },
   { code: "ni-as", name: "Costa Caribe Sur",   flagUrl: wiki("Flag of Region Autonoma Atlantico Sur.svg") },
   { code: "ni-bo", name: "Boaco",              flagUrl: wiki("Flag of Boaco.svg") },
-  { code: "ni-ca", name: "Carazo" },
+  { code: "ni-ca", name: "Carazo", noFlag: true },
   { code: "ni-ci", name: "Chinandega",         flagUrl: wiki("Flag of Chinandega.svg") },
-  { code: "ni-co", name: "Chontales" },
+  { code: "ni-co", name: "Chontales", noFlag: true },
   { code: "ni-es", name: "Estelí",             flagUrl: wiki("Flag of Esteli.svg") },
   { code: "ni-gr", name: "Granada",            flagUrl: wiki("Flag of Granada, Nicaragua.svg") },
   { code: "ni-ji", name: "Jinotega",           flagUrl: wiki("Flag of Jinotega.svg") },
@@ -235,7 +235,7 @@ const NI_DEPARTMENTS: SubRegion[] = [
   { code: "ni-mt", name: "Matagalpa",          flagUrl: wiki("Flag of Matagalpa.svg") },
   { code: "ni-ns", name: "Nueva Segovia",      flagUrl: wiki("Flag of Nueva Segovia.svg") },
   { code: "ni-ri", name: "Rivas",              flagUrl: wiki("Flag of Rivas.svg") },
-  { code: "ni-sj", name: "Río San Juan" },
+  { code: "ni-sj", name: "Río San Juan", noFlag: true },
 ]
 
 // ── COSTA RICA (7 provinces) ──────────────────────────────────────────────────
@@ -258,7 +258,7 @@ const PA_PROVINCES: SubRegion[] = [
   { code: "pa-5",  name: "Darién",         flagUrl: wiki("Bandera de la Provincia de Darién.svg")  },
   { code: "pa-6",  name: "Herrera",        flagUrl: wiki("Bandera de la Provincia de Herrera.svg")  },
   { code: "pa-7",  name: "Los Santos",     flagUrl: wiki("Bandera de la Provincia de Los Santos.svg")  },
-  { code: "pa-8",  name: "Panamá"  },
+  { code: "pa-8",  name: "Panamá", noFlag: true  },
   { code: "pa-9",  name: "Veraguas",       flagUrl: wiki("Bandera de la Provincia de Veraguas.svg")  },
   { code: "pa-10", name: "Panamá Oeste",   flagUrl: wiki("Bandera de la Provincia de Panamá Oeste.svg") },
 ]
@@ -485,7 +485,7 @@ const PE_REGIONS: SubRegion[] = [
   { code: "pe-caj", name: "Cajamarca",      flagUrl: wiki("Bandera de Cajamarca.svg") },
   { code: "pe-cal", name: "Callao",         flagUrl: wiki("Bandera del Callao.svg") },
   { code: "pe-cus", name: "Cusco",          flagUrl: wiki("Flag of Cusco (2021).svg") },
-  { code: "pe-huc", name: "Huánuco" },
+  { code: "pe-huc", name: "Huánuco", flagUrl: wiki("Flag of Huánuco.svg") },
   { code: "pe-huv", name: "Huancavelica",   flagUrl: wiki("Flag of Huancavelica.svg") },
   { code: "pe-ica", name: "Ica",            flagUrl: wiki("Bandera Región Ica.svg") },
   { code: "pe-jun", name: "Junín",          flagUrl: wiki("Flag of Junin.svg") },
@@ -551,7 +551,7 @@ const PY_DEPARTMENTS: SubRegion[] = [
   { code: "py-1",   name: "Concepción",       flagUrl: wiki("Flag of Concepción Department.svg")   },
   { code: "py-2",   name: "San Pedro",        flagUrl: wiki("Flag of San Pedro Department (Paraguay).svg")   },
   { code: "py-3",   name: "Cordillera",       flagUrl: wiki("Bandera del Departamento de Cordillera.JPG")   },
-  { code: "py-4",   name: "Guairá"   },
+  { code: "py-4",   name: "Guairá", flagUrl: wiki("Flag of Guairá Department.svg")   },
   { code: "py-5",   name: "Caaguazú",         flagUrl: wiki("Flag of Caaguazú Department.svg")   },
   { code: "py-6",   name: "Caazapá",          flagUrl: wiki("Flag of Caazapá Department.svg")   },
   { code: "py-7",   name: "Itapúa",           flagUrl: wiki("Flag of Itapúa Department.svg")   },
@@ -577,7 +577,7 @@ const UY_DEPARTMENTS: SubRegion[] = [
   { code: "uy-fd", name: "Florida",      flagUrl: wiki("Flag of Florida Department.svg") },
   { code: "uy-fs", name: "Flores",       flagUrl: wiki("Flag of Flores Department.svg") },
   { code: "uy-la", name: "Lavalleja",    flagUrl: wiki("Flag of Lavalleja Department.svg") },
-  { code: "uy-ma", name: "Maldonado" },
+  { code: "uy-ma", name: "Maldonado", flagUrl: wiki("Bandera del Departamento de Maldonado.svg") },
   { code: "uy-mo", name: "Montevideo",   flagUrl: wiki("Flag of Montevideo.svg") },
   { code: "uy-pa", name: "Paysandú",     flagUrl: wiki("Flag of Paysandú Department.svg") },
   { code: "uy-rn", name: "Río Negro",    flagUrl: wiki("Flag of Rio Negro Department.svg") },
@@ -593,15 +593,15 @@ const UY_DEPARTMENTS: SubRegion[] = [
 // ── GUYANA (10 regions) ───────────────────────────────────────────────────────
 const GY_REGIONS: SubRegion[] = [
   { code: "gy-ba", name: "Barima-Waini",                 flagUrl: wiki("Flag of Barima-Waini, Guyana.svg") },
-  { code: "gy-cu", name: "Cuyuni-Mazaruni" },
-  { code: "gy-de", name: "Demerara-Mahaica" },
-  { code: "gy-ea", name: "East Berbice-Corentyne" },
-  { code: "gy-es", name: "Essequibo Islands-W. Demerara" },
-  { code: "gy-ma", name: "Mahaica-Berbice" },
-  { code: "gy-pm", name: "Pomeroon-Supenaam" },
-  { code: "gy-pt", name: "Potaro-Siparuni" },
-  { code: "gy-ud", name: "Upper Demerara-Berbice" },
-  { code: "gy-ut", name: "Upper Takutu-Upper Essequibo" },
+  { code: "gy-cu", name: "Cuyuni-Mazaruni", flagUrl: wiki("Flag of Cuyuni-Mazaruni, Guyana.svg") },
+  { code: "gy-de", name: "Demerara-Mahaica", flagUrl: wiki("Flag of Demerara-Mahaica, Guyana.svg") },
+  { code: "gy-ea", name: "East Berbice-Corentyne", flagUrl: wiki("Flag of East Berbice-Corentyne, Guyana.svg") },
+  { code: "gy-es", name: "Essequibo Islands-W. Demerara", flagUrl: wiki("Flag of Essequibo Islands-West Demerara, Guyana.svg") },
+  { code: "gy-ma", name: "Mahaica-Berbice", flagUrl: wiki("Flag of Mahaica-Berbice, Guyana.svg") },
+  { code: "gy-pm", name: "Pomeroon-Supenaam", flagUrl: wiki("Flag of Pomeroon-Supenaam, Guyana.svg") },
+  { code: "gy-pt", name: "Potaro-Siparuni", flagUrl: wiki("Flag of Potaro-Siparuni, Guyana.svg") },
+  { code: "gy-ud", name: "Upper Demerara-Berbice", flagUrl: wiki("Flag of Upper Demerara-Berbice, Guyana.svg") },
+  { code: "gy-ut", name: "Upper Takutu-Upper Essequibo", flagUrl: wiki("Flag of Upper Takutu-Upper Essequibo, Guyana.svg") },
 ]
 
 // ── SURINAME (10 districts) ───────────────────────────────────────────────────
@@ -1270,10 +1270,10 @@ export const CHALLENGE_CONTINENTS: ChallengeContinent[] = [
           // Papua
           { code: "id-pa", name: "Papua", flagUrl: wiki("Flag of Papua.svg"),                   group: "Papua" },
           { code: "id-pb", name: "West Papua", flagUrl: wiki("Flag of West Papua (vectorised).svg"),              group: "Papua" },
-          { code: "id-ps", name: "South Papua",             group: "Papua" },
-          { code: "id-pt", name: "Central Papua",           group: "Papua" },
-          { code: "id-pe", name: "Highland Papua",          group: "Papua" },
-          { code: "id-pw", name: "Southwest Papua",         group: "Papua" },
+          { code: "id-ps", name: "South Papua", flagUrl: wiki("Flag of South Papua Province.svg"),             group: "Papua" },
+          { code: "id-pt", name: "Central Papua", flagUrl: wiki("Flag of Central Papua Province.svg"),           group: "Papua" },
+          { code: "id-pe", name: "Highland Papua", flagUrl: wiki("Flag of Highland Papua.svg"),          group: "Papua" },
+          { code: "id-pw", name: "Southwest Papua", flagUrl: wiki("Flag of Southwest Papua.svg"),         group: "Papua" },
         ],
       },
 
@@ -1466,11 +1466,11 @@ export const CHALLENGE_CONTINENTS: ChallengeContinent[] = [
         subRegions: [
           { code: "mn-ar", name: "Arkhangai", flagUrl: wiki("Mn flag arkhangai aimag 2014.svg") },
           { code: "mn-bh", name: "Bayan-Ölgii", flagUrl: wiki("Mn flag bayan olgiy aymag.svg") },
-          { code: "mn-bk", name: "Bayankhongor" },
+          { code: "mn-bk", name: "Bayankhongor", flagUrl: wiki("Mn flag bayankhongor aymag.png") },
           { code: "mn-bu", name: "Bulgan", flagUrl: wiki("Mn flag bulgan aimag.svg") },
-          { code: "mn-da", name: "Darkhan-Uul" },
+          { code: "mn-da", name: "Darkhan-Uul", flagUrl: wiki("Mn flag darkhan uul aymag.svg") },
           { code: "mn-dg", name: "Dornogobi", flagUrl: wiki("Mn flag dornogovi aimag 2011.svg") },
-          { code: "mn-do", name: "Dornod" },
+          { code: "mn-do", name: "Dornod", flagUrl: wiki("Mn flag dornod aimag 2001.svg") },
           { code: "mn-dz", name: "Dundgovi", flagUrl: wiki("Mn flag dundgovi aimag.svg") },
           { code: "mn-ga", name: "Govi-Altai", flagUrl: wiki("Mn flag govi-altai aimag 2011.svg") },
           { code: "mn-gs", name: "Govisümber", flagUrl: wiki("Mn flag govisümber aimag.svg") },
@@ -1479,10 +1479,10 @@ export const CHALLENGE_CONTINENTS: ChallengeContinent[] = [
           { code: "mn-kd", name: "Khovd", flagUrl: wiki("Khovd stars flag.svg") },
           { code: "mn-og", name: "Ömnögovi", flagUrl: wiki("Mn flag ömnögovi aimag 2011.svg") },
           { code: "mn-or", name: "Orkhon", flagUrl: wiki("Orkhon Aimag Flag.svg") },
-          { code: "mn-ov", name: "Övörkhangai" },
+          { code: "mn-ov", name: "Övörkhangai", flagUrl: wiki("Mn flag Ovurhangai aymag.svg") },
           { code: "mn-se", name: "Selenge", flagUrl: wiki("Mn flag selenge aimag 1999.svg") },
           { code: "mn-su", name: "Sükhbaatar", flagUrl: wiki("Mn flag sükhbaatar aimag.svg") },
-          { code: "mn-to", name: "Töv" },
+          { code: "mn-to", name: "Töv", flagUrl: wiki("Tov aymag flag.svg") },
           { code: "mn-ub", name: "Ulaanbaatar", flagUrl: wiki("Flag of Ulaanbaatar, Mongolia.svg") },
           { code: "mn-uv", name: "Uvs", flagUrl: wiki("Uvs Aimag Flag.svg") },
           { code: "mn-za", name: "Zavkhan", flagUrl: wiki("Mn flag zavkhan aimag.svg") },
@@ -1740,7 +1740,7 @@ export const CHALLENGE_CONTINENTS: ChallengeContinent[] = [
           { code: "th-rn", name: "Ranong", flagUrl: wiki("Flag of Ranong Province.svg"),        group: "Southern" },
           { code: "th-st", name: "Satun", flagUrl: wiki("Flag of Satun Province.svg"),         group: "Southern" },
           { code: "th-so", name: "Songkhla", flagUrl: wiki("Flag of Songkhla Province.svg"),      group: "Southern" },
-          { code: "th-srth",name:"Surat Thani",   group: "Southern" },
+          { code: "th-srth",name:"Surat Thani", flagUrl: wiki("Flag of Suratthani Province.svg"),   group: "Southern" },
           { code: "th-tg", name: "Trang", flagUrl: wiki("Flag of Trang Province.svg"),         group: "Southern" },
           { code: "th-yl", name: "Yala", flagUrl: wiki("Flag of Yala Province.svg"),          group: "Southern" },
         ],
@@ -1901,7 +1901,7 @@ export const CHALLENGE_CONTINENTS: ChallengeContinent[] = [
           { code: "ng-ba", name: "Bauchi",      noFlag: true, group: "States" },
           { code: "ng-by", name: "Bayelsa",     flagUrl: wiki("Flag of Bayelsa State.svg"),      group: "States" },
           { code: "ng-be", name: "Benue",       noFlag: true, group: "States" },
-          { code: "ng-bo", name: "Borno",       group: "States" },
+          { code: "ng-bo", name: "Borno", noFlag: true,       group: "States" },
           { code: "ng-cr", name: "Cross River", flagUrl: wiki("Cross River State Flag.svg"),     group: "States" },
           { code: "ng-de", name: "Delta",       flagUrl: wiki("Flag of Delta State.svg"),        group: "States" },
           { code: "ng-eb", name: "Ebonyi",      noFlag: true, group: "States" },
@@ -1976,7 +1976,7 @@ export const CHALLENGE_CONTINENTS: ChallengeContinent[] = [
           { code: "et-ce", name: "Central Ethiopia",    flagUrl: wiki("Flag of Central Ethiopia Regional State.svg"),     group: "Regional States" },
           { code: "et-aa", name: "Addis Ababa",         flagUrl: wiki("Flag of Addis Ababa.svg"),                         group: "Chartered Cities" },
           // Dire Dawa has a city flag in reality but no verified Commons file — left name-only
-          { code: "et-dd", name: "Dire Dawa",                                                                             group: "Chartered Cities" },
+          { code: "et-dd", name: "Dire Dawa", flagUrl: wiki("Flag of Dire Dawa, Ethiopia.svg"),                                                                             group: "Chartered Cities" },
         ],
       },
 
@@ -1991,7 +1991,7 @@ export const CHALLENGE_CONTINENTS: ChallengeContinent[] = [
           { code: "eg-alx", name: "Alexandria",     flagUrl: wiki("Flag of Alexandria.svg") },
           { code: "eg-dk",  name: "Dakahlia",       flagUrl: wiki("Governadorat de Daqahliya.png") },
           { code: "eg-bh",  name: "Beheira",        flagUrl: wiki("Flag of Behira Govenorate.svg") },
-          { code: "eg-fym", name: "Faiyum" },
+          { code: "eg-fym", name: "Faiyum", flagUrl: wiki("Governadorat de Faium.png") },
           { code: "eg-gh",  name: "Gharbia",        flagUrl: wiki("Flag of Gharbia Governorate.png") },
           { code: "eg-is",  name: "Ismailia",       flagUrl: wiki("Governadorat d'Ismailiya.png") },
           { code: "eg-mnf", name: "Monufia",        flagUrl: wiki("Flag of Menoufia Governorate.PNG") },
@@ -3960,12 +3960,12 @@ export const CHALLENGE_CONTINENTS: ChallengeContinent[] = [
       {
         code: "IM", name: "Isle of Man", emoji: "🇮🇲", subTitle: "6 Sheadings", locked: false,
         subRegions: [
-          { code: "im-ay", name: "Ayre" },
-          { code: "im-ga", name: "Garff" },
-          { code: "im-gf", name: "Glenfaba" },
-          { code: "im-mi", name: "Michael" },
-          { code: "im-md", name: "Middle" },
-          { code: "im-ru", name: "Rushen" },
+          { code: "im-ay", name: "Ayre", noFlag: true },
+          { code: "im-ga", name: "Garff", noFlag: true },
+          { code: "im-gf", name: "Glenfaba", noFlag: true },
+          { code: "im-mi", name: "Michael", noFlag: true },
+          { code: "im-md", name: "Middle", noFlag: true },
+          { code: "im-ru", name: "Rushen", noFlag: true },
         ],
       },
 
@@ -3992,16 +3992,16 @@ export const CHALLENGE_CONTINENTS: ChallengeContinent[] = [
       {
         code: "GG", name: "Guernsey", emoji: "🇬🇬", subTitle: "10 Parishes", locked: false,
         subRegions: [
-          { code: "gg-ca", name: "Castel" },
-          { code: "gg-fo", name: "Forest" },
-          { code: "gg-sa", name: "St. Andrew" },
-          { code: "gg-sm", name: "St. Martin" },
-          { code: "gg-sp", name: "St. Peter Port" },
-          { code: "gg-sd", name: "St. Pierre du Bois" },
-          { code: "gg-ss", name: "St. Sampson" },
-          { code: "gg-sv", name: "St. Saviour" },
-          { code: "gg-to", name: "Torteval" },
-          { code: "gg-va", name: "Vale" },
+          { code: "gg-ca", name: "Castel", flagUrl: wiki("Flag of Castel, Guernsey.svg") },
+          { code: "gg-fo", name: "Forest", flagUrl: wiki("Flag of Forest, Guernsey.svg") },
+          { code: "gg-sa", name: "St. Andrew", flagUrl: wiki("Flag of Saint Andrew, Guernsey.svg") },
+          { code: "gg-sm", name: "St. Martin", flagUrl: wiki("Flag of Saint Martin, Guernsey.svg") },
+          { code: "gg-sp", name: "St. Peter Port", flagUrl: wiki("Flag of Saint Peter Port, Guernsey.svg") },
+          { code: "gg-sd", name: "St. Pierre du Bois", flagUrl: wiki("Flag of Saint Pierre du Bois, Guernsey.svg") },
+          { code: "gg-ss", name: "St. Sampson", flagUrl: wiki("Flag of Saint Sampson, Guernsey.svg") },
+          { code: "gg-sv", name: "St. Saviour", flagUrl: wiki("Flag of Saint Saviour, Guernsey.svg") },
+          { code: "gg-to", name: "Torteval", flagUrl: wiki("Flag of Torteval, Guernsey.svg") },
+          { code: "gg-va", name: "Vale", flagUrl: wiki("Flag of Vale, Guernsey.svg") },
         ],
       },
 
@@ -4009,10 +4009,10 @@ export const CHALLENGE_CONTINENTS: ChallengeContinent[] = [
       {
         code: "GI", name: "Gibraltar", emoji: "🇬🇮", subTitle: "4 Areas", locked: false,
         subRegions: [
-          { code: "gi-nr", name: "North District" },
-          { code: "gi-sw", name: "South District" },
-          { code: "gi-wt", name: "Town Area" },
-          { code: "gi-ea", name: "East Side" },
+          { code: "gi-nr", name: "North District", noFlag: true },
+          { code: "gi-sw", name: "South District", noFlag: true },
+          { code: "gi-wt", name: "Town Area", noFlag: true },
+          { code: "gi-ea", name: "East Side", noFlag: true },
         ],
       },
 
@@ -4269,17 +4269,17 @@ export const CHALLENGE_CONTINENTS: ChallengeContinent[] = [
           // The Vergina-Sun "Flag of Greek Macedonia" is a regional symbol for Macedonia as a
           // whole, not an official flag of each periphery — so it's kept only on Central
           // Macedonia; the other two have no distinct official flag (placeholder).
-          { code: "gr-a", name: "East Macedonia & Thrace" },
+          { code: "gr-a", name: "East Macedonia & Thrace", noFlag: true },
           { code: "gr-b", name: "Central Macedonia",       flagUrl: wiki("Flag of Greek Macedonia.svg") },
-          { code: "gr-c", name: "West Macedonia" },
-          { code: "gr-d", name: "Epirus" },         // no official regional flag
-          { code: "gr-e", name: "Thessaly" },       // no official regional flag
-          { code: "gr-f", name: "Ionian Islands" }, // modern region has no flag (only a historical 19th-c. one)
+          { code: "gr-c", name: "West Macedonia", noFlag: true },
+          { code: "gr-d", name: "Epirus", noFlag: true },         // no official regional flag
+          { code: "gr-e", name: "Thessaly", noFlag: true },       // no official regional flag
+          { code: "gr-f", name: "Ionian Islands", noFlag: true }, // modern region has no flag (only a historical 19th-c. one)
           { code: "gr-g", name: "West Greece",             flagUrl: wiki("Flag of the Region of Western Greece.svg") },
-          { code: "gr-h", name: "Central Greece" }, // no verified regional flag
+          { code: "gr-h", name: "Central Greece", noFlag: true }, // no verified regional flag
           { code: "gr-i", name: "Attica",                  flagUrl: wiki("Bandera d'Àtica.svg") },
-          { code: "gr-j", name: "Peloponnese" },    // no official regional flag
-          { code: "gr-k", name: "North Aegean" },   // no official regional flag
+          { code: "gr-j", name: "Peloponnese", noFlag: true },    // no official regional flag
+          { code: "gr-k", name: "North Aegean", noFlag: true },   // no official regional flag
           { code: "gr-l", name: "South Aegean",            flagUrl: wiki("Flag of the Region of South Aegean.svg") },
           // Modern Crete region has no official flag — this is the historical Cretan State flag
           { code: "gr-m", name: "Crete",                   flagUrl: wiki("Flag of Cretan State.svg") },
@@ -4405,7 +4405,7 @@ export const CHALLENGE_CONTINENTS: ChallengeContinent[] = [
           { code: "bg-11", name: "Lovech",         flagUrl: wiki("Flag of Lovech.gif") },
           { code: "bg-12", name: "Montana",        flagUrl: wiki("Flag of Montana, Bulgaria.svg") },
           { code: "bg-13", name: "Pazardzhik",     flagUrl: wiki("Flag of Pazardzhik.gif") },
-          { code: "bg-14", name: "Pernik" }, // no flag file on Commons (coat of arms only)
+          { code: "bg-14", name: "Pernik", noFlag: true }, // no flag file on Commons (coat of arms only)
           { code: "bg-15", name: "Pleven",         flagUrl: wiki("Flag of Pleven.gif") },
           { code: "bg-16", name: "Plovdiv",        flagUrl: wiki("Plovdiv flag.svg") },
           { code: "bg-17", name: "Razgrad",        flagUrl: wiki("Razgrad flag.png") },
@@ -4414,7 +4414,7 @@ export const CHALLENGE_CONTINENTS: ChallengeContinent[] = [
           { code: "bg-20", name: "Sliven",         flagUrl: wiki("Sliven flag.png") },
           { code: "bg-21", name: "Smolyan",        flagUrl: wiki("Smolyan Municipality.jpg") },
           { code: "bg-22", name: "Sofia City",     flagUrl: wiki("BG Sofia flag.svg") },
-          { code: "bg-23", name: "Sofia Province" }, // no flag (Sofia city is not in this province)
+          { code: "bg-23", name: "Sofia Province", noFlag: true }, // no flag (Sofia city is not in this province)
           { code: "bg-24", name: "Stara Zagora",   flagUrl: wiki("Flag of Stara Zagora (obverse).svg") },
           { code: "bg-25", name: "Targovishte",    flagUrl: wiki("Targovishte Municipality.jpg") },
           { code: "bg-26", name: "Haskovo",        flagUrl: wiki("Flag of Haskovo.gif") },
@@ -4643,14 +4643,14 @@ export const CHALLENGE_CONTINENTS: ChallengeContinent[] = [
       {
         code: "MK", name: "North Macedonia", emoji: "🇲🇰", subTitle: "8 Regions", locked: false,
         subRegions: [
-          { code: "mk-101", name: "Vardar" },
-          { code: "mk-201", name: "East" },
-          { code: "mk-301", name: "Southwest" },
-          { code: "mk-401", name: "Southeast" },
-          { code: "mk-501", name: "Pelagonia" },
-          { code: "mk-601", name: "Polog" },
-          { code: "mk-701", name: "Northeast" },
-          { code: "mk-801", name: "Skopje" },
+          { code: "mk-101", name: "Vardar", noFlag: true },
+          { code: "mk-201", name: "East", noFlag: true },
+          { code: "mk-301", name: "Southwest", noFlag: true },
+          { code: "mk-401", name: "Southeast", noFlag: true },
+          { code: "mk-501", name: "Pelagonia", noFlag: true },
+          { code: "mk-601", name: "Polog", noFlag: true },
+          { code: "mk-701", name: "Northeast", noFlag: true },
+          { code: "mk-801", name: "Skopje", noFlag: true },
         ],
       },
 
@@ -4690,18 +4690,18 @@ export const CHALLENGE_CONTINENTS: ChallengeContinent[] = [
       {
         code: "SI", name: "Slovenia", emoji: "🇸🇮", subTitle: "12 Regions", locked: false,
         subRegions: [
-          { code: "si-01", name: "Pomurska" },
-          { code: "si-02", name: "Podravska" },
-          { code: "si-03", name: "Koroška" },
-          { code: "si-04", name: "Savinjska" },
-          { code: "si-05", name: "Zasavska" },
-          { code: "si-06", name: "Posavska" },
-          { code: "si-07", name: "Southeast Slovenia" },
-          { code: "si-08", name: "Primorska-Notranjska" },
-          { code: "si-09", name: "Gorenjska" },
-          { code: "si-10", name: "Primorsko-Kraška" },
-          { code: "si-11", name: "Goriška" },
-          { code: "si-12", name: "Obalno-Kraška" },
+          { code: "si-01", name: "Pomurska", noFlag: true },
+          { code: "si-02", name: "Podravska", noFlag: true },
+          { code: "si-03", name: "Koroška", noFlag: true },
+          { code: "si-04", name: "Savinjska", noFlag: true },
+          { code: "si-05", name: "Zasavska", noFlag: true },
+          { code: "si-06", name: "Posavska", noFlag: true },
+          { code: "si-07", name: "Southeast Slovenia", noFlag: true },
+          { code: "si-08", name: "Primorska-Notranjska", noFlag: true },
+          { code: "si-09", name: "Gorenjska", noFlag: true },
+          { code: "si-10", name: "Primorsko-Kraška", noFlag: true },
+          { code: "si-11", name: "Goriška", noFlag: true },
+          { code: "si-12", name: "Obalno-Kraška", noFlag: true },
         ],
       },
 
@@ -4815,12 +4815,12 @@ export const CHALLENGE_CONTINENTS: ChallengeContinent[] = [
       {
         code: "CY", name: "Cyprus", emoji: "🇨🇾", subTitle: "6 Districts", locked: false,
         subRegions: [
-          { code: "cy-01", name: "Nicosia" },
-          { code: "cy-02", name: "Limassol" },
-          { code: "cy-03", name: "Larnaca" },
-          { code: "cy-04", name: "Famagusta" },
-          { code: "cy-05", name: "Paphos" },
-          { code: "cy-06", name: "Kyrenia" },
+          { code: "cy-01", name: "Nicosia", noFlag: true },
+          { code: "cy-02", name: "Limassol", noFlag: true },
+          { code: "cy-03", name: "Larnaca", noFlag: true },
+          { code: "cy-04", name: "Famagusta", noFlag: true },
+          { code: "cy-05", name: "Paphos", noFlag: true },
+          { code: "cy-06", name: "Kyrenia", noFlag: true },
         ],
       },
 
@@ -4828,14 +4828,14 @@ export const CHALLENGE_CONTINENTS: ChallengeContinent[] = [
       {
         code: "IS", name: "Iceland", emoji: "🇮🇸", subTitle: "8 Regions", locked: false,
         subRegions: [
-          { code: "is-1", name: "Capital Region" },
-          { code: "is-2", name: "Southern Peninsula" },
-          { code: "is-3", name: "West" },
-          { code: "is-4", name: "Westfjords" },
-          { code: "is-5", name: "Northwest" },
-          { code: "is-6", name: "Northeast" },
-          { code: "is-7", name: "East" },
-          { code: "is-8", name: "South" },
+          { code: "is-1", name: "Capital Region", noFlag: true },
+          { code: "is-2", name: "Southern Peninsula", noFlag: true },
+          { code: "is-3", name: "West", noFlag: true },
+          { code: "is-4", name: "Westfjords", noFlag: true },
+          { code: "is-5", name: "Northwest", noFlag: true },
+          { code: "is-6", name: "Northeast", noFlag: true },
+          { code: "is-7", name: "East", noFlag: true },
+          { code: "is-8", name: "South", noFlag: true },
         ],
       },
 
@@ -4846,12 +4846,12 @@ export const CHALLENGE_CONTINENTS: ChallengeContinent[] = [
           // Kosovo's districts have no flags (only municipalities can); the two verified
           // namesake municipality flags are shown, the rest are name-only.
           { code: "xk-pr", name: "Pristina",  flagUrl: wiki("Prishtina-flag.svg") },
-          { code: "xk-pe", name: "Peja" },       // no district flag
+          { code: "xk-pe", name: "Peja", flagUrl: wiki("Flag of Peja.png") },       // no district flag
           { code: "xk-gj", name: "Gjakova",   flagUrl: wiki("Flag of Gjakova.svg") },
-          { code: "xk-mi", name: "Mitrovica" },  // no district flag
-          { code: "xk-pz", name: "Prizren" },    // no district flag (only a municipal emblem)
-          { code: "xk-fe", name: "Ferizaj" },    // no district flag (only a municipal emblem)
-          { code: "xk-gi", name: "Gjilan" },     // no district flag (only a municipal emblem)
+          { code: "xk-mi", name: "Mitrovica", flagUrl: wiki("Flag of Mitrovica.png") },  // no district flag
+          { code: "xk-pz", name: "Prizren", flagUrl: wiki("Flag of Prizren.png") },    // no district flag (only a municipal emblem)
+          { code: "xk-fe", name: "Ferizaj", flagUrl: wiki("Flag of Ferizaj.png") },    // no district flag (only a municipal emblem)
+          { code: "xk-gi", name: "Gjilan", flagUrl: wiki("Flag of Gjilan.png") },     // no district flag (only a municipal emblem)
         ],
       },
 
@@ -4877,18 +4877,18 @@ export const CHALLENGE_CONTINENTS: ChallengeContinent[] = [
       {
         code: "LU", name: "Luxembourg", emoji: "🇱🇺", subTitle: "12 Cantons", locked: false,
         subRegions: [
-          { code: "lu-ca", name: "Capellen" },
-          { code: "lu-cl", name: "Clervaux" },
-          { code: "lu-di", name: "Diekirch" },
-          { code: "lu-ec", name: "Echternach" },
-          { code: "lu-es", name: "Esch-sur-Alzette" },
-          { code: "lu-gr", name: "Grevenmacher" },
-          { code: "lu-lu", name: "Luxembourg" },
-          { code: "lu-me", name: "Mersch" },
-          { code: "lu-rd", name: "Redange" },
-          { code: "lu-rm", name: "Remich" },
-          { code: "lu-vd", name: "Vianden" },
-          { code: "lu-wi", name: "Wiltz" },
+          { code: "lu-ca", name: "Capellen", noFlag: true },
+          { code: "lu-cl", name: "Clervaux", noFlag: true },
+          { code: "lu-di", name: "Diekirch", noFlag: true },
+          { code: "lu-ec", name: "Echternach", noFlag: true },
+          { code: "lu-es", name: "Esch-sur-Alzette", noFlag: true },
+          { code: "lu-gr", name: "Grevenmacher", noFlag: true },
+          { code: "lu-lu", name: "Luxembourg", noFlag: true },
+          { code: "lu-me", name: "Mersch", noFlag: true },
+          { code: "lu-rd", name: "Redange", noFlag: true },
+          { code: "lu-rm", name: "Remich", noFlag: true },
+          { code: "lu-vd", name: "Vianden", noFlag: true },
+          { code: "lu-wi", name: "Wiltz", noFlag: true },
         ],
       },
 
@@ -4896,11 +4896,11 @@ export const CHALLENGE_CONTINENTS: ChallengeContinent[] = [
       {
         code: "MT", name: "Malta", emoji: "🇲🇹", subTitle: "5 Regions", locked: false,
         subRegions: [
-          { code: "mt-01", name: "Gozo & Comino" },
-          { code: "mt-02", name: "Northern" },
+          { code: "mt-01", name: "Gozo & Comino", flagUrl: wiki("Flag of Gozo.svg") },
+          { code: "mt-02", name: "Northern", flagUrl: wiki("Flag of Northern Region, Malta.svg") },
           { code: "mt-03", name: "Northern Harbour" },
-          { code: "mt-04", name: "South Eastern" },
-          { code: "mt-05", name: "Southern Harbour" },
+          { code: "mt-04", name: "South Eastern", flagUrl: wiki("Flag of Southeastern Region, Malta.svg") },
+          { code: "mt-05", name: "Southern Harbour", flagUrl: wiki("Flag of Southern Region, Malta.svg") },
         ],
       },
 
@@ -4908,10 +4908,10 @@ export const CHALLENGE_CONTINENTS: ChallengeContinent[] = [
       {
         code: "MC", name: "Monaco", emoji: "🇲🇨", subTitle: "4 Quarters", locked: false,
         subRegions: [
-          { code: "mc-cl", name: "La Colle" },
-          { code: "mc-co", name: "La Condamine" },
-          { code: "mc-fo", name: "Fontvieille" },
-          { code: "mc-mc", name: "Monaco-Ville" },
+          { code: "mc-cl", name: "La Colle", noFlag: true },
+          { code: "mc-co", name: "La Condamine", noFlag: true },
+          { code: "mc-fo", name: "Fontvieille", noFlag: true },
+          { code: "mc-mc", name: "Monaco-Ville", noFlag: true },
         ],
       },
 
@@ -5034,10 +5034,10 @@ export const CHALLENGE_CONTINENTS: ChallengeContinent[] = [
       {
         code: "VA", name: "Vatican City", emoji: "🇻🇦", subTitle: "4 Areas", locked: false,
         subRegions: [
-          { code: "va-vt", name: "Vatican Hill" },
-          { code: "va-pa", name: "Papal Gardens" },
-          { code: "va-st", name: "St. Peter's" },
-          { code: "va-ca", name: "Castel Gandolfo" },
+          { code: "va-vt", name: "Vatican Hill", noFlag: true },
+          { code: "va-pa", name: "Papal Gardens", noFlag: true },
+          { code: "va-st", name: "St. Peter's", noFlag: true },
+          { code: "va-ca", name: "Castel Gandolfo", noFlag: true },
         ],
       },
     ],
