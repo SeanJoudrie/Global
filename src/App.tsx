@@ -12,6 +12,9 @@ import ProfileScreen from "./components/ProfileScreen"
 import FlashcardsScreen from "./components/FlashcardsScreen"
 import LanguageQuizScreen from "./components/LanguageQuizScreen"
 import CodexScreen from "./components/CodexScreen"
+import GeoQuizScreen from "./components/GeoQuizScreen"
+import GauntletScreen from "./components/GauntletScreen"
+import SettingsScreen from "./components/SettingsScreen"
 import StarField from "./components/StarField"
 import { FLAGS } from "./data/flags"
 import type { FlagRecord } from "./data/flags"
@@ -20,8 +23,9 @@ import type { AppState } from "./utils/storage"
 import { buildDailyQuiz, buildSetQuiz } from "./utils/quiz"
 import type { Question } from "./utils/quiz"
 import { todayString } from "./utils/prng"
+import { loadTheme } from "./components/SettingsScreen"
 
-type Screen = "splash" | "home" | "flags" | "quiz" | "reversequiz" | "result" | "achievements" | "profile" | "flashcards" | "language" | "capitalquiz" | "challenge" | "codex"
+type Screen = "splash" | "home" | "flags" | "quiz" | "reversequiz" | "result" | "achievements" | "profile" | "flashcards" | "language" | "capitalquiz" | "challenge" | "codex" | "geo" | "gauntlet" | "settings"
 
 interface ActiveQuiz {
   questions: Question[]
@@ -92,8 +96,10 @@ export default function App() {
     startSet(activeQuiz.setId, activeQuiz.setFlags)
   }, [activeQuiz, startQuickPlay, startReverseQuiz, startSet])
 
+  const theme = loadTheme()
+
   return (
-    <div style={{ background: "linear-gradient(135deg,#1A1033 0%,#2A1A4A 100%)", minHeight: "100vh" }}>
+    <div style={{ background: `linear-gradient(135deg,${theme.bgFrom} 0%,${theme.bgTo} 100%)`, minHeight: "100vh" }}>
       {screen !== "splash" && <StarField />}
 
       {screen === "splash" && <SplashScreen onDone={() => setScreen("home")} />}
@@ -109,7 +115,10 @@ export default function App() {
           onGoReverseQuiz={startReverseQuiz}
           onGoCapitalQuiz={() => setScreen("capitalquiz")}
           onGoChallenge={() => setScreen("challenge")}
-          onGoCodex={() => setScreen("codex")} />
+          onGoCodex={() => setScreen("codex")}
+          onGoGeo={() => setScreen("geo")}
+          onGoGauntlet={() => setScreen("gauntlet")}
+          onGoSettings={() => setScreen("settings")} />
       )}
 
       {screen === "flags" && (
@@ -124,6 +133,9 @@ export default function App() {
       {screen === "capitalquiz" && <CapitalQuizScreen onBack={() => setScreen("home")} />}
       {screen === "challenge" && <ChallengeScreen onBack={() => setScreen("home")} />}
       {screen === "codex" && <CodexScreen onBack={() => setScreen("home")} />}
+      {screen === "geo" && <GeoQuizScreen onBack={() => setScreen("home")} />}
+      {screen === "gauntlet" && <GauntletScreen onBack={() => setScreen("home")} />}
+      {screen === "settings" && <SettingsScreen onBack={() => setScreen("home")} />}
       {screen === "profile" && <ProfileScreen state={appState} onBack={() => setScreen("home")} />}
       {screen === "achievements" && <AchievementsScreen state={appState} onBack={() => setScreen("home")} />}
 

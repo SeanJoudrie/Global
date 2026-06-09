@@ -17,6 +17,9 @@ interface Props {
   onGoCapitalQuiz: () => void
   onGoChallenge: () => void
   onGoCodex: () => void
+  onGoGeo: () => void
+  onGoGauntlet: () => void
+  onGoSettings: () => void
 }
 
 const ComingSoonTile = ({ emoji, label, desc }: { emoji: string; label: string; desc: string }) => (
@@ -37,6 +40,7 @@ const ComingSoonTile = ({ emoji, label, desc }: { emoji: string; label: string; 
 export default function HomeScreen({
   state, onStartDaily, onGoFlags, onGoProfile, onGoFlashcards,
   onGoLanguage, onQuickPlay, onGoReverseQuiz, onGoCapitalQuiz, onGoChallenge, onGoCodex,
+  onGoGeo, onGoGauntlet, onGoSettings,
 }: Props) {
   const today = todayString()
   const dailyDone = state.lastDailyDate === today
@@ -49,14 +53,18 @@ export default function HomeScreen({
           <EarthLogo size={34} />
           <span className="text-xl font-black" style={{ color: "#F5F3FF" }}>Globalio</span>
         </div>
-        <button onClick={onGoProfile}
-          className="w-9 h-9 flex items-center justify-center rounded-full text-lg transition-all active:scale-95"
-          style={{
-            background: "linear-gradient(135deg, #2D1F52, #3D2A6A)",
-            border: "1px solid #8B6CFF44",
-          }}>
-          👤
-        </button>
+        <div style={{ display: "flex", gap: 8 }}>
+          <button onClick={onGoSettings}
+            className="w-9 h-9 flex items-center justify-center rounded-full text-lg transition-all active:scale-95"
+            style={{ background: "linear-gradient(135deg, #2D1F52, #3D2A6A)", border: "1px solid #8B6CFF44" }}>
+            ⚙️
+          </button>
+          <button onClick={onGoProfile}
+            className="w-9 h-9 flex items-center justify-center rounded-full text-lg transition-all active:scale-95"
+            style={{ background: "linear-gradient(135deg, #2D1F52, #3D2A6A)", border: "1px solid #8B6CFF44" }}>
+            👤
+          </button>
+        </div>
       </header>
 
       {state.currentStreak > 0 && (
@@ -191,7 +199,19 @@ export default function HomeScreen({
           <span style={{ color: "#F59E0B" }}>›</span>
         </button>
 
-        <ComingSoonTile emoji="🗺️" label="Geography" desc="Identify countries by shape" />
+        <button onClick={onGoGeo}
+          className="w-full flex items-center justify-between px-5 py-4 rounded-2xl transition-all active:scale-[0.98] hover:brightness-110"
+          style={{ background: "#2D1F52", border: "1px solid #34D39933" }}>
+          <div className="flex items-center gap-3">
+            <span className="text-2xl">🗺️</span>
+            <div className="text-left">
+              <div className="font-bold" style={{ color: "#F5F3FF" }}>Geography</div>
+              <div className="text-xs" style={{ color: "#B8A9E0" }}>Identify countries by shape</div>
+            </div>
+          </div>
+          <span style={{ color: "#34D399" }}>›</span>
+        </button>
+
         <ComingSoonTile emoji="📜" label="History" desc="Flags through the ages" />
 
         <h3 className="text-xs font-semibold uppercase tracking-widest pt-1" style={{ color: "#B8A9E0" }}>Reference</h3>
@@ -210,6 +230,19 @@ export default function HomeScreen({
         </button>
 
         <h3 className="text-xs font-semibold uppercase tracking-widest pt-1" style={{ color: "#B8A9E0" }}>Challenge</h3>
+
+        <button onClick={onGoGauntlet}
+          className="w-full flex items-center justify-between px-5 py-4 rounded-2xl transition-all active:scale-[0.98] hover:brightness-110"
+          style={{ background: "#2D1F52", border: "1px solid #F43F5E44" }}>
+          <div className="flex items-center gap-3">
+            <span className="text-2xl">⚔️</span>
+            <div className="text-left">
+              <div className="font-bold" style={{ color: "#F5F3FF" }}>Gauntlet</div>
+              <div className="text-xs" style={{ color: "#B8A9E0" }}>Survive every flag — one life</div>
+            </div>
+          </div>
+          <span style={{ color: "#F43F5E" }}>›</span>
+        </button>
 
         <button onClick={onGoChallenge}
           className="w-full flex items-center justify-between px-5 py-4 rounded-2xl transition-all active:scale-[0.98] hover:brightness-110"
