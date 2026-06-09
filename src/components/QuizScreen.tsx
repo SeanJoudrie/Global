@@ -122,10 +122,11 @@ export default function QuizScreen({ questions, title, onFinish, onBack }: Props
         )}
 
         {answerState === 'wrong' && (
-          <div className="w-full max-w-sm mb-3 px-4 py-3 rounded-xl animate-slide-up"
-            style={{ background: '#2D1F52', border: '1px solid #F43F5E44' }}>
-            <div className="text-xs font-semibold mb-1" style={{ color: '#F43F5E' }}>✗ The answer was {q.target.name}</div>
-            <p className="text-sm" style={{ color: '#F5F3FF' }}>{q.target.funFact}</p>
+          // On a wrong answer we deliberately show ONLY the "how to tell them apart" tip
+          // below — no answer/fun-fact box — so it's a calmer moment to learn. The fun
+          // fact is the reward for getting it right.
+          <div className="w-full max-w-sm mb-1 text-center animate-fade-in">
+            <span className="text-xs font-semibold" style={{ color: '#F43F5E' }}>✗ The answer was {q.target.name}</span>
           </div>
         )}
 

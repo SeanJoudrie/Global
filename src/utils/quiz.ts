@@ -56,8 +56,26 @@ export function buildSetQuiz(flags: FlagRecord[], seed: string, max = 10): Quest
   return selected.map(flag => buildQuestion(flag, seed))
 }
 
+// A distinct, Wordle-style flavour line for each score out of 10.
+const SHARE_PHRASES = [
+  "Blanked! 🌑 The atlas wins this round.", // 0
+  "A flicker of recognition 🌱",            // 1
+  "Finding my bearings 🧭",                 // 2
+  "The map's coming into focus 🗺️",        // 3
+  "Getting warmer 🚩",                      // 4
+  "Dead even with the flags ⚖️",            // 5
+  "More right than wrong 📈",               // 6
+  "Sharp eyes 🔥",                          // 7
+  "Flag connoisseur 🌟",                    // 8
+  "So close to flawless 🦅",                // 9
+  "Flawless! A true vexillologist 🏆",      // 10
+]
+
 export function generateShareText(result: { score: number; total: number; answers: ('correct' | 'wrong')[]; date: string }): string {
   const emojiRow = result.answers.map(a => a === 'correct' ? '🟩' : '🟥').join('')
-  const trickNote = result.score < result.total ? " I got tricked!" : " Flawless!"
-  return `Globalio ${result.date}\n${result.score}/${result.total} 🌍\n${emojiRow}${trickNote}\nPlay at globalio.netlify.app`
+  // Index a phrase by score; if the quiz wasn't out of 10, scale to the nearest tier.
+  const idx = result.total === 10 ? result.score : Math.round((result.score / result.total) * 10)
+  const phrase = SHARE_PHRASES[idx] ?? ""
+  const scoreLine = `${result.score}/${result.total} 🌍${phrase ? ` ${phrase}` : ""}`
+  return `Globalio ${result.date}\n${scoreLine}\n${emojiRow}\nPlay at globalio.netlify.app`
 }

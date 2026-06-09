@@ -8,6 +8,7 @@ export interface DailyResult {
 }
 
 export interface AppState {
+  username: string                 // player's display name (stored locally only)
   learnedFlags: string[]           // set of flag codes answered correctly at least once
   crowns: string[]                 // set IDs that are 100% complete
   currentStreak: number
@@ -17,6 +18,7 @@ export interface AppState {
 }
 
 const DEFAULT_STATE: AppState = {
+  username: "",
   learnedFlags: [],
   crowns: [],
   currentStreak: 0,

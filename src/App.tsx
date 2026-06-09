@@ -145,7 +145,10 @@ export default function App() {
       {screen === "geo" && <GeoQuizScreen onBack={() => setScreen("home")} />}
       {screen === "gauntlet" && <GauntletScreen onBack={() => setScreen("home")} />}
       {screen === "settings" && <SettingsScreen onBack={() => setScreen("home")} />}
-      {screen === "profile" && <ProfileScreen state={appState} onBack={() => setScreen("home")} />}
+      {screen === "profile" && (
+        <ProfileScreen state={appState} onBack={() => setScreen("home")}
+          onSetUsername={name => setAppState(s => ({ ...s, username: name }))} />
+      )}
       {screen === "achievements" && <AchievementsScreen state={appState} onBack={() => setScreen("home")} />}
 
       {screen === "quiz" && activeQuiz && (

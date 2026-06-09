@@ -1,14 +1,24 @@
-﻿import { FLAGS } from "../data/flags"
+﻿import { useState } from "react"
+import { FLAGS } from "../data/flags"
 import type { AppState } from "../utils/storage"
 
 interface Props {
   state: AppState
   onBack: () => void
+  onSetUsername: (name: string) => void
 }
 
 const REGIONS = ["Europe", "Africa", "Asia", "Americas", "Middle East", "Oceania"]
 
-export default function ProfileScreen({ state, onBack }: Props) {
+export default function ProfileScreen({ state, onBack, onSetUsername }: Props) {
+  const [editingName, setEditingName] = useState(false)
+  const [draftName, setDraftName] = useState(state.username)
+  const displayName = state.username.trim() || "Explorer"
+
+  const saveName = () => {
+    onSetUsername(draftName.trim().slice(0, 24))
+    setEditingName(false)
+  }
   const regionStats = REGIONS.map(region => {
     const regionFlags = FLAGS.filter(f => f.region === region)
     const learned = regionFlags.filter(f => state.learnedFlags.includes(f.code)).length
@@ -34,11 +44,32 @@ export default function ProfileScreen({ state, onBack }: Props) {
       {/* Profile banner */}
       <div className="mx-5 mb-4 flex items-center gap-4 px-5 py-4 rounded-2xl"
         style={{ background: "#2D1F52", border: "1px solid #8B6CFF33" }}>
-        <div className="w-14 h-14 rounded-full flex items-center justify-center text-3xl"
+        <div className="w-14 h-14 rounded-full flex items-center justify-center text-3xl flex-shrink-0"
           style={{ background: "linear-gradient(135deg,#3D1A7A,#5A2A9A)" }}>🌍</div>
-        <div>
-          <div className="text-xl font-black" style={{ color: "#F5F3FF" }}>Explorer</div>
-          <div className="text-xs" style={{ color: "#B8A9E0" }}>
+        <div className="min-w-0 flex-1">
+          {editingName ? (
+            <div className="flex items-center gap-2">
+              <input
+                autoFocus
+                value={draftName}
+                onChange={e => setDraftName(e.target.value)}
+                onKeyDown={e => { if (e.key === "Enter") saveName(); if (e.key === "Escape") setEditingName(false) }}
+                placeholder="Your name"
+                maxLength={24}
+                className="min-w-0 flex-1 px-2 py-1 rounded-lg text-lg font-black outline-none"
+                style={{ background: "#1A1033", border: "1px solid #8B6CFF66", color: "#F5F3FF" }}
+              />
+              <button onClick={saveName} className="px-3 py-1.5 rounded-lg text-sm font-bold flex-shrink-0"
+                style={{ background: "linear-gradient(135deg,#8B6CFF,#A78BFA)", color: "#fff" }}>Save</button>
+            </div>
+          ) : (
+            <button onClick={() => { setDraftName(state.username); setEditingName(true) }}
+              className="flex items-center gap-2 group">
+              <span className="text-xl font-black" style={{ color: "#F5F3FF" }}>{displayName}</span>
+              <span className="text-xs" style={{ color: "#A78BFA" }}>✏️</span>
+            </button>
+          )}
+          <div className="text-xs mt-0.5" style={{ color: "#B8A9E0" }}>
             {state.learnedFlags.length} flags learned · {state.crowns.length} crowns earned
           </div>
         </div>
