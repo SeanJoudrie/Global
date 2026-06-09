@@ -4,6 +4,12 @@ export interface HistoricalFlag {
   flagUrl: string
   label: string
   note: string
+  /** Flags that existed at the same time as this one — a branch in the family tree.
+   *  e.g. East Germany alongside West Germany, or a naval/civil ensign alongside the
+   *  national flag. Rendered as a forked sub-group beneath the main flag. */
+  parallel?: HistoricalFlag[]
+  /** Short caption describing why the branch exists, e.g. "Cold War division". */
+  parallelCaption?: string
 }
 
 export interface CodexEntry {
@@ -11,6 +17,11 @@ export interface CodexEntry {
   summary: string
   flagHistory: HistoricalFlag[]
 }
+
+/** Wikimedia Commons file → a stable image URL that resolves without knowing the
+ *  internal hash path. Pass the exact "Flag_of_…svg" filename. */
+export const fp = (file: string) =>
+  `https://commons.wikimedia.org/wiki/Special:FilePath/${file}`
 
 const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
   CA: [
@@ -101,6 +112,391 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       flagUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/Flag_of_Great_Britain_%281707%E2%80%931800%29.svg/320px-Flag_of_Great_Britain_%281707%E2%80%931800%29.svg.png',
       label: 'Flag of Great Britain (1707–1800)',
       note: 'Created by the Acts of Union 1707 joining England and Scotland. Combined only St George\'s Cross and St Andrew\'s Cross. Ireland had not yet joined, so there is no red diagonal of St Patrick.',
+    },
+  ],
+  RU: [
+    {
+      fromYear: 1993,
+      toYear: null,
+      flagUrl: 'https://flagcdn.com/w320/ru.png',
+      label: 'Russian Federation',
+      note: 'The white-blue-red tricolor was restored after the fall of the Soviet Union and fixed in its current 2:3 proportions by decree in 1993, then confirmed by federal law in 2000. The colors trace back to Peter the Great.',
+    },
+    {
+      fromYear: 1991,
+      toYear: 1993,
+      flagUrl: fp('Flag_of_Russia_(1991-1993).svg'),
+      label: 'Russian Federation (1991 transitional)',
+      note: 'When Russia re-adopted the historic tricolor in 1991 the first version used a slightly lighter shade and longer 1:2 proportions, before the design was standardized two years later.',
+    },
+    {
+      fromYear: 1922,
+      toYear: 1991,
+      flagUrl: fp('Flag_of_the_Soviet_Union.svg'),
+      label: 'Soviet Union',
+      note: 'The red banner with a gold hammer, sickle, and star symbolized the union of workers and peasants. It flew over the USSR for nearly seven decades until the country dissolved in December 1991.',
+      parallelCaption: 'Russian SFSR within the USSR',
+      parallel: [
+        {
+          fromYear: 1954,
+          toYear: 1991,
+          flagUrl: fp('Flag_of_the_Russian_Soviet_Federative_Socialist_Republic_(1954%E2%80%931991).svg'),
+          label: 'Russian SFSR',
+          note: 'Russia itself was one republic inside the union. From 1954 it flew the Soviet flag with a light-blue band at the hoist to distinguish it from the all-union banner.',
+        },
+      ],
+    },
+    {
+      fromYear: 1858,
+      toYear: 1896,
+      flagUrl: fp('Flag_of_the_Russian_Empire_(black-yellow-white).svg'),
+      label: 'Russian Empire (imperial colors)',
+      note: 'Decreed by Alexander II in 1858, the black-yellow-white flag drew on the heraldic colors of the imperial coat of arms. It served as the official state flag for nearly four decades before the tricolor was restored.',
+    },
+    {
+      fromYear: 1696,
+      toYear: 1858,
+      flagUrl: fp('Flag_of_Russia.svg'),
+      label: 'Tsardom of Russia (Petrine tricolor)',
+      note: 'Peter the Great introduced the white-blue-red tricolor in the 1690s for the merchant fleet, modeled on the Dutch flag. Restored again in 1896, it is the direct ancestor of the modern Russian flag.',
+    },
+  ],
+  CN: [
+    {
+      fromYear: 1949,
+      toYear: null,
+      flagUrl: 'https://flagcdn.com/w320/cn.png',
+      label: "People's Republic of China",
+      note: 'Designed by Zeng Liansong and adopted in 1949, the large gold star represents the Communist Party while the four smaller stars represent the united classes of the Chinese people. The design was chosen from nearly 3,000 public submissions.',
+    },
+    {
+      fromYear: 1928,
+      toYear: 1949,
+      flagUrl: fp('Flag_of_the_Republic_of_China.svg'),
+      label: 'Republic of China',
+      note: 'The "Blue Sky with a White Sun" canton — its twelve rays marking the twelve two-hour periods of the day — was adopted nationally in 1928 after the Kuomintang unified China. It remains the flag of Taiwan today.',
+    },
+    {
+      fromYear: 1912,
+      toYear: 1928,
+      flagUrl: fp('Flag_of_China_(1912%E2%80%931928).svg'),
+      label: 'Republic of China (Five-Colored Flag)',
+      note: 'The five stripes — red, yellow, blue, white, and black — stood for "Five Races Under One Union": the Han, Manchu, Mongol, Hui, and Tibetan peoples. It served the Beiyang government until the Northern Expedition.',
+    },
+    {
+      fromYear: 1889,
+      toYear: 1912,
+      flagUrl: fp('Flag_of_China_(1889%E2%80%931912).svg'),
+      label: 'Qing Dynasty (Yellow Dragon)',
+      note: 'The Azure Dragon chasing a red flaming pearl on a yellow field — yellow being the imperial color of the ruling house. An earlier triangular version dated to 1862 before the rectangular flag was standardized.',
+    },
+  ],
+  JP: [
+    {
+      fromYear: 1870,
+      toYear: null,
+      flagUrl: 'https://flagcdn.com/w320/jp.png',
+      label: 'Japan (Hinomaru)',
+      note: 'The white field with a central red disc — the Nisshōki, or "sun-mark flag" — was designated the national merchant ensign in 1870. Though used for centuries before, it was only formally legislated as the national flag in 1999.',
+    },
+    {
+      fromYear: 1870,
+      toYear: 1945,
+      flagUrl: fp('War_flag_of_the_Imperial_Japanese_Army.svg'),
+      label: 'Rising Sun (Imperial military)',
+      note: 'A military banner, not the national flag: the Imperial Japanese Army adopted this 16-ray Rising Sun design in 1870. It became closely associated with Japan\'s wartime expansion until 1945.',
+      parallelCaption: 'Imperial Japanese Navy ensign',
+      parallel: [
+        {
+          fromYear: 1889,
+          toYear: null,
+          flagUrl: fp('Naval_Ensign_of_Japan.svg'),
+          label: 'Naval ensign',
+          note: 'The Navy\'s version offsets the sun toward the hoist. Controversially, the modern Japan Maritime Self-Defense Force readopted it in 1954, so it still flies at sea today.',
+        },
+      ],
+    },
+  ],
+  AU: [
+    {
+      fromYear: 1908,
+      toYear: null,
+      flagUrl: 'https://flagcdn.com/w320/au.png',
+      label: 'Australian National Flag',
+      note: 'In 1908 a seventh point was added to the large Commonwealth Star to represent the territories. The blue ensign was confirmed as the sole national flag by the Flags Act 1953, effective 1954.',
+      parallelCaption: 'Red Ensign — flown on land before 1954',
+      parallel: [
+        {
+          fromYear: 1908,
+          toYear: null,
+          flagUrl: fp('Civil_Ensign_of_Australia.svg'),
+          label: 'Australian Red Ensign',
+          note: 'For decades most Australians actually flew the red version on land; only in 1954 did the blue ensign officially take precedence. It remains the flag of Australian-registered merchant ships.',
+        },
+      ],
+    },
+    {
+      fromYear: 1903,
+      toYear: 1908,
+      flagUrl: fp('Flag_of_Australia_(1903–1908).svg'),
+      label: 'Blue Ensign (six-pointed star)',
+      note: 'In 1903 the Southern Cross stars were standardized, but the large Commonwealth Star still had only six points — one for each federating colony.',
+    },
+    {
+      fromYear: 1901,
+      toYear: 1903,
+      flagUrl: fp('Flag_of_Australia_(1901–1903).svg'),
+      label: '1901 Federation Design',
+      note: 'The winning entry from the 1901 Federal Flag Design Competition, chosen from 32,823 submissions. The original Southern Cross stars had varying point counts (from five to nine points).',
+    },
+    {
+      fromYear: 1801,
+      toYear: 1901,
+      flagUrl: fp('Flag_of_the_United_Kingdom.svg'),
+      label: 'Union Jack (pre-Federation)',
+      note: 'Before the colonies federated into the Commonwealth of Australia in 1901, the Union Jack was the primary flag flown across the Australian colonies.',
+    },
+  ],
+  NZ: [
+    {
+      fromYear: 1902,
+      toYear: null,
+      flagUrl: 'https://flagcdn.com/w320/nz.png',
+      label: 'Flag of New Zealand',
+      note: 'The Southern Cross blue ensign — four red, white-bordered stars — became the national flag on land and sea under the Ensign Act 1901. The design itself dates to 1869; New Zealanders voted to keep it in two referendums in 2015–16.',
+    },
+    {
+      fromYear: 1867,
+      toYear: 1869,
+      flagUrl: fp('Flag_of_New_Zealand_Government_Ships_1867.svg'),
+      label: "Colonial Blue Ensign ('NZ')",
+      note: 'An 1867 warrant required colonial government vessels to fly the Blue Ensign defaced with the red letters "NZ" — the first distinctly New Zealand ensign, before the Southern Cross replaced the lettering in 1869.',
+    },
+    {
+      fromYear: 1840,
+      toYear: 1867,
+      flagUrl: fp('Flag_of_the_United_Kingdom.svg'),
+      label: 'Union Jack (Crown Colony)',
+      note: 'After the Treaty of Waitangi in 1840 made New Zealand a British colony, the Union Jack served as its flag for use on land.',
+    },
+    {
+      fromYear: 1834,
+      toYear: 1840,
+      flagUrl: fp('Flag_of_the_United_Tribes_of_New_Zealand.svg'),
+      label: 'United Tribes of New Zealand',
+      note: 'The very first flag of New Zealand, chosen by a vote of Māori chiefs at James Busby\'s residence on 20 March 1834. A St George\'s Cross with a blue canton bearing four white eight-pointed stars.',
+    },
+  ],
+  FR: [
+    {
+      fromYear: 1830,
+      toYear: null,
+      flagUrl: 'https://flagcdn.com/w320/fr.png',
+      label: 'France (tricolore)',
+      note: 'Louis-Philippe, the "citizen-king", restored the blue-white-red tricolore in 1830, and it has flown through every French republic and regime since. A slightly darker navy shade was quietly reintroduced in 2020.',
+    },
+    {
+      fromYear: 1814,
+      toYear: 1830,
+      flagUrl: fp('Flag_of_France_(1814–1830).svg'),
+      label: 'Bourbon Restoration',
+      note: 'When the Bourbons returned after Napoleon\'s fall, the tricolore and its revolutionary associations were dropped for the plain white royalist flag. The July Revolution of 1830 swept it away for good.',
+    },
+    {
+      fromYear: 1794,
+      toYear: 1814,
+      flagUrl: fp('Flag_of_France.svg'),
+      label: 'First Republic & Napoleon',
+      note: 'In 1794 the tricolore was fixed as three equal vertical bands of blue, white, and red — the exact design still used today. It flew over the First Republic and Napoleon\'s First Empire.',
+    },
+    {
+      fromYear: 1790,
+      toYear: 1794,
+      flagUrl: fp('Flag_of_France_(1790–1794).svg'),
+      label: 'Revolution (early tricolore)',
+      note: 'The first revolutionary flag placed blue at the hoist and red at the fly — the reverse of the modern order — before the bands were swapped to their familiar arrangement in 1794.',
+    },
+    {
+      fromYear: 1589,
+      toYear: 1790,
+      flagUrl: fp('Royal_Standard_of_the_King_of_France.svg'),
+      label: 'Kingdom of France (Bourbon)',
+      note: 'The white royal standard strewn with golden fleurs-de-lis was the emblem of the Ancien Régime monarchy. White was the dynastic color of the House of Bourbon until the Revolution.',
+    },
+  ],
+  DE: [
+    {
+      fromYear: 1990,
+      toYear: null,
+      flagUrl: 'https://flagcdn.com/w320/de.png',
+      label: 'Germany (reunified)',
+      note: 'On reunification in 1990 the West German black-red-gold tricolour became the flag of the whole country, with no change to the design. The colors are tied to the liberal revolutions of 1848.',
+    },
+    {
+      fromYear: 1949,
+      toYear: 1990,
+      flagUrl: fp('Flag_of_Germany.svg'),
+      label: 'West Germany (Federal Republic)',
+      note: 'The Federal Republic readopted the Weimar black-red-gold tricolour in 1949. This plain flag won out as the flag of the reunified nation in 1990 and is still used today.',
+      parallelCaption: 'Germany divided — East & West (1949–1990)',
+      parallel: [
+        {
+          fromYear: 1959,
+          toYear: 1990,
+          flagUrl: fp('Flag_of_East_Germany.svg'),
+          label: 'East Germany (GDR)',
+          note: 'The communist East used the same tricolour as the West until 1959, when it added the socialist emblem of hammer, compass and rye wreath. The flag vanished with reunification in 1990.',
+        },
+      ],
+    },
+    {
+      fromYear: 1935,
+      toYear: 1945,
+      flagUrl: fp('Flag_of_the_German_Reich_(1935–1945).svg'),
+      label: 'Nazi Germany',
+      note: 'The 1935 Reich Flag Law made the swastika banner the sole national flag of Nazi Germany. A dark chapter of history, it was abolished by the Allies after the regime\'s defeat in 1945.',
+    },
+    {
+      fromYear: 1933,
+      toYear: 1935,
+      flagUrl: fp('Flag_of_Germany_(1933–1935).svg'),
+      label: 'Nazi Germany (transitional)',
+      note: 'After Hitler took power in 1933 the black-red-gold flag was banned, and for two years the old imperial black-white-red tricolour flew alongside the Nazi Party swastika as co-equal national flags.',
+    },
+    {
+      fromYear: 1919,
+      toYear: 1933,
+      flagUrl: fp('Flag_of_Germany_(3-2_aspect_ratio).svg'),
+      label: 'Weimar Republic',
+      note: 'The Weimar Constitution of 1919 adopted the black-red-gold tricolour, colors of the 1848 democratic movement. The choice was bitterly fought by conservatives who favored the old imperial colors.',
+    },
+    {
+      fromYear: 1867,
+      toYear: 1918,
+      flagUrl: fp('Flag_of_Germany_(1867–1918).svg'),
+      label: 'German Empire',
+      note: 'The black-white-red tricolour served the North German Confederation from 1867 and then the unified German Empire from 1871, until the monarchy collapsed at the end of World War I.',
+    },
+  ],
+  AT: [
+    {
+      fromYear: 1945,
+      toYear: null,
+      flagUrl: 'https://flagcdn.com/w320/at.png',
+      label: 'Austria (Second Republic)',
+      note: 'With independence restored in 1945, Austria reinstated the red-white-red triband. Legend ties it to a medieval Babenberg duke whose white tunic was left red but for the band under his belt — one of the oldest flag designs still in use.',
+    },
+    {
+      fromYear: 1938,
+      toYear: 1945,
+      flagUrl: fp('Flag_of_the_German_Reich_(1935–1945).svg'),
+      label: 'Anschluss (annexed by Nazi Germany)',
+      note: 'Following the Anschluss of March 1938, Austria ceased to exist as an independent state and the Nazi German flag flew over its territory until liberation in 1945.',
+    },
+    {
+      fromYear: 1934,
+      toYear: 1938,
+      flagUrl: fp('State_flag_of_Austria_(1934–1938).svg'),
+      label: 'Federal State (Ständestaat)',
+      note: 'The authoritarian Austrofascist Federal State kept the red-white-red bands but added a state emblem with a double-headed eagle and the crutch-cross. It ended with the Nazi annexation.',
+    },
+    {
+      fromYear: 1918,
+      toYear: 1934,
+      flagUrl: fp('Flag_of_Austria.svg'),
+      label: 'First Austrian Republic',
+      note: 'After the empire collapsed, the new republic adopted the red-white-red triband that is essentially the modern Austrian flag.',
+    },
+    {
+      fromYear: 1869,
+      toYear: 1918,
+      flagUrl: fp('Civil_ensign_of_Austria-Hungary_(1869-1918).svg'),
+      label: 'Austria-Hungary',
+      note: 'The Dual Monarchy used a combined civil ensign joining the Austrian red-white-red with the Hungarian colors, while the black-gold Habsburg flag remained in dynastic use until 1918.',
+      parallelCaption: 'Habsburg dynastic flag',
+      parallel: [
+        {
+          fromYear: 1804,
+          toYear: 1867,
+          flagUrl: fp('Flag_of_the_Habsburg_Monarchy.svg'),
+          label: 'Austrian Empire (Habsburg)',
+          note: 'The black-gold horizontal bicolour was the dynastic flag of the House of Habsburg, derived from their long reign as Holy Roman Emperors.',
+        },
+      ],
+    },
+  ],
+  IT: [
+    {
+      fromYear: 1946,
+      toYear: null,
+      flagUrl: 'https://flagcdn.com/w320/it.png',
+      label: 'Italian Republic',
+      note: 'After the 1946 referendum abolished the monarchy, the Savoy royal arms were removed, leaving the plain green-white-red tricolore enshrined in the 1948 Constitution. It remains Italy\'s flag today.',
+    },
+    {
+      fromYear: 1861,
+      toYear: 1946,
+      flagUrl: fp('Flag_of_Italy_(1861–1946).svg'),
+      label: 'Kingdom of Italy',
+      note: 'On unification in 1861 the tricolore carried the coat of arms of the House of Savoy at its centre. This flag flew for 85 years through both World Wars until the monarchy was abolished.',
+    },
+    {
+      fromYear: 1802,
+      toYear: 1814,
+      flagUrl: fp('Flag_of_the_Italian_Republic_(1802).svg'),
+      label: 'Napoleonic Kingdom of Italy',
+      note: 'A striking design of a red field bearing a white lozenge enclosing a green square. Adopted by Napoleon\'s Italian Republic in 1802, it carried over when he made himself King of Italy in 1805.',
+    },
+    {
+      fromYear: 1797,
+      toYear: 1802,
+      flagUrl: fp('Flag_of_the_Cispadane_Republic.svg'),
+      label: 'Cispadane Republic (first tricolore)',
+      note: 'On 7 January 1797 in Reggio Emilia, the Cispadane Republic adopted a green-white-red tricolour — the very first official use of the Italian tricolore as a national flag.',
+    },
+  ],
+  ES: [
+    {
+      fromYear: 1981,
+      toYear: null,
+      flagUrl: 'https://flagcdn.com/w320/es.png',
+      label: 'Kingdom of Spain',
+      note: 'The current flag, fixed in 1981, bears the constitutional coat of arms with the Pillars of Hercules and the quartered arms of Castile, León, Aragón, and Navarre. The red-yellow-red scheme dates to 1785.',
+    },
+    {
+      fromYear: 1977,
+      toYear: 1981,
+      flagUrl: fp('Flag_of_Spain_(1977–1981).svg'),
+      label: 'Spain (Transition)',
+      note: 'After Franco\'s death the eagle of the dictatorship\'s flag was widened and the design softened, a transitional step while the new democratic constitution of 1978 took shape.',
+    },
+    {
+      fromYear: 1945,
+      toYear: 1977,
+      flagUrl: fp('Flag_of_Spain_(1945–1977).svg'),
+      label: 'Francoist Spain',
+      note: 'Franco\'s flag restored the red-yellow-red bands and added the Eagle of Saint John bearing the medieval royal arms with the yoke-and-arrows of the Catholic Monarchs. It flew for most of his dictatorship.',
+    },
+    {
+      fromYear: 1931,
+      toYear: 1939,
+      flagUrl: fp('Flag_of_the_Second_Spanish_Republic.svg'),
+      label: 'Second Spanish Republic',
+      note: 'The Republic replaced the red-yellow-red with a tricolour of red, yellow, and murrey (purple), the purple honouring the Castilian Comuneros. It was abolished by Franco\'s victory in the Civil War.',
+    },
+    {
+      fromYear: 1785,
+      toYear: 1931,
+      flagUrl: fp('Flag_of_Spain_(1785–1873,_1875–1931).svg'),
+      label: 'Kingdom of Spain (Bourbon)',
+      note: 'In 1785 Charles III chose the now-iconic red-yellow-red design as a high-visibility naval ensign, later extended to land. This basic scheme persisted through the monarchy and Bourbon Restoration.',
+    },
+    {
+      fromYear: 1506,
+      toYear: 1785,
+      flagUrl: fp('Flag_of_Cross_of_Burgundy.svg'),
+      label: 'Cross of Burgundy',
+      note: 'A red knotted saltire on a white field served as the de facto flag of the Spanish Empire under the Habsburgs and early Bourbons, flying over its global possessions and armies for nearly three centuries.',
     },
   ],
 }

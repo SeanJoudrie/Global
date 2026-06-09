@@ -397,9 +397,32 @@ function SubdivisionGrid({ subRegions, headerLabel, memberLabel, confirmedNoFlag
   )
 }
 
-function FlagHistoryCard({ hf, isFirst }: { hf: HistoricalFlag; isFirst: boolean }) {
-  const yearLabel = hf.toYear === null ? `${hf.fromYear} — Present` : `${hf.fromYear} — ${hf.toYear}`
+function FlagImg({ src, alt, height }: { src: string; alt: string; height: number }) {
+  return (
+    <div style={{ width: '100%', height, position: 'relative', overflow: 'hidden' }}>
+      <img
+        src={src}
+        alt={alt}
+        style={{ width: '100%', height, objectFit: 'cover', display: 'block' }}
+        onError={e => {
+          const el = e.target as HTMLImageElement
+          el.style.display = 'none'
+          const placeholder = el.parentElement?.querySelector('.flag-placeholder') as HTMLElement
+          if (placeholder) (placeholder as HTMLElement).style.display = 'flex'
+        }}
+      />
+      <div className="flag-placeholder" style={{ display: 'none', position: 'absolute', inset: 0, alignItems: 'center', justifyContent: 'center', background: '#1E1640' }}>
+        <span style={{ color: '#8B6CFF44', fontSize: 40 }}>🏳️</span>
+      </div>
+    </div>
+  )
+}
 
+function yearRange(hf: HistoricalFlag) {
+  return hf.toYear === null ? `${hf.fromYear} — Present` : `${hf.fromYear} — ${hf.toYear}`
+}
+
+function FlagHistoryCard({ hf, isFirst }: { hf: HistoricalFlag; isFirst: boolean }) {
   return (
     <div className="rounded-2xl overflow-hidden" style={{ background: '#2D1F52', border: `1px solid ${isFirst ? '#8B6CFF44' : '#8B6CFF22'}` }}>
       {isFirst && (
@@ -408,32 +431,40 @@ function FlagHistoryCard({ hf, isFirst }: { hf: HistoricalFlag; isFirst: boolean
           <span style={{ color: '#A78BFA', fontSize: 11, fontWeight: 600 }}>↑ Current flag</span>
         </div>
       )}
-      {/* Flag image */}
-      <div style={{ width: '100%', height: 160, position: 'relative', overflow: 'hidden' }}>
-        <img
-          src={hf.flagUrl}
-          alt={hf.label}
-          style={{ width: '100%', height: 160, objectFit: 'cover', display: 'block' }}
-          onError={e => {
-            const el = e.target as HTMLImageElement
-            el.style.display = 'none'
-            const placeholder = el.parentElement?.querySelector('.flag-placeholder') as HTMLElement
-            if (placeholder) (placeholder as HTMLElement).style.display = 'flex'
-          }}
-        />
-        <div className="flag-placeholder" style={{ display: 'none', position: 'absolute', inset: 0, alignItems: 'center', justifyContent: 'center', background: '#1E1640' }}>
-          <span style={{ color: '#8B6CFF44', fontSize: 40 }}>🏳️</span>
-        </div>
-      </div>
+      <FlagImg src={hf.flagUrl} alt={hf.label} height={160} />
       <div className="p-4">
         <div className="flex items-start justify-between gap-2 mb-2">
           <div className="font-bold text-sm" style={{ color: '#F5F3FF' }}>{hf.label}</div>
           <span className="text-xs px-2 py-0.5 rounded-full flex-shrink-0"
             style={{ background: '#8B6CFF22', color: '#A78BFA', border: '1px solid #8B6CFF33', whiteSpace: 'nowrap' }}>
-            {yearLabel}
+            {yearRange(hf)}
           </span>
         </div>
         <p className="text-xs leading-relaxed" style={{ color: '#B8A9E0', lineHeight: 1.65 }}>{hf.note}</p>
+
+        {/* Branch — flags that existed at the same time (e.g. East/West Germany) */}
+        {hf.parallel && hf.parallel.length > 0 && (
+          <div className="mt-3 pt-3" style={{ borderTop: '1px dashed #8B6CFF44' }}>
+            <div className="flex items-center gap-1.5 mb-2.5">
+              <span style={{ color: '#F59E0B', fontSize: 13 }}>⌥</span>
+              <span className="text-xs font-semibold uppercase tracking-wider" style={{ color: '#F59E0B' }}>
+                {hf.parallelCaption ?? 'Flown at the same time'}
+              </span>
+            </div>
+            <div className={`grid gap-2.5 ${hf.parallel.length > 1 ? 'grid-cols-2' : 'grid-cols-1'}`}>
+              {hf.parallel.map((p, i) => (
+                <div key={i} className="rounded-xl overflow-hidden" style={{ background: '#241A45', border: '1px solid #8B6CFF22' }}>
+                  <FlagImg src={p.flagUrl} alt={p.label} height={90} />
+                  <div className="p-2.5">
+                    <div className="font-semibold mb-0.5" style={{ color: '#F5F3FF', fontSize: 12 }}>{p.label}</div>
+                    <div className="mb-1" style={{ color: '#A78BFA', fontSize: 10 }}>{yearRange(p)}</div>
+                    <p style={{ color: '#B8A9E0', fontSize: 10.5, lineHeight: 1.5 }}>{p.note}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     </div>
   )
