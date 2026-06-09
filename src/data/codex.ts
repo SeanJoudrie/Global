@@ -779,7 +779,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     {
       fromYear: 1844,
       toYear: 1922,
-      flagUrl: fp('Flag_of_the_Ottoman_Empire_(1844–1922).svg'),
+      flagUrl: fp('Flag_of_the_Ottoman_Empire.svg'),
       label: 'Ottoman flag (1844)',
       note: 'The Tanzimat reforms of 1844 fixed the modern five-pointed star on the red field, creating essentially today\'s design. This is the direct template the Republic inherited nearly 80 years later.',
     },
@@ -1000,7 +1000,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     },
     {
       fromYear: 1812, toYear: 1816,
-      flagUrl: fp('Bandera_de_Belgrano_1812.svg'),
+      flagUrl: fp('Flag_of_Belgrano_(1812).svg'),
       label: 'Belgrano\'s Original Flag (1812)',
       note: 'Manuel Belgrano improvised the first Argentine flag in 1812 to rally troops at the Battle of Rosario, using the blue and white colours of the Buenos Aires revolutionary cockade. He raised it on February 27, 1812 — a date now celebrated as Flag Day in Argentina. Belgrano had to seek permission from the revolutionary government to use it officially, permission that came only gradually.',
     },
@@ -1218,6 +1218,18 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       label: 'Yemen Arab Republic (North)',
       note: 'North Yemen\'s flag after the 1962 revolution that overthrew the Mutawakkilite Kingdom used red-white-black with a green star at the centre — the pan-Arab palette shared with Egypt, Syria, and Iraq. North Yemen was caught between the Cold War superpowers: a civil war (1962–1970) saw Egyptian-backed republicans fight Saudi-backed royalists, with the republic eventually prevailing. The green star was dropped from the unified flag in 1990.',
     },
+    {
+      fromYear: 1927, toYear: 1962,
+      flagUrl: fp('Flag_of_the_Mutawakkilite_Kingdom_of_Yemen.svg'),
+      label: 'Mutawakkilite Kingdom of Yemen',
+      note: 'After the Ottomans withdrew in 1918, the imams of the Zaydi Shia dynasty ruled North Yemen as the Mutawakkilite Kingdom — a deeply isolated theocratic monarchy that kept the country sealed off from the modern world much as medieval Yemen had been. Its flag was a plain red banner (sometimes bearing a white sword and stars), the traditional Islamic and Arab colour. The 1962 republican revolution that toppled the imamate triggered a brutal eight-year civil war.',
+    },
+    {
+      fromYear: 1849, toYear: 1918,
+      flagUrl: fp('Flag_of_the_Ottoman_Empire.svg'),
+      label: 'Ottoman Yemen',
+      note: 'The Ottomans controlled the Yemeni highlands and the Red Sea coast through their Yemen Vilayet, flying the Ottoman star-and-crescent, though they never fully subdued the fiercely independent Zaydi tribes of the interior. Yemen\'s strategic position guarding the southern entrance to the Red Sea made it valuable to every empire — which is also why Britain seized the southern port of Aden in 1839, beginning the north–south division that would shape Yemen for the next 150 years.',
+    },
   ],
 
   JO: [
@@ -1229,7 +1241,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     },
     {
       fromYear: 1920, toYear: 1928,
-      flagUrl: fp('Flag_of_Transjordan_(1921).svg'),
+      flagUrl: fp('Flag_of_the_Emirate_of_Transjordan.svg'),
       label: 'Emirate of Transjordan',
       note: 'After World War I and the collapse of the Ottoman Empire, Britain created the Emirate of Transjordan under Emir Abdullah I of the Hashemite family. The early flag was a direct variant of the Arab Revolt banner — the same black-white-green horizontal stripes with a red triangle. The white star was added in 1928 to distinguish Jordan\'s flag from that of Palestine, which at the time shared virtually identical colouring under the British Mandate.',
     },
@@ -1238,6 +1250,12 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       flagUrl: fp('Flag_of_the_Arab_Revolt.svg'),
       label: 'Arab Revolt (Sharif Hussein)',
       note: 'The Arab Revolt of 1916 — when Sharif Hussein of Mecca rose against the Ottoman Empire with British support — produced one of the most influential flags in Middle Eastern history. Hussein\'s banner used black-white-green horizontal stripes (representing the Abbasid, Umayyad, and Fatimid caliphates respectively) with a red triangle for the Hashemite family. The Palestinian, Jordanian, Sudanese, Kuwaiti, and several other Arab flags all descend from this single revolutionary design.',
+    },
+    {
+      fromYear: 1516, toYear: 1916,
+      flagUrl: fp('Flag_of_the_Ottoman_Empire.svg'),
+      label: 'Ottoman era',
+      note: 'The territory east of the Jordan River was an Ottoman possession for four centuries, administered from Damascus and flying the Ottoman star-and-crescent. It was a sparsely populated frontier of desert and Bedouin tribes along the route of the Hejaz Railway. When the Arab Revolt swept north in 1916–18, the Hashemites took control, and the land became Transjordan — the territory east of the Jordan that Britain assigned to Emir Abdullah after the war.',
     },
   ],
 
@@ -1250,9 +1268,15 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     },
     {
       fromYear: 1920, toYear: 1943,
-      flagUrl: fp('Flag_of_Lebanon_under_the_French_Mandate.svg'),
+      flagUrl: fp('Flag_of_Lebanon_during_French_Mandate_(1920-1943).svg'),
       label: 'French Mandate of Lebanon',
       note: 'After the Ottoman Empire\'s collapse, France received the League of Nations mandate over greater Syria and carved out "Grand Liban" in 1920, incorporating the Maronite Christian heartland with surrounding Muslim territories. The mandate flag was the French Tricolore defaced with the cedar tree — a direct imposition of French colonial authority over a Lebanese identity. Lebanese nationalists chafed under the arrangement and declared independence in 1943, though French forces only withdrew in 1946.',
+    },
+    {
+      fromYear: 1861, toYear: 1918,
+      flagUrl: fp('Flag_of_the_Ottoman_Empire.svg'),
+      label: 'Mount Lebanon (Ottoman era)',
+      note: 'For four centuries Lebanon was part of the Ottoman Empire, flying the Ottoman red star-and-crescent. After a wave of sectarian massacres in 1860, European powers pressured the Ottomans into creating the autonomous Mount Lebanon Mutasarrifate in 1861 — a self-governing Christian-majority province that gave the Lebanese their first taste of distinct political identity. This autonomy planted the seeds of the modern Lebanese state, though the territory still flew the Ottoman flag until the empire\'s collapse in 1918.',
     },
   ],
 
@@ -1269,6 +1293,12 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       label: 'British Mandate of Palestine',
       note: 'From 1920 to 1948, the territory was governed under a British League of Nations Mandate. The Mandate flag was a British Blue Ensign defaced with a white circle bearing a green "Palestine" inscription. This flag flew over a deeply contested territory where Jewish immigration under Zionist movement auspices clashed violently with the existing Arab population and with British administration, culminating in Britain\'s withdrawal and Israel\'s declaration of independence in 1948.',
     },
+    {
+      fromYear: 1517, toYear: 1917,
+      flagUrl: fp('Flag_of_the_Ottoman_Empire.svg'),
+      label: 'Ottoman Palestine',
+      note: 'For 400 years, from 1517 until General Allenby\'s capture of Jerusalem in 1917, the land was governed by the Ottoman Empire and flew the Ottoman red star-and-crescent. Administered as part of the provinces (vilayets) of Beirut and the special district of Jerusalem, it was a quiet agricultural backwater for most of that period. The late-19th-century rise of Zionism and the simultaneous awakening of Arab nationalism set the stage for the conflicts that followed Ottoman rule.',
+    },
   ],
 
   PS: [
@@ -1283,6 +1313,12 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       flagUrl: fp('Flag_of_the_Arab_Revolt.svg'),
       label: 'Arab Revolt heritage',
       note: 'Palestine\'s flag shares its direct ancestor with Jordan\'s: the Arab Revolt flag of 1916. After World War I, Palestinian Arabs flew variations of the Revolt\'s black-white-green-red banner in their own national movement. The similarity between the Palestinian and Jordanian flags reflects the political reality of 1920s British Mandate geography — Jordan\'s Emir Abdullah added a white star specifically to distinguish his flag from the Palestinian one, the two were so close.',
+    },
+    {
+      fromYear: 1517, toYear: 1916,
+      flagUrl: fp('Flag_of_the_Ottoman_Empire.svg'),
+      label: 'Ottoman era',
+      note: 'Like all the Levant, the land of Palestine was an Ottoman possession for four centuries, flying the Ottoman star-and-crescent. The Arab Revolt of 1916 — launched against Ottoman rule from the Hejaz — was the moment Arab nationalism produced its own banner, the black-white-green-red flag that became the ancestor of the Palestinian, Jordanian, and several other Arab national flags. Before that, there was no distinct Palestinian flag; the territory was simply Ottoman.',
     },
   ],
 
@@ -1340,7 +1376,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     },
     {
       fromYear: 1860, toYear: 1971,
-      flagUrl: fp('Flag_of_Qatar_(1949-1971).svg'),
+      flagUrl: fp('Flag_of_Qatar_(1949–1971).svg'),
       label: 'Qatar under Al-Thani rule / British protection',
       note: 'Qatar came under British protection in 1916 after the Al-Thani family\'s rule was formalised. The pre-independence flag was a red-and-white design typical of Gulf rulers — white added by British treaty to mark peaceful vessels, red the traditional Kharijite colour. The serrated dividing line between white and red was a distinctive Qatari feature even in early flags, and the colour faded progressively from red to the maroon Qatar now uses officially.',
     },
@@ -1667,7 +1703,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     },
     {
       fromYear: 1655, toYear: 1962,
-      flagUrl: fp('Blue_Ensign.svg'),
+      flagUrl: fp('Government_Ensign_of_the_United_Kingdom.svg'),
       label: 'British Jamaica (colonial era)',
       note: 'Britain captured Jamaica from Spain in 1655 and it became one of the most valuable plantation colonies in the Caribbean, dependent on enslaved African labour. Jamaica was a major centre of the transatlantic slave trade and the birthplace of maroon communities — formerly enslaved people who established autonomous settlements in the mountains. Independence in 1962 was achieved peacefully under Chief Minister Alexander Bustamante.',
     },
@@ -1682,7 +1718,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     },
     {
       fromYear: 1797, toYear: 1962,
-      flagUrl: fp('Blue_Ensign.svg'),
+      flagUrl: fp('Government_Ensign_of_the_United_Kingdom.svg'),
       label: 'British Trinidad & Tobago (colonial era)',
       note: 'Trinidad was a Spanish colony until captured by Britain in 1797; Tobago changed hands between European powers 22 times — more than any other territory in the world — before being ceded to Britain in 1814. The islands were merged into a single crown colony in 1889. Trinidad and Tobago became one of the wealthiest Caribbean nations through oil production, and its multicultural society (African, Indian, European, and Chinese heritage) shaped a unique culture including calypso, soca, and steelband music.',
     },
@@ -1697,7 +1733,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     },
     {
       fromYear: 1627, toYear: 1966,
-      flagUrl: fp('Blue_Ensign.svg'),
+      flagUrl: fp('Government_Ensign_of_the_United_Kingdom.svg'),
       label: 'British Barbados (colonial era)',
       note: 'Barbados was an English colony from 1627, one of the earliest and most profitable British Caribbean possessions. At the height of the sugar era in the 18th century, Barbados was Britain\'s most valuable colonial asset per acre. The island\'s plantation economy was based entirely on enslaved African labour; by some estimates the island\'s enslaved population had a life expectancy of just seven years after arrival. Barbados achieved independence peacefully in 1966 and became a republic in 2021.',
     },
@@ -1712,7 +1748,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     },
     {
       fromYear: 1718, toYear: 1973,
-      flagUrl: fp('Blue_Ensign.svg'),
+      flagUrl: fp('Government_Ensign_of_the_United_Kingdom.svg'),
       label: 'British Bahamas (colonial era)',
       note: 'The Bahamas was a base for pirates (including Blackbeard and Charles Vane) until the British Crown asserted control in 1718. During American Prohibition (1920–1933) the islands became a transshipment point for rum, giving the Bahamas unexpected economic prosperity. The islands were of strategic importance during World War II, with the Duke of Windsor serving as Governor. Independence came in 1973 after a peaceful transition.',
     },
@@ -1725,6 +1761,18 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       label: 'Antigua and Barbuda (independence)',
       note: 'Antigua\'s flag was designed by Reginald Samuel and chosen through a national competition ahead of independence from Britain in 1981 (the flag was first used in 1967 for associated statehood). The rising golden sun on a black field, flanked by red, blue, and white, represents the dawn of a new era. Black represents African heritage; blue the sea; white the sand; red the energy of the people; gold the sun. The V-shape of the triangle echoes victory.',
     },
+    {
+      fromYear: 1958, toYear: 1962,
+      flagUrl: fp('Flag_of_the_West_Indies_Federation.svg'),
+      label: 'West Indies Federation',
+      note: 'From 1958 to 1962, Antigua was part of the West Indies Federation — an ambitious attempt to unite Britain\'s Caribbean colonies into a single independent nation. Its flag showed four white wavy lines (the sea) and an orange sun on blue. The federation collapsed in 1962 when Jamaica and Trinidad withdrew, leaving the smaller islands to pursue independence separately over the following two decades.',
+    },
+    {
+      fromYear: 1632, toYear: 1958,
+      flagUrl: fp('Government_Ensign_of_the_United_Kingdom.svg'),
+      label: 'British Leeward Islands (colonial era)',
+      note: 'England colonised Antigua in 1632 and it became one of the most profitable sugar islands in the Caribbean, worked by enslaved Africans. As part of the British Leeward Islands colony, Antigua flew the British Blue Ensign defaced with the Leeward Islands badge. The plantation economy left Antigua with an overwhelmingly African-descended population whose heritage the modern flag\'s black field honours.',
+    },
   ],
 
   DM: [
@@ -1733,6 +1781,18 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       flagUrl: 'https://flagcdn.com/w320/dm.png',
       label: 'Commonwealth of Dominica (independence)',
       note: 'Dominica\'s flag is one of the world\'s most distinctive — a green field with a cross of yellow, black, and white stripes, and at the centre a red circle bearing the rare Sisserou parrot (the imperial Amazon, found only in Dominica). The flag was adopted at independence from Britain in 1978 and is one of only two national flags to prominently feature purple (in the parrot). It was modified in 1981 and 1988 before reaching its current form.',
+    },
+    {
+      fromYear: 1958, toYear: 1962,
+      flagUrl: fp('Flag_of_the_West_Indies_Federation.svg'),
+      label: 'West Indies Federation',
+      note: 'Dominica was one of the ten territories in the West Indies Federation (1958–1962), the failed attempt to forge a single independent Caribbean nation from Britain\'s colonies. Its blue flag with white waves and an orange sun represented the unity of the islands and the sea that both joined and separated them. When the federation dissolved, Dominica remained a British associated state until full independence in 1978.',
+    },
+    {
+      fromYear: 1763, toYear: 1958,
+      flagUrl: fp('Government_Ensign_of_the_United_Kingdom.svg'),
+      label: 'British Windward Islands (colonial era)',
+      note: 'France and Britain contested Dominica for over a century — the island\'s rugged interior allowed the indigenous Kalinago (Carib) people and escaped enslaved Africans to resist colonisation longer than almost anywhere else in the Caribbean. Britain secured it in 1763 and governed it within the British Windward Islands colony, flying the defaced Blue Ensign. Dominica still has the Caribbean\'s only surviving pre-Columbian Kalinago population.',
     },
   ],
 
@@ -1743,6 +1803,18 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       label: 'Grenada (independence)',
       note: 'Grenada\'s flag — red border surrounding four gold stars at top and bottom, with green and yellow triangles and a red circle bearing one gold star at centre, plus a nutmeg on the green triangle — was adopted at independence from Britain in 1974. The nutmeg reflects Grenada\'s status as one of the world\'s largest nutmeg producers. In 1983 the United States invaded Grenada ("Operation Urgent Fury"), temporarily replacing the government; the flag was maintained throughout.',
     },
+    {
+      fromYear: 1958, toYear: 1962,
+      flagUrl: fp('Flag_of_the_West_Indies_Federation.svg'),
+      label: 'West Indies Federation',
+      note: 'Grenada joined the West Indies Federation in 1958. Notably, Grenadian premier and later Governor-General was a strong federalist — and after the federation collapsed in 1962, Grenada briefly explored a "unitary state" union with Trinidad and Tobago before opting for its own independence in 1974. The federation\'s blue-and-sun flag represented a Caribbean unity that never fully materialised.',
+    },
+    {
+      fromYear: 1763, toYear: 1958,
+      flagUrl: fp('Government_Ensign_of_the_United_Kingdom.svg'),
+      label: 'British Windward Islands (colonial era)',
+      note: 'Grenada passed from French to British control in 1763. Under Britain it became a major producer of nutmeg and mace after the spice was introduced in 1843 — earning the nickname "Isle of Spice" and putting the nutmeg on its eventual national flag. As part of the British Windward Islands, Grenada flew the defaced Blue Ensign until the federation era.',
+    },
   ],
 
   KN: [
@@ -1751,6 +1823,18 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       flagUrl: 'https://flagcdn.com/w320/kn.png',
       label: 'Saint Kitts and Nevis (independence)',
       note: 'Saint Kitts and Nevis gained independence from Britain on September 19, 1983 — the last British Caribbean territory on the mainland of the Lesser Antilles to do so. The flag\'s diagonal black stripe with two white stars on green and red was designed by Edrice Lewis. The stars represent the two islands; the green represents fertility; the red recalls the African heritage and the struggle for freedom; black is for the African heritage; yellow for the sunshine.',
+    },
+    {
+      fromYear: 1958, toYear: 1962,
+      flagUrl: fp('Flag_of_the_West_Indies_Federation.svg'),
+      label: 'West Indies Federation',
+      note: 'Saint Kitts–Nevis–Anguilla was part of the West Indies Federation from 1958 to 1962. After it collapsed, the three-island colony became an associated state in 1967 — prompting Anguilla to rebel and break away rather than be ruled from Saint Kitts. The federation\'s flag of waves and sun symbolised a unity that, even at this small scale, proved difficult to hold together.',
+    },
+    {
+      fromYear: 1623, toYear: 1958,
+      flagUrl: fp('Government_Ensign_of_the_United_Kingdom.svg'),
+      label: 'British Leeward Islands (colonial era)',
+      note: 'Saint Kitts was Britain\'s first Caribbean colony, settled in 1623, and was used as the launching point for the colonisation of surrounding islands — earning it the nickname "The Mother Colony of the West Indies." French and English settlers initially shared the island before the English prevailed. As part of the British Leeward Islands, Saint Kitts flew the defaced Blue Ensign. Brimstone Hill Fortress, a UNESCO site, dates from this colonial era.',
     },
   ],
 
@@ -1761,6 +1845,18 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       label: 'Saint Lucia (independence)',
       note: 'Saint Lucia\'s distinctive flag — a blue field with a white-edged black isosceles triangle surmounted by a smaller gold triangle — depicts the twin Pitons, the country\'s iconic volcanic peaks and a UNESCO World Heritage Site. Blue represents the sky and sea; gold the sunshine; black and white the harmony of the two main ethnic groups. The flag was modified in 2002 to make the gold triangle more prominent. Saint Lucia is the only country named after a woman.',
     },
+    {
+      fromYear: 1958, toYear: 1962,
+      flagUrl: fp('Flag_of_the_West_Indies_Federation.svg'),
+      label: 'West Indies Federation',
+      note: 'Saint Lucia was part of the West Indies Federation (1958–1962). After its collapse the island became a British associated state in 1967, gaining full internal self-government before independence in 1979. The federation\'s flag of an orange sun on blue waves stood for the Caribbean unity ideal that fragmented when its largest members departed.',
+    },
+    {
+      fromYear: 1814, toYear: 1958,
+      flagUrl: fp('Government_Ensign_of_the_United_Kingdom.svg'),
+      label: 'British Windward Islands (colonial era)',
+      note: 'Saint Lucia changed hands between France and Britain fourteen times — more than any other Caribbean island — earning it the nickname "Helen of the West Indies" after the much-fought-over Helen of Troy. Britain finally secured it in 1814. The French legacy survives in the island\'s Creole language and place names. As part of the British Windward Islands, Saint Lucia flew the defaced Blue Ensign.',
+    },
   ],
 
   VC: [
@@ -1769,6 +1865,18 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       flagUrl: 'https://flagcdn.com/w320/vc.png',
       label: 'Saint Vincent and the Grenadines',
       note: 'Saint Vincent\'s current flag — blue-gold-green vertical stripes with three green diamonds in a V formation on the gold — was adopted in 1985, replacing a version with a breadfruit leaf. The three diamonds represent the Grenadine islands; the blue represents the sky and sea; gold the warmth of the people; green the lush vegetation. Saint Vincent is known as the "Gem of the Antilles" and the last stronghold of the indigenous Caribs (now called Garifuna) in the Caribbean.',
+    },
+    {
+      fromYear: 1979, toYear: 1985,
+      flagUrl: fp('Flag_of_Saint_Vincent_and_the_Grenadines_(1979-1985).svg'),
+      label: 'First independence flag (breadfruit)',
+      note: 'At independence in 1979, Saint Vincent\'s first flag carried the national coat of arms — featuring a breadfruit leaf — on a blue-gold-green tricolor. Breadfruit was famously brought to Saint Vincent by Captain Bligh in 1793 (after the mutiny on the Bounty derailed his first attempt) as a cheap food for the enslaved population. The busy arms were replaced in 1985 by the cleaner three-diamond design used today.',
+    },
+    {
+      fromYear: 1763, toYear: 1958,
+      flagUrl: fp('Government_Ensign_of_the_United_Kingdom.svg'),
+      label: 'British Windward Islands (colonial era)',
+      note: 'Saint Vincent was one of the last Caribbean islands colonised, because the indigenous Garifuna (Black Caribs) — descendants of Caribs and shipwrecked Africans — fiercely resisted European settlement until the Second Carib War of 1795–96. After their defeat, the British deported thousands of Garifuna to Central America, where their descendants survive today. As part of the British Windward Islands, Saint Vincent flew the defaced Blue Ensign.',
     },
   ],
 
