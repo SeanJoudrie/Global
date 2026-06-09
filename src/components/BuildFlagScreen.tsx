@@ -124,13 +124,24 @@ function FlagCanvas({
 }
 
 // ── Main screen ───────────────────────────────────────────────────────────────
+function randomPuzzle() { return PUZZLES[Math.floor(Math.random() * PUZZLES.length)] }
+
 export default function BuildFlagScreen({ onBack }: Props) {
-  const [puzzle]  = useState<BuildPuzzle>(() => PUZZLES[Math.floor(Math.random() * PUZZLES.length)])
+  const [puzzle, setPuzzle]  = useState<BuildPuzzle>(randomPuzzle)
   const [placed, setPlaced]   = useState<Record<string, string>>({})
-  const [selected, setSelected] = useState<string | null>(null)  // palette tap selection
+  const [selected, setSelected] = useState<string | null>(null)
   const [dragging, setDragging] = useState<DragState | null>(null)
   const [phase, setPhase]     = useState<'playing' | 'result'>('playing')
   const slotRefs = useRef<Record<string, HTMLDivElement | null>>({})
+
+  const startNewGame = () => {
+    setPuzzle(randomPuzzle())
+    setPlaced({})
+    setSelected(null)
+    setDragging(null)
+    setPhase('playing')
+    slotRefs.current = {}
+  }
 
   const placedPieceIds  = new Set(Object.values(placed))
   const palette         = puzzle.pieces.filter(p => !placedPieceIds.has(p.id))
@@ -241,7 +252,7 @@ export default function BuildFlagScreen({ onBack }: Props) {
           </div>
 
           <div className="flex flex-col gap-3 w-full">
-            <button onClick={() => window.location.reload()}
+            <button onClick={startNewGame}
               className="w-full py-3.5 rounded-xl font-bold transition-all active:scale-95"
               style={{ background: "linear-gradient(135deg,#8B6CFF,#A78BFA)", color: "#fff" }}>
               New Flag
