@@ -1173,6 +1173,763 @@ export const CHALLENGE_CONTINENTS: ChallengeContinent[] = [
           { code: "sn-zg", name: "Ziguinchor" },
         ],
       },
+
+      // The remaining African countries — first-level subdivisions. Almost none of these
+      // have official subdivision flags, so they are name-only tiles (a few notable
+      // exceptions, e.g. the Comoros islands and Príncipe, do have flags and are noted).
+
+      // ── Benin (12 departments) ───────────────────────────────────────────
+      {
+        code: "BJ", name: "Benin", emoji: "🇧🇯", subTitle: "12 Departments", locked: false,
+        subRegions: [
+          { code: "bj-al", name: "Alibori" },
+          { code: "bj-ak", name: "Atacora" },
+          { code: "bj-aq", name: "Atlantique" },
+          { code: "bj-bo", name: "Borgou" },
+          { code: "bj-co", name: "Collines" },
+          { code: "bj-ku", name: "Couffo" },
+          { code: "bj-do", name: "Donga" },
+          { code: "bj-li", name: "Littoral" },
+          { code: "bj-mo", name: "Mono" },
+          { code: "bj-ou", name: "Ouémé" },
+          { code: "bj-pl", name: "Plateau" },
+          { code: "bj-zo", name: "Zou" },
+        ],
+      },
+
+      // ── Botswana (10 districts) ──────────────────────────────────────────
+      {
+        code: "BW", name: "Botswana", emoji: "🇧🇼", subTitle: "10 Districts", locked: false,
+        subRegions: [
+          { code: "bw-ce", name: "Central" },
+          { code: "bw-ch", name: "Chobe" },
+          { code: "bw-gh", name: "Ghanzi" },
+          { code: "bw-kg", name: "Kgalagadi" },
+          { code: "bw-kl", name: "Kgatleng" },
+          { code: "bw-kw", name: "Kweneng" },
+          { code: "bw-ne", name: "North-East" },
+          { code: "bw-nw", name: "North-West" },
+          { code: "bw-se", name: "South-East" },
+          { code: "bw-so", name: "Southern" },
+        ],
+      },
+
+      // ── Burkina Faso (13 regions) ────────────────────────────────────────
+      {
+        code: "BF", name: "Burkina Faso", emoji: "🇧🇫", subTitle: "13 Regions", locked: false,
+        subRegions: [
+          { code: "bf-bml", name: "Boucle du Mouhoun" },
+          { code: "bf-cas", name: "Cascades" },
+          { code: "bf-cen", name: "Centre" },
+          { code: "bf-est", name: "Centre-Est" },
+          { code: "bf-nor", name: "Centre-Nord" },
+          { code: "bf-oue", name: "Centre-Ouest" },
+          { code: "bf-sud", name: "Centre-Sud" },
+          { code: "bf-e",   name: "Est" },
+          { code: "bf-hba", name: "Hauts-Bassins" },
+          { code: "bf-n",   name: "Nord" },
+          { code: "bf-plc", name: "Plateau-Central" },
+          { code: "bf-sah", name: "Sahel" },
+          { code: "bf-sow", name: "Sud-Ouest" },
+        ],
+      },
+
+      // ── Burundi (18 provinces) ───────────────────────────────────────────
+      {
+        code: "BI", name: "Burundi", emoji: "🇧🇮", subTitle: "18 Provinces", locked: false,
+        subRegions: [
+          { code: "bi-bb", name: "Bubanza" },
+          { code: "bi-bm", name: "Bujumbura Mairie" },
+          { code: "bi-br", name: "Bujumbura Rural" },
+          { code: "bi-br2",name: "Bururi" },
+          { code: "bi-ca", name: "Cankuzo" },
+          { code: "bi-ci", name: "Cibitoke" },
+          { code: "bi-gi", name: "Gitega" },
+          { code: "bi-ka", name: "Karuzi" },
+          { code: "bi-ky", name: "Kayanza" },
+          { code: "bi-ki", name: "Kirundo" },
+          { code: "bi-ma", name: "Makamba" },
+          { code: "bi-mu", name: "Muramvya" },
+          { code: "bi-my", name: "Muyinga" },
+          { code: "bi-mw", name: "Mwaro" },
+          { code: "bi-ng", name: "Ngozi" },
+          { code: "bi-rm", name: "Rumonge" },
+          { code: "bi-rt", name: "Rutana" },
+          { code: "bi-ry", name: "Ruyigi" },
+        ],
+      },
+
+      // ── Cape Verde (22 municipalities) ───────────────────────────────────
+      {
+        code: "CV", name: "Cape Verde", emoji: "🇨🇻", subTitle: "22 Municipalities", locked: false,
+        subRegions: [
+          { code: "cv-bv", name: "Boa Vista" },
+          { code: "cv-br", name: "Brava" },
+          { code: "cv-ma", name: "Maio" },
+          { code: "cv-mo", name: "Mosteiros" },
+          { code: "cv-pa", name: "Paul" },
+          { code: "cv-pn", name: "Porto Novo" },
+          { code: "cv-pr", name: "Praia" },
+          { code: "cv-rb", name: "Ribeira Brava" },
+          { code: "cv-rg", name: "Ribeira Grande" },
+          { code: "cv-rs", name: "Ribeira Grande de Santiago" },
+          { code: "cv-sl", name: "Sal" },
+          { code: "cv-ca", name: "Santa Catarina" },
+          { code: "cv-cf", name: "Santa Catarina do Fogo" },
+          { code: "cv-cr", name: "Santa Cruz" },
+          { code: "cv-sd", name: "São Domingos" },
+          { code: "cv-sf", name: "São Filipe" },
+          { code: "cv-so", name: "São Lourenço dos Órgãos" },
+          { code: "cv-sm", name: "São Miguel" },
+          { code: "cv-ss", name: "São Salvador do Mundo" },
+          { code: "cv-sv", name: "São Vicente" },
+          { code: "cv-ta", name: "Tarrafal" },
+          { code: "cv-ts", name: "Tarrafal de São Nicolau" },
+        ],
+      },
+
+      // ── Central African Republic (16 prefectures + Bangui) ───────────────
+      {
+        code: "CF", name: "Central African Republic", emoji: "🇨🇫", subTitle: "16 Prefectures + Bangui", locked: false,
+        subRegions: [
+          { code: "cf-bgf", name: "Bangui" },
+          { code: "cf-bb",  name: "Bamingui-Bangoran" },
+          { code: "cf-bk",  name: "Basse-Kotto" },
+          { code: "cf-hm",  name: "Haut-Mbomou" },
+          { code: "cf-hk",  name: "Haute-Kotto" },
+          { code: "cf-kg",  name: "Kémo" },
+          { code: "cf-lb",  name: "Lobaye" },
+          { code: "cf-hs",  name: "Mambéré-Kadéï" },
+          { code: "cf-mb",  name: "Mbomou" },
+          { code: "cf-kb",  name: "Nana-Grébizi" },
+          { code: "cf-nm",  name: "Nana-Mambéré" },
+          { code: "cf-mp",  name: "Ombella-M'Poko" },
+          { code: "cf-uk",  name: "Ouaka" },
+          { code: "cf-ac",  name: "Ouham" },
+          { code: "cf-op",  name: "Ouham-Pendé" },
+          { code: "cf-se",  name: "Sangha-Mbaéré" },
+          { code: "cf-vk",  name: "Vakaga" },
+        ],
+      },
+
+      // ── Chad (23 provinces) ──────────────────────────────────────────────
+      {
+        code: "TD", name: "Chad", emoji: "🇹🇩", subTitle: "23 Provinces", locked: false,
+        subRegions: [
+          { code: "td-ba",  name: "Batha" },
+          { code: "td-bg",  name: "Barh-El-Gazel" },
+          { code: "td-bo",  name: "Borkou" },
+          { code: "td-cb",  name: "Chari-Baguirmi" },
+          { code: "td-ee",  name: "Ennedi-Est" },
+          { code: "td-eo",  name: "Ennedi-Ouest" },
+          { code: "td-gr",  name: "Guéra" },
+          { code: "td-hl",  name: "Hadjer-Lamis" },
+          { code: "td-ka",  name: "Kanem" },
+          { code: "td-lc",  name: "Lac" },
+          { code: "td-lo",  name: "Logone Occidental" },
+          { code: "td-lr",  name: "Logone Oriental" },
+          { code: "td-ma",  name: "Mandoul" },
+          { code: "td-me",  name: "Mayo-Kebbi Est" },
+          { code: "td-mo",  name: "Mayo-Kebbi Ouest" },
+          { code: "td-mc",  name: "Moyen-Chari" },
+          { code: "td-nd",  name: "N'Djamena" },
+          { code: "td-od",  name: "Ouaddaï" },
+          { code: "td-sa",  name: "Salamat" },
+          { code: "td-si",  name: "Sila" },
+          { code: "td-ti",  name: "Tandjilé" },
+          { code: "td-ts",  name: "Tibesti" },
+          { code: "td-wf",  name: "Wadi Fira" },
+        ],
+      },
+
+      // ── Comoros (3 autonomous islands) ───────────────────────────────────
+      // Each island is autonomous and HAS its own flag (can be added later).
+      {
+        code: "KM", name: "Comoros", emoji: "🇰🇲", subTitle: "3 Islands", locked: false,
+        subRegions: [
+          { code: "km-g", name: "Grande Comore (Ngazidja)" },
+          { code: "km-a", name: "Anjouan (Ndzuwani)" },
+          { code: "km-m", name: "Mohéli (Mwali)" },
+        ],
+      },
+
+      // ── Republic of the Congo (12 departments) ───────────────────────────
+      {
+        code: "CG", name: "Republic of the Congo", emoji: "🇨🇬", subTitle: "12 Departments", locked: false,
+        subRegions: [
+          { code: "cg-bz", name: "Brazzaville" },
+          { code: "cg-bo", name: "Bouenza" },
+          { code: "cg-cu", name: "Cuvette" },
+          { code: "cg-co", name: "Cuvette-Ouest" },
+          { code: "cg-ko", name: "Kouilou" },
+          { code: "cg-le", name: "Lékoumou" },
+          { code: "cg-li", name: "Likouala" },
+          { code: "cg-ni", name: "Niari" },
+          { code: "cg-pl", name: "Plateaux" },
+          { code: "cg-pn", name: "Pointe-Noire" },
+          { code: "cg-po", name: "Pool" },
+          { code: "cg-sa", name: "Sangha" },
+        ],
+      },
+
+      // ── Côte d'Ivoire (14 districts) ─────────────────────────────────────
+      {
+        code: "CI", name: "Côte d'Ivoire", emoji: "🇨🇮", subTitle: "14 Districts", locked: false,
+        subRegions: [
+          { code: "ci-ab", name: "Abidjan" },
+          { code: "ci-ym", name: "Yamoussoukro" },
+          { code: "ci-bs", name: "Bas-Sassandra" },
+          { code: "ci-cm", name: "Comoé" },
+          { code: "ci-dn", name: "Denguélé" },
+          { code: "ci-gd", name: "Gôh-Djiboua" },
+          { code: "ci-lc", name: "Lacs" },
+          { code: "ci-lg", name: "Lagunes" },
+          { code: "ci-mg", name: "Montagnes" },
+          { code: "ci-sm", name: "Sassandra-Marahoué" },
+          { code: "ci-sv", name: "Savanes" },
+          { code: "ci-vb", name: "Vallée du Bandama" },
+          { code: "ci-wr", name: "Woroba" },
+          { code: "ci-zz", name: "Zanzan" },
+        ],
+      },
+
+      // ── Djibouti (6 regions) ─────────────────────────────────────────────
+      {
+        code: "DJ", name: "Djibouti", emoji: "🇩🇯", subTitle: "6 Regions", locked: false,
+        subRegions: [
+          { code: "dj-as", name: "Ali Sabieh" },
+          { code: "dj-ar", name: "Arta" },
+          { code: "dj-di", name: "Dikhil" },
+          { code: "dj-dj", name: "Djibouti" },
+          { code: "dj-ob", name: "Obock" },
+          { code: "dj-ta", name: "Tadjourah" },
+        ],
+      },
+
+      // ── Equatorial Guinea (8 provinces) ──────────────────────────────────
+      {
+        code: "GQ", name: "Equatorial Guinea", emoji: "🇬🇶", subTitle: "8 Provinces", locked: false,
+        subRegions: [
+          { code: "gq-an", name: "Annobón" },
+          { code: "gq-bn", name: "Bioko Norte" },
+          { code: "gq-bs", name: "Bioko Sur" },
+          { code: "gq-cs", name: "Centro Sur" },
+          { code: "gq-dj", name: "Djibloho" },
+          { code: "gq-kn", name: "Kié-Ntem" },
+          { code: "gq-li", name: "Litoral" },
+          { code: "gq-wn", name: "Wele-Nzas" },
+        ],
+      },
+
+      // ── Eritrea (6 regions / zobas) ──────────────────────────────────────
+      {
+        code: "ER", name: "Eritrea", emoji: "🇪🇷", subTitle: "6 Regions", locked: false,
+        subRegions: [
+          { code: "er-an", name: "Anseba" },
+          { code: "er-db", name: "Debub (Southern)" },
+          { code: "er-gb", name: "Gash-Barka" },
+          { code: "er-ma", name: "Maekel (Central)" },
+          { code: "er-sk", name: "Northern Red Sea" },
+          { code: "er-dk", name: "Southern Red Sea" },
+        ],
+      },
+
+      // ── Eswatini (4 regions) ─────────────────────────────────────────────
+      {
+        code: "SZ", name: "Eswatini", emoji: "🇸🇿", subTitle: "4 Regions", locked: false,
+        subRegions: [
+          { code: "sz-hh", name: "Hhohho" },
+          { code: "sz-lu", name: "Lubombo" },
+          { code: "sz-ma", name: "Manzini" },
+          { code: "sz-sh", name: "Shiselweni" },
+        ],
+      },
+
+      // ── Gabon (9 provinces) ──────────────────────────────────────────────
+      {
+        code: "GA", name: "Gabon", emoji: "🇬🇦", subTitle: "9 Provinces", locked: false,
+        subRegions: [
+          { code: "ga-es", name: "Estuaire" },
+          { code: "ga-ho", name: "Haut-Ogooué" },
+          { code: "ga-mo", name: "Moyen-Ogooué" },
+          { code: "ga-ng", name: "Ngounié" },
+          { code: "ga-ny", name: "Nyanga" },
+          { code: "ga-oi", name: "Ogooué-Ivindo" },
+          { code: "ga-ol", name: "Ogooué-Lolo" },
+          { code: "ga-om", name: "Ogooué-Maritime" },
+          { code: "ga-wn", name: "Woleu-Ntem" },
+        ],
+      },
+
+      // ── The Gambia (8 local government areas) ────────────────────────────
+      {
+        code: "GM", name: "Gambia", emoji: "🇬🇲", subTitle: "8 Local Government Areas", locked: false,
+        subRegions: [
+          { code: "gm-bj", name: "Banjul" },
+          { code: "gm-kf", name: "Kanifing" },
+          { code: "gm-br", name: "Brikama" },
+          { code: "gm-ml", name: "Mansa Konko" },
+          { code: "gm-kr", name: "Kerewan" },
+          { code: "gm-ku", name: "Kuntaur" },
+          { code: "gm-jw", name: "Janjanbureh" },
+          { code: "gm-bs", name: "Basse" },
+        ],
+      },
+
+      // ── Guinea (8 regions) ───────────────────────────────────────────────
+      {
+        code: "GN", name: "Guinea", emoji: "🇬🇳", subTitle: "8 Regions", locked: false,
+        subRegions: [
+          { code: "gn-b",  name: "Boké" },
+          { code: "gn-c",  name: "Conakry" },
+          { code: "gn-f",  name: "Faranah" },
+          { code: "gn-k",  name: "Kankan" },
+          { code: "gn-d",  name: "Kindia" },
+          { code: "gn-l",  name: "Labé" },
+          { code: "gn-m",  name: "Mamou" },
+          { code: "gn-n",  name: "Nzérékoré" },
+        ],
+      },
+
+      // ── Guinea-Bissau (9 regions) ────────────────────────────────────────
+      {
+        code: "GW", name: "Guinea-Bissau", emoji: "🇬🇼", subTitle: "9 Regions", locked: false,
+        subRegions: [
+          { code: "gw-ba", name: "Bafatá" },
+          { code: "gw-bm", name: "Biombo" },
+          { code: "gw-bs", name: "Bissau" },
+          { code: "gw-bl", name: "Bolama" },
+          { code: "gw-ca", name: "Cacheu" },
+          { code: "gw-ga", name: "Gabú" },
+          { code: "gw-oi", name: "Oio" },
+          { code: "gw-qu", name: "Quinara" },
+          { code: "gw-to", name: "Tombali" },
+        ],
+      },
+
+      // ── Lesotho (10 districts) ───────────────────────────────────────────
+      {
+        code: "LS", name: "Lesotho", emoji: "🇱🇸", subTitle: "10 Districts", locked: false,
+        subRegions: [
+          { code: "ls-d", name: "Berea" },
+          { code: "ls-b", name: "Butha-Buthe" },
+          { code: "ls-c", name: "Leribe" },
+          { code: "ls-e", name: "Mafeteng" },
+          { code: "ls-a", name: "Maseru" },
+          { code: "ls-f", name: "Mohale's Hoek" },
+          { code: "ls-j", name: "Mokhotlong" },
+          { code: "ls-h", name: "Qacha's Nek" },
+          { code: "ls-g", name: "Quthing" },
+          { code: "ls-k", name: "Thaba-Tseka" },
+        ],
+      },
+
+      // ── Liberia (15 counties) ────────────────────────────────────────────
+      {
+        code: "LR", name: "Liberia", emoji: "🇱🇷", subTitle: "15 Counties", locked: false,
+        subRegions: [
+          { code: "lr-bm", name: "Bomi" },
+          { code: "lr-bg", name: "Bong" },
+          { code: "lr-gp", name: "Gbarpolu" },
+          { code: "lr-gb", name: "Grand Bassa" },
+          { code: "lr-cm", name: "Grand Cape Mount" },
+          { code: "lr-gg", name: "Grand Gedeh" },
+          { code: "lr-gk", name: "Grand Kru" },
+          { code: "lr-lo", name: "Lofa" },
+          { code: "lr-mg", name: "Margibi" },
+          { code: "lr-my", name: "Maryland" },
+          { code: "lr-mo", name: "Montserrado" },
+          { code: "lr-ni", name: "Nimba" },
+          { code: "lr-ri", name: "River Cess" },
+          { code: "lr-rg", name: "River Gee" },
+          { code: "lr-si", name: "Sinoe" },
+        ],
+      },
+
+      // ── Libya (22 districts / sha'biyat) ─────────────────────────────────
+      {
+        code: "LY", name: "Libya", emoji: "🇱🇾", subTitle: "22 Districts", locked: false,
+        subRegions: [
+          { code: "ly-bu", name: "Al Butnan" },
+          { code: "ly-dr", name: "Darnah" },
+          { code: "ly-ja", name: "Al Jabal al Akhdar" },
+          { code: "ly-mj", name: "Al Marj" },
+          { code: "ly-ba", name: "Benghazi" },
+          { code: "ly-wa", name: "Al Wahat" },
+          { code: "ly-ku", name: "Kufra" },
+          { code: "ly-sr", name: "Sirte" },
+          { code: "ly-mi", name: "Misrata" },
+          { code: "ly-mb", name: "Murqub" },
+          { code: "ly-tb", name: "Tripoli" },
+          { code: "ly-ji", name: "Jafara" },
+          { code: "ly-za", name: "Zawiya" },
+          { code: "ly-nq", name: "Nuqat al Khams" },
+          { code: "ly-jg", name: "Jabal al Gharbi" },
+          { code: "ly-nl", name: "Nalut" },
+          { code: "ly-ws", name: "Wadi al Shatii" },
+          { code: "ly-sb", name: "Sabha" },
+          { code: "ly-wd", name: "Wadi al Hayaa" },
+          { code: "ly-gt", name: "Ghat" },
+          { code: "ly-mq", name: "Murzuq" },
+          { code: "ly-ju", name: "Jufra" },
+        ],
+      },
+
+      // ── Madagascar (6 provinces) ─────────────────────────────────────────
+      // Madagascar is also divided into 23 regions, but the 6 historic provinces
+      // (faritany) remain the best-known first-level breakdown.
+      {
+        code: "MG", name: "Madagascar", emoji: "🇲🇬", subTitle: "6 Provinces", locked: false,
+        subRegions: [
+          { code: "mg-t", name: "Antananarivo" },
+          { code: "mg-d", name: "Antsiranana" },
+          { code: "mg-f", name: "Fianarantsoa" },
+          { code: "mg-m", name: "Mahajanga" },
+          { code: "mg-a", name: "Toamasina" },
+          { code: "mg-u", name: "Toliara" },
+        ],
+      },
+
+      // ── Malawi (28 districts in 3 regions) ───────────────────────────────
+      {
+        code: "MW", name: "Malawi", emoji: "🇲🇼", subTitle: "28 Districts", locked: false,
+        subRegions: [
+          { code: "mw-ci", name: "Chitipa",     group: "Northern" },
+          { code: "mw-ka", name: "Karonga",     group: "Northern" },
+          { code: "mw-lk", name: "Likoma",      group: "Northern" },
+          { code: "mw-mz", name: "Mzimba",      group: "Northern" },
+          { code: "mw-nb", name: "Nkhata Bay",  group: "Northern" },
+          { code: "mw-ru", name: "Rumphi",      group: "Northern" },
+          { code: "mw-de", name: "Dedza",       group: "Central" },
+          { code: "mw-do", name: "Dowa",        group: "Central" },
+          { code: "mw-ks", name: "Kasungu",     group: "Central" },
+          { code: "mw-li", name: "Lilongwe",    group: "Central" },
+          { code: "mw-mc", name: "Mchinji",     group: "Central" },
+          { code: "mw-nk", name: "Nkhotakota",  group: "Central" },
+          { code: "mw-nu", name: "Ntcheu",      group: "Central" },
+          { code: "mw-ni", name: "Ntchisi",     group: "Central" },
+          { code: "mw-sa", name: "Salima",      group: "Central" },
+          { code: "mw-ba", name: "Balaka",      group: "Southern" },
+          { code: "mw-bl", name: "Blantyre",    group: "Southern" },
+          { code: "mw-ck", name: "Chikwawa",    group: "Southern" },
+          { code: "mw-cr", name: "Chiradzulu",  group: "Southern" },
+          { code: "mw-mh", name: "Machinga",    group: "Southern" },
+          { code: "mw-mg", name: "Mangochi",    group: "Southern" },
+          { code: "mw-mu", name: "Mulanje",     group: "Southern" },
+          { code: "mw-mw", name: "Mwanza",      group: "Southern" },
+          { code: "mw-ns", name: "Nsanje",      group: "Southern" },
+          { code: "mw-ne", name: "Neno",        group: "Southern" },
+          { code: "mw-ph", name: "Phalombe",    group: "Southern" },
+          { code: "mw-th", name: "Thyolo",      group: "Southern" },
+          { code: "mw-zo", name: "Zomba",       group: "Southern" },
+        ],
+      },
+
+      // ── Mali (10 regions + Bamako) ───────────────────────────────────────
+      {
+        code: "ML", name: "Mali", emoji: "🇲🇱", subTitle: "10 Regions + Bamako", locked: false,
+        subRegions: [
+          { code: "ml-bko",name: "Bamako" },
+          { code: "ml-1",  name: "Kayes" },
+          { code: "ml-2",  name: "Koulikoro" },
+          { code: "ml-3",  name: "Sikasso" },
+          { code: "ml-4",  name: "Ségou" },
+          { code: "ml-5",  name: "Mopti" },
+          { code: "ml-6",  name: "Tombouctou (Timbuktu)" },
+          { code: "ml-7",  name: "Gao" },
+          { code: "ml-8",  name: "Kidal" },
+          { code: "ml-9",  name: "Taoudénit" },
+          { code: "ml-10", name: "Ménaka" },
+        ],
+      },
+
+      // ── Mauritania (15 regions) ──────────────────────────────────────────
+      {
+        code: "MR", name: "Mauritania", emoji: "🇲🇷", subTitle: "15 Regions", locked: false,
+        subRegions: [
+          { code: "mr-01", name: "Hodh Ech Chargui" },
+          { code: "mr-02", name: "Hodh El Gharbi" },
+          { code: "mr-03", name: "Assaba" },
+          { code: "mr-04", name: "Gorgol" },
+          { code: "mr-05", name: "Brakna" },
+          { code: "mr-06", name: "Trarza" },
+          { code: "mr-07", name: "Adrar" },
+          { code: "mr-08", name: "Dakhlet Nouadhibou" },
+          { code: "mr-09", name: "Tagant" },
+          { code: "mr-10", name: "Guidimaka" },
+          { code: "mr-11", name: "Tiris Zemmour" },
+          { code: "mr-12", name: "Inchiri" },
+          { code: "mr-nkn",name: "Nouakchott-Nord" },
+          { code: "mr-nkw",name: "Nouakchott-Ouest" },
+          { code: "mr-nks",name: "Nouakchott-Sud" },
+        ],
+      },
+
+      // ── Mauritius (9 districts + Rodrigues) ──────────────────────────────
+      // Rodrigues is an autonomous outer island and has its own regional flag.
+      {
+        code: "MU", name: "Mauritius", emoji: "🇲🇺", subTitle: "9 Districts + Rodrigues", locked: false,
+        subRegions: [
+          { code: "mu-bl", name: "Black River",       group: "Districts" },
+          { code: "mu-fl", name: "Flacq",             group: "Districts" },
+          { code: "mu-gp", name: "Grand Port",        group: "Districts" },
+          { code: "mu-mo", name: "Moka",              group: "Districts" },
+          { code: "mu-pa", name: "Pamplemousses",     group: "Districts" },
+          { code: "mu-pw", name: "Plaines Wilhems",   group: "Districts" },
+          { code: "mu-pl", name: "Port Louis",        group: "Districts" },
+          { code: "mu-rr", name: "Rivière du Rempart",group: "Districts" },
+          { code: "mu-sa", name: "Savanne",           group: "Districts" },
+          { code: "mu-ro", name: "Rodrigues",         group: "Autonomous Island" },
+        ],
+      },
+
+      // ── Namibia (14 regions) ─────────────────────────────────────────────
+      {
+        code: "NA", name: "Namibia", emoji: "🇳🇦", subTitle: "14 Regions", locked: false,
+        subRegions: [
+          { code: "na-er", name: "Erongo" },
+          { code: "na-ha", name: "Hardap" },
+          { code: "na-ka", name: "ǁKaras" },
+          { code: "na-ke", name: "Kavango East" },
+          { code: "na-kw", name: "Kavango West" },
+          { code: "na-kh", name: "Khomas" },
+          { code: "na-ku", name: "Kunene" },
+          { code: "na-ow", name: "Ohangwena" },
+          { code: "na-oh", name: "Omaheke" },
+          { code: "na-os", name: "Omusati" },
+          { code: "na-on", name: "Oshana" },
+          { code: "na-ot", name: "Oshikoto" },
+          { code: "na-oj", name: "Otjozondjupa" },
+          { code: "na-ca", name: "Zambezi" },
+        ],
+      },
+
+      // ── Niger (8 regions) ────────────────────────────────────────────────
+      {
+        code: "NE", name: "Niger", emoji: "🇳🇪", subTitle: "8 Regions", locked: false,
+        subRegions: [
+          { code: "ne-1", name: "Agadez" },
+          { code: "ne-2", name: "Diffa" },
+          { code: "ne-3", name: "Dosso" },
+          { code: "ne-4", name: "Maradi" },
+          { code: "ne-8", name: "Niamey" },
+          { code: "ne-5", name: "Tahoua" },
+          { code: "ne-6", name: "Tillabéri" },
+          { code: "ne-7", name: "Zinder" },
+        ],
+      },
+
+      // ── Rwanda (5 provinces) ─────────────────────────────────────────────
+      {
+        code: "RW", name: "Rwanda", emoji: "🇷🇼", subTitle: "5 Provinces", locked: false,
+        subRegions: [
+          { code: "rw-01", name: "Kigali" },
+          { code: "rw-02", name: "Eastern" },
+          { code: "rw-03", name: "Northern" },
+          { code: "rw-04", name: "Western" },
+          { code: "rw-05", name: "Southern" },
+        ],
+      },
+
+      // ── São Tomé and Príncipe (6 districts + Príncipe) ───────────────────
+      // Príncipe is an autonomous region and has its own flag.
+      {
+        code: "ST", name: "São Tomé and Príncipe", emoji: "🇸🇹", subTitle: "6 Districts + Príncipe", locked: false,
+        subRegions: [
+          { code: "st-ag", name: "Água Grande",  group: "São Tomé Island" },
+          { code: "st-ca", name: "Cantagalo",    group: "São Tomé Island" },
+          { code: "st-cau",name: "Caué",         group: "São Tomé Island" },
+          { code: "st-le", name: "Lembá",        group: "São Tomé Island" },
+          { code: "st-lo", name: "Lobata",       group: "São Tomé Island" },
+          { code: "st-me", name: "Mé-Zóchi",     group: "São Tomé Island" },
+          { code: "st-pa", name: "Príncipe",     group: "Autonomous Region" },
+        ],
+      },
+
+      // ── Sierra Leone (16 districts in 5 provinces) ───────────────────────
+      {
+        code: "SL", name: "Sierra Leone", emoji: "🇸🇱", subTitle: "16 Districts", locked: false,
+        subRegions: [
+          { code: "sl-kai", name: "Kailahun",  group: "Eastern" },
+          { code: "sl-ken", name: "Kenema",    group: "Eastern" },
+          { code: "sl-kon", name: "Kono",      group: "Eastern" },
+          { code: "sl-bom", name: "Bombali",   group: "Northern" },
+          { code: "sl-fal", name: "Falaba",    group: "Northern" },
+          { code: "sl-koi", name: "Koinadugu", group: "Northern" },
+          { code: "sl-ton", name: "Tonkolili", group: "Northern" },
+          { code: "sl-kam", name: "Kambia",    group: "North West" },
+          { code: "sl-kar", name: "Karene",    group: "North West" },
+          { code: "sl-por", name: "Port Loko", group: "North West" },
+          { code: "sl-bo",  name: "Bo",        group: "Southern" },
+          { code: "sl-bon", name: "Bonthe",    group: "Southern" },
+          { code: "sl-moy", name: "Moyamba",   group: "Southern" },
+          { code: "sl-puj", name: "Pujehun",   group: "Southern" },
+          { code: "sl-war", name: "Western Area Rural", group: "Western Area" },
+          { code: "sl-wau", name: "Western Area Urban", group: "Western Area" },
+        ],
+      },
+
+      // ── Somalia (18 regions) ─────────────────────────────────────────────
+      // Note: the northern regions (Awdal, Woqooyi Galbeed, Togdheer, Sool, Sanaag)
+      // form the self-declared, internationally unrecognised state of Somaliland.
+      {
+        code: "SO", name: "Somalia", emoji: "🇸🇴", subTitle: "18 Regions", locked: false,
+        subRegions: [
+          { code: "so-aw", name: "Awdal" },
+          { code: "so-ba", name: "Bakool" },
+          { code: "so-bn", name: "Banaadir" },
+          { code: "so-br", name: "Bari" },
+          { code: "so-by", name: "Bay" },
+          { code: "so-ga", name: "Galguduud" },
+          { code: "so-ge", name: "Gedo" },
+          { code: "so-hi", name: "Hiiraan" },
+          { code: "so-jd", name: "Middle Juba" },
+          { code: "so-jh", name: "Lower Juba" },
+          { code: "so-mu", name: "Mudug" },
+          { code: "so-nu", name: "Nugaal" },
+          { code: "so-sa", name: "Sanaag" },
+          { code: "so-sd", name: "Middle Shabelle" },
+          { code: "so-sh", name: "Lower Shabelle" },
+          { code: "so-so", name: "Sool" },
+          { code: "so-to", name: "Togdheer" },
+          { code: "so-wo", name: "Woqooyi Galbeed" },
+        ],
+      },
+
+      // ── South Sudan (10 states + 3 administrative areas) ─────────────────
+      {
+        code: "SS", name: "South Sudan", emoji: "🇸🇸", subTitle: "10 States + 3 Areas", locked: false,
+        subRegions: [
+          { code: "ss-ec", name: "Central Equatoria",       group: "States" },
+          { code: "ss-ee", name: "Eastern Equatoria",       group: "States" },
+          { code: "ss-jg", name: "Jonglei",                 group: "States" },
+          { code: "ss-lk", name: "Lakes",                   group: "States" },
+          { code: "ss-bn", name: "Northern Bahr el Ghazal", group: "States" },
+          { code: "ss-un", name: "Unity",                   group: "States" },
+          { code: "ss-nu", name: "Upper Nile",              group: "States" },
+          { code: "ss-wr", name: "Warrap",                  group: "States" },
+          { code: "ss-bw", name: "Western Bahr el Ghazal",  group: "States" },
+          { code: "ss-ew", name: "Western Equatoria",       group: "States" },
+          { code: "ss-ab", name: "Abyei",                   group: "Administrative Areas" },
+          { code: "ss-pi", name: "Pibor",                   group: "Administrative Areas" },
+          { code: "ss-ru", name: "Ruweng",                  group: "Administrative Areas" },
+        ],
+      },
+
+      // ── Sudan (18 states / wilayat) ──────────────────────────────────────
+      {
+        code: "SD", name: "Sudan", emoji: "🇸🇩", subTitle: "18 States", locked: false,
+        subRegions: [
+          { code: "sd-kh", name: "Khartoum" },
+          { code: "sd-gz", name: "Al Jazirah" },
+          { code: "sd-rs", name: "Red Sea" },
+          { code: "sd-ka", name: "Kassala" },
+          { code: "sd-gd", name: "Al Qadarif" },
+          { code: "sd-nr", name: "River Nile" },
+          { code: "sd-no", name: "Northern" },
+          { code: "sd-nw", name: "White Nile" },
+          { code: "sd-nb", name: "Blue Nile" },
+          { code: "sd-no2",name: "North Kordofan" },
+          { code: "sd-ks", name: "South Kordofan" },
+          { code: "sd-gk", name: "West Kordofan" },
+          { code: "sd-nd", name: "North Darfur" },
+          { code: "sd-sd", name: "South Darfur" },
+          { code: "sd-ed", name: "East Darfur" },
+          { code: "sd-wd", name: "West Darfur" },
+          { code: "sd-cd", name: "Central Darfur" },
+          { code: "sd-si", name: "Sennar" },
+        ],
+      },
+
+      // ── Togo (5 regions) ─────────────────────────────────────────────────
+      {
+        code: "TG", name: "Togo", emoji: "🇹🇬", subTitle: "5 Regions", locked: false,
+        subRegions: [
+          { code: "tg-m", name: "Maritime" },
+          { code: "tg-p", name: "Plateaux" },
+          { code: "tg-c", name: "Centrale" },
+          { code: "tg-k", name: "Kara" },
+          { code: "tg-s", name: "Savanes" },
+        ],
+      },
+
+      // ── Tunisia (24 governorates) ────────────────────────────────────────
+      {
+        code: "TN", name: "Tunisia", emoji: "🇹🇳", subTitle: "24 Governorates", locked: false,
+        subRegions: [
+          { code: "tn-11", name: "Tunis" },
+          { code: "tn-12", name: "Ariana" },
+          { code: "tn-13", name: "Ben Arous" },
+          { code: "tn-14", name: "Manouba" },
+          { code: "tn-21", name: "Nabeul" },
+          { code: "tn-22", name: "Zaghouan" },
+          { code: "tn-23", name: "Bizerte" },
+          { code: "tn-31", name: "Béja" },
+          { code: "tn-32", name: "Jendouba" },
+          { code: "tn-33", name: "Kef" },
+          { code: "tn-34", name: "Siliana" },
+          { code: "tn-41", name: "Kairouan" },
+          { code: "tn-42", name: "Kasserine" },
+          { code: "tn-43", name: "Sidi Bouzid" },
+          { code: "tn-51", name: "Sousse" },
+          { code: "tn-52", name: "Monastir" },
+          { code: "tn-53", name: "Mahdia" },
+          { code: "tn-61", name: "Sfax" },
+          { code: "tn-71", name: "Gafsa" },
+          { code: "tn-72", name: "Tozeur" },
+          { code: "tn-73", name: "Kébili" },
+          { code: "tn-81", name: "Gabès" },
+          { code: "tn-82", name: "Médenine" },
+          { code: "tn-83", name: "Tataouine" },
+        ],
+      },
+
+      // ── Uganda (4 regions) ───────────────────────────────────────────────
+      // Uganda is subdivided into 130+ small districts; these group into 4 regions,
+      // which is the clearest first-level breakdown.
+      {
+        code: "UG", name: "Uganda", emoji: "🇺🇬", subTitle: "4 Regions", locked: false,
+        subRegions: [
+          { code: "ug-c", name: "Central" },
+          { code: "ug-e", name: "Eastern" },
+          { code: "ug-n", name: "Northern" },
+          { code: "ug-w", name: "Western" },
+        ],
+      },
+
+      // ── Zambia (10 provinces) ────────────────────────────────────────────
+      {
+        code: "ZM", name: "Zambia", emoji: "🇿🇲", subTitle: "10 Provinces", locked: false,
+        subRegions: [
+          { code: "zm-02", name: "Central" },
+          { code: "zm-08", name: "Copperbelt" },
+          { code: "zm-03", name: "Eastern" },
+          { code: "zm-04", name: "Luapula" },
+          { code: "zm-09", name: "Lusaka" },
+          { code: "zm-10", name: "Muchinga" },
+          { code: "zm-05", name: "Northern" },
+          { code: "zm-06", name: "North-Western" },
+          { code: "zm-07", name: "Southern" },
+          { code: "zm-01", name: "Western" },
+        ],
+      },
+
+      // ── Zimbabwe (10 provinces) ──────────────────────────────────────────
+      {
+        code: "ZW", name: "Zimbabwe", emoji: "🇿🇼", subTitle: "10 Provinces", locked: false,
+        subRegions: [
+          { code: "zw-bu", name: "Bulawayo" },
+          { code: "zw-ha", name: "Harare" },
+          { code: "zw-ma", name: "Manicaland" },
+          { code: "zw-mc", name: "Mashonaland Central" },
+          { code: "zw-me", name: "Mashonaland East" },
+          { code: "zw-mw", name: "Mashonaland West" },
+          { code: "zw-mv", name: "Masvingo" },
+          { code: "zw-mn", name: "Matabeleland North" },
+          { code: "zw-ms", name: "Matabeleland South" },
+          { code: "zw-mi", name: "Midlands" },
+        ],
+      },
     ],
   },
 
