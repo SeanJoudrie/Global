@@ -24,6 +24,9 @@ interface Props {
   onGoOddOneOut: () => void
   onGoTheCrop: () => void
   onGoFlagDNA: () => void
+  onGoBuildFlag: () => void
+  onGoThePeel: () => void
+  onGoLookalikes: () => void
 }
 
 const ComingSoonTile = ({ emoji, label, desc }: { emoji: string; label: string; desc: string }) => (
@@ -45,7 +48,7 @@ export default function HomeScreen({
   state, onStartDaily, onGoFlags, onGoProfile, onGoFlashcards,
   onGoLanguage, onQuickPlay, onGoReverseQuiz, onGoCapitalQuiz, onGoChallenge, onGoCodex,
   onGoGeo, onGoGauntlet, onGoTierList, onGoSettings,
-  onGoOddOneOut, onGoTheCrop, onGoFlagDNA,
+  onGoOddOneOut, onGoTheCrop, onGoFlagDNA, onGoBuildFlag, onGoThePeel, onGoLookalikes,
 }: Props) {
   const today = todayString()
   const dailyDone = state.lastDailyDate === today
@@ -273,6 +276,45 @@ export default function HomeScreen({
             </div>
           </div>
           <span style={{ color: "#8B6CFF" }}>›</span>
+        </button>
+
+        <button onClick={onGoBuildFlag}
+          className="w-full flex items-center justify-between px-5 py-4 rounded-2xl transition-all active:scale-[0.98] hover:brightness-110"
+          style={{ background: "#2D1F52", border: "1px solid #8B6CFF33" }}>
+          <div className="flex items-center gap-3">
+            <span className="text-2xl">🧩</span>
+            <div className="text-left">
+              <div className="font-bold" style={{ color: "#F5F3FF" }}>Build the Flag</div>
+              <div className="text-xs" style={{ color: "#B8A9E0" }}>Drag the right pieces onto the canvas — watch out for decoys</div>
+            </div>
+          </div>
+          <span style={{ color: "#8B6CFF" }}>›</span>
+        </button>
+
+        <button onClick={onGoThePeel}
+          className="w-full flex items-center justify-between px-5 py-4 rounded-2xl transition-all active:scale-[0.98] hover:brightness-110"
+          style={{ background: "#2D1F52", border: "1px solid #8B6CFF33" }}>
+          <div className="flex items-center gap-3">
+            <span className="text-2xl">🪄</span>
+            <div className="text-left">
+              <div className="font-bold" style={{ color: "#F5F3FF" }}>The Peel</div>
+              <div className="text-xs" style={{ color: "#B8A9E0" }}>Scratch to reveal — fewer pixels = more points</div>
+            </div>
+          </div>
+          <span style={{ color: "#8B6CFF" }}>›</span>
+        </button>
+
+        <button onClick={onGoLookalikes}
+          className="w-full flex items-center justify-between px-5 py-4 rounded-2xl transition-all active:scale-[0.98] hover:brightness-110"
+          style={{ background: "#2D1F52", border: "1px solid #F43F5E33" }}>
+          <div className="flex items-center gap-3">
+            <span className="text-2xl">👯</span>
+            <div className="text-left">
+              <div className="font-bold" style={{ color: "#F5F3FF" }}>Lookalikes</div>
+              <div className="text-xs" style={{ color: "#B8A9E0" }}>Pick the right flag from 4 near-identical ones · hard mode</div>
+            </div>
+          </div>
+          <span style={{ color: "#F43F5E88" }}>›</span>
         </button>
 
         <h3 className="text-xs font-semibold uppercase tracking-widest pt-1" style={{ color: "#B8A9E0" }}>Challenge</h3>

@@ -19,6 +19,9 @@ import TierListScreen from "./components/TierListScreen"
 import OddOneOutScreen from "./components/OddOneOutScreen"
 import TheCropScreen from "./components/TheCropScreen"
 import FlagDNAScreen from "./components/FlagDNAScreen"
+import BuildFlagScreen from "./components/BuildFlagScreen"
+import ThePeelScreen from "./components/ThePeelScreen"
+import ConfusablesScreen from "./components/ConfusablesScreen"
 import StarField from "./components/StarField"
 import EarthLogo from "./components/EarthLogo"
 import { FLAGS } from "./data/flags"
@@ -30,7 +33,7 @@ import type { Question } from "./utils/quiz"
 import { todayString } from "./utils/prng"
 import { loadTheme } from "./components/SettingsScreen"
 
-type Screen = "splash" | "home" | "flags" | "quiz" | "reversequiz" | "result" | "achievements" | "profile" | "flashcards" | "language" | "capitalquiz" | "challenge" | "codex" | "geo" | "gauntlet" | "tierlist" | "settings" | "oddoneout" | "thecrop" | "flagdna"
+type Screen = "splash" | "home" | "flags" | "quiz" | "reversequiz" | "result" | "achievements" | "profile" | "flashcards" | "language" | "capitalquiz" | "challenge" | "codex" | "geo" | "gauntlet" | "tierlist" | "settings" | "oddoneout" | "thecrop" | "flagdna" | "buildflag" | "thepeel" | "lookalikes"
 
 interface ActiveQuiz {
   questions: Question[]
@@ -156,7 +159,10 @@ export default function App() {
           onGoSettings={() => setScreen("settings")}
           onGoOddOneOut={() => setScreen("oddoneout")}
           onGoTheCrop={() => setScreen("thecrop")}
-          onGoFlagDNA={() => setScreen("flagdna")} />
+          onGoFlagDNA={() => setScreen("flagdna")}
+          onGoBuildFlag={() => setScreen("buildflag")}
+          onGoThePeel={() => setScreen("thepeel")}
+          onGoLookalikes={() => setScreen("lookalikes")} />
       )}
 
       {screen === "flags" && (
@@ -175,9 +181,12 @@ export default function App() {
       {screen === "gauntlet" && <GauntletScreen onBack={() => setScreen("home")} />}
       {screen === "tierlist" && <TierListScreen onBack={() => setScreen("home")} />}
       {screen === "settings"   && <SettingsScreen onBack={() => setScreen("home")} />}
-      {screen === "oddoneout"  && <OddOneOutScreen onBack={() => setScreen("home")} />}
-      {screen === "thecrop"    && <TheCropScreen   onBack={() => setScreen("home")} />}
-      {screen === "flagdna"    && <FlagDNAScreen    onBack={() => setScreen("home")} />}
+      {screen === "oddoneout"  && <OddOneOutScreen  onBack={() => setScreen("home")} />}
+      {screen === "thecrop"    && <TheCropScreen    onBack={() => setScreen("home")} />}
+      {screen === "flagdna"    && <FlagDNAScreen     onBack={() => setScreen("home")} />}
+      {screen === "buildflag"  && <BuildFlagScreen   onBack={() => setScreen("home")} />}
+      {screen === "thepeel"    && <ThePeelScreen     onBack={() => setScreen("home")} />}
+      {screen === "lookalikes" && <ConfusablesScreen onBack={() => setScreen("home")} />}
       {screen === "profile" && (
         <ProfileScreen state={appState} onBack={() => setScreen("home")}
           onSetUsername={name => setAppState(s => ({ ...s, username: name }))} />
