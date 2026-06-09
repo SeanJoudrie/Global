@@ -1173,6 +1173,194 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     },
   ],
 
+  // ── Middle East ───────────────────────────────────────────────────────────
+
+  SA: [
+    {
+      fromYear: 1973, toYear: null,
+      flagUrl: 'https://flagcdn.com/w320/sa.png',
+      label: 'Kingdom of Saudi Arabia (current)',
+      note: 'Saudi Arabia\'s flag — a green field bearing the Shahada ("There is no god but Allah, and Muhammad is his messenger") in white Thuluth script above a white sword — is one of the world\'s most religiously charged national flags. The sword\'s orientation was reversed in 1973 to always face forward (towards the hoist) regardless of which side of the flag you see. Green is the traditional colour of Islam; the sword symbolises the Kingdom\'s founding through military conquest.',
+    },
+    {
+      fromYear: 1938, toYear: 1973,
+      flagUrl: fp('Flag_of_Saudi_Arabia_(1938-1973).svg'),
+      label: 'Kingdom of Saudi Arabia (1938)',
+      note: 'An earlier standardisation in 1938 established the green-Shahada-sword design but with the sword pointing in different directions on each side — a heraldic oddity that was corrected in 1973. Before 1938 the exact form of the Shahada inscription and sword varied between different royal households and governors. Saudi Arabia is one of only three countries whose flag includes text.',
+    },
+    {
+      fromYear: 1902, toYear: 1938,
+      flagUrl: fp('Flag_of_Nejd_(1926).svg'),
+      label: 'Sultanate/Kingdom of Nejd',
+      note: 'Ibn Saud\'s early flags as he united the Arabian Peninsula were variants of a green field with the Shahada — the same core identity but without a standardised sword. When Ibn Saud captured Riyadh in 1902, beginning his 30-year campaign to unite Arabia, his banners were simpler religious standards. The sword emblem was formalised as the kingdom consolidated, symbolising both the founding wars and the Wahhabi religious authority underpinning the state.',
+    },
+  ],
+
+  YE: [
+    {
+      fromYear: 1990, toYear: null,
+      flagUrl: 'https://flagcdn.com/w320/ye.png',
+      label: 'Republic of Yemen (unified)',
+      note: 'When North and South Yemen reunified on May 22, 1990, the new republic adopted a simple red-white-black horizontal tricolor — the pan-Arab colours — shedding the communist star and triangle of the south and the complex arms of the north. The design was essentially a compromise between the two predecessor flags. Unification lasted only months before a civil war nearly split the country again; another civil war beginning in 2014 has since devastated the country.',
+      parallel: [
+        {
+          fromYear: 1967, toYear: 1990,
+          flagUrl: fp('Flag_of_South_Yemen.svg'),
+          label: 'People\'s Democratic Republic of Yemen (South)',
+          note: 'South Yemen — the only Marxist state in the Arab world — used a red-white-black tricolor with a sky-blue triangle at the hoist bearing a red star. It was one of the world\'s most radical communist regimes, nationalising land and businesses and fighting a brutal internal power struggle that killed thousands. The blue and red star disappeared entirely at unification.',
+        },
+      ],
+      parallelCaption: 'South Yemen (existed simultaneously)',
+    },
+    {
+      fromYear: 1962, toYear: 1990,
+      flagUrl: fp('Flag_of_North_Yemen.svg'),
+      label: 'Yemen Arab Republic (North)',
+      note: 'North Yemen\'s flag after the 1962 revolution that overthrew the Mutawakkilite Kingdom used red-white-black with a green star at the centre — the pan-Arab palette shared with Egypt, Syria, and Iraq. North Yemen was caught between the Cold War superpowers: a civil war (1962–1970) saw Egyptian-backed republicans fight Saudi-backed royalists, with the republic eventually prevailing. The green star was dropped from the unified flag in 1990.',
+    },
+  ],
+
+  JO: [
+    {
+      fromYear: 1928, toYear: null,
+      flagUrl: 'https://flagcdn.com/w320/jo.png',
+      label: 'Hashemite Kingdom of Jordan',
+      note: 'Jordan\'s flag — horizontal black-white-green stripes (pan-Arab colours) with a red triangle at the hoist bearing a white seven-pointed star — descends directly from the Arab Revolt flag of 1916. The seven points of the star represent the seven verses of the opening sura of the Quran, the seven hills of Amman, and the seven virtues of faith, justice, humility, national spirit, virtue, social welfare, and aspirations. Jordan\'s flag design has been essentially unchanged since 1928, though the territory has changed dramatically.',
+    },
+    {
+      fromYear: 1920, toYear: 1928,
+      flagUrl: fp('Flag_of_Transjordan_(1921).svg'),
+      label: 'Emirate of Transjordan',
+      note: 'After World War I and the collapse of the Ottoman Empire, Britain created the Emirate of Transjordan under Emir Abdullah I of the Hashemite family. The early flag was a direct variant of the Arab Revolt banner — the same black-white-green horizontal stripes with a red triangle. The white star was added in 1928 to distinguish Jordan\'s flag from that of Palestine, which at the time shared virtually identical colouring under the British Mandate.',
+    },
+    {
+      fromYear: 1916, toYear: 1920,
+      flagUrl: fp('Flag_of_the_Arab_Revolt.svg'),
+      label: 'Arab Revolt (Sharif Hussein)',
+      note: 'The Arab Revolt of 1916 — when Sharif Hussein of Mecca rose against the Ottoman Empire with British support — produced one of the most influential flags in Middle Eastern history. Hussein\'s banner used black-white-green horizontal stripes (representing the Abbasid, Umayyad, and Fatimid caliphates respectively) with a red triangle for the Hashemite family. The Palestinian, Jordanian, Sudanese, Kuwaiti, and several other Arab flags all descend from this single revolutionary design.',
+    },
+  ],
+
+  LB: [
+    {
+      fromYear: 1943, toYear: null,
+      flagUrl: 'https://flagcdn.com/w320/lb.png',
+      label: 'Lebanese Republic',
+      note: 'Lebanon\'s flag — red-white-red horizontal stripes with a green cedar tree at centre — was adopted in November 1943 when Lebanon declared independence from the French Mandate. The cedar of Lebanon, referenced more than 70 times in the Bible, has symbolised the country for millennia. The flag was designed by Henri Pharaon: the white represents the snow of Mount Lebanon; the red the blood shed for liberation; the cedar represents immortality and steadiness. The exact shade of green of the cedar has varied slightly between official versions.',
+    },
+    {
+      fromYear: 1920, toYear: 1943,
+      flagUrl: fp('Flag_of_Lebanon_under_the_French_Mandate.svg'),
+      label: 'French Mandate of Lebanon',
+      note: 'After the Ottoman Empire\'s collapse, France received the League of Nations mandate over greater Syria and carved out "Grand Liban" in 1920, incorporating the Maronite Christian heartland with surrounding Muslim territories. The mandate flag was the French Tricolore defaced with the cedar tree — a direct imposition of French colonial authority over a Lebanese identity. Lebanese nationalists chafed under the arrangement and declared independence in 1943, though French forces only withdrew in 1946.',
+    },
+  ],
+
+  IL: [
+    {
+      fromYear: 1948, toYear: null,
+      flagUrl: 'https://flagcdn.com/w320/il.png',
+      label: 'State of Israel',
+      note: 'Israel\'s flag — a white field with two horizontal blue stripes and a blue Star of David at the centre — was adopted on October 28, 1948, five months after independence. The design, proposed by David Wolffsohn at the First Zionist Congress in 1897, was inspired by the Jewish prayer shawl (tallit), which is traditionally white with blue or black stripes. The Star of David (Magen David) had been used as a Jewish symbol for centuries but became a Zionist emblem specifically in the late 19th century. Israel is the only country whose flag is directly based on a religious garment.',
+    },
+    {
+      fromYear: 1920, toYear: 1948,
+      flagUrl: fp('Flag_of_Mandatory_Palestine.svg'),
+      label: 'British Mandate of Palestine',
+      note: 'From 1920 to 1948, the territory was governed under a British League of Nations Mandate. The Mandate flag was a British Blue Ensign defaced with a white circle bearing a green "Palestine" inscription. This flag flew over a deeply contested territory where Jewish immigration under Zionist movement auspices clashed violently with the existing Arab population and with British administration, culminating in Britain\'s withdrawal and Israel\'s declaration of independence in 1948.',
+    },
+  ],
+
+  PS: [
+    {
+      fromYear: 1964, toYear: null,
+      flagUrl: 'https://flagcdn.com/w320/ps.png',
+      label: 'State of Palestine',
+      note: 'The Palestinian flag — horizontal black-white-green stripes with a red triangle at the hoist — is almost identical to Jordan\'s flag, sharing the same Arab Revolt ancestry. The PLO adopted it in 1964; it was formally declared the flag of the State of Palestine in 1988. The design deliberately references the pan-Arab colours and the shared heritage of the Arab Revolt. As of 2012, Palestine is a UN non-member observer state; the flag flies at the UN headquarters in New York.',
+    },
+    {
+      fromYear: 1916, toYear: 1948,
+      flagUrl: fp('Flag_of_the_Arab_Revolt.svg'),
+      label: 'Arab Revolt heritage',
+      note: 'Palestine\'s flag shares its direct ancestor with Jordan\'s: the Arab Revolt flag of 1916. After World War I, Palestinian Arabs flew variations of the Revolt\'s black-white-green-red banner in their own national movement. The similarity between the Palestinian and Jordanian flags reflects the political reality of 1920s British Mandate geography — Jordan\'s Emir Abdullah added a white star specifically to distinguish his flag from the Palestinian one, the two were so close.',
+    },
+  ],
+
+  AE: [
+    {
+      fromYear: 1971, toYear: null,
+      flagUrl: 'https://flagcdn.com/w320/ae.png',
+      label: 'United Arab Emirates (federation)',
+      note: 'When seven Trucial States — Abu Dhabi, Dubai, Sharjah, Ajman, Fujairah, Ras al-Khaimah, and Umm al-Quwain — federated as the UAE on December 2, 1971, they adopted the pan-Arab green-white-black horizontal stripes with a red vertical stripe at the hoist. The flag was designed by Abdulla Mohamed Al Maainah, then 19 years old, who won the national design competition. Red is the traditional colour of the Kharijite and Gulf ruling families; the other three colours are pan-Arab.',
+    },
+    {
+      fromYear: 1820, toYear: 1971,
+      flagUrl: fp('Flag_of_the_Trucial_States.svg'),
+      label: 'Trucial States (under British protection)',
+      note: 'The seven emirates were known as the Trucial States under British protection from 1820, when a General Treaty with Britain ended widespread piracy in the Gulf. Each emirate flew its own red-and-white flag — red was the traditional colour of Gulf rulers, white added by treaty with Britain to identify peaceful vessels. The flags were nearly identical between emirates, distinguishable mainly by different proportions of red and white. Britain withdrew from "East of Suez" in 1971, prompting federation.',
+    },
+  ],
+
+  BH: [
+    {
+      fromYear: 2002, toYear: null,
+      flagUrl: 'https://flagcdn.com/w320/bh.png',
+      label: 'Kingdom of Bahrain (five points)',
+      note: 'When Bahrain upgraded from Emirate to Kingdom in 2002, the serrated white-red border — traditionally with many points — was reduced to exactly five triangular points representing the Five Pillars of Islam. The design retains Bahrain\'s traditional red-and-white colour scheme: white for peace; red for the blood of battles against foreign invaders. Bahrain was one of the first Gulf states to discover oil (1932) and one of the first to see reserves begin to deplete.',
+    },
+    {
+      fromYear: 1820, toYear: 2002,
+      flagUrl: fp('Flag_of_Bahrain_(1820).svg'),
+      label: 'Emirate of Bahrain (multiple points)',
+      note: 'For most of its modern history, Bahrain\'s flag was simply red, the traditional Kharijite colour of Gulf rulers. The white serrated border was added by treaty with Britain in 1820 to distinguish Bahraini ships as peaceful. The number of serrations varied over the decades — at different times the border had 28, 16, or other numbers of points — before standardisation in 1972 fixed it at 28 and the 2002 reform reduced it to five.',
+    },
+  ],
+
+  KW: [
+    {
+      fromYear: 1961, toYear: null,
+      flagUrl: 'https://flagcdn.com/w320/kw.png',
+      label: 'State of Kuwait (independence)',
+      note: 'Kuwait adopted its current flag on independence from Britain on June 19, 1961 — the same day independence was declared. The horizontal green-white-red stripes with a black trapezoid at the hoist are pan-Arab colours. The flag was designed to look clearly different from the simple red flags of other Gulf states. Green symbolises the fertile lands; white for peace; red for blood on enemy swords; black for the defeat of enemies — a martial reading that suits Kuwait\'s turbulent history, including the 1990 Iraqi invasion.',
+    },
+    {
+      fromYear: 1899, toYear: 1961,
+      flagUrl: fp('Flag_of_Kuwait_(1956-1961).svg'),
+      label: 'Kuwait under British protection',
+      note: 'The Kuwaiti ruling family, the Al-Sabah, had invited British protection in 1899 to avoid Ottoman annexation. The pre-independence Kuwaiti flags were simple red designs — sometimes with a white serrated border similar to Bahrain\'s — typical of Gulf ruling families. The dramatic shift to green-white-red-black in 1961 was a deliberate assertion of Kuwaiti Arab national identity distinct from both British colonial association and the plain red Gulf tradition.',
+    },
+  ],
+
+  QA: [
+    {
+      fromYear: 1971, toYear: null,
+      flagUrl: 'https://flagcdn.com/w320/qa.png',
+      label: 'State of Qatar (independence)',
+      note: 'Qatar\'s distinctive maroon-and-white flag — with a serrated border like Bahrain\'s — was adopted on independence from Britain on September 3, 1971. The original flag was red-and-white like Bahrain\'s, but the red faded to maroon in the intense Gulf sun, and Qatar eventually standardised the darker maroon as the official colour. Qatar\'s flag has nine serrated points, the most of any Gulf state flag, though the exact significance of that number is debated. Qatar is the only country whose flag has a width-to-length ratio greater than 1:2.',
+    },
+    {
+      fromYear: 1860, toYear: 1971,
+      flagUrl: fp('Flag_of_Qatar_(1949-1971).svg'),
+      label: 'Qatar under Al-Thani rule / British protection',
+      note: 'Qatar came under British protection in 1916 after the Al-Thani family\'s rule was formalised. The pre-independence flag was a red-and-white design typical of Gulf rulers — white added by British treaty to mark peaceful vessels, red the traditional Kharijite colour. The serrated dividing line between white and red was a distinctive Qatari feature even in early flags, and the colour faded progressively from red to the maroon Qatar now uses officially.',
+    },
+  ],
+
+  OM: [
+    {
+      fromYear: 1970, toYear: null,
+      flagUrl: 'https://flagcdn.com/w320/om.png',
+      label: 'Sultanate of Oman (current)',
+      note: 'Oman\'s horizontal red-white-green flag with the national emblem (crossed khanjar daggers over a belt, and two crossed swords) was adopted when Sultan Qaboos overthrew his father in 1970 and opened Oman to the modern world. Red is the traditional colour of Omani rulers; white represents peace; green represents the Jebel Akhdar ("Green Mountain") region. The khanjar dagger on the emblem is also depicted on Omani currency and is a potent symbol of Omani cultural identity.',
+    },
+    {
+      fromYear: 1868, toYear: 1970,
+      flagUrl: fp('Flag_of_Oman_(1970).svg'),
+      label: 'Sultanate of Oman (plain red)',
+      note: 'For most of its history as a recognised sultanate, Oman\'s flag was simply a plain red banner — red being the traditional colour of Gulf and Omani rulers, associated with the Kharijite branch of Islam historically dominant in Oman. Sultan Said bin Taimur, who ruled from 1932 to 1970, kept the country in extreme isolation, banning sunglasses, radios, and even bicycles. His son Qaboos\'s coup transformed both the country and its flag overnight.',
+    },
+  ],
+
   // ── Americas ────────────────────────────────────────────────────────────────
 
   CL: [
