@@ -1,5 +1,5 @@
 ﻿import { useState, useEffect } from "react"
-import { LANGUAGES } from "../data/languages"
+import { LANGUAGES, detectScript, scriptFont, languageNote } from "../data/languages"
 import type { LanguageRecord, Difficulty } from "../data/languages"
 import { shuffleWithSeed, seededRandom } from "../utils/prng"
 
@@ -7,30 +7,31 @@ interface Props { onBack: () => void }
 
 type Phase = "menu" | "quiz" | "result"
 
+// Build 3 distractors. We pull from ALL languages and strongly prefer the SAME writing
+// system as the target, so you can't win just by recognising the alphabet.
 function getChoices(target: LanguageRecord, all: LanguageRecord[], seed: string): LanguageRecord[] {
   const rng = seededRandom(seed + target.code)
-  // 1. Prefer languages explicitly listed as confusable
-  const confusable = target.confusableWith
-    .map(c => all.find(l => l.code === c))
-    .filter((l): l is LanguageRecord => !!l && l.code !== target.code)
-    .sort(() => rng() - 0.5).slice(0, 2)
-  if (confusable.length < 3) {
-    // 2. Fill with same-script languages before going fully random
-    const sameScript = all
-      .filter(l => l.code !== target.code
-        && l.isLatinScript === target.isLatinScript
-        && !confusable.find(c => c.code === l.code))
-      .sort(() => rng() - 0.5)
-    confusable.push(...sameScript.slice(0, 3 - confusable.length))
+  const targetScript = detectScript(target.sample)
+  const pool = all.filter(l => l.code !== target.code)
+  const picks: LanguageRecord[] = []
+
+  // 1. Curated confusables first
+  for (const c of target.confusableWith) {
+    const l = pool.find(p => p.code === c)
+    if (l && !picks.find(p => p.code === l.code)) picks.push(l)
   }
-  if (confusable.length < 3) {
-    // 3. Last resort: anything
-    const rest = all
-      .filter(l => l.code !== target.code && !confusable.find(c => c.code === l.code))
-      .sort(() => rng() - 0.5)
-    confusable.push(...rest.slice(0, 3 - confusable.length))
-  }
-  return [target, ...confusable.slice(0, 3)].sort(() => rng() - 0.5)
+  // 2. Same-script languages (the key anti-giveaway step)
+  const sameScript = pool
+    .filter(l => detectScript(l.sample) === targetScript && !picks.find(p => p.code === l.code))
+    .sort(() => rng() - 0.5)
+  picks.push(...sameScript)
+  // 3. Anything else as a last resort
+  const rest = pool
+    .filter(l => !picks.find(p => p.code === l.code))
+    .sort(() => rng() - 0.5)
+  picks.push(...rest)
+
+  return [target, ...picks.slice(0, 3)].sort(() => rng() - 0.5)
 }
 
 const DIFF_COLORS: Record<Difficulty, { bg: string; border: string; label: string }> = {
@@ -56,7 +57,9 @@ export default function LanguageQuizScreen({ onBack }: Props) {
     const pool = LANGUAGES.filter(l => l.difficulty === diff)
     const seed = Date.now().toString() + diff
     const shuffled = shuffleWithSeed(pool, seed).slice(0, TOTAL)
-    const qs = shuffled.map((t, i) => ({ target: t, choices: getChoices(t, pool, seed + i) }))
+    // Distractors are drawn from the whole language set (preferring the same script),
+    // not just this difficulty — so e.g. Classical Chinese sits next to Mandarin.
+    const qs = shuffled.map((t, i) => ({ target: t, choices: getChoices(t, LANGUAGES, seed + i) }))
     setQuestions(qs)
     setIdx(0)
     setAnswers([])
@@ -183,7 +186,10 @@ export default function LanguageQuizScreen({ onBack }: Props) {
           <div className="text-xs font-semibold uppercase tracking-widest mb-3" style={{ color: diff.border }}>
             🌐 What language is this?
           </div>
-          <p className="text-xl leading-relaxed font-semibold" style={{ color: "#F5F3FF" }}>
+          <p className="text-xl leading-relaxed font-semibold" style={{
+            color: "#F5F3FF",
+            fontFamily: (showRoman && !q.target.isLatinScript) ? undefined : scriptFont(detectScript(q.target.sample)),
+          }}>
             {showRoman && !q.target.isLatinScript ? q.target.romanized : q.target.sample}
           </p>
           {!q.target.isLatinScript && (
@@ -221,7 +227,7 @@ export default function LanguageQuizScreen({ onBack }: Props) {
             <div className="text-xs font-semibold mb-1" style={{ color: selected === correctIdx ? "#34D399" : "#F43F5E" }}>
               {selected === correctIdx ? `✓ Correct — ${q.target.name}` : `✗ That was ${q.target.name}`}
             </div>
-            <p className="text-sm" style={{ color: "#F5F3FF" }}>{q.target.nativeName} is spoken by millions worldwide.</p>
+            <p className="text-sm" style={{ color: "#F5F3FF" }}>{languageNote(q.target)}</p>
           </div>
         )}
 

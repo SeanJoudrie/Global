@@ -7,6 +7,65 @@ export interface LanguageRecord {
   difficulty: 'easy' | 'medium' | 'hard' | 'extreme'
   confusableWith: string[]
   isLatinScript: boolean
+  note?: string
+}
+
+export type Script =
+  | 'latin' | 'cyrillic' | 'greek' | 'han' | 'hangul' | 'arabic' | 'hebrew'
+  | 'devanagari' | 'bengali' | 'tamil' | 'sinhala' | 'thai' | 'khmer' | 'burmese'
+  | 'ethiopic' | 'georgian' | 'armenian' | 'gothic' | 'coptic' | 'cuneiform'
+  | 'hieroglyph' | 'other'
+
+// Detect a writing system from the first strong character of a sample.
+// Used to keep quiz distractors in the same script so the alphabet isn't a giveaway.
+export function detectScript(text: string): Script {
+  for (const ch of text) {
+    const cp = ch.codePointAt(0)!
+    if (cp >= 0x12000 && cp <= 0x1247F) return 'cuneiform'
+    if (cp >= 0x13000 && cp <= 0x1342F) return 'hieroglyph'
+    if (cp >= 0x10330 && cp <= 0x1034F) return 'gothic'
+    if (cp >= 0x2C80 && cp <= 0x2CFF) return 'coptic'
+    if (cp >= 0x0400 && cp <= 0x04FF) return 'cyrillic'
+    if (cp >= 0x0370 && cp <= 0x03FF) return 'greek'
+    if ((cp >= 0x3040 && cp <= 0x30FF) || (cp >= 0x4E00 && cp <= 0x9FFF) || (cp >= 0x3400 && cp <= 0x4DBF)) return 'han'
+    if (cp >= 0xAC00 && cp <= 0xD7A3) return 'hangul'
+    if (cp >= 0x0900 && cp <= 0x097F) return 'devanagari'
+    if (cp >= 0x0980 && cp <= 0x09FF) return 'bengali'
+    if (cp >= 0x0B80 && cp <= 0x0BFF) return 'tamil'
+    if (cp >= 0x0D80 && cp <= 0x0DFF) return 'sinhala'
+    if (cp >= 0x1000 && cp <= 0x109F) return 'burmese'
+    if (cp >= 0x1200 && cp <= 0x137F) return 'ethiopic'
+    if (cp >= 0x0E00 && cp <= 0x0E7F) return 'thai'
+    if (cp >= 0x1780 && cp <= 0x17FF) return 'khmer'
+    if (cp >= 0x0600 && cp <= 0x06FF) return 'arabic'
+    if (cp >= 0x0590 && cp <= 0x05FF) return 'hebrew'
+    if (cp >= 0x10A0 && cp <= 0x10FF) return 'georgian'
+    if (cp >= 0x0530 && cp <= 0x058F) return 'armenian'
+    if (cp >= 0x0041 && cp <= 0x024F) return 'latin'
+  }
+  return 'other'
+}
+
+const SCRIPT_LABELS: Record<Script, string> = {
+  latin: 'Latin', cyrillic: 'Cyrillic', greek: 'Greek', han: 'Chinese (Han)',
+  hangul: 'Korean Hangul', arabic: 'Arabic', hebrew: 'Hebrew', devanagari: 'Devanagari',
+  bengali: 'Bengali', tamil: 'Tamil', sinhala: 'Sinhala', thai: 'Thai', khmer: 'Khmer',
+  burmese: 'Burmese', ethiopic: 'Ethiopic', georgian: 'Georgian', armenian: 'Armenian',
+  gothic: 'Gothic', coptic: 'Coptic', cuneiform: 'cuneiform', hieroglyph: 'Egyptian hieroglyph',
+  other: '',
+}
+
+export function scriptLabel(s: Script): string { return SCRIPT_LABELS[s] }
+
+// Webfont to apply for historic scripts that aren't in default system fonts.
+export function scriptFont(s: Script): string | undefined {
+  switch (s) {
+    case 'cuneiform': return "'Noto Sans Cuneiform', sans-serif"
+    case 'hieroglyph': return "'Noto Sans Egyptian Hieroglyphs', sans-serif"
+    case 'gothic': return "'Noto Sans Gothic', sans-serif"
+    case 'coptic': return "'Noto Sans Coptic', serif"
+    default: return undefined
+  }
 }
 
 export const LANGUAGES: LanguageRecord[] = [
@@ -231,10 +290,54 @@ export const LANGUAGES: LanguageRecord[] = [
   { code:'got', name:'Gothic', nativeName:'𐌲𐌿𐍄𐌹𐍃𐌺', difficulty:'extreme', isLatinScript:false, confusableWith:['non','grc'],
     sample:'𐌰𐍄𐍄𐌰 𐌿𐌽𐍃𐌰𐍂 𐌸𐌿 𐌹𐌽 𐌷𐌹𐌼𐌹𐌽𐌰𐌼.',
     romanized:'Atta unsar thu in himinam. (Our Father who art in heaven)' },
-  { code:'lzh', name:'Classical Chinese', nativeName:'文言', difficulty:'extreme', isLatinScript:false, confusableWith:['zh','ja'],
+  { code:'lzh', name:'Classical Chinese', nativeName:'文言', difficulty:'extreme', isLatinScript:false, confusableWith:['zh','ja','yue'],
     sample:'日出於東而沒於西，日日如是。',
     romanized:'Rì chū yú dōng ér mò yú xī, rìrì rúshì.' },
+
+  // ── Extra regional neighbours (harder to tell apart) ─────────────────────────
+  { code:'yue', name:'Cantonese', nativeName:'廣東話', difficulty:'medium', isLatinScript:false, confusableWith:['zh','ja','lzh'],
+    sample:'太陽每日喺東邊升起，喺西邊落山。',
+    romanized:'Taai-yèuhng múih yaht hái dūng-bīn sīng-héi, hái sāi-bīn lohk-sāan.' },
+  { code:'fy', name:'West Frisian', nativeName:'Frysk', difficulty:'hard', isLatinScript:true, confusableWith:['nl','de','en'],
+    sample:'De sinne komt alle dagen yn it easten op en giet yn it westen ûnder.',
+    romanized:'De sinne komt alle dagen yn it easten op en giet yn it westen ûnder.' },
+
+  // ── Cuneiform & hieroglyphic scripts (rendered via Noto historic webfonts) ───
+  { code:'sux', name:'Sumerian', nativeName:'𒅴𒂠', difficulty:'extreme', isLatinScript:false, confusableWith:['akk','egy'],
+    sample:'𒈗 𒆠𒂗𒄀',
+    romanized:'lugal ki-en-gi — “king of Sumer”' },
+  { code:'akk', name:'Akkadian', nativeName:'𒀝𒅗𒁺𒌑', difficulty:'extreme', isLatinScript:false, confusableWith:['sux','egy'],
+    sample:'𒈗 𒆳𒆳',
+    romanized:'šar mātāti — “king of all lands”' },
+  { code:'egy', name:'Ancient Egyptian', nativeName:'𓂋𓏤𓈖𓆎𓅓𓏏𓊖', difficulty:'extreme', isLatinScript:false, confusableWith:['sux','akk','cop'],
+    sample:'𓂋𓂝𓇳',
+    romanized:'Rꜥ — “Ra”, the sun god' },
 ]
+
+// Notes shown on the answer reveal — short, true statements (the ancient languages
+// in particular are NOT "spoken by millions", so each gets a real fact).
+const LANGUAGE_NOTES: Record<string, string> = {
+  la:  'Latin was the language of ancient Rome and stayed Europe’s language of scholarship for over a thousand years.',
+  grc: 'Ancient Greek is the language of Homer, Plato and the original New Testament.',
+  sa:  'Sanskrit is the classical language of India and the sacred texts of Hinduism.',
+  non: 'Old Norse was spoken by the Vikings and is the direct ancestor of modern Icelandic.',
+  ang: 'Old English is the language of Beowulf, spoken in England before about 1150.',
+  cop: 'Coptic is the final form of the ancient Egyptian language, still used in Coptic Christian worship.',
+  chu: 'Old Church Slavonic was the first Slavic literary language, devised in the 9th century by Saints Cyril and Methodius.',
+  nci: 'Classical Nahuatl was the language of the Aztec Empire — words like “chocolate” and “tomato” come from it.',
+  got: 'Gothic is an extinct East Germanic language, known almost entirely from a 4th-century Bible translation.',
+  lzh: 'Classical Chinese was the written language of imperial China and East Asian scholarship for two millennia.',
+  sux: 'Sumerian, written in cuneiform, is the oldest known written language — and related to no living language.',
+  akk: 'Akkadian was the language of Babylon and Assyria, written in cuneiform on clay tablets.',
+  egy: 'Ancient Egyptian was written in hieroglyphs and spoken along the Nile for more than 3,000 years.',
+}
+
+export function languageNote(l: LanguageRecord): string {
+  if (l.note) return l.note
+  if (LANGUAGE_NOTES[l.code]) return LANGUAGE_NOTES[l.code]
+  const label = scriptLabel(detectScript(l.sample))
+  return label ? `${l.name} is written in the ${label} script.` : `${l.name} (${l.nativeName}).`
+}
 
 export type Difficulty = 'easy' | 'medium' | 'hard' | 'extreme'
 
