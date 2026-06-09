@@ -34,9 +34,10 @@ function getChoices(target: LanguageRecord, all: LanguageRecord[], seed: string)
 }
 
 const DIFF_COLORS: Record<Difficulty, { bg: string; border: string; label: string }> = {
-  easy:   { bg: "#34D39922", border: "#34D399", label: "🟢 Easy" },
-  medium: { bg: "#F59E0B22", border: "#F59E0B", label: "🟡 Medium" },
-  hard:   { bg: "#F43F5E22", border: "#F43F5E", label: "🔴 Hard" },
+  easy:    { bg: "#34D39922", border: "#34D399", label: "🟢 Easy" },
+  medium:  { bg: "#F59E0B22", border: "#F59E0B", label: "🟡 Medium" },
+  hard:    { bg: "#F43F5E22", border: "#F43F5E", label: "🔴 Hard" },
+  extreme: { bg: "#8B6CFF22", border: "#8B6CFF", label: "💀 Extreme" },
 }
 
 export default function LanguageQuizScreen({ onBack }: Props) {
@@ -97,7 +98,7 @@ export default function LanguageQuizScreen({ onBack }: Props) {
             <p className="text-sm" style={{ color: "#B8A9E0" }}>Read a sentence and identify the language from 4 choices.</p>
           </div>
           <div className="w-full max-w-sm space-y-3">
-            {(["easy", "medium", "hard"] as Difficulty[]).map(d => (
+            {(["easy", "medium", "hard", "extreme"] as Difficulty[]).map(d => (
               <button key={d} onClick={() => startQuiz(d)}
                 className="w-full py-4 px-5 rounded-2xl text-left transition-all active:scale-95 hover:brightness-110"
                 style={{ background: DIFF_COLORS[d].bg, border: `1px solid ${DIFF_COLORS[d].border}66`, color: "#F5F3FF" }}>
@@ -106,6 +107,7 @@ export default function LanguageQuizScreen({ onBack }: Props) {
                   {d === "easy" && "Major world languages — Spanish, French, Mandarin…"}
                   {d === "medium" && "Familiar but tricky — Polish, Greek, Hebrew…"}
                   {d === "hard" && "Obscure & similar-looking — Basque, Georgian, Welsh…"}
+                  {d === "extreme" && "Ancient & dead languages — Latin, Sanskrit, Gothic…"}
                 </div>
               </button>
             ))}
@@ -116,7 +118,8 @@ export default function LanguageQuizScreen({ onBack }: Props) {
   }
 
   if (phase === "result") {
-    const pct = Math.round((score / TOTAL) * 100)
+    const total = questions.length || TOTAL
+    const pct = Math.round((score / total) * 100)
     return (
       <div className="min-h-screen flex flex-col items-center justify-center px-5"
         style={{ background: "linear-gradient(135deg,var(--bg-from) 0%,var(--bg-to) 100%)" }}>
@@ -124,7 +127,7 @@ export default function LanguageQuizScreen({ onBack }: Props) {
           <div className="rounded-2xl p-6 mb-4 text-center"
             style={{ background: "#2D1F52", border: "1px solid #8B6CFF44", boxShadow: "0 0 32px #8B6CFF22" }}>
             <div className="text-5xl mb-3">{pct >= 80 ? "🏆" : pct >= 50 ? "👍" : "📚"}</div>
-            <div className="text-6xl font-black mb-1" style={{ color: "#F5F3FF" }}>{score}/{TOTAL}</div>
+            <div className="text-6xl font-black mb-1" style={{ color: "#F5F3FF" }}>{score}/{total}</div>
             <div className="text-sm mb-3" style={{ color: "#B8A9E0" }}>Guess the Language · {DIFF_COLORS[difficulty].label}</div>
             <div className="flex justify-center gap-1 mb-4">
               {answers.map((a, i) => <span key={i}>{a === "correct" ? "🟩" : "🟥"}</span>)}

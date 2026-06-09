@@ -4,7 +4,7 @@ export interface LanguageRecord {
   nativeName: string
   sample: string
   romanized: string
-  difficulty: 'easy' | 'medium' | 'hard'
+  difficulty: 'easy' | 'medium' | 'hard' | 'extreme'
   confusableWith: string[]
   isLatinScript: boolean
 }
@@ -171,9 +171,72 @@ export const LANGUAGES: LanguageRecord[] = [
   { code:'uz', name:'Uzbek', nativeName:'Oʻzbek', difficulty:'hard', isLatinScript:true, confusableWith:['kk','tr','az'],
     sample:'Quyosh har kuni sharqdan chiqadi va g\'arbda botadi.',
     romanized:'Quyosh har kuni sharqdan chiqadi va g\'arbda botadi.' },
+
+  // ── MORE MEDIUM ──────────────────────────────────────────────────────────────
+  { code:'sk', name:'Slovak', nativeName:'Slovenčina', difficulty:'medium', isLatinScript:true, confusableWith:['cs','pl'],
+    sample:'Slnko každý deň vychádza na východe a zapadá na západe.',
+    romanized:'Slnko každý deň vychádza na východe a zapadá na západe.' },
+  { code:'sr', name:'Serbian', nativeName:'Српски', difficulty:'medium', isLatinScript:false, confusableWith:['ru','bg','mk','uk'],
+    sample:'Сунце сваког дана излази на истоку, а залази на западу.',
+    romanized:'Sunce svakog dana izlazi na istoku, a zalazi na zapadu.' },
+  { code:'bg', name:'Bulgarian', nativeName:'Български', difficulty:'medium', isLatinScript:false, confusableWith:['ru','mk','sr'],
+    sample:'Слънцето изгрява на изток и залязва на запад всеки ден.',
+    romanized:'Slǎnceto izgryava na iztok i zalyazva na zapad vseki den.' },
+  { code:'ur', name:'Urdu', nativeName:'اردو', difficulty:'medium', isLatinScript:false, confusableWith:['ar','fa'],
+    sample:'سورج ہر روز مشرق سے طلوع ہوتا ہے اور مغرب میں غروب ہوتا ہے۔',
+    romanized:'Sūraj har roz mashriq se tulū hotā hai aur maghrib men ghurūb hotā hai.' },
+  { code:'tl', name:'Tagalog', nativeName:'Tagalog', difficulty:'medium', isLatinScript:true, confusableWith:['id','ms'],
+    sample:'Ang araw ay sumisikat sa silangan at lumulubog sa kanluran araw-araw.',
+    romanized:'Ang araw ay sumisikat sa silangan at lumulubog sa kanluran araw-araw.' },
+
+  // ── MORE HARD ────────────────────────────────────────────────────────────────
+  { code:'et', name:'Estonian', nativeName:'Eesti', difficulty:'hard', isLatinScript:true, confusableWith:['fi','lv','lt'],
+    sample:'Päike tõuseb idas ja loojub läänes iga päev.',
+    romanized:'Päike tõuseb idas ja loojub läänes iga päev.' },
+  { code:'ne', name:'Nepali', nativeName:'नेपाली', difficulty:'hard', isLatinScript:false, confusableWith:['hi','mr','bn'],
+    sample:'सूर्य हरेक दिन पूर्वमा उदाउँछ र पश्चिममा अस्ताउँछ।',
+    romanized:'Sūrya harek din pūrvamā udāũcha ra paścimmā astāũcha.' },
+  { code:'zu', name:'Zulu', nativeName:'isiZulu', difficulty:'hard', isLatinScript:true, confusableWith:['sw','yo'],
+    sample:'Ilanga liphuma empumalanga lishone entshonalanga zonke izinsuku.',
+    romanized:'Ilanga liphuma empumalanga lishone entshonalanga zonke izinsuku.' },
+  { code:'kk', name:'Kazakh', nativeName:'Қазақ', difficulty:'hard', isLatinScript:false, confusableWith:['ru','mn','uz'],
+    sample:'Күн күн сайын шығыстан шығып, батыстан батады.',
+    romanized:'Kün kün sayın şığıstan şığıp, batıstan batadı.' },
+
+  // ── EXTREME (ancient & historical languages — just for fun) ──────────────────
+  { code:'la', name:'Latin', nativeName:'Latina', difficulty:'extreme', isLatinScript:true, confusableWith:['it','es','ro'],
+    sample:'Sol ab oriente oritur et ad occidentem occidit cotidie.',
+    romanized:'Sol ab oriente oritur et ad occidentem occidit cotidie.' },
+  { code:'grc', name:'Ancient Greek', nativeName:'Ἑλληνική', difficulty:'extreme', isLatinScript:false, confusableWith:['el','cop'],
+    sample:'Ὁ ἥλιος ἀνατέλλει ἐκ τῆς ἀνατολῆς καὶ δύεται πρὸς δυσμάς.',
+    romanized:'Ho hēlios anatellei ek tēs anatolēs kai dyetai pros dysmas.' },
+  { code:'sa', name:'Sanskrit', nativeName:'संस्कृतम्', difficulty:'extreme', isLatinScript:false, confusableWith:['hi','ne','mr'],
+    sample:'सूर्यः प्रतिदिनं पूर्वस्यां उदेति पश्चिमायां च अस्तं गच्छति।',
+    romanized:'Sūryaḥ pratidinaṃ pūrvasyāṃ udeti paścimāyāṃ ca astaṃ gacchati.' },
+  { code:'non', name:'Old Norse', nativeName:'Norrœnt', difficulty:'extreme', isLatinScript:true, confusableWith:['is','no','da'],
+    sample:'Sól rís í austri ok sezk í vestri hvern dag.',
+    romanized:'Sól rís í austri ok sezk í vestri hvern dag.' },
+  { code:'ang', name:'Old English', nativeName:'Englisc', difficulty:'extreme', isLatinScript:true, confusableWith:['en','de','non'],
+    sample:'Sēo sunne ārīst on ēastan and gǣþ to setle on westan ǣlce dæg.',
+    romanized:'Seo sunne arist on eastan and gaeth to setle on westan aelce daeg.' },
+  { code:'cop', name:'Coptic', nativeName:'ϯⲙⲉⲧⲣⲉⲙⲛ̀ⲭⲏⲙⲓ', difficulty:'extreme', isLatinScript:false, confusableWith:['grc','el'],
+    sample:'ⲡⲣⲏ ϣⲁϥϣⲁ ϩⲓ ⲡⲥⲁ ⲛ̀ϣⲁ ⲟⲩⲟϩ ϣⲁϥϩⲱⲧⲡ ϩⲓ ⲡⲥⲁ ⲛ̀ϩⲱⲧⲡ.',
+    romanized:'Pre shafsha hi psa ensha ouoh shafhotp hi psa enhotp.' },
+  { code:'chu', name:'Old Church Slavonic', nativeName:'Словѣ́ньскъ', difficulty:'extreme', isLatinScript:false, confusableWith:['ru','bg','sr'],
+    sample:'Слъньце въсходитъ отъ въстока и заходитъ на западъ.',
+    romanized:'Slŭnĭce vŭsxoditŭ otŭ vŭstoka i zaxoditŭ na zapadŭ.' },
+  { code:'nci', name:'Classical Nahuatl', nativeName:'Nāhuatl', difficulty:'extreme', isLatinScript:true, confusableWith:['es','la'],
+    sample:'In tōnatiuh mōmoztlae huālquīza in tlauhcopa īhuān oncalaqui in cihuātlāmpa.',
+    romanized:'In tonatiuh momoztlae hualquiza in tlauhcopa ihuan oncalaqui in cihuatlampa.' },
+  { code:'got', name:'Gothic', nativeName:'𐌲𐌿𐍄𐌹𐍃𐌺', difficulty:'extreme', isLatinScript:false, confusableWith:['non','grc'],
+    sample:'𐌰𐍄𐍄𐌰 𐌿𐌽𐍃𐌰𐍂 𐌸𐌿 𐌹𐌽 𐌷𐌹𐌼𐌹𐌽𐌰𐌼.',
+    romanized:'Atta unsar thu in himinam. (Our Father who art in heaven)' },
+  { code:'lzh', name:'Classical Chinese', nativeName:'文言', difficulty:'extreme', isLatinScript:false, confusableWith:['zh','ja'],
+    sample:'日出於東而沒於西，日日如是。',
+    romanized:'Rì chū yú dōng ér mò yú xī, rìrì rúshì.' },
 ]
 
-export type Difficulty = 'easy' | 'medium' | 'hard'
+export type Difficulty = 'easy' | 'medium' | 'hard' | 'extreme'
 
 export function getLanguagesByDifficulty(diff: Difficulty): LanguageRecord[] {
   return LANGUAGES.filter(l => l.difficulty === diff)

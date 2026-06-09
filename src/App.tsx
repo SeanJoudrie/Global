@@ -16,6 +16,7 @@ import GeoQuizScreen from "./components/GeoQuizScreen"
 import GauntletScreen from "./components/GauntletScreen"
 import SettingsScreen from "./components/SettingsScreen"
 import StarField from "./components/StarField"
+import EarthLogo from "./components/EarthLogo"
 import { FLAGS } from "./data/flags"
 import type { FlagRecord } from "./data/flags"
 import { loadState, saveState, markFlagLearned, recordDailyResult, awardCrown } from "./utils/storage"
@@ -110,6 +111,26 @@ export default function App() {
   return (
     <div style={{ background: 'linear-gradient(135deg,var(--bg-from) 0%,var(--bg-to) 100%)', minHeight: "100vh" }}>
       {screen !== "splash" && <StarField />}
+
+      {/* Persistent home logo — fixed top-left on every screen except splash/home.
+          Tapping it always jumps back to the home page. */}
+      {screen !== "splash" && screen !== "home" && (
+        <button
+          onClick={() => setScreen("home")}
+          aria-label="Home"
+          title="Home"
+          style={{
+            position: "fixed", top: 10, right: 12, zIndex: 50,
+            display: "flex", alignItems: "center", gap: 6,
+            padding: "4px 10px 4px 6px", borderRadius: 999,
+            background: "rgba(45,31,82,0.85)", border: "1px solid #8B6CFF44",
+            backdropFilter: "blur(6px)", cursor: "pointer",
+          }}
+        >
+          <EarthLogo size={24} />
+          <span style={{ color: "#F5F3FF", fontWeight: 800, fontSize: 13 }}>Home</span>
+        </button>
+      )}
 
       {screen === "splash" && <SplashScreen onDone={() => setScreen("home")} />}
 

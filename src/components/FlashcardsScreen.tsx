@@ -66,6 +66,17 @@ export default function FlashcardsScreen({ onBack, onQuizSet }: Props) {
     }, 230)
   }
 
+  // Step back one card (used by the desktop arrows). Wraps at the start.
+  const goPrev = () => {
+    if (exiting) return
+    setExiting('right')
+    setTimeout(() => {
+      setCardIdx(i => (i <= 0 ? cards.length - 1 : i - 1))
+      setFlipped(false)
+      setExiting(null)
+    }, 230)
+  }
+
   const handleFlip = () => {
     if (!flipped) {
       // Track this card as recently studied when revealed
@@ -201,6 +212,18 @@ export default function FlashcardsScreen({ onBack, onQuizSet }: Props) {
 
       <div className="flex-1 flex flex-col items-center justify-center px-5 pb-10" style={{ zIndex: 1, position: 'relative' }}>
         <div style={{ width: '100%', maxWidth: 360, position: 'relative' }}>
+          {/* Desktop-only navigation arrows (mobile uses swipe) */}
+          <button onClick={e => { e.stopPropagation(); goPrev() }} aria-label="Previous card"
+            className="hidden sm:flex items-center justify-center active:scale-90 transition-transform"
+            style={{ position: 'absolute', left: -64, top: '50%', transform: 'translateY(-50%)', zIndex: 5,
+              width: 44, height: 44, borderRadius: 999, fontSize: 22,
+              background: '#2D1F52', border: '1px solid #8B6CFF44', color: '#A78BFA', cursor: 'pointer' }}>‹</button>
+          <button onClick={e => { e.stopPropagation(); advance('left') }} aria-label="Next card"
+            className="hidden sm:flex items-center justify-center active:scale-90 transition-transform"
+            style={{ position: 'absolute', right: -64, top: '50%', transform: 'translateY(-50%)', zIndex: 5,
+              width: 44, height: 44, borderRadius: 999, fontSize: 22,
+              background: '#2D1F52', border: '1px solid #8B6CFF44', color: '#A78BFA', cursor: 'pointer' }}>›</button>
+
           <div className="absolute inset-0 rounded-2xl" style={{ background: '#2D1F52', transform: 'rotate(3deg) scale(0.97) translateY(8px)', opacity: 0.4 }} />
           <div className="absolute inset-0 rounded-2xl" style={{ background: '#2D1F52', transform: 'rotate(-1.5deg) scale(0.985) translateY(4px)', opacity: 0.65 }} />
 

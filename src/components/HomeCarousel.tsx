@@ -186,19 +186,19 @@ export default function HomeCarousel({ onStartDaily, dailyDone, todayScore }: Pr
             display: "-webkit-box", WebkitLineClamp: 3, WebkitBoxOrient: "vertical", overflow: "hidden",
           }}>{dailyFlag.funFact}</p>
         </div>
-        {/* Flag right */}
+        {/* Flag right — enlarged and filling the frame so it reads as a real flag */}
         <div style={{
-          flexShrink: 0, width: 108, height: 72,
-          borderRadius: 10, overflow: "hidden",
-          border: "2px solid #34D39944",
-          boxShadow: "0 0 20px #34D39930",
+          flexShrink: 0, width: 152, height: 104,
+          borderRadius: 12, overflow: "hidden",
+          border: "2px solid #34D39966",
+          boxShadow: "0 0 24px #34D39938",
           background: "#1A1033",
           display: "flex", alignItems: "center", justifyContent: "center",
         }}>
           <img
             src={dailyFlag.flagUrl}
             alt={dailyFlag.name}
-            style={{ maxWidth: "100%", maxHeight: "100%", objectFit: "contain", display: "block" }}
+            style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
             onError={e => { (e.target as HTMLImageElement).style.display = "none" }}
           />
         </div>

@@ -43,10 +43,31 @@ export const THEMES: Theme[] = [
   },
   {
     id: 'teal',
-    name: 'Arctic Teal',
-    icon: '🧊',
-    bgFrom: '#011C1A', bgTo: '#042E2B',
-    cardBg: '#063832', accent: '#14B8A6', accentLight: '#2DD4BF', muted: '#99F6E4',
+    name: 'Teal & Orange',
+    icon: '🪸',
+    bgFrom: '#021C1A', bgTo: '#053330',
+    cardBg: '#06403A', accent: '#FB8C3C', accentLight: '#FDBA74', muted: '#5EEAD4',
+  },
+  {
+    id: 'sunset',
+    name: 'Sunset',
+    icon: '🌅',
+    bgFrom: '#2A1206', bgTo: '#3D1E0A',
+    cardBg: '#3A1E10', accent: '#FB923C', accentLight: '#FDBA74', muted: '#FCD9B0',
+  },
+  {
+    id: 'rose',
+    name: 'Rose Quartz',
+    icon: '🌸',
+    bgFrom: '#240A1A', bgTo: '#3A1029',
+    cardBg: '#3A1430', accent: '#F472B6', accentLight: '#F9A8D4', muted: '#FBCFE8',
+  },
+  {
+    id: 'midnight',
+    name: 'Midnight',
+    icon: '🌃',
+    bgFrom: '#070B1A', bgTo: '#0E1530',
+    cardBg: '#121A38', accent: '#6366F1', accentLight: '#A5B4FC', muted: '#C7D2FE',
   },
 ]
 

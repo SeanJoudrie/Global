@@ -71,11 +71,15 @@ const SHARE_PHRASES = [
   "Flawless! A true vexillologist 🏆",      // 10
 ]
 
+// Pick the flavour line for a score (scales to a 0-10 tier if the quiz isn't out of 10).
+export function scorePhrase(score: number, total: number): string {
+  const idx = total === 10 ? score : Math.round((score / total) * 10)
+  return SHARE_PHRASES[idx] ?? ""
+}
+
 export function generateShareText(result: { score: number; total: number; answers: ('correct' | 'wrong')[]; date: string }): string {
   const emojiRow = result.answers.map(a => a === 'correct' ? '🟩' : '🟥').join('')
-  // Index a phrase by score; if the quiz wasn't out of 10, scale to the nearest tier.
-  const idx = result.total === 10 ? result.score : Math.round((result.score / result.total) * 10)
-  const phrase = SHARE_PHRASES[idx] ?? ""
+  const phrase = scorePhrase(result.score, result.total)
   const scoreLine = `${result.score}/${result.total} 🌍${phrase ? ` ${phrase}` : ""}`
   return `Globalio ${result.date}\n${scoreLine}\n${emojiRow}\nPlay at globalio.netlify.app`
 }
