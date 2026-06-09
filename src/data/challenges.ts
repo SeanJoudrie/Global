@@ -1564,36 +1564,92 @@ export const CHALLENGE_CONTINENTS: ChallengeContinent[] = [
         ],
       },
 
-      // ── Ireland (4 provinces) ────────────────────────────────────────────
+      // ── Ireland (26 counties) ────────────────────────────────────────────
       {
-        code: "IE", name: "Ireland", emoji: "🇮🇪", subTitle: "4 Provinces", locked: false,
+        code: "IE", name: "Ireland", emoji: "🇮🇪", subTitle: "26 Counties", locked: false,
         subRegions: [
-          { code: "ie-c", name: "Connacht", flagUrl: flag("ie-c") },
-          { code: "ie-l", name: "Leinster", flagUrl: flag("ie-l") },
-          { code: "ie-m", name: "Munster",  flagUrl: flag("ie-m") },
-          { code: "ie-u", name: "Ulster",   flagUrl: flag("ie-u") },
+          { code: "ie-cw", name: "Carlow",     flagUrl: flag("ie-cw") },
+          { code: "ie-cn", name: "Cavan",      flagUrl: flag("ie-cn") },
+          { code: "ie-ce", name: "Clare",      flagUrl: flag("ie-ce") },
+          { code: "ie-co", name: "Cork",       flagUrl: flag("ie-co") },
+          { code: "ie-dl", name: "Donegal",    flagUrl: flag("ie-dl") },
+          { code: "ie-d",  name: "Dublin",     flagUrl: flag("ie-d")  },
+          { code: "ie-g",  name: "Galway",     flagUrl: flag("ie-g")  },
+          { code: "ie-ky", name: "Kerry",      flagUrl: flag("ie-ky") },
+          { code: "ie-ke", name: "Kildare",    flagUrl: flag("ie-ke") },
+          { code: "ie-kk", name: "Kilkenny",   flagUrl: flag("ie-kk") },
+          { code: "ie-ls", name: "Laois",      flagUrl: flag("ie-ls") },
+          { code: "ie-lm", name: "Leitrim",    flagUrl: flag("ie-lm") },
+          { code: "ie-lk", name: "Limerick",   flagUrl: flag("ie-lk") },
+          { code: "ie-ld", name: "Longford",   flagUrl: flag("ie-ld") },
+          { code: "ie-lh", name: "Louth",      flagUrl: flag("ie-lh") },
+          { code: "ie-mo", name: "Mayo",       flagUrl: flag("ie-mo") },
+          { code: "ie-mh", name: "Meath",      flagUrl: flag("ie-mh") },
+          { code: "ie-mn", name: "Monaghan",   flagUrl: flag("ie-mn") },
+          { code: "ie-oy", name: "Offaly",     flagUrl: flag("ie-oy") },
+          { code: "ie-rn", name: "Roscommon",  flagUrl: flag("ie-rn") },
+          { code: "ie-so", name: "Sligo",      flagUrl: flag("ie-so") },
+          { code: "ie-ta", name: "Tipperary",  flagUrl: flag("ie-ta") },
+          { code: "ie-wd", name: "Waterford",  flagUrl: flag("ie-wd") },
+          { code: "ie-wh", name: "Westmeath",  flagUrl: flag("ie-wh") },
+          { code: "ie-wx", name: "Wexford",    flagUrl: flag("ie-wx") },
+          { code: "ie-ww", name: "Wicklow",    flagUrl: flag("ie-ww") },
         ],
       },
 
-      // ── Serbia (districts / autonomous provinces) ────────────────────────
+      // ── Serbia (25 districts + Belgrade) ────────────────────────────────
       {
-        code: "RS", name: "Serbia", emoji: "🇷🇸", subTitle: "5 Regions", locked: false,
+        code: "RS", name: "Serbia", emoji: "🇷🇸", subTitle: "25 Districts", locked: false,
         subRegions: [
-          { code: "rs-vo", name: "Vojvodina",          flagUrl: flag("rs-vo") },
+          // Belgrade City
           { code: "rs-00", name: "Belgrade",           flagUrl: flag("rs-00") },
-          { code: "rs-02", name: "Šumadija & W Serbia",flagUrl: flag("rs-02") },
-          { code: "rs-03", name: "S & E Serbia",       flagUrl: flag("rs-03") },
-          { code: "rs-km", name: "Kosovo & Metohija",  flagUrl: flag("rs-km") },
+          // Central Serbia – 17 districts
+          { code: "rs-01", name: "Braničevo",          flagUrl: flag("rs-01") },
+          { code: "rs-02", name: "Jablanica",          flagUrl: flag("rs-02") },
+          { code: "rs-03", name: "Kolubara",           flagUrl: flag("rs-03") },
+          { code: "rs-04", name: "Mačva",              flagUrl: flag("rs-04") },
+          { code: "rs-05", name: "Moravica",           flagUrl: flag("rs-05") },
+          { code: "rs-06", name: "Nišava",             flagUrl: flag("rs-06") },
+          { code: "rs-07", name: "Pčinja",             flagUrl: flag("rs-07") },
+          { code: "rs-08", name: "Pirot",              flagUrl: flag("rs-08") },
+          { code: "rs-09", name: "Podunavlje",         flagUrl: flag("rs-09") },
+          { code: "rs-10", name: "Pomoravlje",         flagUrl: flag("rs-10") },
+          { code: "rs-11", name: "Rasina",             flagUrl: flag("rs-11") },
+          { code: "rs-12", name: "Raška",              flagUrl: flag("rs-12") },
+          { code: "rs-13", name: "Toplica",            flagUrl: flag("rs-13") },
+          { code: "rs-14", name: "Zaječar",            flagUrl: flag("rs-14") },
+          { code: "rs-15", name: "Zlatibor",           flagUrl: flag("rs-15") },
+          { code: "rs-16", name: "Šumadija",           flagUrl: flag("rs-16") },
+          { code: "rs-17", name: "Bor",                flagUrl: flag("rs-17") },
+          // Vojvodina – 7 districts
+          { code: "rs-19", name: "South Bačka",        flagUrl: flag("rs-19") },
+          { code: "rs-20", name: "North Bačka",        flagUrl: flag("rs-20") },
+          { code: "rs-21", name: "West Bačka",         flagUrl: flag("rs-21") },
+          { code: "rs-22", name: "North Banat",        flagUrl: flag("rs-22") },
+          { code: "rs-23", name: "Central Banat",      flagUrl: flag("rs-23") },
+          { code: "rs-24", name: "South Banat",        flagUrl: flag("rs-24") },
+          { code: "rs-25", name: "Srem",               flagUrl: flag("rs-25") },
         ],
       },
 
-      // ── Bosnia and Herzegovina ───────────────────────────────────────────
+      // ── Bosnia and Herzegovina (FBiH cantons + RS + Brčko) ───────────────
       {
-        code: "BA", name: "Bosnia & Herzegovina", emoji: "🇧🇦", subTitle: "3 Entities", locked: false,
+        code: "BA", name: "Bosnia & Herzegovina", emoji: "🇧🇦", subTitle: "12 Cantons & Entities", locked: false,
         subRegions: [
-          { code: "ba-bih", name: "Federation of B&H", flagUrl: flag("ba-bih") },
-          { code: "ba-srp", name: "Republika Srpska",  flagUrl: flag("ba-srp") },
-          { code: "ba-brc", name: "Brčko District",    flagUrl: flag("ba-brc") },
+          // Federation of B&H – 10 cantons
+          { code: "ba-f01", name: "Una-Sana",            flagUrl: flag("ba-f01") },
+          { code: "ba-f02", name: "Posavina",            flagUrl: flag("ba-f02") },
+          { code: "ba-f03", name: "Tuzla",               flagUrl: flag("ba-f03") },
+          { code: "ba-f04", name: "Zenica-Doboj",        flagUrl: flag("ba-f04") },
+          { code: "ba-f05", name: "Bosnian Podrinje",    flagUrl: flag("ba-f05") },
+          { code: "ba-f06", name: "Central Bosnia",      flagUrl: flag("ba-f06") },
+          { code: "ba-f07", name: "Herzegovina-Neretva", flagUrl: flag("ba-f07") },
+          { code: "ba-f08", name: "West Herzegovina",    flagUrl: flag("ba-f08") },
+          { code: "ba-f09", name: "Sarajevo",            flagUrl: flag("ba-f09") },
+          { code: "ba-f10", name: "Canton 10 (Livno)",   flagUrl: flag("ba-f10") },
+          // Other entities
+          { code: "ba-srp", name: "Republika Srpska",    flagUrl: flag("ba-srp") },
+          { code: "ba-brc", name: "Brčko District",      flagUrl: flag("ba-brc") },
         ],
       },
 
