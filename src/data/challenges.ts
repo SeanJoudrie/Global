@@ -2264,7 +2264,7 @@ export const CHALLENGE_CONTINENTS: ChallengeContinent[] = [
           { code: "nz-mwt", name: "Manawatu-Whanganui" },
           { code: "nz-nsn", name: "Nelson" },
           { code: "nz-ntl", name: "Northland" },
-          { code: "nz-ota", name: "Otago" },
+          { code: "nz-ota", name: "Otago", flagUrl: wiki("Flag of Otago.svg") },
           { code: "nz-stl", name: "Southland" },
           { code: "nz-tas", name: "Tasman" },
           { code: "nz-tki", name: "Taranaki" },
