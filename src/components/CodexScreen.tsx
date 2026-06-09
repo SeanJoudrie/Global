@@ -316,7 +316,7 @@ const NO_SUBDIVISION_FLAG_COUNTRIES = new Set<string>([
   'RW', 'TG', 'UG', 'ZM', 'MG', 'ZW', 'GA', 'SL', 'TN', 'SO', 'TZ', 'MU', 'ST',
   // Americas — subdivisions confirmed flagless (Cuba province flags were deleted as
   // fakes; Suriname/Haiti/DR have only a handful, handled individually).
-  'CU', 'SR', 'HT', 'DO',
+  'CU', 'SR', 'HT', 'DO', 'BZ',
   // Only unofficial/proposed designs exist for these — no official subdivision flags.
   // (Countries with SOME official flags keep their flagged tiles; only flagless ones show "No flag".)
   'AO', 'CM', 'ZA',
