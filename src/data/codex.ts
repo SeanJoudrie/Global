@@ -2222,6 +2222,159 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       note: 'Adopted at independence from Britain in 1960, the flag deliberately avoided any cross or crescent and the blue/red of the two motherlands, aiming for neutrality between Greek and Turkish Cypriots.',
     },
   ],
+
+  // ── Africa ──────────────────────────────────────────────────────────────────
+  ZM: [
+    {
+      fromYear: 1996,
+      toYear: null,
+      flagUrl: 'https://flagcdn.com/w320/zm.png',
+      label: 'Current flag',
+      note: 'In 1996 the field green was brightened and the orange eagle redrawn to match the coat of arms. The eagle and red-black-orange stripes sit unusually in the fly rather than the center.',
+    },
+    {
+      fromYear: 1964,
+      toYear: 1996,
+      flagUrl: fp('Flag_of_Zambia_(1964–1996).svg'),
+      label: 'Independence flag',
+      note: 'Adopted at independence from Britain on 24 October 1964, replacing the Northern Rhodesia flag. This original version used a darker shade of green.',
+    },
+  ],
+  ZW: [
+    {
+      fromYear: 1980,
+      toYear: null,
+      flagUrl: 'https://flagcdn.com/w320/zw.png',
+      label: 'Flag of Zimbabwe',
+      note: 'Adopted at independence in 1980, it uses the green-yellow-red-black ZANU-PF colors with a red star and the golden Zimbabwe Bird, a soapstone carving found at the ruins of Great Zimbabwe.',
+    },
+    {
+      fromYear: 1979,
+      toYear: 1980,
+      flagUrl: fp('Flag_of_Zimbabwe_Rhodesia_(1979).svg'),
+      label: 'Zimbabwe Rhodesia',
+      note: 'Used briefly by the short-lived state of Zimbabwe Rhodesia in 1979 after the internal settlement, featuring a Zimbabwe Bird on a white disc, before the country reverted to British control.',
+    },
+    {
+      fromYear: 1968,
+      toYear: 1979,
+      flagUrl: fp('Flag_of_Rhodesia_(1968–1979).svg'),
+      label: 'Rhodesia (UDI era)',
+      note: 'On the third anniversary of the Unilateral Declaration of Independence, the white-minority government adopted a green-white-green triband with the colonial arms — flying over an internationally unrecognized state.',
+    },
+    {
+      fromYear: 1964,
+      toYear: 1968,
+      flagUrl: fp('Flag_of_Rhodesia_(1964–1968).svg'),
+      label: 'Rhodesia light-blue ensign',
+      note: 'After Southern Rhodesia became simply "Rhodesia" in 1964, it flew a light-blue ensign with the colonial shield, retained through the 1965 UDI.',
+    },
+  ],
+  MW: [
+    {
+      fromYear: 2012,
+      toYear: null,
+      flagUrl: 'https://flagcdn.com/w320/mw.png',
+      label: 'Flag of Malawi (restored)',
+      note: 'After President Mutharika\'s death, Parliament voted in 2012 to restore the original 1964 design — a rare "changed and changed back" flag story. The red rising sun symbolizes the dawn of freedom across Africa.',
+    },
+    {
+      fromYear: 2010,
+      toYear: 2012,
+      flagUrl: fp('Flag_of_Malawi_(2010–2012).svg'),
+      label: "'Full sun' flag",
+      note: 'Changed in 2010 under President Mutharika to a full white sun, meant to show economic progress. The unpopular change was nicknamed the "Bingu flag" and reversed two years later.',
+    },
+    {
+      fromYear: 1964,
+      toYear: 2010,
+      flagUrl: fp('Flag_of_Malawi.svg'),
+      label: 'Independence flag',
+      note: 'Adopted at independence on 6 July 1964, the black-red-green triband with a red rising sun of 31 rays — the same design restored in 2012.',
+    },
+  ],
+  MZ: [
+    {
+      fromYear: 1983,
+      toYear: null,
+      flagUrl: 'https://flagcdn.com/w320/mz.png',
+      label: 'Flag of Mozambique',
+      note: 'Adopted in 1983, this is the only national flag in the world to depict a modern assault rifle: a bayoneted AK-47 crossed with a hoe over an open book, atop a gold star.',
+    },
+    {
+      fromYear: 1975,
+      toYear: 1983,
+      flagUrl: fp('Flag_of_Mozambique_(1975–1983).svg'),
+      label: 'Independence flag',
+      note: 'Adopted at independence in 1975, it placed a white cogwheel emblem with a book, hoe, and rifle at the hoist where the four colored stripes converged.',
+    },
+    {
+      fromYear: 1974,
+      toYear: 1975,
+      flagUrl: fp('Flag_of_Mozambique_(1974–1975).svg'),
+      label: 'Transitional FRELIMO flag',
+      note: 'Used during the transition between the Portuguese ceasefire and full independence, based directly on the FRELIMO liberation-movement banner.',
+    },
+  ],
+  BW: [
+    {
+      fromYear: 1966,
+      toYear: null,
+      flagUrl: 'https://flagcdn.com/w320/bw.png',
+      label: 'Flag of Botswana',
+      note: 'First hoisted at independence in 1966. The light blue stands for water and rain (the national motto "Pula" means "let there be rain"); the black band with white edges symbolizes racial harmony. It has never been changed.',
+    },
+  ],
+  NA: [
+    {
+      fromYear: 1990,
+      toYear: null,
+      flagUrl: 'https://flagcdn.com/w320/na.png',
+      label: 'Flag of Namibia',
+      note: 'Adopted at independence from South African rule in 1990, assembled from three finalist designs. Its diagonal red band, blue and green triangles, and golden sun reflect the colors of SWAPO.',
+    },
+  ],
+  LS: [
+    {
+      fromYear: 2006,
+      toYear: null,
+      flagUrl: 'https://flagcdn.com/w320/ls.png',
+      label: 'Flag of Lesotho',
+      note: 'Unveiled on the 40th anniversary of independence in 2006, it returned to a peaceful blue-white-green design with a black mokorotlo (traditional Basotho straw hat) in the center, representing the nation\'s people.',
+    },
+    {
+      fromYear: 1987,
+      toYear: 2006,
+      flagUrl: fp('Flag_of_Lesotho_(1987–2006).svg'),
+      label: 'Military-coup flag',
+      note: 'Following the 1986 military coup, this 1987 flag used a diagonal layout with an assegai, knobkerrie, and shield, reflecting the ruling Military Council.',
+    },
+    {
+      fromYear: 1966,
+      toYear: 1987,
+      flagUrl: fp('Flag_of_Lesotho_(1966–1987).svg'),
+      label: 'Independence flag',
+      note: 'Introduced at independence in 1966, this blue-green-red flag bore a white mokorotlo hat in the canton.',
+    },
+  ],
+  SZ: [
+    {
+      fromYear: 1968,
+      toYear: null,
+      flagUrl: 'https://flagcdn.com/w320/sz.png',
+      label: 'Flag of Eswatini',
+      note: 'Adopted at independence in 1968, based on a military banner King Sobhuza II gave the Swazi Pioneer Corps in 1941, featuring a black-and-white Nguni shield with two spears and a fighting staff. The country renamed itself Eswatini in 2018, but the flag was unchanged.',
+    },
+  ],
+  MU: [
+    {
+      fromYear: 1968,
+      toYear: null,
+      flagUrl: 'https://flagcdn.com/w320/mu.png',
+      label: 'The Four Bands',
+      note: 'Adopted at independence in 1968 and known as "Les Quatre Bandes," it has four equal horizontal bands of red, blue, yellow, and green — one of very few national flags with four horizontal stripes.',
+    },
+  ],
 }
 
 export const CODEX_SUMMARIES: Record<string, string> = {
