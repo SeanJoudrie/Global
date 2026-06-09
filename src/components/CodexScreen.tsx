@@ -286,11 +286,21 @@ export default function CodexScreen({ onBack }: Props) {
   )
 }
 
+// Shown when a subdivision is positively confirmed to have no flag.
 const NO_FLAG_PLACEHOLDER = (
   <div style={{ width: '100%', aspectRatio: '3/2', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'rgba(0,0,0,0.45)', borderRadius: 4 }}>
     <span style={{ fontSize: 7, color: 'rgba(255,255,255,0.35)', textAlign: 'center', lineHeight: 1.3 }}>no flag</span>
   </div>
 )
+
+// Shown when a flag may exist but hasn't been added yet (the default for unknowns).
+const UNKNOWN_FLAG_PLACEHOLDER = (
+  <div style={{ width: '100%', aspectRatio: '3/2', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'rgba(139,108,255,0.10)', border: '1px dashed rgba(139,108,255,0.30)', borderRadius: 4 }}>
+    <span style={{ fontSize: 16, lineHeight: 1 }}>🏳️</span>
+  </div>
+)
+// HTML string version for the <img> onError fallback (a broken URL = unverified, not "no flag").
+const UNKNOWN_FLAG_HTML = 'width:100%;aspect-ratio:3/2;display:flex;align-items:center;justify-content:center;background:rgba(139,108,255,0.10);border:1px dashed rgba(139,108,255,0.30);border-radius:4px'
 
 function SubRegionTile({ sr }: { sr: SubRegion }) {
   return (
@@ -300,9 +310,9 @@ function SubRegionTile({ sr }: { sr: SubRegion }) {
             src={sr.flagUrl}
             alt={sr.name}
             style={{ width: '100%', aspectRatio: '3/2', objectFit: 'contain', borderRadius: 4, display: 'block' }}
-            onError={e => { (e.target as HTMLImageElement).replaceWith(Object.assign(document.createElement('div'), { style: 'width:100%;aspect-ratio:3/2;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.45);border-radius:4px', innerHTML: '<span style="font-size:7px;color:rgba(255,255,255,0.35);text-align:center;line-height:1.3">no flag</span>' })) }}
+            onError={e => { (e.target as HTMLImageElement).replaceWith(Object.assign(document.createElement('div'), { style: UNKNOWN_FLAG_HTML, innerHTML: '<span style="font-size:16px;line-height:1">🏳️</span>' })) }}
           />
-        : NO_FLAG_PLACEHOLDER
+        : sr.noFlag ? NO_FLAG_PLACEHOLDER : UNKNOWN_FLAG_PLACEHOLDER
       }
       <span style={{ fontSize: 8.5, color: '#B8A9E0', textAlign: 'center', lineHeight: 1.2, wordBreak: 'break-word' }}>{sr.name}</span>
     </div>

@@ -3,6 +3,7 @@
   name: string
   flagUrl?: string
   group?: string
+  noFlag?: boolean   // true only when we've positively confirmed no flag exists
 }
 
 export interface ChallengeCountry {
