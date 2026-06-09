@@ -608,34 +608,6 @@ const SR_DISTRICTS: SubRegion[] = [
   { code: "sr-wa", name: "Wanica",      flagUrl: flag("sr-wa") },
 ]
 
-// ── EUROPE ────────────────────────────────────────────────────────────────────
-const ES_COMMUNITIES: SubRegion[] = [
-  { code: "es-an", name: "Andalusia",           flagUrl: flag("es-an") },
-  { code: "es-ar", name: "Aragon",              flagUrl: flag("es-ar") },
-  { code: "es-as", name: "Asturias",            flagUrl: flag("es-as") },
-  { code: "es-ib", name: "Balearic Islands",    flagUrl: flag("es-ib") },
-  { code: "es-pv", name: "Basque Country",      flagUrl: flag("es-pv") },
-  { code: "es-cn", name: "Canary Islands",      flagUrl: flag("es-cn") },
-  { code: "es-cb", name: "Cantabria",           flagUrl: flag("es-cb") },
-  { code: "es-cl", name: "Castile and León",    flagUrl: flag("es-cl") },
-  { code: "es-cm", name: "Castile-La Mancha",   flagUrl: flag("es-cm") },
-  { code: "es-ct", name: "Catalonia",           flagUrl: flag("es-ct") },
-  { code: "es-ex", name: "Extremadura",         flagUrl: flag("es-ex") },
-  { code: "es-ga", name: "Galicia",             flagUrl: flag("es-ga") },
-  { code: "es-ri", name: "La Rioja",            flagUrl: flag("es-ri") },
-  { code: "es-md", name: "Madrid",              flagUrl: flag("es-md") },
-  { code: "es-mc", name: "Murcia",              flagUrl: flag("es-mc") },
-  { code: "es-nc", name: "Navarre",             flagUrl: flag("es-nc") },
-  { code: "es-vc", name: "Valencian Community", flagUrl: flag("es-vc") },
-]
-
-const UK_NATIONS: SubRegion[] = [
-  { code: "gb-eng", name: "England",          flagUrl: flag("gb-eng") },
-  { code: "gb-sct", name: "Scotland",         flagUrl: flag("gb-sct") },
-  { code: "gb-wls", name: "Wales",            flagUrl: flag("gb-wls") },
-  { code: "gb-nir", name: "Northern Ireland", flagUrl: flag("gb-nir") },
-]
-
 // ─────────────────────────────────────────────────────────────────────────────
 
 export const CHALLENGE_CONTINENTS: ChallengeContinent[] = [
@@ -703,38 +675,6 @@ export const CHALLENGE_CONTINENTS: ChallengeContinent[] = [
       { code: "UY", name: "Uruguay", emoji: "🇺🇾", subTitle: "19 Departments", subRegions: UY_DEPARTMENTS, locked: false },
       { code: "GY", name: "Guyana", emoji: "🇬🇾", subTitle: "10 Regions", subRegions: GY_REGIONS, locked: true },
       { code: "SR", name: "Suriname", emoji: "🇸🇷", subTitle: "10 Districts", subRegions: SR_DISTRICTS, locked: true },
-    ],
-  },
-
-  // ── EUROPE ────────────────────────────────────────────────────────────────
-  {
-    id: "europe",
-    name: "Europe",
-    emoji: "🌍",
-    locked: false,
-    countries: [
-      { code: "ES", name: "Spain", emoji: "🇪🇸", subTitle: "17 Autonomous Communities", subRegions: ES_COMMUNITIES, locked: false },
-      { code: "GB", name: "United Kingdom", emoji: "🇬🇧", subTitle: "4 Nations", subRegions: UK_NATIONS, locked: false },
-      { code: "DE", name: "Germany", emoji: "🇩🇪", subTitle: "16 States", subRegions: [], locked: true },
-      { code: "FR", name: "France", emoji: "🇫🇷", subTitle: "18 Regions", subRegions: [], locked: true },
-      { code: "IT", name: "Italy", emoji: "🇮🇹", subTitle: "20 Regions", subRegions: [], locked: true },
-      { code: "PT", name: "Portugal", emoji: "🇵🇹", subTitle: "18 Districts", subRegions: [], locked: true },
-      { code: "NL", name: "Netherlands", emoji: "🇳🇱", subTitle: "12 Provinces", subRegions: [], locked: true },
-      { code: "BE", name: "Belgium", emoji: "🇧🇪", subTitle: "10 Provinces", subRegions: [], locked: true },
-      { code: "CH", name: "Switzerland", emoji: "🇨🇭", subTitle: "26 Cantons", subRegions: [], locked: true },
-      { code: "AT", name: "Austria", emoji: "🇦🇹", subTitle: "9 States", subRegions: [], locked: true },
-      { code: "PL", name: "Poland", emoji: "🇵🇱", subTitle: "16 Voivodeships", subRegions: [], locked: true },
-      { code: "SE", name: "Sweden", emoji: "🇸🇪", subTitle: "21 Counties", subRegions: [], locked: true },
-      { code: "NO", name: "Norway", emoji: "🇳🇴", subTitle: "15 Counties", subRegions: [], locked: true },
-      { code: "DK", name: "Denmark", emoji: "🇩🇰", subTitle: "5 Regions", subRegions: [], locked: true },
-      { code: "FI", name: "Finland", emoji: "🇫🇮", subTitle: "19 Regions", subRegions: [], locked: true },
-      { code: "IE", name: "Ireland", emoji: "🇮🇪", subTitle: "4 Provinces", subRegions: [], locked: true },
-      { code: "IS", name: "Iceland", emoji: "🇮🇸", subTitle: "8 Regions", subRegions: [], locked: true },
-      { code: "GR", name: "Greece", emoji: "🇬🇷", subTitle: "13 Regions", subRegions: [], locked: true },
-      { code: "RO", name: "Romania", emoji: "🇷🇴", subTitle: "41 Counties", subRegions: [], locked: true },
-      { code: "HU", name: "Hungary", emoji: "🇭🇺", subTitle: "19 Counties", subRegions: [], locked: true },
-      { code: "CZ", name: "Czech Republic", emoji: "🇨🇿", subTitle: "14 Regions", subRegions: [], locked: true },
-      { code: "AD", name: "Andorra", emoji: "🇦🇩", subTitle: "7 Parishes", subRegions: [], locked: true },
     ],
   },
 
