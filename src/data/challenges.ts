@@ -696,7 +696,7 @@ export const CHALLENGE_CONTINENTS: ChallengeContinent[] = [
           { code: "tt-sjl", name: "San Juan-Laventille",      group: "Trinidad" },
           { code: "tt-sip", name: "Siparia",                  group: "Trinidad" },
           { code: "tt-tup", name: "Tunapuna-Piarco",          group: "Trinidad" },
-          { code: "tt-tob", name: "Tobago",                   group: "Tobago" },
+          { code: "tt-tob", name: "Tobago", flagUrl: wiki("Flag of Tobago.svg"), group: "Tobago" },
         ],
       },
 
@@ -773,7 +773,7 @@ export const CHALLENGE_CONTINENTS: ChallengeContinent[] = [
           { code: "ag-pa", name: "Saint Paul",    group: "Antigua" },
           { code: "ag-pe", name: "Saint Peter",   group: "Antigua" },
           { code: "ag-ph", name: "Saint Philip",  group: "Antigua" },
-          { code: "ag-ba", name: "Barbuda",       group: "Dependencies" },
+          { code: "ag-ba", name: "Barbuda",       flagUrl: wiki("Flag of Barbuda.svg"), group: "Dependencies" },
           { code: "ag-re", name: "Redonda",       group: "Dependencies" },
         ],
       },
