@@ -1,17 +1,27 @@
 import { useState } from "react"
-import { IDENTITY_FLAGS } from "../data/identityFlags"
+import { LGBTQ_FLAGS, OTHER_IDENTITY_FLAGS } from "../data/identityFlags"
 import type { IdentityFlag } from "../data/identityFlags"
 
 interface Props { onBack: () => void }
 
 const ROUNDS = 6
 
-function pickChoices(target: IdentityFlag): IdentityFlag[] {
-  const sameCat = IDENTITY_FLAGS.filter(f => f.id !== target.id && f.category === target.category)
+// The two play modes keep LGBTQ+ pride flags and the civic/ethnic/separatist
+// set in separate pools so a round never mixes the two.
+type ModeId = "lgbtq" | "identity"
+const MODES: { id: ModeId; label: string; emoji: string; pool: IdentityFlag[]; gradient: string }[] = [
+  { id: "lgbtq",    label: "Pride & LGBTQ+",      emoji: "🏳️‍🌈", pool: LGBTQ_FLAGS,
+    gradient: "linear-gradient(90deg,#FF5E5E,#FFD93D,#6BCB77,#4D96FF,#B66DFF)" },
+  { id: "identity", label: "Movements & Identity", emoji: "🏴", pool: OTHER_IDENTITY_FLAGS,
+    gradient: "linear-gradient(90deg,#8B6CFF,#A78BFA)" },
+]
+
+function pickChoices(target: IdentityFlag, pool: IdentityFlag[]): IdentityFlag[] {
+  const sameCat = pool.filter(f => f.id !== target.id && f.category === target.category)
   const shuffled = [...sameCat].sort(() => Math.random() - 0.5)
   const distractors = shuffled.slice(0, 3)
   if (distractors.length < 3) {
-    const extra = IDENTITY_FLAGS
+    const extra = pool
       .filter(f => f.id !== target.id && !distractors.some(d => d.id === f.id))
       .sort(() => Math.random() - 0.5)
       .slice(0, 3 - distractors.length)
@@ -22,10 +32,10 @@ function pickChoices(target: IdentityFlag): IdentityFlag[] {
 
 interface Round { target: IdentityFlag; choices: IdentityFlag[] }
 
-function buildRounds(): Round[] {
-  return [...IDENTITY_FLAGS].sort(() => Math.random() - 0.5)
+function buildRounds(pool: IdentityFlag[]): Round[] {
+  return [...pool].sort(() => Math.random() - 0.5)
     .slice(0, ROUNDS)
-    .map(target => ({ target, choices: pickChoices(target) }))
+    .map(target => ({ target, choices: pickChoices(target, pool) }))
 }
 
 function FlagImg({ src, alt }: { src: string; alt: string }) {
@@ -46,12 +56,49 @@ function FlagImg({ src, alt }: { src: string; alt: string }) {
   )
 }
 
-function IdentityFlagScreenGame({ onBack , onReplay }: Props & { onReplay: () => void }) {
-  const [rounds] = useState(buildRounds)
+export default function IdentityFlagScreen({ onBack }: Props) {
+  const [mode, setMode] = useState<ModeId | null>(null)
+  const [rounds, setRounds] = useState<Round[]>([])
   const [idx, setIdx] = useState(0)
   const [selected, setSelected] = useState<string | null>(null)
   const [scores, setScores] = useState<{ correct: boolean }[]>([])
   const [done, setDone] = useState(false)
+
+  const startMode = (m: ModeId) => {
+    const pool = MODES.find(x => x.id === m)!.pool
+    setMode(m)
+    setRounds(buildRounds(pool))
+    setIdx(0); setSelected(null); setScores([]); setDone(false)
+  }
+
+  const activeMode = MODES.find(m => m.id === mode)
+
+  // ── Mode picker ─────────────────────────────────────────────────────────────
+  if (!mode) {
+    return (
+      <div className="min-h-screen flex flex-col"
+        style={{ background: "linear-gradient(135deg,var(--bg-from) 0%,var(--bg-to) 100%)" }}>
+        <header className="flex items-center gap-3 px-5 pt-8 pb-4">
+          <button onClick={onBack} className="w-9 h-9 flex items-center justify-center rounded-full text-xl"
+            style={{ background: "#2D1F52", color: "#B8A9E0" }}>&#8249;</button>
+          <h1 className="text-2xl font-black" style={{ color: "#F5F3FF" }}>Identity Flags</h1>
+        </header>
+        <div className="flex-1 flex flex-col items-center justify-center px-5 gap-4">
+          <p className="text-sm text-center mb-1" style={{ color: "#B8A9E0", maxWidth: 320 }}>
+            Pick a deck — Pride &amp; LGBTQ+ flags and civic/cultural movement flags are kept separate.
+          </p>
+          {MODES.map(m => (
+            <button key={m.id} onClick={() => startMode(m.id)}
+              className="w-full max-w-sm py-5 rounded-2xl font-bold text-lg transition-all active:scale-95"
+              style={{ background: m.gradient, color: "#fff", textShadow: "0 1px 2px #0006", boxShadow: "0 4px 20px #00000040" }}>
+              <span style={{ fontSize: 26, marginRight: 8 }}>{m.emoji}</span>{m.label}
+              <div className="text-xs font-normal mt-0.5 opacity-90">{m.pool.length} flags</div>
+            </button>
+          ))}
+        </div>
+      </div>
+    )
+  }
 
   const round = rounds[idx]
   const answered = selected !== null
@@ -84,9 +131,9 @@ function IdentityFlagScreenGame({ onBack , onReplay }: Props & { onReplay: () =>
             </div>
           </div>
           <div className="flex flex-col gap-3">
-            <button onClick={onReplay}
+            <button onClick={() => setMode(null)}
               className="w-full py-3.5 rounded-xl font-bold transition-all active:scale-95"
-              style={{ background: "linear-gradient(90deg,#FF5E5E,#FF9F45,#FFD93D,#6BCB77,#4D96FF,#B66DFF)", color: "#fff", textShadow: "0 1px 2px #0006" }}>
+              style={{ background: activeMode?.gradient ?? "linear-gradient(90deg,#FF5E5E,#FF9F45,#FFD93D,#6BCB77,#4D96FF,#B66DFF)", color: "#fff", textShadow: "0 1px 2px #0006" }}>
               Play Again
             </button>
             <button onClick={onBack}
@@ -108,7 +155,7 @@ function IdentityFlagScreenGame({ onBack , onReplay }: Props & { onReplay: () =>
         <button onClick={onBack} className="w-9 h-9 flex items-center justify-center rounded-full text-xl"
           style={{ background: "#2D1F52", color: "#B8A9E0" }}>&#8249;</button>
         <div className="text-center">
-          <div className="text-xs font-semibold uppercase tracking-widest" style={{ color: "#B8A9E0" }}>Identity Flag</div>
+          <div className="text-xs font-semibold uppercase tracking-widest" style={{ color: "#B8A9E0" }}>{activeMode?.label ?? "Identity Flag"}</div>
           <div className="text-sm font-bold" style={{ color: "#F5F3FF" }}>{idx + 1} / {ROUNDS}</div>
         </div>
         <div className="flex gap-1.5">
@@ -123,7 +170,7 @@ function IdentityFlagScreenGame({ onBack , onReplay }: Props & { onReplay: () =>
 
       <div className="mx-5 h-1.5 rounded-full overflow-hidden mb-4" style={{ background: "#2D1F52" }}>
         <div className="h-full rounded-full transition-all duration-500"
-          style={{ width: `${(idx / ROUNDS) * 100}%`, background: "linear-gradient(90deg,#FF5E5E,#FFD93D,#6BCB77,#4D96FF,#B66DFF)" }} />
+          style={{ width: `${(idx / ROUNDS) * 100}%`, background: activeMode?.gradient ?? "linear-gradient(90deg,#FF5E5E,#FFD93D,#6BCB77,#4D96FF,#B66DFF)" }} />
       </div>
 
       <div className="flex flex-col items-center px-5 gap-4">
@@ -167,7 +214,7 @@ function IdentityFlagScreenGame({ onBack , onReplay }: Props & { onReplay: () =>
             </div>
             <button onClick={handleNext}
               className="w-full max-w-sm py-3.5 rounded-xl font-bold transition-all active:scale-95"
-              style={{ background: "linear-gradient(90deg,#FF5E5E,#FFD93D,#6BCB77,#4D96FF,#B66DFF)", color: "#fff", textShadow: "0 1px 2px #0006" }}>
+              style={{ background: activeMode?.gradient ?? "linear-gradient(90deg,#FF5E5E,#FFD93D,#6BCB77,#4D96FF,#B66DFF)", color: "#fff", textShadow: "0 1px 2px #0006" }}>
               {idx + 1 >= ROUNDS ? "See Results →" : "Next →"}
             </button>
           </>
@@ -175,9 +222,4 @@ function IdentityFlagScreenGame({ onBack , onReplay }: Props & { onReplay: () =>
       </div>
     </div>
   )
-}
-
-export default function IdentityFlagScreen({ onBack }: Props) {
-  const [replayKey, setReplayKey] = useState(0)
-  return <IdentityFlagScreenGame key={replayKey} onBack={onBack} onReplay={() => setReplayKey(k => k + 1)} />
 }
