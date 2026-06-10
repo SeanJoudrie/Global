@@ -10,6 +10,7 @@ export interface DailyResult {
 export interface AppState {
   username: string
   learnedFlags: string[]
+  learnedSubs: string[]
   crowns: string[]
   currentStreak: number
   longestStreak: number
@@ -31,6 +32,7 @@ export interface ShareResult {
 const DEFAULT_STATE: AppState = {
   username: "",
   learnedFlags: [],
+  learnedSubs: [],
   crowns: [],
   currentStreak: 0,
   longestStreak: 0,
@@ -58,6 +60,11 @@ export function saveState(state: AppState): void {
 export function markFlagLearned(state: AppState, code: string): AppState {
   if (state.learnedFlags.includes(code)) return state
   return { ...state, learnedFlags: [...state.learnedFlags, code] }
+}
+
+export function markSubLearned(state: AppState, code: string): AppState {
+  if (state.learnedSubs.includes(code)) return state
+  return { ...state, learnedSubs: [...state.learnedSubs, code] }
 }
 
 export function recordDailyResult(state: AppState, result: DailyResult): AppState {

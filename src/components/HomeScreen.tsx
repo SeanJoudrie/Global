@@ -34,6 +34,10 @@ interface Props {
   onGoProgressMap: () => void
   onGoHistorical: () => void
   onGoIdentity: () => void
+  onGoProvinceRoulette: () => void
+  onGoSubStumper: () => void
+  onGoLineage: () => void
+  onGoSubStats: () => void
 }
 
 
@@ -44,6 +48,7 @@ export default function HomeScreen({
   onGoOddOneOut, onGoTheCrop, onGoFlagDNA, onGoBuildFlag, onGoThePeel, onGoLookalikes,
   onGoComposer, onGoSilhouette, onGoFlagFamilies, onGoFunFact,
   onGoProgressMap, onGoHistorical, onGoIdentity,
+  onGoProvinceRoulette, onGoSubStumper, onGoLineage, onGoSubStats,
 }: Props) {
   const today = todayString()
   const dailyDone = state.lastDailyDate === today
@@ -241,6 +246,45 @@ export default function HomeScreen({
           <span style={{ color: "#FF6FD8" }}>›</span>
         </button>
 
+        <button onClick={onGoProvinceRoulette}
+          className="w-full flex items-center justify-between px-5 py-4 rounded-2xl transition-all active:scale-[0.98] hover:brightness-110"
+          style={{ background: "#2D1F52", border: "1px solid #8B6CFF55" }}>
+          <div className="flex items-center gap-3">
+            <span className="text-2xl">🎰</span>
+            <div className="text-left">
+              <div className="font-bold" style={{ color: "#F5F3FF" }}>Province Roulette</div>
+              <div className="text-xs" style={{ color: "#B8A9E0" }}>Subdivision flag → continent → country → region</div>
+            </div>
+          </div>
+          <span style={{ color: "#A78BFA" }}>›</span>
+        </button>
+
+        <button onClick={onGoSubStumper}
+          className="w-full flex items-center justify-between px-5 py-4 rounded-2xl transition-all active:scale-[0.98] hover:brightness-110"
+          style={{ background: "#2D1F52", border: "1px solid #34D39955" }}>
+          <div className="flex items-center gap-3">
+            <span className="text-2xl">📍</span>
+            <div className="text-left">
+              <div className="font-bold" style={{ color: "#F5F3FF" }}>Subdivision Stumper</div>
+              <div className="text-xs" style={{ color: "#B8A9E0" }}>Province flag → name the country</div>
+            </div>
+          </div>
+          <span style={{ color: "#34D399" }}>›</span>
+        </button>
+
+        <button onClick={onGoLineage}
+          className="w-full flex items-center justify-between px-5 py-4 rounded-2xl transition-all active:scale-[0.98] hover:brightness-110"
+          style={{ background: "#2D1F52", border: "1px solid #F59E0B55" }}>
+          <div className="flex items-center gap-3">
+            <span className="text-2xl">🌳</span>
+            <div className="text-left">
+              <div className="font-bold" style={{ color: "#F5F3FF" }}>Lineage</div>
+              <div className="text-xs" style={{ color: "#B8A9E0" }}>Follow the flag's family tree to today's country</div>
+            </div>
+          </div>
+          <span style={{ color: "#F59E0B" }}>›</span>
+        </button>
+
         <h3 className="text-xs font-semibold uppercase tracking-widest pt-1" style={{ color: "#B8A9E0" }}>Reference</h3>
 
         <button onClick={onGoCodex}
@@ -267,6 +311,19 @@ export default function HomeScreen({
             </div>
           </div>
           <span style={{ color: "#FBBF24" }}>›</span>
+        </button>
+
+        <button onClick={onGoSubStats}
+          className="w-full flex items-center justify-between px-5 py-4 rounded-2xl transition-all active:scale-[0.98] hover:brightness-110"
+          style={{ background: "#2D1F52", border: "1px solid #8B6CFF33" }}>
+          <div className="flex items-center gap-3">
+            <span className="text-2xl">📊</span>
+            <div className="text-left">
+              <div className="font-bold" style={{ color: "#F5F3FF" }}>Subdivision Stats</div>
+              <div className="text-xs" style={{ color: "#B8A9E0" }}>{state.learnedSubs.length} subdivision flags learned · by continent</div>
+            </div>
+          </div>
+          <span style={{ color: "#8B6CFF" }}>›</span>
         </button>
 
         <h3 className="text-xs font-semibold uppercase tracking-widest pt-1" style={{ color: "#B8A9E0" }}>Mini Games</h3>
