@@ -2,6 +2,8 @@ import { useState, useRef } from 'react'
 import { FLAGS, REGIONS, getFlagsByRegion } from '../data/flags'
 import type { Region } from '../data/flags'
 import { CHALLENGE_CONTINENTS } from '../data/challenges'
+import { HISTORICAL_FLAGS } from '../data/historicalFlags'
+import { LGBTQ_FLAGS, OTHER_IDENTITY_FLAGS } from '../data/identityFlags'
 import { shuffleWithSeed } from '../utils/prng'
 
 interface Props {
@@ -10,7 +12,14 @@ interface Props {
 }
 
 type Mode = 'menu' | 'learn'
-type DeckType = 'countries' | 'subdivisions'
+type DeckType = 'countries' | 'subdivisions' | 'historical' | 'lgbtq' | 'identity'
+
+// Decks built from a flat list (no region/continent filtering).
+const SIMPLE_DECKS: { id: DeckType; label: string; emoji: string; blurb: string }[] = [
+  { id: 'historical', label: 'Historical', emoji: '📜',     blurb: 'Flags of vanished states & empires' },
+  { id: 'lgbtq',      label: 'LGBTQ+',     emoji: '🏳️‍🌈', blurb: 'Pride & identity flags' },
+  { id: 'identity',   label: 'Identity',   emoji: '🏴',     blurb: 'Civic, ethnic & movement flags' },
+]
 
 // A unified card used by the flip view, built from either a country flag or a subdivision flag.
 interface StudyCard {
@@ -89,7 +98,34 @@ export default function FlashcardsScreen({ onBack, onQuizSet }: Props) {
     }))
   })()
 
-  const cards = deckType === 'countries' ? countryCards : subdivisionCards
+  const historicalCards: StudyCard[] = (() => {
+    if (deckType !== 'historical') return []
+    return shuffleWithSeed(HISTORICAL_FLAGS, sessionSeed + 'hist').map(h => ({
+      key: h.id, flagUrl: h.flagUrl, name: h.name,
+      subtitle: `${h.era} · ${h.region}`, funFact: h.note,
+    }))
+  })()
+
+  const lgbtqCards: StudyCard[] = (() => {
+    if (deckType !== 'lgbtq') return []
+    return shuffleWithSeed(LGBTQ_FLAGS, sessionSeed + 'lgbtq').map(f => ({
+      key: f.id, flagUrl: f.flagUrl, name: f.name, subtitle: f.category, funFact: f.note,
+    }))
+  })()
+
+  const identityCards: StudyCard[] = (() => {
+    if (deckType !== 'identity') return []
+    return shuffleWithSeed(OTHER_IDENTITY_FLAGS, sessionSeed + 'ident').map(f => ({
+      key: f.id, flagUrl: f.flagUrl, name: f.name, subtitle: f.category, funFact: f.note,
+    }))
+  })()
+
+  const cards =
+    deckType === 'countries'    ? countryCards :
+    deckType === 'subdivisions' ? subdivisionCards :
+    deckType === 'historical'   ? historicalCards :
+    deckType === 'lgbtq'        ? lgbtqCards :
+                                  identityCards
   const card = cards.length > 0 ? cards[cardIdx % cards.length] : undefined
   const relIdx = cards.length > 0 ? cardIdx % cards.length : 0
 
@@ -142,16 +178,22 @@ export default function FlashcardsScreen({ onBack, onQuizSet }: Props) {
 
         {/* Deck type tabs */}
         <div className="px-5 mb-4" style={{ zIndex: 1, position: 'relative' }}>
-          <div style={{ display: 'flex', gap: 8, background: '#2D1F52', padding: 4, borderRadius: 14 }}>
-            {(['countries', 'subdivisions'] as DeckType[]).map(t => (
-              <button key={t} onClick={() => setDeckType(t)}
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, background: '#2D1F52', padding: 4, borderRadius: 14 }}>
+            {([
+              { id: 'countries' as DeckType,    label: '🏳️ Countries' },
+              { id: 'subdivisions' as DeckType, label: '📍 Subdivisions' },
+              { id: 'historical' as DeckType,   label: '📜 Historical' },
+              { id: 'lgbtq' as DeckType,        label: '🏳️‍🌈 LGBTQ+' },
+              { id: 'identity' as DeckType,     label: '🏴 Identity' },
+            ]).map(t => (
+              <button key={t.id} onClick={() => setDeckType(t.id)}
                 style={{
-                  flex: 1, padding: '8px 0', borderRadius: 10, fontSize: 13, fontWeight: 700,
+                  flex: '1 0 28%', padding: '8px 4px', borderRadius: 10, fontSize: 12.5, fontWeight: 700,
                   border: 'none', cursor: 'pointer',
-                  background: deckType === t ? 'linear-gradient(135deg,#8B6CFF,#A78BFA)' : 'transparent',
-                  color: deckType === t ? '#fff' : '#B8A9E0',
+                  background: deckType === t.id ? 'linear-gradient(135deg,#8B6CFF,#A78BFA)' : 'transparent',
+                  color: deckType === t.id ? '#fff' : '#B8A9E0',
                 }}>
-                {t === 'countries' ? '🏳️ Countries' : '📍 Subdivisions'}
+                {t.label}
               </button>
             ))}
           </div>
@@ -211,7 +253,7 @@ export default function FlashcardsScreen({ onBack, onQuizSet }: Props) {
               </button>
             </div>
           </>
-        ) : (
+        ) : deckType === 'subdivisions' ? (
           /* ── Subdivisions browser: continent → country ── */
           <div className="flex-1 px-5 overflow-y-auto" style={{ zIndex: 1, position: 'relative' }}>
             <div className="text-xs mb-3" style={{ color: '#B8A9E066' }}>
@@ -258,6 +300,29 @@ export default function FlashcardsScreen({ onBack, onQuizSet }: Props) {
               })}
             </div>
           </div>
+        ) : (
+          /* ── Simple decks: historical / lgbtq / identity ── */
+          <div className="flex-1 flex flex-col items-center justify-center px-5 gap-5" style={{ zIndex: 1, position: 'relative' }}>
+            {(() => {
+              const d = SIMPLE_DECKS.find(x => x.id === deckType)!
+              return (
+                <>
+                  <div style={{ textAlign: 'center' }}>
+                    <div style={{ fontSize: 48 }}>{d.emoji}</div>
+                    <div className="font-black text-xl mt-1" style={{ color: '#F5F3FF' }}>{d.label}</div>
+                    <div className="text-xs mt-1" style={{ color: '#B8A9E0' }}>{d.blurb}</div>
+                    <div className="text-xs mt-2" style={{ color: '#8B6CFF' }}>{cards.length} cards</div>
+                  </div>
+                  <button onClick={startLearn}
+                    className="w-full max-w-sm py-4 rounded-2xl font-bold text-lg transition-all active:scale-95"
+                    style={{ background: 'linear-gradient(135deg,#8B6CFF,#A78BFA)', color: '#fff', boxShadow: '0 4px 20px #8B6CFF55' }}>
+                    📖 Learn
+                    <div className="text-xs font-normal mt-0.5 opacity-75">Swipe through flags & facts</div>
+                  </button>
+                </>
+              )
+            })()}
+          </div>
         )}
       </div>
     )
@@ -275,8 +340,11 @@ export default function FlashcardsScreen({ onBack, onQuizSet }: Props) {
     )
   }
 
+  const simpleDeck = SIMPLE_DECKS.find(d => d.id === deckType)
   const headerSub = deckType === 'countries'
     ? (selectedRegion === 'all' ? 'World' : selectedRegion)
+    : simpleDeck
+    ? simpleDeck.label
     : (subCountry?.name ?? '')
 
   return (
@@ -286,7 +354,7 @@ export default function FlashcardsScreen({ onBack, onQuizSet }: Props) {
           style={{ background: '#2D1F52', color: '#B8A9E0' }}>‹</button>
         <div className="flex-1">
           <h1 className="text-xl font-black" style={{ color: '#F5F3FF' }}>
-            {deckType === 'subdivisions' ? `${headerSub} Subdivisions` : 'Flashcards'}
+            {deckType === 'subdivisions' ? `${headerSub} Subdivisions` : simpleDeck ? simpleDeck.label : 'Flashcards'}
           </h1>
           <div className="text-xs" style={{ color: '#B8A9E0' }}>#{relIdx + 1} / {cards.length} · {deckType === 'subdivisions' ? 'subdivision flags' : headerSub}</div>
         </div>
