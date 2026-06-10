@@ -1,4 +1,4 @@
-interface Props { onBack: () => void }
+interface Props { onBack: () => void; onMegaCodex: () => void }
 
 export interface Theme {
   id: string
@@ -82,7 +82,7 @@ export function saveTheme(id: string) {
   localStorage.setItem(THEME_STORAGE_KEY, id)
 }
 
-export default function SettingsScreen({ onBack }: Props) {
+export default function SettingsScreen({ onBack, onMegaCodex }: Props) {
   const currentId = localStorage.getItem(THEME_STORAGE_KEY) ?? 'space'
 
   const pick = (id: string) => {
@@ -139,6 +139,13 @@ export default function SettingsScreen({ onBack }: Props) {
             )
           })}
         </div>
+
+        {/* secret */}
+        <button onClick={onMegaCodex}
+          className="w-full mt-8 py-2.5 rounded-xl text-xs font-semibold transition-all active:scale-95"
+          style={{ background: 'transparent', border: '1px dashed #8B6CFF22', color: '#8B6CFF55' }}>
+          🌈 Mega Codex
+        </button>
       </div>
     </div>
   )
