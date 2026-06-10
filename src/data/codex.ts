@@ -179,14 +179,14 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     {
       fromYear: 1912,
       toYear: 1928,
-      flagUrl: fp('Flag_of_China_(1912%E2%80%931928).svg'),
+      flagUrl: fp('Flag_of_the_Republic_of_China_1912-1928.svg'),
       label: 'Republic of China (Five-Colored Flag)',
       note: 'The five stripes — red, yellow, blue, white, and black — stood for "Five Races Under One Union": the Han, Manchu, Mongol, Hui, and Tibetan peoples. It served the Beiyang government until the Northern Expedition.',
     },
     {
       fromYear: 1889,
       toYear: 1912,
-      flagUrl: fp('Flag_of_China_(1889%E2%80%931912).svg'),
+      flagUrl: fp('Flag_of_the_Qing_dynasty_(1889-1912).svg'),
       label: 'Qing Dynasty (Yellow Dragon)',
       note: 'The Azure Dragon chasing a red flaming pearl on a yellow field — yellow being the imperial color of the ruling house. An earlier triangular version dated to 1862 before the rectangular flag was standardized.',
     },
@@ -972,7 +972,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     },
     {
       fromYear: 1907, toYear: 1925,
-      flagUrl: fp('Flag_of_Iran_(1907).svg'),
+      flagUrl: fp('State_flag_of_Persia_(1907–1933).svg'),
       label: 'Constitutional Era',
       note: 'The Constitutional Revolution of 1906 forced the Qajar shahs to accept a parliament and a constitution — and updated the flag with the emblem centered on the white stripe for the first time. The lion-and-sun device in this form dated from at least the Safavid empire of the 16th century and symbolised the power of the Persian monarchy and state.',
     },
@@ -1070,7 +1070,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     },
     {
       fromYear: 1789, toYear: 1790,
-      flagUrl: fp('Flag_of_Brabant.svg'),
+      flagUrl: fp('Banner_of_the_Duchy_of_Brabant.svg'),
       label: 'Brabantine Revolution',
       note: 'The 1789 Brabantine Revolution against Austrian rule briefly created the United Belgian States. The revolutionary flag took the black, yellow, and red from the coat of arms of the Duchy of Brabant and arranged them horizontally (black on top, as in the Brabant arms). After Belgium\'s eventual independence in 1830, the revolutionary tradition was honoured but the stripes were turned vertical — creating today\'s distinctive flag.',
     },
@@ -1289,7 +1289,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     },
     {
       fromYear: 1920, toYear: 1948,
-      flagUrl: fp('Flag_of_Mandatory_Palestine.svg'),
+      flagUrl: fp('Ensign_of_the_Palestine_Mandate_(1927–1948).svg'),
       label: 'British Mandate of Palestine',
       note: 'From 1920 to 1948, the territory was governed under a British League of Nations Mandate. The Mandate flag was a British Blue Ensign defaced with a white circle bearing a green "Palestine" inscription. This flag flew over a deeply contested territory where Jewish immigration under Zionist movement auspices clashed violently with the existing Arab population and with British administration, culminating in Britain\'s withdrawal and Israel\'s declaration of independence in 1948.',
     },
@@ -1346,7 +1346,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     },
     {
       fromYear: 1820, toYear: 2002,
-      flagUrl: fp('Flag_of_Bahrain_(1820).svg'),
+      flagUrl: fp('Flag_of_Bahrain_(1820–1932).svg'),
       label: 'Emirate of Bahrain (multiple points)',
       note: 'For most of its modern history, Bahrain\'s flag was simply red, the traditional Kharijite colour of Gulf rulers. The white serrated border was added by treaty with Britain in 1820 to distinguish Bahraini ships as peaceful. The number of serrations varied over the decades — at different times the border had 28, 16, or other numbers of points — before standardisation in 1972 fixed it at 28 and the 2002 reform reduced it to five.',
     },
@@ -1361,7 +1361,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     },
     {
       fromYear: 1899, toYear: 1961,
-      flagUrl: fp('Flag_of_Kuwait_(1956-1961).svg'),
+      flagUrl: fp('Flag_of_Kuwait_(1915-1961).svg'),
       label: 'Kuwait under British protection',
       note: 'The Kuwaiti ruling family, the Al-Sabah, had invited British protection in 1899 to avoid Ottoman annexation. The pre-independence Kuwaiti flags were simple red designs — sometimes with a white serrated border similar to Bahrain\'s — typical of Gulf ruling families. The dramatic shift to green-white-red-black in 1961 was a deliberate assertion of Kuwaiti Arab national identity distinct from both British colonial association and the plain red Gulf tradition.',
     },
@@ -1510,7 +1510,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     },
     {
       fromYear: 1869, toYear: 1898,
-      flagUrl: fp('Flag_of_Cuba_(1869).svg'),
+      flagUrl: fp('Céspedes_flag.svg'),
       label: 'Ten Years\' War rebel flag',
       note: 'During the Ten Years\' War (1868–1878) — Cuba\'s first major independence uprising — rebels in the Oriente region used a flag of red, white, and blue horizontal stripes. The Bayamo flag, raised when rebels captured the town of Bayamo in 1868, is considered Cuba\'s first revolutionary banner. These regional rebel flags were eventually unified around López\'s 1849 design during the final push for independence.',
     },

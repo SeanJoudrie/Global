@@ -121,12 +121,12 @@ export const HISTORICAL_FLAGS: HistoricalEntity[] = [
   // ── Asia & Oceania ──────────────────────────────────────────────────────────
   {
     id: "qing", name: "Qing Dynasty", era: "1889–1912", region: "Asia & Oceania",
-    flagUrl: fp("Flag_of_China_(1889–1912).svg"),
+    flagUrl: fp("Flag_of_the_Qing_dynasty_(1889-1912).svg"),
     note: "The 'Yellow Dragon Flag' shows the Azure Dragon chasing a flaming pearl. It began as a triangular naval ensign in 1862 and became China's first true national flag in 1889.",
   },
   {
     id: "roc-fivecolor", name: "Republic of China (1912)", era: "1912–1928", region: "Asia & Oceania",
-    flagUrl: fp("Flag_of_China_(1912–1928).svg"),
+    flagUrl: fp("Flag_of_the_Republic_of_China_1912-1928.svg"),
     note: "The five stripes stood for the Han, Manchu, Mongol, Hui, and Tibetan peoples under the 'Five Races Under One Union' ideal, until the KMT's Blue Sky flag replaced it in 1928.",
   },
   {
