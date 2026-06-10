@@ -1,0 +1,180 @@
+import type { CSSProperties, ReactNode } from "react"
+import { T, FONT, tint } from "../ui/tokens"
+import type { TabKey } from "../ui/registry"
+
+/* ── Circular progress ring with monospaced % readout ───────────────────── */
+export function ProgressRing({ done, total, accent, size = 40, stroke = 3.5, label = true }:
+  { done: number; total: number; accent: string; size?: number; stroke?: number; label?: boolean }) {
+  const pct = total ? Math.min(1, done / total) : 0
+  const r = (size - stroke) / 2
+  const c = 2 * Math.PI * r
+  const mid = size / 2
+  return (
+    <svg width={size} height={size} style={{ flexShrink: 0 }}>
+      <circle cx={mid} cy={mid} r={r} fill="none" stroke={T.line} strokeWidth={stroke} />
+      <circle cx={mid} cy={mid} r={r} fill="none" stroke={accent} strokeWidth={stroke} strokeLinecap="round"
+        strokeDasharray={c} strokeDashoffset={c * (1 - pct)} transform={`rotate(-90 ${mid} ${mid})`}
+        style={{ transition: "stroke-dashoffset 0.6s ease" }} />
+      {label && (
+        <text x={mid} y={mid} dominantBaseline="central" textAnchor="middle"
+          fill={accent} fontSize={size * 0.27} fontWeight={700}
+          style={{ fontFamily: FONT.mono, letterSpacing: "-0.04em" }}>
+          {Math.round(pct * 100)}
+        </text>
+      )}
+    </svg>
+  )
+}
+
+/* ── Stat pill: mono metric + uppercase micro label ─────────────────────── */
+export function StatPill({ icon, value, label, accent = T.amber, big = false }:
+  { icon?: ReactNode; value: ReactNode; label: string; accent?: string; big?: boolean }) {
+  return (
+    <div style={{
+      display: "flex", flexDirection: "column", gap: 2, padding: big ? "14px 16px" : "8px 12px",
+      borderRadius: 10, background: T.surface, border: `1px solid ${T.line}`, position: "relative", overflow: "hidden",
+    }}>
+      <div style={{ position: "absolute", left: 0, top: 0, bottom: 0, width: 2, background: accent }} />
+      <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+        {icon && <span style={{ fontSize: big ? 15 : 12 }}>{icon}</span>}
+        <span style={{ fontFamily: FONT.mono, fontWeight: 800, fontSize: big ? 26 : 16, color: accent, letterSpacing: "-0.04em", lineHeight: 1 }}>{value}</span>
+      </div>
+      <span className="geo-micro" style={{ fontSize: 8.5, color: T.muted }}>{label}</span>
+    </div>
+  )
+}
+
+/* ── Section header: high-tracking uppercase micro-copy + optional action ── */
+export function SectionHeader({ title, accent = T.muted, action }:
+  { title: string; accent?: string; action?: ReactNode }) {
+  return (
+    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 10 }}>
+      <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+        <span style={{ width: 12, height: 1.5, background: accent, opacity: 0.7 }} />
+        <span className="geo-micro" style={{ fontSize: 10, color: accent }}>{title}</span>
+      </div>
+      {action}
+    </div>
+  )
+}
+
+/* ── Module card: heavy learning tasks (icon, title, subtitle, progress) ── */
+export function ModuleCard({ icon, title, subtitle, accent, progress, onClick }:
+  {
+    icon: ReactNode; title: string; subtitle: string; accent: string
+    progress?: { done: number; total: number }; onClick: () => void
+  }) {
+  const mastered = !!progress && progress.total > 0 && progress.done >= progress.total
+  return (
+    <button onClick={onClick} className={`geo-tap ${mastered ? "geo-foil" : ""}`}
+      style={{
+        width: "100%", display: "flex", alignItems: "center", gap: 13, textAlign: "left",
+        padding: "13px 14px", borderRadius: 12,
+        background: mastered ? undefined : T.surface,
+        border: mastered ? undefined : `1px solid ${T.line}`,
+        position: "relative", overflow: "hidden",
+      }}>
+      {/* accent spine */}
+      <span style={{ position: "absolute", left: 0, top: 10, bottom: 10, width: 2.5, borderRadius: 2, background: accent }} />
+      {/* icon chip */}
+      <span style={{
+        width: 42, height: 42, borderRadius: 10, flexShrink: 0,
+        display: "flex", alignItems: "center", justifyContent: "center", fontSize: 21,
+        background: tint(accent, 0.1), border: `1px solid ${tint(accent, 0.28)}`,
+      }}>{icon}</span>
+      <div style={{ flex: 1, minWidth: 0 }}>
+        <div className="geo-display" style={{ color: T.text, fontWeight: 600, fontSize: 15, letterSpacing: "-0.01em" }}>
+          {title}{mastered && <span style={{ marginLeft: 6 }}>👑</span>}
+        </div>
+        <div style={{ color: T.muted, fontSize: 11.5, marginTop: 1, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{subtitle}</div>
+      </div>
+      {progress
+        ? <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: 3 }}>
+            <ProgressRing done={progress.done} total={progress.total} accent={accent} size={38} />
+            <span style={{ fontFamily: FONT.mono, fontSize: 9, color: T.dim, letterSpacing: "-0.02em" }}>{progress.done}/{progress.total}</span>
+          </div>
+        : <span style={{ color: accent, fontSize: 18, opacity: 0.7 }}>→</span>}
+    </button>
+  )
+}
+
+/* ── Game tile: compact, casual minigames (carousel / grid) ─────────────── */
+export function GameTile({ icon, title, subtitle, accent, onClick, style }:
+  { icon: ReactNode; title: string; subtitle: string; accent: string; onClick: () => void; style?: CSSProperties }) {
+  return (
+    <button onClick={onClick} className="geo-tap"
+      style={{
+        width: 124, flexShrink: 0, textAlign: "left", padding: "12px 12px 13px",
+        borderRadius: 12, background: T.surface, border: `1px solid ${T.line}`,
+        display: "flex", flexDirection: "column", gap: 8, position: "relative", overflow: "hidden",
+        ...style,
+      }}>
+      <span style={{ position: "absolute", right: -14, top: -14, width: 46, height: 46, borderRadius: "50%", background: tint(accent, 0.08) }} />
+      <span style={{
+        width: 34, height: 34, borderRadius: 9, display: "flex", alignItems: "center", justifyContent: "center",
+        fontSize: 18, background: tint(accent, 0.12), border: `1px solid ${tint(accent, 0.3)}`,
+      }}>{icon}</span>
+      <div>
+        <div className="geo-display" style={{ color: T.text, fontWeight: 600, fontSize: 12.5, lineHeight: 1.1 }}>{title}</div>
+        <div style={{ color: T.muted, fontSize: 9.5, marginTop: 3, lineHeight: 1.2 }}>{subtitle}</div>
+      </div>
+    </button>
+  )
+}
+
+/* ── Hero card: image-led, primary actions ──────────────────────────────── */
+export function HeroCard({ eyebrow, title, subtitle, accent, image, onClick, tall = false }:
+  { eyebrow: string; title: ReactNode; subtitle: string; accent: string; image?: ReactNode; onClick: () => void; tall?: boolean }) {
+  return (
+    <button onClick={onClick} className="geo-tap"
+      style={{
+        width: "100%", textAlign: "left", borderRadius: 16, overflow: "hidden", position: "relative",
+        border: `1px solid ${T.line}`, background: T.surface, minHeight: tall ? 150 : 96,
+        display: "flex", flexDirection: "column", justifyContent: "flex-end",
+      }}>
+      {image}
+      <div className="geo-grid-soft" style={{ position: "absolute", inset: 0, opacity: 0.5 }} />
+      <span style={{ position: "absolute", left: 0, top: 0, bottom: 0, width: 3, background: accent }} />
+      <div style={{ position: "relative", padding: "14px 16px" }}>
+        <div className="geo-micro" style={{ fontSize: 9, color: accent, marginBottom: 4 }}>{eyebrow}</div>
+        <div className="geo-display" style={{ color: T.text, fontWeight: 700, fontSize: tall ? 24 : 18, letterSpacing: "-0.02em", lineHeight: 1.05 }}>{title}</div>
+        <div style={{ color: T.muted, fontSize: 12, marginTop: 3 }}>{subtitle}</div>
+      </div>
+    </button>
+  )
+}
+
+/* ── Bottom tab bar ─────────────────────────────────────────────────────── */
+const TAB_META: { key: TabKey; label: string; icon: string; accent: string }[] = [
+  { key: "today", label: "Today", icon: "🛰️", accent: T.amber },
+  { key: "learn", label: "Learn", icon: "📡", accent: T.cyan },
+  { key: "play",  label: "Play",  icon: "🎮", accent: T.chartreuse },
+  { key: "codex", label: "Codex", icon: "🗂️", accent: T.amber },
+  { key: "you",   label: "You",   icon: "🪪", accent: T.cyan },
+]
+
+export function TabBar({ active, onChange }: { active: TabKey; onChange: (t: TabKey) => void }) {
+  return (
+    <nav style={{
+      position: "fixed", left: 0, right: 0, bottom: 0, zIndex: 60,
+      display: "grid", gridTemplateColumns: "repeat(5,1fr)",
+      background: "rgba(8,11,18,0.92)", backdropFilter: "blur(14px)",
+      borderTop: `1px solid ${T.line}`, paddingBottom: "env(safe-area-inset-bottom)",
+    }}>
+      {TAB_META.map(t => {
+        const on = active === t.key
+        return (
+          <button key={t.key} onClick={() => onChange(t.key)}
+            style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 3, padding: "9px 0 8px", position: "relative", background: "transparent" }}>
+            <span style={{
+              position: "absolute", top: 0, height: 2, width: 26, borderRadius: 2,
+              background: on ? t.accent : "transparent", boxShadow: on ? `0 0 10px ${t.accent}` : "none",
+            }} />
+            <span style={{ fontSize: 17, filter: on ? "none" : "grayscale(0.7)", opacity: on ? 1 : 0.55, transition: "all 0.15s" }}>{t.icon}</span>
+            <span className="geo-micro" style={{ fontSize: 8, color: on ? t.accent : T.dim }}>{t.label}</span>
+          </button>
+        )
+      })}
+    </nav>
+  )
+}

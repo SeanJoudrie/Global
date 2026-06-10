@@ -1,6 +1,7 @@
 ﻿import { useState, useCallback, useEffect } from "react"
 import SplashScreen from "./components/SplashScreen"
-import HomeScreen from "./components/HomeScreen"
+import MainTabs from "./components/MainTabs"
+import type { TabKey } from "./ui/registry"
 import FlagsScreen from "./components/FlagsScreen"
 import QuizScreen from "./components/QuizScreen"
 import ReverseQuizScreen from "./components/ReverseQuizScreen"
@@ -62,6 +63,7 @@ export default function App() {
   const [activeQuiz, setActiveQuiz] = useState<ActiveQuiz | null>(null)
   const [lastResult, setLastResult] = useState<{ score: number; total: number; answers: ("correct" | "wrong")[] } | null>(null)
   const [histRegion, setHistRegion] = useState<HistoricalRegion | undefined>(undefined)
+  const [tab, setTab] = useState<TabKey>("today")
 
   useEffect(() => { saveState(appState) }, [appState])
 
@@ -160,38 +162,9 @@ export default function App() {
       {screen === "splash" && <SplashScreen onDone={() => setScreen("home")} />}
 
       {screen === "home" && (
-        <HomeScreen state={appState} onStartDaily={startDaily}
-          onGoFlags={() => setScreen("flags")}
-          onGoAchievements={() => setScreen("achievements")}
-          onGoProfile={() => setScreen("profile")}
-          onGoFlashcards={() => setScreen("flashcards")}
-          onGoLanguage={() => setScreen("language")}
-          onQuickPlay={startQuickPlay}
-          onGoReverseQuiz={startReverseQuiz}
-          onGoCapitalQuiz={() => setScreen("capitalquiz")}
-          onGoChallenge={() => setScreen("challenge")}
-          onGoCodex={() => setScreen("codex")}
-          onGoGeo={() => setScreen("geo")}
-          onGoGauntlet={() => setScreen("gauntlet")}
-          onGoTierList={() => setScreen("tierlist")}
-          onGoSettings={() => setScreen("settings")}
-          onGoOddOneOut={() => setScreen("oddoneout")}
-          onGoTheCrop={() => setScreen("thecrop")}
-          onGoFlagDNA={() => setScreen("flagdna")}
-          onGoBuildFlag={() => setScreen("buildflag")}
-          onGoThePeel={() => setScreen("thepeel")}
-          onGoLookalikes={() => setScreen("lookalikes")}
-          onGoComposer={() => setScreen("composer")}
-          onGoSilhouette={() => setScreen("silhouette")}
-          onGoFlagFamilies={() => setScreen("flagfamilies")}
-          onGoFunFact={() => setScreen("funfact")}
-          onGoProgressMap={() => setScreen("progressmap")}
-          onGoHistorical={() => setScreen("historical")}
-          onGoIdentity={() => setScreen("identity")}
-          onGoProvinceRoulette={() => setScreen("provinceroulette")}
-          onGoSubStumper={() => setScreen("substumper")}
-          onGoLineage={() => setScreen("lineage")}
-          onGoSubStats={() => setScreen("substats")} />
+        <MainTabs state={appState} tab={tab} onTab={setTab}
+          onNavigate={(s) => setScreen(s as Screen)}
+          onQuickPlay={startQuickPlay} onStartDaily={startDaily} onReverseQuiz={startReverseQuiz} />
       )}
 
       {screen === "flags" && (
