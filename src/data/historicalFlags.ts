@@ -1091,6 +1091,47 @@ export const HISTORICAL_FLAGS: HistoricalEntity[] = [
     flagUrl: fp("Flag_of_Emirate_of_Harar.svg"), relatedCode: "ET",
     note: "An independent walled city-state in eastern Ethiopia, a revered centre of Islamic learning, until Emperor Menelik II conquered it in 1887. Its flag bears crossed swords.",
   },
+  // Wave 7+: Indonesian sultanates, Balinese & Indian princely states
+  {
+    id: "siak", name: "Sultanate of Siak Sri Indrapura", era: "1723–1945", region: "Asia & Oceania",
+    flagUrl: fp("Flag_of_Sultanate_of_Siak_Sri_Indrapura.svg"), relatedCode: "ID",
+    note: "A Malay sultanate on Sumatra's east coast that grew rich on trade, flying black and yellow bands with a red hoist crest, until it joined the new Indonesian republic in 1945.",
+  },
+  {
+    id: "pontianak", name: "Sultanate of Pontianak", era: "1771–1950", region: "Asia & Oceania",
+    flagUrl: fp("Flag_of_Pontianak_Sultanate.svg"), relatedCode: "ID",
+    note: "A Borneo sultanate founded at the mouth of the Kapuas River by an Arab sayyid, flying a yellow flag with a green crescent and star.",
+  },
+  {
+    id: "bulungan", name: "Sultanate of Bulungan", era: "1731–1959", region: "Asia & Oceania",
+    flagUrl: fp("Flag_of_the_Bulungan_Sultanate.svg"), relatedCode: "ID",
+    note: "A North Kalimantan coastal sultanate with a simple yellow-over-blue flag, dissolved after a violent 1950s clash with the Indonesian republic.",
+  },
+  {
+    id: "karangasem", name: "Kingdom of Karangasem", era: "1660–1908", region: "Asia & Oceania",
+    flagUrl: fp("Flag_of_the_Kingdom_of_Karangasem.svg"), relatedCode: "ID",
+    note: "A Balinese kingdom in the island's east that once ruled neighbouring Lombok, before falling to the Dutch in the early 1900s.",
+  },
+  {
+    id: "buton", name: "Sultanate of Buton", era: "1332–1960", region: "Asia & Oceania",
+    flagUrl: fp("Flag_of_Lordship_of_Butung_(Buton).svg"), relatedCode: "ID",
+    note: "A long-lived island sultanate off southeast Sulawesi, strategically placed on the spice routes, with a distinctive constitution limiting the sultan's power.",
+  },
+  {
+    id: "baroda", name: "Princely State of Baroda", era: "1721–1949", region: "Asia & Oceania",
+    flagUrl: fp("Baroda_flag.svg"), relatedCode: "IN",
+    note: "One of the wealthiest princely states of British India, ruled by the Maratha Gaekwad dynasty and famed for a pearl carpet and the gem-studded Star of the South diamond.",
+  },
+  {
+    id: "gwalior", name: "Princely State of Gwalior", era: "1731–1948", region: "Asia & Oceania",
+    flagUrl: fp("Flag_of_Gwalior_(State).svg"), relatedCode: "IN",
+    note: "The Scindia dynasty's powerful Maratha state in central India, whose flag bears a sun flanked by cobras; its great hilltop fort guarded the route to the Deccan.",
+  },
+  {
+    id: "indore", name: "Princely State of Indore", era: "1731–1948", region: "Asia & Oceania",
+    flagUrl: fp("Indore_Flag.svg"), relatedCode: "IN",
+    note: "The Holkar dynasty's Maratha state, founded by the remarkable queen-regent Ahilyabai Holkar, who built temples and rest-houses across India.",
+  },
 ]
 
 /** Historical entities tied to a given modern country code, for the Codex. */
