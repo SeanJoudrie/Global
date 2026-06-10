@@ -72,7 +72,16 @@ function buildRounds(count: number): Round[] {
     if (inPool.length < 3 || outPool.length < 1) continue
 
     const three = [...inPool].sort(() => Math.random() - 0.5).slice(0, 3)
-    const odd   = outPool[Math.floor(Math.random() * outPool.length)]
+    // Make it HARD: prefer an odd flag that looks confusingly similar to the
+    // in-group (shares a 'confusableWith' link), so you can't just spot the
+    // visual oddball — you have to actually know the fact.
+    const inCodes = new Set(three.map(f => f.code))
+    const lookalikes = outPool.filter(f =>
+      (f.confusableWith ?? []).some(c => inCodes.has(c)) ||
+      three.some(t => (t.confusableWith ?? []).includes(f.code))
+    )
+    const pickFrom = lookalikes.length ? lookalikes : outPool
+    const odd   = pickFrom[Math.floor(Math.random() * pickFrom.length)]
     const all   = [...three, odd].sort(() => Math.random() - 0.5)
 
     rounds.push({

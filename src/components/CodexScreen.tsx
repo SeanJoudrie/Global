@@ -3,6 +3,7 @@ import { FLAGS } from '../data/flags'
 import { CODEX } from '../data/codex'
 import type { HistoricalFlag } from '../data/codex'
 import { historicalFor } from '../data/historicalFlags'
+import { IDENTITY_FLAGS, IDENTITY_CATEGORIES } from '../data/identityFlags'
 import { CHALLENGE_CONTINENTS } from '../data/challenges'
 import type { SubRegion } from '../data/challenges'
 
@@ -389,7 +390,67 @@ export default function CodexScreen({ onBack }: Props) {
             )
           })
         )}
+
+        {/* Identity & other flags — pride, ethnic, separatist, micronations… */}
+        {!isSearching && <IdentityCodexSection />}
       </div>
+    </div>
+  )
+}
+
+// ── Identity flags browser (pride, ethnic, separatist, micronations, signal) ──
+function IdentityCodexSection() {
+  const [openCat, setOpenCat] = useState<string | null>(null)
+  const [openFlag, setOpenFlag] = useState<string | null>(null)
+  return (
+    <div className="mt-5">
+      <div className="px-1 mb-2">
+        <h3 className="text-sm font-bold uppercase tracking-widest" style={{ color: '#FF6FD8' }}>Identity & Other Flags</h3>
+        <p className="text-xs" style={{ color: '#B8A9E088' }}>{IDENTITY_FLAGS.length} flags beyond countries</p>
+      </div>
+      {IDENTITY_CATEGORIES.map(cat => {
+        const flags = IDENTITY_FLAGS.filter(f => f.category === cat)
+        const isOpen = openCat === cat
+        return (
+          <div key={cat} className="mb-3">
+            <button
+              onClick={() => setOpenCat(o => o === cat ? null : cat)}
+              className="w-full flex items-center justify-between px-4 py-3 rounded-xl transition-all active:scale-[0.98]"
+              style={{ background: isOpen ? '#2D1F52' : '#221740', border: `1px solid ${isOpen ? '#FF6FD855' : '#8B6CFF22'}` }}>
+              <div className="flex items-center gap-2">
+                <h3 className="text-sm font-bold uppercase tracking-widest" style={{ color: '#C084FC' }}>{cat}</h3>
+                <span className="text-xs" style={{ color: '#B8A9E066' }}>{flags.length}</span>
+              </div>
+              <span style={{ color: '#C084FC', fontSize: 18, transition: 'transform 0.2s', transform: isOpen ? 'rotate(90deg)' : 'rotate(0deg)' }}>›</span>
+            </button>
+            {isOpen && (
+              <div className="mt-1.5 space-y-1.5">
+                {flags.map(f => {
+                  const showNote = openFlag === f.id
+                  return (
+                    <button key={f.id} onClick={() => setOpenFlag(o => o === f.id ? null : f.id)}
+                      className="w-full px-4 py-3 rounded-xl transition-all active:scale-[0.99] text-left"
+                      style={{ background: '#2D1F52', border: `1px solid ${showNote ? '#C084FC44' : '#8B6CFF22'}` }}>
+                      <div className="flex items-center gap-3">
+                        <img src={f.flagUrl} alt={f.name}
+                          style={{ width: 46, height: 30, objectFit: 'contain', borderRadius: 5, border: '1px solid #8B6CFF22', flexShrink: 0, background: '#1E1640' }}
+                          onError={e => { (e.target as HTMLImageElement).style.opacity = '0.3' }} />
+                        <div className="flex-1 min-w-0">
+                          <div className="font-semibold text-sm truncate" style={{ color: '#F5F3FF' }}>{f.name}</div>
+                        </div>
+                        <span style={{ color: '#C084FC', fontSize: 16, transition: 'transform 0.2s', transform: showNote ? 'rotate(90deg)' : 'rotate(0deg)' }}>›</span>
+                      </div>
+                      {showNote && (
+                        <p className="text-xs leading-relaxed mt-2.5" style={{ color: '#B8A9E0', lineHeight: 1.65 }}>{f.note}</p>
+                      )}
+                    </button>
+                  )
+                })}
+              </div>
+            )}
+          </div>
+        )
+      })}
     </div>
   )
 }
