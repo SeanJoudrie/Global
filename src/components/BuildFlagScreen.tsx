@@ -67,7 +67,7 @@ function FlagCanvas({
     )
   }
 
-  if (puzzle.layout === 'h3' || puzzle.layout === 'h2') {
+  if (puzzle.layout === 'h3' || puzzle.layout === 'h2' || puzzle.layout === 'h4') {
     return (
       <div style={{ display:'flex', flexDirection:'column', width:FLAG_W, height:FLAG_H, borderRadius:8, overflow:'hidden', boxShadow:'0 0 24px #8B6CFF22' }}>
         {puzzle.slots.map(s => (

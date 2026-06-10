@@ -1,4 +1,4 @@
-export type Layout = 'v3' | 'h3' | 'h2' | 'v2' | 'disc'
+export type Layout = 'v3' | 'h3' | 'h2' | 'v2' | 'h4' | 'disc'
 
 export interface Piece {
   id: string
@@ -272,6 +272,20 @@ const raw: BuildPuzzle[] = [
     slots: ['top', 'bottom'],
     solution: { top: 'r', bottom: 'w' },
     pieces: shuffle([RED('r'), WHITE('w'), BLUE('b'), GREEN('g'), YELLOW('y'), BLACK('k')]),
+  },
+  {
+    code: 'GM', name: 'The Gambia', layout: 'h3',
+    slots: ['top', 'middle', 'bottom'],
+    solution: { top: 'r', middle: 'b', bottom: 'g' },
+    pieces: shuffle([RED('r'), BLUE('b'), GREEN('g'), WHITE('w'), YELLOW('y'), BLACK('k')]),
+  },
+
+  // ── Four horizontal bands (h4) ───────────────────────────────────────────
+  {
+    code: 'MU', name: 'Mauritius', layout: 'h4',
+    slots: ['top', 'upper', 'lower', 'bottom'],
+    solution: { top: 'r', upper: 'b', lower: 'y', bottom: 'g' },
+    pieces: shuffle([RED('r'), BLUE('b'), YELLOW('y'), GREEN('g'), WHITE('w'), BLACK('k')]),
   },
 ]
 

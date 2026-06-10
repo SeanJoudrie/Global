@@ -1,6 +1,41 @@
 import { useState } from "react"
 import { FLAGS } from "../data/flags"
 import type { FlagRecord } from "../data/flags"
+import { FLAG_ATTRIBS } from "../data/flagAttribs"
+import type { FlagAttribs } from "../data/flagAttribs"
+
+const FEATURES = ['stripes', 'cross', 'star', 'crescent', 'emblem'] as const
+
+// How visually similar `oddCode` is to the in-group of three flags. Higher =
+// blends in better. We reward shared colours and matching the group's majority
+// feature profile, and heavily penalise a distinctive "tell" the group lacks
+// (e.g. a Nordic cross among Middle-Eastern flags), so the answer can't be
+// spotted by look alone.
+function visualScore(oddCode: string, three: FlagRecord[]): number {
+  const oa = FLAG_ATTRIBS[oddCode]
+  if (!oa) return -Infinity
+  const inAttrs = three.map(t => FLAG_ATTRIBS[t.code]).filter(Boolean) as FlagAttribs[]
+  if (inAttrs.length === 0) return 0
+  let s = 0
+  const colorFreq: Record<string, number> = {}
+  inAttrs.forEach(a => a.colors.forEach(c => { colorFreq[c] = (colorFreq[c] || 0) + 1 }))
+  oa.colors.forEach(c => { s += (colorFreq[c] || 0) * 1.5 })
+  for (const f of FEATURES) {
+    const inCount = inAttrs.filter(a => a[f]).length
+    if (oa[f] && inCount === 0) s -= 3
+    else if (oa[f] === (inCount >= 2)) s += 1
+  }
+  return s
+}
+
+function pickBlendingOutlier(three: FlagRecord[], outPool: FlagRecord[]): FlagRecord {
+  const scored = outPool
+    .map(f => ({ f, s: visualScore(f.code, three) }))
+    .sort((a, b) => b.s - a.s)
+  // Randomise among the top blending candidates so rounds still vary.
+  const top = scored.slice(0, Math.min(4, scored.length))
+  return (top[Math.floor(Math.random() * top.length)] ?? scored[0]).f
+}
 
 interface Props { onBack: () => void }
 
@@ -72,16 +107,10 @@ function buildRounds(count: number): Round[] {
     if (inPool.length < 3 || outPool.length < 1) continue
 
     const three = [...inPool].sort(() => Math.random() - 0.5).slice(0, 3)
-    // Make it HARD: prefer an odd flag that looks confusingly similar to the
-    // in-group (shares a 'confusableWith' link), so you can't just spot the
-    // visual oddball — you have to actually know the fact.
-    const inCodes = new Set(three.map(f => f.code))
-    const lookalikes = outPool.filter(f =>
-      (f.confusableWith ?? []).some(c => inCodes.has(c)) ||
-      three.some(t => (t.confusableWith ?? []).includes(f.code))
-    )
-    const pickFrom = lookalikes.length ? lookalikes : outPool
-    const odd   = pickFrom[Math.floor(Math.random() * pickFrom.length)]
+    // Make it HARD: choose an outlier that visually blends in with the in-group
+    // (shared palette/symbols, no obvious tell), so you can't just spot the odd
+    // flag — you have to actually know the fact.
+    const odd   = pickBlendingOutlier(three, outPool)
     const all   = [...three, odd].sort(() => Math.random() - 0.5)
 
     rounds.push({
@@ -98,7 +127,7 @@ function buildRounds(count: number): Round[] {
     const inPool  = FLAGS.filter(f => cat.codes.has(f.code))
     const outPool = FLAGS.filter(f => !cat.codes.has(f.code))
     const three   = [...inPool].sort(() => Math.random() - 0.5).slice(0, 3)
-    const odd     = outPool[Math.floor(Math.random() * outPool.length)]
+    const odd     = pickBlendingOutlier(three, outPool)
     const all     = [...three, odd].sort(() => Math.random() - 0.5)
     rounds.push({ question: cat.question, themeLabel: cat.themeLabel, flags: all, oddIndex: all.indexOf(odd) })
   }

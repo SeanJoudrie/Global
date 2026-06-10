@@ -29,8 +29,10 @@ function buildCapitalQuiz(count = 10): CapQ[] {
 }
 
 export default function CapitalQuizScreen({ onBack }: Props) {
-  const [phase, setPhase] = useState<Phase>("menu")
-  const [questions, setQuestions] = useState<CapQ[]>([])
+  // Skip the intro/example screen — picking a capital is intuitive, so start
+  // straight into the quiz.
+  const [phase, setPhase] = useState<Phase>("quiz")
+  const [questions, setQuestions] = useState<CapQ[]>(() => buildCapitalQuiz(10))
   const [idx, setIdx] = useState(0)
   const [answers, setAnswers] = useState<("correct" | "wrong")[]>([])
   const [selected, setSelected] = useState<number | null>(null)
@@ -91,32 +93,6 @@ export default function CapitalQuizScreen({ onBack }: Props) {
   const animClass = (i: number) => {
     if (animating !== i) return ""
     return i === q.correctIndex ? "animate-correct-bounce" : "animate-wrong-shake"
-  }
-
-  if (phase === "menu") {
-    return (
-      <div className="min-h-screen flex flex-col" style={{ background: "linear-gradient(135deg,var(--bg-from) 0%,var(--bg-to) 100%)" }}>
-        <header className="flex items-center gap-3 px-5 pt-8 pb-4" style={{ zIndex: 1, position: "relative" }}>
-          <button onClick={onBack} className="w-9 h-9 flex items-center justify-center rounded-full text-xl"
-            style={{ background: "#2D1F52", color: "#B8A9E0" }}>&#8249;</button>
-          <h1 className="text-2xl font-black" style={{ color: "#F5F3FF" }}>Capital Cities</h1>
-        </header>
-        <div className="flex-1 flex flex-col items-center justify-center px-5 gap-5" style={{ zIndex: 1, position: "relative" }}>
-          <div className="text-6xl">🏛️</div>
-          <div className="text-center">
-            <h2 className="text-xl font-black mb-2" style={{ color: "#F5F3FF" }}>Name that Capital</h2>
-            <p className="text-sm" style={{ color: "#B8A9E0" }}>
-              10 random countries · pick the correct capital city
-            </p>
-          </div>
-          <button onClick={startQuiz}
-            className="w-full max-w-sm py-4 rounded-2xl font-bold text-lg transition-all active:scale-95"
-            style={{ background: "linear-gradient(135deg,#8B6CFF,#A78BFA)", color: "#fff", boxShadow: "0 4px 20px #8B6CFF55" }}>
-            Start Quiz →
-          </button>
-        </div>
-      </div>
-    )
   }
 
   if (phase === "result") {
