@@ -97,7 +97,7 @@ const REGION_EMOJI: Record<string, string> = {
   Africa: "🌍", Oceania: "🌊", "Middle East": "🕌",
 }
 
-export default function FlagDNAScreen({ onBack }: Props) {
+function FlagDNAScreenGame({ onBack , onReplay }: Props & { onReplay: () => void }) {
   const [target]  = useState<FlagRecord>(() => ELIGIBLE[Math.floor(Math.random() * ELIGIBLE.length)])
   const [input,  setInput]  = useState("")
   const [guesses, setGuesses] = useState<GuessResult[]>([])
@@ -299,7 +299,7 @@ export default function FlagDNAScreen({ onBack }: Props) {
 
         {finished && (
           <div className="flex flex-col gap-3 mt-2">
-            <button onClick={() => window.location.reload()}
+            <button onClick={onReplay}
               className="w-full py-3.5 rounded-xl font-bold transition-all active:scale-95"
               style={{ background: "linear-gradient(135deg,#8B6CFF,#A78BFA)", color: "#fff" }}>
               New Flag
@@ -314,4 +314,9 @@ export default function FlagDNAScreen({ onBack }: Props) {
       </div>
     </div>
   )
+}
+
+export default function FlagDNAScreen({ onBack }: Props) {
+  const [replayKey, setReplayKey] = useState(0)
+  return <FlagDNAScreenGame key={replayKey} onBack={onBack} onReplay={() => setReplayKey(k => k + 1)} />
 }

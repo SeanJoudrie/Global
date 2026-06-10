@@ -16,7 +16,7 @@ const STAGES = [
   { filter: "none",                                         label: "Full colour", pts: 50  },
 ]
 
-export default function SilhouetteScreen({ onBack }: Props) {
+function SilhouetteScreenGame({ onBack , onReplay }: Props & { onReplay: () => void }) {
   // Fresh random flag every mount / "New flag" reload.
   const [target] = useState<FlagRecord>(() => FLAGS[Math.floor(Math.random() * FLAGS.length)])
 
@@ -78,7 +78,7 @@ export default function SilhouetteScreen({ onBack }: Props) {
             </div>
           </div>
           <div className="flex flex-col gap-3">
-            <button onClick={() => window.location.reload()}
+            <button onClick={onReplay}
               className="w-full py-3.5 rounded-xl font-bold transition-all active:scale-95"
               style={{ background: "linear-gradient(135deg,#8B6CFF,#A78BFA)", color: "#fff" }}>
               New Flag
@@ -183,4 +183,9 @@ export default function SilhouetteScreen({ onBack }: Props) {
       </div>
     </div>
   )
+}
+
+export default function SilhouetteScreen({ onBack }: Props) {
+  const [replayKey, setReplayKey] = useState(0)
+  return <SilhouetteScreenGame key={replayKey} onBack={onBack} onReplay={() => setReplayKey(k => k + 1)} />
 }

@@ -7,7 +7,7 @@ interface Props { onBack: () => void }
 // Scale = CSS transform scale factor. We zoom from 6× down to 1×.
 const SCALES = [6, 4, 2.8, 2, 1.4, 1]
 
-export default function TheCropScreen({ onBack }: Props) {
+function TheCropScreenGame({ onBack , onReplay }: Props & { onReplay: () => void }) {
   const [target]  = useState<FlagRecord>(() => FLAGS[Math.floor(Math.random() * FLAGS.length)])
   // Random focal point as percentages (transform-origin)
   const [originX] = useState(() => 20 + Math.random() * 60)  // 20–80%
@@ -154,7 +154,7 @@ export default function TheCropScreen({ onBack }: Props) {
                   : "Fully revealed — better luck next time."}
               </div>
             </div>
-            <button onClick={() => window.location.reload()}
+            <button onClick={onReplay}
               className="w-full py-3.5 rounded-xl font-bold transition-all active:scale-95"
               style={{ background: "linear-gradient(135deg,#8B6CFF,#A78BFA)", color: "#fff" }}>
               New Flag
@@ -203,4 +203,9 @@ export default function TheCropScreen({ onBack }: Props) {
       </div>
     </div>
   )
+}
+
+export default function TheCropScreen({ onBack }: Props) {
+  const [replayKey, setReplayKey] = useState(0)
+  return <TheCropScreenGame key={replayKey} onBack={onBack} onReplay={() => setReplayKey(k => k + 1)} />
 }

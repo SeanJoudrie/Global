@@ -47,7 +47,7 @@ function FlagImg({ src, alt }: { src: string; alt: string }) {
   )
 }
 
-export default function HistoricalFlagScreen({ onBack }: Props) {
+function HistoricalFlagScreenGame({ onBack , onReplay }: Props & { onReplay: () => void }) {
   const [rounds] = useState(buildRounds)
   const [idx, setIdx] = useState(0)
   const [selected, setSelected] = useState<string | null>(null)
@@ -87,7 +87,7 @@ export default function HistoricalFlagScreen({ onBack }: Props) {
             </div>
           </div>
           <div className="flex flex-col gap-3">
-            <button onClick={() => window.location.reload()}
+            <button onClick={onReplay}
               className="w-full py-3.5 rounded-xl font-bold transition-all active:scale-95"
               style={{ background: "linear-gradient(135deg,#A855F7,#C084FC)", color: "#fff" }}>
               Play Again
@@ -181,4 +181,9 @@ export default function HistoricalFlagScreen({ onBack }: Props) {
       </div>
     </div>
   )
+}
+
+export default function HistoricalFlagScreen({ onBack }: Props) {
+  const [replayKey, setReplayKey] = useState(0)
+  return <HistoricalFlagScreenGame key={replayKey} onBack={onBack} onReplay={() => setReplayKey(k => k + 1)} />
 }

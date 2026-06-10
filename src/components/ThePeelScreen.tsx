@@ -20,7 +20,7 @@ function scoreFromPct(pct: number): number {
   return 100
 }
 
-export default function ThePeelScreen({ onBack }: Props) {
+function ThePeelScreenGame({ onBack , onReplay }: Props & { onReplay: () => void }) {
   const [target]    = useState<FlagRecord>(() => FLAGS[Math.floor(Math.random() * FLAGS.length)])
   const [brushSize, setBrushSize] = useState<BrushSize>('medium')
 
@@ -247,7 +247,7 @@ export default function ThePeelScreen({ onBack }: Props) {
                 <div className="text-xs mt-2" style={{ color: '#34D399' }}>Perfect peel! Under 5% 🏆</div>
               )}
             </div>
-            <button onClick={() => window.location.reload()}
+            <button onClick={onReplay}
               className="w-full py-3.5 rounded-xl font-bold transition-all active:scale-95"
               style={{ background: "linear-gradient(135deg,#8B6CFF,#A78BFA)", color: "#fff" }}>
               New Flag
@@ -262,4 +262,9 @@ export default function ThePeelScreen({ onBack }: Props) {
       </div>
     </div>
   )
+}
+
+export default function ThePeelScreen({ onBack }: Props) {
+  const [replayKey, setReplayKey] = useState(0)
+  return <ThePeelScreenGame key={replayKey} onBack={onBack} onReplay={() => setReplayKey(k => k + 1)} />
 }

@@ -52,7 +52,7 @@ const ACCENT_B = '#34D399'
 const FLAG_W = 72
 const FLAG_H = 48
 
-export default function FlagFamiliesScreen({ onBack }: Props) {
+function FlagFamiliesScreenGame({ onBack , onReplay }: Props & { onReplay: () => void }) {
   const [rounds]    = useState(() => buildRounds(TOTAL_ROUNDS))
   const [idx, setIdx]       = useState(0)
   // assignments: code → 'A' | 'B'
@@ -123,7 +123,7 @@ export default function FlagFamiliesScreen({ onBack }: Props) {
             </div>
           </div>
           <div className="flex flex-col gap-3">
-            <button onClick={() => window.location.reload()}
+            <button onClick={onReplay}
               className="w-full py-3.5 rounded-xl font-bold transition-all active:scale-95"
               style={{ background: "linear-gradient(135deg,#8B6CFF,#A78BFA)", color: "#fff" }}>
               Play Again
@@ -298,4 +298,9 @@ export default function FlagFamiliesScreen({ onBack }: Props) {
       </div>
     </div>
   )
+}
+
+export default function FlagFamiliesScreen({ onBack }: Props) {
+  const [replayKey, setReplayKey] = useState(0)
+  return <FlagFamiliesScreenGame key={replayKey} onBack={onBack} onReplay={() => setReplayKey(k => k + 1)} />
 }
