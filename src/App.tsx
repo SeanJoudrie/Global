@@ -52,7 +52,6 @@ import FlagGachaScreen from "./components/FlagGachaScreen"
 import SymbolHuntScreen from "./components/SymbolHuntScreen"
 import TwoTruthsScreen from "./components/TwoTruthsScreen"
 import StarField from "./components/StarField"
-import MapBackdrop from "./components/MapBackdrop"
 import EarthLogo from "./components/EarthLogo"
 import { FLAGS } from "./data/flags"
 import type { FlagRecord } from "./data/flags"
@@ -154,7 +153,6 @@ export default function App() {
 
   return (
     <div style={{ background: 'linear-gradient(135deg,var(--bg-from) 0%,var(--bg-to) 100%)', minHeight: "100vh" }}>
-      {screen !== "splash" && <MapBackdrop />}
       {screen !== "splash" && <StarField />}
 
       {/* Persistent home logo — fixed top-left on every screen except splash/home.

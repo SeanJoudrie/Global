@@ -10,19 +10,24 @@ import { LineIcon, FlameIcon } from "./icons"
 import FlagImage from "./FlagImage"
 import HeroCarousel from "./HeroCarousel"
 
-// Faint antique world-map backdrop (Cartographer skin only) — edges fade out.
+// Faint antique world-map backdrop (Cartographer skin only): filled landmasses,
+// softly blurred, masked into a half-circle "dome" that dissolves at the edges.
 function MapBackdrop() {
+  const dome = "radial-gradient(132% 95% at 50% 13%, #000 0%, #000 46%, rgba(0,0,0,0.5) 64%, transparent 80%)"
   return (
-    <svg viewBox={(worldMap as { viewBox: string }).viewBox} preserveAspectRatio="xMidYMid slice"
-      style={{
-        position: "fixed", inset: 0, width: "100%", height: "100%", pointerEvents: "none", zIndex: 0,
-        opacity: 0.07, WebkitMaskImage: "radial-gradient(120% 90% at 50% 35%, #000 30%, transparent 78%)",
-        maskImage: "radial-gradient(120% 90% at 50% 35%, #000 30%, transparent 78%)",
-      }}>
-      {(worldMap as { locations: { id: string; path: string }[] }).locations.map(l => (
-        <path key={l.id} d={l.path} fill="none" stroke={T.text} strokeWidth={0.6} />
-      ))}
-    </svg>
+    <div aria-hidden style={{
+      position: "absolute", inset: 0, zIndex: 0, pointerEvents: "none",
+      opacity: 0.17, filter: "blur(1.3px)",
+      WebkitMaskImage: dome, maskImage: dome,
+      overflow: "hidden", display: "flex", justifyContent: "center", alignItems: "flex-start",
+    }}>
+      <svg viewBox={(worldMap as { viewBox: string }).viewBox} preserveAspectRatio="xMidYMid meet"
+        style={{ width: "142%", maxWidth: "none", marginTop: "3vh", display: "block" }}>
+        {(worldMap as { locations: { id: string; path: string }[] }).locations.map(l => (
+          <path key={l.id} d={l.path} fill={T.text} />
+        ))}
+      </svg>
+    </div>
   )
 }
 
