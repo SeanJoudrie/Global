@@ -235,7 +235,7 @@ export default function HomeScreen({
             <span className="text-2xl">🏳️‍🌈</span>
             <div className="text-left">
               <div className="font-bold" style={{ color: "#F5F3FF" }}>Identity Flags</div>
-              <div className="text-xs" style={{ color: "#B8A9E0" }}>Pride, ethnic, separatist & micronation flags</div>
+              <div className="text-xs" style={{ color: "#B8A9E0" }}>Pride, ethnic, separatist, signal & micronation flags</div>
             </div>
           </div>
           <span style={{ color: "#FF6FD8" }}>›</span>
