@@ -177,6 +177,12 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       ],
     },
     {
+      fromYear: 1920, toYear: 1922,
+      flagUrl: fp('Flag_of_Far_Eastern_Republic.svg'),
+      label: 'Far Eastern Republic',
+      note: 'A nominally independent buffer state created by Soviet Russia in 1920 to avoid direct war with Japan, which occupied parts of the Russian Far East during the Civil War. Its red flag bore a blue canton lettered "DVR." Once Japanese forces withdrew in 1922, the republic dissolved itself into Soviet Russia.',
+    },
+    {
       fromYear: 1858,
       toYear: 1896,
       flagUrl: fp('Flag_of_the_Russian_Empire_(black-yellow-white).svg'),
@@ -408,6 +414,12 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       note: 'The black-white-red tricolour served the North German Confederation from 1867 and then the unified German Empire from 1871, until the monarchy collapsed at the end of World War I.',
     },
     {
+      fromYear: 1863, toYear: 1918,
+      flagUrl: fp('Flag_of_Anhalt_Duchies.svg'),
+      label: 'Duchy of Anhalt',
+      note: 'The Duchy of Anhalt was a sovereign German state — ancestral home of the House of Ascania, from which Catherine the Great of Russia descended. Its green-white-red tricolor flew until the German monarchies fell in 1918. Anhalt is today part of Saxony-Anhalt.',
+    },
+    {
       fromYear: 1816, toYear: 1866,
       flagUrl: fp('Flag_of_the_Free_City_of_Frankfurt.svg'),
       label: 'Free City of Frankfurt',
@@ -477,6 +489,12 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       note: 'On unification in 1861 the tricolore carried the coat of arms of the House of Savoy at its centre. This flag flew for 85 years through both World Wars until the monarchy was abolished.',
     },
     {
+      fromYear: 1848, toYear: 1849,
+      flagUrl: fp('Flag_of_the_Republic_of_San_Marco.svg'),
+      label: 'Republic of San Marco (Venice)',
+      note: 'During the 1848 revolutions, Venice rose against Austrian rule and proclaimed the Republic of San Marco under Daniele Manin, placing the gold Winged Lion of Saint Mark on the Italian tricolor. Austria besieged and retook the city in 1849 after seventeen months — one of the last holdouts of the revolutionary wave.',
+    },
+    {
       fromYear: 1802,
       toYear: 1814,
       flagUrl: fp('Flag_of_the_Italian_Republic_(1802).svg'),
@@ -489,6 +507,12 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       flagUrl: fp('Flag_of_the_Cispadane_Republic.svg'),
       label: 'Cispadane Republic (first tricolore)',
       note: 'On 7 January 1797 in Reggio Emilia, the Cispadane Republic adopted a green-white-red tricolour — the very first official use of the Italian tricolore as a national flag.',
+    },
+    {
+      fromYear: 839, toYear: 1131,
+      flagUrl: fp('Flag_of_the_Republic_of_Amalfi.svg'),
+      label: 'Duchy of Amalfi',
+      note: 'Amalfi was one of the first Italian maritime republics, a Mediterranean trading power from the 9th to 12th centuries that rivalled Venice, Pisa, and Genoa. Its banner bore a white cross on blue — later associated with the Order of Malta. Norman conquest in 1131 ended its independence.',
     },
   ],
   ES: [
@@ -721,6 +745,15 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       flagUrl: fp('British_Raj_Red_Ensign.svg'),
       label: 'Star of India (British Raj)',
       note: 'A red ensign with the Union Jack and the "Star of India" emblem, used unofficially for British India. The Union Jack itself remained the official flag of the Raj.',
+      parallelCaption: 'Princely state of the Raj era',
+      parallel: [
+        {
+          fromYear: 1936, toYear: 1952,
+          flagUrl: fp('Flag_of_Jammu_and_Kashmir_(1936-1953).svg'),
+          label: 'Princely State of Jammu and Kashmir',
+          note: 'The princely state of Jammu and Kashmir was ruled by the Hindu Dogra dynasty over a Muslim-majority population under British paramountcy. Its disputed accession to India in 1947 triggered the first India-Pakistan war and a conflict that continues today. The state kept its own flag under special autonomy until that status was revoked in 2019.',
+        },
+      ],
     },
   ],
   BR: [
@@ -1685,6 +1718,15 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       flagUrl: fp('Flag_of_the_Federal_Republic_of_Central_America.svg'),
       label: 'Federal Republic of Central America',
       note: 'After independence from Spain in 1821, Guatemala was briefly part of the Mexican Empire before joining the Federal Republic of Central America (1823–1839) alongside El Salvador, Honduras, Nicaragua, and Costa Rica. The federation\'s flag — blue-white-blue horizontal stripes with a central emblem — is the ancestor of every Central American national flag today. The federation collapsed in civil war, but the colours survived in each successor state\'s flag.',
+      parallelCaption: '6th state of the federation (1838-40)',
+      parallel: [
+        {
+          fromYear: 1838, toYear: 1840,
+          flagUrl: fp('Flag_of_the_State_of_Los_Altos.svg'),
+          label: 'State of Los Altos',
+          note: 'Los Altos was briefly the "sixth state" of the Federal Republic of Central America, formed in 1838 from the highlands around Quetzaltenango. Its flag carried the federation\'s blue-white-blue with a quetzal — the free-flying bird that became Guatemala\'s national symbol. Guatemalan forces under Rafael Carrera reconquered it by 1840.',
+        },
+      ],
     },
   ],
 
@@ -2198,6 +2240,12 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       flagUrl: fp('Flag_of_Croatia_(1941–1945).svg'),
       label: 'Independent State of Croatia (NDH)',
       note: 'The WWII fascist puppet state kept the tricolor and checkerboard but added the Ustaše "U" emblem. It remains a taboo symbol because of the regime\'s genocidal crimes.',
+    },
+    {
+      fromYear: 1921, toYear: 1921,
+      flagUrl: fp('Flag_of_Albona_Republic.svg'),
+      label: 'Labin Republic (Albona)',
+      note: 'The Labin Republic was a short-lived 1921 workers\' state in Istria, when coal miners seized the mines and declared self-rule against rising Italian Fascism. Its red flag bore a miner\'s hammer and pick. Italian troops crushed it within five weeks — one of Europe\'s earliest organized anti-fascist uprisings.',
     },
   ],
   RS: [
@@ -3750,6 +3798,18 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       flagUrl: 'https://flagcdn.com/w320/id.png',
       label: 'Sang Saka Merah Putih',
       note: 'A simple red-over-white bicolour whose colors trace back to the 13th-century Majapahit Empire. Banned by the Dutch, it was raised on independence day in 1945. It is nearly identical to Monaco\'s flag but with a 2:3 ratio.',
+    },
+    {
+      fromYear: 1605, toYear: 1669,
+      flagUrl: fp('Flag_of_the_Sultanate_of_Gowa.svg'),
+      label: 'Sultanate of Gowa',
+      note: 'Gowa was a powerful Makassar seafaring kingdom in southern Sulawesi that dominated the eastern Indonesian spice trade. After a long war, the Dutch East India Company and allied Bugis forces defeated Gowa at the 1669 Treaty of Bongaya, breaking its commercial power.',
+    },
+    {
+      fromYear: 1081, toYear: 1950,
+      flagUrl: fp('Flag_of_the_Sultanate_of_Tidore.png'),
+      label: 'Sultanate of Tidore',
+      note: 'Tidore was a Moluccan spice kingdom and the great rival of neighbouring Ternate, controlling cloves and nutmeg coveted across the world. It long resisted European domination, allying variously with the Spanish and Portuguese against the Dutch, before being absorbed into the Dutch East Indies.',
     },
   ],
   MY: [
