@@ -38,6 +38,12 @@ interface Props {
   onGoSubStumper: () => void
   onGoLineage: () => void
   onGoSubStats: () => void
+  onGoFlagle: () => void
+  onGoHigherLower: () => void
+  onGoDeadOrAlive: () => void
+  onGoFrankenflag: () => void
+  onGoDescribeIt: () => void
+  onGoFlagBracket: () => void
 }
 
 
@@ -49,6 +55,7 @@ export default function HomeScreen({
   onGoComposer, onGoSilhouette, onGoFlagFamilies, onGoFunFact,
   onGoProgressMap, onGoHistorical, onGoIdentity,
   onGoProvinceRoulette, onGoSubStumper, onGoLineage, onGoSubStats,
+  onGoFlagle, onGoHigherLower, onGoDeadOrAlive, onGoFrankenflag, onGoDescribeIt, onGoFlagBracket,
 }: Props) {
   const today = todayString()
   const dailyDone = state.lastDailyDate === today
@@ -248,7 +255,7 @@ export default function HomeScreen({
 
         <button onClick={onGoProvinceRoulette}
           className="w-full flex items-center justify-between px-5 py-4 rounded-2xl transition-all active:scale-[0.98] hover:brightness-110"
-          style={{ background: "#2D1F52", border: "1px solid #8B6CFF55" }}>
+          style={{ background: "#2D1F52", border: "1px solid #A78BFA55" }}>
           <div className="flex items-center gap-3">
             <span className="text-2xl">🎰</span>
             <div className="text-left">
@@ -283,6 +290,84 @@ export default function HomeScreen({
             </div>
           </div>
           <span style={{ color: "#F59E0B" }}>›</span>
+        </button>
+
+        <button onClick={onGoFlagle}
+          className="w-full flex items-center justify-between px-5 py-4 rounded-2xl transition-all active:scale-[0.98] hover:brightness-110"
+          style={{ background: "#2D1F52", border: "1px solid #34D39955" }}>
+          <div className="flex items-center gap-3">
+            <span className="text-2xl">🟩</span>
+            <div className="text-left">
+              <div className="font-bold" style={{ color: "#F5F3FF" }}>Flagle <span style={{ color: "#34D399", fontSize: 10 }}>DAILY</span></div>
+              <div className="text-xs" style={{ color: "#B8A9E0" }}>Wordle for flags — 6 guesses, attribute clues</div>
+            </div>
+          </div>
+          <span style={{ color: "#34D399" }}>›</span>
+        </button>
+
+        <button onClick={onGoDeadOrAlive}
+          className="w-full flex items-center justify-between px-5 py-4 rounded-2xl transition-all active:scale-[0.98] hover:brightness-110"
+          style={{ background: "#2D1F52", border: "1px solid #F43F5E55" }}>
+          <div className="flex items-center gap-3">
+            <span className="text-2xl">💀</span>
+            <div className="text-left">
+              <div className="font-bold" style={{ color: "#F5F3FF" }}>Dead or Alive</div>
+              <div className="text-xs" style={{ color: "#B8A9E0" }}>Current country or vanished state? Survival run</div>
+            </div>
+          </div>
+          <span style={{ color: "#F43F5E" }}>›</span>
+        </button>
+
+        <button onClick={onGoHigherLower}
+          className="w-full flex items-center justify-between px-5 py-4 rounded-2xl transition-all active:scale-[0.98] hover:brightness-110"
+          style={{ background: "#2D1F52", border: "1px solid #FBBF2455" }}>
+          <div className="flex items-center gap-3">
+            <span className="text-2xl">📊</span>
+            <div className="text-left">
+              <div className="font-bold" style={{ color: "#F5F3FF" }}>Higher or Lower</div>
+              <div className="text-xs" style={{ color: "#B8A9E0" }}>Which flag trait is more common? Endless streak</div>
+            </div>
+          </div>
+          <span style={{ color: "#FBBF24" }}>›</span>
+        </button>
+
+        <button onClick={onGoFrankenflag}
+          className="w-full flex items-center justify-between px-5 py-4 rounded-2xl transition-all active:scale-[0.98] hover:brightness-110"
+          style={{ background: "#2D1F52", border: "1px solid #8B6CFF55" }}>
+          <div className="flex items-center gap-3">
+            <span className="text-2xl">🧟</span>
+            <div className="text-left">
+              <div className="font-bold" style={{ color: "#F5F3FF" }}>Frankenflag</div>
+              <div className="text-xs" style={{ color: "#B8A9E0" }}>Two flags stitched together — name both halves</div>
+            </div>
+          </div>
+          <span style={{ color: "#8B6CFF" }}>›</span>
+        </button>
+
+        <button onClick={onGoDescribeIt}
+          className="w-full flex items-center justify-between px-5 py-4 rounded-2xl transition-all active:scale-[0.98] hover:brightness-110"
+          style={{ background: "#2D1F52", border: "1px solid #60A5FA55" }}>
+          <div className="flex items-center gap-3">
+            <span className="text-2xl">🔤</span>
+            <div className="text-left">
+              <div className="font-bold" style={{ color: "#F5F3FF" }}>Describe-It</div>
+              <div className="text-xs" style={{ color: "#B8A9E0" }}>Name the flag from words alone — no image</div>
+            </div>
+          </div>
+          <span style={{ color: "#60A5FA" }}>›</span>
+        </button>
+
+        <button onClick={onGoFlagBracket}
+          className="w-full flex items-center justify-between px-5 py-4 rounded-2xl transition-all active:scale-[0.98] hover:brightness-110"
+          style={{ background: "#2D1F52", border: "1px solid #FBBF2455" }}>
+          <div className="flex items-center gap-3">
+            <span className="text-2xl">👑</span>
+            <div className="text-left">
+              <div className="font-bold" style={{ color: "#F5F3FF" }}>Flag Bracket <span style={{ color: "#FBBF24", fontSize: 10 }}>DAILY</span></div>
+              <div className="text-xs" style={{ color: "#B8A9E0" }}>16 flags, one tournament — crown the coolest</div>
+            </div>
+          </div>
+          <span style={{ color: "#FBBF24" }}>›</span>
         </button>
 
         <h3 className="text-xs font-semibold uppercase tracking-widest pt-1" style={{ color: "#B8A9E0" }}>Reference</h3>
