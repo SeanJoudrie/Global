@@ -5,9 +5,10 @@ import { todayString } from "../utils/prng"
 import { T, ACCENT, FONT, tint, IS_CARTO } from "../ui/tokens"
 import { groupsFor, REGISTRY } from "../ui/registry"
 import type { Entry, TabKey } from "../ui/registry"
-import { TabBar, ModuleCard, GameTile, HeroCard, StatPill, SectionHeader, ProgressRing } from "./ui"
+import { TabBar, ModuleCard, GameTile, StatPill, SectionHeader, ProgressRing } from "./ui"
 import { LineIcon, FlameIcon } from "./icons"
 import FlagImage from "./FlagImage"
+import HeroCarousel from "./HeroCarousel"
 
 // Faint antique world-map backdrop (Cartographer skin only) — edges fade out.
 function MapBackdrop() {
@@ -40,7 +41,6 @@ const dayIdx = Math.floor(Date.now() / 86400000)
 export default function MainTabs({ state, tab, onTab, onNavigate, onQuickPlay, onStartDaily, onReverseQuiz }: Props) {
   const today = todayString()
   const dailyDone = state.lastDailyDate === today
-  const fotd = FLAGS[dayIdx % FLAGS.length]
   const playTiles = REGISTRY.filter(r => r.tab === "play" && r.size === "tile")
   const spotlight = playTiles[dayIdx % playTiles.length]
 
@@ -79,7 +79,7 @@ export default function MainTabs({ state, tab, onTab, onNavigate, onQuickPlay, o
 
       <main style={{ position: "relative", padding: "8px 16px 96px" }}>
         {tab === "today" && (
-          <TodayTab state={state} fotd={fotd} dailyDone={dailyDone} spotlight={spotlight}
+          <TodayTab state={state} dailyDone={dailyDone} spotlight={spotlight}
             onNavigate={onNavigate} onQuickPlay={onQuickPlay} onStartDaily={onStartDaily} launch={launch} playTiles={playTiles} />
         )}
         {tab === "learn" && <ListTab tab="learn" launch={launch} state={state} />}
@@ -94,33 +94,36 @@ export default function MainTabs({ state, tab, onTab, onNavigate, onQuickPlay, o
 }
 
 /* ── TODAY ─────────────────────────────────────────────────────────────── */
-function TodayTab({ state, fotd, dailyDone, spotlight, onNavigate, onQuickPlay, onStartDaily, launch, playTiles }: {
-  state: AppState; fotd: typeof FLAGS[number]; dailyDone: boolean; spotlight: Entry
+function TodayTab({ state, dailyDone, spotlight, onNavigate, onQuickPlay, onStartDaily, launch, playTiles }: {
+  state: AppState; dailyDone: boolean; spotlight: Entry
   onNavigate: (s: string) => void; onQuickPlay: () => void; onStartDaily: () => void
   launch: (e: Entry) => void; playTiles: Entry[]
 }) {
+  const posterFlag = FLAGS[(dayIdx * 13) % FLAGS.length]
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 18 }}>
-      {/* Flag of the Day — image hero */}
-      <button onClick={() => onNavigate("codex")} className="geo-tap"
-        style={{ position: "relative", width: "100%", height: 168, borderRadius: 16, overflow: "hidden", border: `1px solid ${T.line}`, textAlign: "left" }}>
-        <FlagImage code={fotd.code} style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }} />
-        <div style={{ position: "absolute", inset: 0, background: "linear-gradient(0deg,#06080D 8%,rgba(6,8,13,0.2) 55%,transparent), linear-gradient(90deg,rgba(6,8,13,0.85),transparent 70%)" }} />
-        <div style={{ position: "absolute", left: 16, bottom: 14, right: 16 }}>
-          <div className="geo-micro" style={{ fontSize: 9, color: ACCENT.today, marginBottom: 4 }}>◦ Flag of the Day</div>
-          <div className="geo-display" style={{ color: "#fff", fontWeight: 700, fontSize: 26, letterSpacing: "-0.02em", lineHeight: 1 }}>{fotd.name}</div>
-          <div style={{ color: T.muted, fontSize: 11.5, marginTop: 5, maxWidth: "85%", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{fotd.funFact}</div>
-        </div>
-      </button>
+      {/* Swipeable hero carousel: Flag of the Day · Did You Know · featured game · personalise */}
+      <HeroCarousel onNavigate={onNavigate} />
 
       {/* Primary action bento */}
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
-        <button onClick={onQuickPlay} className={`geo-tap ${IS_CARTO ? "carto-card" : ""}`}
-          style={{ textAlign: "left", padding: 14, borderRadius: 14, position: "relative", overflow: "hidden",
-            ...(IS_CARTO ? { ["--wash" as string]: tint(T.chartreuse, 0.4) } : { background: `linear-gradient(150deg,${tint(T.chartreuse, 0.16)},${T.surface})`, border: `1px solid ${tint(T.chartreuse, 0.4)}` }) }}>
-          <div style={{ marginBottom: 22, color: T.chartreuse }}>{IS_CARTO ? <LineIcon name="quickplay" size={22} color={T.chartreuse} /> : <span style={{ fontSize: 22 }}>⚡</span>}</div>
-          <div className="geo-display" style={{ color: T.text, fontWeight: 700, fontSize: 16 }}>Quick Play</div>
-          <div className="geo-mono" style={{ color: T.chartreuse, fontSize: 10, marginTop: 2 }}>10 random flags</div>
+        {/* Quick Play — pumped-up shading, glow + arrow to pull the tap */}
+        <button onClick={onQuickPlay} className="geo-tap"
+          style={{
+            textAlign: "left", padding: 14, borderRadius: 14, position: "relative", overflow: "hidden",
+            background: `linear-gradient(145deg, ${tint(T.chartreuse, 0.3)}, ${tint(T.chartreuse, 0.07)} 58%, ${T.surface})`,
+            border: `1px solid ${tint(T.chartreuse, 0.5)}`,
+            boxShadow: IS_CARTO ? `0 12px 24px -16px ${tint(T.chartreuse, 0.95)}` : `0 0 28px ${tint(T.chartreuse, 0.2)}`,
+          }}>
+          <div style={{ position: "absolute", right: -12, bottom: -14, opacity: 0.13, color: T.chartreuse, pointerEvents: "none" }}>
+            <LineIcon name="quickplay" size={86} color={T.chartreuse} strokeWidth={1.1} />
+          </div>
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+            <span style={{ color: T.chartreuse, display: "flex" }}>{IS_CARTO ? <LineIcon name="quickplay" size={22} color={T.chartreuse} /> : <span style={{ fontSize: 22 }}>⚡</span>}</span>
+            <span style={{ width: 24, height: 24, borderRadius: 999, background: T.chartreuse, color: IS_CARTO ? "#FFFCF4" : T.void, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 13, fontWeight: 800 }}>→</span>
+          </div>
+          <div className="geo-display" style={{ color: T.text, fontWeight: 700, fontSize: 16, marginTop: 20 }}>Quick Play</div>
+          <div className="geo-mono" style={{ color: T.chartreuse, fontSize: 10, marginTop: 2 }}>10 random flags · instant</div>
         </button>
         <button onClick={onStartDaily} className={`geo-tap ${IS_CARTO ? "carto-card" : ""}`}
           style={{ textAlign: "left", padding: 14, borderRadius: 14, position: "relative", overflow: "hidden",
@@ -138,11 +141,25 @@ function TodayTab({ state, fotd, dailyDone, spotlight, onNavigate, onQuickPlay, 
           progress={{ done: state.learnedFlags.length, total: FLAGS.length }} onClick={() => onNavigate("flags")} />
       </div>
 
-      {/* Daily game spotlight */}
+      {/* Daily game spotlight — with a poster image to demo & entice */}
       <div>
-        <SectionHeader title="Today's game" accent={T.chartreuse} />
-        <HeroCard eyebrow="◦ Rotates daily" title={spotlight.title} subtitle={spotlight.subtitle} accent={ACCENT.play}
-          tall onClick={() => launch(spotlight)} />
+        <SectionHeader title="Today's game" accent={ACCENT.play} />
+        <button onClick={() => launch(spotlight)} className={`geo-tap ${IS_CARTO ? "carto-card" : ""}`}
+          style={{ width: "100%", textAlign: "left", borderRadius: 16, padding: 14, position: "relative", overflow: "hidden", display: "flex", gap: 14, alignItems: "center",
+            ...(IS_CARTO ? { ["--wash" as string]: tint(ACCENT.play, 0.4) } : { background: T.surface, border: `1px solid ${T.line}` }) }}>
+          <div style={{ flex: 1, minWidth: 0 }}>
+            <div className="geo-micro" style={{ fontSize: 9, color: ACCENT.play, marginBottom: 5 }}>◦ Today's Game · rotates daily</div>
+            <div className="geo-display" style={{ color: T.text, fontWeight: 700, fontSize: 22, lineHeight: 1.05 }}>{spotlight.title}</div>
+            <p style={{ color: T.muted, fontSize: 12, marginTop: 5 }}>{spotlight.subtitle}</p>
+            <div style={{ marginTop: 12, display: "inline-flex", alignItems: "center", gap: 6, padding: "7px 14px", borderRadius: 999, background: ACCENT.play, color: IS_CARTO ? "#FFFCF4" : T.void }}>
+              <span style={{ fontFamily: FONT.display, fontWeight: 700, fontSize: 12 }}>Play</span><span style={{ fontSize: 13 }}>→</span>
+            </div>
+          </div>
+          <div style={{ flexShrink: 0, width: 96, height: 96, borderRadius: 14, overflow: "hidden", position: "relative", border: `1px solid ${T.line}`, background: tint(ACCENT.play, 0.1), display: "flex", alignItems: "center", justifyContent: "center" }}>
+            <FlagImage code={posterFlag.code} style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", opacity: 0.26 }} />
+            <span style={{ position: "relative", color: ACCENT.play, display: "flex" }}><LineIcon name={spotlight.id} size={40} color={ACCENT.play} strokeWidth={1.5} /></span>
+          </div>
+        </button>
       </div>
 
       {/* Jump back in */}
