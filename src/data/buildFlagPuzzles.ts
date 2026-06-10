@@ -177,6 +177,102 @@ const raw: BuildPuzzle[] = [
       BLUE('b'), GREEN('g'), p('y','#FFD500','Yellow'),
     ]),
   },
+
+  // ── More vertical tricolors (v3) ─────────────────────────────────────────
+  {
+    code: 'TD', name: 'Chad', layout: 'v3',
+    slots: ['left', 'center', 'right'],
+    solution: { left: 'b', center: 'y', right: 'r' },
+    pieces: shuffle([BLUE('b'), YELLOW('y'), RED('r'), WHITE('w'), GREEN('g'), BLACK('k')]),
+  },
+  {
+    code: 'ML', name: 'Mali', layout: 'v3',
+    slots: ['left', 'center', 'right'],
+    solution: { left: 'g', center: 'y', right: 'r' },
+    pieces: shuffle([GREEN('g'), YELLOW('y'), RED('r'), WHITE('w'), BLUE('b'), BLACK('k')]),
+  },
+  {
+    code: 'GN', name: 'Guinea', layout: 'v3',
+    slots: ['left', 'center', 'right'],
+    solution: { left: 'r', center: 'y', right: 'g' },
+    pieces: shuffle([RED('r'), YELLOW('y'), GREEN('g'), WHITE('w'), BLUE('b'), BLACK('k')]),
+  },
+  {
+    code: 'CI', name: "Côte d'Ivoire", layout: 'v3',
+    slots: ['left', 'center', 'right'],
+    solution: { left: 'o', center: 'w', right: 'g' },
+    pieces: shuffle([ORANGE('o'), WHITE('w'), GREEN('g'), RED('r'), BLUE('b'), YELLOW('y')]),
+  },
+  {
+    code: 'NG', name: 'Nigeria', layout: 'v3',
+    slots: ['left', 'center', 'right'],
+    solution: { left: 'g', center: 'w', right: 'g2' },
+    pieces: shuffle([GREEN('g'), WHITE('w'), p('g2', '#169B62', 'Green'), RED('r'), BLUE('b'), YELLOW('y')]),
+  },
+  {
+    code: 'PE', name: 'Peru', layout: 'v3',
+    slots: ['left', 'center', 'right'],
+    solution: { left: 'r', center: 'w', right: 'r2' },
+    pieces: shuffle([RED('r'), WHITE('w'), p('r2', '#CF0921', 'Red'), BLUE('b'), GREEN('g'), YELLOW('y')]),
+  },
+
+  // ── More horizontal tricolors (h3) ───────────────────────────────────────
+  {
+    code: 'AM', name: 'Armenia', layout: 'h3',
+    slots: ['top', 'middle', 'bottom'],
+    solution: { top: 'r', middle: 'b', bottom: 'o' },
+    pieces: shuffle([p('r', '#D90012', 'Red'), p('b', '#0033A0', 'Blue'), p('o', '#F2A800', 'Orange'), WHITE('w'), GREEN('g'), BLACK('k')]),
+  },
+  {
+    code: 'CO', name: 'Colombia', layout: 'h3',
+    slots: ['top', 'middle', 'bottom'],
+    solution: { top: 'y', middle: 'b', bottom: 'r' },
+    pieces: shuffle([p('y', '#FCD116', 'Yellow'), p('b', '#003893', 'Blue'), p('r', '#CE1126', 'Red'), WHITE('w'), GREEN('g'), BLACK('k')]),
+  },
+  {
+    code: 'BO', name: 'Bolivia', layout: 'h3',
+    slots: ['top', 'middle', 'bottom'],
+    solution: { top: 'r', middle: 'y', bottom: 'g' },
+    pieces: shuffle([RED('r'), YELLOW('y'), GREEN('g'), WHITE('w'), BLUE('b'), BLACK('k')]),
+  },
+  {
+    code: 'YE', name: 'Yemen', layout: 'h3',
+    slots: ['top', 'middle', 'bottom'],
+    solution: { top: 'r', middle: 'w', bottom: 'k' },
+    pieces: shuffle([RED('r'), WHITE('w'), BLACK('k'), BLUE('b'), GREEN('g'), YELLOW('y')]),
+  },
+  {
+    code: 'SL', name: 'Sierra Leone', layout: 'h3',
+    slots: ['top', 'middle', 'bottom'],
+    solution: { top: 'g', middle: 'w', bottom: 'b' },
+    pieces: shuffle([p('g', '#1EB53A', 'Green'), WHITE('w'), p('b', '#0072C6', 'Blue'), RED('r'), YELLOW('y'), BLACK('k')]),
+  },
+  {
+    code: 'IN', name: 'India', layout: 'h3',
+    slots: ['top', 'middle', 'bottom'],
+    solution: { top: 'o', middle: 'w', bottom: 'g' },
+    pieces: shuffle([p('o', '#FF9933', 'Saffron'), WHITE('w'), p('g', '#138808', 'Green'), RED('r'), BLUE('b'), YELLOW('y')]),
+  },
+  {
+    code: 'LU', name: 'Luxembourg', layout: 'h3',
+    slots: ['top', 'middle', 'bottom'],
+    solution: { top: 'r', middle: 'w', bottom: 'lb' },
+    pieces: shuffle([RED('r'), WHITE('w'), p('lb', '#00A1DE', 'Light blue'), BLUE('b'), GREEN('g'), YELLOW('y')]),
+  },
+  {
+    code: 'LV', name: 'Latvia', layout: 'h3',
+    slots: ['top', 'middle', 'bottom'],
+    solution: { top: 'm', middle: 'w', bottom: 'm2' },
+    pieces: shuffle([p('m', '#9E3039', 'Maroon'), WHITE('w'), p('m2', '#9E3039', 'Maroon'), RED('r'), BLUE('b'), BLACK('k')]),
+  },
+
+  // ── More horizontal bicolors (h2) ────────────────────────────────────────
+  {
+    code: 'MC', name: 'Monaco', layout: 'h2',
+    slots: ['top', 'bottom'],
+    solution: { top: 'r', bottom: 'w' },
+    pieces: shuffle([RED('r'), WHITE('w'), BLUE('b'), GREEN('g'), YELLOW('y'), BLACK('k')]),
+  },
 ]
 
 // Export shuffled so each session is different

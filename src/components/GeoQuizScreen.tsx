@@ -173,7 +173,15 @@ export default function GeoQuizScreen({ onBack }: Props) {
             src={q.shapeUrl}
             alt="Country shape"
             onLoad={() => setImgLoaded(true)}
-            onError={() => setImgLoaded(true)}
+            onError={e => {
+              const el = e.target as HTMLImageElement
+              if (!el.dataset.fb) {
+                el.dataset.fb = "1"
+                el.src = `https://cdn.jsdelivr.net/gh/djaiss/mapsicon@master/all/${q.target.code.toLowerCase()}/vector.svg`
+              } else {
+                setImgLoaded(true)
+              }
+            }}
             style={{
               maxWidth: '80%', maxHeight: '80%', objectFit: 'contain',
               filter: 'brightness(0) invert(1)',

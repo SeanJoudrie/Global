@@ -116,7 +116,11 @@ export default function FlashcardsScreen({ onBack, onQuizSet }: Props) {
     const delta = clientX - dragStartX.current
     isDragging.current = false
     dragStartX.current = null
-    if (Math.abs(delta) > 50) advance(delta < 0 ? 'left' : 'right')
+    // Swipe left → next card; swipe right → go back to the previous one.
+    if (Math.abs(delta) > 50) {
+      if (delta < 0) advance('left')
+      else goPrev()
+    }
   }
 
   const cardStyle = (): React.CSSProperties => {
