@@ -51,6 +51,10 @@ import BorderChainScreen from "./components/BorderChainScreen"
 import FlagGachaScreen from "./components/FlagGachaScreen"
 import SymbolHuntScreen from "./components/SymbolHuntScreen"
 import TwoTruthsScreen from "./components/TwoTruthsScreen"
+import CapitalMatchScreen from "./components/CapitalMatchScreen"
+import OddBorderOutScreen from "./components/OddBorderOutScreen"
+import ContinentSortScreen from "./components/ContinentSortScreen"
+import StatClashScreen from "./components/StatClashScreen"
 import StarField from "./components/StarField"
 import EarthLogo from "./components/EarthLogo"
 import { FLAGS } from "./data/flags"
@@ -62,7 +66,7 @@ import type { Question } from "./utils/quiz"
 import { todayString } from "./utils/prng"
 import { loadTheme } from "./components/SettingsScreen"
 
-type Screen = "splash" | "home" | "flags" | "quiz" | "reversequiz" | "result" | "achievements" | "profile" | "flashcards" | "language" | "capitalquiz" | "challenge" | "codex" | "geo" | "gauntlet" | "tierlist" | "settings" | "oddoneout" | "thecrop" | "flagdna" | "buildflag" | "thepeel" | "lookalikes" | "composer" | "silhouette" | "flagfamilies" | "funfact" | "progressmap" | "historical" | "identity" | "provinceroulette" | "substumper" | "lineage" | "substats" | "megacodex" | "flagle" | "higherlower" | "deadoralive" | "frankenflag" | "describeit" | "flagbracket" | "realorbot" | "timeline" | "bordermap" | "borderchain" | "gacha" | "symbolhunt" | "twotruths"
+type Screen = "splash" | "home" | "flags" | "quiz" | "reversequiz" | "result" | "achievements" | "profile" | "flashcards" | "language" | "capitalquiz" | "challenge" | "codex" | "geo" | "gauntlet" | "tierlist" | "settings" | "oddoneout" | "thecrop" | "flagdna" | "buildflag" | "thepeel" | "lookalikes" | "composer" | "silhouette" | "flagfamilies" | "funfact" | "progressmap" | "historical" | "identity" | "provinceroulette" | "substumper" | "lineage" | "substats" | "megacodex" | "flagle" | "higherlower" | "deadoralive" | "frankenflag" | "describeit" | "flagbracket" | "realorbot" | "timeline" | "bordermap" | "borderchain" | "gacha" | "symbolhunt" | "twotruths" | "capitalmatch" | "oddborder" | "continentsort" | "statclash"
 
 interface ActiveQuiz {
   questions: Question[]
@@ -281,6 +285,10 @@ export default function App() {
       {screen === "gacha"        && <FlagGachaScreen    onBack={() => setScreen("home")} />}
       {screen === "symbolhunt"   && <SymbolHuntScreen   onBack={() => setScreen("home")} />}
       {screen === "twotruths"    && <TwoTruthsScreen    onBack={() => setScreen("home")} />}
+      {screen === "capitalmatch" && <CapitalMatchScreen onBack={() => setScreen("home")} />}
+      {screen === "oddborder"    && <OddBorderOutScreen onBack={() => setScreen("home")} />}
+      {screen === "continentsort"&& <ContinentSortScreen onBack={() => setScreen("home")} />}
+      {screen === "statclash"    && <StatClashScreen    onBack={() => setScreen("home")} />}
 
       {screen === "quiz" && activeQuiz && (
         <QuizScreen questions={activeQuiz.questions} title={activeQuiz.title}

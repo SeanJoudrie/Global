@@ -50,6 +50,7 @@ export const REGISTRY: Entry[] = [
 
   { id: "bordermap", title: "Border Map", subtitle: "Fill in a country's neighbours", icon: "🗺️", tab: "play", group: "Geography", size: "module", accent: "learn" },
   { id: "borderchain", title: "Border Chain", subtitle: "Hop from border to border", icon: "🔗", tab: "play", group: "Geography", size: "module", accent: "learn" },
+  { id: "oddborder", title: "Odd Border Out", subtitle: "Spot the non-neighbour", icon: "🧭", tab: "play", group: "Geography", size: "module", accent: "learn" },
 
   { id: "oddoneout", title: "Odd One Out", subtitle: "Find the impostor", icon: "🕵️", tab: "play", group: "Quick games", size: "tile", accent: "play" },
   { id: "thecrop", title: "The Crop", subtitle: "Zoom out to guess", icon: "🔍", tab: "play", group: "Quick games", size: "tile", accent: "play" },
@@ -68,6 +69,9 @@ export const REGISTRY: Entry[] = [
   { id: "higherlower", title: "Higher / Lower", subtitle: "More red or blue?", icon: "📊", tab: "play", group: "Quick games", size: "tile", accent: "play" },
   { id: "describeit", title: "Describe-It", subtitle: "Guess from the clues", icon: "📝", tab: "play", group: "Quick games", size: "tile", accent: "play" },
   { id: "flagbracket", title: "Flag Bracket", subtitle: "Vote your champion", icon: "🏆", tab: "play", group: "Quick games", size: "tile", accent: "play" },
+  { id: "capitalmatch", title: "Capital Match", subtitle: "Match flags to capitals", icon: "🏛️", tab: "play", group: "Quick games", size: "tile", accent: "play" },
+  { id: "continentsort", title: "Continent Sort", subtitle: "Sort flags by region", icon: "🌍", tab: "play", group: "Quick games", size: "tile", accent: "play" },
+  { id: "statclash", title: "Stat Clash", subtitle: "Bigger population or area?", icon: "⚖️", tab: "play", group: "Quick games", size: "tile", accent: "play" },
 
   { id: "gauntlet", title: "Gauntlet", subtitle: "One life · every flag", icon: "⚔️", tab: "play", group: "Challenge", size: "module", accent: "challenge" },
   { id: "challenge", title: "Challenge Mode", subtitle: "States, provinces & regions", icon: "🎖️", tab: "play", group: "Challenge", size: "module", accent: "challenge" },
