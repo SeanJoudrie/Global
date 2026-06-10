@@ -424,15 +424,25 @@ export default function CodexScreen({ onBack }: Props) {
 
 // ── Identity flags browser (pride, ethnic, separatist, micronations, signal) ──
 function IdentityCodexSection() {
+  const [sectionOpen, setSectionOpen] = useState(false)
   const [openCat, setOpenCat] = useState<string | null>(null)
   const [openFlag, setOpenFlag] = useState<string | null>(null)
   return (
     <div className="mt-5">
-      <div className="px-1 mb-2">
-        <h3 className="text-sm font-bold uppercase tracking-widest" style={{ color: '#FF6FD8' }}>Identity & Other Flags</h3>
-        <p className="text-xs" style={{ color: '#B8A9E088' }}>{IDENTITY_FLAGS.length} flags beyond countries</p>
-      </div>
-      {IDENTITY_CATEGORIES.map(cat => {
+      {/* Collapsed by default — countries come first; tap to reveal the extras */}
+      <button
+        onClick={() => setSectionOpen(o => !o)}
+        className="w-full flex items-center justify-between px-4 py-3 rounded-xl transition-all active:scale-[0.98]"
+        style={{ background: sectionOpen ? '#2D1F52' : '#221740', border: `1px solid ${sectionOpen ? '#FF6FD855' : '#8B6CFF33'}` }}>
+        <div className="text-left">
+          <h3 className="text-sm font-bold uppercase tracking-widest" style={{ color: '#FF6FD8' }}>Identity &amp; Other Flags</h3>
+          <p className="text-xs" style={{ color: '#B8A9E088' }}>{IDENTITY_FLAGS.length} flags beyond countries</p>
+        </div>
+        <span style={{ color: '#FF6FD8', fontSize: 20, transition: 'transform 0.2s', transform: sectionOpen ? 'rotate(90deg)' : 'rotate(0deg)' }}>›</span>
+      </button>
+
+      {sectionOpen && <div className="mt-3" />}
+      {sectionOpen && IDENTITY_CATEGORIES.map(cat => {
         const flags = IDENTITY_FLAGS.filter(f => f.category === cat)
         const isOpen = openCat === cat
         return (

@@ -2,13 +2,15 @@
 // SettingsScreen) is orthogonal and untouched — this only governs the dashboard
 // shell skin. Changing aesthetic reloads the app, so reading once at module
 // load is correct and avoids threading context everywhere.
-export type Aesthetic = "cartographer" | "tactical"
+// "original" = the pre-redesign HomeScreen layout (purple list + emoji), kept
+// as a switchable option. cartographer/tactical use the new tab dashboard.
+export type Aesthetic = "cartographer" | "tactical" | "original"
 const KEY = "globalio_aesthetic"
 
 export function loadAesthetic(): Aesthetic {
   if (typeof localStorage === "undefined") return "cartographer"
   const v = localStorage.getItem(KEY)
-  return v === "tactical" ? "tactical" : "cartographer"
+  return v === "tactical" || v === "original" ? v : "cartographer"
 }
 export function saveAesthetic(a: Aesthetic) {
   try { localStorage.setItem(KEY, a) } catch { /* ignore */ }

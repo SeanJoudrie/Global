@@ -1,6 +1,7 @@
 ﻿import { useState, useCallback, useEffect } from "react"
 import SplashScreen from "./components/SplashScreen"
 import MainTabs from "./components/MainTabs"
+import HomeScreen from "./components/HomeScreen"
 import type { TabKey } from "./ui/registry"
 import { AESTHETIC } from "./ui/tokens"
 import FlagsScreen from "./components/FlagsScreen"
@@ -163,7 +164,42 @@ export default function App() {
 
       {screen === "splash" && <SplashScreen onDone={() => setScreen("home")} />}
 
-      {screen === "home" && (
+      {screen === "home" && AESTHETIC === "original" && (
+        <HomeScreen state={appState} onStartDaily={startDaily}
+          onGoFlags={() => setScreen("flags")}
+          onGoAchievements={() => setScreen("achievements")}
+          onGoProfile={() => setScreen("profile")}
+          onGoFlashcards={() => setScreen("flashcards")}
+          onGoLanguage={() => setScreen("language")}
+          onQuickPlay={startQuickPlay}
+          onGoReverseQuiz={startReverseQuiz}
+          onGoCapitalQuiz={() => setScreen("capitalquiz")}
+          onGoChallenge={() => setScreen("challenge")}
+          onGoCodex={() => setScreen("codex")}
+          onGoGeo={() => setScreen("geo")}
+          onGoGauntlet={() => setScreen("gauntlet")}
+          onGoTierList={() => setScreen("tierlist")}
+          onGoSettings={() => setScreen("settings")}
+          onGoOddOneOut={() => setScreen("oddoneout")}
+          onGoTheCrop={() => setScreen("thecrop")}
+          onGoFlagDNA={() => setScreen("flagdna")}
+          onGoBuildFlag={() => setScreen("buildflag")}
+          onGoThePeel={() => setScreen("thepeel")}
+          onGoLookalikes={() => setScreen("lookalikes")}
+          onGoComposer={() => setScreen("composer")}
+          onGoSilhouette={() => setScreen("silhouette")}
+          onGoFlagFamilies={() => setScreen("flagfamilies")}
+          onGoFunFact={() => setScreen("funfact")}
+          onGoProgressMap={() => setScreen("progressmap")}
+          onGoHistorical={() => setScreen("historical")}
+          onGoIdentity={() => setScreen("identity")}
+          onGoProvinceRoulette={() => setScreen("provinceroulette")}
+          onGoSubStumper={() => setScreen("substumper")}
+          onGoLineage={() => setScreen("lineage")}
+          onGoSubStats={() => setScreen("substats")} />
+      )}
+
+      {screen === "home" && AESTHETIC !== "original" && (
         <MainTabs state={appState} tab={tab} onTab={setTab}
           onNavigate={(s) => setScreen(s as Screen)}
           onQuickPlay={startQuickPlay} onStartDaily={startDaily} onReverseQuiz={startReverseQuiz} />

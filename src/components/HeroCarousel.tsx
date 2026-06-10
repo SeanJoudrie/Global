@@ -13,10 +13,8 @@ interface Props {
 }
 
 const dayIdx = Math.floor(Date.now() / 86400000)
-const CARD_H = 184
+const CARD_H = 186
 
-// A rotating "try this game" feature — each pairs a game with a real image
-// pulled from its own content, so the carousel actively sells the games.
 interface Featured { id: string; label: string; title: string; sub: string; img: string; accent: string }
 
 function buildFeatured(): Featured {
@@ -24,22 +22,26 @@ function buildFeatured(): Featured {
   const hist = HISTORICAL_FLAGS[Math.floor(seededRandom(todayString() + "histfeat")() * HISTORICAL_FLAGS.length)]
   const pool: Featured[] = [
     { id: "substumper", label: "New Challenge", title: "Subdivision Stumper", sub: `Whose province is this — ${sub.name}?`, img: sub.flagUrl, accent: ACCENT.learn },
-    { id: "historical", label: "From the Archive", title: "Historical Flags", sub: `Identify a vanished state — ${hist.name}`, img: hist.flagUrl, accent: ACCENT.codex },
+    { id: "historical", label: "From the Archive", title: "Historical Flags", sub: `Name a vanished state — ${hist.name}`, img: hist.flagUrl, accent: ACCENT.codex },
     { id: "lineage", label: "Trace the Tree", title: "Lineage", sub: "Follow a flag's family to today's country", img: hist.flagUrl, accent: ACCENT.play },
-    { id: "provinceroulette", label: "Spin it", title: "Province Roulette", sub: `Continent → country → ${sub.name}`, img: sub.flagUrl, accent: ACCENT.learn },
+    { id: "provinceroulette", label: "Spin It", title: "Province Roulette", sub: `Continent → country → ${sub.name}`, img: sub.flagUrl, accent: ACCENT.learn },
   ]
   return pool[dayIdx % pool.length]
 }
 
+// A neat, fully-visible flag chip (contain, never zoomed/cropped).
+function FlagChip({ code, w, h }: { code: string; w: number; h: number }) {
+  return (
+    <div style={{ flexShrink: 0, width: w, height: h, borderRadius: 9, overflow: "hidden", border: `1px solid ${T.line}`,
+      background: IS_CARTO ? "#FFFFFF" : T.surfaceHi, display: "flex", alignItems: "center", justifyContent: "center", padding: 4 }}>
+      <FlagImage code={code} style={{ maxWidth: "100%", maxHeight: "100%", objectFit: "contain", display: "block" }} />
+    </div>
+  )
+}
+
 export default function HeroCarousel({ onNavigate }: Props) {
-  const fotd = useMemo(() => {
-    const r = seededRandom(todayString() + "fotd")
-    return FLAGS[Math.floor(r() * FLAGS.length)]
-  }, [])
-  const factFlag = useMemo(() => {
-    const r = seededRandom(todayString() + "fact")
-    return FLAGS[Math.floor(r() * FLAGS.length)]
-  }, [])
+  const fotd = useMemo(() => FLAGS[Math.floor(seededRandom(todayString() + "fotd")() * FLAGS.length)], [])
+  const factFlag = useMemo(() => FLAGS[Math.floor(seededRandom(todayString() + "fact")() * FLAGS.length)], [])
   const featured = useMemo(buildFeatured, [])
 
   const [idx, setIdx] = useState(0)
@@ -48,6 +50,7 @@ export default function HeroCarousel({ onNavigate }: Props) {
   const timer = useRef<ReturnType<typeof setInterval> | null>(null)
   const NUM = 4
 
+  // Auto-advance every 9s; resets when the user interacts.
   const reset = () => {
     if (timer.current) clearInterval(timer.current)
     timer.current = setInterval(() => setIdx(i => (i + 1) % NUM), 9000)
@@ -78,41 +81,40 @@ export default function HeroCarousel({ onNavigate }: Props) {
     <div className="geo-micro" style={{ fontSize: 9, color: accent, marginBottom: 6 }}>◦ {text}</div>
   )
 
+  const regionChip = (region: string, accent: string) => (
+    <span className="geo-micro" style={{ fontSize: 8, color: accent, padding: "3px 8px", borderRadius: 999, background: tint(accent, 0.12), border: `1px solid ${tint(accent, 0.3)}` }}>{region}</span>
+  )
+
   const slides = [
-    // 0 — Flag of the Day
+    // 0 — Flag of the Day (small contained flag top-right, fact gets full width)
     shellCard(ACCENT.codex, (
-      <div style={{ display: "flex", gap: 14, height: "100%" }}>
-        <div style={{ flex: 1, minWidth: 0, display: "flex", flexDirection: "column" }}>
-          {eyebrow("Flag of the Day", ACCENT.codex)}
-          <div className="geo-display" style={{ color: T.text, fontWeight: 700, fontSize: 25, lineHeight: 1, letterSpacing: "-0.01em" }}>{fotd.name}</div>
-          <div style={{ marginTop: 7 }}>
-            <span className="geo-micro" style={{ fontSize: 8, color: ACCENT.codex, padding: "3px 8px", borderRadius: 999, background: tint(ACCENT.codex, 0.12), border: `1px solid ${tint(ACCENT.codex, 0.3)}` }}>{fotd.region}</span>
+      <div style={{ display: "flex", flexDirection: "column", height: "100%" }}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 12 }}>
+          <div style={{ minWidth: 0, flex: 1 }}>
+            {eyebrow("Flag of the Day", ACCENT.codex)}
+            <div className="geo-display" style={{ color: T.text, fontWeight: 700, fontSize: 24, lineHeight: 1, letterSpacing: "-0.01em" }}>{fotd.name}</div>
+            <div style={{ marginTop: 8 }}>{regionChip(fotd.region, ACCENT.codex)}</div>
           </div>
-          <p style={{ marginTop: "auto", fontSize: 11.5, lineHeight: 1.5, color: T.muted, display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>{fotd.funFact}</p>
+          <FlagChip code={fotd.code} w={88} h={59} />
         </div>
-        <div style={{ flexShrink: 0, width: 132, height: "100%", borderRadius: 12, overflow: "hidden", border: `1px solid ${T.line}`, boxShadow: IS_CARTO ? "0 6px 16px -8px rgba(31,58,60,0.4)" : "none" }}>
-          <FlagImage code={fotd.code} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
-        </div>
+        <p style={{ marginTop: "auto", fontSize: 11, lineHeight: 1.5, color: T.muted, display: "-webkit-box", WebkitLineClamp: 3, WebkitBoxOrient: "vertical", overflow: "hidden" }}>{fotd.funFact}</p>
       </div>
     ), () => onNavigate("codex")),
 
-    // 1 — Did You Know (fact + flag thumb)
+    // 1 — Fun Fact (clean serif, no quotes, not italic; flag chip; roomy)
     shellCard(ACCENT.learn, (
-      <div style={{ display: "flex", gap: 14, height: "100%" }}>
-        <div style={{ flex: 1, minWidth: 0, display: "flex", flexDirection: "column" }}>
-          {eyebrow("Did You Know", ACCENT.learn)}
-          <p className="geo-display" style={{ color: T.text, fontWeight: 600, fontSize: 16, lineHeight: 1.35, fontStyle: IS_CARTO ? "italic" : "normal", margin: 0 }}>
-            "{factFlag.funFact}"
-          </p>
-          <div className="geo-micro" style={{ marginTop: "auto", fontSize: 8, color: T.muted }}>{factFlag.name} · tap for more facts</div>
+      <div style={{ display: "flex", flexDirection: "column", height: "100%" }}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 12 }}>
+          {eyebrow("Fun Fact", ACCENT.learn)}
+          <FlagChip code={factFlag.code} w={62} h={42} />
         </div>
-        <div style={{ flexShrink: 0, width: 96, height: 96, alignSelf: "center", borderRadius: 12, overflow: "hidden", border: `1px solid ${T.line}` }}>
-          <FlagImage code={factFlag.code} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
-        </div>
+        <p className="geo-display" style={{ color: T.text, fontWeight: 600, fontSize: 14, lineHeight: 1.5, margin: "2px 0 0",
+          display: "-webkit-box", WebkitLineClamp: 4, WebkitBoxOrient: "vertical", overflow: "hidden" }}>{factFlag.funFact}</p>
+        <div className="geo-micro" style={{ marginTop: "auto", fontSize: 8, color: T.muted }}>{factFlag.name} · tap for more</div>
       </div>
     ), () => onNavigate("funfact")),
 
-    // 2 — Featured game (sells a game with a real image)
+    // 2 — Featured game (sells a game with a contained image + CTA)
     shellCard(featured.accent, (
       <div style={{ display: "flex", gap: 14, height: "100%" }}>
         <div style={{ flex: 1, minWidth: 0, display: "flex", flexDirection: "column" }}>
@@ -124,19 +126,18 @@ export default function HeroCarousel({ onNavigate }: Props) {
             <span style={{ fontSize: 13 }}>→</span>
           </div>
         </div>
-        <div style={{ flexShrink: 0, width: 120, height: "100%", borderRadius: 12, overflow: "hidden", border: `1px solid ${T.line}`, background: tint(featured.accent, 0.08), display: "flex", alignItems: "center", justifyContent: "center" }}>
-          <img src={featured.img} alt="" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+        <div style={{ flexShrink: 0, width: 104, height: "100%", borderRadius: 12, overflow: "hidden", border: `1px solid ${T.line}`, background: IS_CARTO ? "#FFFFFF" : tint(featured.accent, 0.08), display: "flex", alignItems: "center", justifyContent: "center", padding: 6 }}>
+          <img src={featured.img} alt="" style={{ maxWidth: "100%", maxHeight: "100%", objectFit: "contain", display: "block" }}
             onError={e => { (e.target as HTMLImageElement).style.opacity = "0.25" }} />
         </div>
       </div>
     ), () => onNavigate(featured.id)),
 
-    // 3 — Make it yours (aesthetic / theme promo, pops in a contrasting palette)
+    // 3 — Make it yours (promotes the other look + themes)
     (() => {
-      // Promote the OTHER aesthetic's look so it visibly contrasts the current skin.
       const promo = IS_CARTO
-        ? { name: "Tactical Geo-Codex", sub: "Dark charcoal · electric accents", sw: ["#0A0E16", "#BEF23A", "#27D3DE", "#F5A524"] }
-        : { name: "Modern Cartographer", sub: "Warm parchment · classic serif", sw: ["#FBF4E4", "#C2735A", "#5C8CA8", "#1F3A3C"] }
+        ? { name: "Tactical Geo-Codex", sw: ["#0A0E16", "#BEF23A", "#27D3DE", "#F5A524"] }
+        : { name: "Modern Cartographer", sw: ["#FBF4E4", "#C2735A", "#5C8CA8", "#1F3A3C"] }
       return shellCard(ACCENT.challenge, (
         <div style={{ display: "flex", gap: 14, height: "100%" }}>
           <div style={{ flex: 1, minWidth: 0, display: "flex", flexDirection: "column" }}>
@@ -150,8 +151,8 @@ export default function HeroCarousel({ onNavigate }: Props) {
               <span style={{ fontFamily: FONT.display, fontWeight: 600, fontSize: 12, color: T.text }}>{promo.name} →</span>
             </div>
           </div>
-          <div style={{ flexShrink: 0, width: 64, height: "100%", borderRadius: 12, display: "flex", alignItems: "center", justifyContent: "center", background: tint(ACCENT.challenge, 0.1), border: `1px solid ${tint(ACCENT.challenge, 0.3)}`, color: ACCENT.challenge }}>
-            <LineIcon name="settings" size={26} color={ACCENT.challenge} />
+          <div style={{ flexShrink: 0, width: 60, height: "100%", borderRadius: 12, display: "flex", alignItems: "center", justifyContent: "center", background: tint(ACCENT.challenge, 0.1), border: `1px solid ${tint(ACCENT.challenge, 0.3)}`, color: ACCENT.challenge }}>
+            <LineIcon name="settings" size={24} color={ACCENT.challenge} />
           </div>
         </div>
       ), () => onNavigate("settings"))
@@ -162,13 +163,10 @@ export default function HeroCarousel({ onNavigate }: Props) {
 
   return (
     <div>
-      <div className="select-none"
-        style={{ cursor: "grab", touchAction: "pan-y" }}
-        onMouseDown={e => onDown(e.clientX)}
-        onMouseUp={e => onUp(e.clientX)}
+      <div className="select-none" style={{ cursor: "grab", touchAction: "pan-y" }}
+        onMouseDown={e => onDown(e.clientX)} onMouseUp={e => onUp(e.clientX)}
         onMouseLeave={() => { dragging.current = false; dragX.current = null }}
-        onTouchStart={e => onDown(e.touches[0].clientX)}
-        onTouchEnd={e => onUp(e.changedTouches[0].clientX)}>
+        onTouchStart={e => onDown(e.touches[0].clientX)} onTouchEnd={e => onUp(e.changedTouches[0].clientX)}>
         {slides[idx]}
       </div>
       <div style={{ display: "flex", justifyContent: "center", gap: 7, marginTop: 11 }}>

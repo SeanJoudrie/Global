@@ -100,6 +100,10 @@ function TodayTab({ state, dailyDone, spotlight, onNavigate, onQuickPlay, onStar
   launch: (e: Entry) => void; playTiles: Entry[]
 }) {
   const posterFlag = FLAGS[(dayIdx * 13) % FLAGS.length]
+  // Surface the game-like LEARN entries here too, mixed with casual games.
+  const LEARN_GAME_IDS = ["language", "geo", "capitalquiz", "reversequiz", "substumper", "lineage"]
+  const learnGames = LEARN_GAME_IDS.map(id => REGISTRY.find(r => r.id === id)).filter(Boolean) as Entry[]
+  const tryGames = [...learnGames, ...playTiles].slice(0, 12)
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 18 }}>
       {/* Swipeable hero carousel: Flag of the Day · Did You Know · featured game · personalise */}
@@ -135,13 +139,7 @@ function TodayTab({ state, dailyDone, spotlight, onNavigate, onQuickPlay, onStar
       </div>
 
       {/* Resume */}
-      <div>
-        <SectionHeader title="Resume" accent={T.cyan} />
-        <ModuleCard icon="🚩" glyph="flags" title="Flag Sets" subtitle="Pick up where you left off" accent={ACCENT.learn}
-          progress={{ done: state.learnedFlags.length, total: FLAGS.length }} onClick={() => onNavigate("flags")} />
-      </div>
-
-      {/* Daily game spotlight — with a poster image to demo & entice */}
+      {/* Today's game — sits above Resume; poster image to demo & entice */}
       <div>
         <SectionHeader title="Today's game" accent={ACCENT.play} />
         <button onClick={() => launch(spotlight)} className={`geo-tap ${IS_CARTO ? "carto-card" : ""}`}
@@ -162,11 +160,18 @@ function TodayTab({ state, dailyDone, spotlight, onNavigate, onQuickPlay, onStar
         </button>
       </div>
 
-      {/* Jump back in */}
       <div>
-        <SectionHeader title="Jump back in" accent={T.chartreuse} action={<span className="geo-micro" style={{ fontSize: 8, color: T.dim }}>swipe →</span>} />
-        <div style={{ display: "flex", gap: 10, overflowX: "auto", paddingBottom: 4, margin: "0 -16px", padding: "0 16px 4px" }}>
-          {playTiles.slice(0, 8).map(e => (
+        <SectionHeader title="Resume" accent={T.cyan} />
+        <ModuleCard icon="🚩" glyph="flags" title="Flag Sets" subtitle="Pick up where you left off" accent={ACCENT.learn}
+          progress={{ done: state.learnedFlags.length, total: FLAGS.length }} onClick={() => onNavigate("flags")} />
+      </div>
+
+      {/* Games to try — mixes casual games with the learn-section games so they
+          surface here too (multiple pathways to every game) */}
+      <div>
+        <SectionHeader title="Games to try" accent={T.chartreuse} action={<button onClick={() => onNavigate("flags")} className="geo-micro" style={{ fontSize: 8, color: T.dim, background: "transparent" }}>see all →</button>} />
+        <div style={{ display: "flex", gap: 10, overflowX: "auto", margin: "0 -16px", padding: "0 16px 4px" }}>
+          {tryGames.map(e => (
             <GameTile key={e.id} icon={e.icon} glyph={e.id} title={e.title} subtitle={e.subtitle} accent={ACCENT[e.accent]} onClick={() => launch(e)} />
           ))}
         </div>
@@ -212,11 +217,24 @@ function CollectionBanner({ state }: { state: AppState }) {
   )
 }
 
-/* ── PLAY — casual carousel + challenge modules ────────────────────────── */
+/* ── PLAY — casual games + cross-listed quiz games + challenge modules ──── */
+const QUIZ_GAME_IDS = ["reversequiz", "capitalquiz", "language", "geo", "substumper", "lineage"]
+
 function PlayTab({ launch }: { launch: (e: Entry) => void }) {
   const groups = groupsFor("play")
+  // Multiple pathways: the game-like LEARN entries also live here so players who
+  // never open Learn still find them.
+  const quizGames = QUIZ_GAME_IDS.map(id => REGISTRY.find(r => r.id === id)).filter(Boolean) as Entry[]
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
+      <div>
+        <SectionHeader title="Quiz Games" accent={ACCENT.learn} action={<span className="geo-micro" style={{ fontSize: 8, color: T.dim }}>also in Learn</span>} />
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(108px,1fr))", gap: 10 }}>
+          {quizGames.map(e => (
+            <GameTile key={e.id} icon={e.icon} glyph={e.id} title={e.title} subtitle={e.subtitle} accent={ACCENT.learn} onClick={() => launch(e)} style={{ width: "100%" }} />
+          ))}
+        </div>
+      </div>
       {groups.map(g => {
         const isTiles = g.entries[0].size === "tile"
         return (

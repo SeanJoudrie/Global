@@ -103,6 +103,7 @@ export default function SettingsScreen({ onBack, onMegaCodex }: Props) {
   const AESTHETICS: { id: Aesthetic; name: string; sub: string; swatch: string[] }[] = [
     { id: 'cartographer', name: 'Modern Cartographer', sub: 'Warm parchment archive · serif', swatch: ['#FBF4E4', '#C2735A', '#5C8CA8', '#1F3A3C'] },
     { id: 'tactical', name: 'Tactical Geo-Codex', sub: 'Dark charcoal · electric accents', swatch: ['#0A0E16', '#BEF23A', '#27D3DE', '#F5A524'] },
+    { id: 'original', name: 'Original (Beta)', sub: 'The classic purple dashboard & list', swatch: ['#1A1033', '#8B6CFF', '#A78BFA', '#FBBF24'] },
   ]
 
   return (
