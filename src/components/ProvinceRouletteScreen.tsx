@@ -9,22 +9,35 @@ function pick<T>(a: T[]): T { return a[Math.floor(Math.random() * a.length)] }
 
 interface Step { label: string; choices: string[]; answer: string }
 
+// Always returns exactly 4 distinct options: the answer + 3 distractors,
+// preferring `primary`, then backfilling from `fallback` so it's never short.
+function fourChoices(answer: string, primary: string[], fallback: string[]): string[] {
+  const seen = new Set<string>([answer])
+  const out = [answer]
+  for (const list of [primary, fallback]) {
+    for (const x of shuffle(list)) {
+      if (out.length >= 4) break
+      if (!seen.has(x)) { seen.add(x); out.push(x) }
+    }
+  }
+  return shuffle(out)
+}
+
+const ALL_COUNTRIES = Array.from(new Set(SUB_FLAGS.map(s => s.countryName)))
+const ALL_REGIONS = Array.from(new Set(SUB_FLAGS.map(s => s.name)))
+
 function buildSteps(target: SubFlag): Step[] {
-  // Continent
-  const continents = SUB_CONTINENTS.map(c => c.name)
-  // Country (3 distractors from same continent)
-  const sameContCountries = Array.from(new Set(
-    SUB_FLAGS.filter(s => s.continent === target.continent && s.countryCode !== target.countryCode).map(s => s.countryName)
-  ))
-  const countryChoices = shuffle([target.countryName, ...shuffle(sameContCountries).slice(0, 3)])
-  // Region (3 distractors from same country)
-  const sameCountryRegions = SUB_FLAGS.filter(s => s.countryCode === target.countryCode && s.code !== target.code).map(s => s.name)
-  const regionChoices = shuffle([target.name, ...shuffle(Array.from(new Set(sameCountryRegions))).slice(0, 3)])
+  const sameContCountries = SUB_FLAGS
+    .filter(s => s.continent === target.continent && s.countryName !== target.countryName)
+    .map(s => s.countryName)
+  const sameCountryRegions = SUB_FLAGS
+    .filter(s => s.countryCode === target.countryCode && s.name !== target.name)
+    .map(s => s.name)
 
   return [
-    { label: "Which continent?", choices: shuffle(continents), answer: target.continent },
-    { label: "Which country?", choices: countryChoices, answer: target.countryName },
-    { label: "Which subdivision?", choices: regionChoices, answer: target.name },
+    { label: "Which continent?", choices: shuffle(SUB_CONTINENTS.map(c => c.name)), answer: target.continent },
+    { label: "Which country?", choices: fourChoices(target.countryName, sameContCountries, ALL_COUNTRIES), answer: target.countryName },
+    { label: "Which subdivision?", choices: fourChoices(target.name, sameCountryRegions, ALL_REGIONS), answer: target.name },
   ]
 }
 
