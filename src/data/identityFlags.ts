@@ -7,6 +7,7 @@ export type IdentityCategory =
   | "Indigenous Peoples"
   | "Separatist & Autonomous"
   | "Micronations"
+  | "Maritime & Signal"
 
 export interface IdentityFlag {
   id: string
@@ -150,7 +151,7 @@ export const IDENTITY_FLAGS: IdentityFlag[] = [
   },
   {
     id: "bigender", name: "Bigender Pride Flag", category: "Pride & Identity",
-    flagUrl: fp("Bigender_Pride_Flag.svg"),
+    flagUrl: fp("Bigender_Flag.svg"),
     note: "For identifying as two genders at once or fluctuating between them, in shades of pink, purple, white, and blue.",
   },
   {
@@ -498,6 +499,144 @@ export const IDENTITY_FLAGS: IdentityFlag[] = [
     flagUrl: fp("Glacier_Republic_Flag.svg"),
     note: "A 2014 Greenpeace stunt-state planted on an Andean glacier to highlight a legal gap in Chile's protection of its glaciers.",
   },
+
+  // ── Maritime & Signal ───────────────────────────────────────────────────────
+  // The 26 International Code of Signals flags. Each has a meaning when flown alone.
+  {
+    id: "ics-alpha", name: "Alpha (A)", category: "Maritime & Signal",
+    flagUrl: fp("ICS_Alpha.svg"),
+    note: "Blue-and-white swallowtail. Flown alone it means 'I have a diver down; keep well clear at slow speed' — also the international diver-down flag.",
+  },
+  {
+    id: "ics-bravo", name: "Bravo (B)", category: "Maritime & Signal",
+    flagUrl: fp("ICS_Bravo.svg"),
+    note: "A red swallowtail. Alone: 'I am taking in, discharging, or carrying dangerous goods.'",
+  },
+  {
+    id: "ics-charlie", name: "Charlie (C)", category: "Maritime & Signal",
+    flagUrl: fp("ICS_Charlie.svg"),
+    note: "Blue-white-red-white-blue horizontal bands. Alone it means 'Affirmative — Yes.'",
+  },
+  {
+    id: "ics-delta", name: "Delta (D)", category: "Maritime & Signal",
+    flagUrl: fp("ICS_Delta.svg"),
+    note: "Yellow-blue-yellow. Alone: 'Keep clear of me; I am manoeuvring with difficulty.'",
+  },
+  {
+    id: "ics-echo", name: "Echo (E)", category: "Maritime & Signal",
+    flagUrl: fp("ICS_Echo.svg"),
+    note: "Blue over red. Alone: 'I am altering my course to starboard.'",
+  },
+  {
+    id: "ics-foxtrot", name: "Foxtrot (F)", category: "Maritime & Signal",
+    flagUrl: fp("ICS_Foxtrot.svg"),
+    note: "A red diamond on white. Alone: 'I am disabled; communicate with me.'",
+  },
+  {
+    id: "ics-golf", name: "Golf (G)", category: "Maritime & Signal",
+    flagUrl: fp("ICS_Golf.svg"),
+    note: "Yellow and blue vertical stripes. Alone: 'I require a pilot.'",
+  },
+  {
+    id: "ics-hotel", name: "Hotel (H)", category: "Maritime & Signal",
+    flagUrl: fp("ICS_Hotel.svg"),
+    note: "White and red halves. Alone: 'I have a pilot on board.'",
+  },
+  {
+    id: "ics-india", name: "India (I)", category: "Maritime & Signal",
+    flagUrl: fp("ICS_India.svg"),
+    note: "A black disc on yellow. Alone: 'I am altering my course to port.'",
+  },
+  {
+    id: "ics-juliet", name: "Juliet (J)", category: "Maritime & Signal",
+    flagUrl: fp("ICS_Juliet.svg"),
+    note: "Blue-white-blue. Alone: 'I am on fire and have dangerous cargo — keep clear.'",
+  },
+  {
+    id: "ics-kilo", name: "Kilo (K)", category: "Maritime & Signal",
+    flagUrl: fp("ICS_Kilo.svg"),
+    note: "Yellow and blue halves. Alone: 'I wish to communicate with you.'",
+  },
+  {
+    id: "ics-lima", name: "Lima (L)", category: "Maritime & Signal",
+    flagUrl: fp("ICS_Lima.svg"),
+    note: "A yellow-and-black checkerboard. Alone: 'You should stop your vessel instantly.'",
+  },
+  {
+    id: "ics-mike", name: "Mike (M)", category: "Maritime & Signal",
+    flagUrl: fp("ICS_Mike.svg"),
+    note: "A white saltire (X) on blue. Alone: 'My vessel is stopped and making no way.'",
+  },
+  {
+    id: "ics-november", name: "November (N)", category: "Maritime & Signal",
+    flagUrl: fp("ICS_November.svg"),
+    note: "A blue-and-white checkerboard. Alone: 'Negative — No.'",
+  },
+  {
+    id: "ics-oscar", name: "Oscar (O)", category: "Maritime & Signal",
+    flagUrl: fp("ICS_Oscar.svg"),
+    note: "Red and yellow diagonal halves. Alone: 'Man overboard.'",
+  },
+  {
+    id: "ics-papa", name: "Papa (P)", category: "Maritime & Signal",
+    flagUrl: fp("ICS_Papa.svg"),
+    note: "The 'Blue Peter' — a white square on blue. In harbor: 'All aboard; the vessel is about to sail.'",
+  },
+  {
+    id: "ics-quebec", name: "Quebec (Q)", category: "Maritime & Signal",
+    flagUrl: fp("ICS_Quebec.svg"),
+    note: "A solid yellow flag. Alone: 'My vessel is healthy and I request free pratique (clearance to enter port).'",
+  },
+  {
+    id: "ics-romeo", name: "Romeo (R)", category: "Maritime & Signal",
+    flagUrl: fp("ICS_Romeo.svg"),
+    note: "A yellow cross on red. Used mainly in coded groups and to acknowledge signals.",
+  },
+  {
+    id: "ics-sierra", name: "Sierra (S)", category: "Maritime & Signal",
+    flagUrl: fp("ICS_Sierra.svg"),
+    note: "A blue square on white. Alone: 'I am operating astern propulsion' (engines going backward).",
+  },
+  {
+    id: "ics-tango", name: "Tango (T)", category: "Maritime & Signal",
+    flagUrl: fp("ICS_Tango.svg"),
+    note: "Red-white-blue vertical bands. Alone: 'Keep clear of me; I am engaged in pair trawling.'",
+  },
+  {
+    id: "ics-uniform", name: "Uniform (U)", category: "Maritime & Signal",
+    flagUrl: fp("ICS_Uniform.svg"),
+    note: "A red-and-white checkerboard. Alone it is an urgent warning: 'You are running into danger.'",
+  },
+  {
+    id: "ics-victor", name: "Victor (V)", category: "Maritime & Signal",
+    flagUrl: fp("ICS_Victor.svg"),
+    note: "A red saltire (X) on white. Alone: 'I require assistance.'",
+  },
+  {
+    id: "ics-whiskey", name: "Whiskey (W)", category: "Maritime & Signal",
+    flagUrl: fp("ICS_Whiskey.svg"),
+    note: "Blue-white-red nested squares. Alone: 'I require medical assistance.'",
+  },
+  {
+    id: "ics-xray", name: "X-ray (X)", category: "Maritime & Signal",
+    flagUrl: fp("ICS_X-ray.svg"),
+    note: "A blue cross on white. Alone: 'Stop carrying out your intentions and watch for my signals.'",
+  },
+  {
+    id: "ics-yankee", name: "Yankee (Y)", category: "Maritime & Signal",
+    flagUrl: fp("ICS_Yankee.svg"),
+    note: "Yellow and red diagonal stripes. Alone: 'I am dragging my anchor.'",
+  },
+  {
+    id: "ics-zulu", name: "Zulu (Z)", category: "Maritime & Signal",
+    flagUrl: fp("ICS_Zulu.svg"),
+    note: "Black, blue, red, and yellow triangles meeting at the center. Alone: 'I require a tug.'",
+  },
+  {
+    id: "diver-down", name: "Diver Down (North America)", category: "Maritime & Signal",
+    flagUrl: fp("Diver_Down_flag.svg"),
+    note: "A red flag with a white diagonal stripe, used in North American waters to mark a diver below — the regional counterpart to the international Alpha flag.",
+  },
 ]
 
 export const IDENTITY_CATEGORIES: IdentityCategory[] = [
@@ -506,5 +645,6 @@ export const IDENTITY_CATEGORIES: IdentityCategory[] = [
   "Indigenous Peoples",
   "Separatist & Autonomous",
   "Micronations",
+  "Maritime & Signal",
   "Civic & Ideological",
 ]
