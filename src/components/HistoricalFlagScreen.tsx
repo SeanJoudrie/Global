@@ -1,8 +1,8 @@
 import { useState } from "react"
 import { HISTORICAL_FLAGS } from "../data/historicalFlags"
-import type { HistoricalEntity } from "../data/historicalFlags"
+import type { HistoricalEntity, HistoricalRegion } from "../data/historicalFlags"
 
-interface Props { onBack: () => void }
+interface Props { onBack: () => void; region?: HistoricalRegion }
 
 const ROUNDS = 6
 const PTS = 1000
@@ -23,8 +23,10 @@ function pickChoices(target: HistoricalEntity): HistoricalEntity[] {
 
 interface Round { target: HistoricalEntity; choices: HistoricalEntity[] }
 
-function buildRounds(): Round[] {
-  return [...HISTORICAL_FLAGS].sort(() => Math.random() - 0.5)
+function buildRounds(region?: HistoricalRegion): Round[] {
+  const pool = region ? HISTORICAL_FLAGS.filter(h => h.region === region) : HISTORICAL_FLAGS
+  const usePool = pool.length >= 4 ? pool : HISTORICAL_FLAGS
+  return [...usePool].sort(() => Math.random() - 0.5)
     .slice(0, ROUNDS)
     .map(target => ({ target, choices: pickChoices(target) }))
 }
@@ -47,8 +49,8 @@ function FlagImg({ src, alt }: { src: string; alt: string }) {
   )
 }
 
-function HistoricalFlagScreenGame({ onBack , onReplay }: Props & { onReplay: () => void }) {
-  const [rounds] = useState(buildRounds)
+function HistoricalFlagScreenGame({ onBack, onReplay, region }: Props & { onReplay: () => void }) {
+  const [rounds] = useState(() => buildRounds(region))
   const [idx, setIdx] = useState(0)
   const [selected, setSelected] = useState<string | null>(null)
   const [scores, setScores] = useState<{ correct: boolean }[]>([])
@@ -183,7 +185,7 @@ function HistoricalFlagScreenGame({ onBack , onReplay }: Props & { onReplay: () 
   )
 }
 
-export default function HistoricalFlagScreen({ onBack }: Props) {
+export default function HistoricalFlagScreen({ onBack, region }: Props) {
   const [replayKey, setReplayKey] = useState(0)
-  return <HistoricalFlagScreenGame key={replayKey} onBack={onBack} onReplay={() => setReplayKey(k => k + 1)} />
+  return <HistoricalFlagScreenGame key={replayKey} onBack={onBack} region={region} onReplay={() => setReplayKey(k => k + 1)} />
 }

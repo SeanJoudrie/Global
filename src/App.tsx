@@ -28,6 +28,7 @@ import FlagFamiliesScreen from "./components/FlagFamiliesScreen"
 import FunFactScreen from "./components/FunFactScreen"
 import ProgressMapScreen from "./components/ProgressMapScreen"
 import HistoricalFlagScreen from "./components/HistoricalFlagScreen"
+import type { HistoricalRegion } from "./data/historicalFlags"
 import IdentityFlagScreen from "./components/IdentityFlagScreen"
 import ProvinceRouletteScreen from "./components/ProvinceRouletteScreen"
 import SubdivisionStumperScreen from "./components/SubdivisionStumperScreen"
@@ -60,6 +61,7 @@ export default function App() {
   const [appState, setAppState] = useState<AppState>(() => loadState())
   const [activeQuiz, setActiveQuiz] = useState<ActiveQuiz | null>(null)
   const [lastResult, setLastResult] = useState<{ score: number; total: number; answers: ("correct" | "wrong")[] } | null>(null)
+  const [histRegion, setHistRegion] = useState<HistoricalRegion | undefined>(undefined)
 
   useEffect(() => { saveState(appState) }, [appState])
 
@@ -193,7 +195,9 @@ export default function App() {
       )}
 
       {screen === "flags" && (
-        <FlagsScreen state={appState} onBack={() => setScreen("home")} onStartSet={startSet} />
+        <FlagsScreen state={appState} onBack={() => setScreen("home")} onStartSet={startSet}
+          onStartHistorical={(region) => { setHistRegion(region); setScreen("historical") }}
+          onGoIdentity={() => setScreen("identity")} />
       )}
 
       {screen === "flashcards" && (
@@ -227,7 +231,7 @@ export default function App() {
       )}
       {screen === "achievements" && <AchievementsScreen state={appState} onBack={() => setScreen("home")} />}
       {screen === "progressmap" && <ProgressMapScreen state={appState} onBack={() => setScreen("home")} />}
-      {screen === "historical" && <HistoricalFlagScreen onBack={() => setScreen("home")} />}
+      {screen === "historical" && <HistoricalFlagScreen onBack={() => setScreen("home")} region={histRegion} />}
       {screen === "identity" && <IdentityFlagScreen onBack={() => setScreen("home")} />}
       {screen === "provinceroulette" && <ProvinceRouletteScreen onBack={() => setScreen("home")} onSubLearned={handleSubLearned} />}
       {screen === "substumper" && <SubdivisionStumperScreen onBack={() => setScreen("home")} onSubLearned={handleSubLearned} />}
