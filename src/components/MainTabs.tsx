@@ -1,11 +1,29 @@
+import worldMap from "@svg-maps/world"
 import { FLAGS } from "../data/flags"
 import type { AppState } from "../utils/storage"
 import { todayString } from "../utils/prng"
-import { T, ACCENT, FONT, tint } from "../ui/tokens"
+import { T, ACCENT, FONT, tint, IS_CARTO } from "../ui/tokens"
 import { groupsFor, REGISTRY } from "../ui/registry"
 import type { Entry, TabKey } from "../ui/registry"
 import { TabBar, ModuleCard, GameTile, HeroCard, StatPill, SectionHeader, ProgressRing } from "./ui"
+import { LineIcon, FlameIcon } from "./icons"
 import FlagImage from "./FlagImage"
+
+// Faint antique world-map backdrop (Cartographer skin only) — edges fade out.
+function MapBackdrop() {
+  return (
+    <svg viewBox={(worldMap as { viewBox: string }).viewBox} preserveAspectRatio="xMidYMid slice"
+      style={{
+        position: "fixed", inset: 0, width: "100%", height: "100%", pointerEvents: "none", zIndex: 0,
+        opacity: 0.07, WebkitMaskImage: "radial-gradient(120% 90% at 50% 35%, #000 30%, transparent 78%)",
+        maskImage: "radial-gradient(120% 90% at 50% 35%, #000 30%, transparent 78%)",
+      }}>
+      {(worldMap as { locations: { id: string; path: string }[] }).locations.map(l => (
+        <path key={l.id} d={l.path} fill="none" stroke={T.text} strokeWidth={0.6} />
+      ))}
+    </svg>
+  )
+}
 
 interface Props {
   state: AppState
@@ -36,22 +54,26 @@ export default function MainTabs({ state, tab, onTab, onNavigate, onQuickPlay, o
   const learned = state.learnedFlags.length
 
   return (
-    <div className="geo-grid" style={{ minHeight: "100vh", position: "relative", zIndex: 1 }}>
-      <div className="geo-vignette" style={{ position: "absolute", inset: 0, pointerEvents: "none" }} />
+    <div className={IS_CARTO ? "carto-paper" : "geo-grid"} style={{ minHeight: "100vh", position: "relative", zIndex: 1, background: IS_CARTO ? T.bg : undefined }}>
+      {IS_CARTO ? <MapBackdrop /> : <div className="geo-vignette" style={{ position: "absolute", inset: 0, pointerEvents: "none" }} />}
 
       {/* ── Shared header: wordmark · live streak · system actions ── */}
       <header style={{ position: "relative", display: "flex", alignItems: "center", justifyContent: "space-between", padding: "16px 18px 6px" }}>
-        <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-          <span style={{ width: 9, height: 9, borderRadius: 2, background: ACCENT.today, boxShadow: `0 0 8px ${ACCENT.today}`, display: "inline-block" }} />
-          <span className="geo-display" style={{ color: T.text, fontWeight: 700, fontSize: 18, letterSpacing: "0.02em" }}>GLOBALIO</span>
+        <div style={{ display: "flex", alignItems: "center", gap: 9 }}>
+          <span style={{ width: 9, height: 9, borderRadius: IS_CARTO ? "50%" : 2, background: ACCENT.today, boxShadow: IS_CARTO ? "none" : `0 0 8px ${ACCENT.today}`, display: "inline-block" }} />
+          <span className="geo-display" style={{ color: T.text, fontWeight: 700, fontSize: IS_CARTO ? 22 : 18, letterSpacing: IS_CARTO ? "0.01em" : "0.02em" }}>
+            {IS_CARTO ? "Globalio" : "GLOBALIO"}
+          </span>
         </div>
         <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 5, padding: "5px 10px", borderRadius: 8, background: T.surface, border: `1px solid ${tint(T.amber, 0.3)}` }}>
-            <span style={{ fontSize: 12 }}>🔥</span>
-            <span style={{ fontFamily: FONT.mono, fontWeight: 800, fontSize: 14, color: T.amber, letterSpacing: "-0.03em" }}>{state.currentStreak}</span>
+          <div style={{ display: "flex", alignItems: "center", gap: 5, padding: "5px 10px", borderRadius: IS_CARTO ? 999 : 8, background: T.surface, border: `1px solid ${tint(T.amber, IS_CARTO ? 0.45 : 0.3)}` }}>
+            {IS_CARTO ? <FlameIcon size={13} color={T.amber} strokeWidth={1.7} /> : <span style={{ fontSize: 12 }}>🔥</span>}
+            <span style={{ fontFamily: FONT.mono, fontWeight: IS_CARTO ? 600 : 800, fontSize: 14, color: T.amber, letterSpacing: "-0.02em" }}>{state.currentStreak}</span>
           </div>
           <button onClick={() => onNavigate("settings")} aria-label="Settings" className="geo-tap"
-            style={{ width: 32, height: 32, borderRadius: 8, background: T.surface, border: `1px solid ${T.line}`, color: T.muted }}>⚙</button>
+            style={{ width: 32, height: 32, borderRadius: IS_CARTO ? 999 : 8, background: T.surface, border: `1px solid ${T.line}`, color: T.muted, display: "flex", alignItems: "center", justifyContent: "center" }}>
+            {IS_CARTO ? <LineIcon name="settings" size={16} color={T.muted} /> : "⚙"}
+          </button>
         </div>
       </header>
 
@@ -93,24 +115,26 @@ function TodayTab({ state, fotd, dailyDone, spotlight, onNavigate, onQuickPlay, 
 
       {/* Primary action bento */}
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
-        <button onClick={onQuickPlay} className="geo-tap"
-          style={{ textAlign: "left", padding: 14, borderRadius: 14, background: `linear-gradient(150deg,${tint(T.chartreuse, 0.16)},${T.surface})`, border: `1px solid ${tint(T.chartreuse, 0.4)}`, position: "relative", overflow: "hidden" }}>
-          <div style={{ fontSize: 22, marginBottom: 24 }}>⚡</div>
-          <div className="geo-display" style={{ color: T.text, fontWeight: 700, fontSize: 15 }}>Quick Play</div>
-          <div className="geo-mono" style={{ color: T.chartreuse, fontSize: 10, marginTop: 2 }}>10 RANDOM FLAGS</div>
+        <button onClick={onQuickPlay} className={`geo-tap ${IS_CARTO ? "carto-card" : ""}`}
+          style={{ textAlign: "left", padding: 14, borderRadius: 14, position: "relative", overflow: "hidden",
+            ...(IS_CARTO ? { ["--wash" as string]: tint(T.chartreuse, 0.4) } : { background: `linear-gradient(150deg,${tint(T.chartreuse, 0.16)},${T.surface})`, border: `1px solid ${tint(T.chartreuse, 0.4)}` }) }}>
+          <div style={{ marginBottom: 22, color: T.chartreuse }}>{IS_CARTO ? <LineIcon name="quickplay" size={22} color={T.chartreuse} /> : <span style={{ fontSize: 22 }}>⚡</span>}</div>
+          <div className="geo-display" style={{ color: T.text, fontWeight: 700, fontSize: 16 }}>Quick Play</div>
+          <div className="geo-mono" style={{ color: T.chartreuse, fontSize: 10, marginTop: 2 }}>10 random flags</div>
         </button>
-        <button onClick={onStartDaily} className="geo-tap"
-          style={{ textAlign: "left", padding: 14, borderRadius: 14, background: `linear-gradient(150deg,${tint(T.amber, 0.16)},${T.surface})`, border: `1px solid ${tint(T.amber, 0.4)}`, position: "relative", overflow: "hidden" }}>
-          <div style={{ fontSize: 22, marginBottom: 24 }}>🎯</div>
-          <div className="geo-display" style={{ color: T.text, fontWeight: 700, fontSize: 15 }}>Daily Game</div>
-          <div className="geo-mono" style={{ color: dailyDone ? T.green : T.amber, fontSize: 10, marginTop: 2 }}>{dailyDone ? "✓ COMPLETE" : "NEW TODAY"}</div>
+        <button onClick={onStartDaily} className={`geo-tap ${IS_CARTO ? "carto-card" : ""}`}
+          style={{ textAlign: "left", padding: 14, borderRadius: 14, position: "relative", overflow: "hidden",
+            ...(IS_CARTO ? { ["--wash" as string]: tint(T.amber, 0.4) } : { background: `linear-gradient(150deg,${tint(T.amber, 0.16)},${T.surface})`, border: `1px solid ${tint(T.amber, 0.4)}` }) }}>
+          <div style={{ marginBottom: 22, color: T.amber }}>{IS_CARTO ? <LineIcon name="reversequiz" size={22} color={T.amber} /> : <span style={{ fontSize: 22 }}>🎯</span>}</div>
+          <div className="geo-display" style={{ color: T.text, fontWeight: 700, fontSize: 16 }}>Daily Game</div>
+          <div className="geo-mono" style={{ color: dailyDone ? T.green : T.amber, fontSize: 10, marginTop: 2 }}>{dailyDone ? "✓ complete" : "new today"}</div>
         </button>
       </div>
 
       {/* Resume */}
       <div>
         <SectionHeader title="Resume" accent={T.cyan} />
-        <ModuleCard icon="🚩" title="Flag Sets" subtitle="Pick up where you left off" accent={ACCENT.learn}
+        <ModuleCard icon="🚩" glyph="flags" title="Flag Sets" subtitle="Pick up where you left off" accent={ACCENT.learn}
           progress={{ done: state.learnedFlags.length, total: FLAGS.length }} onClick={() => onNavigate("flags")} />
       </div>
 
@@ -126,7 +150,7 @@ function TodayTab({ state, fotd, dailyDone, spotlight, onNavigate, onQuickPlay, 
         <SectionHeader title="Jump back in" accent={T.chartreuse} action={<span className="geo-micro" style={{ fontSize: 8, color: T.dim }}>swipe →</span>} />
         <div style={{ display: "flex", gap: 10, overflowX: "auto", paddingBottom: 4, margin: "0 -16px", padding: "0 16px 4px" }}>
           {playTiles.slice(0, 8).map(e => (
-            <GameTile key={e.id} icon={e.icon} title={e.title} subtitle={e.subtitle} accent={ACCENT[e.accent]} onClick={() => launch(e)} />
+            <GameTile key={e.id} icon={e.icon} glyph={e.id} title={e.title} subtitle={e.subtitle} accent={ACCENT[e.accent]} onClick={() => launch(e)} />
           ))}
         </div>
       </div>
@@ -145,7 +169,7 @@ function ListTab({ tab, launch, state }: { tab: TabKey; launch: (e: Entry) => vo
           <SectionHeader title={g.group} accent={ACCENT[g.entries[0].accent]} />
           <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
             {g.entries.map(e => (
-              <ModuleCard key={e.id} icon={e.icon} title={e.title} subtitle={e.subtitle} accent={ACCENT[e.accent]}
+              <ModuleCard key={e.id} icon={e.icon} glyph={e.id} title={e.title} subtitle={e.subtitle} accent={ACCENT[e.accent]}
                 progress={e.progress?.(state)} onClick={() => launch(e)} />
             ))}
           </div>
@@ -184,13 +208,13 @@ function PlayTab({ launch }: { launch: (e: Entry) => void }) {
             {isTiles ? (
               <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(108px,1fr))", gap: 10 }}>
                 {g.entries.map(e => (
-                  <GameTile key={e.id} icon={e.icon} title={e.title} subtitle={e.subtitle} accent={ACCENT[e.accent]} onClick={() => launch(e)} style={{ width: "100%" }} />
+                  <GameTile key={e.id} icon={e.icon} glyph={e.id} title={e.title} subtitle={e.subtitle} accent={ACCENT[e.accent]} onClick={() => launch(e)} style={{ width: "100%" }} />
                 ))}
               </div>
             ) : (
               <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
                 {g.entries.map(e => (
-                  <ModuleCard key={e.id} icon={e.icon} title={e.title} subtitle={e.subtitle} accent={ACCENT[e.accent]} onClick={() => launch(e)} />
+                  <ModuleCard key={e.id} icon={e.icon} glyph={e.id} title={e.title} subtitle={e.subtitle} accent={ACCENT[e.accent]} onClick={() => launch(e)} />
                 ))}
               </div>
             )}
@@ -249,9 +273,9 @@ function YouTab({ state, learned, onNavigate }: { state: AppState; learned: numb
 
       {/* Links */}
       <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-        <ModuleCard icon="📊" title="Full Profile" subtitle="Detailed history & badges" accent={T.cyan} onClick={() => onNavigate("profile")} />
-        <ModuleCard icon="🏅" title="Achievements" subtitle="Milestones & medals" accent={T.amber} onClick={() => onNavigate("achievements")} />
-        <ModuleCard icon="⚙️" title="Settings" subtitle="Themes & secrets" accent={T.muted} onClick={() => onNavigate("settings")} />
+        <ModuleCard icon="📊" glyph="profile" title="Full Profile" subtitle="Detailed history & badges" accent={T.cyan} onClick={() => onNavigate("profile")} />
+        <ModuleCard icon="🏅" glyph="achievements" title="Achievements" subtitle="Milestones & medals" accent={T.amber} onClick={() => onNavigate("achievements")} />
+        <ModuleCard icon="⚙️" glyph="settings" title="Settings" subtitle="Themes & aesthetic" accent={T.muted} onClick={() => onNavigate("settings")} />
       </div>
     </div>
   )

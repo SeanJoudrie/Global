@@ -2,6 +2,7 @@
 import SplashScreen from "./components/SplashScreen"
 import MainTabs from "./components/MainTabs"
 import type { TabKey } from "./ui/registry"
+import { AESTHETIC } from "./ui/tokens"
 import FlagsScreen from "./components/FlagsScreen"
 import QuizScreen from "./components/QuizScreen"
 import ReverseQuizScreen from "./components/ReverseQuizScreen"
@@ -125,6 +126,7 @@ export default function App() {
   }, [activeQuiz, startQuickPlay, startReverseQuiz, startSet])
 
   useEffect(() => {
+    document.body.classList.toggle("aesthetic-carto", AESTHETIC === "cartographer")
     const t = loadTheme()
     const r = document.documentElement.style
     r.setProperty('--bg-from', t.bgFrom)

@@ -1,6 +1,13 @@
 import type { CSSProperties, ReactNode } from "react"
-import { T, FONT, tint } from "../ui/tokens"
+import { T, FONT, tint, IS_CARTO } from "../ui/tokens"
 import type { TabKey } from "../ui/registry"
+import { LineIcon } from "./icons"
+
+// Render an etched line icon (Cartographer) or the original emoji (Tactical).
+function Glyph({ glyph, emoji, size, color }: { glyph?: string; emoji?: ReactNode; size: number; color: string }) {
+  if (IS_CARTO && glyph) return <LineIcon name={glyph} size={size} color={color} />
+  return <span style={{ fontSize: size }}>{emoji}</span>
+}
 
 /* ── Circular progress ring with monospaced % readout ───────────────────── */
 export function ProgressRing({ done, total, accent, size = 40, stroke = 3.5, label = true }:
@@ -59,29 +66,32 @@ export function SectionHeader({ title, accent = T.muted, action }:
 }
 
 /* ── Module card: heavy learning tasks (icon, title, subtitle, progress) ── */
-export function ModuleCard({ icon, title, subtitle, accent, progress, onClick }:
+export function ModuleCard({ icon, glyph, title, subtitle, accent, progress, onClick }:
   {
-    icon: ReactNode; title: string; subtitle: string; accent: string
+    icon?: ReactNode; glyph?: string; title: string; subtitle: string; accent: string
     progress?: { done: number; total: number }; onClick: () => void
   }) {
   const mastered = !!progress && progress.total > 0 && progress.done >= progress.total
+  const base: CSSProperties = IS_CARTO
+    ? {} // .carto-card supplies bg/border/shadow
+    : { background: mastered ? undefined : T.surface, border: mastered ? undefined : `1px solid ${T.line}` }
   return (
-    <button onClick={onClick} className={`geo-tap ${mastered ? "geo-foil" : ""}`}
+    <button onClick={onClick}
+      className={`geo-tap ${mastered ? "geo-foil" : IS_CARTO ? "carto-card" : ""}`}
       style={{
         width: "100%", display: "flex", alignItems: "center", gap: 13, textAlign: "left",
-        padding: "13px 14px", borderRadius: 12,
-        background: mastered ? undefined : T.surface,
-        border: mastered ? undefined : `1px solid ${T.line}`,
-        position: "relative", overflow: "hidden",
+        padding: "13px 14px", borderRadius: 12, position: "relative", overflow: "hidden",
+        ...base, ...(IS_CARTO ? { ["--wash" as string]: tint(accent, 0.45) } : {}),
       }}>
       {/* accent spine */}
       <span style={{ position: "absolute", left: 0, top: 10, bottom: 10, width: 2.5, borderRadius: 2, background: accent }} />
       {/* icon chip */}
       <span style={{
         width: 42, height: 42, borderRadius: 10, flexShrink: 0,
-        display: "flex", alignItems: "center", justifyContent: "center", fontSize: 21,
-        background: tint(accent, 0.1), border: `1px solid ${tint(accent, 0.28)}`,
-      }}>{icon}</span>
+        display: "flex", alignItems: "center", justifyContent: "center",
+        background: tint(accent, IS_CARTO ? 0.12 : 0.1), border: `1px solid ${tint(accent, 0.28)}`,
+        color: accent,
+      }}><Glyph glyph={glyph} emoji={icon} size={21} color={accent} /></span>
       <div style={{ flex: 1, minWidth: 0 }}>
         <div className="geo-display" style={{ color: T.text, fontWeight: 600, fontSize: 15, letterSpacing: "-0.01em" }}>
           {title}{mastered && <span style={{ marginLeft: 6 }}>👑</span>}
@@ -99,21 +109,21 @@ export function ModuleCard({ icon, title, subtitle, accent, progress, onClick }:
 }
 
 /* ── Game tile: compact, casual minigames (carousel / grid) ─────────────── */
-export function GameTile({ icon, title, subtitle, accent, onClick, style }:
-  { icon: ReactNode; title: string; subtitle: string; accent: string; onClick: () => void; style?: CSSProperties }) {
+export function GameTile({ icon, glyph, title, subtitle, accent, onClick, style }:
+  { icon?: ReactNode; glyph?: string; title: string; subtitle: string; accent: string; onClick: () => void; style?: CSSProperties }) {
   return (
-    <button onClick={onClick} className="geo-tap"
+    <button onClick={onClick} className={`geo-tap ${IS_CARTO ? "carto-card" : ""}`}
       style={{
         width: 124, flexShrink: 0, textAlign: "left", padding: "12px 12px 13px",
-        borderRadius: 12, background: T.surface, border: `1px solid ${T.line}`,
-        display: "flex", flexDirection: "column", gap: 8, position: "relative", overflow: "hidden",
+        borderRadius: 12, display: "flex", flexDirection: "column", gap: 8, position: "relative", overflow: "hidden",
+        ...(IS_CARTO ? { ["--wash" as string]: tint(accent, 0.4) } : { background: T.surface, border: `1px solid ${T.line}` }),
         ...style,
       }}>
-      <span style={{ position: "absolute", right: -14, top: -14, width: 46, height: 46, borderRadius: "50%", background: tint(accent, 0.08) }} />
+      {!IS_CARTO && <span style={{ position: "absolute", right: -14, top: -14, width: 46, height: 46, borderRadius: "50%", background: tint(accent, 0.08) }} />}
       <span style={{
         width: 34, height: 34, borderRadius: 9, display: "flex", alignItems: "center", justifyContent: "center",
-        fontSize: 18, background: tint(accent, 0.12), border: `1px solid ${tint(accent, 0.3)}`,
-      }}>{icon}</span>
+        background: tint(accent, 0.12), border: `1px solid ${tint(accent, 0.3)}`, color: accent,
+      }}><Glyph glyph={glyph} emoji={icon} size={18} color={accent} /></span>
       <div>
         <div className="geo-display" style={{ color: T.text, fontWeight: 600, fontSize: 12.5, lineHeight: 1.1 }}>{title}</div>
         <div style={{ color: T.muted, fontSize: 9.5, marginTop: 3, lineHeight: 1.2 }}>{subtitle}</div>
@@ -145,12 +155,12 @@ export function HeroCard({ eyebrow, title, subtitle, accent, image, onClick, tal
 }
 
 /* ── Bottom tab bar ─────────────────────────────────────────────────────── */
-const TAB_META: { key: TabKey; label: string; icon: string; accent: string }[] = [
-  { key: "today", label: "Today", icon: "🛰️", accent: T.amber },
-  { key: "learn", label: "Learn", icon: "📡", accent: T.cyan },
-  { key: "play",  label: "Play",  icon: "🎮", accent: T.chartreuse },
-  { key: "codex", label: "Codex", icon: "🗂️", accent: T.amber },
-  { key: "you",   label: "You",   icon: "🪪", accent: T.cyan },
+const TAB_META: { key: TabKey; label: string; glyph: string; emoji: string; accent: string }[] = [
+  { key: "today", label: "Today", glyph: "today", emoji: "🛰️", accent: T.amber },
+  { key: "learn", label: "Learn", glyph: "learn", emoji: "📡", accent: T.cyan },
+  { key: "play",  label: "Play",  glyph: "play",  emoji: "🎮", accent: T.chartreuse },
+  { key: "codex", label: "Codex", glyph: "codex", emoji: "🗂️", accent: T.amber },
+  { key: "you",   label: "You",   glyph: "you",   emoji: "🪪", accent: T.cyan },
 ]
 
 export function TabBar({ active, onChange }: { active: TabKey; onChange: (t: TabKey) => void }) {
@@ -158,7 +168,8 @@ export function TabBar({ active, onChange }: { active: TabKey; onChange: (t: Tab
     <nav style={{
       position: "fixed", left: 0, right: 0, bottom: 0, zIndex: 60,
       display: "grid", gridTemplateColumns: "repeat(5,1fr)",
-      background: "rgba(8,11,18,0.92)", backdropFilter: "blur(14px)",
+      background: IS_CARTO ? "rgba(251,244,228,0.94)" : "rgba(8,11,18,0.92)",
+      backdropFilter: "blur(14px)",
       borderTop: `1px solid ${T.line}`, paddingBottom: "env(safe-area-inset-bottom)",
     }}>
       {TAB_META.map(t => {
@@ -168,9 +179,11 @@ export function TabBar({ active, onChange }: { active: TabKey; onChange: (t: Tab
             style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 3, padding: "9px 0 8px", position: "relative", background: "transparent" }}>
             <span style={{
               position: "absolute", top: 0, height: 2, width: 26, borderRadius: 2,
-              background: on ? t.accent : "transparent", boxShadow: on ? `0 0 10px ${t.accent}` : "none",
+              background: on ? t.accent : "transparent", boxShadow: on && !IS_CARTO ? `0 0 10px ${t.accent}` : "none",
             }} />
-            <span style={{ fontSize: 17, filter: on ? "none" : "grayscale(0.7)", opacity: on ? 1 : 0.55, transition: "all 0.15s" }}>{t.icon}</span>
+            <span style={{ display: "flex", color: on ? t.accent : T.dim, opacity: on ? 1 : IS_CARTO ? 0.8 : 0.55, transition: "all 0.15s" }}>
+              <Glyph glyph={t.glyph} emoji={t.emoji} size={IS_CARTO ? 19 : 17} color={on ? t.accent : T.dim} />
+            </span>
             <span className="geo-micro" style={{ fontSize: 8, color: on ? t.accent : T.dim }}>{t.label}</span>
           </button>
         )

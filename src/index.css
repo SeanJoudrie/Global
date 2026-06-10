@@ -153,3 +153,55 @@ body {
 /* Tab bar press feedback */
 .geo-tap { transition: transform 0.12s ease, opacity 0.12s ease; }
 .geo-tap:active { transform: scale(0.94); }
+
+/* ════════════════════════════════════════════════════════════════════════
+   MODERN CARTOGRAPHER — warm parchment archive skin (switchable aesthetic)
+   Classic serif headers · ink-teal text · watercolour washes · paper cards.
+   ════════════════════════════════════════════════════════════════════════ */
+body.aesthetic-carto {
+  --font-display: 'Playfair Display', Georgia, serif;
+  --font-mono: 'Inter', system-ui, sans-serif;
+}
+body.aesthetic-carto .geo-micro { letter-spacing: 0.18em; }
+
+/* Faded antique-map wash for the dashboard backdrop */
+.carto-paper {
+  background-color: #FBF4E4;
+  background-image:
+    radial-gradient(120% 90% at 50% -10%, rgba(192,136,58,0.06), transparent 55%),
+    radial-gradient(circle at 1px 1px, rgba(31,58,60,0.05) 1px, transparent 0);
+  background-size: auto, 26px 26px;
+}
+
+/* Paper-stock card: hairline border, soft natural shadow, gentle hover lift +
+   a single-accent watercolour wash that bleeds in behind it. */
+.carto-card {
+  position: relative;
+  background: #FFFCF4;
+  border: 1px solid #DDCEAF;
+  box-shadow: 0 1px 2px rgba(31,58,60,0.05), 0 8px 20px -14px rgba(31,58,60,0.25);
+  transition: transform 0.22s cubic-bezier(0.2,0.7,0.2,1), box-shadow 0.22s ease, border-color 0.22s ease;
+}
+.carto-card::before {
+  content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+  background: radial-gradient(130% 120% at 12% -10%, var(--wash, rgba(94,140,168,0.5)), transparent 58%);
+  opacity: 0; transition: opacity 0.28s ease;
+}
+.carto-card:hover, .carto-card:focus-visible, .carto-card:active {
+  transform: translateY(-2px) rotate(-0.15deg);
+  box-shadow: 0 2px 4px rgba(31,58,60,0.06), 0 16px 30px -16px rgba(31,58,60,0.4);
+  border-color: #C8B58C;
+}
+.carto-card:hover::before, .carto-card:focus-visible::before, .carto-card:active::before { opacity: 0.5; }
+
+/* Mastered collectible in parchment mode: aged-gold foil edge, no neon */
+body.aesthetic-carto .geo-foil {
+  background:
+    linear-gradient(#FFFCF4, #FFFCF4) padding-box,
+    linear-gradient(135deg, #C0883A, #E7CE96 30%, #C0883A 55%, #9C7A33 80%) border-box;
+}
+body.aesthetic-carto .geo-foil::after {
+  background: linear-gradient(115deg, transparent 38%, rgba(231,206,150,0.5) 50%, transparent 62%);
+}
+
+body.aesthetic-carto { background: #FBF4E4; }

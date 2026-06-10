@@ -1,3 +1,6 @@
+import { AESTHETIC, saveAesthetic } from "../ui/tokens"
+import type { Aesthetic } from "../ui/tokens"
+
 interface Props { onBack: () => void; onMegaCodex: () => void }
 
 export interface Theme {
@@ -84,12 +87,23 @@ export function saveTheme(id: string) {
 
 export default function SettingsScreen({ onBack, onMegaCodex }: Props) {
   const currentId = localStorage.getItem(THEME_STORAGE_KEY) ?? 'space'
+  const currentAesthetic = AESTHETIC
 
   const pick = (id: string) => {
     saveTheme(id)
     // Force re-render by reloading (simplest approach for full-app theme change)
     window.location.reload()
   }
+
+  const pickAesthetic = (a: Aesthetic) => {
+    saveAesthetic(a)
+    window.location.reload()
+  }
+
+  const AESTHETICS: { id: Aesthetic; name: string; sub: string; swatch: string[] }[] = [
+    { id: 'cartographer', name: 'Modern Cartographer', sub: 'Warm parchment archive · serif', swatch: ['#FBF4E4', '#C2735A', '#5C8CA8', '#1F3A3C'] },
+    { id: 'tactical', name: 'Tactical Geo-Codex', sub: 'Dark charcoal · electric accents', swatch: ['#0A0E16', '#BEF23A', '#27D3DE', '#F5A524'] },
+  ]
 
   return (
     <div className="min-h-screen flex flex-col" style={{
@@ -103,7 +117,28 @@ export default function SettingsScreen({ onBack, onMegaCodex }: Props) {
       </header>
 
       <div className="px-5">
-        <h2 className="text-xs font-semibold uppercase tracking-widest mb-4" style={{ color: '#B8A9E0' }}>Theme</h2>
+        <h2 className="text-xs font-semibold uppercase tracking-widest mb-4" style={{ color: '#B8A9E0' }}>Dashboard Aesthetic</h2>
+        <div className="grid grid-cols-1 gap-3 mb-8">
+          {AESTHETICS.map(a => {
+            const active = a.id === currentAesthetic
+            return (
+              <button key={a.id} onClick={() => pickAesthetic(a.id)}
+                className="flex items-center gap-4 p-4 rounded-2xl text-left transition-all active:scale-[0.98]"
+                style={{ background: '#2D1F52', border: `2px solid ${active ? '#A78BFA' : '#8B6CFF33'}`, boxShadow: active ? '0 0 20px #8B6CFF33' : 'none' }}>
+                <div style={{ display: 'flex', borderRadius: 8, overflow: 'hidden', border: '1px solid #00000033', flexShrink: 0 }}>
+                  {a.swatch.map((c, i) => <div key={i} style={{ width: 16, height: 40, background: c }} />)}
+                </div>
+                <div style={{ flex: 1 }}>
+                  <div style={{ color: '#F5F3FF', fontWeight: 700, fontSize: 14 }}>{a.name}</div>
+                  <div style={{ color: '#B8A9E0', fontSize: 11, marginTop: 2 }}>{a.sub}</div>
+                </div>
+                {active && <div style={{ width: 20, height: 20, borderRadius: '50%', background: '#A78BFA', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 12 }}>✓</div>}
+              </button>
+            )
+          })}
+        </div>
+
+        <h2 className="text-xs font-semibold uppercase tracking-widest mb-4" style={{ color: '#B8A9E0' }}>Colour Theme</h2>
         <div className="grid grid-cols-2 gap-3">
           {THEMES.map(t => {
             const active = t.id === currentId
