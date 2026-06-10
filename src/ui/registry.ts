@@ -61,6 +61,8 @@ export const REGISTRY: Entry[] = [
   { id: "composer", title: "The Composer", subtitle: "Order the colours", icon: "🎴", tab: "play", group: "Quick games", size: "tile", accent: "play" },
   { id: "flagfamilies", title: "Flag Families", subtitle: "Sort into families", icon: "👪", tab: "play", group: "Quick games", size: "tile", accent: "play" },
   { id: "funfact", title: "Fun Fact", subtitle: "Daily flag fact", icon: "💡", tab: "play", group: "Quick games", size: "tile", accent: "play" },
+  { id: "symbolhunt", title: "Symbol Hunt", subtitle: "Find every flag with a symbol", icon: "🔎", tab: "play", group: "Quick games", size: "tile", accent: "play" },
+  { id: "twotruths", title: "Two Truths", subtitle: "Spot the lie about a country", icon: "🕵️", tab: "play", group: "Quick games", size: "tile", accent: "play" },
   { id: "deadoralive", title: "Dead or Alive", subtitle: "Live or vanished?", icon: "💀", tab: "play", group: "Quick games", size: "tile", accent: "play" },
   { id: "frankenflag", title: "Frankenflag", subtitle: "Name both halves", icon: "🧟", tab: "play", group: "Quick games", size: "tile", accent: "play" },
   { id: "higherlower", title: "Higher / Lower", subtitle: "More red or blue?", icon: "📊", tab: "play", group: "Quick games", size: "tile", accent: "play" },

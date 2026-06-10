@@ -5,7 +5,7 @@ import {
   Languages, Globe2, Compass, Zap, Settings, User, Award, Flame, Crown,
   GraduationCap, Gamepad2,
   LayoutGrid, Bot, History, Skull, SplitSquareHorizontal, ArrowUpDown, AlignLeft, Vote,
-  MapPinned, Waypoints, Gift,
+  MapPinned, Waypoints, Gift, ScanSearch, VenetianMask,
 } from "lucide-react"
 import type { LucideIcon } from "lucide-react"
 
@@ -30,6 +30,7 @@ const MAP: Record<string, LucideIcon> = {
   flagle: LayoutGrid, realorbot: Bot, timeline: History, deadoralive: Skull,
   frankenflag: SplitSquareHorizontal, higherlower: ArrowUpDown, describeit: AlignLeft, flagbracket: Vote,
   bordermap: MapPinned, borderchain: Waypoints, gacha: Gift,
+  symbolhunt: ScanSearch, twotruths: VenetianMask,
 }
 
 export function LineIcon({ name, size = 21, strokeWidth = 1.6, color = "currentColor" }:

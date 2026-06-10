@@ -49,6 +49,8 @@ import FlagTimelineScreen from "./components/FlagTimelineScreen"
 import BorderMapScreen from "./components/BorderMapScreen"
 import BorderChainScreen from "./components/BorderChainScreen"
 import FlagGachaScreen from "./components/FlagGachaScreen"
+import SymbolHuntScreen from "./components/SymbolHuntScreen"
+import TwoTruthsScreen from "./components/TwoTruthsScreen"
 import StarField from "./components/StarField"
 import MapBackdrop from "./components/MapBackdrop"
 import EarthLogo from "./components/EarthLogo"
@@ -61,7 +63,7 @@ import type { Question } from "./utils/quiz"
 import { todayString } from "./utils/prng"
 import { loadTheme } from "./components/SettingsScreen"
 
-type Screen = "splash" | "home" | "flags" | "quiz" | "reversequiz" | "result" | "achievements" | "profile" | "flashcards" | "language" | "capitalquiz" | "challenge" | "codex" | "geo" | "gauntlet" | "tierlist" | "settings" | "oddoneout" | "thecrop" | "flagdna" | "buildflag" | "thepeel" | "lookalikes" | "composer" | "silhouette" | "flagfamilies" | "funfact" | "progressmap" | "historical" | "identity" | "provinceroulette" | "substumper" | "lineage" | "substats" | "megacodex" | "flagle" | "higherlower" | "deadoralive" | "frankenflag" | "describeit" | "flagbracket" | "realorbot" | "timeline" | "bordermap" | "borderchain" | "gacha"
+type Screen = "splash" | "home" | "flags" | "quiz" | "reversequiz" | "result" | "achievements" | "profile" | "flashcards" | "language" | "capitalquiz" | "challenge" | "codex" | "geo" | "gauntlet" | "tierlist" | "settings" | "oddoneout" | "thecrop" | "flagdna" | "buildflag" | "thepeel" | "lookalikes" | "composer" | "silhouette" | "flagfamilies" | "funfact" | "progressmap" | "historical" | "identity" | "provinceroulette" | "substumper" | "lineage" | "substats" | "megacodex" | "flagle" | "higherlower" | "deadoralive" | "frankenflag" | "describeit" | "flagbracket" | "realorbot" | "timeline" | "bordermap" | "borderchain" | "gacha" | "symbolhunt" | "twotruths"
 
 interface ActiveQuiz {
   questions: Question[]
@@ -279,6 +281,8 @@ export default function App() {
       {screen === "bordermap"    && <BorderMapScreen    onBack={() => setScreen("home")} />}
       {screen === "borderchain"  && <BorderChainScreen  onBack={() => setScreen("home")} />}
       {screen === "gacha"        && <FlagGachaScreen    onBack={() => setScreen("home")} />}
+      {screen === "symbolhunt"   && <SymbolHuntScreen   onBack={() => setScreen("home")} />}
+      {screen === "twotruths"    && <TwoTruthsScreen    onBack={() => setScreen("home")} />}
 
       {screen === "quiz" && activeQuiz && (
         <QuizScreen questions={activeQuiz.questions} title={activeQuiz.title}
