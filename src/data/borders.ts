@@ -1,0 +1,193 @@
+import { FLAGS } from "./flags"
+
+// Land-border adjacency (ISO-3166-1 alpha-2, lowercase-insensitive here using the
+// uppercase codes that match FLAGS). Island/isolated nations are simply absent.
+// Built into a SYMMETRIC graph at load so a missing reverse entry can't break a
+// border — if A lists B, B automatically borders A too.
+const RAW: Record<string, string[]> = {
+  // ── Europe ──
+  AL: ["ME", "XK", "MK", "GR"],
+  AD: ["FR", "ES"],
+  AT: ["DE", "CZ", "SK", "HU", "SI", "IT", "CH", "LI"],
+  BY: ["PL", "LT", "LV", "RU", "UA"],
+  BE: ["NL", "DE", "LU", "FR"],
+  BA: ["HR", "RS", "ME"],
+  BG: ["RO", "RS", "MK", "GR", "TR"],
+  HR: ["SI", "HU", "RS", "BA", "ME"],
+  CZ: ["DE", "PL", "SK", "AT"],
+  DK: ["DE"],
+  EE: ["LV", "RU"],
+  FI: ["SE", "NO", "RU"],
+  FR: ["BE", "LU", "DE", "CH", "IT", "ES", "AD", "MC"],
+  DE: ["DK", "PL", "CZ", "AT", "CH", "FR", "LU", "BE", "NL"],
+  GR: ["AL", "MK", "BG", "TR"],
+  HU: ["AT", "SK", "UA", "RO", "RS", "HR", "SI"],
+  IE: ["GB"],
+  IT: ["FR", "CH", "AT", "SI", "SM", "VA"],
+  XK: ["ME", "AL", "MK", "RS"],
+  LV: ["EE", "RU", "BY", "LT"],
+  LI: ["CH", "AT"],
+  LT: ["LV", "BY", "PL", "RU"],
+  LU: ["BE", "DE", "FR"],
+  MD: ["RO", "UA"],
+  MC: ["FR"],
+  ME: ["HR", "BA", "RS", "XK", "AL"],
+  NL: ["DE", "BE"],
+  MK: ["XK", "RS", "BG", "GR", "AL"],
+  NO: ["SE", "FI", "RU"],
+  PL: ["DE", "CZ", "SK", "UA", "BY", "LT", "RU"],
+  PT: ["ES"],
+  RO: ["HU", "UA", "MD", "BG", "RS"],
+  RU: ["NO", "FI", "EE", "LV", "LT", "PL", "BY", "UA", "GE", "AZ", "KZ", "CN", "MN", "KP"],
+  SM: ["IT"],
+  RS: ["HU", "RO", "BG", "MK", "XK", "ME", "BA", "HR"],
+  SK: ["CZ", "PL", "UA", "HU", "AT"],
+  SI: ["IT", "AT", "HU", "HR"],
+  ES: ["FR", "AD", "PT"],
+  SE: ["NO", "FI"],
+  CH: ["DE", "FR", "IT", "AT", "LI"],
+  UA: ["RU", "BY", "PL", "SK", "HU", "RO", "MD"],
+  GB: ["IE"],
+  // ── Africa ──
+  DZ: ["MA", "TN", "LY", "NE", "ML", "MR", "EH"],
+  AO: ["CG", "CD", "ZM", "NA"],
+  BJ: ["TG", "BF", "NE", "NG"],
+  BW: ["NA", "ZA", "ZW", "ZM"],
+  BF: ["ML", "NE", "BJ", "TG", "GH", "CI"],
+  BI: ["RW", "TZ", "CD"],
+  CM: ["NG", "TD", "CF", "CG", "GA", "GQ"],
+  CF: ["TD", "SD", "SS", "CD", "CG", "CM"],
+  TD: ["LY", "SD", "CF", "CM", "NG", "NE"],
+  CG: ["GA", "CM", "CF", "CD", "AO"],
+  CD: ["CG", "CF", "SS", "UG", "RW", "BI", "TZ", "ZM", "AO"],
+  CI: ["LR", "GN", "ML", "BF", "GH"],
+  DJ: ["ER", "ET", "SO"],
+  EG: ["LY", "SD", "IL", "PS"],
+  GQ: ["CM", "GA"],
+  ER: ["SD", "ET", "DJ"],
+  SZ: ["ZA", "MZ"],
+  ET: ["ER", "DJ", "SO", "KE", "SS", "SD"],
+  GA: ["GQ", "CM", "CG"],
+  GM: ["SN"],
+  GH: ["CI", "BF", "TG"],
+  GN: ["GW", "SN", "ML", "CI", "LR", "SL"],
+  GW: ["SN", "GN"],
+  KE: ["ET", "SO", "TZ", "UG", "SS"],
+  LS: ["ZA"],
+  LR: ["SL", "GN", "CI"],
+  LY: ["TN", "DZ", "NE", "TD", "SD", "EG"],
+  MW: ["TZ", "MZ", "ZM"],
+  ML: ["DZ", "NE", "BF", "CI", "GN", "SN", "MR"],
+  MR: ["EH", "DZ", "ML", "SN"],
+  MA: ["DZ", "EH"],
+  MZ: ["TZ", "MW", "ZM", "ZW", "ZA", "SZ"],
+  NA: ["AO", "ZM", "BW", "ZA"],
+  NE: ["DZ", "LY", "TD", "NG", "BJ", "BF", "ML"],
+  NG: ["BJ", "NE", "TD", "CM"],
+  RW: ["UG", "TZ", "BI", "CD"],
+  SN: ["MR", "ML", "GN", "GW", "GM"],
+  SL: ["GN", "LR"],
+  SO: ["DJ", "ET", "KE"],
+  ZA: ["NA", "BW", "ZW", "MZ", "SZ", "LS"],
+  SS: ["SD", "ET", "KE", "UG", "CD", "CF"],
+  SD: ["EG", "LY", "TD", "CF", "SS", "ET", "ER"],
+  TZ: ["KE", "UG", "RW", "BI", "CD", "ZM", "MW", "MZ"],
+  TG: ["GH", "BF", "BJ"],
+  TN: ["DZ", "LY"],
+  UG: ["SS", "KE", "TZ", "RW", "CD"],
+  ZM: ["CD", "TZ", "MW", "MZ", "ZW", "BW", "NA", "AO"],
+  ZW: ["ZA", "BW", "ZM", "MZ"],
+  // ── Asia & Middle East ──
+  AF: ["IR", "TM", "UZ", "TJ", "CN", "PK"],
+  AM: ["GE", "AZ", "IR", "TR"],
+  AZ: ["RU", "GE", "AM", "IR", "TR"],
+  BD: ["IN", "MM"],
+  BT: ["CN", "IN"],
+  BN: ["MY"],
+  KH: ["TH", "LA", "VN"],
+  CN: ["RU", "MN", "KZ", "KG", "TJ", "AF", "PK", "IN", "NP", "BT", "MM", "LA", "VN", "KP"],
+  GE: ["RU", "TR", "AM", "AZ"],
+  IN: ["PK", "CN", "NP", "BT", "BD", "MM"],
+  ID: ["MY", "PG", "TL"],
+  IR: ["IQ", "TR", "AM", "AZ", "TM", "AF", "PK"],
+  IQ: ["TR", "IR", "KW", "SA", "JO", "SY"],
+  IL: ["LB", "SY", "JO", "EG", "PS"],
+  JO: ["SY", "IQ", "SA", "IL", "PS"],
+  KZ: ["RU", "CN", "KG", "UZ", "TM"],
+  KW: ["IQ", "SA"],
+  KG: ["KZ", "UZ", "TJ", "CN"],
+  LA: ["CN", "VN", "KH", "TH", "MM"],
+  LB: ["SY", "IL"],
+  MY: ["TH", "ID", "BN"],
+  MN: ["RU", "CN"],
+  MM: ["BD", "IN", "CN", "LA", "TH"],
+  NP: ["CN", "IN"],
+  KP: ["CN", "RU", "KR"],
+  OM: ["AE", "SA", "YE"],
+  PK: ["IR", "AF", "CN", "IN"],
+  PS: ["IL", "JO", "EG"],
+  QA: ["SA"],
+  SA: ["JO", "IQ", "KW", "QA", "AE", "OM", "YE"],
+  KR: ["KP"],
+  SY: ["TR", "IQ", "JO", "IL", "LB"],
+  TJ: ["AF", "UZ", "KG", "CN"],
+  TH: ["MM", "LA", "KH", "MY"],
+  TL: ["ID"],
+  TR: ["GR", "BG", "GE", "AM", "AZ", "IR", "IQ", "SY"],
+  TM: ["KZ", "UZ", "AF", "IR"],
+  AE: ["SA", "OM"],
+  UZ: ["KZ", "KG", "TJ", "AF", "TM"],
+  VN: ["CN", "LA", "KH"],
+  YE: ["SA", "OM"],
+  // ── Americas ──
+  AR: ["CL", "BO", "PY", "BR", "UY"],
+  BZ: ["MX", "GT"],
+  BO: ["BR", "PY", "AR", "CL", "PE"],
+  BR: ["UY", "AR", "PY", "BO", "PE", "CO", "VE", "GY", "SR"],
+  CA: ["US"],
+  CL: ["PE", "BO", "AR"],
+  CO: ["PA", "EC", "PE", "BR", "VE"],
+  CR: ["NI", "PA"],
+  DO: ["HT"],
+  EC: ["CO", "PE"],
+  SV: ["GT", "HN"],
+  GT: ["MX", "BZ", "HN", "SV"],
+  GY: ["VE", "BR", "SR"],
+  HT: ["DO"],
+  HN: ["GT", "SV", "NI"],
+  MX: ["US", "GT", "BZ"],
+  NI: ["HN", "CR"],
+  PA: ["CR", "CO"],
+  PY: ["BO", "BR", "AR"],
+  PE: ["EC", "CO", "BR", "BO", "CL"],
+  SR: ["GY", "BR"],
+  US: ["CA", "MX"],
+  UY: ["BR", "AR"],
+  VE: ["CO", "BR", "GY"],
+  // ── Oceania ──
+  PG: ["ID"],
+}
+
+const CODES = new Set(FLAGS.map(f => f.code))
+
+// Symmetric graph (only over countries we actually have flags for).
+const GRAPH = new Map<string, Set<string>>()
+const link = (a: string, b: string) => {
+  if (!GRAPH.has(a)) GRAPH.set(a, new Set())
+  GRAPH.get(a)!.add(b)
+}
+for (const [a, list] of Object.entries(RAW)) {
+  for (const b of list) { link(a, b); link(b, a) }
+}
+
+/** Neighbours of `code` that exist in FLAGS (i.e. are nameable). */
+export function neighborsOf(code: string): string[] {
+  const s = GRAPH.get(code)
+  if (!s) return []
+  return [...s].filter(c => CODES.has(c))
+}
+
+/** Country codes (in FLAGS) that have at least `min` nameable land neighbours. */
+export function countriesWithBorders(min = 1): string[] {
+  return FLAGS.map(f => f.code).filter(c => neighborsOf(c).length >= min)
+}

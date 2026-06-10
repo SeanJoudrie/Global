@@ -46,6 +46,10 @@ export const REGISTRY: Entry[] = [
   { id: "flagle", title: "Flagle", subtitle: "Daily flag Wordle · 6 guesses", icon: "🟩", tab: "play", group: "Daily & New", size: "module", accent: "codex" },
   { id: "realorbot", title: "Real or Bot", subtitle: "Swipe: real flag or AI fake?", icon: "🤖", tab: "play", group: "Daily & New", size: "module", accent: "challenge" },
   { id: "timeline", title: "Flag Timeline", subtitle: "Order a country's flags in time", icon: "⏳", tab: "play", group: "Daily & New", size: "module", accent: "learn" },
+  { id: "gacha", title: "Flag Gacha", subtitle: "Daily pull · collect them all", icon: "🎁", tab: "play", group: "Daily & New", size: "module", accent: "codex" },
+
+  { id: "bordermap", title: "Border Map", subtitle: "Fill in a country's neighbours", icon: "🗺️", tab: "play", group: "Geography", size: "module", accent: "learn" },
+  { id: "borderchain", title: "Border Chain", subtitle: "Hop from border to border", icon: "🔗", tab: "play", group: "Geography", size: "module", accent: "learn" },
 
   { id: "oddoneout", title: "Odd One Out", subtitle: "Find the impostor", icon: "🕵️", tab: "play", group: "Quick games", size: "tile", accent: "play" },
   { id: "thecrop", title: "The Crop", subtitle: "Zoom out to guess", icon: "🔍", tab: "play", group: "Quick games", size: "tile", accent: "play" },
