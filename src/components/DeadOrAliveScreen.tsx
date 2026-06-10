@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { FLAGS } from "../data/flags"
 import { HISTORICAL_FLAGS } from "../data/historicalFlags"
+import { T, ACCENT, FONT } from "../ui/tokens"
 
 interface Props { onBack: () => void }
 
@@ -38,28 +39,26 @@ export default function DeadOrAliveScreen({ onBack }: Props) {
     setReveal(null)
   }
 
-  const border = reveal ? (card.alive ? "#34D399" : "#F43F5E") : "#8B6CFF33"
+  const border = reveal ? (card.alive ? T.green : T.warm) : T.lineHi
 
   return (
-    <div className="min-h-screen flex flex-col"
-      style={{ background: "linear-gradient(135deg,var(--bg-from) 0%,var(--bg-to) 100%)" }}>
+    <div className="min-h-screen flex flex-col" style={{ background: T.bg }}>
       <header className="flex items-center justify-between px-5 pt-8 pb-4">
         <button onClick={onBack} className="w-9 h-9 flex items-center justify-center rounded-full text-xl"
-          style={{ background: "#2D1F52", color: "#B8A9E0" }}>&#8249;</button>
+          style={{ background: T.surface, border: `1px solid ${T.line}`, color: T.muted }}>&#8249;</button>
         <div className="text-center">
-          <div className="text-xs font-semibold uppercase tracking-widest" style={{ color: "#B8A9E0" }}>Dead or Alive</div>
-          <div className="text-sm font-bold" style={{ color: "#F5F3FF" }}>Streak {streak}</div>
+          <div className="geo-micro" style={{ fontSize: 9, color: T.muted }}>Dead or Alive</div>
+          <div style={{ fontFamily: FONT.mono, fontWeight: 800, fontSize: 16, color: ACCENT.play }}>Streak {streak}</div>
         </div>
-        <div className="text-xs font-black" style={{ color: "#FBBF24" }}>🏆 {best}</div>
+        <div style={{ fontFamily: FONT.mono, fontWeight: 700, fontSize: 13, color: T.amber }}>🏆 {best}</div>
       </header>
 
       <div className="flex-1 flex flex-col items-center justify-center px-5 gap-5">
-        <p className="text-sm" style={{ color: "#B8A9E0" }}>Is this a flag of a country that exists today?</p>
+        <p style={{ fontSize: 13, color: T.muted }}>Is this a flag of a country that exists today?</p>
 
         <div style={{
           width: 300, height: 200, borderRadius: 14, overflow: "hidden",
-          border: `2.5px solid ${border}`, background: "#1E1640", position: "relative",
-          boxShadow: "0 0 32px #8B6CFF22",
+          border: `2.5px solid ${border}`, background: "#fff", position: "relative",
         }}>
           <img src={card.flagUrl} alt="mystery flag"
             style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
@@ -67,10 +66,10 @@ export default function DeadOrAliveScreen({ onBack }: Props) {
           {reveal && (
             <div style={{
               position: "absolute", bottom: 0, left: 0, right: 0,
-              background: "linear-gradient(transparent,#120930ee)", padding: "26px 12px 10px", textAlign: "center",
+              background: "linear-gradient(transparent,rgba(0,0,0,0.82))", padding: "26px 12px 10px", textAlign: "center",
             }}>
-              <div style={{ color: "#F5F3FF", fontWeight: 800 }}>{card.name}</div>
-              <div style={{ color: card.alive ? "#34D399" : "#F43F5E", fontSize: 12, fontWeight: 700 }}>
+              <div style={{ color: "#fff", fontWeight: 800 }}>{card.name}</div>
+              <div style={{ color: card.alive ? T.green : T.warm, fontSize: 12, fontWeight: 700 }}>
                 {card.alive ? "✓ Still flying today" : `✝ Vanished · ${card.sub}`}
               </div>
             </div>
@@ -79,25 +78,22 @@ export default function DeadOrAliveScreen({ onBack }: Props) {
 
         {!reveal ? (
           <div className="flex gap-3 w-full max-w-sm">
-            <button onClick={() => guess(false)}
-              className="flex-1 py-4 rounded-xl font-bold transition-all active:scale-95"
-              style={{ background: "linear-gradient(135deg,#F43F5E,#E11D48)", color: "#fff" }}>
+            <button onClick={() => guess(false)} className="geo-tap flex-1 py-4 rounded-xl"
+              style={{ background: T.warm, color: T.onAccent, fontFamily: FONT.display, fontWeight: 700 }}>
               ✝ Vanished
             </button>
-            <button onClick={() => guess(true)}
-              className="flex-1 py-4 rounded-xl font-bold transition-all active:scale-95"
-              style={{ background: "linear-gradient(135deg,#34D399,#10B981)", color: "#fff" }}>
+            <button onClick={() => guess(true)} className="geo-tap flex-1 py-4 rounded-xl"
+              style={{ background: T.green, color: T.onAccent, fontFamily: FONT.display, fontWeight: 700 }}>
               ✓ Current
             </button>
           </div>
         ) : (
           <div className="w-full max-w-sm flex flex-col gap-3 items-center">
-            <div className="text-lg font-black" style={{ color: reveal.correct ? "#34D399" : "#F43F5E" }}>
+            <div className="geo-display" style={{ fontSize: 17, fontWeight: 700, color: reveal.correct ? T.green : T.warm }}>
               {reveal.correct ? "✓ Correct!" : `✗ Survived ${streak}`}
             </div>
-            <button onClick={cont}
-              className="w-full py-3.5 rounded-xl font-bold transition-all active:scale-95"
-              style={{ background: "linear-gradient(135deg,#8B6CFF,#A78BFA)", color: "#fff" }}>
+            <button onClick={cont} className="geo-tap w-full py-3.5 rounded-xl"
+              style={{ background: ACCENT.play, color: T.onAccent, fontFamily: FONT.display, fontWeight: 700 }}>
               {reveal.correct ? "Next →" : "Try Again"}
             </button>
           </div>
