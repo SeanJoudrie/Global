@@ -1,7 +1,7 @@
 import { fp } from "./codex"
 
 export type IdentityCategory =
-  | "Pride & Identity"
+  | "Pride & LGBTQ+"
   | "Civic & Ideological"
   | "Pan-National & Ethnic"
   | "Indigenous Peoples"
@@ -20,162 +20,162 @@ export interface IdentityFlag {
 export const IDENTITY_FLAGS: IdentityFlag[] = [
   // ── Pride & Identity ────────────────────────────────────────────────────────
   {
-    id: "pride-8", name: "Original 8-Stripe Pride Flag", category: "Pride & Identity",
+    id: "pride-8", name: "Original 8-Stripe Pride Flag", category: "Pride & LGBTQ+",
     flagUrl: fp("Gay_flag_8.svg"),
     note: "Gilbert Baker's original 1978 design for San Francisco's Gay Freedom Day. It had eight stripes, including hot pink (sex) and turquoise (magic), soon dropped for the six-stripe version.",
   },
   {
-    id: "pride-6", name: "Rainbow Pride Flag", category: "Pride & Identity",
+    id: "pride-6", name: "Rainbow Pride Flag", category: "Pride & LGBTQ+",
     flagUrl: fp("Gay_Pride_Flag.svg"),
     note: "The globally recognized six-stripe rainbow — red, orange, yellow, green, blue, violet — simplified from Baker's original around 1979, partly due to fabric availability.",
   },
   {
-    id: "pride-progress", name: "Progress Pride Flag", category: "Pride & Identity",
+    id: "pride-progress", name: "Progress Pride Flag", category: "Pride & LGBTQ+",
     flagUrl: fp("LGBTQ%2B_rainbow_flag_Quasar_%22Progress%22_variant.svg"),
     note: "Daniel Quasar's 2018 redesign adds a chevron of black and brown stripes (marginalized communities) plus the trans flag's blue, pink, and white to emphasize forward progress.",
   },
   {
-    id: "pride-trans", name: "Transgender Pride Flag", category: "Pride & Identity",
+    id: "pride-trans", name: "Transgender Pride Flag", category: "Pride & LGBTQ+",
     flagUrl: fp("Transgender_Pride_flag.svg"),
     note: "Designed by Monica Helms in 1999. Its light blue, pink, and white stripes are symmetrical, so the flag is always correct no matter which way it is flown.",
   },
   {
-    id: "pride-bi", name: "Bisexual Pride Flag", category: "Pride & Identity",
+    id: "pride-bi", name: "Bisexual Pride Flag", category: "Pride & LGBTQ+",
     flagUrl: fp("Bisexual_Pride_Flag.svg"),
     note: "Michael Page's 1998 design: magenta for same-gender attraction, blue for opposite-gender, and an overlapping purple stripe for attraction across the spectrum.",
   },
   {
-    id: "pride-pan", name: "Pansexual Pride Flag", category: "Pride & Identity",
+    id: "pride-pan", name: "Pansexual Pride Flag", category: "Pride & LGBTQ+",
     flagUrl: fp("Pansexuality_Pride_Flag.svg"),
     note: "A pink-yellow-cyan tricolor from around 2010, where the central yellow stripe represents attraction to non-binary and all other gender identities.",
   },
   {
-    id: "pride-ace", name: "Asexual Pride Flag", category: "Pride & Identity",
+    id: "pride-ace", name: "Asexual Pride Flag", category: "Pride & LGBTQ+",
     flagUrl: fp("Asexual_Pride_Flag.svg"),
     note: "Created by the AVEN community in 2010: black for asexuality, grey for the grey-area, white for allies and partners, and purple for community.",
   },
   {
-    id: "pride-nb", name: "Non-Binary Pride Flag", category: "Pride & Identity",
+    id: "pride-nb", name: "Non-Binary Pride Flag", category: "Pride & LGBTQ+",
     flagUrl: fp("Nonbinary_flag.svg"),
     note: "Designed by 17-year-old Kye Rowan in 2014: yellow for genders outside the binary, white for all genders, purple for a mix, and black for agender.",
   },
   {
-    id: "philadelphia-pride", name: "Philadelphia Pride Flag", category: "Pride & Identity",
+    id: "philadelphia-pride", name: "Philadelphia Pride Flag", category: "Pride & LGBTQ+",
     flagUrl: fp("Philadelphia_Pride_Flag.svg"),
     note: "The 2017 'More Color, More Pride' flag added black and brown stripes above the rainbow to explicitly honor LGBTQ+ people of color.",
   },
   {
-    id: "intersex-progress", name: "Intersex-Inclusive Progress Flag", category: "Pride & Identity",
+    id: "intersex-progress", name: "Intersex-Inclusive Progress Flag", category: "Pride & LGBTQ+",
     flagUrl: fp("Intersex-inclusive_pride_flag.svg"),
     note: "Valentino Vecchietti's 2021 update adds a yellow triangle with a purple circle (the intersex symbol) to the Progress chevron — the current leading standard.",
   },
   {
-    id: "lesbian-sunset", name: "Lesbian Flag (Sunset)", category: "Pride & Identity",
+    id: "lesbian-sunset", name: "Lesbian Flag (Sunset)", category: "Pride & LGBTQ+",
     flagUrl: fp("Lesbian_pride_flag_2018.svg"),
     note: "The current community-standard lesbian flag (2018), with sunset stripes from orange (gender non-conformity) through white to pink (femininity).",
   },
   {
-    id: "lesbian-labrys", name: "Labrys Lesbian Flag", category: "Pride & Identity",
+    id: "lesbian-labrys", name: "Labrys Lesbian Flag", category: "Pride & LGBTQ+",
     flagUrl: fp("Labrys_Lesbian_Flag.svg"),
     note: "A 1999 design: a white labrys (double-headed Amazonian axe) over a reclaimed black triangle on violet, rooted in lesbian-feminist symbolism.",
   },
   {
-    id: "lesbian-lipstick", name: "Lipstick Lesbian Flag", category: "Pride & Identity",
+    id: "lesbian-lipstick", name: "Lipstick Lesbian Flag", category: "Pride & LGBTQ+",
     flagUrl: fp("Lipstick_lesbian_Pride_Flag.svg"),
     note: "A 2010 flag of pink and red stripes with a red lip-kiss mark; later largely retired for excluding butch lesbians and over controversy about its creator.",
   },
   {
-    id: "lesbian-pink", name: "Pink Lesbian Flag", category: "Pride & Identity",
+    id: "lesbian-pink", name: "Pink Lesbian Flag", category: "Pride & LGBTQ+",
     flagUrl: fp("Lesbian_Pride_pink_flag.svg"),
     note: "The lipstick flag with the kiss mark removed — widely circulated through the 2010s before the sunset flag became the accepted standard.",
   },
   {
-    id: "achillean", name: "Achillean / MLM Flag", category: "Pride & Identity",
+    id: "achillean", name: "Achillean / MLM Flag", category: "Pride & LGBTQ+",
     flagUrl: fp("MLM_flag.svg"),
     note: "A men-loving-men flag with two green carnations — a nod to Oscar Wilde, who wore a green carnation to subtly signal his orientation.",
   },
   {
-    id: "gay-mens", name: "Gay Men's Flag", category: "Pride & Identity",
+    id: "gay-mens", name: "Gay Men's Flag", category: "Pride & LGBTQ+",
     flagUrl: fp("New_Gay_Pride_Flag.svg"),
     note: "A 2019 counterpart to the sunset lesbian flag, with green-to-blue stripes for community, healing, and diversity among gay and queer men.",
   },
   {
-    id: "polysexual", name: "Polysexual Pride Flag", category: "Pride & Identity",
+    id: "polysexual", name: "Polysexual Pride Flag", category: "Pride & LGBTQ+",
     flagUrl: fp("Polysexuality_Pride_Flag.svg"),
     note: "Attraction to multiple — but not necessarily all — genders. A 2012 pink-green-blue tricolor.",
   },
   {
-    id: "omnisexual", name: "Omnisexual Pride Flag", category: "Pride & Identity",
+    id: "omnisexual", name: "Omnisexual Pride Flag", category: "Pride & LGBTQ+",
     flagUrl: fp("Omnisexual_Pride-Flag.svg"),
     note: "Attraction to all genders, where gender is still a factor (unlike pansexuality). Five stripes from light pink through dark purple to light blue.",
   },
   {
-    id: "aromantic", name: "Aromantic Pride Flag", category: "Pride & Identity",
+    id: "aromantic", name: "Aromantic Pride Flag", category: "Pride & LGBTQ+",
     flagUrl: fp("Aromantic_Pride_Flag.svg"),
     note: "For those who experience little or no romantic attraction. The 2014 design uses dark and light green, white, grey, and black stripes.",
   },
   {
-    id: "demisexual", name: "Demisexual Pride Flag", category: "Pride & Identity",
+    id: "demisexual", name: "Demisexual Pride Flag", category: "Pride & LGBTQ+",
     flagUrl: fp("Demisexual_Pride_Flag.svg"),
     note: "For attraction that forms only after a deep emotional bond: a black hoist triangle, white and grey halves, and a purple central stripe.",
   },
   {
-    id: "demiromantic", name: "Demiromantic Pride Flag", category: "Pride & Identity",
+    id: "demiromantic", name: "Demiromantic Pride Flag", category: "Pride & LGBTQ+",
     flagUrl: fp("Demiromantic_Pride_Flag.svg"),
     note: "The romantic-attraction counterpart to demisexual, mirroring its layout but using green in place of purple.",
   },
   {
-    id: "graysexual", name: "Graysexual Pride Flag", category: "Pride & Identity",
+    id: "graysexual", name: "Graysexual Pride Flag", category: "Pride & LGBTQ+",
     flagUrl: fp("Grey_asexuality_flag.svg"),
     note: "For the spectrum between asexual and allosexual — attraction felt rarely or only under specific conditions. Purple-grey-white-grey-purple stripes.",
   },
   {
-    id: "abrosexual", name: "Abrosexual Pride Flag", category: "Pride & Identity",
+    id: "abrosexual", name: "Abrosexual Pride Flag", category: "Pride & LGBTQ+",
     flagUrl: fp("Abrosexual_flag.svg"),
     note: "For an orientation that is fluid and changes over time, with green-to-pink stripes.",
   },
   {
-    id: "genderqueer", name: "Genderqueer Pride Flag", category: "Pride & Identity",
+    id: "genderqueer", name: "Genderqueer Pride Flag", category: "Pride & LGBTQ+",
     flagUrl: fp("Genderqueer_Pride_Flag.svg"),
     note: "Marilyn Roxie's 2011 design: lavender for androgyny, white for agender identity, and chartreuse green for identities outside the binary.",
   },
   {
-    id: "genderfluid", name: "Genderfluid Pride Flag", category: "Pride & Identity",
+    id: "genderfluid", name: "Genderfluid Pride Flag", category: "Pride & LGBTQ+",
     flagUrl: fp("Genderfluidity_Pride-Flag.svg"),
     note: "For a gender identity that fluctuates over time, with pink, white, purple, black, and blue stripes (2012).",
   },
   {
-    id: "agender", name: "Agender Pride Flag", category: "Pride & Identity",
+    id: "agender", name: "Agender Pride Flag", category: "Pride & LGBTQ+",
     flagUrl: fp("Agender_pride_flag.svg"),
     note: "A symmetrical seven-stripe flag (2014) for the absence of gender: black and white for no gender, grey for partial, and green for non-binary.",
   },
   {
-    id: "bigender", name: "Bigender Pride Flag", category: "Pride & Identity",
+    id: "bigender", name: "Bigender Pride Flag", category: "Pride & LGBTQ+",
     flagUrl: fp("Bigender_Flag.svg"),
     note: "For identifying as two genders at once or fluctuating between them, in shades of pink, purple, white, and blue.",
   },
   {
-    id: "intersex", name: "Intersex Flag", category: "Pride & Identity",
+    id: "intersex", name: "Intersex Flag", category: "Pride & LGBTQ+",
     flagUrl: fp("Intersex_Pride_Flag.svg"),
     note: "Morgan Carpenter's 2013 design: a purple circle on golden yellow, deliberately avoiding pink and blue, symbolizing wholeness and bodily autonomy.",
   },
   {
-    id: "two-spirit", name: "Two-Spirit Flag", category: "Pride & Identity",
+    id: "two-spirit", name: "Two-Spirit Flag", category: "Pride & LGBTQ+",
     flagUrl: fp("Two-Spirit_Flag.svg"),
     note: "A pan-Indigenous North American umbrella term for traditional third-gender roles; the flag pairs two feathers with a circle over a rainbow field.",
   },
   {
-    id: "poly-original", name: "Polyamory Flag (1995)", category: "Pride & Identity",
+    id: "poly-original", name: "Polyamory Flag (1995)", category: "Pride & LGBTQ+",
     flagUrl: fp("Polyamory_Pride_Flag.svg"),
     note: "Jim Evans's 1995 design — blue (honesty), red (love), black (solidarity) — with a gold Greek pi for 'infinite love'.",
   },
   {
-    id: "poly-modern", name: "Polyamory Flag (2022)", category: "Pride & Identity",
+    id: "poly-modern", name: "Polyamory Flag (2022)", category: "Pride & LGBTQ+",
     flagUrl: fp("Polyamory_flag_with_infinity_heart.svg"),
     note: "A widely adopted 2022 redesign: a red-blue-black tricolor with a white infinity-heart at the center.",
   },
   {
-    id: "straight-ally", name: "Straight Ally Flag", category: "Pride & Identity",
+    id: "straight-ally", name: "Straight Ally Flag", category: "Pride & LGBTQ+",
     flagUrl: fp("Straight_Ally_flag.svg"),
     note: "Black-and-white stripes (straight/cis identity) with a rainbow-filled 'A' for ally, showing support for the LGBTQ+ community.",
   },
@@ -640,7 +640,7 @@ export const IDENTITY_FLAGS: IdentityFlag[] = [
 ]
 
 export const IDENTITY_CATEGORIES: IdentityCategory[] = [
-  "Pride & Identity",
+  "Pride & LGBTQ+",
   "Pan-National & Ethnic",
   "Indigenous Peoples",
   "Separatist & Autonomous",
@@ -648,3 +648,9 @@ export const IDENTITY_CATEGORIES: IdentityCategory[] = [
   "Maritime & Signal",
   "Civic & Ideological",
 ]
+
+/** LGBTQ+ pride/identity flags, kept distinct from the civic/ethnic/separatist set. */
+export const LGBTQ_FLAGS: IdentityFlag[] = IDENTITY_FLAGS.filter(f => f.category === "Pride & LGBTQ+")
+
+/** All non-LGBTQ identity flags: civic, ethnic, indigenous, separatist, micronations. */
+export const OTHER_IDENTITY_FLAGS: IdentityFlag[] = IDENTITY_FLAGS.filter(f => f.category !== "Pride & LGBTQ+")

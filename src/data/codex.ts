@@ -53,6 +53,12 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       label: 'Canadian Red Ensign (1868–1921)',
       note: 'The earliest Canadian Red Ensign, defaced with the shield of the original four provinces at Confederation: Ontario, Quebec, Nova Scotia, and New Brunswick. Used informally as Canada expanded westward.',
     },
+    {
+      fromYear: 1837, toYear: 1838,
+      flagUrl: fp('Flag_of_the_Patriote_movement_(Lower_Canada).svg'),
+      label: 'Patriote Movement (Lower Canada)',
+      note: 'During the 1837–38 rebellions, French-Canadian Patriotes in Lower Canada (Quebec) flew a green-white-red horizontal tricolor against British colonial rule. The uprising was crushed, but the flag endures as a Québécois nationalist symbol.',
+    },
   ],
   US: [
     {
@@ -82,6 +88,21 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       flagUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/df/US_flag_20_stars.svg/320px-US_flag_20_stars.svg.png',
       label: 'Westward Expansion (20–37 Stars)',
       note: 'The Act of 1818 froze the stripes at 13 — one per original colony — and added one new star per state admitted, effective each July 4th. Across this era the count rose from 20 to 37 as America expanded across the continent through the Civil War and Reconstruction.',
+      parallelCaption: 'Breakaway republics of the era',
+      parallel: [
+        {
+          fromYear: 1836, toYear: 1839,
+          flagUrl: fp('Flag_of_the_Republic_of_Texas_(1836–1839).svg'),
+          label: 'Republic of Texas (Burnet Flag)',
+          note: 'After winning independence from Mexico in 1836, the Republic of Texas first flew the Burnet Flag — a single gold star on azure — before adopting the Lone Star flag in 1839. Texas was an independent nation for nearly a decade before joining the US in 1845.',
+        },
+        {
+          fromYear: 1861, toYear: 1861,
+          flagUrl: fp('Flag_of_Mississippi_Variant_(1861).svg'),
+          label: 'Republic of Mississippi (Magnolia Flag)',
+          note: 'When Mississippi seceded in January 1861 it briefly flew the "Magnolia Flag" — a magnolia tree on white with a lone-star canton — before joining the Confederacy. Mississippi revived the magnolia on its state flag in 2020.',
+        },
+      ],
     },
     {
       fromYear: 1795,
@@ -89,6 +110,15 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       flagUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/US_flag_15_stars.svg/320px-US_flag_15_stars.svg.png',
       label: '15-Star, 15-Stripe Flag',
       note: 'After Vermont (1791) and Kentucky (1792) joined, both the stars and stripes were bumped to 15. This is the flag that flew over Fort McHenry during the British bombardment in 1814 — the sight that inspired Francis Scott Key to write what became "The Star-Spangled Banner."',
+      parallelCaption: 'Breakaway republic of the era',
+      parallel: [
+        {
+          fromYear: 1810, toYear: 1810,
+          flagUrl: fp('Bonnie_Blue_flag.svg'),
+          label: 'Republic of West Florida',
+          note: 'For 90 days in 1810, English-speaking settlers in Spanish West Florida revolted and flew the "Bonnie Blue" — a single white star on blue. The US annexed the territory the same year, but the lone-star motif lived on in Texas and Confederate symbolism.',
+        },
+      ],
     },
     {
       fromYear: 1777,
@@ -145,6 +175,12 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
           note: 'Russia itself was one republic inside the union. From 1954 it flew the Soviet flag with a light-blue band at the hoist to distinguish it from the all-union banner.',
         },
       ],
+    },
+    {
+      fromYear: 1920, toYear: 1922,
+      flagUrl: fp('Flag_of_Far_Eastern_Republic.svg'),
+      label: 'Far Eastern Republic',
+      note: 'A nominally independent buffer state created by Soviet Russia in 1920 to avoid direct war with Japan, which occupied parts of the Russian Far East during the Civil War. Its red flag bore a blue canton lettered "DVR." Once Japanese forces withdrew in 1922, the republic dissolved itself into Soviet Russia.',
     },
     {
       fromYear: 1858,
@@ -377,6 +413,18 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       label: 'German Empire',
       note: 'The black-white-red tricolour served the North German Confederation from 1867 and then the unified German Empire from 1871, until the monarchy collapsed at the end of World War I.',
     },
+    {
+      fromYear: 1863, toYear: 1918,
+      flagUrl: fp('Flag_of_Anhalt_Duchies.svg'),
+      label: 'Duchy of Anhalt',
+      note: 'The Duchy of Anhalt was a sovereign German state — ancestral home of the House of Ascania, from which Catherine the Great of Russia descended. Its green-white-red tricolor flew until the German monarchies fell in 1918. Anhalt is today part of Saxony-Anhalt.',
+    },
+    {
+      fromYear: 1816, toYear: 1866,
+      flagUrl: fp('Flag_of_the_Free_City_of_Frankfurt.svg'),
+      label: 'Free City of Frankfurt',
+      note: 'Before unification, Frankfurt was a sovereign city-state and seat of the German Confederation\'s parliament, flying a white-and-red civic flag until Prussia annexed it in 1866 for siding with Austria. It was one of the historic Free Cities, alongside Hamburg and Bremen.',
+    },
   ],
   AT: [
     {
@@ -441,6 +489,12 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       note: 'On unification in 1861 the tricolore carried the coat of arms of the House of Savoy at its centre. This flag flew for 85 years through both World Wars until the monarchy was abolished.',
     },
     {
+      fromYear: 1848, toYear: 1849,
+      flagUrl: fp('Flag_of_the_Republic_of_San_Marco.svg'),
+      label: 'Republic of San Marco (Venice)',
+      note: 'During the 1848 revolutions, Venice rose against Austrian rule and proclaimed the Republic of San Marco under Daniele Manin, placing the gold Winged Lion of Saint Mark on the Italian tricolor. Austria besieged and retook the city in 1849 after seventeen months — one of the last holdouts of the revolutionary wave.',
+    },
+    {
       fromYear: 1802,
       toYear: 1814,
       flagUrl: fp('Flag_of_the_Italian_Republic_(1802).svg'),
@@ -453,6 +507,12 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       flagUrl: fp('Flag_of_the_Cispadane_Republic.svg'),
       label: 'Cispadane Republic (first tricolore)',
       note: 'On 7 January 1797 in Reggio Emilia, the Cispadane Republic adopted a green-white-red tricolour — the very first official use of the Italian tricolore as a national flag.',
+    },
+    {
+      fromYear: 839, toYear: 1131,
+      flagUrl: fp('Flag_of_the_Republic_of_Amalfi.svg'),
+      label: 'Duchy of Amalfi',
+      note: 'Amalfi was one of the first Italian maritime republics, a Mediterranean trading power from the 9th to 12th centuries that rivalled Venice, Pisa, and Genoa. Its banner bore a white cross on blue — later associated with the Order of Malta. Norman conquest in 1131 ended its independence.',
     },
   ],
   ES: [
@@ -685,6 +745,15 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       flagUrl: fp('British_Raj_Red_Ensign.svg'),
       label: 'Star of India (British Raj)',
       note: 'A red ensign with the Union Jack and the "Star of India" emblem, used unofficially for British India. The Union Jack itself remained the official flag of the Raj.',
+      parallelCaption: 'Princely state of the Raj era',
+      parallel: [
+        {
+          fromYear: 1936, toYear: 1952,
+          flagUrl: fp('Flag_of_Jammu_and_Kashmir_(1936-1953).svg'),
+          label: 'Princely State of Jammu and Kashmir',
+          note: 'The princely state of Jammu and Kashmir was ruled by the Hindu Dogra dynasty over a Muslim-majority population under British paramountcy. Its disputed accession to India in 1947 triggered the first India-Pakistan war and a conflict that continues today. The state kept its own flag under special autonomy until that status was revoked in 2019.',
+        },
+      ],
     },
   ],
   BR: [
@@ -722,6 +791,15 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       flagUrl: fp('Flag_of_Brazil_(1870–1889).svg'),
       label: 'Empire of Brazil',
       note: 'A green field with a yellow rhombus framing the imperial arms. Green stood for the House of Braganza and yellow for the Habsburgs — the houses of Emperor Pedro I and Empress Maria Leopoldina.',
+      parallelCaption: 'Separatist republic of the era',
+      parallel: [
+        {
+          fromYear: 1836, toYear: 1845,
+          flagUrl: fp('Flag_of_Piratini_Republic.svg'),
+          label: 'Riograndense Republic (Piratini)',
+          note: 'The "Ragamuffin War" saw Brazil\'s southernmost province secede as the Riograndense Republic from 1836 to 1845 — the longest civil war in Brazilian history. Giuseppe Garibaldi fought on the rebel side before his later Italian campaigns.',
+        },
+      ],
     },
   ],
   MX: [
@@ -759,6 +837,27 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       flagUrl: fp('Flag_of_Mexico_(1823-1864,_1867-1893).svg'),
       label: 'Early Republic',
       note: 'The republican redesign placed an uncrowned eagle on a cactus gripping a snake, ringed by oak and laurel. The same design returned from 1867 to 1893.',
+      parallelCaption: 'Secessionist & breakaway states of the era',
+      parallel: [
+        {
+          fromYear: 1840, toYear: 1840,
+          flagUrl: fp('Flag_of_the_Republic_of_the_Rio_Grande.svg'),
+          label: 'Republic of the Rio Grande',
+          note: 'A short-lived 1840 republic of northern Mexican states resisting centralist rule from Mexico City; its flag bore three stars for its claimed territories. It was reabsorbed by Mexico within the year.',
+        },
+        {
+          fromYear: 1841, toYear: 1848,
+          flagUrl: fp('Flag_of_the_Republic_of_Yucatan.svg'),
+          label: 'Republic of Yucatán',
+          note: 'Yucatán declared independence from Mexico twice (1841 and 1846) over disputes about federalism, flying five green stars beside red-white-red stripes. The peninsula rejoined Mexico in 1848 amid the Caste War.',
+        },
+        {
+          fromYear: 1854, toYear: 1854,
+          flagUrl: fp('Flag_of_the_Republic_of_Sonora.svg'),
+          label: 'Republic of Sonora (Walker)',
+          note: 'American filibuster William Walker proclaimed a "Republic of Sonora" in 1854 during a failed private invasion of northwestern Mexico. The venture collapsed within months and Walker was tried in the US for violating neutrality laws.',
+        },
+      ],
     },
     {
       fromYear: 1821,
@@ -775,6 +874,15 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       flagUrl: 'https://flagcdn.com/w320/tr.png',
       label: 'Flag of Turkey',
       note: 'When Atatürk proclaimed the Republic in 1923, Turkey kept the Ottoman red star-and-crescent almost unchanged, signaling continuity rather than rupture. Its exact proportions were only codified by the 1936 Turkish Flag Law.',
+      parallelCaption: 'Transient republic that joined Turkey',
+      parallel: [
+        {
+          fromYear: 1938, toYear: 1939,
+          flagUrl: fp('Flag_of_Hatay.svg'),
+          label: 'State of Hatay',
+          note: 'Carved from French-mandate Syria, the Republic of Hatay existed for one year (1938–39) before voting to join Turkey. Its flag is near-identical to Turkey\'s but with a hollow (outlined) star. The annexation is still disputed by Syria.',
+        },
+      ],
     },
     {
       fromYear: 1844,
@@ -969,6 +1077,15 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       flagUrl: fp('State_flag_of_Iran_(1933–1964).svg'),
       label: 'Imperial Standard (Pahlavi era)',
       note: 'The Pahlavi dynasty retained the ancient lion-and-sun emblem on the green-white-red tricolor: a lion holding a sword with a radiant sun rising behind it. This symbol of Persian royalty dated back to at least the 12th century. The 1979 revolution deliberately erased it — books and buildings bearing the lion and sun were defaced, making surviving examples historically significant.',
+      parallelCaption: 'Soviet-backed breakaway of 1946',
+      parallel: [
+        {
+          fromYear: 1946, toYear: 1946,
+          flagUrl: fp('Flag_of_the_Republic_of_Mahabad.svg'),
+          label: 'Republic of Mahabad',
+          note: 'A short-lived Kurdish state in northwestern Iran, set up with Soviet backing in January 1946 and collapsing that December once Soviet forces withdrew. It remains a foundational symbol of modern Kurdish nationalism.',
+        },
+      ],
     },
     {
       fromYear: 1907, toYear: 1925,
@@ -1051,6 +1168,12 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       flagUrl: fp('Flag_of_Gran_Colombia.svg'),
       label: 'Gran Colombia',
       note: 'Venezuela was a founding component of Simón Bolívar\'s Gran Colombia alongside Colombia and Ecuador. The shared tricolor of yellow, blue, and red designed by Francisco de Miranda in 1806 became the common ancestor of all three nations\' flags — a visible reminder of the dream of a unified South American republic that collapsed in 1830.',
+    },
+    {
+      fromYear: 1811, toYear: 1812,
+      flagUrl: fp('Flag_of_the_First_Republic_of_Venezuela.svg'),
+      label: 'First Republic of Venezuela',
+      note: 'The first independent Venezuelan state (1811–12) flew an early version of Miranda\'s yellow-blue-red tricolor with a canton of stars. It collapsed after an earthquake and royalist counterattack, but began the lineage that runs to today\'s flag.',
     },
   ],
 
@@ -1183,6 +1306,12 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       note: 'Saudi Arabia\'s flag — a green field bearing the Shahada ("There is no god but Allah, and Muhammad is his messenger") in white Thuluth script above a white sword — is one of the world\'s most religiously charged national flags. The sword\'s orientation was reversed in 1973 to always face forward (towards the hoist) regardless of which side of the flag you see. Green is the traditional colour of Islam; the sword symbolises the Kingdom\'s founding through military conquest.',
     },
     {
+      fromYear: 1926, toYear: 1932,
+      flagUrl: fp('Flag_of_the_Kingdom_of_Hejaz_and_Nejd.svg'),
+      label: 'Kingdom of Hejaz and Nejd',
+      note: 'After Ibn Saud conquered the Hejaz — and the holy cities of Mecca and Medina — in 1925, he ruled a dual kingdom of Hejaz and Nejd from 1926 until merging them into the single Kingdom of Saudi Arabia in 1932. Its green flag bore the Shahada and a white sword.',
+    },
+    {
       fromYear: 1938, toYear: 1973,
       flagUrl: fp('Flag_of_Saudi_Arabia_(1938–1973).svg'),
       label: 'Kingdom of Saudi Arabia (1938)',
@@ -1229,6 +1358,18 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       flagUrl: fp('Flag_of_the_Ottoman_Empire.svg'),
       label: 'Ottoman Yemen',
       note: 'The Ottomans controlled the Yemeni highlands and the Red Sea coast through their Yemen Vilayet, flying the Ottoman star-and-crescent, though they never fully subdued the fiercely independent Zaydi tribes of the interior. Yemen\'s strategic position guarding the southern entrance to the Red Sea made it valuable to every empire — which is also why Britain seized the southern port of Aden in 1839, beginning the north–south division that would shape Yemen for the next 150 years.',
+    },
+    {
+      fromYear: 1740, toYear: 1967,
+      flagUrl: fp('Flag_of_the_Sultanate_of_Lahej.svg'),
+      label: 'Sultanate of Lahej',
+      note: 'A principal South Arabian sultanate of the Aden Protectorate, Lahej flew a red-and-white flag with crossed daggers. Like the other southern states it was abolished in 1967 when the British-protected sultanates were absorbed into South Yemen.',
+    },
+    {
+      fromYear: 1395, toYear: 1967,
+      flagUrl: fp('Kathiri_flag.svg'),
+      label: 'Kathiri State of Seiyun',
+      note: 'A Hadhrami sultanate in the eastern Aden Protectorate, the Kathiri State of Seiyun flew a green-yellow-red flag with three stars. It too was dissolved into South Yemen in 1967, ending centuries of dynastic rule in the Hadhramaut valley.',
     },
   ],
 
@@ -1556,6 +1697,12 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       label: 'Haitian Occupation',
       note: 'From 1822 to 1844 the eastern two-thirds of Hispaniola (the future Dominican Republic) was occupied and incorporated into Haiti by President Jean-Pierre Boyer. For 22 years the Haitian blue-and-red flew over what is now the Dominican Republic, a period known in Dominican history as the Haitian Unification — an occupation that profoundly shaped Dominican national identity and the desire for separation.',
     },
+    {
+      fromYear: 1821, toYear: 1822,
+      flagUrl: fp('Flag_of_the_Republic_of_the_Spanish_Haiti.svg'),
+      label: 'Republic of Spanish Haiti',
+      note: 'For nine weeks in late 1821, the eastern half of Hispaniola declared independence from Spain as the "Republic of Spanish Haiti," flying a Gran Colombia-style tricolor with a white hoist bar. Haiti invaded and annexed it in February 1822, beginning the 22-year occupation.',
+    },
   ],
 
   // ── Central American Union family ──────────────────────────────────────────
@@ -1571,6 +1718,15 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       flagUrl: fp('Flag_of_the_Federal_Republic_of_Central_America.svg'),
       label: 'Federal Republic of Central America',
       note: 'After independence from Spain in 1821, Guatemala was briefly part of the Mexican Empire before joining the Federal Republic of Central America (1823–1839) alongside El Salvador, Honduras, Nicaragua, and Costa Rica. The federation\'s flag — blue-white-blue horizontal stripes with a central emblem — is the ancestor of every Central American national flag today. The federation collapsed in civil war, but the colours survived in each successor state\'s flag.',
+      parallelCaption: '6th state of the federation (1838-40)',
+      parallel: [
+        {
+          fromYear: 1838, toYear: 1840,
+          flagUrl: fp('Flag_of_the_State_of_Los_Altos.svg'),
+          label: 'State of Los Altos',
+          note: 'Los Altos was briefly the "sixth state" of the Federal Republic of Central America, formed in 1838 from the highlands around Quetzaltenango. Its flag carried the federation\'s blue-white-blue with a quetzal — the free-flying bird that became Guatemala\'s national symbol. Guatemalan forces under Rafael Carrera reconquered it by 1840.',
+        },
+      ],
     },
   ],
 
@@ -2084,6 +2240,12 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       flagUrl: fp('Flag_of_Croatia_(1941–1945).svg'),
       label: 'Independent State of Croatia (NDH)',
       note: 'The WWII fascist puppet state kept the tricolor and checkerboard but added the Ustaše "U" emblem. It remains a taboo symbol because of the regime\'s genocidal crimes.',
+    },
+    {
+      fromYear: 1921, toYear: 1921,
+      flagUrl: fp('Flag_of_Albona_Republic.svg'),
+      label: 'Labin Republic (Albona)',
+      note: 'The Labin Republic was a short-lived 1921 workers\' state in Istria, when coal miners seized the mines and declared self-rule against rising Italian Fascism. Its red flag bore a miner\'s hammer and pick. Italian troops crushed it within five weeks — one of Europe\'s earliest organized anti-fascist uprisings.',
     },
   ],
   RS: [
@@ -2889,6 +3051,21 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       flagUrl: fp('Flag_of_the_Republic_of_the_Congo_(Léopoldville)_(1960–1963).svg'),
       label: 'Independence flag',
       note: 'At independence from Belgium in 1960, the flag was blue with one large yellow star and six small stars for the founding provinces of the new state.',
+      parallelCaption: 'Secessionist states of the Congo Crisis',
+      parallel: [
+        {
+          fromYear: 1960, toYear: 1963,
+          flagUrl: fp('Flag_of_Katanga.svg'),
+          label: 'State of Katanga',
+          note: 'The mineral-rich Katanga province seceded under Moïse Tshombe days after Congo\'s 1960 independence, backed by Belgian mining interests. Its flag bore three red croisettes (copper-cross currency). UN forces ended the secession in 1963.',
+        },
+        {
+          fromYear: 1960, toYear: 1962,
+          flagUrl: fp('Flag_of_South_Kasai.svg'),
+          label: 'South Kasai',
+          note: 'The diamond-rich South Kasai region also seceded in 1960 under Albert Kalonji, flying a flag with a hand holding the region\'s mineral wealth. It was reconquered by the central government in 1962.',
+        },
+      ],
     },
   ],
   AO: [
@@ -2914,6 +3091,12 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       flagUrl: fp('Flag_of_Rwanda_(1961–2001).svg'),
       label: "Original tricolour with 'R'",
       note: 'A red-yellow-green tricolour with a black capital "R" added to distinguish it from Guinea\'s identical flag. It flew through independence and the 1994 genocide before being replaced.',
+    },
+    {
+      fromYear: 1961, toYear: 1962,
+      flagUrl: fp('Flag_of_Rwanda_(January_–_September_1961).svg'),
+      label: 'Kingdom of Rwanda (transition)',
+      note: 'In the transition to independence (1961–62), Rwanda flew a red-yellow-green vertical tricolor bearing a large black letter "R" — added to tell it apart from the near-identical flag of Guinea. The "R" flag was used until the 2001 redesign.',
     },
   ],
   BI: [
@@ -2978,6 +3161,21 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       flagUrl: fp('Flag_of_Tanganyika_(1961–1964).svg'),
       label: 'Flag of Tanganyika',
       note: 'Independent Tanganyika flew a green field with a central black, yellow-edged stripe — colors that carried directly into the union flag.',
+      parallelCaption: 'Zanzibar, which united with Tanganyika to form Tanzania',
+      parallel: [
+        {
+          fromYear: 1963, toYear: 1964,
+          flagUrl: fp('Flag_of_the_Sultanate_of_Zanzibar_(1963).svg'),
+          label: 'Sultanate of Zanzibar',
+          note: 'Zanzibar gained independence from Britain as a constitutional sultanate in December 1963, flying a plain red flag (the historic colour of its Omani-descended dynasty). It lasted barely a month before being overthrown.',
+        },
+        {
+          fromYear: 1964, toYear: 1964,
+          flagUrl: fp('Flag_of_Zanzibar_(January-April_1964).svg'),
+          label: 'People\'s Republic of Zanzibar',
+          note: 'The January 1964 revolution overthrew the sultan and raised a blue-black-green flag. In April 1964 it merged with Tanganyika to form Tanzania — the "Tan" + "Zan" of the new name.',
+        },
+      ],
     },
   ],
   KM: [
@@ -3079,6 +3277,15 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       flagUrl: 'https://flagcdn.com/w320/ma.png',
       label: 'Flag of Morocco',
       note: 'In 1915 Sultan Yusef added the green interlaced pentagram (Seal of Solomon) to the red field, partly to distinguish Moroccan ships. The design survived the French and Spanish protectorate eras.',
+      parallelCaption: 'Breakaway republic during the Rif War',
+      parallel: [
+        {
+          fromYear: 1921, toYear: 1926,
+          flagUrl: fp('Flag_of_the_Republic_of_the_Rif.svg'),
+          label: 'Republic of the Rif',
+          note: 'Berber leader Abd el-Krim founded the Republic of the Rif in 1921 after crushing a Spanish army at Annual. Its red flag bore a white rhombus and crescent. A joint Spanish-French offensive — using early chemical weapons — ended it in 1926.',
+        },
+      ],
     },
     {
       fromYear: 1666,
@@ -3591,6 +3798,18 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       flagUrl: 'https://flagcdn.com/w320/id.png',
       label: 'Sang Saka Merah Putih',
       note: 'A simple red-over-white bicolour whose colors trace back to the 13th-century Majapahit Empire. Banned by the Dutch, it was raised on independence day in 1945. It is nearly identical to Monaco\'s flag but with a 2:3 ratio.',
+    },
+    {
+      fromYear: 1605, toYear: 1669,
+      flagUrl: fp('Flag_of_the_Sultanate_of_Gowa.svg'),
+      label: 'Sultanate of Gowa',
+      note: 'Gowa was a powerful Makassar seafaring kingdom in southern Sulawesi that dominated the eastern Indonesian spice trade. After a long war, the Dutch East India Company and allied Bugis forces defeated Gowa at the 1669 Treaty of Bongaya, breaking its commercial power.',
+    },
+    {
+      fromYear: 1081, toYear: 1950,
+      flagUrl: fp('Flag_of_the_Sultanate_of_Tidore.png'),
+      label: 'Sultanate of Tidore',
+      note: 'Tidore was a Moluccan spice kingdom and the great rival of neighbouring Ternate, controlling cloves and nutmeg coveted across the world. It long resisted European domination, allying variously with the Spanish and Portuguese against the Dutch, before being absorbed into the Dutch East Indies.',
     },
   ],
   MY: [
