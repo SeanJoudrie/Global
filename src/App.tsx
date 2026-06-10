@@ -33,6 +33,7 @@ import ProvinceRouletteScreen from "./components/ProvinceRouletteScreen"
 import SubdivisionStumperScreen from "./components/SubdivisionStumperScreen"
 import LineageScreen from "./components/LineageScreen"
 import SubdivisionStatsScreen from "./components/SubdivisionStatsScreen"
+import MegaCodexScreen from "./components/MegaCodexScreen"
 import StarField from "./components/StarField"
 import EarthLogo from "./components/EarthLogo"
 import { FLAGS } from "./data/flags"
@@ -44,7 +45,7 @@ import type { Question } from "./utils/quiz"
 import { todayString } from "./utils/prng"
 import { loadTheme } from "./components/SettingsScreen"
 
-type Screen = "splash" | "home" | "flags" | "quiz" | "reversequiz" | "result" | "achievements" | "profile" | "flashcards" | "language" | "capitalquiz" | "challenge" | "codex" | "geo" | "gauntlet" | "tierlist" | "settings" | "oddoneout" | "thecrop" | "flagdna" | "buildflag" | "thepeel" | "lookalikes" | "composer" | "silhouette" | "flagfamilies" | "funfact" | "progressmap" | "historical" | "identity" | "provinceroulette" | "substumper" | "lineage" | "substats"
+type Screen = "splash" | "home" | "flags" | "quiz" | "reversequiz" | "result" | "achievements" | "profile" | "flashcards" | "language" | "capitalquiz" | "challenge" | "codex" | "geo" | "gauntlet" | "tierlist" | "settings" | "oddoneout" | "thecrop" | "flagdna" | "buildflag" | "thepeel" | "lookalikes" | "composer" | "silhouette" | "flagfamilies" | "funfact" | "progressmap" | "historical" | "identity" | "provinceroulette" | "substumper" | "lineage" | "substats" | "megacodex"
 
 interface ActiveQuiz {
   questions: Question[]
@@ -136,7 +137,7 @@ export default function App() {
 
       {/* Persistent home logo — fixed top-left on every screen except splash/home.
           Tapping it always jumps back to the home page. */}
-      {screen !== "splash" && screen !== "home" && (
+      {screen !== "splash" && screen !== "home" && screen !== "megacodex" && (
         <button
           onClick={() => setScreen("home")}
           aria-label="Home"
@@ -206,7 +207,7 @@ export default function App() {
       {screen === "geo" && <GeoQuizScreen onBack={() => setScreen("home")} />}
       {screen === "gauntlet" && <GauntletScreen onBack={() => setScreen("home")} />}
       {screen === "tierlist" && <TierListScreen onBack={() => setScreen("home")} />}
-      {screen === "settings"   && <SettingsScreen onBack={() => setScreen("home")} />}
+      {screen === "settings"   && <SettingsScreen onBack={() => setScreen("home")} onMegaCodex={() => setScreen("megacodex")} />}
       {screen === "oddoneout"  && <OddOneOutScreen  onBack={() => setScreen("home")} />}
       {screen === "thecrop"    && <TheCropScreen    onBack={() => setScreen("home")} />}
       {screen === "flagdna"    && <FlagDNAScreen     onBack={() => setScreen("home")} />}
@@ -232,6 +233,7 @@ export default function App() {
       {screen === "substumper" && <SubdivisionStumperScreen onBack={() => setScreen("home")} onSubLearned={handleSubLearned} />}
       {screen === "lineage" && <LineageScreen onBack={() => setScreen("home")} />}
       {screen === "substats" && <SubdivisionStatsScreen state={appState} onBack={() => setScreen("home")} />}
+      {screen === "megacodex" && <MegaCodexScreen onBack={() => setScreen("settings")} />}
 
       {screen === "quiz" && activeQuiz && (
         <QuizScreen questions={activeQuiz.questions} title={activeQuiz.title}
