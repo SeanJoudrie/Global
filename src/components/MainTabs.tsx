@@ -1,3 +1,4 @@
+import { useState } from "react"
 import worldMap from "@svg-maps/world"
 import { FLAGS } from "../data/flags"
 import type { AppState } from "../utils/storage"
@@ -12,23 +13,32 @@ import HeroCarousel from "./HeroCarousel"
 
 // Faint antique world-map backdrop (Cartographer skin only). Fixed to the
 // viewport so it stays put while the page scrolls; heavily blurred, very low
-// opacity, and feathered on every edge so it reads as a soft map wash with no
-// hard boundary.
+// opacity, and feathered on every edge so there's no hard boundary.
+//
+// Prefers a real map photo at /world-map.jpg (drop your vintage-map image into
+// public/ and it's used automatically); falls back to the vector world map
+// until that file exists.
 function MapBackdrop() {
   const soft = "radial-gradient(108% 108% at 50% 44%, #000 0%, #000 38%, rgba(0,0,0,0.5) 64%, transparent 84%)"
+  const [usePhoto, setUsePhoto] = useState(true)
   return (
     <div aria-hidden style={{
       position: "fixed", inset: 0, zIndex: 0, pointerEvents: "none",
-      opacity: 0.1, filter: "blur(3px)",
+      opacity: usePhoto ? 0.13 : 0.1, filter: "blur(3px)",
       WebkitMaskImage: soft, maskImage: soft,
       display: "flex", alignItems: "center", justifyContent: "center", overflow: "hidden",
     }}>
-      <svg viewBox={(worldMap as { viewBox: string }).viewBox} preserveAspectRatio="xMidYMid meet"
-        style={{ width: "172%", minWidth: 720, maxWidth: "none", display: "block" }}>
-        {(worldMap as { locations: { id: string; path: string }[] }).locations.map(l => (
-          <path key={l.id} d={l.path} fill="#8C7A5A" />
-        ))}
-      </svg>
+      {usePhoto ? (
+        <img src="/world-map.jpg" alt="" onError={() => setUsePhoto(false)}
+          style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+      ) : (
+        <svg viewBox={(worldMap as { viewBox: string }).viewBox} preserveAspectRatio="xMidYMid meet"
+          style={{ width: "172%", minWidth: 720, maxWidth: "none", display: "block" }}>
+          {(worldMap as { locations: { id: string; path: string }[] }).locations.map(l => (
+            <path key={l.id} d={l.path} fill="#8C7A5A" />
+          ))}
+        </svg>
+      )}
     </div>
   )
 }
