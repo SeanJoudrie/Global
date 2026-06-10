@@ -110,6 +110,30 @@ export default function CodexScreen({ onBack }: Props) {
             </p>
           </div>
 
+          {/* Did you know? — surfaces the flag's fun fact + how to tell it apart */}
+          {(selectedFlag.funFact || selectedFlag.distinguishingTip) && (
+            <div className="mb-5 rounded-2xl overflow-hidden" style={{ border: '1px solid #FBBF2433' }}>
+              {selectedFlag.funFact && (
+                <div style={{ background: '#2D1F52', padding: '16px 18px' }}>
+                  <div className="text-xs font-bold uppercase tracking-widest mb-2" style={{ color: '#FBBF24' }}>
+                    💡 Did you know?
+                  </div>
+                  <p className="text-sm leading-relaxed" style={{ color: '#F5F3FF', lineHeight: 1.65 }}>
+                    {selectedFlag.funFact}
+                  </p>
+                </div>
+              )}
+              {selectedFlag.distinguishingTip && (
+                <div style={{ background: '#1A1033', padding: '12px 18px', borderTop: '1px solid #8B6CFF22' }}>
+                  <div className="text-xs font-semibold mb-1" style={{ color: '#8B6CFF' }}>How to tell it apart</div>
+                  <p className="text-xs leading-relaxed" style={{ color: '#B8A9E0', lineHeight: 1.6 }}>
+                    {selectedFlag.distinguishingTip}
+                  </p>
+                </div>
+              )}
+            </div>
+          )}
+
           {/* Flag History — collapsible */}
           <div className="mb-5">
             <button

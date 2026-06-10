@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useRef, useEffect } from "react"
 import { FLAGS } from "../data/flags"
 import { SUB_FLAGS } from "../data/subdivisions"
 import { HISTORICAL_FLAGS } from "../data/historicalFlags"
@@ -7,8 +7,8 @@ import { CODEX } from "../data/codex"
 
 interface Props { onBack: () => void }
 
-// Not celebrated alongside the rest.
-const EXCLUDE = (url: string) => url.includes("German_Reich")
+// Nazi swastika is not celebrated here; .gif flags are skipped (heavy/animated).
+const EXCLUDE = (url: string) => url.includes("German_Reich") || /\.gif(\?|$)/i.test(url)
 
 function gatherFlagUrls(): string[] {
   const urls = new Set<string>()
@@ -25,12 +25,48 @@ function gatherFlagUrls(): string[] {
   return [...urls].filter(u => !EXCLUDE(u)).sort(() => Math.random() - 0.5)
 }
 
+const GAP = 3
+const PAD = 6
+const MIN_TILE = 56
+const BUFFER_ROWS = 8
+
 export default function MegaCodexScreen({ onBack }: Props) {
   const [urls] = useState(gatherFlagUrls)
+  const scrollRef = useRef<HTMLDivElement>(null)
+  const rafRef = useRef<number | null>(null)
+  const [vw, setVw] = useState(() => (typeof window !== "undefined" ? window.innerWidth : 390))
+  const [vh, setVh] = useState(() => (typeof window !== "undefined" ? window.innerHeight : 800))
+  const [scrollTop, setScrollTop] = useState(0)
+
+  useEffect(() => {
+    const onResize = () => { setVw(window.innerWidth); setVh(window.innerHeight) }
+    window.addEventListener("resize", onResize)
+    return () => window.removeEventListener("resize", onResize)
+  }, [])
+
+  // Uniform grid geometry
+  const cols = Math.max(2, Math.floor((vw - PAD * 2 + GAP) / (MIN_TILE + GAP)))
+  const tileW = (vw - PAD * 2 - GAP * (cols - 1)) / cols
+  const rowH = tileW * (2 / 3) + GAP
+  const totalRows = Math.ceil(urls.length / cols)
+  const totalHeight = totalRows * rowH + PAD * 2
+
+  const startRow = Math.max(0, Math.floor(scrollTop / rowH) - BUFFER_ROWS)
+  const endRow = Math.min(totalRows, Math.ceil((scrollTop + vh) / rowH) + BUFFER_ROWS)
+  const startIdx = startRow * cols
+  const endIdx = Math.min(urls.length, endRow * cols)
+  const visible = urls.slice(startIdx, endIdx)
+
+  const onScroll = () => {
+    if (rafRef.current != null) return
+    rafRef.current = requestAnimationFrame(() => {
+      rafRef.current = null
+      if (scrollRef.current) setScrollTop(scrollRef.current.scrollTop)
+    })
+  }
 
   return (
-    <div style={{ minHeight: "100vh", background: "#0B0717", position: "relative", zIndex: 1 }}>
-      {/* No labels — just a back arrow, floating */}
+    <div style={{ position: "fixed", inset: 0, background: "#0B0717", zIndex: 1 }}>
       <button onClick={onBack} aria-label="Back"
         style={{
           position: "fixed", top: 12, left: 12, zIndex: 50,
@@ -40,35 +76,38 @@ export default function MegaCodexScreen({ onBack }: Props) {
           border: "1px solid rgba(139,108,255,0.4)", backdropFilter: "blur(6px)", cursor: "pointer",
         }}>‹</button>
 
-      <div style={{
-        display: "grid",
-        gridTemplateColumns: "repeat(auto-fill, minmax(54px, 1fr))",
-        gap: 3, padding: 6,
-      }}>
-        {urls.map((u, i) => (
-          <img
-            key={i}
-            src={u}
-            alt=""
-            loading="lazy"
-            decoding="async"
-            style={{ width: "100%", aspectRatio: "3 / 2", objectFit: "cover", borderRadius: 3, display: "block", background: "#0B0717" }}
-            onError={e => {
-              // Wikimedia/flagcdn throttle big bursts, so retry a few times with
-              // backoff; only collapse the cell once it's truly broken, so the
-              // wall stays dense (no gaps) with whatever actually loads.
-              const el = e.target as HTMLImageElement
-              const t = Number(el.dataset.t || "0")
-              if (t < 3) {
-                el.dataset.t = String(t + 1)
-                el.removeAttribute("src")
-                window.setTimeout(() => { el.src = u }, 600 + t * 900 + Math.random() * 700)
-              } else {
-                el.style.display = "none"
-              }
-            }}
-          />
-        ))}
+      <div ref={scrollRef} onScroll={onScroll}
+        style={{ position: "absolute", inset: 0, overflowY: "auto", WebkitOverflowScrolling: "touch" }}>
+        {/* Full-height spacer so the scrollbar represents the whole wall */}
+        <div style={{ height: totalHeight, position: "relative" }}>
+          {/* Only the visible rows are mounted */}
+          <div style={{
+            position: "absolute", left: PAD, right: PAD, top: PAD + startRow * rowH,
+            display: "grid", gridTemplateColumns: `repeat(${cols}, 1fr)`, gap: GAP,
+          }}>
+            {visible.map((u, k) => (
+              <img
+                key={startIdx + k}
+                src={u}
+                alt=""
+                loading="lazy"
+                decoding="async"
+                style={{ width: "100%", aspectRatio: "3 / 2", objectFit: "cover", borderRadius: 3, display: "block", background: "#16102E" }}
+                onError={e => {
+                  const el = e.target as HTMLImageElement
+                  const t = Number(el.dataset.t || "0")
+                  if (t < 2) {
+                    el.dataset.t = String(t + 1)
+                    el.removeAttribute("src")
+                    window.setTimeout(() => { el.src = u }, 500 + t * 800 + Math.random() * 600)
+                  } else {
+                    el.style.visibility = "hidden"
+                  }
+                }}
+              />
+            ))}
+          </div>
+        </div>
       </div>
     </div>
   )
