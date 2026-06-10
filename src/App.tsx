@@ -29,18 +29,22 @@ import FunFactScreen from "./components/FunFactScreen"
 import ProgressMapScreen from "./components/ProgressMapScreen"
 import HistoricalFlagScreen from "./components/HistoricalFlagScreen"
 import IdentityFlagScreen from "./components/IdentityFlagScreen"
+import ProvinceRouletteScreen from "./components/ProvinceRouletteScreen"
+import SubdivisionStumperScreen from "./components/SubdivisionStumperScreen"
+import LineageScreen from "./components/LineageScreen"
+import SubdivisionStatsScreen from "./components/SubdivisionStatsScreen"
 import StarField from "./components/StarField"
 import EarthLogo from "./components/EarthLogo"
 import { FLAGS } from "./data/flags"
 import type { FlagRecord } from "./data/flags"
-import { loadState, saveState, markFlagLearned, recordDailyResult, awardCrown, saveShareResult } from "./utils/storage"
+import { loadState, saveState, markFlagLearned, markSubLearned, recordDailyResult, awardCrown, saveShareResult } from "./utils/storage"
 import type { AppState, ShareResult } from "./utils/storage"
 import { buildDailyQuiz, buildSetQuiz } from "./utils/quiz"
 import type { Question } from "./utils/quiz"
 import { todayString } from "./utils/prng"
 import { loadTheme } from "./components/SettingsScreen"
 
-type Screen = "splash" | "home" | "flags" | "quiz" | "reversequiz" | "result" | "achievements" | "profile" | "flashcards" | "language" | "capitalquiz" | "challenge" | "codex" | "geo" | "gauntlet" | "tierlist" | "settings" | "oddoneout" | "thecrop" | "flagdna" | "buildflag" | "thepeel" | "lookalikes" | "composer" | "silhouette" | "flagfamilies" | "funfact" | "progressmap" | "historical" | "identity"
+type Screen = "splash" | "home" | "flags" | "quiz" | "reversequiz" | "result" | "achievements" | "profile" | "flashcards" | "language" | "capitalquiz" | "challenge" | "codex" | "geo" | "gauntlet" | "tierlist" | "settings" | "oddoneout" | "thecrop" | "flagdna" | "buildflag" | "thepeel" | "lookalikes" | "composer" | "silhouette" | "flagfamilies" | "funfact" | "progressmap" | "historical" | "identity" | "provinceroulette" | "substumper" | "lineage" | "substats"
 
 interface ActiveQuiz {
   questions: Question[]
@@ -103,6 +107,10 @@ export default function App() {
     setLastResult({ score, total, answers })
     setScreen("result")
   }, [activeQuiz, appState])
+
+  const handleSubLearned = useCallback((code: string) => {
+    setAppState(s => markSubLearned(s, code))
+  }, [])
 
   const handleRetry = useCallback(() => {
     if (!activeQuiz) return
@@ -176,7 +184,11 @@ export default function App() {
           onGoFunFact={() => setScreen("funfact")}
           onGoProgressMap={() => setScreen("progressmap")}
           onGoHistorical={() => setScreen("historical")}
-          onGoIdentity={() => setScreen("identity")} />
+          onGoIdentity={() => setScreen("identity")}
+          onGoProvinceRoulette={() => setScreen("provinceroulette")}
+          onGoSubStumper={() => setScreen("substumper")}
+          onGoLineage={() => setScreen("lineage")}
+          onGoSubStats={() => setScreen("substats")} />
       )}
 
       {screen === "flags" && (
@@ -216,6 +228,10 @@ export default function App() {
       {screen === "progressmap" && <ProgressMapScreen state={appState} onBack={() => setScreen("home")} />}
       {screen === "historical" && <HistoricalFlagScreen onBack={() => setScreen("home")} />}
       {screen === "identity" && <IdentityFlagScreen onBack={() => setScreen("home")} />}
+      {screen === "provinceroulette" && <ProvinceRouletteScreen onBack={() => setScreen("home")} onSubLearned={handleSubLearned} />}
+      {screen === "substumper" && <SubdivisionStumperScreen onBack={() => setScreen("home")} onSubLearned={handleSubLearned} />}
+      {screen === "lineage" && <LineageScreen onBack={() => setScreen("home")} />}
+      {screen === "substats" && <SubdivisionStatsScreen state={appState} onBack={() => setScreen("home")} />}
 
       {screen === "quiz" && activeQuiz && (
         <QuizScreen questions={activeQuiz.questions} title={activeQuiz.title}
