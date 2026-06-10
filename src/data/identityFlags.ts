@@ -639,18 +639,24 @@ export const IDENTITY_FLAGS: IdentityFlag[] = [
   },
 ]
 
+// Maritime & Signal (the ICS / phonetic-alphabet signal flags) are their own
+// thing — they live in a separate section, NOT under Identity.
 export const IDENTITY_CATEGORIES: IdentityCategory[] = [
   "Pride & LGBTQ+",
   "Pan-National & Ethnic",
   "Indigenous Peoples",
   "Separatist & Autonomous",
   "Micronations",
-  "Maritime & Signal",
   "Civic & Ideological",
 ]
 
 /** LGBTQ+ pride/identity flags, kept distinct from the civic/ethnic/separatist set. */
 export const LGBTQ_FLAGS: IdentityFlag[] = IDENTITY_FLAGS.filter(f => f.category === "Pride & LGBTQ+")
 
-/** All non-LGBTQ identity flags: civic, ethnic, indigenous, separatist, micronations. */
-export const OTHER_IDENTITY_FLAGS: IdentityFlag[] = IDENTITY_FLAGS.filter(f => f.category !== "Pride & LGBTQ+")
+/** Civic, ethnic, indigenous, separatist & micronation flags (no LGBTQ, no signal). */
+export const OTHER_IDENTITY_FLAGS: IdentityFlag[] = IDENTITY_FLAGS.filter(
+  f => f.category !== "Pride & LGBTQ+" && f.category !== "Maritime & Signal"
+)
+
+/** Maritime / international signal flags (Alpha, Bravo, Charlie …) — own section. */
+export const SIGNAL_FLAGS: IdentityFlag[] = IDENTITY_FLAGS.filter(f => f.category === "Maritime & Signal")

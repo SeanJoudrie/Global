@@ -81,7 +81,7 @@ export default function FlagsScreen({ state, onBack, onStartSet, onStartHistoric
             <span className="text-2xl">🏳️‍🌈</span>
             <div>
               <div className="font-bold text-base" style={{ color: '#F5F3FF' }}>Identity Flags</div>
-              <div className="text-xs" style={{ color: '#C4B5FD' }}>Pride · ethnic · separatist · micronations · maritime</div>
+              <div className="text-xs" style={{ color: '#C4B5FD' }}>Pride · ethnic · separatist · micronations · signal</div>
             </div>
           </div>
           <span style={{ color: '#A78BFA' }}>›</span>

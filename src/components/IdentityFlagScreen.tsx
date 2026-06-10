@@ -1,19 +1,21 @@
 import { useState } from "react"
-import { LGBTQ_FLAGS, OTHER_IDENTITY_FLAGS } from "../data/identityFlags"
+import { LGBTQ_FLAGS, OTHER_IDENTITY_FLAGS, SIGNAL_FLAGS } from "../data/identityFlags"
 import type { IdentityFlag } from "../data/identityFlags"
 
 interface Props { onBack: () => void }
 
 const ROUNDS = 6
 
-// The two play modes keep LGBTQ+ pride flags and the civic/ethnic/separatist
-// set in separate pools so a round never mixes the two.
-type ModeId = "lgbtq" | "identity"
+// Each play mode keeps its pool separate so a round never mixes types — pride,
+// movements/identity, and the maritime signal alphabet are all their own thing.
+type ModeId = "lgbtq" | "identity" | "signal"
 const MODES: { id: ModeId; label: string; emoji: string; pool: IdentityFlag[]; gradient: string }[] = [
   { id: "lgbtq",    label: "Pride & LGBTQ+",      emoji: "🏳️‍🌈", pool: LGBTQ_FLAGS,
     gradient: "linear-gradient(90deg,#FF5E5E,#FFD93D,#6BCB77,#4D96FF,#B66DFF)" },
   { id: "identity", label: "Movements & Identity", emoji: "🏴", pool: OTHER_IDENTITY_FLAGS,
     gradient: "linear-gradient(90deg,#8B6CFF,#A78BFA)" },
+  { id: "signal",   label: "Maritime Signal Flags", emoji: "⚓", pool: SIGNAL_FLAGS,
+    gradient: "linear-gradient(90deg,#1C6DD0,#3CC4D0)" },
 ]
 
 function pickChoices(target: IdentityFlag, pool: IdentityFlag[]): IdentityFlag[] {

@@ -30,7 +30,7 @@ export const REGISTRY: Entry[] = [
   { id: "flags", title: "Flag Sets", subtitle: "Country, historical & identity sets", icon: "🚩", tab: "learn", group: "Curriculum", size: "module", accent: "learn", progress: flagProgress },
   { id: "flashcards", title: "Flashcards", subtitle: "Swipe & learn all 195", icon: "🃏", tab: "learn", group: "Curriculum", size: "module", accent: "learn", progress: flagProgress },
   { id: "historical", title: "Historical Flags", subtitle: "Vanished empires & states", icon: "📜", tab: "learn", group: "Curriculum", size: "module", accent: "learn" },
-  { id: "identity", title: "Identity Flags", subtitle: "Pride · ethnic · maritime", icon: "🏳️‍🌈", tab: "learn", group: "Curriculum", size: "module", accent: "learn" },
+  { id: "identity", title: "Identity Flags", subtitle: "Pride · ethnic · signal flags", icon: "🏳️‍🌈", tab: "learn", group: "Curriculum", size: "module", accent: "learn" },
 
   { id: "reversequiz", action: "reverse", title: "Flag ID Challenge", subtitle: "See the name, pick the flag", icon: "🎯", tab: "learn", group: "Drills", size: "module", accent: "learn" },
   { id: "capitalquiz", title: "Capital Cities", subtitle: "Name that capital", icon: "🏛️", tab: "learn", group: "Drills", size: "module", accent: "learn" },
