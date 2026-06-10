@@ -141,7 +141,7 @@ function TodayTab({ state, dailyDone, spotlight, onNavigate, onQuickPlay, onStar
           </div>
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
             <span style={{ color: T.chartreuse, display: "flex" }}>{IS_CARTO ? <LineIcon name="quickplay" size={22} color={T.chartreuse} /> : <span style={{ fontSize: 22 }}>⚡</span>}</span>
-            <span style={{ width: 24, height: 24, borderRadius: 999, background: T.chartreuse, color: IS_CARTO ? "#FFFCF4" : T.void, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 13, fontWeight: 800 }}>→</span>
+            <span style={{ width: 24, height: 24, borderRadius: 999, background: T.chartreuse, color: T.onAccent, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 13, fontWeight: 800 }}>→</span>
           </div>
           <div className="geo-display" style={{ color: T.text, fontWeight: 700, fontSize: 16, marginTop: 20 }}>Quick Play</div>
           <div className="geo-mono" style={{ color: T.chartreuse, fontSize: 10, marginTop: 2 }}>10 random flags · instant</div>
@@ -166,7 +166,7 @@ function TodayTab({ state, dailyDone, spotlight, onNavigate, onQuickPlay, onStar
             <div className="geo-micro" style={{ fontSize: 9, color: ACCENT.play, marginBottom: 5 }}>◦ Today's Game · rotates daily</div>
             <div className="geo-display" style={{ color: T.text, fontWeight: 700, fontSize: 22, lineHeight: 1.05 }}>{spotlight.title}</div>
             <p style={{ color: T.muted, fontSize: 12, marginTop: 5 }}>{spotlight.subtitle}</p>
-            <div style={{ marginTop: 12, display: "inline-flex", alignItems: "center", gap: 6, padding: "7px 14px", borderRadius: 999, background: ACCENT.play, color: IS_CARTO ? "#FFFCF4" : T.void }}>
+            <div style={{ marginTop: 12, display: "inline-flex", alignItems: "center", gap: 6, padding: "7px 14px", borderRadius: 999, background: ACCENT.play, color: T.onAccent }}>
               <span style={{ fontFamily: FONT.display, fontWeight: 700, fontSize: 12 }}>Play</span><span style={{ fontSize: 13 }}>→</span>
             </div>
           </div>

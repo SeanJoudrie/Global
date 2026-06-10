@@ -104,7 +104,7 @@ function TwoTruthsGame({ onBack, onReplay }: Props & { onReplay: () => void }) {
             <div style={{ fontFamily: FONT.mono, fontWeight: 800, fontSize: 38, color: ACCENT.codex }}>{correct}<span style={{ color: T.dim, fontSize: 20 }}>/{ROUNDS}</span></div>
             <div style={{ color: T.muted, fontSize: 12 }}>lies spotted</div>
           </div>
-          <button onClick={onReplay} className="geo-tap" style={{ padding: "14px 0", borderRadius: 12, fontWeight: 700, fontFamily: FONT.display, background: ACCENT.codex, color: IS_CARTO ? "#FFFCF4" : T.void }}>Play again</button>
+          <button onClick={onReplay} className="geo-tap" style={{ padding: "14px 0", borderRadius: 12, fontWeight: 700, fontFamily: FONT.display, background: ACCENT.codex, color: T.onAccent }}>Play again</button>
           <button onClick={onBack} className="geo-tap" style={{ padding: "12px 0", borderRadius: 12, fontWeight: 600, background: T.surface, border: `1px solid ${T.line}`, color: T.muted }}>← Home</button>
         </div>
       </div>
@@ -146,7 +146,7 @@ function TwoTruthsGame({ onBack, onReplay }: Props & { onReplay: () => void }) {
         </div>
 
         {answered && (
-          <button onClick={next} className="geo-tap" style={{ marginTop: "auto", width: "100%", padding: "14px 0", borderRadius: 12, fontWeight: 700, fontFamily: FONT.display, background: ACCENT.codex, color: IS_CARTO ? "#FFFCF4" : T.void }}>
+          <button onClick={next} className="geo-tap" style={{ marginTop: "auto", width: "100%", padding: "14px 0", borderRadius: 12, fontWeight: 700, fontFamily: FONT.display, background: ACCENT.codex, color: T.onAccent }}>
             {idx + 1 >= ROUNDS ? "See result →" : "Next →"}
           </button>
         )}

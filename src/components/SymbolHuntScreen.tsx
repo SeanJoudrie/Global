@@ -2,7 +2,7 @@ import { useState } from "react"
 import { FLAGS } from "../data/flags"
 import { SYMBOLS } from "../data/flagSymbols"
 import type { SymbolDef } from "../data/flagSymbols"
-import { T, ACCENT, FONT, IS_CARTO } from "../ui/tokens"
+import { T, ACCENT, FONT } from "../ui/tokens"
 import FlagImage from "./FlagImage"
 
 interface Props { onBack: () => void }
@@ -63,7 +63,7 @@ function SymbolHuntGame({ onBack, onReplay }: Props & { onReplay: () => void }) 
             <div style={{ fontFamily: FONT.mono, fontWeight: 800, fontSize: 38, color: ACCENT.play }}>{hits}<span style={{ color: T.dim, fontSize: 20 }}>/{total}</span></div>
             <div style={{ color: T.muted, fontSize: 12 }}>symbols found{misses ? ` · ${misses} wrong` : " · flawless!"}</div>
           </div>
-          <button onClick={onReplay} className="geo-tap" style={{ padding: "14px 0", borderRadius: 12, fontWeight: 700, fontFamily: FONT.display, background: ACCENT.play, color: IS_CARTO ? "#FFFCF4" : T.void }}>Play again</button>
+          <button onClick={onReplay} className="geo-tap" style={{ padding: "14px 0", borderRadius: 12, fontWeight: 700, fontFamily: FONT.display, background: ACCENT.play, color: T.onAccent }}>Play again</button>
           <button onClick={onBack} className="geo-tap" style={{ padding: "12px 0", borderRadius: 12, fontWeight: 600, background: T.surface, border: `1px solid ${T.line}`, color: T.muted }}>← Home</button>
         </div>
       </div>
@@ -107,8 +107,8 @@ function SymbolHuntGame({ onBack, onReplay }: Props & { onReplay: () => void }) 
 
         <div style={{ marginTop: "auto" }}>
           {!checked
-            ? <button onClick={check} className="geo-tap" style={{ width: "100%", padding: "14px 0", borderRadius: 12, fontWeight: 700, fontFamily: FONT.display, background: ACCENT.play, color: IS_CARTO ? "#FFFCF4" : T.void }}>Submit{picked.size ? ` (${picked.size})` : ""}</button>
-            : <button onClick={next} className="geo-tap" style={{ width: "100%", padding: "14px 0", borderRadius: 12, fontWeight: 700, fontFamily: FONT.display, background: ACCENT.play, color: IS_CARTO ? "#FFFCF4" : T.void }}>{idx + 1 >= ROUNDS ? "See result →" : "Next →"}</button>}
+            ? <button onClick={check} className="geo-tap" style={{ width: "100%", padding: "14px 0", borderRadius: 12, fontWeight: 700, fontFamily: FONT.display, background: ACCENT.play, color: T.onAccent }}>Submit{picked.size ? ` (${picked.size})` : ""}</button>
+            : <button onClick={next} className="geo-tap" style={{ width: "100%", padding: "14px 0", borderRadius: 12, fontWeight: 700, fontFamily: FONT.display, background: ACCENT.play, color: T.onAccent }}>{idx + 1 >= ROUNDS ? "See result →" : "Next →"}</button>}
         </div>
       </div>
     </div>

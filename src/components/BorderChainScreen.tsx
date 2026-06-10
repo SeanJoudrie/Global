@@ -100,7 +100,7 @@ function ChainGame({ onBack, onReplay }: Props & { onReplay: () => void }) {
               <div style={{ fontFamily: FONT.mono, fontWeight: 800, fontSize: 34, color: ACCENT.learn }}>{chain.length}</div>
               <div style={{ color: T.muted, fontSize: 12 }}>{over.reason}</div>
             </div>
-            <button onClick={onReplay} className="geo-tap" style={{ padding: "14px 0", borderRadius: 12, fontWeight: 700, fontFamily: FONT.display, background: ACCENT.learn, color: IS_CARTO ? "#FFFCF4" : T.void }}>New chain</button>
+            <button onClick={onReplay} className="geo-tap" style={{ padding: "14px 0", borderRadius: 12, fontWeight: 700, fontFamily: FONT.display, background: ACCENT.learn, color: T.onAccent }}>New chain</button>
             <button onClick={onBack} className="geo-tap" style={{ padding: "12px 0", borderRadius: 12, fontWeight: 600, background: T.surface, border: `1px solid ${T.line}`, color: T.muted }}>← Home</button>
           </div>
         ) : (

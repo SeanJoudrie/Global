@@ -2,7 +2,7 @@ import { useState, useMemo } from "react"
 import { FLAGS } from "../data/flags"
 import type { FlagRecord } from "../data/flags"
 import { todayString } from "../utils/prng"
-import { T, ACCENT, FONT, tint, IS_CARTO } from "../ui/tokens"
+import { T, ACCENT, FONT, tint } from "../ui/tokens"
 import FlagImage from "./FlagImage"
 
 interface Props { onBack: () => void }
@@ -71,8 +71,8 @@ export default function FlagGachaScreen({ onBack }: Props) {
         {reveal.dupe && <div className="geo-mono" style={{ marginTop: 14, fontSize: 12, color: ACCENT.codex }}>+15 XP (already collected)</div>}
         <div style={{ display: "flex", gap: 10, marginTop: 22 }}>
           {save.tokens > 0
-            ? <button onClick={pull} className="geo-tap" style={{ padding: "12px 22px", borderRadius: 12, fontWeight: 700, fontFamily: FONT.display, background: ACCENT.codex, color: IS_CARTO ? "#FFFCF4" : T.void }}>Pull again ({save.tokens})</button>
-            : <button onClick={() => setReveal(null)} className="geo-tap" style={{ padding: "12px 22px", borderRadius: 12, fontWeight: 700, fontFamily: FONT.display, background: ACCENT.codex, color: IS_CARTO ? "#FFFCF4" : T.void }}>Done</button>}
+            ? <button onClick={pull} className="geo-tap" style={{ padding: "12px 22px", borderRadius: 12, fontWeight: 700, fontFamily: FONT.display, background: ACCENT.codex, color: T.onAccent }}>Pull again ({save.tokens})</button>
+            : <button onClick={() => setReveal(null)} className="geo-tap" style={{ padding: "12px 22px", borderRadius: 12, fontWeight: 700, fontFamily: FONT.display, background: ACCENT.codex, color: T.onAccent }}>Done</button>}
           <button onClick={() => { setReveal(null); setBrowse(true) }} className="geo-tap" style={{ padding: "12px 18px", borderRadius: 12, fontWeight: 600, background: T.surface, border: `1px solid ${T.line}`, color: T.muted }}>Collection</button>
         </div>
       </div>
@@ -104,7 +104,7 @@ export default function FlagGachaScreen({ onBack }: Props) {
             <div style={{ width: 130, height: 130, borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 60, background: tint(ACCENT.codex, 0.1), border: `2px dashed ${tint(ACCENT.codex, 0.4)}` }}>🎁</div>
             {save.tokens > 0 ? (
               <>
-                <button onClick={pull} className="geo-tap" style={{ padding: "16px 36px", borderRadius: 14, fontWeight: 700, fontSize: 17, fontFamily: FONT.display, background: ACCENT.codex, color: IS_CARTO ? "#FFFCF4" : T.void, boxShadow: `0 8px 26px -8px ${tint(ACCENT.codex, 0.8)}` }}>Pull a flag</button>
+                <button onClick={pull} className="geo-tap" style={{ padding: "16px 36px", borderRadius: 14, fontWeight: 700, fontSize: 17, fontFamily: FONT.display, background: ACCENT.codex, color: T.onAccent, boxShadow: `0 8px 26px -8px ${tint(ACCENT.codex, 0.8)}` }}>Pull a flag</button>
                 <div className="geo-mono" style={{ fontSize: 11, color: T.muted }}>{save.tokens} pull{save.tokens === 1 ? "" : "s"} available</div>
               </>
             ) : (

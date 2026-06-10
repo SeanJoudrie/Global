@@ -115,7 +115,7 @@ function BorderMapGame({ onBack, onReplay }: Props & { onReplay: () => void }) {
               <div className="geo-display" style={{ fontWeight: 700, fontSize: 22, color: T.text }}>All {targets.length} neighbours!</div>
               <div style={{ color: T.muted, fontSize: 12, marginTop: 4 }}>{misses === 0 ? "Flawless — no wrong guesses." : `${misses} wrong guess${misses === 1 ? "" : "es"}`}</div>
               <div style={{ display: "flex", gap: 10, marginTop: 18 }}>
-                <button onClick={onReplay} className="geo-tap" style={{ padding: "11px 20px", borderRadius: 12, fontWeight: 700, fontFamily: FONT.display, background: ACCENT.codex, color: IS_CARTO ? "#FFFCF4" : T.void }}>New country</button>
+                <button onClick={onReplay} className="geo-tap" style={{ padding: "11px 20px", borderRadius: 12, fontWeight: 700, fontFamily: FONT.display, background: ACCENT.codex, color: T.onAccent }}>New country</button>
                 <button onClick={onBack} className="geo-tap" style={{ padding: "11px 20px", borderRadius: 12, fontWeight: 600, background: T.surface, border: `1px solid ${T.line}`, color: T.muted }}>Home</button>
               </div>
             </div>

@@ -121,7 +121,7 @@ export default function HeroCarousel({ onNavigate }: Props) {
           {eyebrow(featured.label, featured.accent)}
           <div className="geo-display" style={{ color: T.text, fontWeight: 700, fontSize: 20, lineHeight: 1.05 }}>{featured.title}</div>
           <p style={{ marginTop: 6, fontSize: 11.5, lineHeight: 1.5, color: T.muted, display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>{featured.sub}</p>
-          <div style={{ marginTop: "auto", display: "inline-flex", alignSelf: "flex-start", alignItems: "center", gap: 6, padding: "7px 13px", borderRadius: 999, background: featured.accent, color: IS_CARTO ? "#FFFCF4" : T.void }}>
+          <div style={{ marginTop: "auto", display: "inline-flex", alignSelf: "flex-start", alignItems: "center", gap: 6, padding: "7px 13px", borderRadius: 999, background: featured.accent, color: T.onAccent }}>
             <span style={{ fontFamily: FONT.display, fontWeight: 700, fontSize: 12 }}>Play now</span>
             <span style={{ fontSize: 13 }}>→</span>
           </div>

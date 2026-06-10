@@ -2,7 +2,7 @@ import { useState } from "react"
 import { CAPITALS } from "../data/capitals"
 import type { CapitalRecord } from "../data/capitals"
 import { FLAGS } from "../data/flags"
-import { T, ACCENT, FONT, tint, IS_CARTO } from "../ui/tokens"
+import { T, ACCENT, FONT, tint } from "../ui/tokens"
 import FlagImage from "./FlagImage"
 
 interface Props { onBack: () => void }
@@ -62,7 +62,7 @@ function CapitalMatchGame({ onBack, onReplay }: Props & { onReplay: () => void }
             <div style={{ fontFamily: FONT.mono, fontWeight: 800, fontSize: 36, color: ACCENT.learn }}>{total}<span style={{ color: T.dim, fontSize: 18 }}> matched</span></div>
             <div style={{ color: T.muted, fontSize: 12 }}>{mistakes === 0 ? "Flawless!" : `${mistakes} mistake${mistakes === 1 ? "" : "s"}`}</div>
           </div>
-          <button onClick={onReplay} className="geo-tap" style={{ padding: "14px 0", borderRadius: 12, fontWeight: 700, fontFamily: FONT.display, background: ACCENT.learn, color: IS_CARTO ? "#FFFCF4" : T.void }}>Play again</button>
+          <button onClick={onReplay} className="geo-tap" style={{ padding: "14px 0", borderRadius: 12, fontWeight: 700, fontFamily: FONT.display, background: ACCENT.learn, color: T.onAccent }}>Play again</button>
           <button onClick={onBack} className="geo-tap" style={{ padding: "12px 0", borderRadius: 12, fontWeight: 600, background: T.surface, border: `1px solid ${T.line}`, color: T.muted }}>← Home</button>
         </div>
       </div>

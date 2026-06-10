@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { FLAGS } from "../data/flags"
 import { STATS, STAT_CODES } from "../data/countryStats"
-import { T, ACCENT, FONT, IS_CARTO } from "../ui/tokens"
+import { T, ACCENT, FONT } from "../ui/tokens"
 import FlagImage from "./FlagImage"
 
 interface Props { onBack: () => void }
@@ -74,7 +74,7 @@ function StatClashGame({ onBack, onReplay }: Props & { onReplay: () => void }) {
               <div><div style={{ fontFamily: FONT.mono, fontWeight: 800, fontSize: 28, color: T.amber }}>{best}</div><div className="geo-micro" style={{ fontSize: 8, color: T.muted }}>best</div></div>
             </div>
           </div>
-          <button onClick={onReplay} className="geo-tap" style={{ padding: "14px 0", borderRadius: 12, fontWeight: 700, fontFamily: FONT.display, background: ACCENT.play, color: IS_CARTO ? "#FFFCF4" : T.void }}>Go again</button>
+          <button onClick={onReplay} className="geo-tap" style={{ padding: "14px 0", borderRadius: 12, fontWeight: 700, fontFamily: FONT.display, background: ACCENT.play, color: T.onAccent }}>Go again</button>
           <button onClick={onBack} className="geo-tap" style={{ padding: "12px 0", borderRadius: 12, fontWeight: 600, background: T.surface, border: `1px solid ${T.line}`, color: T.muted }}>← Home</button>
         </div>
       </div>

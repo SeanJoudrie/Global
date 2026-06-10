@@ -2,7 +2,7 @@ import { useState } from "react"
 import { CODEX } from "../data/codex"
 import type { HistoricalFlag } from "../data/codex"
 import { FLAGS } from "../data/flags"
-import { T, ACCENT, FONT, tint, IS_CARTO } from "../ui/tokens"
+import { T, ACCENT, FONT, tint } from "../ui/tokens"
 
 interface Props { onBack: () => void }
 
@@ -76,7 +76,7 @@ function TimelineGame({ onBack, onReplay }: Props & { onReplay: () => void }) {
             <div style={{ fontFamily: FONT.mono, fontWeight: 800, fontSize: 38, color: ACCENT.learn, marginTop: 4 }}>{total}<span style={{ color: T.dim, fontSize: 20 }}>/{max}</span></div>
             <div style={{ color: T.muted, fontSize: 12 }}>flags placed in the right era</div>
           </div>
-          <button onClick={onReplay} className="geo-tap" style={{ padding: "14px 0", borderRadius: 12, fontWeight: 700, fontFamily: FONT.display, background: ACCENT.learn, color: IS_CARTO ? "#FFFCF4" : T.void }}>Play again</button>
+          <button onClick={onReplay} className="geo-tap" style={{ padding: "14px 0", borderRadius: 12, fontWeight: 700, fontFamily: FONT.display, background: ACCENT.learn, color: T.onAccent }}>Play again</button>
           <button onClick={onBack} className="geo-tap" style={{ padding: "12px 0", borderRadius: 12, fontWeight: 600, background: T.surface, border: `1px solid ${T.line}`, color: T.muted }}>← Home</button>
         </div>
       </div>
@@ -152,8 +152,8 @@ function TimelineGame({ onBack, onReplay }: Props & { onReplay: () => void }) {
             <button onClick={undo} className="geo-tap" style={{ flex: 1, padding: "12px 0", borderRadius: 12, fontWeight: 600, background: T.surface, border: `1px solid ${T.line}`, color: T.muted }}>Undo</button>
           )}
           {!locked
-            ? <button onClick={lockIn} disabled={!allPlaced} className="geo-tap" style={{ flex: 2, padding: "13px 0", borderRadius: 12, fontWeight: 700, fontFamily: FONT.display, background: allPlaced ? ACCENT.learn : T.surface, color: allPlaced ? (IS_CARTO ? "#FFFCF4" : T.void) : T.dim, border: allPlaced ? "none" : `1px solid ${T.line}` }}>{allPlaced ? "Lock in" : `Place all ${round.chrono.length}`}</button>
-            : <button onClick={next} className="geo-tap" style={{ flex: 1, padding: "13px 0", borderRadius: 12, fontWeight: 700, fontFamily: FONT.display, background: ACCENT.learn, color: IS_CARTO ? "#FFFCF4" : T.void }}>{idx + 1 >= ROUNDS ? "See result →" : "Next →"}</button>}
+            ? <button onClick={lockIn} disabled={!allPlaced} className="geo-tap" style={{ flex: 2, padding: "13px 0", borderRadius: 12, fontWeight: 700, fontFamily: FONT.display, background: allPlaced ? ACCENT.learn : T.surface, color: allPlaced ? (T.onAccent) : T.dim, border: allPlaced ? "none" : `1px solid ${T.line}` }}>{allPlaced ? "Lock in" : `Place all ${round.chrono.length}`}</button>
+            : <button onClick={next} className="geo-tap" style={{ flex: 1, padding: "13px 0", borderRadius: 12, fontWeight: 700, fontFamily: FONT.display, background: ACCENT.learn, color: T.onAccent }}>{idx + 1 >= ROUNDS ? "See result →" : "Next →"}</button>}
         </div>
       </div>
     </div>
