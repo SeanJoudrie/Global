@@ -51,8 +51,22 @@ export default function MegaCodexScreen({ onBack }: Props) {
             src={u}
             alt=""
             loading="lazy"
-            style={{ width: "100%", aspectRatio: "3 / 2", objectFit: "cover", borderRadius: 3, display: "block", background: "#1A1033" }}
-            onError={e => { (e.target as HTMLImageElement).style.visibility = "hidden" }}
+            decoding="async"
+            style={{ width: "100%", aspectRatio: "3 / 2", objectFit: "cover", borderRadius: 3, display: "block", background: "#0B0717" }}
+            onError={e => {
+              // Wikimedia/flagcdn throttle big bursts, so retry a few times with
+              // backoff; only collapse the cell once it's truly broken, so the
+              // wall stays dense (no gaps) with whatever actually loads.
+              const el = e.target as HTMLImageElement
+              const t = Number(el.dataset.t || "0")
+              if (t < 3) {
+                el.dataset.t = String(t + 1)
+                el.removeAttribute("src")
+                window.setTimeout(() => { el.src = u }, 600 + t * 900 + Math.random() * 700)
+              } else {
+                el.style.display = "none"
+              }
+            }}
           />
         ))}
       </div>
