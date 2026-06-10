@@ -140,7 +140,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
         {
           fromYear: 1954,
           toYear: 1991,
-          flagUrl: fp('Flag_of_the_Russian_Soviet_Federative_Socialist_Republic_(1954%E2%80%931991).svg'),
+          flagUrl: fp('Flag_of_the_Russian_Soviet_Federative_Socialist_Republic_(1954–1991).svg'),
           label: 'Russian SFSR',
           note: 'Russia itself was one republic inside the union. From 1954 it flew the Soviet flag with a light-blue band at the hoist to distinguish it from the all-union banner.',
         },
@@ -719,7 +719,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     {
       fromYear: 1822,
       toYear: 1889,
-      flagUrl: fp('Flag_of_the_Empire_of_Brazil.svg'),
+      flagUrl: fp('Flag_of_Brazil_(1870–1889).svg'),
       label: 'Empire of Brazil',
       note: 'A green field with a yellow rhombus framing the imperial arms. Green stood for the House of Braganza and yellow for the Habsburgs — the houses of Emperor Pedro I and Empress Maria Leopoldina.',
     },
@@ -893,7 +893,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     },
     {
       fromYear: 1809, toYear: 1917,
-      flagUrl: fp('Flag_of_the_Grand_Duchy_of_Finland.svg'),
+      flagUrl: fp('Merchant_Flag_of_Grand_Duchy_of_Finland.png'),
       label: 'Grand Duchy of Finland (Russian era)',
       note: 'After Sweden ceded Finland to Russia in 1809, Finland became an autonomous Grand Duchy of the Russian Empire. The duchy used a red flag bearing the Finnish lion coat of arms. During this period Finnish national identity grew steadily — the Kalevala epic was compiled, the Finnish language was promoted, and the eventual push for independence gathered strength.',
     },
@@ -915,7 +915,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     },
     {
       fromYear: 1897, toYear: 1910,
-      flagUrl: fp('Flag_of_the_Empire_of_Korea.svg'),
+      flagUrl: fp('Flag_of_Korea_(1899).svg'),
       label: 'Korean Empire (Taegeukgi)',
       note: 'When King Gojong declared the Korean Empire in 1897 to assert sovereignty against both China and Japan, the Taegeukgi continued as the national symbol. In 1910 Japan annexed Korea and suppressed the flag entirely. For 35 years under Japanese colonial rule, displaying this flag was an act of resistance — and it became a powerful symbol of the independence movement.',
     },
@@ -945,13 +945,13 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     },
     {
       fromYear: 1945, toYear: 1976,
-      flagUrl: fp('Flag_of_the_Democratic_Republic_of_Vietnam.svg'),
+      flagUrl: fp('Flag_of_North_Vietnam_(1945–1955).svg'),
       label: 'Democratic Republic of Vietnam',
       note: 'Ho Chi Minh proclaimed the Democratic Republic of Vietnam on September 2, 1945, adopting this red flag with a gold star. The same flag flew through the war with France (ending 1954), the division of Vietnam at the 17th parallel, and the long war with the United States and South Vietnam — making it one of the most recognised flags of 20th-century armed struggle.',
     },
     {
       fromYear: 1802, toYear: 1945,
-      flagUrl: fp('Flag_of_Vietnam_1802-1885.svg'),
+      flagUrl: fp('Long_tinh_flag_(variant).svg'),
       label: 'Nguyen Dynasty / French Indochina',
       note: 'The Nguyen emperors, who unified Vietnam in 1802, used a plain yellow flag. Under French colonial rule from the 1880s, a dragon motif was sometimes used on yellow for the protectorate of Annam. Yellow remained Vietnam\'s imperial colour for over a century — which is why South Vietnam\'s post-independence flag also used yellow as its field.',
     },
@@ -1140,7 +1140,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     },
     {
       fromYear: 1946, toYear: 1958,
-      flagUrl: fp('Flag_of_Syria_(1932-1958).svg'),
+      flagUrl: fp('Flag_of_Syria_(1930–1958,_1961–1963).svg'),
       label: 'Syrian Republic (independence era)',
       note: 'When France\'s League of Nations mandate ended and Syria gained full independence in 1946, it flew this green-white-black tricolor with three red stars representing the three territories united as Syria: Damascus, Aleppo, and Deir ez-Zor (the Jabal al-Druze). This was Syria\'s flag at the time of independence and remained so until the ill-fated union with Egypt.',
     },
@@ -3257,7 +3257,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     {
       fromYear: 1959,
       toYear: 1960,
-      flagUrl: fp('Flag_of_the_Mali_Federation.svg'),
+      flagUrl: fp('Flag_of_Mali_(1959–1961).svg'),
       label: 'Mali Federation',
       note: 'When Senegal united with French Sudan in 1959, it flew a green-yellow-red tricolour bearing a black kanaga — a human figure derived from Dogon culture and the Negritude movement.',
     },
