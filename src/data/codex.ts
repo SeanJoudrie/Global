@@ -540,7 +540,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     {
       fromYear: 1707,
       toYear: 1816,
-      flagUrl: fp('Flag_Portugal_(1707).svg'),
+      flagUrl: fp('Flag_of_Portugal_(1707).svg'),
       label: 'White flag with royal arms',
       note: 'A plain white field bearing the Portuguese royal coat of arms, used through the reigns of John V, Joseph I and Maria I. The white field carried no meaning of its own until colors were added in the 19th century.',
     },
@@ -845,7 +845,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       parallel: [
         {
           fromYear: 1844, toYear: 1899,
-          flagUrl: fp('Flag_of_Norway_(1844-1899).svg'),
+          flagUrl: fp('Norge-Unionsflagg-1844.svg'),
           label: 'Norwegian counterpart',
           note: 'Norway\'s flag carried the same union mark in the same position — the two mirrors of a political arrangement that ended peacefully in 1905 when Norway voted for independence.',
         },
@@ -909,7 +909,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     },
     {
       fromYear: 1949, toYear: 1984,
-      flagUrl: fp('Flag_of_South_Korea_(1949-1984).svg'),
+      flagUrl: fp('Flag_of_South_Korea_(1949–1984).svg'),
       label: 'Taegukgi (1949 specification)',
       note: 'When the Republic of Korea was proclaimed in 1948, the trigrams were initially placed in a slightly different orientation. The 1949 official specification corrected this, but minor inconsistencies in which trigrams appeared in which corners persisted in practice until the 1984 standardisation finally resolved the ambiguity.',
     },
@@ -966,7 +966,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     },
     {
       fromYear: 1925, toYear: 1979,
-      flagUrl: fp('State_flag_of_Iran_(1925–1979).svg'),
+      flagUrl: fp('State_flag_of_Iran_(1933–1964).svg'),
       label: 'Imperial Standard (Pahlavi era)',
       note: 'The Pahlavi dynasty retained the ancient lion-and-sun emblem on the green-white-red tricolor: a lion holding a sword with a radiant sun rising behind it. This symbol of Persian royalty dated back to at least the 12th century. The 1979 revolution deliberately erased it — books and buildings bearing the lion and sun were defaced, making surviving examples historically significant.',
     },
@@ -978,7 +978,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     },
     {
       fromYear: 1501, toYear: 1907,
-      flagUrl: fp('Flag_of_Persia_(1500-1800).svg'),
+      flagUrl: fp('Flag_of_Persia_(1665).svg'),
       label: 'Safavid / Qajar Persia',
       note: 'The ancient Persian lion-and-sun motif predates any standardised tricolor. Under the Safavids and Qajars, the lion and sun appeared on battle standards, seals, and eventually on a green field. The familiar green-white-red arrangement was formalised only in the 19th century under the Qajars, but the lion and sun had represented Persian sovereignty for centuries before that.',
     },
@@ -1128,7 +1128,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     },
     {
       fromYear: 1963, toYear: 1980,
-      flagUrl: fp('Flag_of_Syria_(1963-1972).svg'),
+      flagUrl: fp('Flag_of_Syria_(1963–1972).svg'),
       label: 'Ba\'ath Party Syria',
       note: 'After the Ba\'ath coup of 1963, Syria adopted a pan-Arab tricolor with three red stars representing the hoped-for union of Syria, Egypt, and Iraq. Between 1972 and 1980, Syria joined a Federation of Arab Republics with Egypt and Libya, using a flag with the Hawk of Quraish. When that federation dissolved, Syria returned to the two-star design now in use.',
     },
@@ -1184,7 +1184,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     },
     {
       fromYear: 1938, toYear: 1973,
-      flagUrl: fp('Flag_of_Saudi_Arabia_(1938-1973).svg'),
+      flagUrl: fp('Flag_of_Saudi_Arabia_(1938–1973).svg'),
       label: 'Kingdom of Saudi Arabia (1938)',
       note: 'An earlier standardisation in 1938 established the green-Shahada-sword design but with the sword pointing in different directions on each side — a heraldic oddity that was corrected in 1973. Before 1938 the exact form of the Shahada inscription and sword varied between different royal households and governors. Saudi Arabia is one of only three countries whose flag includes text.',
     },
@@ -1391,7 +1391,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     },
     {
       fromYear: 1868, toYear: 1970,
-      flagUrl: fp('Flag_of_Oman_(1970).svg'),
+      flagUrl: fp('Flag_of_Oman_(1970–1995).svg'),
       label: 'Sultanate of Oman (plain red)',
       note: 'For most of its history as a recognised sultanate, Oman\'s flag was simply a plain red banner — red being the traditional colour of Gulf and Omani rulers, associated with the Kharijite branch of Islam historically dominant in Oman. Sultan Said bin Taimur, who ruled from 1932 to 1970, kept the country in extreme isolation, banning sunglasses, radios, and even bicycles. His son Qaboos\'s coup transformed both the country and its flag overnight.',
     },
@@ -1429,7 +1429,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     },
     {
       fromYear: 1820, toYear: 1825,
-      flagUrl: fp('Flag_of_Peru_(1820-1822).svg'),
+      flagUrl: fp('Flag_of_Peru_(1821–1822).svg'),
       label: 'San Martín\'s Original Design',
       note: 'When General José de San Martín landed in Peru in 1820 to liberate it from Spain, he designed the first Peruvian flag with diagonal red and white stripes radiating from the centre. The story goes that San Martín was inspired by watching flamingos fly at dawn over Paracas Bay — the red of their wings against white sky suggesting Peru\'s colours. The diagonal design was quickly changed to vertical stripes but the red-and-white palette remained.',
     },
@@ -1495,7 +1495,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     },
     {
       fromYear: 1842, toYear: 1990,
-      flagUrl: fp('Flag_of_Paraguay_(1842).svg'),
+      flagUrl: fp('Flag_of_Paraguay_(1842–1954).svg'),
       label: 'Republic of Paraguay (classic design)',
       note: 'When Paraguay declared independence from Spain in 1811 under José Gaspar Rodríguez de Francia, the flag\'s design evolved through several versions before the distinctive double-sided design was codified in 1842. Francia ruled as "El Supremo" in near-total isolation from the outside world — he closed Paraguay\'s borders and severed contact with Argentina and Brazil — giving Paraguayan national symbols an unusually homegrown character.',
     },
