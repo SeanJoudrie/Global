@@ -1,6 +1,7 @@
 import { useState, useMemo } from "react"
 import { FLAGS } from "../data/flags"
 import type { FlagRecord } from "../data/flags"
+import FlagImage from "./FlagImage"
 
 interface Props { onBack: () => void }
 
@@ -165,16 +166,8 @@ export default function TheComposerScreen({ onBack }: Props) {
                     backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden',
                     transform: 'rotateY(180deg)', background: '#1A1033',
                   }}>
-                    <img
-                      src={target.flagUrl}
-                      alt=""
-                      onError={e => {
-                        const el = e.target as HTMLImageElement
-                        if (!el.dataset.fb) {
-                          el.dataset.fb = "1"
-                          el.src = `https://cdn.jsdelivr.net/gh/lipis/flag-icons@main/flags/4x3/${target.code.toLowerCase()}.svg`
-                        }
-                      }}
+                    <FlagImage
+                      code={target.code}
                       style={{
                         position: 'absolute',
                         width: TILE_W * 3, height: TILE_H * 3,

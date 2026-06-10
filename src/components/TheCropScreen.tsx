@@ -1,6 +1,7 @@
 import { useState, useMemo, useRef } from "react"
 import { FLAGS } from "../data/flags"
 import type { FlagRecord } from "../data/flags"
+import FlagImage from "./FlagImage"
 
 interface Props { onBack: () => void }
 
@@ -98,16 +99,9 @@ function TheCropScreenGame({ onBack , onReplay }: Props & { onReplay: () => void
           position: "relative",
           background: "#1A1033",
         }}>
-          <img
-            src={target.flagUrl}
+          <FlagImage
+            code={target.code}
             alt="flag"
-            onError={e => {
-              const el = e.target as HTMLImageElement
-              if (!el.dataset.fb) {
-                el.dataset.fb = "1"
-                el.src = `https://cdn.jsdelivr.net/gh/lipis/flag-icons@main/flags/4x3/${target.code.toLowerCase()}.svg`
-              }
-            }}
             style={{
               width: "100%",
               height: "100%",

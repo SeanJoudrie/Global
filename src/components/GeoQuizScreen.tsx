@@ -3,17 +3,13 @@ import { FLAGS } from '../data/flags'
 import type { FlagRecord } from '../data/flags'
 import { shuffleWithSeed, seededRandom, todayString } from '../utils/prng'
 import { scorePhrase } from '../utils/quiz'
+import CountryOutline from './CountryOutline'
 
 interface Props { onBack: () => void }
 
 interface GeoQuestion {
   target: FlagRecord
   choices: FlagRecord[]
-  shapeUrl: string
-}
-
-function shapeUrl(code: string) {
-  return `https://cdn.jsdelivr.net/gh/djaiss/mapsicon@master/all/${code.toLowerCase()}/512.png`
 }
 
 function buildChoices(target: FlagRecord, seed: string): FlagRecord[] {
@@ -36,7 +32,6 @@ function buildQuiz(seed: string, count = 10): GeoQuestion[] {
   return shuffled.map(target => ({
     target,
     choices: buildChoices(target, seed),
-    shapeUrl: shapeUrl(target.code),
   }))
 }
 
@@ -48,13 +43,12 @@ export default function GeoQuizScreen({ onBack }: Props) {
   const [score, setScore] = useState(0)
   const [answers, setAnswers] = useState<('correct' | 'wrong')[]>([])
   const [phase, setPhase] = useState<'quiz' | 'result'>('quiz')
-  const [imgLoaded, setImgLoaded] = useState(false)
   // One hint per game: reveals the continent of whichever question it's used on.
   const [hintUsed, setHintUsed] = useState(false)
   const [hintShownFor, setHintShownFor] = useState<number | null>(null)
 
   const q = questions[idx]
-  useEffect(() => { setSelected(null); setImgLoaded(false) }, [idx, seed])
+  useEffect(() => { setSelected(null) }, [idx, seed])
 
   const resetGame = () => {
     setIdx(0); setScore(0); setAnswers([]); setSelected(null)
@@ -165,28 +159,11 @@ export default function GeoQuizScreen({ onBack }: Props) {
           display: 'flex', alignItems: 'center', justifyContent: 'center',
           position: 'relative', overflow: 'hidden',
         }}>
-          {!imgLoaded && (
-            <div style={{ position: 'absolute', color: '#8B6CFF44', fontSize: 14 }}>Loading shape…</div>
-          )}
-          <img
+          <CountryOutline
             key={q.target.code}
-            src={q.shapeUrl}
-            alt="Country shape"
-            onLoad={() => setImgLoaded(true)}
-            onError={e => {
-              const el = e.target as HTMLImageElement
-              if (!el.dataset.fb) {
-                el.dataset.fb = "1"
-                el.src = `https://cdn.jsdelivr.net/gh/djaiss/mapsicon@master/all/${q.target.code.toLowerCase()}/vector.svg`
-              } else {
-                setImgLoaded(true)
-              }
-            }}
-            style={{
-              maxWidth: '80%', maxHeight: '80%', objectFit: 'contain',
-              filter: 'brightness(0) invert(1)',
-              opacity: imgLoaded ? 1 : 0, transition: 'opacity 0.3s',
-            }}
+            code={q.target.code}
+            fill="#F5F3FF"
+            style={{ width: '80%', height: '80%', objectFit: 'contain' }}
           />
         </div>
 
