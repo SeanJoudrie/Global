@@ -215,7 +215,6 @@ export default function LanguageQuizScreen({ onBack }: Props) {
                 className="py-4 px-3 rounded-xl font-semibold text-sm transition-all active:scale-95"
                 style={{ background: bg, border: `1.5px solid ${border}`, color, cursor: answered ? "default" : "pointer" }}>
                 <div style={{ fontSize: 14, fontWeight: 700 }}>{choice.name}</div>
-                <div style={{ fontSize: 11, fontWeight: 400, marginTop: 2, opacity: 0.6 }}>{choice.nativeName}</div>
               </button>
             )
           })}

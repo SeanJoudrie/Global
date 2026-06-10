@@ -101,6 +101,13 @@ export default function TheCropScreen({ onBack }: Props) {
           <img
             src={target.flagUrl}
             alt="flag"
+            onError={e => {
+              const el = e.target as HTMLImageElement
+              if (!el.dataset.fb) {
+                el.dataset.fb = "1"
+                el.src = `https://cdn.jsdelivr.net/gh/lipis/flag-icons@main/flags/4x3/${target.code.toLowerCase()}.svg`
+              }
+            }}
             style={{
               width: "100%",
               height: "100%",

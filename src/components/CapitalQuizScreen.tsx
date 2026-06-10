@@ -109,20 +109,6 @@ export default function CapitalQuizScreen({ onBack }: Props) {
               10 random countries · pick the correct capital city
             </p>
           </div>
-          <div className="w-full max-w-sm rounded-2xl p-4" style={{ background: "#2D1F52", border: "1px solid #8B6CFF33" }}>
-            <div className="text-xs font-semibold mb-2" style={{ color: "#A78BFA" }}>Example question</div>
-            <div className="font-bold mb-3" style={{ color: "#F5F3FF" }}>What is the capital of France?</div>
-            <div className="grid grid-cols-2 gap-2">
-              {["Paris ✓", "Lyon", "Berlin", "Brussels"].map(c => (
-                <div key={c} className="py-2 px-3 rounded-lg text-sm text-center"
-                  style={{ background: c.includes("✓") ? "#34D39922" : "#1A1033",
-                    border: `1px solid ${c.includes("✓") ? "#34D399" : "#8B6CFF22"}`,
-                    color: c.includes("✓") ? "#34D399" : "#B8A9E0" }}>
-                  {c}
-                </div>
-              ))}
-            </div>
-          </div>
           <button onClick={startQuiz}
             className="w-full max-w-sm py-4 rounded-2xl font-bold text-lg transition-all active:scale-95"
             style={{ background: "linear-gradient(135deg,#8B6CFF,#A78BFA)", color: "#fff", boxShadow: "0 4px 20px #8B6CFF55" }}>

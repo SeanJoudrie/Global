@@ -142,34 +142,48 @@ export default function TheComposerScreen({ onBack }: Props) {
             const col = i % 3
             const revealed = flipped.has(i)
             return (
-              <div key={i} style={{
-                width: TILE_W, height: TILE_H,
-                position: 'relative', overflow: 'hidden',
-                background: '#1A1033',
-              }}>
-                <img
-                  src={target.flagUrl}
-                  alt=""
-                  style={{
-                    position: 'absolute',
-                    width: TILE_W * 3,
-                    height: TILE_H * 3,
-                    objectFit: 'cover',
-                    left: -(col * TILE_W),
-                    top:  -(row * TILE_H),
-                    opacity: revealed ? 1 : 0,
-                    transition: 'opacity 0.4s ease',
-                  }}
-                />
-                {!revealed && (
+              <div key={i} style={{ width: TILE_W, height: TILE_H, perspective: 600 }}>
+                <div style={{
+                  position: 'relative', width: '100%', height: '100%',
+                  transformStyle: 'preserve-3d',
+                  transition: 'transform 0.55s cubic-bezier(0.4,0,0.2,1)',
+                  transitionDelay: `${(row + col) * 40}ms`,
+                  transform: revealed ? 'rotateY(180deg)' : 'rotateY(0deg)',
+                }}>
+                  {/* Front — face-down card */}
                   <div style={{
-                    position: 'absolute', inset: 0,
+                    position: 'absolute', inset: 0, backfaceVisibility: 'hidden',
+                    WebkitBackfaceVisibility: 'hidden',
                     background: 'linear-gradient(135deg,#2D1F52,#1A1033)',
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
                   }}>
                     <span style={{ fontSize: 18, opacity: 0.3 }}>🎴</span>
                   </div>
-                )}
+                  {/* Back — the flag piece */}
+                  <div style={{
+                    position: 'absolute', inset: 0, overflow: 'hidden',
+                    backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden',
+                    transform: 'rotateY(180deg)', background: '#1A1033',
+                  }}>
+                    <img
+                      src={target.flagUrl}
+                      alt=""
+                      onError={e => {
+                        const el = e.target as HTMLImageElement
+                        if (!el.dataset.fb) {
+                          el.dataset.fb = "1"
+                          el.src = `https://cdn.jsdelivr.net/gh/lipis/flag-icons@main/flags/4x3/${target.code.toLowerCase()}.svg`
+                        }
+                      }}
+                      style={{
+                        position: 'absolute',
+                        width: TILE_W * 3, height: TILE_H * 3,
+                        objectFit: 'cover',
+                        left: -(col * TILE_W), top: -(row * TILE_H),
+                      }}
+                    />
+                  </div>
+                </div>
               </div>
             )
           })}
