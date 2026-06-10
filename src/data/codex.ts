@@ -839,7 +839,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     },
     {
       fromYear: 1844, toYear: 1905,
-      flagUrl: fp('Flag_of_Sweden_(1844-1905).svg'),
+      flagUrl: fp('Flag_of_Sweden_(pre-1906).svg'),
       label: 'Swedish Flag with Union Mark',
       note: 'During the personal union with Norway (1814–1905), a combined canton showing both national crosses appeared in the upper hoist corner. Sweden and Norway shared a king but remained separate kingdoms; the union mark was a constant reminder of that political arrangement.',
       parallel: [
@@ -1495,7 +1495,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     },
     {
       fromYear: 1842, toYear: 1990,
-      flagUrl: fp('Flag_of_Paraguay_(1842–1954).svg'),
+      flagUrl: fp('Flag_of_Paraguay_(1842-1954).svg'),
       label: 'Republic of Paraguay (classic design)',
       note: 'When Paraguay declared independence from Spain in 1811 under José Gaspar Rodríguez de Francia, the flag\'s design evolved through several versions before the distinctive double-sided design was codified in 1842. Francia ruled as "El Supremo" in near-total isolation from the outside world — he closed Paraguay\'s borders and severed contact with Argentina and Brazil — giving Paraguayan national symbols an unusually homegrown character.',
     },
@@ -2465,7 +2465,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     {
       fromYear: 1862,
       toYear: 2011,
-      flagUrl: fp('Flag_of_San_Marino_(1862–2011).svg'),
+      flagUrl: fp('Flag_of_San_Marino_(pre-2011).svg'),
       label: 'White-blue with arms (1862)',
       note: 'The white-over-light-blue flag with the central coat of arms was standardized by decree in 1862 and flew almost unchanged for nearly 150 years.',
     },
