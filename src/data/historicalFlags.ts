@@ -1132,6 +1132,83 @@ export const HISTORICAL_FLAGS: HistoricalEntity[] = [
     flagUrl: fp("Indore_Flag.svg"), relatedCode: "IN",
     note: "The Holkar dynasty's Maratha state, founded by the remarkable queen-regent Ahilyabai Holkar, who built temples and rest-houses across India.",
   },
+  // Wave 7+: Balkan, Soviet-era, Italian & Pacific states
+  {
+    id: "suvadiva", name: "United Suvadive Republic", era: "1959–1963", region: "Asia & Oceania",
+    flagUrl: fp("Flag_of_the_United_Suvadive_Republic.svg"), relatedCode: "MV",
+    note: "The three southern atolls of the Maldives broke away under Abdullah Afeef for four years; their blue-green-red flag carried a crescent and three stars before the rebellion collapsed.",
+  },
+  {
+    id: "huahine", name: "Kingdom of Huahine", era: "1846–1895", region: "Asia & Oceania",
+    flagUrl: fp("Flag_of_Huahine.svg"),
+    note: "A Society Islands kingdom that resisted France longer than its neighbours; its red-and-white flag with a French canton reflected an uneasy protectorate before annexation.",
+  },
+  {
+    id: "naxos", name: "Duchy of the Archipelago", era: "1207–1579", region: "Europe",
+    flagUrl: fp("Coat_of_Arms_of_the_House_of_Sanudo.svg"), relatedCode: "GR",
+    note: "A Venetian crusader state ruling the Cyclades from Naxos, under the Sanudo dynasty whose white banner bore a red cross and four black crosslets.",
+  },
+  {
+    id: "illyria", name: "Kingdom of Illyria", era: "1816–1849", region: "Europe",
+    flagUrl: fp("Flag_of_the_Kingdom_of_Illyria.svg"), relatedCode: "SI",
+    note: "An Austrian crown land carved from former Napoleonic territory along the Adriatic, covering parts of modern Slovenia, Croatia, and Austria.",
+  },
+  {
+    id: "central-albania", name: "Republic of Central Albania", era: "1913–1914", region: "Europe",
+    flagUrl: fp("Essad_Pasha%27s_flag.svg"), relatedCode: "AL",
+    note: "Warlord Essad Pasha Toptani's short-lived statelet around Durrës during Albania's chaotic birth, flying a red flag with a white star.",
+  },
+  {
+    id: "pontus", name: "Republic of Pontus", era: "1917–1922", region: "Europe",
+    flagUrl: fp("Flag_of_Pontus.svg"), relatedCode: "GR",
+    note: "A proposed homeland for the Pontic Greeks of the Black Sea coast, never realized; its black flag bore the eagle of the medieval Empire of Trebizond.",
+  },
+  {
+    id: "crimean-pr", name: "Crimean People's Republic", era: "1917–1918", region: "Europe",
+    flagUrl: fp("Flag_of_Crimean_People%27s_Republic_1917.svg"), relatedCode: "UA",
+    note: "One of the first secular Muslim-led republics in the world, flying the sky-blue Kök Bayraq with a golden Tatar tamga, before the Bolsheviks crushed it within months.",
+  },
+  {
+    id: "parma", name: "Duchy of Parma", era: "1545–1859", region: "Europe",
+    flagUrl: fp("Flag_of_the_Duchy_of_Parma.svg"), relatedCode: "IT",
+    note: "A northern Italian duchy long ruled by the Farnese and later Bourbon-Parma dynasties, its yellow flag bearing a blue fleur-de-lis shield, absorbed into unified Italy.",
+  },
+  {
+    id: "lucca-piombino", name: "Principality of Lucca and Piombino", era: "1805–1809", region: "Europe",
+    flagUrl: fp("Flag_of_the_Principality_of_Lucca_(1805-1809).svg"), relatedCode: "IT",
+    note: "A Napoleonic state given to the emperor's sister Elisa Bonaparte, the only one of his siblings to rule in her own right.",
+  },
+  {
+    id: "east-florida", name: "Republic of East Florida", era: "1812", region: "Americas",
+    flagUrl: fp("East_Florida_Patriot_Flag.svg"), relatedCode: "US",
+    note: "American 'Patriots' raised this flag of a charging soldier in a covert 1812 bid to seize Spanish East Florida — a filibuster the US government quietly encouraged, then disavowed.",
+  },
+  // Wave 7+: Congo secessions, Biafra proxy & Trucial emirates
+  {
+    id: "katanga", name: "State of Katanga", era: "1960–1963", region: "Africa & Middle East",
+    flagUrl: fp("Flag_of_Katanga.svg"), relatedCode: "CD",
+    note: "Moïse Tshombe's mineral-rich province seceded days after Congo's independence, triggering a UN war; its flag's three red croisettes are traditional Katangese copper crosses.",
+  },
+  {
+    id: "south-kasai", name: "South Kasai", era: "1960–1962", region: "Africa & Middle East",
+    flagUrl: fp("Flag_of_South_Kasai.svg"), relatedCode: "CD",
+    note: "A diamond-rich Congolese region that broke away alongside Katanga, flying a red-and-green flag with a gold 'V' for victory before the central government reconquered it.",
+  },
+  {
+    id: "benin-1967", name: "Republic of Benin (1967)", era: "1967", region: "Africa & Middle East",
+    flagUrl: fp("Flag_of_the_Republic_of_Benin.svg"), relatedCode: "NG",
+    note: "One of the shortest-lived states in history — declared in Benin City as a Biafran ally during the Nigerian Civil War, it existed for a single day before federal troops retook the city.",
+  },
+  {
+    id: "dubai-trucial", name: "Emirate of Dubai (Trucial)", era: "1961–1971", region: "Africa & Middle East",
+    flagUrl: fp("Flag_of_Dubai.svg"), relatedCode: "AE",
+    note: "Before the UAE formed in 1971, Dubai flew a red field with a white hoist band, adopted to mark its ships at sea under the Trucial States agreements with Britain.",
+  },
+  {
+    id: "abu-dhabi-trucial", name: "Emirate of Abu Dhabi (Trucial)", era: "1958–1971", region: "Africa & Middle East",
+    flagUrl: fp("Flag_of_Abu_Dhabi.svg"), relatedCode: "AE",
+    note: "The largest of the Trucial emirates flew a red flag with a white canton before joining the United Arab Emirates in 1971.",
+  },
 ]
 
 /** Historical entities tied to a given modern country code, for the Codex. */
