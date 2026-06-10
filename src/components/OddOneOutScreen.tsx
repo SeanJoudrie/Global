@@ -221,7 +221,11 @@ export default function OddOneOutScreen({ onBack }: Props) {
                 disabled={answered}
                 className="relative rounded-xl overflow-hidden transition-all active:scale-95"
                 style={{ border, background: "#1A1033", aspectRatio: "3/2" }}>
-                <img src={flag.flagUrl} alt={flag.name} className="w-full h-full object-cover" />
+                <img src={flag.flagUrl} alt={flag.name} className="w-full h-full object-cover"
+                  onError={e => {
+                    const el = e.target as HTMLImageElement
+                    if (!el.dataset.fb) { el.dataset.fb = "1"; el.src = `https://cdn.jsdelivr.net/gh/lipis/flag-icons@main/flags/4x3/${flag.code.toLowerCase()}.svg` }
+                  }} />
                 {overlay && (
                   <div style={{ position: 'absolute', inset: 0, background: overlay,
                     display: 'flex', alignItems: 'center', justifyContent: 'center' }}>

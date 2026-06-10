@@ -42,7 +42,7 @@ function buildQuiz(seed: string, count = 10): GeoQuestion[] {
 
 export default function GeoQuizScreen({ onBack }: Props) {
   const [seed] = useState(() => Date.now().toString())
-  const [questions] = useState<GeoQuestion[]>(() => buildQuiz(Date.now().toString()))
+  const [questions] = useState<GeoQuestion[]>(() => buildQuiz(seed))
   const [idx, setIdx] = useState(0)
   const [selected, setSelected] = useState<number | null>(null)
   const [score, setScore] = useState(0)
