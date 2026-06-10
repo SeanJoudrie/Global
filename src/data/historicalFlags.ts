@@ -726,6 +726,371 @@ export const HISTORICAL_FLAGS: HistoricalEntity[] = [
     flagUrl: fp("Flag_of_French_Sudan_(1958–1959).svg"), relatedCode: "ML",
     note: "A green-yellow-red tricolor with a black Kanaga (a Dogon stick-figure) on the center stripe. The Kanaga was dropped in 1961, leaving the present plain Mali flag.",
   },
+
+  // ── Wave 4: deep space ──────────────────────────────────────────────────────
+  // Middle East kingdoms
+  {
+    id: "riyadh-emirate", name: "Emirate of Riyadh", era: "1824–1891", region: "Africa & Middle East",
+    flagUrl: fp("Flag_of_the_First_and_Second_Saudi_State.svg"), relatedCode: "SA",
+    note: "The plain green banner with the white Arabic shahada served both the First and Second Saudi States ruled from Riyadh, the forerunners of modern Saudi Arabia.",
+  },
+  {
+    id: "hejaz", name: "Kingdom of Hejaz", era: "1916–1925", region: "Africa & Middle East",
+    flagUrl: fp("Flag_of_Hejaz_(1917).svg"), relatedCode: "SA",
+    note: "Sharif Hussein's black-green-white tricolor with a red hoist triangle was the flag of the Arab Revolt, the template for nearly every later pan-Arab flag.",
+  },
+  {
+    id: "transjordan", name: "Emirate of Transjordan", era: "1921–1946", region: "Africa & Middle East",
+    flagUrl: fp("Flag_of_the_Emirate_of_Transjordan.svg"), relatedCode: "JO",
+    note: "Black-white-green bands with a red chevron and a white seven-pointed star for the seven verses of Al-Fatiha — the direct precursor of the modern flag of Jordan.",
+  },
+  {
+    id: "yemen-mutawakkilite", name: "Mutawakkilite Kingdom of Yemen", era: "1918–1962", region: "Africa & Middle East",
+    flagUrl: fp("Flag_of_the_Mutawakkilite_Kingdom_of_Yemen.svg"), relatedCode: "YE",
+    note: "A red field with the white sword of Ali flanked by five white stars, flown by the Zaydi imams who ruled North Yemen until a 1962 coup founded a republic.",
+  },
+  {
+    id: "ottoman-egypt", name: "Ottoman Egypt (Khedivate)", era: "1844–1867", region: "Africa & Middle East",
+    flagUrl: fp("Flag_of_Egypt_(1844–1867).svg"), relatedCode: "EG",
+    note: "A red field with three white crescents each cradling a star, flown under Muhammad Ali's dynasty while Egypt was an autonomous Ottoman province.",
+  },
+  // Europe — deep space
+  {
+    id: "ragusa", name: "Republic of Ragusa", era: "1358–1808", region: "Europe",
+    flagUrl: fp("St._Blaise_-_National_Flag_of_the_Ragusan_Republic.svg"), relatedCode: "HR",
+    note: "The Adriatic merchant republic of Dubrovnik flew a white flag bearing St Blaise, its patron, holding a model of the walled city. Its motto was 'Libertas'.",
+  },
+  {
+    id: "county-nice", name: "County of Nice", era: "1388–1860", region: "Europe",
+    flagUrl: fp("Flag_of_the_County_of_Nice.svg"), relatedCode: "FR",
+    note: "A red eagle perched on three green hills on white — the arms of Nice during its centuries under the House of Savoy, before France annexed it in 1860.",
+  },
+  {
+    id: "styria", name: "Duchy of Styria", era: "1180–1918", region: "Europe",
+    flagUrl: fp("Flag_of_Styria.svg"), relatedCode: "AT",
+    note: "The white-over-green Landesfarben of the Habsburg duchy; its arms bear a white fire-breathing panther. Styria is now split between Austria and Slovenia.",
+  },
+  {
+    id: "carinthia", name: "Duchy of Carinthia", era: "976–1918", region: "Europe",
+    flagUrl: fp("Flag_of_Carinthia_until_1946.svg"), relatedCode: "AT",
+    note: "The yellow-red-white crown-land flag of one of the oldest duchies of the Holy Roman Empire, whose arms show three black lions on gold.",
+  },
+  {
+    id: "gorizia", name: "County of Gorizia (Görz)", era: "1500–1918", region: "Europe",
+    flagUrl: fp("Flag_of_Görz_und_Gradisca.svg"), relatedCode: "SI",
+    note: "A white-and-red bicolour for the Habsburg princely county on the Adriatic frontier, whose arms feature a gold lion. Its land is now split between Italy and Slovenia.",
+  },
+  {
+    id: "lordship-ireland", name: "Lordship of Ireland", era: "1171–1541", region: "Europe",
+    flagUrl: fp("Banner_of_the_Lordship_of_Ireland.svg"), relatedCode: "IE",
+    note: "Three gold crowns on light blue with a white border, the banner of the medieval English lordship before the gold-harp arms replaced it under Henry VIII.",
+  },
+  {
+    id: "kingdom-mann", name: "Kingdom of Mann", era: "1079–1265", region: "Europe",
+    flagUrl: fp("Flag_of_the_Isle_of_Man.svg"), relatedCode: "GB",
+    note: "The gold three-legged triskelion on red descends from the Norse-Gaelic Kingdom of Mann and the Isles, which once ruled the Irish Sea from the Isle of Man.",
+  },
+  {
+    id: "mingrelia", name: "Principality of Mingrelia", era: "1557–1867", region: "Europe",
+    flagUrl: fp("Flag_of_the_Principality_of_Mingrelia.svg"), relatedCode: "GE",
+    note: "A white flag with a St George crest, flown by the Dadiani princes of western Georgia until the principality was absorbed by the Russian Empire.",
+  },
+  {
+    id: "samos", name: "Principality of Samos", era: "1834–1912", region: "Europe",
+    flagUrl: fp("Flag_of_the_Principality_of_Samos_(1834–1912).svg"), relatedCode: "GR",
+    note: "A cross flag with two red and two blue quarters, the red marking Ottoman suzerainty over this autonomous Greek island principality, which united with Greece in 1912.",
+  },
+  {
+    id: "monaco-lozenge", name: "Monaco (Grimaldi lozenge banner)", era: "1339–1881", region: "Europe",
+    flagUrl: fp("Lozenge_flag_of_Monaco.svg"), relatedCode: "MC",
+    note: "The Grimaldi armorial banner of red-and-white lozenges, the dynasty's historic flag before Monaco adopted its plain red-over-white bicolour in 1881.",
+  },
+  // Asia & Oceania — Indonesian sultanates & Indian states
+  {
+    id: "gowa", name: "Sultanate of Gowa", era: "1300–1946", region: "Asia & Oceania",
+    flagUrl: fp("Flag_of_the_Sultanate_of_Gowa.svg"), relatedCode: "ID",
+    note: "The dominant Makassarese power of South Sulawesi flew a deep-red field with a white canton and a kris dagger, until it fell to the Dutch after the Makassar War.",
+  },
+  {
+    id: "ternate", name: "Sultanate of Ternate", era: "1257–1914", region: "Asia & Oceania",
+    flagUrl: fp("Bendera_Ternate_-_Almulk_Buldan_Ternate.svg"), relatedCode: "ID",
+    note: "A yellow flag with a black ring reading 'the realm of Ternate'. This Moluccan clove kingdom was one of the original Spice Islands powers fought over by Europe.",
+  },
+  {
+    id: "tidore", name: "Sultanate of Tidore", era: "1081–1967", region: "Asia & Oceania",
+    flagUrl: fp("Flag_of_the_Sultanate_of_Tidore.png"), relatedCode: "ID",
+    note: "Ternate's great spice-trade rival in Maluku, whose flag carried Arabic inscriptions. At its height Tidore claimed influence as far as western New Guinea.",
+  },
+  {
+    id: "banten", name: "Sultanate of Banten", era: "1527–1813", region: "Asia & Oceania",
+    flagUrl: fp("Flag_of_the_Sultanate_of_Banten.svg"), relatedCode: "ID",
+    note: "A white field with two crossed golden swords, flown by the wealthy pepper-trading Islamic sultanate of western Java until the Dutch abolished it.",
+  },
+  {
+    id: "hyderabad", name: "Hyderabad State", era: "1724–1948", region: "Asia & Oceania",
+    flagUrl: fp("Asafia_flag_of_Hyderabad_State.svg"), relatedCode: "IN",
+    note: "The yellow 'Asafia' flag of the fabulously wealthy Nizams, the largest princely state of British India, annexed by India in 1948.",
+  },
+  {
+    id: "jammu-kashmir", name: "Princely State of Jammu and Kashmir", era: "1846–1947", region: "Asia & Oceania",
+    flagUrl: fp("Flag_of_the_Princely_State_of_Jammu_and_Kashmir_(1836-1936).svg"), relatedCode: "IN",
+    note: "A red field with a mountain range and a hand (panja) symbol, flown by the Dogra maharajas whose 1947 accession sparked the still-unresolved Kashmir dispute.",
+  },
+  {
+    id: "travancore", name: "Princely State of Travancore", era: "1729–1949", region: "Asia & Oceania",
+    flagUrl: fp("Flag_of_Kingdom_of_Travancore.svg"), relatedCode: "IN",
+    note: "A red field with a white conch shell, the sankha of Vishnu and the dynastic emblem of the south Indian kingdom famed for its temples and backwaters.",
+  },
+  {
+    id: "maratha", name: "Maratha Empire", era: "1674–1818", region: "Asia & Oceania",
+    flagUrl: fp("Flag_of_the_Maratha_Empire.svg"), relatedCode: "IN",
+    note: "The saffron swallow-tailed 'Bhagwa Dhwaj' of Shivaji's empire, which at its peak ruled most of the Indian subcontinent before the British.",
+  },
+  // Americas — deep space
+  {
+    id: "madawaska", name: "Republic of Madawaska", era: "1827", region: "Americas",
+    flagUrl: fp("Flag_of_Madawaska.svg"), relatedCode: "CA",
+    note: "A white field with an eagle and a ring of red stars, emblem of the self-declared 'republic' in the disputed Maine–New Brunswick borderland (the design itself is a later commemorative one).",
+  },
+  {
+    id: "muskogee", name: "State of Muskogee", era: "1799–1803", region: "Americas",
+    flagUrl: fp("State_of_Muskogee_(Florida,_1799-1803).svg"), relatedCode: "US",
+    note: "A red field with a blue canton and sunburst, flown by the Creek–Seminole state that adventurer William Augustus Bowles tried to build in Spanish Florida.",
+  },
+  {
+    id: "lower-california", name: "Republic of Lower California", era: "1853–1854", region: "Americas",
+    flagUrl: fp("Flag_of_the_Republic_of_Lower_California.svg"), relatedCode: "MX",
+    note: "The filibuster republic American mercenary William Walker declared in Baja California; its two stars stood for Baja California and Sonora.",
+  },
+  {
+    id: "sonora-republic", name: "Republic of Sonora", era: "1854", region: "Americas",
+    flagUrl: fp("Flag_of_the_Republic_of_Sonora.svg"), relatedCode: "MX",
+    note: "Walker's renamed two-state mercenary republic. He was driven out of Mexico within months — and was later executed in Honduras after a similar scheme.",
+  },
+  {
+    id: "piratini", name: "Riograndense Republic", era: "1836–1845", region: "Americas",
+    flagUrl: fp("Flag_of_Piratini_Republic.svg"), relatedCode: "BR",
+    note: "The breakaway republic of the decade-long Farroupilha (Ragamuffin) War in southern Brazil — three diagonal stripes of green, red, and yellow.",
+  },
+  {
+    id: "juliana", name: "Republic of Juliana", era: "1839", region: "Americas",
+    flagUrl: fp("Flag_of_República_Juliana_(1839).svg"), relatedCode: "BR",
+    note: "A short-lived republic proclaimed at Laguna in Santa Catarina during the Ragamuffin War, allied with the Riograndense rebels. The Italian revolutionary Giuseppe Garibaldi fought for it.",
+  },
+  {
+    id: "equator-confederation", name: "Confederation of the Equator", era: "1824", region: "Americas",
+    flagUrl: fp("1824_Flag.svg"), relatedCode: "BR",
+    note: "A short-lived secessionist confederation of northeastern Brazilian provinces revolting against the new emperor; a sky-blue field with a shield reading 'Confederação'.",
+  },
+  {
+    id: "lares", name: "Republic of Puerto Rico (Lares)", era: "1868", region: "Americas",
+    flagUrl: fp("Flag_of_Lares.svg"),
+    note: "The Grito de Lares revolutionary flag — a white cross dividing blue and red quarters with a white star — raised in the brief 1868 uprising against Spanish rule.",
+  },
+  {
+    id: "acre", name: "Republic of Acre", era: "1899–1903", region: "Americas",
+    flagUrl: fp("Bandeira_do_Acre.svg"), relatedCode: "BR",
+    note: "Rubber-tappers in the Bolivia–Brazil borderland declared an independent republic over the lucrative Acre territory; its diagonal yellow-green flag survives as the Brazilian state flag.",
+  },
+  {
+    id: "buenos-aires-state", name: "State of Buenos Aires", era: "1852–1861", region: "Americas",
+    flagUrl: fp("Flag_of_the_State_of_Buenos_Aires.svg"), relatedCode: "AR",
+    note: "Blue-white-blue with a Sun of May and four red liberty caps, flown while Buenos Aires seceded from the rest of the Argentine Confederation for nearly a decade.",
+  },
+  {
+    id: "entre-rios", name: "Republic of Entre Ríos", era: "1820–1821", region: "Americas",
+    flagUrl: fp("Flag_of_Artigas.svg"), relatedCode: "AR",
+    note: "Warlord Francisco Ramírez's federalist republic flew the blue-white-blue flag of Artigas, crossed by a red diagonal bar for the federal cause.",
+  },
+  // Oceania — Polynesian & Pacific kingdoms
+  {
+    id: "rarotonga", name: "Kingdom of Rarotonga", era: "1858–1888", region: "Asia & Oceania",
+    flagUrl: fp("Flag_of_Rarotonga_1858-1888.svg"),
+    note: "Red-white-red with three blue stars, flown by the Cook Islands kingdom before it became a British protectorate, then part of New Zealand.",
+  },
+  {
+    id: "raiatea", name: "Kingdom of Raiatea", era: "1880–1888", region: "Asia & Oceania",
+    flagUrl: fp("Flag_of_the_Kingdom_of_Raiatea_(1880-1888).svg"),
+    note: "A red-and-white striped flag with a small French tricolor canton, from the Leeward Islands kingdom that resisted French annexation for years.",
+  },
+  {
+    id: "tavolara", name: "Kingdom of Tavolara", era: "1836–1934", region: "Europe",
+    flagUrl: fp("Flag_of_Tavolara.svg"), relatedCode: "IT",
+    note: "A tiny island kingdom off Sardinia ruled by the Bertoleoni family, sometimes called the smallest kingdom in the world. Its flag bears a gold star beneath a crown.",
+  },
+  {
+    id: "tubuai", name: "Kingdom of Tubuai", era: "1819–1881", region: "Asia & Oceania",
+    flagUrl: fp("Flag_of_Tubuai.svg"),
+    note: "A white field with a red cross and four blue stars, the historic flag of a kingdom in the Austral Islands of the South Pacific.",
+  },
+  {
+    id: "rapa", name: "Kingdom of Rapa Iti", era: "1867–1887", region: "Asia & Oceania",
+    flagUrl: fp("Flag_of_Rapa.svg"),
+    note: "A remote Polynesian island kingdom whose flag carried a blue star beneath a crown with a French canton, before France absorbed it.",
+  },
+  {
+    id: "mangareva", name: "Kingdom of Mangareva", era: "1832–1844", region: "Asia & Oceania",
+    flagUrl: fp("Flag_of_the_Gambier_Islands.svg"),
+    note: "The Gambier Islands kingdom flew a banded flag with corner stars, attributed to the French explorer Dumont d'Urville, before becoming a French protectorate.",
+  },
+  {
+    id: "north-solomons", name: "Republic of the North Solomons", era: "1975", region: "Asia & Oceania",
+    flagUrl: fp("Flag_of_Bougainville.svg"), relatedCode: "PG",
+    note: "Bougainville's secessionists raised this blue flag with an 'upe' headdress and kapkap disc in 1975, days before Papua New Guinea's independence — the start of a long struggle.",
+  },
+  {
+    id: "kingdom-fiji", name: "Kingdom of Fiji", era: "1871–1874", region: "Asia & Oceania",
+    flagUrl: fp("Flag_of_the_Kingdom_of_Fiji_(1871-1874).svg"), relatedCode: "FJ",
+    note: "King Cakobau's united Kingdom of Fiji flew a blue-and-white flag with a crowned shield, until he ceded the islands to Britain in 1874.",
+  },
+  {
+    id: "ainu", name: "Ainu", era: "1973", region: "Asia & Oceania",
+    flagUrl: fp("Flag_of_Ainu.svg"), relatedCode: "JP",
+    note: "The flag of the indigenous Ainu of Hokkaido, designed in 1973: a blue field for sky and sea, a white wave for snow, and a red arrow for the aconite hunting poison.",
+  },
+  // Asia — empires, sultanates & revolutionary states
+  {
+    id: "maguindanao", name: "Sultanate of Maguindanao", era: "1520–1888", region: "Asia & Oceania",
+    flagUrl: fp("Flag_of_Maguindanao.svg"), relatedCode: "PH",
+    note: "A powerful Muslim sultanate of Mindanao that resisted Spanish conquest for centuries, flying a plain yellow banner — the royal color.",
+  },
+  {
+    id: "taiping", name: "Taiping Heavenly Kingdom", era: "1851–1864", region: "Asia & Oceania",
+    flagUrl: fp("Flag_of_Taiping_Heavenly_Kingdom.jpg"), relatedCode: "CN",
+    note: "The vast quasi-Christian rebel kingdom whose civil war against the Qing killed an estimated 20 million people. It flew many ornate banners rather than one fixed flag.",
+  },
+  {
+    id: "lanfang", name: "Lanfang Republic", era: "1777–1884", region: "Asia & Oceania",
+    flagUrl: fp("Flag_of_Lanfang_Republic.svg"), relatedCode: "ID",
+    note: "A Hakka Chinese mining state on Borneo, sometimes called one of Asia's first republics, with elected leaders — until the Dutch absorbed it.",
+  },
+  {
+    id: "sedang", name: "Kingdom of Sedang", era: "1888–1890", region: "Asia & Oceania",
+    flagUrl: fp("Flag_of_Sedang.svg"), relatedCode: "VN",
+    note: "A blue flag with a white cross and red star, decreed by the French adventurer Charles-Marie David de Mayréna, who crowned himself King Marie I in the Vietnamese highlands.",
+  },
+  {
+    id: "biak-na-bato", name: "Republic of Biak-na-Bato", era: "1897", region: "Asia & Oceania",
+    flagUrl: fp("Flag_of_the_Biak-na-Bato.svg"), relatedCode: "PH",
+    note: "Emilio Aguinaldo's short-lived 1897 republic in a mountain stronghold, flying a blue-over-red flag with a white triangle and sun — a step toward Philippine independence.",
+  },
+  {
+    id: "katipunan", name: "Katipunan", era: "1896–1897", region: "Asia & Oceania",
+    flagUrl: fp("Philippine_revolution_flag_kkk1.svg"), relatedCode: "PH",
+    note: "The red banner with three white K's of the secret revolutionary society that launched the 1896 Philippine Revolution against Spain.",
+  },
+  {
+    id: "azad-hind", name: "Azad Hind (Free India)", era: "1943–1945", region: "Asia & Oceania",
+    flagUrl: fp("Flag_of_the_Indian_Legion.svg"), relatedCode: "IN",
+    note: "Subhas Chandra Bose's Japanese-allied Provisional Government of Free India flew a saffron-white-green tricolor with a springing tiger.",
+  },
+  {
+    id: "patani-pulo", name: "Patani (PULO)", era: "1968–1989", region: "Asia & Oceania",
+    flagUrl: fp("Flag_of_the_Pattani_United_Liberation_Organisation_(1968-1989).svg"), relatedCode: "TH",
+    note: "The banner of the movement seeking independence for the historically Malay-Muslim Patani region of southern Thailand: red-white stripes with a crescent and star.",
+  },
+  {
+    id: "champasak", name: "Kingdom of Champasak", era: "1713–1947", region: "Asia & Oceania",
+    flagUrl: fp("Flag_of_the_Kingdom_of_Champasak_(1713-1947).svg"), relatedCode: "LA",
+    note: "A blue flag with a white multi-tiered parasol, flown by one of the three Lao kingdoms before they were merged into modern Laos.",
+  },
+  {
+    id: "luang-prabang", name: "Kingdom of Luang Prabang", era: "1707–1893", region: "Asia & Oceania",
+    flagUrl: fp("Flag_of_the_Kingdom_of_Luang_Phrabang_(1707-1893).svg"), relatedCode: "LA",
+    note: "The royal Lao kingdom flew a red flag with the three-headed white elephant Erawan beneath a parasol — the same elephant later used by the Kingdom of Laos.",
+  },
+  {
+    id: "delhi-sultanate", name: "Delhi Sultanate", era: "1206–1526", region: "Asia & Oceania",
+    flagUrl: fp("Delhi_Sultanate_Flag.svg"), relatedCode: "IN",
+    note: "The series of Muslim dynasties that ruled much of medieval India from Delhi, repelling the Mongols, before the Mughals supplanted them.",
+  },
+  {
+    id: "goryeo", name: "Goryeo Dynasty", era: "918–1392", region: "Asia & Oceania",
+    flagUrl: fp("Royal_flag_of_Goryeo_(Bong-gi).svg"), relatedCode: "KR",
+    note: "The medieval Korean dynasty that gave the country its English name. This reconstructed royal phoenix banner stands in for an era that used no national flag.",
+  },
+  // Europe — Napoleonic, Baltic & Russian Civil War states
+  {
+    id: "courland", name: "Duchy of Courland and Semigallia", era: "1561–1795", region: "Europe",
+    flagUrl: fp("Flag_of_Courland_(state).svg"), relatedCode: "LV",
+    note: "A Polish-Lithuanian vassal duchy in modern Latvia that — astonishingly — founded colonies on Tobago in the Caribbean and an island in the Gambia in the 1650s.",
+  },
+  {
+    id: "cossack-hetmanate", name: "Cossack Hetmanate", era: "1649–1764", region: "Europe",
+    flagUrl: fp("Flag_of_the_Cossack_Hetmanat.svg"), relatedCode: "UA",
+    note: "The Cossack state of central Ukraine, founded by Bohdan Khmelnytsky's uprising, flew a crimson banner with a Cossack bearing a musket.",
+  },
+  {
+    id: "far-eastern-republic", name: "Far Eastern Republic", era: "1920–1922", region: "Europe",
+    flagUrl: fp("Flag_of_Far_Eastern_Republic.svg"), relatedCode: "RU",
+    note: "A nominally independent buffer state the Bolsheviks set up across Siberia to avoid war with Japan; once the Japanese withdrew, it was absorbed into Soviet Russia.",
+  },
+  {
+    id: "donets-krivoy-rog", name: "Donets–Krivoy Rog Soviet Republic", era: "1918", region: "Europe",
+    flagUrl: fp("Flag_of_the_Donets-Krivoy_Rog_Soviet_Republic.svg"), relatedCode: "UA",
+    note: "A short-lived Bolshevik republic in the Donbas industrial basin that tried to stay part of Soviet Russia rather than join Ukraine — dissolved within months.",
+  },
+  {
+    id: "abkhazia-ssr", name: "SSR of Abkhazia", era: "1921–1931", region: "Europe",
+    flagUrl: fp("Flag_of_the_SSR_Abkhazia.svg"), relatedCode: "GE",
+    note: "For a decade Abkhazia was a full Soviet republic with a hammer-and-sickle flag, before Stalin downgraded it to an autonomous republic within Georgia.",
+  },
+  {
+    id: "kingdom-finland", name: "Kingdom of Finland", era: "1918", region: "Europe",
+    flagUrl: fp("Flag_of_Finland_1918-1920_(State).svg"), relatedCode: "FI",
+    note: "After independence Finland briefly elected a German prince as king and designed lion-bearing royal flags — but Germany's defeat in WWI ended the monarchy before he ever arrived.",
+  },
+  {
+    id: "elba", name: "Principality of Elba", era: "1814–1815", region: "Europe",
+    flagUrl: fp("Flag_of_the_Princedom_of_Elba.svg"), relatedCode: "IT",
+    note: "The tiny Mediterranean island Napoleon was given to rule during his first exile; he designed its white flag with a red bar and three gold bees before escaping to retake France.",
+  },
+  {
+    id: "etruria", name: "Kingdom of Etruria", era: "1801–1807", region: "Europe",
+    flagUrl: fp("Flag_of_the_Kingdom_of_Etruria.svg"), relatedCode: "IT",
+    note: "A short-lived Napoleonic client kingdom in Tuscany under the Bourbon-Parma dynasty, before Napoleon annexed it directly into France.",
+  },
+  // Africa — kingdoms & Boer micro-republics
+  {
+    id: "adal", name: "Sultanate of Adal", era: "1415–1577", region: "Africa & Middle East",
+    flagUrl: fp("Flag_of_Adal_Sultanate.svg"), relatedCode: "SO",
+    note: "A powerful medieval Muslim sultanate of the Horn of Africa that waged a devastating 16th-century war against the Christian Ethiopian Empire.",
+  },
+  {
+    id: "stellaland", name: "Stellaland", era: "1882–1885", region: "Africa & Middle East",
+    flagUrl: fp("Flag_of_Stellaland.svg"), relatedCode: "ZA",
+    note: "A Boer republic — its name means 'star land' for a comet seen at its founding — with a green flag and a single white star, soon annexed into British Bechuanaland.",
+  },
+  {
+    id: "goshen", name: "State of Goshen", era: "1882–1883", region: "Africa & Middle East",
+    flagUrl: fp("Flag_of_the_Republic_of_Goshen.svg"), relatedCode: "ZA",
+    note: "A tiny Boer republic near the Transvaal border, which briefly merged with neighbouring Stellaland before Britain absorbed both.",
+  },
+  {
+    id: "nieuwe-republiek", name: "Nieuwe Republiek", era: "1884–1888", region: "Africa & Middle East",
+    flagUrl: fp("Flag_of_Nieuwe_Republiek.svg"), relatedCode: "ZA",
+    note: "A Boer 'New Republic' around Vryheid, carved out of Zulu land as a reward for backing a claimant to the Zulu throne, before joining the Transvaal.",
+  },
+  {
+    id: "sanwi", name: "Kingdom of Sanwi", era: "1740–present", region: "Africa & Middle East",
+    flagUrl: fp("Kingdom_of_Sanwi_flag.svg"), relatedCode: "CI",
+    note: "A traditional Akan kingdom in southeastern Côte d'Ivoire that has twice attempted to secede from the modern republic.",
+  },
+  {
+    id: "mahdist", name: "Mahdist State", era: "1885–1899", region: "Africa & Middle East",
+    flagUrl: fp("Flag_of_the_Mahdi_movement_in_Sudan.svg"), relatedCode: "SD",
+    note: "The Islamic state founded by the self-proclaimed Mahdi after his forces stormed Khartoum and killed General Gordon; its banners were covered in Arabic calligraphy.",
+  },
+  {
+    id: "loango", name: "Kingdom of Loango", era: "1550–1883", region: "Africa & Middle East",
+    flagUrl: fp("Flag_of_the_Kingdom_of_Loango.svg"), relatedCode: "CG",
+    note: "A coastal trading kingdom north of the Congo River, famed for its cloth and ivory, before it fell under French control.",
+  },
+  {
+    id: "harar", name: "Emirate of Harar", era: "1647–1887", region: "Africa & Middle East",
+    flagUrl: fp("Flag_of_Emirate_of_Harar.svg"), relatedCode: "ET",
+    note: "An independent walled city-state in eastern Ethiopia, a revered centre of Islamic learning, until Emperor Menelik II conquered it in 1887. Its flag bears crossed swords.",
+  },
 ]
 
 /** Historical entities tied to a given modern country code, for the Codex. */
