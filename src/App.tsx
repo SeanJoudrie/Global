@@ -28,6 +28,7 @@ import FlagFamiliesScreen from "./components/FlagFamiliesScreen"
 import FunFactScreen from "./components/FunFactScreen"
 import ProgressMapScreen from "./components/ProgressMapScreen"
 import HistoricalFlagScreen from "./components/HistoricalFlagScreen"
+import IdentityFlagScreen from "./components/IdentityFlagScreen"
 import StarField from "./components/StarField"
 import EarthLogo from "./components/EarthLogo"
 import { FLAGS } from "./data/flags"
@@ -39,7 +40,7 @@ import type { Question } from "./utils/quiz"
 import { todayString } from "./utils/prng"
 import { loadTheme } from "./components/SettingsScreen"
 
-type Screen = "splash" | "home" | "flags" | "quiz" | "reversequiz" | "result" | "achievements" | "profile" | "flashcards" | "language" | "capitalquiz" | "challenge" | "codex" | "geo" | "gauntlet" | "tierlist" | "settings" | "oddoneout" | "thecrop" | "flagdna" | "buildflag" | "thepeel" | "lookalikes" | "composer" | "silhouette" | "flagfamilies" | "funfact" | "progressmap" | "historical"
+type Screen = "splash" | "home" | "flags" | "quiz" | "reversequiz" | "result" | "achievements" | "profile" | "flashcards" | "language" | "capitalquiz" | "challenge" | "codex" | "geo" | "gauntlet" | "tierlist" | "settings" | "oddoneout" | "thecrop" | "flagdna" | "buildflag" | "thepeel" | "lookalikes" | "composer" | "silhouette" | "flagfamilies" | "funfact" | "progressmap" | "historical" | "identity"
 
 interface ActiveQuiz {
   questions: Question[]
@@ -174,7 +175,8 @@ export default function App() {
           onGoFlagFamilies={() => setScreen("flagfamilies")}
           onGoFunFact={() => setScreen("funfact")}
           onGoProgressMap={() => setScreen("progressmap")}
-          onGoHistorical={() => setScreen("historical")} />
+          onGoHistorical={() => setScreen("historical")}
+          onGoIdentity={() => setScreen("identity")} />
       )}
 
       {screen === "flags" && (
@@ -213,6 +215,7 @@ export default function App() {
       {screen === "achievements" && <AchievementsScreen state={appState} onBack={() => setScreen("home")} />}
       {screen === "progressmap" && <ProgressMapScreen state={appState} onBack={() => setScreen("home")} />}
       {screen === "historical" && <HistoricalFlagScreen onBack={() => setScreen("home")} />}
+      {screen === "identity" && <IdentityFlagScreen onBack={() => setScreen("home")} />}
 
       {screen === "quiz" && activeQuiz && (
         <QuizScreen questions={activeQuiz.questions} title={activeQuiz.title}
