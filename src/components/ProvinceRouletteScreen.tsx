@@ -41,7 +41,7 @@ function buildSteps(target: SubFlag): Step[] {
   ]
 }
 
-export default function ProvinceRouletteScreen({ onBack, onSubLearned }: Props) {
+function ProvinceRouletteScreenGame({ onBack, onSubLearned , onReplay }: Props & { onReplay: () => void }) {
   const [target] = useState<SubFlag>(() => pick(SUB_FLAGS))
   const [steps] = useState<Step[]>(() => buildSteps(target))
   const [stepIdx, setStepIdx] = useState(0)
@@ -92,7 +92,7 @@ export default function ProvinceRouletteScreen({ onBack, onSubLearned }: Props) 
             </div>
           </div>
           <div className="flex flex-col gap-3">
-            <button onClick={() => window.location.reload()} className="w-full py-3.5 rounded-xl font-bold transition-all active:scale-95"
+            <button onClick={onReplay} className="w-full py-3.5 rounded-xl font-bold transition-all active:scale-95"
               style={{ background: "linear-gradient(135deg,#8B6CFF,#A78BFA)", color: "#fff" }}>New Flag</button>
             <button onClick={onBack} className="w-full py-3.5 rounded-xl font-bold transition-all active:scale-95"
               style={{ background: "#2D1F52", border: "1px solid #8B6CFF33", color: "#B8A9E0" }}>← Home</button>
@@ -152,4 +152,9 @@ export default function ProvinceRouletteScreen({ onBack, onSubLearned }: Props) 
       </div>
     </div>
   )
+}
+
+export default function ProvinceRouletteScreen({ onBack, onSubLearned }: Props) {
+  const [replayKey, setReplayKey] = useState(0)
+  return <ProvinceRouletteScreenGame key={replayKey} onBack={onBack} onSubLearned={onSubLearned} onReplay={() => setReplayKey(k => k + 1)} />
 }

@@ -23,7 +23,7 @@ function buildRounds(): Round[] {
   })
 }
 
-export default function SubdivisionStumperScreen({ onBack, onSubLearned }: Props) {
+function SubdivisionStumperScreenGame({ onBack, onSubLearned , onReplay }: Props & { onReplay: () => void }) {
   const [rounds] = useState(buildRounds)
   const [idx, setIdx] = useState(0)
   const [picked, setPicked] = useState<string | null>(null)
@@ -59,7 +59,7 @@ export default function SubdivisionStumperScreen({ onBack, onSubLearned }: Props
             <div className="flex justify-center gap-2 flex-wrap">{scores.map((s, i) => <span key={i} style={{ fontSize: 22 }}>{s ? "🟩" : "🟥"}</span>)}</div>
           </div>
           <div className="flex flex-col gap-3">
-            <button onClick={() => window.location.reload()} className="w-full py-3.5 rounded-xl font-bold transition-all active:scale-95" style={{ background: "linear-gradient(135deg,#34D399,#10B981)", color: "#fff" }}>Play Again</button>
+            <button onClick={onReplay} className="w-full py-3.5 rounded-xl font-bold transition-all active:scale-95" style={{ background: "linear-gradient(135deg,#34D399,#10B981)", color: "#fff" }}>Play Again</button>
             <button onClick={onBack} className="w-full py-3.5 rounded-xl font-bold transition-all active:scale-95" style={{ background: "#2D1F52", border: "1px solid #8B6CFF33", color: "#B8A9E0" }}>← Home</button>
           </div>
         </div>
@@ -118,4 +118,9 @@ export default function SubdivisionStumperScreen({ onBack, onSubLearned }: Props
       </div>
     </div>
   )
+}
+
+export default function SubdivisionStumperScreen({ onBack, onSubLearned }: Props) {
+  const [replayKey, setReplayKey] = useState(0)
+  return <SubdivisionStumperScreenGame key={replayKey} onBack={onBack} onSubLearned={onSubLearned} onReplay={() => setReplayKey(k => k + 1)} />
 }

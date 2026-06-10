@@ -48,7 +48,7 @@ function buildRounds(count: number): Round[] {
 
 const TOTAL = 5
 
-export default function ConfusablesScreen({ onBack }: Props) {
+function ConfusablesScreenGame({ onBack , onReplay }: Props & { onReplay: () => void }) {
   const [rounds]    = useState(() => buildRounds(TOTAL))
   const [idx, setIdx]       = useState(0)
   const [selected, setSelected]  = useState<number | null>(null)
@@ -92,7 +92,7 @@ export default function ConfusablesScreen({ onBack }: Props) {
             </div>
           </div>
           <div className="flex flex-col gap-3">
-            <button onClick={() => window.location.reload()}
+            <button onClick={onReplay}
               className="w-full py-3.5 rounded-xl font-bold transition-all active:scale-95"
               style={{ background: "linear-gradient(135deg,#8B6CFF,#A78BFA)", color: "#fff" }}>
               Play Again
@@ -207,4 +207,9 @@ export default function ConfusablesScreen({ onBack }: Props) {
       </div>
     </div>
   )
+}
+
+export default function ConfusablesScreen({ onBack }: Props) {
+  const [replayKey, setReplayKey] = useState(0)
+  return <ConfusablesScreenGame key={replayKey} onBack={onBack} onReplay={() => setReplayKey(k => k + 1)} />
 }

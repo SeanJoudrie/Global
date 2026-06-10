@@ -62,12 +62,12 @@ export default function HomeScreen({
           <span className="text-xl font-black" style={{ color: "#F5F3FF" }}>Globalio</span>
         </div>
         <div style={{ display: "flex", gap: 8 }}>
-          <button onClick={onGoSettings}
+          <button onClick={onGoSettings} aria-label="Settings"
             className="w-9 h-9 flex items-center justify-center rounded-full text-lg transition-all active:scale-95"
             style={{ background: "linear-gradient(135deg, #2D1F52, #3D2A6A)", border: "1px solid #8B6CFF44" }}>
             ⚙️
           </button>
-          <button onClick={onGoProfile}
+          <button onClick={onGoProfile} aria-label="Profile"
             className="w-9 h-9 flex items-center justify-center rounded-full text-lg transition-all active:scale-95"
             style={{ background: "linear-gradient(135deg, #2D1F52, #3D2A6A)", border: "1px solid #8B6CFF44" }}>
             👤
@@ -131,7 +131,7 @@ export default function HomeScreen({
             <span className="text-2xl">⚡</span>
             <div className="text-left">
               <div className="font-bold" style={{ color: "#F5F3FF" }}>Quick Play</div>
-              <div className="text-xs" style={{ color: "#C4B5FD" }}>5 random flags · instant start</div>
+              <div className="text-xs" style={{ color: "#C4B5FD" }}>10 random flags · instant start</div>
             </div>
           </div>
           <span className="text-xs px-2 py-0.5 rounded-full font-semibold"

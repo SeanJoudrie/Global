@@ -46,7 +46,7 @@ function FlagImg({ src, alt }: { src: string; alt: string }) {
   )
 }
 
-export default function IdentityFlagScreen({ onBack }: Props) {
+function IdentityFlagScreenGame({ onBack , onReplay }: Props & { onReplay: () => void }) {
   const [rounds] = useState(buildRounds)
   const [idx, setIdx] = useState(0)
   const [selected, setSelected] = useState<string | null>(null)
@@ -84,7 +84,7 @@ export default function IdentityFlagScreen({ onBack }: Props) {
             </div>
           </div>
           <div className="flex flex-col gap-3">
-            <button onClick={() => window.location.reload()}
+            <button onClick={onReplay}
               className="w-full py-3.5 rounded-xl font-bold transition-all active:scale-95"
               style={{ background: "linear-gradient(90deg,#FF5E5E,#FF9F45,#FFD93D,#6BCB77,#4D96FF,#B66DFF)", color: "#fff", textShadow: "0 1px 2px #0006" }}>
               Play Again
@@ -175,4 +175,9 @@ export default function IdentityFlagScreen({ onBack }: Props) {
       </div>
     </div>
   )
+}
+
+export default function IdentityFlagScreen({ onBack }: Props) {
+  const [replayKey, setReplayKey] = useState(0)
+  return <IdentityFlagScreenGame key={replayKey} onBack={onBack} onReplay={() => setReplayKey(k => k + 1)} />
 }

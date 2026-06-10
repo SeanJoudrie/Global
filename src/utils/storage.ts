@@ -106,7 +106,10 @@ export function awardCrown(state: AppState, setId: string): AppState {
 }
 
 function getPreviousDay(dateStr: string): string {
-  const d = new Date(dateStr)
-  d.setDate(d.getDate() - 1)
-  return d.toISOString().slice(0, 10)
+  // Parse the y-m-d components and do the math purely in UTC so the result is
+  // independent of the viewer's timezone / DST (todayString() is a local y-m-d).
+  const [y, m, d] = dateStr.split('-').map(Number)
+  const dt = new Date(Date.UTC(y, m - 1, d))
+  dt.setUTCDate(dt.getUTCDate() - 1)
+  return dt.toISOString().slice(0, 10)
 }
