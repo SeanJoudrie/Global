@@ -44,6 +44,8 @@ import DeadOrAliveScreen from "./components/DeadOrAliveScreen"
 import FrankenflagScreen from "./components/FrankenflagScreen"
 import DescribeItScreen from "./components/DescribeItScreen"
 import FlagBracketScreen from "./components/FlagBracketScreen"
+import RealOrBotScreen from "./components/RealOrBotScreen"
+import FlagTimelineScreen from "./components/FlagTimelineScreen"
 import StarField from "./components/StarField"
 import EarthLogo from "./components/EarthLogo"
 import { FLAGS } from "./data/flags"
@@ -55,7 +57,7 @@ import type { Question } from "./utils/quiz"
 import { todayString } from "./utils/prng"
 import { loadTheme } from "./components/SettingsScreen"
 
-type Screen = "splash" | "home" | "flags" | "quiz" | "reversequiz" | "result" | "achievements" | "profile" | "flashcards" | "language" | "capitalquiz" | "challenge" | "codex" | "geo" | "gauntlet" | "tierlist" | "settings" | "oddoneout" | "thecrop" | "flagdna" | "buildflag" | "thepeel" | "lookalikes" | "composer" | "silhouette" | "flagfamilies" | "funfact" | "progressmap" | "historical" | "identity" | "provinceroulette" | "substumper" | "lineage" | "substats" | "megacodex" | "flagle" | "higherlower" | "deadoralive" | "frankenflag" | "describeit" | "flagbracket"
+type Screen = "splash" | "home" | "flags" | "quiz" | "reversequiz" | "result" | "achievements" | "profile" | "flashcards" | "language" | "capitalquiz" | "challenge" | "codex" | "geo" | "gauntlet" | "tierlist" | "settings" | "oddoneout" | "thecrop" | "flagdna" | "buildflag" | "thepeel" | "lookalikes" | "composer" | "silhouette" | "flagfamilies" | "funfact" | "progressmap" | "historical" | "identity" | "provinceroulette" | "substumper" | "lineage" | "substats" | "megacodex" | "flagle" | "higherlower" | "deadoralive" | "frankenflag" | "describeit" | "flagbracket" | "realorbot" | "timeline"
 
 interface ActiveQuiz {
   questions: Question[]
@@ -267,6 +269,8 @@ export default function App() {
       {screen === "frankenflag"  && <FrankenflagScreen  onBack={() => setScreen("home")} />}
       {screen === "describeit"   && <DescribeItScreen   onBack={() => setScreen("home")} />}
       {screen === "flagbracket"  && <FlagBracketScreen  onBack={() => setScreen("home")} />}
+      {screen === "realorbot"    && <RealOrBotScreen    onBack={() => setScreen("home")} />}
+      {screen === "timeline"     && <FlagTimelineScreen onBack={() => setScreen("home")} />}
 
       {screen === "quiz" && activeQuiz && (
         <QuizScreen questions={activeQuiz.questions} title={activeQuiz.title}

@@ -4,6 +4,7 @@ import {
   Swords, Medal, Trophy, BookOpen, Map, BarChart3, Target, Landmark,
   Languages, Globe2, Compass, Zap, Settings, User, Award, Flame, Crown,
   GraduationCap, Gamepad2,
+  LayoutGrid, Bot, History, Skull, SplitSquareHorizontal, ArrowUpDown, AlignLeft, Vote,
 } from "lucide-react"
 import type { LucideIcon } from "lucide-react"
 
@@ -24,6 +25,9 @@ const MAP: Record<string, LucideIcon> = {
   profile: User, achievements: Award, settings: Settings, today: Compass, quickplay: Zap,
   // tab bar
   learn: GraduationCap, play: Gamepad2, you: User,
+  // newer games
+  flagle: LayoutGrid, realorbot: Bot, timeline: History, deadoralive: Skull,
+  frankenflag: SplitSquareHorizontal, higherlower: ArrowUpDown, describeit: AlignLeft, flagbracket: Vote,
 }
 
 export function LineIcon({ name, size = 21, strokeWidth = 1.6, color = "currentColor" }:

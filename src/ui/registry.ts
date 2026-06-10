@@ -42,6 +42,11 @@ export const REGISTRY: Entry[] = [
   { id: "lineage", title: "Lineage", subtitle: "Trace a flag's family tree", icon: "🌳", tab: "learn", group: "Subdivisions", size: "module", accent: "learn" },
 
   // ── PLAY ───────────────────────────────────────────────────────────────
+  // daily & flagship
+  { id: "flagle", title: "Flagle", subtitle: "Daily flag Wordle · 6 guesses", icon: "🟩", tab: "play", group: "Daily & New", size: "module", accent: "codex" },
+  { id: "realorbot", title: "Real or Bot", subtitle: "Swipe: real flag or AI fake?", icon: "🤖", tab: "play", group: "Daily & New", size: "module", accent: "challenge" },
+  { id: "timeline", title: "Flag Timeline", subtitle: "Order a country's flags in time", icon: "⏳", tab: "play", group: "Daily & New", size: "module", accent: "learn" },
+
   { id: "oddoneout", title: "Odd One Out", subtitle: "Find the impostor", icon: "🕵️", tab: "play", group: "Quick games", size: "tile", accent: "play" },
   { id: "thecrop", title: "The Crop", subtitle: "Zoom out to guess", icon: "🔍", tab: "play", group: "Quick games", size: "tile", accent: "play" },
   { id: "flagdna", title: "Flag DNA", subtitle: "Guess by attributes", icon: "🧬", tab: "play", group: "Quick games", size: "tile", accent: "play" },
@@ -52,6 +57,11 @@ export const REGISTRY: Entry[] = [
   { id: "composer", title: "The Composer", subtitle: "Order the colours", icon: "🎴", tab: "play", group: "Quick games", size: "tile", accent: "play" },
   { id: "flagfamilies", title: "Flag Families", subtitle: "Sort into families", icon: "👪", tab: "play", group: "Quick games", size: "tile", accent: "play" },
   { id: "funfact", title: "Fun Fact", subtitle: "Daily flag fact", icon: "💡", tab: "play", group: "Quick games", size: "tile", accent: "play" },
+  { id: "deadoralive", title: "Dead or Alive", subtitle: "Live or vanished?", icon: "💀", tab: "play", group: "Quick games", size: "tile", accent: "play" },
+  { id: "frankenflag", title: "Frankenflag", subtitle: "Name both halves", icon: "🧟", tab: "play", group: "Quick games", size: "tile", accent: "play" },
+  { id: "higherlower", title: "Higher / Lower", subtitle: "More red or blue?", icon: "📊", tab: "play", group: "Quick games", size: "tile", accent: "play" },
+  { id: "describeit", title: "Describe-It", subtitle: "Guess from the clues", icon: "📝", tab: "play", group: "Quick games", size: "tile", accent: "play" },
+  { id: "flagbracket", title: "Flag Bracket", subtitle: "Vote your champion", icon: "🏆", tab: "play", group: "Quick games", size: "tile", accent: "play" },
 
   { id: "gauntlet", title: "Gauntlet", subtitle: "One life · every flag", icon: "⚔️", tab: "play", group: "Challenge", size: "module", accent: "challenge" },
   { id: "challenge", title: "Challenge Mode", subtitle: "States, provinces & regions", icon: "🎖️", tab: "play", group: "Challenge", size: "module", accent: "challenge" },
