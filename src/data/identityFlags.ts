@@ -637,6 +637,102 @@ export const IDENTITY_FLAGS: IdentityFlag[] = [
     flagUrl: fp("Diver_Down_flag.svg"),
     note: "A red flag with a white diagonal stripe, used in North American waters to mark a diver below — the regional counterpart to the international Alpha flag.",
   },
+
+  // ── More Indigenous Peoples ──────────────────────────────────────────────
+  {
+    id: "iroquois", name: "Iroquois Confederacy (Haudenosaunee)", category: "Indigenous Peoples",
+    flagUrl: fp("Flag_of_the_Iroquois_Confederacy.svg"),
+    note: "Based on the Hiawatha Wampum Belt: a central white pine tree flanked by four squares on a purple field, representing the founding Mohawk, Oneida, Onondaga, Cayuga and Seneca nations. Still flown today — the Haudenosaunee even field their own lacrosse team under it.",
+  },
+  {
+    id: "sami", name: "Sámi Flag (Sápmi)", category: "Indigenous Peoples",
+    flagUrl: fp("Sami_flag.svg"),
+    note: "Adopted in 1986 for the Sámi people of northern Scandinavia and Russia. The circle echoes a shaman's drum and the sun & moon; the red-green-yellow-blue draws on traditional gákti dress.",
+  },
+  {
+    id: "metis", name: "Métis Nation Flag", category: "Indigenous Peoples",
+    flagUrl: fp("Métis_flag.svg"),
+    note: "A white infinity symbol on blue (a red variant also exists) — one of North America's oldest Indigenous flags, dating to about 1815. The infinity represents the joining of two peoples and the endurance of the Métis Nation.",
+  },
+  {
+    id: "cherokee", name: "Cherokee Nation Flag", category: "Indigenous Peoples",
+    flagUrl: fp("Flag_of_the_Cherokee_Nation.svg"),
+    note: "Orange field with the Great Seal ringed by seven yellow stars for the seven clans, plus a black star remembering those lost on the Trail of Tears.",
+  },
+  {
+    id: "navajo", name: "Navajo Nation Flag", category: "Indigenous Peoples",
+    flagUrl: fp("Flag_of_the_Navajo_Nation.svg"),
+    note: "Adopted 1968: a map of the Navajo Nation on a tan field, bounded by the four sacred mountains, with a rainbow arc of sovereignty over the homeland.",
+  },
+
+  // ── More Separatist & Autonomous ─────────────────────────────────────────
+  {
+    id: "tibet", name: "Tibet (Snow Lion Flag)", category: "Separatist & Autonomous",
+    flagUrl: fp("Flag_of_Tibet.svg"),
+    note: "Two snow lions holding a flaming jewel before a sunburst mountain. Used by the Tibetan government until 1959 and by the government-in-exile today; banned within China.",
+  },
+  {
+    id: "sadr", name: "Western Sahara (SADR)", category: "Separatist & Autonomous",
+    flagUrl: fp("Flag_of_the_Sahrawi_Arab_Democratic_Republic.svg"),
+    note: "Flag of the Sahrawi Arab Democratic Republic, claimed by the Polisario Front over Western Sahara — a pan-Arab tricolour with a red star and crescent.",
+  },
+  {
+    id: "artsakh", name: "Artsakh (Nagorno-Karabakh)", category: "Separatist & Autonomous",
+    flagUrl: fp("Flag_of_Artsakh.svg"),
+    note: "The Armenian tricolour with a white stepped pattern at the fly, used by the self-declared Republic of Artsakh until its dissolution in 2024.",
+  },
+  {
+    id: "corsica", name: "Corsica (Moor's Head)", category: "Separatist & Autonomous",
+    flagUrl: fp("Flag_of_Corsica.svg"),
+    note: "A black Moor's head with a white bandana on white — adopted by Corsican nationalist Pasquale Paoli in 1755 and a symbol of the island's autonomy movement.",
+  },
+  {
+    id: "sardinia", name: "Sardinia (Four Moors)", category: "Separatist & Autonomous",
+    flagUrl: fp("Flag_of_Sardinia,_Italy.svg"),
+    note: "The 'Four Moors' — a red St George's cross with a bandaged Moor's head in each quarter — flag of the autonomous region and Sardinian independence movements.",
+  },
+  {
+    id: "brittany", name: "Brittany (Gwenn ha Du)", category: "Separatist & Autonomous",
+    flagUrl: fp("Flag_of_Brittany.svg"),
+    note: "The 'White and Black': nine stripes for Brittany's historic dioceses and a field of black ermine spots. Designed in 1923, now the region's everyday flag.",
+  },
+  {
+    id: "cornwall", name: "Cornwall (St Piran's Flag)", category: "Separatist & Autonomous",
+    flagUrl: fp("Saint_Piran's_Flag.svg"),
+    note: "A white cross on black, said to represent tin (white) running from ore (black). The banner of Cornish identity and the Cornish self-government movement.",
+  },
+  {
+    id: "tamil-eelam", name: "Tamil Eelam", category: "Separatist & Autonomous",
+    flagUrl: fp("Flag_of_Tamil_Eelam.svg"),
+    note: "A roaring tiger before crossed rifles ringed by bayonets — emblem of the proposed independent Tamil state in north-east Sri Lanka.",
+  },
+  {
+    id: "bougainville", name: "Bougainville", category: "Separatist & Autonomous",
+    flagUrl: fp("Flag_of_Bougainville.svg"),
+    note: "Flag of the autonomous region of Papua New Guinea that voted ~98% for independence in 2019; the central upe is a traditional ceremonial headdress.",
+  },
+  {
+    id: "rojava", name: "Rojava (North & East Syria)", category: "Separatist & Autonomous",
+    flagUrl: fp("Flag_of_Rojava.svg"),
+    note: "Flag of the Autonomous Administration of North and East Syria — a Kurdish-led, multi-ethnic self-governing region established during the Syrian civil war.",
+  },
+
+  // ── More Micronations ────────────────────────────────────────────────────
+  {
+    id: "ladonia", name: "Ladonia", category: "Micronations",
+    flagUrl: fp("Flag_of_Ladonia.svg"),
+    note: "A green Nordic cross on green — a deliberately 'invisible' flag for the Swedish art micronation founded in 1996 by sculptor Lars Vilks around his driftwood works.",
+  },
+  {
+    id: "westarctica", name: "Grand Duchy of Westarctica", category: "Micronations",
+    flagUrl: fp("Flag_of_Westarctica.svg"),
+    note: "Claims Marie Byrd Land — the one slice of Antarctica no country claims. Its blue-and-white flag now doubles as a vehicle for climate-change awareness.",
+  },
+  {
+    id: "uzupis", name: "Republic of Užupis", category: "Micronations",
+    flagUrl: fp("Flag_of_Užupis.svg"),
+    note: "A bohemian artists' 'republic' in a Vilnius neighbourhood, declared on 1 April 1997. Its flag shows a hand with a hole in the palm — 'you can't take anything with you.'",
+  },
 ]
 
 // Maritime & Signal (the ICS / phonetic-alphabet signal flags) are their own
