@@ -167,7 +167,7 @@ const GT_DEPARTMENTS: SubRegion[] = [
   { code: "gt-es", name: "Escuintla",       flagUrl: wiki("Flag of Escuintla Department.svg") },
   { code: "gt-gu", name: "Guatemala",       flagUrl: wiki("Flag of the Guatemala Department.svg") },
   { code: "gt-hu", name: "Huehuetenango",   flagUrl: wiki("Flag of Huehuetenango Department.svg") },
-  { code: "gt-iz", name: "Izabal", noFlag: true },
+  { code: "gt-iz", name: "Izabal", flagUrl: wiki("Flag of Izabal Department.svg") },
   { code: "gt-ja", name: "Jalapa",          flagUrl: wiki("Flag of Jalapa Department, Guatemala.svg") },
   { code: "gt-ju", name: "Jutiapa",         flagUrl: wiki("Flag of Jutiapa Department.svg") },
   { code: "gt-pe", name: "Petén",           flagUrl: wiki("Flag of Petén.svg") },
