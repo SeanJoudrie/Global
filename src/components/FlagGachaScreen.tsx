@@ -18,18 +18,29 @@ function rarity(code: string): "legendary" | "rare" | "common" {
 const RARITY_COLOR = { legendary: "#F4B740", rare: "#8B7BE8", common: "#7E8DA6" }
 const RARITY_LABEL = { legendary: "★ Legendary", rare: "◆ Rare", common: "● Common" }
 
+// Continent grouping for the collection view (completionist sort).
+const REGION_ORDER = ["Africa", "Americas", "Asia", "Europe", "Middle East", "Oceania"]
+const byContinent = (() => {
+  const map = new Map<string, FlagRecord[]>()
+  for (const f of FLAGS) { const k = f.region ?? "Other"; (map.get(k) ?? map.set(k, []).get(k)!).push(f) }
+  const keys = [...map.keys()].sort((a, b) => {
+    const ia = REGION_ORDER.indexOf(a), ib = REGION_ORDER.indexOf(b)
+    return (ia < 0 ? 99 : ia) - (ib < 0 ? 99 : ib)
+  })
+  return keys.map(k => ({ region: k, flags: [...map.get(k)!].sort((a, b) => a.name.localeCompare(b.name)) }))
+})()
+
 // ── persistence ──────────────────────────────────────────────────────────────
 const KEY = "globalio_gacha"
 interface Save { collected: string[]; xp: number; tokens: number; lastDaily: string; seeded?: boolean }
 function load(): Save {
   try {
     const raw = localStorage.getItem(KEY)
-    const s: Save = raw ? JSON.parse(raw) : { collected: [], xp: 0, tokens: 0, lastDaily: "", seeded: false }
-    // daily free pull + first-time starter bundle
-    if (!s.seeded) { s.tokens += 5; s.seeded = true }
-    if (s.lastDaily !== todayString()) { s.tokens += 1; s.lastDaily = todayString() }
+    const s: Save = raw ? JSON.parse(raw) : { collected: [], xp: 0, tokens: 0, lastDaily: "", seeded: true }
+    // Exactly one free pull per day — it does not stockpile.
+    if (s.lastDaily !== todayString()) { s.tokens = 1; s.lastDaily = todayString(); s.seeded = true }
     return s
-  } catch { return { collected: [], xp: 0, tokens: 5, lastDaily: todayString(), seeded: true } }
+  } catch { return { collected: [], xp: 0, tokens: 1, lastDaily: todayString(), seeded: true } }
 }
 function persist(s: Save) { try { localStorage.setItem(KEY, JSON.stringify(s)) } catch { /* ignore */ } }
 
@@ -118,19 +129,30 @@ export default function FlagGachaScreen({ onBack }: Props) {
         ) : (
           <div style={{ flex: 1, overflowY: "auto" }}>
             <button onClick={() => setBrowse(false)} className="geo-micro geo-tap" style={{ fontSize: 9, color: T.dim, background: "transparent", marginBottom: 10 }}>← back to pulls</button>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(56px,1fr))", gap: 8 }}>
-              {FLAGS.map(f => {
-                const have = collected.has(f.code)
-                const r = rarity(f.code)
-                return (
-                  <div key={f.code} title={have ? f.name : "???"} style={{ aspectRatio: "3/2", borderRadius: 6, overflow: "hidden", border: `1px solid ${have ? tint(RARITY_COLOR[r], 0.7) : T.line}`, background: have ? "#fff" : tint(T.muted, 0.08), position: "relative" }}>
-                    {have
-                      ? <FlagImage code={f.code} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
-                      : <div style={{ width: "100%", height: "100%", display: "flex", alignItems: "center", justifyContent: "center", color: T.dim, fontSize: 14 }}>?</div>}
+            {byContinent.map(group => {
+              const haveCount = group.flags.filter(f => collected.has(f.code)).length
+              return (
+                <div key={group.region} style={{ marginBottom: 16 }}>
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 7 }}>
+                    <span className="geo-display" style={{ fontWeight: 700, fontSize: 13, color: T.text }}>{group.region}</span>
+                    <span style={{ fontFamily: FONT.mono, fontSize: 10, color: T.dim }}>{haveCount}/{group.flags.length}</span>
                   </div>
-                )
-              })}
-            </div>
+                  <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(56px,1fr))", gap: 8 }}>
+                    {group.flags.map(f => {
+                      const have = collected.has(f.code)
+                      const r = rarity(f.code)
+                      return (
+                        <div key={f.code} title={have ? f.name : "???"} style={{ aspectRatio: "3/2", borderRadius: 6, overflow: "hidden", border: `1px solid ${have ? tint(RARITY_COLOR[r], 0.7) : T.line}`, background: have ? "#fff" : tint(T.muted, 0.08), position: "relative" }}>
+                          {have
+                            ? <FlagImage code={f.code} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+                            : <div style={{ width: "100%", height: "100%", display: "flex", alignItems: "center", justifyContent: "center", color: T.dim, fontSize: 14 }}>?</div>}
+                        </div>
+                      )
+                    })}
+                  </div>
+                </div>
+              )
+            })}
           </div>
         )}
       </div>

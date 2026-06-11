@@ -1,8 +1,11 @@
 import { useState, useEffect } from 'react'
 import { FLAGS, REGIONS, getFlagsByRegion } from '../data/flags'
 import type { Region } from '../data/flags'
+import { OTHER_IDENTITY_FLAGS } from '../data/identityFlags'
 
 interface Props { onBack: () => void }
+
+interface Chip { code: string; flagUrl: string; name: string }
 
 type TierId = 'S' | 'A' | 'B' | 'C' | 'D' | 'F'
 const TIERS: { id: TierId; color: string }[] = [
@@ -15,8 +18,11 @@ const TIERS: { id: TierId; color: string }[] = [
 ]
 const POOL = 'pool'
 
-type RegionChoice = 'World' | Region
-const REGION_OPTS: RegionChoice[] = ['World', ...REGIONS]
+type RegionChoice = 'World' | 'Other' | Region
+const REGION_OPTS: RegionChoice[] = ['World', ...REGIONS, 'Other']
+
+// Identity / non-country flags, normalised to the chip shape (keyed by id).
+const OTHER_CHIPS: Chip[] = OTHER_IDENTITY_FLAGS.map(f => ({ code: f.id, flagUrl: f.flagUrl, name: f.name }))
 
 const keyFor = (r: RegionChoice) => `globalio_tierlist_${r}`
 function loadPlacement(r: RegionChoice): Record<string, string> {
@@ -29,7 +35,8 @@ export default function TierListScreen({ onBack }: Props) {
   const [selected, setSelected] = useState<string | null>(null)
   const [dragged, setDragged] = useState<string | null>(null)
 
-  const flags = region === 'World' ? FLAGS : getFlagsByRegion(region as Region)
+  const flags: Chip[] = region === 'Other' ? OTHER_CHIPS
+    : (region === 'World' ? FLAGS : getFlagsByRegion(region as Region)).map(f => ({ code: f.code, flagUrl: f.flagUrl, name: f.name }))
 
   // Load this region's saved list whenever the region changes.
   useEffect(() => { setPlacement(loadPlacement(region)); setSelected(null) }, [region])
