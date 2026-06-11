@@ -68,6 +68,7 @@ export const REGISTRY: Entry[] = [
   { id: "capitalmatch", title: "Capital Match", subtitle: "Match flags to capitals", icon: "🏛️", tab: "play", group: "Quick games", size: "tile", accent: "play" },
   { id: "continentsort", title: "Continent Sort", subtitle: "Sort flags by region", icon: "🌍", tab: "play", group: "Quick games", size: "tile", accent: "play" },
   { id: "statclash", title: "Stat Clash", subtitle: "Bigger population or area?", icon: "⚖️", tab: "play", group: "Quick games", size: "tile", accent: "play" },
+  { id: "uscityflags", title: "US City Flags", subtitle: "Name the American city", icon: "🏙️", tab: "play", group: "Quick games", size: "tile", accent: "play" },
 
   // Geography games
   { id: "bordermap", title: "Border Map", subtitle: "Fill in a country's neighbours", icon: "🗺️", tab: "play", group: "Geography", size: "tile", accent: "play" },

@@ -4,6 +4,7 @@ import { CODEX } from '../data/codex'
 import type { HistoricalFlag } from '../data/codex'
 import { historicalFor } from '../data/historicalFlags'
 import { IDENTITY_FLAGS, IDENTITY_CATEGORIES, SIGNAL_FLAGS } from '../data/identityFlags'
+import { US_CITY_FLAGS } from '../data/usCityFlags'
 import { CHALLENGE_CONTINENTS } from '../data/challenges'
 import type { SubRegion } from '../data/challenges'
 
@@ -417,6 +418,8 @@ export default function CodexScreen({ onBack }: Props) {
 
         {/* Identity & other flags — pride, ethnic, separatist, micronations… */}
         {!isSearching && <IdentityCodexSection />}
+        {/* American city flags — beta, lots of municipal flags */}
+        {!isSearching && <AmericanCitiesCodexSection />}
         {/* Maritime / signal alphabet — its own section, separate from Identity */}
         {!isSearching && <SignalCodexSection />}
       </div>
@@ -487,6 +490,55 @@ function IdentityCodexSection() {
           </div>
         )
       })}
+    </div>
+  )
+}
+
+// ── American city flags (Beta) — lots of municipal flags ──
+function AmericanCitiesCodexSection() {
+  const [open, setOpen] = useState(false)
+  const [openFlag, setOpenFlag] = useState<string | null>(null)
+  const cities = [...US_CITY_FLAGS].sort((a, b) => a.name.localeCompare(b.name))
+  return (
+    <div className="mt-5">
+      <button
+        onClick={() => setOpen(o => !o)}
+        className="w-full flex items-center justify-between px-4 py-3 rounded-xl transition-all active:scale-[0.98]"
+        style={{ background: open ? '#2D1F52' : '#221740', border: `1px solid ${open ? '#5CC9F555' : '#8B6CFF33'}` }}>
+        <div className="text-left">
+          <h3 className="text-sm font-bold uppercase tracking-widest" style={{ color: '#5CC9F5' }}>
+            American Cities <span style={{ color: '#5CC9F599', fontSize: 10 }}>(Beta)</span>
+          </h3>
+          <p className="text-xs" style={{ color: '#B8A9E088' }}>{cities.length} U.S. municipal flags</p>
+        </div>
+        <span style={{ color: '#5CC9F5', fontSize: 20, transition: 'transform 0.2s', transform: open ? 'rotate(90deg)' : 'rotate(0deg)' }}>›</span>
+      </button>
+      {open && (
+        <div className="mt-1.5 space-y-1.5">
+          {cities.map(f => {
+            const showNote = openFlag === f.id
+            return (
+              <button key={f.id} onClick={() => setOpenFlag(o => o === f.id ? null : f.id)}
+                className="w-full px-4 py-3 rounded-xl transition-all active:scale-[0.99] text-left"
+                style={{ background: '#2D1F52', border: `1px solid ${showNote ? '#5CC9F544' : '#8B6CFF22'}` }}>
+                <div className="flex items-center gap-3">
+                  <img src={f.flagUrl} alt={f.name}
+                    style={{ width: 46, height: 30, objectFit: 'contain', borderRadius: 5, border: '1px solid #8B6CFF22', flexShrink: 0, background: '#1E1640' }}
+                    onError={e => { (e.target as HTMLImageElement).style.opacity = '0.3' }} />
+                  <div className="flex-1 min-w-0">
+                    <div className="font-semibold text-sm truncate" style={{ color: '#F5F3FF' }}>{f.name}</div>
+                    <div className="text-xs" style={{ color: '#B8A9E088' }}>{f.state}</div>
+                  </div>
+                  <span style={{ color: '#5CC9F5', fontSize: 16, transition: 'transform 0.2s', transform: showNote ? 'rotate(90deg)' : 'rotate(0deg)' }}>›</span>
+                </div>
+                {showNote && (
+                  <p className="text-xs leading-relaxed mt-2.5" style={{ color: '#B8A9E0', lineHeight: 1.65 }}>{f.note}</p>
+                )}
+              </button>
+            )
+          })}
+        </div>
+      )}
     </div>
   )
 }
