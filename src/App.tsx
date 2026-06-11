@@ -43,6 +43,7 @@ const SubdivisionStumperScreen = lazy(() => import("./components/SubdivisionStum
 const LineageScreen = lazy(() => import("./components/LineageScreen"))
 const SubdivisionStatsScreen = lazy(() => import("./components/SubdivisionStatsScreen"))
 const MegaCodexScreen = lazy(() => import("./components/MegaCodexScreen"))
+const FlagDiagnosticsScreen = lazy(() => import("./components/FlagDiagnosticsScreen"))
 const FlagleScreen = lazy(() => import("./components/FlagleScreen"))
 const HigherLowerScreen = lazy(() => import("./components/HigherLowerScreen"))
 const DeadOrAliveScreen = lazy(() => import("./components/DeadOrAliveScreen"))
@@ -71,7 +72,7 @@ import type { Question } from "./utils/quiz"
 import { todayString } from "./utils/prng"
 import { loadTheme } from "./components/SettingsScreen"
 
-type Screen = "splash" | "home" | "flags" | "quiz" | "reversequiz" | "result" | "achievements" | "profile" | "flashcards" | "language" | "capitalquiz" | "challenge" | "codex" | "geo" | "gauntlet" | "tierlist" | "settings" | "oddoneout" | "thecrop" | "flagdna" | "buildflag" | "thepeel" | "lookalikes" | "composer" | "silhouette" | "flagfamilies" | "funfact" | "progressmap" | "historical" | "identity" | "provinceroulette" | "substumper" | "lineage" | "substats" | "megacodex" | "flagle" | "higherlower" | "deadoralive" | "frankenflag" | "describeit" | "flagbracket" | "realorbot" | "timeline" | "bordermap" | "borderchain" | "gacha" | "symbolhunt" | "twotruths" | "capitalmatch" | "oddborder" | "continentsort" | "statclash" | "uscityflags" | "prideroulette"
+type Screen = "splash" | "home" | "flags" | "quiz" | "reversequiz" | "result" | "achievements" | "profile" | "flashcards" | "language" | "capitalquiz" | "challenge" | "codex" | "geo" | "gauntlet" | "tierlist" | "settings" | "oddoneout" | "thecrop" | "flagdna" | "buildflag" | "thepeel" | "lookalikes" | "composer" | "silhouette" | "flagfamilies" | "funfact" | "progressmap" | "historical" | "identity" | "provinceroulette" | "substumper" | "lineage" | "substats" | "megacodex" | "flagle" | "higherlower" | "deadoralive" | "frankenflag" | "describeit" | "flagbracket" | "realorbot" | "timeline" | "bordermap" | "borderchain" | "gacha" | "symbolhunt" | "twotruths" | "capitalmatch" | "oddborder" | "continentsort" | "statclash" | "uscityflags" | "prideroulette" | "flagdiag"
 
 interface ActiveQuiz {
   questions: Question[]
@@ -178,7 +179,7 @@ export default function App() {
 
       {/* Persistent home logo — fixed top-left on every screen except splash/home.
           Tapping it always jumps back to the home page. */}
-      {screen !== "splash" && screen !== "home" && screen !== "megacodex" && (
+      {screen !== "splash" && screen !== "home" && screen !== "megacodex" && screen !== "flagdiag" && (
         <button
           onClick={() => setScreen("home")}
           aria-label="Home"
@@ -263,7 +264,7 @@ export default function App() {
       {screen === "geo" && <GeoQuizScreen onBack={() => setScreen("home")} />}
       {screen === "gauntlet" && <GauntletScreen onBack={() => setScreen("home")} />}
       {screen === "tierlist" && <TierListScreen onBack={() => setScreen("home")} />}
-      {screen === "settings"   && <SettingsScreen onBack={() => setScreen("home")} onMegaCodex={() => setScreen("megacodex")} />}
+      {screen === "settings"   && <SettingsScreen onBack={() => setScreen("home")} onMegaCodex={() => setScreen("megacodex")} onFlagCheck={() => setScreen("flagdiag")} />}
       {screen === "oddoneout"  && <OddOneOutScreen  onBack={() => setScreen("home")} />}
       {screen === "thecrop"    && <TheCropScreen    onBack={() => setScreen("home")} />}
       {screen === "flagdna"    && <FlagDNAScreen     onBack={() => setScreen("home")} />}
@@ -290,6 +291,7 @@ export default function App() {
       {screen === "lineage" && <LineageScreen onBack={() => setScreen("home")} />}
       {screen === "substats" && <SubdivisionStatsScreen state={appState} onBack={() => setScreen("home")} />}
       {screen === "megacodex" && <MegaCodexScreen onBack={() => setScreen("settings")} />}
+      {screen === "flagdiag"  && <FlagDiagnosticsScreen onBack={() => setScreen("settings")} />}
       {screen === "flagle"       && <FlagleScreen       onBack={() => setScreen("home")} />}
       {screen === "higherlower"  && <HigherLowerScreen  onBack={() => setScreen("home")} />}
       {screen === "deadoralive"  && <DeadOrAliveScreen  onBack={() => setScreen("home")} />}

@@ -1,7 +1,7 @@
 import { AESTHETIC, saveAesthetic } from "../ui/tokens"
 import type { Aesthetic } from "../ui/tokens"
 
-interface Props { onBack: () => void; onMegaCodex: () => void }
+interface Props { onBack: () => void; onMegaCodex: () => void; onFlagCheck: () => void }
 
 export interface Theme {
   id: string
@@ -85,7 +85,7 @@ export function saveTheme(id: string) {
   localStorage.setItem(THEME_STORAGE_KEY, id)
 }
 
-export default function SettingsScreen({ onBack, onMegaCodex }: Props) {
+export default function SettingsScreen({ onBack, onMegaCodex, onFlagCheck }: Props) {
   const currentId = localStorage.getItem(THEME_STORAGE_KEY) ?? 'space'
   const currentAesthetic = AESTHETIC
 
@@ -181,6 +181,13 @@ export default function SettingsScreen({ onBack, onMegaCodex }: Props) {
           className="w-full mt-8 py-2.5 rounded-xl text-xs font-semibold transition-all active:scale-95"
           style={{ background: 'transparent', border: '1px dashed #8B6CFF22', color: '#8B6CFF55' }}>
           🌈 Mega Codex
+        </button>
+
+        {/* temporary flag-QA list */}
+        <button onClick={onFlagCheck}
+          className="w-full mt-3 py-2.5 rounded-xl text-xs font-semibold transition-all active:scale-95"
+          style={{ background: 'transparent', border: '1px dashed #8B6CFF22', color: '#8B6CFF55' }}>
+          🚩 Flag Check (QA)
         </button>
       </div>
     </div>
