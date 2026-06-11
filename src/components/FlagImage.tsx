@@ -13,6 +13,8 @@ import type { CSSProperties } from "react"
 export function flagSources(code: string): string[] {
   const c = code.toLowerCase()
   return [
+    // Self-hosted first: instant, cached, works offline, no broken images.
+    `/flags/${c}.svg`,
     `https://flagcdn.com/w320/${c}.png`,
     `https://cdn.jsdelivr.net/gh/lipis/flag-icons@main/flags/4x3/${c}.svg`,
     `https://flagcdn.com/${c}.svg`,

@@ -28,7 +28,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     {
       fromYear: 1965,
       toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/ca.png',
+      flagUrl: '/flags/ca.svg',
       label: 'The Maple Leaf Flag',
       note: 'Adopted February 15, 1965 after a passionate national debate. The single red maple leaf on a white field was chosen over dozens of competing designs after months of parliamentary argument known as the "Great Canadian Flag Debate."',
     },
@@ -64,7 +64,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     {
       fromYear: 1960,
       toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/us.png',
+      flagUrl: '/flags/us.svg',
       label: '50-Star Flag',
       note: 'Adopted July 4, 1960, the day after Hawaii became the 50th state. Designed by 17-year-old Robert Heft as a school project — his teacher gave him a B minus but later raised the grade when the design was officially selected.',
     },
@@ -132,7 +132,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     {
       fromYear: 1801,
       toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/gb.png',
+      flagUrl: '/flags/gb.svg',
       label: 'Union Jack (Current)',
       note: 'Created in 1801 when Ireland joined Great Britain. Combines St George\'s Cross (England), St Andrew\'s Cross (Scotland), and St Patrick\'s Cross (Ireland). The red diagonal is deliberately offset so the Scottish white saltire is not obscured.',
     },
@@ -148,7 +148,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     {
       fromYear: 1993,
       toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/ru.png',
+      flagUrl: '/flags/ru.svg',
       label: 'Russian Federation',
       note: 'The white-blue-red tricolor was restored after the fall of the Soviet Union and fixed in its current 2:3 proportions by decree in 1993, then confirmed by federal law in 2000. The colors trace back to Peter the Great.',
     },
@@ -201,7 +201,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     {
       fromYear: 1949,
       toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/cn.png',
+      flagUrl: '/flags/cn.svg',
       label: "People's Republic of China",
       note: 'Designed by Zeng Liansong and adopted in 1949, the large gold star represents the Communist Party while the four smaller stars represent the united classes of the Chinese people. The design was chosen from nearly 3,000 public submissions.',
     },
@@ -231,7 +231,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     {
       fromYear: 1870,
       toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/jp.png',
+      flagUrl: '/flags/jp.svg',
       label: 'Japan (Hinomaru)',
       note: 'The white field with a central red disc — the Nisshōki, or "sun-mark flag" — was designated the national merchant ensign in 1870. Though used for centuries before, it was only formally legislated as the national flag in 1999.',
     },
@@ -257,7 +257,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     {
       fromYear: 1908,
       toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/au.png',
+      flagUrl: '/flags/au.svg',
       label: 'Australian National Flag',
       note: 'In 1908 a seventh point was added to the large Commonwealth Star to represent the territories. The blue ensign was confirmed as the sole national flag by the Flags Act 1953, effective 1954.',
       parallelCaption: 'Red Ensign — flown on land before 1954',
@@ -297,7 +297,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     {
       fromYear: 1902,
       toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/nz.png',
+      flagUrl: '/flags/nz.svg',
       label: 'Flag of New Zealand',
       note: 'The Southern Cross blue ensign — four red, white-bordered stars — became the national flag on land and sea under the Ensign Act 1901. The design itself dates to 1869; New Zealanders voted to keep it in two referendums in 2015–16.',
     },
@@ -327,7 +327,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     {
       fromYear: 1830,
       toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/fr.png',
+      flagUrl: '/flags/fr.svg',
       label: 'France (tricolore)',
       note: 'Louis-Philippe, the "citizen-king", restored the blue-white-red tricolore in 1830, and it has flown through every French republic and regime since. A slightly darker navy shade was quietly reintroduced in 2020.',
     },
@@ -364,7 +364,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     {
       fromYear: 1990,
       toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/de.png',
+      flagUrl: '/flags/de.svg',
       label: 'Germany (reunified)',
       note: 'On reunification in 1990 the West German black-red-gold tricolour became the flag of the whole country, with no change to the design. The colors are tied to the liberal revolutions of 1848.',
     },
@@ -430,7 +430,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     {
       fromYear: 1945,
       toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/at.png',
+      flagUrl: '/flags/at.svg',
       label: 'Austria (Second Republic)',
       note: 'With independence restored in 1945, Austria reinstated the red-white-red triband. Legend ties it to a medieval Babenberg duke whose white tunic was left red but for the band under his belt — one of the oldest flag designs still in use.',
     },
@@ -477,7 +477,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     {
       fromYear: 1946,
       toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/it.png',
+      flagUrl: '/flags/it.svg',
       label: 'Italian Republic',
       note: 'After the 1946 referendum abolished the monarchy, the Savoy royal arms were removed, leaving the plain green-white-red tricolore enshrined in the 1948 Constitution. It remains Italy\'s flag today.',
     },
@@ -519,7 +519,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     {
       fromYear: 1981,
       toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/es.png',
+      flagUrl: '/flags/es.svg',
       label: 'Kingdom of Spain',
       note: 'The current flag, fixed in 1981, bears the constitutional coat of arms with the Pillars of Hercules and the quartered arms of Castile, León, Aragón, and Navarre. The red-yellow-red scheme dates to 1785.',
     },
@@ -563,7 +563,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     {
       fromYear: 1994,
       toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/za.png',
+      flagUrl: '/flags/za.svg',
       label: 'Rainbow flag',
       note: 'Designed by Frederick Brownell and first flown on 27 April 1994 at the dawn of democracy, it is the only national flag with six colors. The Y-shape is widely read as the convergence of a diverse society onto a single path forward.',
     },
@@ -586,7 +586,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     {
       fromYear: 1911,
       toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/pt.png',
+      flagUrl: '/flags/pt.svg',
       label: 'Republican flag',
       note: 'Adopted in 1911 after the Republic was proclaimed, replacing royal blue-and-white with green and red. The arms sit on an armillary sphere recalling the Age of Discoveries, placed over the boundary of the two colors.',
     },
@@ -609,7 +609,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     {
       fromYear: 1796,
       toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/nl.png',
+      flagUrl: '/flags/nl.svg',
       label: 'Red-white-blue tricolour',
       note: 'The modern red-white-blue continued through the Batavian Republic, Kingdom, and present day; its bright vermilion red was officially fixed by royal decree in 1937. Orange survives in the pennant flown above the flag on royal occasions.',
     },
@@ -632,7 +632,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     {
       fromYear: 1978,
       toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/gr.png',
+      flagUrl: '/flags/gr.svg',
       label: 'Nine-stripe flag',
       note: 'Adopted as the sole national flag in 1978, with nine alternating blue and white stripes and a white cross in the canton. Tradition links the nine stripes to the syllables of "Eleftheria i Thanatos" — "Freedom or Death".',
     },
@@ -662,7 +662,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     {
       fromYear: 1922,
       toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/ie.png',
+      flagUrl: '/flags/ie.svg',
       label: 'Green-white-orange tricolour',
       note: 'First flown by Thomas Francis Meagher in 1848 and raised over the GPO during the 1916 Rising, the tricolour was used by the Irish Free State from 1922 and given constitutional status in 1937. Green represents Catholics, orange Protestants, and the white the hoped-for peace between them.',
     },
@@ -688,7 +688,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     {
       fromYear: 1919,
       toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/pl.png',
+      flagUrl: '/flags/pl.svg',
       label: 'White-and-red bicolour',
       note: 'The Sejm officially adopted the horizontal white-over-red bicolour in 1919, and its basic design has been unchanged since — retained even throughout the communist People\'s Republic.',
       parallelCaption: 'State flag with eagle (used abroad & at sea)',
@@ -721,7 +721,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     {
       fromYear: 1947,
       toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/in.png',
+      flagUrl: '/flags/in.svg',
       label: 'Tricolour with Ashoka Chakra',
       note: 'Adopted on 22 July 1947, weeks before independence, it replaced the spinning wheel with the 24-spoke navy Ashoka Chakra. The wheel is taken from the Lion Capital of Ashoka at Sarnath.',
     },
@@ -760,7 +760,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     {
       fromYear: 1992,
       toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/br.png',
+      flagUrl: '/flags/br.svg',
       label: 'Flag of Brazil (27 stars)',
       note: 'Updated in 1992 to 27 stars after several territories became states, each star representing a state or the Federal District. It is one of the few national flags that maps an actual astronomical sky.',
     },
@@ -806,7 +806,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     {
       fromYear: 1968,
       toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/mx.png',
+      flagUrl: '/flags/mx.svg',
       label: 'Flag of Mexico',
       note: 'Standardized in 1968 ahead of the Mexico City Olympics, it fixed the eagle, serpent, and cactus emblem in its current detailed form. The arms recall the Aztec founding legend of Tenochtitlan.',
     },
@@ -871,7 +871,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     {
       fromYear: 1923,
       toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/tr.png',
+      flagUrl: '/flags/tr.svg',
       label: 'Flag of Turkey',
       note: 'When Atatürk proclaimed the Republic in 1923, Turkey kept the Ottoman red star-and-crescent almost unchanged, signaling continuity rather than rupture. Its exact proportions were only codified by the 1936 Turkish Flag Law.',
       parallelCaption: 'Transient republic that joined Turkey',
@@ -903,7 +903,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     {
       fromYear: 1984,
       toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/eg.png',
+      flagUrl: '/flags/eg.svg',
       label: 'Flag of Egypt',
       note: 'In 1984 the golden hawk was replaced by the gold Eagle of Saladin, Egypt\'s national emblem, centered in the red-white-black tricolour. The colors signify the struggle against occupation, a bright future, and the end of oppression.',
     },
@@ -941,7 +941,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
   SE: [
     {
       fromYear: 1906, toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/se.png',
+      flagUrl: '/flags/se.svg',
       label: 'Swedish Flag (colours standardised)',
       note: 'In 1906 a royal decree fixed the exact shades of blue and yellow, ending a century of variation. The Nordic cross design itself stretches back to at least the early 16th century — one of the oldest unchanged national symbols in Europe.',
     },
@@ -971,7 +971,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
   NO: [
     {
       fromYear: 1821, toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/no.png',
+      flagUrl: '/flags/no.svg',
       label: 'Norwegian Flag (Meltzer design)',
       note: 'Designed by merchant and politician Fredrik Meltzer, this flag cleverly incorporated the three colours of the French Tricolore (associated with liberty) into a Nordic cross — blue within white within red. The design was adopted by the Norwegian Storting in 1821, though Norway was in union with Sweden and the flag was slow to gain official recognition abroad.',
     },
@@ -986,7 +986,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
   DK: [
     {
       fromYear: 1370, toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/dk.png',
+      flagUrl: '/flags/dk.svg',
       label: 'The Dannebrog',
       note: 'The Dannebrog — a white Nordic cross on red — is the oldest national flag still in continuous use by an independent nation, reliably documented from at least 1370. Legend holds it fell from the sky during the Battle of Lyndanisse in 1219. Whatever its origin, the design has remained essentially unchanged for over 650 years, making it the template for every other Nordic cross flag.',
     },
@@ -995,7 +995,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
   FI: [
     {
       fromYear: 1918, toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/fi.png',
+      flagUrl: '/flags/fi.svg',
       label: 'Finnish Flag (blue cross)',
       note: 'Adopted on May 29, 1918, shortly after Finland declared independence from Russia in December 1917. The blue Nordic cross on white was chosen through a design competition — the blue representing Finland\'s thousands of lakes and the clear sky, the white its snow. The exact proportions were refined several times, with the current form standardised in 1978.',
     },
@@ -1011,7 +1011,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
   KR: [
     {
       fromYear: 1984, toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/kr.png',
+      flagUrl: '/flags/kr.svg',
       label: 'Taegukgi (standardised)',
       note: 'Korea\'s Taegukgi — white field, red-and-blue yin-yang (taegeuk) at centre, four black trigrams at corners — was formally standardised in 1984, fixing proportions and exact trigram arrangement. The design has been a Korean national symbol since its first use in 1882 and remained unchanged in concept through the Japanese occupation and the establishment of the Republic of Korea in 1948.',
     },
@@ -1038,7 +1038,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
   VN: [
     {
       fromYear: 1976, toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/vn.png',
+      flagUrl: '/flags/vn.svg',
       label: 'Socialist Republic of Vietnam',
       note: 'When North and South Vietnam were formally reunified in July 1976, the gold five-pointed star on red — previously the flag of North Vietnam since 1945 — became the flag of the unified country. The red represents the revolution and the blood of those who died fighting for independence; the gold star represents the five main classes of Vietnamese society.',
       parallel: [
@@ -1068,7 +1068,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
   IR: [
     {
       fromYear: 1980, toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/ir.png',
+      flagUrl: '/flags/ir.svg',
       label: 'Islamic Republic of Iran',
       note: 'Adopted after the 1979 Islamic Revolution, this flag keeps the green-white-red tricolor (unchanged since the Qajar era) but replaces the imperial lion and sun with the emblem of the Islamic Republic — a stylised Allah in the shape of a tulip, symbolising martyrdom. Along the borders of the green and red bands, the phrase "Allahu Akbar" (God is Greatest) is repeated 22 times, commemorating the 22nd of Bahman (February 11, 1979), the day of the revolution\'s victory.',
     },
@@ -1105,7 +1105,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
   AR: [
     {
       fromYear: 1818, toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/ar.png',
+      flagUrl: '/flags/ar.svg',
       label: 'Flag of Argentina (with Sun of May)',
       note: 'The Sun of May — representing Inti, the Inca sun god, and commemorating the May Revolution of 1810 — was officially added to the flag on February 25, 1818. The sun is depicted with alternating straight and wavy rays and a human face, copied from the reverse of Argentina\'s first coin minted in 1813. It distinguishes the "official ceremonial flag" from the plain-striped civil flag.',
     },
@@ -1126,7 +1126,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
   CO: [
     {
       fromYear: 1861, toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/co.png',
+      flagUrl: '/flags/co.svg',
       label: 'Republic of Colombia',
       note: 'Colombia\'s horizontal tricolor — yellow (half), blue (quarter), red (quarter) — descends directly from the flag of Gran Colombia designed by Francisco de Miranda in 1806. The wide yellow band represents sovereignty and wealth; blue the two oceans flanking Colombia; red the blood of independence fighters. The current proportions (2:1:1) have been official since 1861.',
     },
@@ -1147,7 +1147,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
   VE: [
     {
       fromYear: 2006, toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/ve.png',
+      flagUrl: '/flags/ve.svg',
       label: 'Bolivarian Republic of Venezuela',
       note: 'In 2006 President Hugo Chávez updated the flag by adding an eighth star (previously seven) to honour the province of Guayana, aligning the stars in an arc rather than a line, and moving the coat of arms to the hoist side. The horse in the coat of arms — which had previously been running to the right — was controversially reversed to gallop to the left, which critics read as a political statement.',
     },
@@ -1181,7 +1181,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
   BE: [
     {
       fromYear: 1831, toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/be.png',
+      flagUrl: '/flags/be.svg',
       label: 'Kingdom of Belgium',
       note: 'Belgium\'s vertical black-yellow-red tricolor was adopted at independence in 1831. The colours derive from the ducal arms of Brabant — a golden lion on black — combined with red from the arms of Hainaut. It\'s unusually tall and narrow compared to most flags (13:15 ratio), and the black stripe is on the hoist side — the only national flag with black in that position.',
     },
@@ -1202,7 +1202,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
   CH: [
     {
       fromYear: 1889, toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/ch.png',
+      flagUrl: '/flags/ch.svg',
       label: 'Swiss Federal Flag (standardised)',
       note: 'Switzerland officially standardised its federal flag in 1889 — a bold white cross on red, in a square format unique among sovereign nations (only Vatican City also uses a square flag). The equal-armed cross has represented the Swiss Confederation since at least the Battle of Laupen in 1339, when Swiss troops wore white crosses as field insignia. The Red Cross flag is its inverse — white field, red cross — created in 1863 by Swiss founder Henry Dunant as a deliberate tribute.',
     },
@@ -1218,7 +1218,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
   IQ: [
     {
       fromYear: 2008, toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/iq.png',
+      flagUrl: '/flags/iq.svg',
       label: 'Republic of Iraq (current)',
       note: 'The 2008 revision updated the Kufic script "Allahu Akbar" to a standardised typeface (removing Saddam Hussein\'s handwriting) and removed the three green stars that had symbolised Ba\'athist pan-Arab unity. The basic red-white-black horizontal tricolor with green text remains, connecting the flag to the broader pan-Arab colour tradition shared with Egypt, Syria, and Yemen.',
     },
@@ -1245,7 +1245,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
   SY: [
     {
       fromYear: 1980, toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/sy.png',
+      flagUrl: '/flags/sy.svg',
       label: 'Syrian Arab Republic (current)',
       note: 'Syria\'s current flag — red, white, and black horizontal stripes with two green stars — was readopted in 1980 after Syria\'s federation with Egypt and Libya ended. The two stars represent Syria and Egypt, a nod to the failed United Arab Republic of 1958–1961. This flag is simultaneously a symbol of Ba\'athist Arab nationalism and — because it was also used by the independence-era republic — was adopted by opposition forces during the 2011 civil war as an alternative to the Ba\'ath flag.',
     },
@@ -1272,7 +1272,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
   LY: [
     {
       fromYear: 2011, toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/ly.png',
+      flagUrl: '/flags/ly.svg',
       label: 'Restored Independence Flag',
       note: 'After Muammar Gaddafi\'s regime fell in the 2011 civil war, Libya restored the flag of the original Kingdom of Libya — a black-red-green horizontal tricolor with a white crescent and star at the centre. The black represents the Cyrenaica region, red the blood of martyrs, and green the Fezzan region. Adopted originally in 1951, this flag had been suppressed for 42 years by Gaddafi\'s all-green design.',
     },
@@ -1301,7 +1301,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
   SA: [
     {
       fromYear: 1973, toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/sa.png',
+      flagUrl: '/flags/sa.svg',
       label: 'Kingdom of Saudi Arabia (current)',
       note: 'Saudi Arabia\'s flag — a green field bearing the Shahada ("There is no god but Allah, and Muhammad is his messenger") in white Thuluth script above a white sword — is one of the world\'s most religiously charged national flags. The sword\'s orientation was reversed in 1973 to always face forward (towards the hoist) regardless of which side of the flag you see. Green is the traditional colour of Islam; the sword symbolises the Kingdom\'s founding through military conquest.',
     },
@@ -1328,7 +1328,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
   YE: [
     {
       fromYear: 1990, toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/ye.png',
+      flagUrl: '/flags/ye.svg',
       label: 'Republic of Yemen (unified)',
       note: 'When North and South Yemen reunified on May 22, 1990, the new republic adopted a simple red-white-black horizontal tricolor — the pan-Arab colours — shedding the communist star and triangle of the south and the complex arms of the north. The design was essentially a compromise between the two predecessor flags. Unification lasted only months before a civil war nearly split the country again; another civil war beginning in 2014 has since devastated the country.',
       parallel: [
@@ -1376,7 +1376,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
   JO: [
     {
       fromYear: 1928, toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/jo.png',
+      flagUrl: '/flags/jo.svg',
       label: 'Hashemite Kingdom of Jordan',
       note: 'Jordan\'s flag — horizontal black-white-green stripes (pan-Arab colours) with a red triangle at the hoist bearing a white seven-pointed star — descends directly from the Arab Revolt flag of 1916. The seven points of the star represent the seven verses of the opening sura of the Quran, the seven hills of Amman, and the seven virtues of faith, justice, humility, national spirit, virtue, social welfare, and aspirations. Jordan\'s flag design has been essentially unchanged since 1928, though the territory has changed dramatically.',
     },
@@ -1403,7 +1403,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
   LB: [
     {
       fromYear: 1943, toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/lb.png',
+      flagUrl: '/flags/lb.svg',
       label: 'Lebanese Republic',
       note: 'Lebanon\'s flag — red-white-red horizontal stripes with a green cedar tree at centre — was adopted in November 1943 when Lebanon declared independence from the French Mandate. The cedar of Lebanon, referenced more than 70 times in the Bible, has symbolised the country for millennia. The flag was designed by Henri Pharaon: the white represents the snow of Mount Lebanon; the red the blood shed for liberation; the cedar represents immortality and steadiness. The exact shade of green of the cedar has varied slightly between official versions.',
     },
@@ -1424,7 +1424,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
   IL: [
     {
       fromYear: 1948, toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/il.png',
+      flagUrl: '/flags/il.svg',
       label: 'State of Israel',
       note: 'Israel\'s flag — a white field with two horizontal blue stripes and a blue Star of David at the centre — was adopted on October 28, 1948, five months after independence. The design, proposed by David Wolffsohn at the First Zionist Congress in 1897, was inspired by the Jewish prayer shawl (tallit), which is traditionally white with blue or black stripes. The Star of David (Magen David) had been used as a Jewish symbol for centuries but became a Zionist emblem specifically in the late 19th century. Israel is the only country whose flag is directly based on a religious garment.',
     },
@@ -1445,7 +1445,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
   PS: [
     {
       fromYear: 1964, toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/ps.png',
+      flagUrl: '/flags/ps.svg',
       label: 'State of Palestine',
       note: 'The Palestinian flag — horizontal black-white-green stripes with a red triangle at the hoist — is almost identical to Jordan\'s flag, sharing the same Arab Revolt ancestry. The PLO adopted it in 1964; it was formally declared the flag of the State of Palestine in 1988. The design deliberately references the pan-Arab colours and the shared heritage of the Arab Revolt. As of 2012, Palestine is a UN non-member observer state; the flag flies at the UN headquarters in New York.',
     },
@@ -1466,7 +1466,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
   AE: [
     {
       fromYear: 1971, toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/ae.png',
+      flagUrl: '/flags/ae.svg',
       label: 'United Arab Emirates (federation)',
       note: 'When seven Trucial States — Abu Dhabi, Dubai, Sharjah, Ajman, Fujairah, Ras al-Khaimah, and Umm al-Quwain — federated as the UAE on December 2, 1971, they adopted the pan-Arab green-white-black horizontal stripes with a red vertical stripe at the hoist. The flag was designed by Abdulla Mohamed Al Maainah, then 19 years old, who won the national design competition. Red is the traditional colour of the Kharijite and Gulf ruling families; the other three colours are pan-Arab.',
     },
@@ -1481,7 +1481,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
   BH: [
     {
       fromYear: 2002, toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/bh.png',
+      flagUrl: '/flags/bh.svg',
       label: 'Kingdom of Bahrain (five points)',
       note: 'When Bahrain upgraded from Emirate to Kingdom in 2002, the serrated white-red border — traditionally with many points — was reduced to exactly five triangular points representing the Five Pillars of Islam. The design retains Bahrain\'s traditional red-and-white colour scheme: white for peace; red for the blood of battles against foreign invaders. Bahrain was one of the first Gulf states to discover oil (1932) and one of the first to see reserves begin to deplete.',
     },
@@ -1496,7 +1496,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
   KW: [
     {
       fromYear: 1961, toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/kw.png',
+      flagUrl: '/flags/kw.svg',
       label: 'State of Kuwait (independence)',
       note: 'Kuwait adopted its current flag on independence from Britain on June 19, 1961 — the same day independence was declared. The horizontal green-white-red stripes with a black trapezoid at the hoist are pan-Arab colours. The flag was designed to look clearly different from the simple red flags of other Gulf states. Green symbolises the fertile lands; white for peace; red for blood on enemy swords; black for the defeat of enemies — a martial reading that suits Kuwait\'s turbulent history, including the 1990 Iraqi invasion.',
     },
@@ -1511,7 +1511,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
   QA: [
     {
       fromYear: 1971, toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/qa.png',
+      flagUrl: '/flags/qa.svg',
       label: 'State of Qatar (independence)',
       note: 'Qatar\'s distinctive maroon-and-white flag — with a serrated border like Bahrain\'s — was adopted on independence from Britain on September 3, 1971. The original flag was red-and-white like Bahrain\'s, but the red faded to maroon in the intense Gulf sun, and Qatar eventually standardised the darker maroon as the official colour. Qatar\'s flag has nine serrated points, the most of any Gulf state flag, though the exact significance of that number is debated. Qatar is the only country whose flag has a width-to-length ratio greater than 1:2.',
     },
@@ -1526,7 +1526,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
   OM: [
     {
       fromYear: 1970, toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/om.png',
+      flagUrl: '/flags/om.svg',
       label: 'Sultanate of Oman (current)',
       note: 'Oman\'s horizontal red-white-green flag with the national emblem (crossed khanjar daggers over a belt, and two crossed swords) was adopted when Sultan Qaboos overthrew his father in 1970 and opened Oman to the modern world. Red is the traditional colour of Omani rulers; white represents peace; green represents the Jebel Akhdar ("Green Mountain") region. The khanjar dagger on the emblem is also depicted on Omani currency and is a potent symbol of Omani cultural identity.',
     },
@@ -1543,7 +1543,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
   CL: [
     {
       fromYear: 1818, toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/cl.png',
+      flagUrl: '/flags/cl.svg',
       label: 'Chilean Flag (La Estrella Solitaria)',
       note: 'Chile\'s flag — the "Lone Star" — was finalised on October 18, 1817, shortly before independence was formally declared. The white star represents a guide to progress and honour; red and blue are said to represent the blood of patriots and the sky and ocean. Superficially similar to the Texas flag (adopted 1839), the Chilean flag actually came first. The proportions were refined in 1854 but the design has been unchanged for over 200 years.',
     },
@@ -1558,7 +1558,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
   PE: [
     {
       fromYear: 1950, toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/pe.png',
+      flagUrl: '/flags/pe.svg',
       label: 'Republic of Peru (current)',
       note: 'Peru\'s red-white-red vertical tricolor has been the national colour scheme since independence, but the coat of arms in the state flag was simplified and standardised in 1950. The arms feature a vicuña (national animal), a cinchona tree (source of quinine), and a cornucopia — three symbols of Peru\'s natural wealth. The civil flag (without arms) is among the oldest unchanged designs in the Americas.',
     },
@@ -1579,7 +1579,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
   EC: [
     {
       fromYear: 1900, toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/ec.png',
+      flagUrl: '/flags/ec.svg',
       label: 'Republic of Ecuador (with coat of arms)',
       note: 'Ecuador\'s flag is visually almost identical to Colombia\'s and Venezuela\'s — all three descend from Gran Colombia\'s yellow-blue-red tricolor. Ecuador distinguishes its state flag with a large coat of arms featuring Mount Chimborazo, a steamboat, and a condor. The proportions of the stripes (yellow taking half the flag) are also inherited directly from Francisco de Miranda\'s original Gran Colombia design.',
     },
@@ -1600,7 +1600,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
   BO: [
     {
       fromYear: 1851, toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/bo.png',
+      flagUrl: '/flags/bo.svg',
       label: 'Republic of Bolivia (red-yellow-green)',
       note: 'Bolivia\'s horizontal red-yellow-green tricolor was established by law in 1851, though the colours had been in use since independence in 1825. Red represents the blood of independence heroes; yellow the country\'s mineral wealth (Bolivia has some of the world\'s largest lithium and tin deposits); green the fertile land. The Wiphala — a rainbow-chequered flag of the indigenous Aymara people — was added as a co-official state flag in the 2009 constitution.',
     },
@@ -1615,7 +1615,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
   UY: [
     {
       fromYear: 1830, toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/uy.png',
+      flagUrl: '/flags/uy.svg',
       label: 'Oriental Republic of Uruguay',
       note: 'Uruguay\'s flag takes its nine horizontal stripes (five white, four blue) from the United States flag — at the time of independence, the US model was enormously influential across the Americas. In the canton sits the Sun of May, identical in meaning to Argentina\'s: both nations recognise the same revolutionary sunrise of May 25, 1810. Uruguay was once part of the United Provinces of the Río de la Plata alongside Argentina, and the shared sun reflects that common origin.',
     },
@@ -1630,7 +1630,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
   PY: [
     {
       fromYear: 1990, toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/py.png',
+      flagUrl: '/flags/py.svg',
       label: 'Republic of Paraguay (current)',
       note: 'Paraguay\'s flag is unique in the world: its obverse and reverse show different emblems. The front bears the national coat of arms (a star surrounded by olive and palm branches under the motto "Peace and Justice"); the back shows the Treasury Seal (a lion guarding a staff of liberty). This double-sided design has been official since 1842 and was last updated in 2013. The red-white-blue tricolor is said to have been inspired by the French Tricolore, which was associated with liberty across the Atlantic world.',
     },
@@ -1645,7 +1645,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
   CU: [
     {
       fromYear: 1902, toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/cu.png',
+      flagUrl: '/flags/cu.svg',
       label: 'Republic of Cuba',
       note: 'Cuba\'s flag — designed by exile Narciso López in 1849 — pre-dates Cuban independence by 50 years. López wanted to annex Cuba to the United States; later Cuban independence leaders adopted the same flag but stripped it of that meaning. The three blue stripes represent the three colonial provinces; the two white stripes represent peace; the red triangle stands for liberty, equality, and fraternity; the white star is the Lone Star of an independent Cuba. This design has flown without any change since 1902.',
     },
@@ -1666,7 +1666,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
   HT: [
     {
       fromYear: 1986, toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/ht.png',
+      flagUrl: '/flags/ht.svg',
       label: 'Republic of Haiti (restored)',
       note: 'Haiti\'s distinctive blue-and-red bicolor was restored in 1986 after the fall of the Duvalier dictatorship. The flag is derived from the legendary act of 1803 in which Jean-Jacques Dessalines tore the white strip from a captured French Tricolore, stitching the remaining blue and red together as a symbol of the union between Black and mixed-race Haitians against the colonial power. The coat of arms — a palm tree, cannons, and the motto "L\'Union Fait La Force" — sits in the white centre band of the state flag.',
     },
@@ -1687,13 +1687,13 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
   DO: [
     {
       fromYear: 1844, toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/do.png',
+      flagUrl: '/flags/do.svg',
       label: 'Dominican Republic',
       note: 'The Dominican flag — a white cross dividing blue and red quarters, with the coat of arms at centre — was designed by Juan Pablo Duarte for independence from Haiti in 1844. The white cross was deliberately chosen to set the Dominican flag apart from Haiti\'s blue-and-red (which had no cross), marking the cultural, religious, and political distinction the founders wanted to emphasise. The coat of arms features a Bible and cross, six Dominican flags, and the motto "God, Fatherland, Liberty."',
     },
     {
       fromYear: 1822, toYear: 1844,
-      flagUrl: 'https://flagcdn.com/w320/ht.png',
+      flagUrl: '/flags/ht.svg',
       label: 'Haitian Occupation',
       note: 'From 1822 to 1844 the eastern two-thirds of Hispaniola (the future Dominican Republic) was occupied and incorporated into Haiti by President Jean-Pierre Boyer. For 22 years the Haitian blue-and-red flew over what is now the Dominican Republic, a period known in Dominican history as the Haitian Unification — an occupation that profoundly shaped Dominican national identity and the desire for separation.',
     },
@@ -1709,7 +1709,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
   GT: [
     {
       fromYear: 1871, toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/gt.png',
+      flagUrl: '/flags/gt.svg',
       label: 'Republic of Guatemala (blue-white-blue)',
       note: 'Guatemala\'s vertical blue-white-blue tricolor with the quetzal and coat of arms was established by the 1871 Liberal Revolution. The blue stripes represent the Pacific and Atlantic oceans that flank Central America; the white represents peace. The resplendent quetzal — one of the world\'s most striking birds — is the national symbol; a quetzal has never successfully been kept in captivity, making it an emblem of liberty. The currency is also called the quetzal.',
     },
@@ -1733,7 +1733,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
   HN: [
     {
       fromYear: 1866, toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/hn.png',
+      flagUrl: '/flags/hn.svg',
       label: 'Republic of Honduras',
       note: 'Honduras\'s flag directly inherits the Central American Federal Republic\'s blue-white-blue horizontal tricolor. The five blue stars added in 1866 represent the five original nations of the Federal Republic — a quiet expression of the old dream of Central American unity. Honduras has held these colours continuously since the federation\'s collapse, with only the star design changing.',
     },
@@ -1748,7 +1748,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
   SV: [
     {
       fromYear: 1912, toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/sv.png',
+      flagUrl: '/flags/sv.svg',
       label: 'Republic of El Salvador (current)',
       note: 'El Salvador\'s blue-white-blue horizontal tricolor and its coat of arms (five volcanoes between two oceans, a rainbow, and the motto "God, Union, Liberty") were standardised in 1912. Like all Central American nations, the design descends from the Federal Republic flag. The blue represents the Pacific and Atlantic; the white represents peace. El Salvador is the smallest and most densely populated country in Central America.',
     },
@@ -1763,7 +1763,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
   NI: [
     {
       fromYear: 1908, toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/ni.png',
+      flagUrl: '/flags/ni.svg',
       label: 'Republic of Nicaragua (current)',
       note: 'Nicaragua\'s blue-white-blue horizontal tricolor — again from the Central American Federation — was definitively standardised in 1908. The coat of arms uniquely shows a rainbow over five volcanoes between two bodies of water, with a Phrygian cap of liberty and the words "Republic of Nicaragua — Central America." Nicaragua is the largest country in Central America and its flag uniquely uses the word "Central America" in the arms, keeping alive the unification ideal.',
     },
@@ -1778,7 +1778,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
   CR: [
     {
       fromYear: 1906, toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/cr.png',
+      flagUrl: '/flags/cr.svg',
       label: 'Republic of Costa Rica (current)',
       note: 'Costa Rica distinguished its Central American tricolor in 1848 by adding a wide red horizontal stripe at the centre — inspired, according to tradition, by First Lady Pacífica Fernández, who admired the French Tricolore\'s colours. The result — blue-white-red-white-blue — is immediately distinct from its neighbours. The coat of arms on the state flag was standardised in 1906 and shows three volcanoes, two oceans, and rising sun.',
     },
@@ -1793,13 +1793,13 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
   PA: [
     {
       fromYear: 1903, toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/pa.png',
+      flagUrl: '/flags/pa.svg',
       label: 'Republic of Panama (independence)',
       note: 'Panama\'s quartered flag — white with a blue star, white with a red star, blue, and red — was designed by Manuel Amador Guerrero\'s family and first flown on November 4, 1903, the day after independence from Colombia. The blue represents the Conservative Party; red represents the Liberal Party; white represents the peace between them. The design was chosen to symbolise national unity across political lines — an ambitious hope for a country whose independence was largely engineered by the United States to secure the Canal Zone.',
     },
     {
       fromYear: 1821, toYear: 1903,
-      flagUrl: 'https://flagcdn.com/w320/co.png',
+      flagUrl: '/flags/co.svg',
       label: 'Department of Colombia',
       note: 'Panama declared independence from Spain in 1821 and immediately joined Gran Colombia, later becoming a department of Colombia when Gran Colombia dissolved. Panama\'s attempts at independence in 1840, 1841, and later years were all unsuccessful. The 1903 independence was backed by the United States, which wanted to build a canal and found Colombia unwilling to cede the territory on American terms. Panama flew Colombia\'s yellow-blue-red tricolor for 82 years.',
     },
@@ -1808,7 +1808,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
   GY: [
     {
       fromYear: 1966, toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/gy.png',
+      flagUrl: '/flags/gy.svg',
       label: 'Cooperative Republic of Guyana',
       note: 'Guyana\'s flag — nicknamed "The Golden Arrowhead" — was designed by American vexillologist Whitney Smith and adopted at independence from Britain in 1966. A gold arrowhead points from the hoist towards the fly, fringed in white; beneath it a red triangle fringed in black. Green represents the forests; gold the mineral wealth; white the rivers; black the endurance of the people; red the zeal for nation-building. It remains one of the most distinctive flag designs in the Americas.',
     },
@@ -1823,7 +1823,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
   SR: [
     {
       fromYear: 1975, toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/sr.png',
+      flagUrl: '/flags/sr.svg',
       label: 'Republic of Suriname (independence)',
       note: 'Suriname\'s flag — five horizontal stripes of green, white, red, white, and green, with a large yellow star at the centre — was adopted when the country gained independence from the Netherlands in 1975. Green represents the forests and agriculture; white represents justice and freedom; red represents progress and love; the yellow star represents the unity of all the ethnic groups in Suriname\'s famously diverse population (Hindustanis, Creoles, Maroons, Javanese, Amerindians, and others).',
     },
@@ -1838,7 +1838,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
   BZ: [
     {
       fromYear: 1981, toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/bz.png',
+      flagUrl: '/flags/bz.svg',
       label: 'Belize (independence)',
       note: 'Belize\'s flag is unusual: a white circle with the national coat of arms sits on a blue field with red stripes top and bottom. The red stripes were added to include both political parties — the PUP (blue) and the UDP (red) — in the national symbol. The coat of arms depicts two woodcutters (logging was the colonial economy\'s foundation) beneath a mahogany tree and the motto "Sub Umbra Floreo" (I flourish in the shade). Belize was the last mainland American country to gain independence, in 1981.',
     },
@@ -1853,7 +1853,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
   JM: [
     {
       fromYear: 1962, toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/jm.png',
+      flagUrl: '/flags/jm.svg',
       label: 'Jamaica (independence)',
       note: 'Jamaica\'s flag is the only national flag in the world with neither red, white, nor blue. The gold diagonal cross (saltire) divides the flag into four triangles: green above and below, black left and right. Black represents the strength and creativity of the people; gold represents the natural wealth and the beauty of sunlight; green represents hope and the lush vegetation. The design won a national competition ahead of independence from Britain on August 6, 1962.',
     },
@@ -1868,7 +1868,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
   TT: [
     {
       fromYear: 1962, toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/tt.png',
+      flagUrl: '/flags/tt.svg',
       label: 'Trinidad and Tobago (independence)',
       note: 'Trinidad and Tobago\'s flag features a black stripe edged in white running diagonally from the upper hoist to the lower fly on a red field. The designer, Carlisle Chang, intended red for the fire element and the warmth of the people; black for the dedication and strength that unifies the country; white for the equality of all under the sun. The two islands gained independence together from Britain on August 31, 1962.',
     },
@@ -1883,7 +1883,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
   BB: [
     {
       fromYear: 1966, toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/bb.png',
+      flagUrl: '/flags/bb.svg',
       label: 'Barbados (independence)',
       note: 'Barbados\'s flag features three vertical bands of blue-gold-blue with a broken trident in the centre — the trident representing Barbados\'s maritime heritage (the country was known as "Little England" under colonial rule) and the "broken" lower shaft symbolising the break from colonial status. The flag was designed by Grantley Prescod and adopted at independence from Britain on November 30, 1966. In November 2021 Barbados became a republic, but kept the same flag — the trident remained.',
     },
@@ -1898,7 +1898,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
   BS: [
     {
       fromYear: 1973, toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/bs.png',
+      flagUrl: '/flags/bs.svg',
       label: 'Commonwealth of the Bahamas',
       note: 'The Bahamas\' flag — aquamarine and gold stripes with a black triangle at the hoist — was designed by Hervis Bain and adopted at independence from Britain on July 10, 1973. The aquamarine represents the surrounding sea; gold the beaches and the sun; black the strength and unity of the Bahamian people. The archipelago of some 700 islands was the site of Christopher Columbus\'s first landing in the Americas in 1492, on the island of Guanahani (San Salvador).',
     },
@@ -1913,7 +1913,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
   AG: [
     {
       fromYear: 1967, toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/ag.png',
+      flagUrl: '/flags/ag.svg',
       label: 'Antigua and Barbuda (independence)',
       note: 'Antigua\'s flag was designed by Reginald Samuel and chosen through a national competition ahead of independence from Britain in 1981 (the flag was first used in 1967 for associated statehood). The rising golden sun on a black field, flanked by red, blue, and white, represents the dawn of a new era. Black represents African heritage; blue the sea; white the sand; red the energy of the people; gold the sun. The V-shape of the triangle echoes victory.',
     },
@@ -1934,7 +1934,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
   DM: [
     {
       fromYear: 1978, toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/dm.png',
+      flagUrl: '/flags/dm.svg',
       label: 'Commonwealth of Dominica (independence)',
       note: 'Dominica\'s flag is one of the world\'s most distinctive — a green field with a cross of yellow, black, and white stripes, and at the centre a red circle bearing the rare Sisserou parrot (the imperial Amazon, found only in Dominica). The flag was adopted at independence from Britain in 1978 and is one of only two national flags to prominently feature purple (in the parrot). It was modified in 1981 and 1988 before reaching its current form.',
     },
@@ -1955,7 +1955,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
   GD: [
     {
       fromYear: 1974, toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/gd.png',
+      flagUrl: '/flags/gd.svg',
       label: 'Grenada (independence)',
       note: 'Grenada\'s flag — red border surrounding four gold stars at top and bottom, with green and yellow triangles and a red circle bearing one gold star at centre, plus a nutmeg on the green triangle — was adopted at independence from Britain in 1974. The nutmeg reflects Grenada\'s status as one of the world\'s largest nutmeg producers. In 1983 the United States invaded Grenada ("Operation Urgent Fury"), temporarily replacing the government; the flag was maintained throughout.',
     },
@@ -1976,7 +1976,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
   KN: [
     {
       fromYear: 1983, toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/kn.png',
+      flagUrl: '/flags/kn.svg',
       label: 'Saint Kitts and Nevis (independence)',
       note: 'Saint Kitts and Nevis gained independence from Britain on September 19, 1983 — the last British Caribbean territory on the mainland of the Lesser Antilles to do so. The flag\'s diagonal black stripe with two white stars on green and red was designed by Edrice Lewis. The stars represent the two islands; the green represents fertility; the red recalls the African heritage and the struggle for freedom; black is for the African heritage; yellow for the sunshine.',
     },
@@ -1997,7 +1997,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
   LC: [
     {
       fromYear: 1979, toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/lc.png',
+      flagUrl: '/flags/lc.svg',
       label: 'Saint Lucia (independence)',
       note: 'Saint Lucia\'s distinctive flag — a blue field with a white-edged black isosceles triangle surmounted by a smaller gold triangle — depicts the twin Pitons, the country\'s iconic volcanic peaks and a UNESCO World Heritage Site. Blue represents the sky and sea; gold the sunshine; black and white the harmony of the two main ethnic groups. The flag was modified in 2002 to make the gold triangle more prominent. Saint Lucia is the only country named after a woman.',
     },
@@ -2018,7 +2018,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
   VC: [
     {
       fromYear: 1985, toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/vc.png',
+      flagUrl: '/flags/vc.svg',
       label: 'Saint Vincent and the Grenadines',
       note: 'Saint Vincent\'s current flag — blue-gold-green vertical stripes with three green diamonds in a V formation on the gold — was adopted in 1985, replacing a version with a breadfruit leaf. The three diamonds represent the Grenadine islands; the blue represents the sky and sea; gold the warmth of the people; green the lush vegetation. Saint Vincent is known as the "Gem of the Antilles" and the last stronghold of the indigenous Caribs (now called Garifuna) in the Caribbean.',
     },
@@ -2041,7 +2041,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     {
       fromYear: 2012,
       toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/by.png',
+      flagUrl: '/flags/by.svg',
       label: 'Flag of Belarus',
       note: 'A 2012 standardization made the hoist ornament red-on-white. The red-green bicolour is one of the few national flags that still keeps a Soviet-derived design rather than reverting after independence.',
     },
@@ -2071,7 +2071,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     {
       fromYear: 1990,
       toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/ee.png',
+      flagUrl: '/flags/ee.svg',
       label: 'Flag of Estonia (restored)',
       note: 'The blue-black-white tricolour, first raised by Estonian students in 1884, was restored in 1990 as the USSR collapsed. Blue is the sky, black the soil and hardship, white the people\'s striving for freedom.',
     },
@@ -2101,7 +2101,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     {
       fromYear: 1990,
       toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/lv.png',
+      flagUrl: '/flags/lv.svg',
       label: 'Flag of Latvia (restored)',
       note: 'Among the world\'s oldest flag designs, traced to a 13th-century chronicle, the maroon-white-maroon flag was restored in 1990. Its deep carmine shade is officially called "Latvian red".',
     },
@@ -2131,7 +2131,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     {
       fromYear: 1988,
       toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/lt.png',
+      flagUrl: '/flags/lt.svg',
       label: 'Flag of Lithuania (restored)',
       note: 'Yellow for the sun and prosperity, green for forests and hope, red for blood shed for the nation. It was the first Baltic flag readopted during the independence movement, restored in 1988.',
     },
@@ -2161,7 +2161,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     {
       fromYear: 1991,
       toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/ua.png',
+      flagUrl: '/flags/ua.svg',
       label: 'Flag of Ukraine',
       note: 'The blue-and-yellow bicolour was restored at independence in 1991, reviving the 1917 design. It is widely read as blue sky above golden wheat fields.',
     },
@@ -2184,7 +2184,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     {
       fromYear: 1990,
       toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/md.png',
+      flagUrl: '/flags/md.svg',
       label: 'Flag of Moldova',
       note: 'A blue-yellow-red vertical tricolour adopted in 1990, deliberately modelled on Romania\'s flag to reflect shared heritage, but bearing Moldova\'s eagle-and-aurochs coat of arms on the central stripe.',
     },
@@ -2200,7 +2200,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     {
       fromYear: 1998,
       toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/ba.png',
+      flagUrl: '/flags/ba.svg',
       label: 'Flag of Bosnia and Herzegovina',
       note: 'Imposed by High Representative Carlos Westendorp in 1998 after local politicians deadlocked, it was deliberately neutral. The yellow triangle suggests the country\'s shape and its three peoples; the stars represent Europe.',
     },
@@ -2223,7 +2223,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     {
       fromYear: 1990,
       toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/hr.png',
+      flagUrl: '/flags/hr.svg',
       label: 'Flag of Croatia',
       note: 'Adopted in December 1990 as Yugoslavia dissolved, it centers the red-and-white checkerboard (šahovnica) beneath a crown of five historical regional shields, beginning with the oldest known Croatian coat of arms.',
     },
@@ -2252,7 +2252,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     {
       fromYear: 2010,
       toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/rs.png',
+      flagUrl: '/flags/rs.svg',
       label: 'Flag of Serbia',
       note: 'A 2010 standardization set the coat of arms in its present form — the double-headed white eagle and the cross with four firesteels (the "Serbian cross").',
     },
@@ -2282,7 +2282,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     {
       fromYear: 1991,
       toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/si.png',
+      flagUrl: '/flags/si.svg',
       label: 'Flag of Slovenia',
       note: 'Adopted at independence in June 1991, it replaced the red star with the national arms in the upper hoist: Mount Triglav, wavy lines for sea and rivers, and three gold stars of the Counts of Celje.',
     },
@@ -2298,7 +2298,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     {
       fromYear: 1995,
       toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/mk.png',
+      flagUrl: '/flags/mk.svg',
       label: 'Flag of North Macedonia',
       note: 'Adopted in 1995 to end the dispute with Greece, it shows a stylized golden sun with eight broadening rays on red. The flag was unchanged by the 2019 renaming to "North Macedonia".',
     },
@@ -2321,7 +2321,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     {
       fromYear: 2004,
       toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/me.png',
+      flagUrl: '/flags/me.svg',
       label: 'Flag of Montenegro',
       note: 'Adopted in 2004 ahead of independence: a red field with a gold border bearing the golden double-headed eagle of the historic House of Petrović-Njegoš, a deliberate break from the Serbian-style tricolor.',
     },
@@ -2344,7 +2344,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     {
       fromYear: 2008,
       toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/xk.png',
+      flagUrl: '/flags/xk.svg',
       label: 'Flag of Kosovo',
       note: 'Adopted on 17 February 2008 with the declaration of independence — one of the world\'s newest national flags. It deliberately avoids Albanian and pan-Slavic colors, using a blue field with a gold map and six white stars for the main ethnic groups.',
     },
@@ -2353,7 +2353,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     {
       fromYear: 1920,
       toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/cz.png',
+      flagUrl: '/flags/cz.svg',
       label: 'Czech flag (blue triangle)',
       note: 'Adopted by Czechoslovakia in 1920, adding a blue hoist triangle to distinguish it from Poland\'s. Czechia kept this exact flag after the peaceful 1993 split, despite a law barring successor states from using the federal flag.',
     },
@@ -2369,7 +2369,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     {
       fromYear: 1992,
       toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/sk.png',
+      flagUrl: '/flags/sk.svg',
       label: 'Slovak flag (with arms)',
       note: 'Adopted in September 1992 before the split from Czechoslovakia, it shifts the national arms (a double cross on three hills) toward the hoist so the flag is not confused with other Slavic tricolors.',
     },
@@ -2385,7 +2385,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     {
       fromYear: 1957,
       toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/hu.png',
+      flagUrl: '/flags/hu.svg',
       label: 'Current tricolor',
       note: 'After the 1956 revolution was crushed, the Kádár government removed all heraldry, returning to the plain red-white-green tricolor. This emblem-free flag has remained Hungary\'s flag ever since.',
     },
@@ -2422,7 +2422,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     {
       fromYear: 1989,
       toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/ro.png',
+      flagUrl: '/flags/ro.svg',
       label: 'Current tricolor',
       note: 'Post-revolution Romania restored the plain blue-yellow-red tricolor without any emblem. The official cobalt blue, chrome yellow and vermilion red shades were later fixed by law.',
     },
@@ -2466,7 +2466,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     {
       fromYear: 1990,
       toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/bg.png',
+      flagUrl: '/flags/bg.svg',
       label: 'Current tricolor',
       note: 'With the fall of communism the socialist emblem was removed, returning Bulgaria to the plain white-green-red tricolor. The green was originally inspired by Russia\'s Pan-Slavic flag.',
     },
@@ -2503,7 +2503,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     {
       fromYear: 1992,
       toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/al.png',
+      flagUrl: '/flags/al.svg',
       label: 'Current flag',
       note: 'After communism fell, the red star was removed on 7 April 1992, leaving the plain black double-headed eagle on red. The eagle derives from the 15th-century seal of national hero Skanderbeg.',
     },
@@ -2540,7 +2540,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     {
       fromYear: 1866,
       toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/ad.png',
+      flagUrl: '/flags/ad.svg',
       label: 'Tricolor with arms',
       note: 'The vertical blue-yellow-red tricolor was introduced in 1866, its design popularly attributed to Napoleon III, one of Andorra\'s two co-princes. It was officially codified in 1971 and standardized in 1993.',
     },
@@ -2556,7 +2556,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     {
       fromYear: 1982,
       toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/li.png',
+      flagUrl: '/flags/li.svg',
       label: 'Blue-red with crown',
       note: 'A restyled, more detailed gold crown was adopted in 1982. Blue represents the sky and red the evening fires lit in homes.',
     },
@@ -2579,7 +2579,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     {
       fromYear: 1845,
       toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/lu.png',
+      flagUrl: '/flags/lu.svg',
       label: 'Red-white-blue tricolor',
       note: 'Fixed in 1845 and only legally formalized in 1993, Luxembourg\'s tricolor has been essentially unchanged for over 175 years. It is nearly identical to the Netherlands\' flag but is longer and uses a lighter blue.',
     },
@@ -2588,7 +2588,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     {
       fromYear: 1964,
       toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/mt.png',
+      flagUrl: '/flags/mt.svg',
       label: 'White-red with George Cross',
       note: 'At independence in 1964 the blue canton was dropped and the George Cross, edged in red, was placed directly on the white field so it would appear less prominent.',
     },
@@ -2604,7 +2604,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     {
       fromYear: 1881,
       toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/mc.png',
+      flagUrl: '/flags/mc.svg',
       label: 'Red-white bicolour',
       note: 'Adopted in 1881 from the Grimaldi heraldic colors, this simple red-over-white bicolour is among the world\'s oldest continuous national flags. It is nearly identical to Indonesia\'s flag, differing mainly in proportion.',
     },
@@ -2620,7 +2620,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     {
       fromYear: 2011,
       toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/sm.png',
+      flagUrl: '/flags/sm.svg',
       label: 'White-blue with arms',
       note: 'A Constitutional Law of 2011 definitively fixed the flag and slightly refined the arms. White stands for peace and blue for liberty; the arms show three towers on Monte Titano beneath the motto LIBERTAS.',
     },
@@ -2636,7 +2636,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     {
       fromYear: 2023,
       toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/va.png',
+      flagUrl: '/flags/va.svg',
       label: 'Yellow-white with keys and tiara',
       note: 'The 2023 Fundamental Law accompanied a minor revision of the emblem. The flag remains one of only two square national flags in the world, alongside Switzerland.',
     },
@@ -2652,7 +2652,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     {
       fromYear: 1944,
       toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/is.png',
+      flagUrl: '/flags/is.svg',
       label: 'Current Icelandic flag',
       note: 'The red-cross-on-white-on-blue design was retained when Iceland became a fully independent republic in 1944. The colors are said to represent the island\'s fire (red), ice (white) and mountains (blue).',
     },
@@ -2668,7 +2668,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     {
       fromYear: 2006,
       toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/cy.png',
+      flagUrl: '/flags/cy.svg',
       label: 'Copper island on white',
       note: 'In 2006 the shades were standardized and proportions set to 3:2. The map is rendered in copper for Cyprus\'s ancient copper mines, above two olive branches for peace — deliberately avoiding the colors of Greece and Turkey.',
     },
@@ -2686,7 +2686,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     {
       fromYear: 1996,
       toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/zm.png',
+      flagUrl: '/flags/zm.svg',
       label: 'Current flag',
       note: 'In 1996 the field green was brightened and the orange eagle redrawn to match the coat of arms. The eagle and red-black-orange stripes sit unusually in the fly rather than the center.',
     },
@@ -2702,7 +2702,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     {
       fromYear: 1980,
       toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/zw.png',
+      flagUrl: '/flags/zw.svg',
       label: 'Flag of Zimbabwe',
       note: 'Adopted at independence in 1980, it uses the green-yellow-red-black ZANU-PF colors with a red star and the golden Zimbabwe Bird, a soapstone carving found at the ruins of Great Zimbabwe.',
     },
@@ -2732,7 +2732,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     {
       fromYear: 2012,
       toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/mw.png',
+      flagUrl: '/flags/mw.svg',
       label: 'Flag of Malawi (restored)',
       note: 'After President Mutharika\'s death, Parliament voted in 2012 to restore the original 1964 design — a rare "changed and changed back" flag story. The red rising sun symbolizes the dawn of freedom across Africa.',
     },
@@ -2755,7 +2755,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     {
       fromYear: 1983,
       toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/mz.png',
+      flagUrl: '/flags/mz.svg',
       label: 'Flag of Mozambique',
       note: 'Adopted in 1983, this is the only national flag in the world to depict a modern assault rifle: a bayoneted AK-47 crossed with a hoe over an open book, atop a gold star.',
     },
@@ -2778,7 +2778,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     {
       fromYear: 1966,
       toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/bw.png',
+      flagUrl: '/flags/bw.svg',
       label: 'Flag of Botswana',
       note: 'First hoisted at independence in 1966. The light blue stands for water and rain (the national motto "Pula" means "let there be rain"); the black band with white edges symbolizes racial harmony. It has never been changed.',
     },
@@ -2787,7 +2787,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     {
       fromYear: 1990,
       toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/na.png',
+      flagUrl: '/flags/na.svg',
       label: 'Flag of Namibia',
       note: 'Adopted at independence from South African rule in 1990, assembled from three finalist designs. Its diagonal red band, blue and green triangles, and golden sun reflect the colors of SWAPO.',
     },
@@ -2796,7 +2796,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     {
       fromYear: 2006,
       toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/ls.png',
+      flagUrl: '/flags/ls.svg',
       label: 'Flag of Lesotho',
       note: 'Unveiled on the 40th anniversary of independence in 2006, it returned to a peaceful blue-white-green design with a black mokorotlo (traditional Basotho straw hat) in the center, representing the nation\'s people.',
     },
@@ -2819,7 +2819,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     {
       fromYear: 1968,
       toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/sz.png',
+      flagUrl: '/flags/sz.svg',
       label: 'Flag of Eswatini',
       note: 'Adopted at independence in 1968, based on a military banner King Sobhuza II gave the Swazi Pioneer Corps in 1941, featuring a black-and-white Nguni shield with two spears and a fighting staff. The country renamed itself Eswatini in 2018, but the flag was unchanged.',
     },
@@ -2828,7 +2828,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     {
       fromYear: 1968,
       toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/mu.png',
+      flagUrl: '/flags/mu.svg',
       label: 'The Four Bands',
       note: 'Adopted at independence in 1968 and known as "Les Quatre Bandes," it has four equal horizontal bands of red, blue, yellow, and green — one of very few national flags with four horizontal stripes.',
     },
@@ -2837,7 +2837,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     {
       fromYear: 1961,
       toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/sl.png',
+      flagUrl: '/flags/sl.svg',
       label: 'Flag of Sierra Leone',
       note: 'Adopted at independence in 1961, a green-white-blue tricolour. Green stands for agriculture and mountains, white for unity and justice, and blue for the natural harbour of Freetown.',
     },
@@ -2860,7 +2860,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     {
       fromYear: 1847,
       toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/lr.png',
+      flagUrl: '/flags/lr.svg',
       label: 'Flag of Liberia',
       note: 'Adopted in 1847 when Liberia — founded by freed American slaves — declared independence. It mirrors the US Stars and Stripes but has 11 stripes for the signers of its Declaration and a single white star for Africa\'s then-only republic.',
     },
@@ -2876,7 +2876,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     {
       fromYear: 1965,
       toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/gm.png',
+      flagUrl: '/flags/gm.svg',
       label: 'Flag of The Gambia',
       note: 'Hoisted at independence in 1965 and designed by accountant Louis Thomasi. Its red, blue, and green bands separated by thin white stripes represent the sun and savanna, the Gambia River, and the land\'s forests.',
     },
@@ -2892,7 +2892,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     {
       fromYear: 1992,
       toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/cv.png',
+      flagUrl: '/flags/cv.svg',
       label: 'Flag of Cape Verde',
       note: 'Adopted in 1992 after multiparty democracy and a break from the union ideal with Guinea-Bissau. Its blue field, white-red-white stripes, and ring of ten yellow stars represent the ten main islands and a turn toward the Atlantic.',
     },
@@ -2908,7 +2908,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     {
       fromYear: 1975,
       toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/st.png',
+      flagUrl: '/flags/st.svg',
       label: 'Flag of São Tomé and Príncipe',
       note: 'Adopted at independence from Portugal in 1975, based on the flag of the MLSTP liberation movement. The two black stars on the yellow band represent the two islands, in pan-African colors.',
     },
@@ -2917,7 +2917,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     {
       fromYear: 1979,
       toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/gq.png',
+      flagUrl: '/flags/gq.svg',
       label: 'Flag of Equatorial Guinea (restored)',
       note: 'The original 1968 design with the silk-cotton-tree coat of arms was restored in 1979 after dictator Macías Nguema was deposed, and remains in use.',
     },
@@ -2940,7 +2940,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     {
       fromYear: 1960,
       toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/ga.png',
+      flagUrl: '/flags/ga.svg',
       label: 'Flag of Gabon',
       note: 'Modified days before independence in 1960 by removing the French canton and widening the central yellow band. Green stands for forests, yellow for the equator and sun, and blue for the sea.',
     },
@@ -2956,7 +2956,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     {
       fromYear: 1975,
       toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/cm.png',
+      flagUrl: '/flags/cm.svg',
       label: 'Flag of Cameroon',
       note: 'Adopted in 1975 when Cameroon became a unitary state, merging the two earlier stars into a single central gold star symbolizing national unity.',
     },
@@ -2979,7 +2979,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     {
       fromYear: 1958,
       toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/cf.png',
+      flagUrl: '/flags/cf.svg',
       label: 'Flag of the Central African Republic',
       note: 'Designed by founding father Barthélemy Boganda in 1958, it uniquely fuses the French blue-white-red with the pan-African red-green-yellow, crossed by a vertical red "blood of unity" stripe. It was even kept unchanged during Bokassa\'s 1976–1979 "Central African Empire."',
     },
@@ -2988,7 +2988,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     {
       fromYear: 1959,
       toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/td.png',
+      flagUrl: '/flags/td.svg',
       label: 'Flag of Chad',
       note: 'Adopted in 1959: a blue-yellow-red tricolour. Chad switched from pan-African green to blue to avoid clashing with Mali — coincidentally producing a flag nearly identical to Romania\'s, a resemblance Chad raised at the UN in 2004.',
     },
@@ -2997,7 +2997,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     {
       fromYear: 1991,
       toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/cg.png',
+      flagUrl: '/flags/cg.svg',
       label: 'Flag of the Republic of the Congo',
       note: 'With the collapse of the one-party Marxist state in 1991, the country readopted its original 1959 diagonal green-yellow-red tricolour in the pan-African colors.',
     },
@@ -3020,7 +3020,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     {
       fromYear: 2006,
       toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/cd.png',
+      flagUrl: '/flags/cd.svg',
       label: 'Flag of the DR Congo',
       note: 'The 2006 constitution confirmed a sky-blue flag with a yellow star and a red, yellow-bordered diagonal stripe. Blue stands for peace, red for the blood of martyrs, and yellow for the country\'s wealth.',
     },
@@ -3072,7 +3072,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     {
       fromYear: 1975,
       toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/ao.png',
+      flagUrl: '/flags/ao.svg',
       label: 'Flag of Angola',
       note: 'Adopted at independence from Portugal in 1975, red over black with a yellow machete, half-cogwheel, and star from the ruling MPLA\'s emblem. The design deliberately echoes the Soviet hammer-and-sickle.',
     },
@@ -3081,7 +3081,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     {
       fromYear: 2001,
       toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/rw.png',
+      flagUrl: '/flags/rw.svg',
       label: 'Flag of Rwanda',
       note: 'Completely redesigned in 2001 to break association with the old regime and the 1994 genocide: blue over yellow over green with a golden sun. Blue is peace, yellow economic development, green prosperity.',
     },
@@ -3103,7 +3103,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     {
       fromYear: 1982,
       toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/bi.png',
+      flagUrl: '/flags/bi.svg',
       label: 'Flag of Burundi',
       note: 'The current flag refined the proportions of the 1967 design: a white saltire dividing red and green fields, with three red stars on a central white disc for the motto "Unité, Travail, Progrès".',
     },
@@ -3133,7 +3133,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     {
       fromYear: 1962,
       toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/ug.png',
+      flagUrl: '/flags/ug.svg',
       label: 'Flag of Uganda',
       note: 'Adopted at independence from Britain in 1962, with six black-yellow-red stripes and a central white disc bearing the grey crowned crane — the national bird, facing the hoist.',
     },
@@ -3142,7 +3142,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     {
       fromYear: 1963,
       toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/ke.png',
+      flagUrl: '/flags/ke.svg',
       label: 'Flag of Kenya',
       note: 'Adopted at independence in 1963: black, red, and green bands separated by white fimbriations, with a central Maasai shield and crossed spears symbolizing the defence of freedom.',
     },
@@ -3151,7 +3151,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     {
       fromYear: 1964,
       toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/tz.png',
+      flagUrl: '/flags/tz.svg',
       label: 'Flag of Tanzania',
       note: 'After Tanganyika and Zanzibar united in 1964, a new flag merged Tanganyika\'s green and black with Zanzibar\'s blue into a yellow-edged black diagonal. Green is land, blue sea, black the people, yellow mineral wealth.',
     },
@@ -3182,7 +3182,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     {
       fromYear: 2002,
       toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/km.png',
+      flagUrl: '/flags/km.svg',
       label: 'Flag of the Comoros',
       note: 'Hoisted in 2002, with four horizontal stripes and a green hoist triangle bearing a crescent and four stars. The four stripes and four stars each represent the islands, including French-administered Mayotte.',
     },
@@ -3226,7 +3226,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     {
       fromYear: 1958,
       toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/mg.png',
+      flagUrl: '/flags/mg.svg',
       label: 'Flag of Madagascar',
       note: 'Adopted in 1958 as the Malagasy Republic gained autonomy within the French Community. White and red recall the historic Merina kingdom, while green honors the Hova commoners.',
     },
@@ -3235,7 +3235,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     {
       fromYear: 1962,
       toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/dz.png',
+      flagUrl: '/flags/dz.svg',
       label: 'Flag of Algeria',
       note: 'Adopted in 1962, the day before formal independence, with equal green and white vertical bands and a red crescent and star symbolizing Islam.',
     },
@@ -3258,7 +3258,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     {
       fromYear: 1999,
       toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/tn.png',
+      flagUrl: '/flags/tn.svg',
       label: 'Flag of Tunisia',
       note: 'A 1999 law formalized the flag for the first time, only slightly adjusting the crescent and proportions of a design that had flown almost unchanged since 1831 — among the oldest in the Arab world.',
     },
@@ -3274,7 +3274,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     {
       fromYear: 1915,
       toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/ma.png',
+      flagUrl: '/flags/ma.svg',
       label: 'Flag of Morocco',
       note: 'In 1915 Sultan Yusef added the green interlaced pentagram (Seal of Solomon) to the red field, partly to distinguish Moroccan ships. The design survived the French and Spanish protectorate eras.',
       parallelCaption: 'Breakaway republic during the Rif War',
@@ -3299,7 +3299,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     {
       fromYear: 2017,
       toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/mr.png',
+      flagUrl: '/flags/mr.svg',
       label: 'Flag of Mauritania',
       note: 'A 2017 referendum added horizontal red bands top and bottom to honor the blood shed by Mauritanians in the struggle for independence.',
     },
@@ -3315,7 +3315,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     {
       fromYear: 1970,
       toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/sd.png',
+      flagUrl: '/flags/sd.svg',
       label: 'Flag of Sudan',
       note: 'Adopted in 1970 after Gaafar Nimeiry\'s coup, using the pan-Arab red-white-black tricolour with a green hoist triangle, based on the Arab Liberation Flag of Egypt\'s 1952 revolution.',
     },
@@ -3331,7 +3331,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     {
       fromYear: 2011,
       toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/ss.png',
+      flagUrl: '/flags/ss.svg',
       label: 'Flag of South Sudan',
       note: 'Based on the SPLM liberation banner and first adopted in 2005 under the peace agreement, it carried over unchanged when South Sudan became the world\'s newest country in 2011.',
     },
@@ -3340,7 +3340,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     {
       fromYear: 2009,
       toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/et.png',
+      flagUrl: '/flags/et.svg',
       label: 'Flag of Ethiopia',
       note: 'A 2009 standardization fixed the current national emblem — a gold rayed pentagram on a blue disc — whose rays symbolize the equality and unity of Ethiopia\'s peoples. The red-yellow-green is one of the world\'s oldest tricolors.',
     },
@@ -3377,7 +3377,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     {
       fromYear: 1995,
       toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/er.png',
+      flagUrl: '/flags/er.svg',
       label: 'Flag of Eritrea',
       note: 'Adopted in 1995, the olive wreath was standardized to 30 leaves, symbolizing the 30 years of armed struggle that preceded independence.',
     },
@@ -3400,7 +3400,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     {
       fromYear: 1977,
       toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/dj.png',
+      flagUrl: '/flags/dj.svg',
       label: 'Flag of Djibouti',
       note: 'Adopted at independence from France in 1977: light blue and green bands with a white triangle and red star. The colors are associated with the Issa and Afar communities, the star representing unity.',
     },
@@ -3409,7 +3409,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     {
       fromYear: 1954,
       toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/so.png',
+      flagUrl: '/flags/so.svg',
       label: 'Flag of Somalia',
       note: 'Designed by Mohammed Awale Liban and adopted in 1954 during the UN trusteeship, with a light-blue field honoring the UN and a white Star of Unity for the five regions inhabited by ethnic Somalis.',
     },
@@ -3418,7 +3418,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     {
       fromYear: 1960,
       toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/ng.png',
+      flagUrl: '/flags/ng.svg',
       label: 'Flag of Nigeria',
       note: 'Adopted on independence day in 1960 from a design by 23-year-old student Michael Taiwo Akinkunmi. The green bands represent agriculture and natural wealth; the white center stands for peace and unity.',
     },
@@ -3434,7 +3434,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     {
       fromYear: 1966,
       toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/gh.png',
+      flagUrl: '/flags/gh.svg',
       label: 'Flag of Ghana (restored)',
       note: 'After the 1966 coup that ousted Nkrumah, the original 1957 red-gold-green flag was immediately reinstated. Designed by Theodosia Okoh, it was the first flag to use the black star, inspiring many later African flags.',
     },
@@ -3457,7 +3457,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     {
       fromYear: 1960,
       toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/sn.png',
+      flagUrl: '/flags/sn.svg',
       label: 'Flag of Senegal',
       note: 'On full independence in 1960 after the Mali Federation broke up, Senegal kept the vertical green-yellow-red tricolour but replaced the central figure with a green five-pointed star for unity and hope.',
     },
@@ -3480,7 +3480,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     {
       fromYear: 1961,
       toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/ml.png',
+      flagUrl: '/flags/ml.svg',
       label: 'Flag of Mali',
       note: 'In 1961 the black human figure (kanaga) was removed — reportedly after objections from Islamic groups to depicting the human form — leaving a plain green-gold-red pan-African tricolour.',
     },
@@ -3496,7 +3496,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     {
       fromYear: 1984,
       toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/bf.png',
+      flagUrl: '/flags/bf.svg',
       label: 'Flag of Burkina Faso',
       note: 'In 1984 revolutionary leader Thomas Sankara renamed the country Burkina Faso ("Land of Upright People") and introduced this red-and-green flag with a central yellow star for revolution and the nation\'s riches.',
     },
@@ -3512,7 +3512,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     {
       fromYear: 1959,
       toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/ne.png',
+      flagUrl: '/flags/ne.svg',
       label: 'Flag of Niger',
       note: 'Adopted in 1959 shortly before independence, with a central orange disc for the sun. Green stands for hope and the river south, white for purity, and orange for the Sahara. It has never changed.',
     },
@@ -3521,7 +3521,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     {
       fromYear: 1990,
       toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/bj.png',
+      flagUrl: '/flags/bj.svg',
       label: 'Flag of Benin (restored)',
       note: 'With the collapse of Marxism-Leninism, Benin restored its original 1959 Dahomey flag in 1990 — a rare case of a nation returning exactly to its pre-socialist flag without any redesign.',
     },
@@ -3544,7 +3544,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     {
       fromYear: 1960,
       toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/tg.png',
+      flagUrl: '/flags/tg.svg',
       label: 'Flag of Togo',
       note: 'Adopted at independence in 1960 and designed by artist Paul Ahyi, with five green and yellow stripes (one per region) and a single white star on a red canton, reducing the earlier two stars to one to stress unity.',
     },
@@ -3567,7 +3567,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     {
       fromYear: 1958,
       toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/gn.png',
+      flagUrl: '/flags/gn.svg',
       label: 'Flag of Guinea',
       note: 'Adopted in 1958 after Guinea alone rejected the French Community and chose immediate independence under Sékou Touré. The red-yellow-green tricolour mirrors Ghana\'s pan-African colors and has never changed.',
     },
@@ -3576,7 +3576,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     {
       fromYear: 1973,
       toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/gw.png',
+      flagUrl: '/flags/gw.svg',
       label: 'Flag of Guinea-Bissau',
       note: 'Adopted at the 1973 declaration of independence from Portugal, nearly identical to the PAIGC liberation party\'s flag, with a red hoist band bearing a black star for African unity. It has never been changed.',
     },
@@ -3587,7 +3587,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     {
       fromYear: 1970,
       toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/fj.png',
+      flagUrl: '/flags/fj.svg',
       label: 'Flag of Fiji',
       note: 'Adopted at independence in 1970, the colonial dark blue was lightened to a sky blue for the Pacific Ocean, keeping the shield and the Union Jack. Fiji formally proposed removing the Union Jack in 2005 and 2015, but both efforts were abandoned.',
     },
@@ -3610,7 +3610,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     {
       fromYear: 1971,
       toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/pg.png',
+      flagUrl: '/flags/pg.svg',
       label: 'Flag of Papua New Guinea',
       note: 'Designed by 15-year-old schoolgirl Susan Karike and adopted in 1971, it shows a yellow Raggiana bird of paradise and the white stars of the Southern Cross on a diagonally split red-and-black field. It has never changed.',
     },
@@ -3626,7 +3626,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     {
       fromYear: 1977,
       toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/sb.png',
+      flagUrl: '/flags/sb.svg',
       label: 'Flag of the Solomon Islands',
       note: 'Adopted just before independence in 1977: a yellow diagonal stripe separates a blue triangle (sea and sky) from a green one (land), with five white stars for the island groups. One flag, never changed.',
     },
@@ -3642,7 +3642,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     {
       fromYear: 1980,
       toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/vu.png',
+      flagUrl: '/flags/vu.svg',
       label: 'Flag of Vanuatu',
       note: 'Adopted at independence in 1980 in the colors of the Vanua\'aku Pati, with a black "Y" shape, a boar\'s tusk, and namele fern leaves. One flag, never changed.',
     },
@@ -3658,7 +3658,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     {
       fromYear: 1949,
       toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/ws.png',
+      flagUrl: '/flags/ws.svg',
       label: 'Flag of Samoa',
       note: 'In 1949 a fifth, smaller star was added to complete the Southern Cross on the red field. The design was kept after independence in 1962 and has remained unchanged.',
     },
@@ -3688,7 +3688,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     {
       fromYear: 1866,
       toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/to.png',
+      flagUrl: '/flags/to.svg',
       label: 'Flag of Tonga',
       note: 'The red flag with a white canton bearing a red couped cross was introduced in 1866 and entrenched in the 1875 constitution, which forbids it from ever being altered — one of the world\'s oldest unchanged flags.',
     },
@@ -3704,7 +3704,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     {
       fromYear: 1979,
       toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/ki.png',
+      flagUrl: '/flags/ki.svg',
       label: 'Flag of Kiribati',
       note: 'Adopted at independence in 1979, the golden frigatebird flying over a rising sun and three white waves is based directly on the colonial coat of arms granted to the Gilbert and Ellice Islands in 1937.',
     },
@@ -3713,7 +3713,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     {
       fromYear: 1979,
       toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/mh.png',
+      flagUrl: '/flags/mh.svg',
       label: 'Flag of the Marshall Islands',
       note: 'Hoisted in 1979 when the territory became self-governing: two diverging orange and white rays and a 24-point white star on deep blue, representing the nation\'s location near the equator.',
     },
@@ -3729,7 +3729,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     {
       fromYear: 1978,
       toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/fm.png',
+      flagUrl: '/flags/fm.svg',
       label: 'Flag of the Federated States of Micronesia',
       note: 'Adopted in 1978, it keeps the light-blue field of the Trust Territory flag but reduces the stars from six to four — one for each FSM state: Yap, Chuuk, Pohnpei, and Kosrae.',
     },
@@ -3745,7 +3745,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     {
       fromYear: 1968,
       toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/nr.png',
+      flagUrl: '/flags/nr.svg',
       label: 'Flag of Nauru',
       note: 'Adopted on independence day in 1968: a blue field with a gold stripe for the equator and a white 12-pointed star below it, depicting Nauru\'s position just south of the equator. The twelve points represent the island\'s original tribes.',
     },
@@ -3754,7 +3754,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     {
       fromYear: 1981,
       toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/pw.png',
+      flagUrl: '/flags/pw.svg',
       label: 'Flag of Palau',
       note: 'Adopted in 1981 when Palau became self-governing: a golden-yellow full moon slightly off-center on a sky-blue field, the moon symbolizing peace and national unity.',
     },
@@ -3770,7 +3770,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     {
       fromYear: 1997,
       toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/tv.png',
+      flagUrl: '/flags/tv.svg',
       label: 'Flag of Tuvalu (restored)',
       note: 'In 1997 Tuvalu reverted to its original 1978 design — a light-blue ensign with the Union Jack and nine yellow stars mapping the geographic positions of the nine islands.',
     },
@@ -3795,7 +3795,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     {
       fromYear: 1945,
       toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/id.png',
+      flagUrl: '/flags/id.svg',
       label: 'Sang Saka Merah Putih',
       note: 'A simple red-over-white bicolour whose colors trace back to the 13th-century Majapahit Empire. Banned by the Dutch, it was raised on independence day in 1945. It is nearly identical to Monaco\'s flag but with a 2:3 ratio.',
     },
@@ -3816,7 +3816,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     {
       fromYear: 1963,
       toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/my.png',
+      flagUrl: '/flags/my.svg',
       label: 'Jalur Gemilang',
       note: 'When Sabah, Sarawak, and Singapore joined in 1963, the stripes and star points increased from 11 to 14. The design was unchanged when Singapore left in 1965 — the 14th element was simply reinterpreted as the federal territories.',
     },
@@ -3832,7 +3832,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     {
       fromYear: 1959,
       toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/sg.png',
+      flagUrl: '/flags/sg.svg',
       label: 'Flag of Singapore',
       note: 'Unveiled in 1959 when Singapore became self-governing. The crescent represents a young rising nation; the five stars stand for democracy, peace, progress, justice, and equality. It was kept through merger with Malaysia and full independence.',
     },
@@ -3855,7 +3855,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     {
       fromYear: 1959,
       toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/bn.png',
+      flagUrl: '/flags/bn.svg',
       label: 'Flag of Brunei',
       note: 'With the 1959 constitution, the red national crest — a crescent, parasol, wings, and hands with a Jawi motto — was added over the striped yellow field.',
     },
@@ -3871,7 +3871,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     {
       fromYear: 1998,
       toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/ph.png',
+      flagUrl: '/flags/ph.svg',
       label: 'Flag of the Philippines',
       note: 'The 1998 Flag and Heraldic Code fixed the blue as "Royal Blue." The eight sun rays represent the first eight provinces to revolt in 1896; three stars stand for Luzon, Visayas, and Mindanao.',
       parallelCaption: 'Flown red-up in wartime',
@@ -3925,7 +3925,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     {
       fromYear: 2002,
       toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/tl.png',
+      flagUrl: '/flags/tl.svg',
       label: 'Flag of Timor-Leste',
       note: 'Re-adopted in 2002 at the restoration of independence, identical to the 1975 design. Yellow symbolizes the colonial past, black the obscurantism to be overcome, red the liberation struggle, and the white star peace.',
     },
@@ -3941,7 +3941,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     {
       fromYear: 1990,
       toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/am.png',
+      flagUrl: '/flags/am.svg',
       label: 'Republic of Armenia',
       note: 'The red-blue-orange (apricot) tricolour of the 1918 First Republic was readopted in 1990, before formal independence. The orange band symbolizes the Armenian people\'s creative talent and hard work.',
     },
@@ -3964,7 +3964,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     {
       fromYear: 1991,
       toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/az.png',
+      flagUrl: '/flags/az.svg',
       label: 'Republic of Azerbaijan',
       note: 'On regaining independence, Azerbaijan restored the 1918 tricolour of turquoise, red, and green with a white crescent and eight-pointed star. The blue honors Turkic heritage, red modernity, green Islam.',
     },
@@ -3987,7 +3987,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     {
       fromYear: 2004,
       toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/ge.png',
+      flagUrl: '/flags/ge.svg',
       label: 'Five-Cross Flag',
       note: 'Adopted in 2004 after the Rose Revolution, the white flag bears a central red St. George\'s cross and four smaller Bolnisi crosses, reviving a banner of the medieval Kingdom of Georgia.',
     },
@@ -4010,7 +4010,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     {
       fromYear: 1992,
       toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/kz.png',
+      flagUrl: '/flags/kz.svg',
       label: 'Republic of Kazakhstan',
       note: 'Adopted in 1992, the sky-blue flag bears a golden sun with 32 rays above a soaring steppe eagle, with a national ornamental pattern down the hoist. Blue symbolizes the Turkic sky and unity.',
     },
@@ -4026,7 +4026,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     {
       fromYear: 2023,
       toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/kg.png',
+      flagUrl: '/flags/kg.svg',
       label: 'Flag of Kyrgyzstan',
       note: 'A 2023 redesign straightened the sun\'s previously wavy rays, which lawmakers argued resembled a sunflower — culturally associated with servility. The sun has 40 rays for the 40 Kyrgyz tribes.',
     },
@@ -4049,7 +4049,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     {
       fromYear: 1992,
       toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/tj.png',
+      flagUrl: '/flags/tj.svg',
       label: 'Republic of Tajikistan',
       note: 'Adopted in 1992, a red-white-green tricolour with a central gold crown beneath an arc of seven stars. It has one of the widest middle stripes of any national flag.',
     },
@@ -4065,7 +4065,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     {
       fromYear: 2001,
       toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/tm.png',
+      flagUrl: '/flags/tm.svg',
       label: 'Flag of Turkmenistan',
       note: 'Finalized in 2001, this green flag with a vertical red carpet-stripe of five tribal "guls," a crescent, five stars, and olive branches is among the most detailed national flags in the world.',
     },
@@ -4095,7 +4095,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     {
       fromYear: 1991,
       toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/uz.png',
+      flagUrl: '/flags/uz.svg',
       label: 'Republic of Uzbekistan',
       note: 'Adopted in 1991, the first ex-Soviet Central Asian republic to introduce a new national flag. It bears blue, white, and green stripes with red fimbriations, a white crescent, and twelve stars.',
     },
@@ -4111,7 +4111,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     {
       fromYear: 2021,
       toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/af.png',
+      flagUrl: '/flags/af.svg',
       label: 'Islamic Emirate (Taliban)',
       note: 'Re-adopted at the Taliban\'s August 2021 takeover: a white field bearing the black Shahada, the Islamic declaration of faith. Afghanistan has changed its flag more often than almost any nation on Earth.',
     },
@@ -4193,7 +4193,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     {
       fromYear: 1947,
       toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/pk.png',
+      flagUrl: '/flags/pk.svg',
       label: 'Flag of Pakistan',
       note: 'Adopted days before independence in 1947. The white hoist stripe represents religious minorities, while the green field and white crescent-and-star represent the Muslim majority. It has been stable ever since.',
     },
@@ -4202,7 +4202,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     {
       fromYear: 1972,
       toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/bd.png',
+      flagUrl: '/flags/bd.svg',
       label: 'Flag of Bangladesh',
       note: 'In 1972 the gold map was removed, leaving a red disc on green. The disc is set slightly toward the hoist so it appears centered when the flag flies.',
     },
@@ -4218,7 +4218,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     {
       fromYear: 1962,
       toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/np.png',
+      flagUrl: '/flags/np.svg',
       label: 'Flag of Nepal',
       note: 'Standardized in 1962, when the faces were removed from the sun and moon. It is the world\'s only non-rectangular national flag — two stacked pennants.',
     },
@@ -4234,7 +4234,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     {
       fromYear: 1969,
       toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/bt.png',
+      flagUrl: '/flags/bt.svg',
       label: 'Flag of Bhutan',
       note: 'Finalized around 1969: the white Thunder Dragon clutches jewels, the yellow half denotes the secular monarchy and the orange-red half the Buddhist spiritual tradition.',
     },
@@ -4257,7 +4257,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     {
       fromYear: 1965,
       toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/mv.png',
+      flagUrl: '/flags/mv.svg',
       label: 'Flag of the Maldives',
       note: 'Adopted at independence in 1965; the black-and-white hoist stripes were removed, leaving the red field, green panel, and white crescent opening toward the fly.',
     },
@@ -4280,7 +4280,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     {
       fromYear: 1972,
       toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/lk.png',
+      flagUrl: '/flags/lk.svg',
       label: 'Flag of Sri Lanka',
       note: 'When the country became the Republic of Sri Lanka in 1972, the corner pinnacles were replaced with four bo (pipal) tree leaves, a Buddhist symbol of compassion.',
     },
@@ -4310,7 +4310,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     {
       fromYear: 1993,
       toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/kh.png',
+      flagUrl: '/flags/kh.svg',
       label: 'Kingdom of Cambodia',
       note: 'The 1948 Angkor Wat design was readopted in 1993 when the monarchy was restored. Cambodia is one of only a few countries whose flag depicts a building — and it has done so under nearly every regime since 1948.',
     },
@@ -4354,7 +4354,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     {
       fromYear: 2010,
       toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/mm.png',
+      flagUrl: '/flags/mm.svg',
       label: 'Republic of the Union of Myanmar',
       note: 'A yellow-green-red horizontal tricolour with a large white five-pointed star in the center, adopted in 2010.',
     },
@@ -4384,7 +4384,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     {
       fromYear: 1917,
       toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/th.png',
+      flagUrl: '/flags/th.svg',
       label: 'Thong Trairong',
       note: 'The central stripe was changed to dark blue in 1917 — honoring Rama VI\'s birthday color and the WWI Allies — giving the red-white-blue-white-red flag with its double-width blue band.',
     },
@@ -4414,7 +4414,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     {
       fromYear: 1992,
       toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/mn.png',
+      flagUrl: '/flags/mn.svg',
       label: 'Flag of Mongolia',
       note: 'In 1992 the socialist star above the Soyombo was removed, leaving the red-blue-red triband with the golden Soyombo national symbol at the hoist.',
     },
@@ -4444,7 +4444,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     {
       fromYear: 1975,
       toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/la.png',
+      flagUrl: '/flags/la.svg',
       label: 'Lao PDR (Pathet Lao flag)',
       note: 'A red-blue-red triband with a white disc, adopted nationally in 1975. The disc symbolizes a full moon over the Mekong and national unity.',
     },
@@ -4460,7 +4460,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     {
       fromYear: 1948,
       toYear: null,
-      flagUrl: 'https://flagcdn.com/w320/kp.png',
+      flagUrl: '/flags/kp.svg',
       label: 'DPRK red-star flag',
       note: 'Adopted in 1948, replacing the Taegukgi: a broad red band edged with white and blue stripes, with a red star in a white disc near the hoist.',
     },

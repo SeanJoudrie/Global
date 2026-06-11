@@ -18,7 +18,8 @@ const f = (
 ): FlagRecord => ({
   code, name, region,
   subdivisionGroup: null,
-  flagUrl: `https://flagcdn.com/w320/${code.toLowerCase()}.png`,
+  // Self-hosted SVG (instant, offline, never 404s); FlagImage keeps CDN fallbacks.
+  flagUrl: `/flags/${code.toLowerCase()}.svg`,
   confusableWith, distinguishingTip, funFact,
 })
 
