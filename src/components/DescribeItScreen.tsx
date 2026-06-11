@@ -134,6 +134,12 @@ export default function DescribeItScreen({ onBack }: Props) {
 
         {result ? (
           <>
+            {/* reveal the flag now that the round is over */}
+            <div style={{ width: 220, height: 147, borderRadius: 12, overflow: "hidden", border: `2px solid ${result.correct ? "#34D399" : "#F43F5E"}`, boxShadow: "0 0 24px #00000044" }}>
+              <img src={round.target.flagUrl} alt={round.target.name}
+                style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+                onError={e => { (e.target as HTMLImageElement).style.opacity = "0.3" }} />
+            </div>
             <div className="w-full max-w-sm px-4 py-3 rounded-xl"
               style={{ background: "#2D1F52", border: `1px solid ${result.correct ? "#34D39944" : "#F43F5E44"}` }}>
               <p className="text-sm font-bold" style={{ color: result.correct ? "#34D399" : "#F43F5E" }}>

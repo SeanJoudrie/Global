@@ -2,7 +2,6 @@ import { useState } from "react"
 import { FLAGS } from "../data/flags"
 import type { FlagRecord } from "../data/flags"
 import { CAPITALS } from "../data/capitals"
-import { FLAG_ATTRIBS } from "../data/flagAttribs"
 import { neighborsOf } from "../data/borders"
 import { T, ACCENT, FONT, tint, IS_CARTO } from "../ui/tokens"
 import FlagImage from "./FlagImage"
@@ -14,32 +13,28 @@ const shuffle = <X,>(a: X[]): X[] => [...a].sort(() => Math.random() - 0.5)
 const rand = <X,>(a: X[]): X => a[Math.floor(Math.random() * a.length)]
 const NAME = (code: string) => FLAGS.find(f => f.code === code)?.name ?? code
 
-const ALL_COLORS = ["red", "blue", "green", "yellow", "white", "black", "orange"]
 const ALL_REGIONS = ["Europe", "Africa", "Asia", "Americas", "Oceania", "Middle East"]
 const CAP = new Map(CAPITALS.map(c => [c.code, c]))
 
-// Countries we can build statements for (flag + capital + attributes).
-const POOL = FLAGS.filter(f => CAP.has(f.code) && FLAG_ATTRIBS[f.code])
+// Countries we can build statements for (need a capital). We avoid colour claims
+// entirely — you can just look at the flag — and lean on capital, region and
+// (plausible) border facts that actually require knowledge.
+const POOL = FLAGS.filter(f => CAP.has(f.code))
 
 interface Stmt { text: string; type: string }
 
-function trueStmt(type: string, f: FlagRecord): Stmt | null {
+function trueStmt(type: string, f: FlagRecord): Stmt {
   const cap = CAP.get(f.code)!
-  const attr = FLAG_ATTRIBS[f.code]
   if (type === "capital") return { text: `Its capital is ${cap.capital}.`, type }
   if (type === "region") return { text: `It lies in ${f.region}.`, type }
-  if (type === "color") return { text: `Its flag includes the colour ${rand(attr.colors)}.`, type }
-  if (type === "border") {
-    const ns = neighborsOf(f.code)
-    if (!ns.length) return null
-    return { text: `It shares a land border with ${NAME(rand(ns))}.`, type }
-  }
-  return null
+  // border (true)
+  const ns = neighborsOf(f.code)
+  if (!ns.length) return { text: `It has no land borders.`, type }
+  return { text: `It shares a land border with ${NAME(rand(ns))}.`, type }
 }
 
 function falseStmt(type: string, f: FlagRecord): Stmt {
   const cap = CAP.get(f.code)!
-  const attr = FLAG_ATTRIBS[f.code]
   if (type === "capital") {
     const other = rand(CAPITALS.filter(c => c.capital !== cap.capital))
     return { text: `Its capital is ${other.capital}.`, type }
@@ -48,24 +43,20 @@ function falseStmt(type: string, f: FlagRecord): Stmt {
     const other = rand(ALL_REGIONS.filter(r => r !== f.region))
     return { text: `It lies in ${other}.`, type }
   }
-  if (type === "color") {
-    const missing = ALL_COLORS.filter(c => !attr.colors.includes(c))
-    return { text: `Its flag includes the colour ${rand(missing)}.`, type }
-  }
-  // border: claim a border with a country on a DIFFERENT continent (guaranteed
-  // not a real neighbour, so the statement is reliably false)
-  const far = rand(FLAGS.filter(x => x.region !== f.region && x.code !== f.code))
-  return { text: `It shares a land border with ${far.name}.`, type }
+  // border (false): a *plausible* same-region country that is NOT actually a
+  // neighbour, so the player has to think (e.g. "Kazakhstan borders Iran?").
+  const ns = new Set([f.code, ...neighborsOf(f.code)])
+  const sameRegion = FLAGS.filter(x => x.region === f.region && !ns.has(x.code))
+  const pool = sameRegion.length ? sameRegion : FLAGS.filter(x => !ns.has(x.code))
+  return { text: `It shares a land border with ${rand(pool).name}.`, type }
 }
 
 interface Round { flag: FlagRecord; stmts: Stmt[]; falseIdx: number }
 
 function makeRound(f: FlagRecord): Round {
-  const types = ["capital", "region", "color"]
-  if (neighborsOf(f.code).length) types.push("border")
-  const chosen = shuffle(types).slice(0, 3)
+  const chosen = ["capital", "region", "border"]
   const falseType = rand(chosen)
-  const built = chosen.map(t => ({ stmt: t === falseType ? falseStmt(t, f) : trueStmt(t, f)!, isFalse: t === falseType }))
+  const built = chosen.map(t => ({ stmt: t === falseType ? falseStmt(t, f) : trueStmt(t, f), isFalse: t === falseType }))
   const ordered = shuffle(built)
   return { flag: f, stmts: ordered.map(b => b.stmt), falseIdx: ordered.findIndex(b => b.isFalse) }
 }
