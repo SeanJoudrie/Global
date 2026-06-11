@@ -2,6 +2,7 @@ import { useState } from "react"
 import { FLAGS } from "../data/flags"
 import { SYMBOLS } from "../data/flagSymbols"
 import type { SymbolDef } from "../data/flagSymbols"
+import { OTHER_IDENTITY_FLAGS } from "../data/identityFlags"
 import { T, ACCENT, FONT } from "../ui/tokens"
 import FlagImage from "./FlagImage"
 
@@ -11,16 +12,26 @@ const ROUNDS = 5
 const GRID = 15
 const shuffle = <X,>(a: X[]): X[] => [...a].sort(() => Math.random() - 0.5)
 
-interface Round { sym: SymbolDef; grid: string[]; matches: Set<string> }
+// A grid tile is either a real country flag (by code) or a non-country
+// "identity" flag (rendered from a URL). Identity tiles are never a match —
+// they're sprinkled in so players get exposed to them.
+interface Cell { key: string; code?: string; url?: string; name?: string; match: boolean }
+interface Round { sym: SymbolDef; grid: Cell[]; matchCount: number }
 
 function buildRounds(): Round[] {
   return shuffle(SYMBOLS).slice(0, ROUNDS).map(sym => {
     const pool = [...sym.codes]
     const nMatch = Math.min(pool.length, 4 + Math.floor(Math.random() * 4)) // 4–7 present
     const matches = shuffle(pool).slice(0, nMatch)
-    const matchSet = new Set(matches)
-    const fillers = shuffle(FLAGS.filter(f => !sym.codes.has(f.code))).slice(0, GRID - matches.length).map(f => f.code)
-    return { sym, grid: shuffle([...matches, ...fillers]), matches: matchSet }
+    const matchCells: Cell[] = matches.map(code => ({ key: "c:" + code, code, match: true }))
+    // 0–2 identity flags as decoys to introduce them
+    const nIdentity = matchCells.length < GRID - 4 ? Math.floor(Math.random() * 3) : 0
+    const idCells: Cell[] = shuffle(OTHER_IDENTITY_FLAGS).slice(0, nIdentity)
+      .map(f => ({ key: "i:" + f.id, url: f.flagUrl, name: f.name, match: false }))
+    const need = GRID - matchCells.length - idCells.length
+    const fillers: Cell[] = shuffle(FLAGS.filter(f => !sym.codes.has(f.code))).slice(0, need)
+      .map(f => ({ key: "c:" + f.code, code: f.code, match: false }))
+    return { sym, grid: shuffle([...matchCells, ...idCells, ...fillers]), matchCount: matchCells.length }
   })
 }
 
@@ -33,16 +44,17 @@ function SymbolHuntGame({ onBack, onReplay }: Props & { onReplay: () => void }) 
   const [done, setDone] = useState(false)
 
   const round = rounds[idx]
+  const matchKeys = new Set(round.grid.filter(c => c.match).map(c => c.key))
 
-  const toggle = (code: string) => {
+  const toggle = (key: string) => {
     if (checked) return
-    setPicked(p => { const n = new Set(p); n.has(code) ? n.delete(code) : n.add(code); return n })
+    setPicked(p => { const n = new Set(p); n.has(key) ? n.delete(key) : n.add(key); return n })
   }
 
   const check = () => {
     let hit = 0, miss = 0
-    picked.forEach(c => round.matches.has(c) ? hit++ : miss++)
-    setScores(s => [...s, { hit, miss, total: round.matches.size }])
+    picked.forEach(k => matchKeys.has(k) ? hit++ : miss++)
+    setScores(s => [...s, { hit, miss, total: round.matchCount }])
     setChecked(true)
   }
 
@@ -85,21 +97,24 @@ function SymbolHuntGame({ onBack, onReplay }: Props & { onReplay: () => void }) 
         </div>
 
         <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 9 }}>
-          {round.grid.map(code => {
-            const isPicked = picked.has(code)
-            const isMatch = round.matches.has(code)
+          {round.grid.map(cell => {
+            const isPicked = picked.has(cell.key)
+            const isMatch = cell.match
             let border = `1.5px solid ${isPicked ? ACCENT.play : T.line}`
             if (checked) {
               if (isMatch) border = `2.5px solid ${ACCENT.codex}`           // should have been picked
               else if (isPicked) border = `2.5px solid ${T.warm}`           // wrong pick
             }
             return (
-              <button key={code} onClick={() => toggle(code)} className="geo-tap"
+              <button key={cell.key} onClick={() => toggle(cell.key)} className="geo-tap"
                 style={{ position: "relative", aspectRatio: "3/2", borderRadius: 8, overflow: "hidden", border, background: "#fff", opacity: checked && !isMatch && !isPicked ? 0.5 : 1 }}>
-                <FlagImage code={code} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+                {cell.code
+                  ? <FlagImage code={cell.code} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+                  : <img src={cell.url} alt={cell.name} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} onError={e => { (e.target as HTMLImageElement).style.opacity = "0.3" }} />}
                 {isPicked && !checked && <span style={{ position: "absolute", top: 3, right: 3, width: 18, height: 18, borderRadius: "50%", background: ACCENT.play, color: "#fff", fontSize: 11, display: "flex", alignItems: "center", justifyContent: "center" }}>✓</span>}
                 {checked && isMatch && <span style={{ position: "absolute", bottom: 2, right: 3, fontSize: 13, color: ACCENT.codex }}>✓</span>}
                 {checked && isPicked && !isMatch && <span style={{ position: "absolute", bottom: 2, right: 3, fontSize: 13, color: T.warm }}>✗</span>}
+                {checked && !cell.code && <span style={{ position: "absolute", top: 2, left: 3, fontSize: 8, fontWeight: 700, color: T.warm, background: T.bg, padding: "1px 4px", borderRadius: 4 }}>not a country</span>}
               </button>
             )
           })}

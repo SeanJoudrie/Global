@@ -33,10 +33,13 @@ function buildResult(guess: FlagRecord, target: FlagRecord): GuessResult {
   const ga = FLAG_ATTRIBS[guess.code]
   const ta = FLAG_ATTRIBS[target.code]
 
-  const relevantColors = ALL_COLORS.filter(c => ta.colors.includes(c) || ga.colors.includes(c))
+  // Only ever show colours that belong to the *answer* — a ✓ means your guess
+  // also has it, a ✗ means the answer has it and you missed it. We never surface
+  // colours that aren't in the target (no "not called yet" middle ground).
+  const relevantColors = ALL_COLORS.filter(c => ta.colors.includes(c))
   const colors = relevantColors.map(c => ({
     color: c,
-    match: ta.colors.includes(c) === ga.colors.includes(c),
+    match: ga.colors.includes(c),
   }))
 
   const featMatch = (gv: boolean, tv: boolean) => (gv || tv) ? (gv === tv) : null
