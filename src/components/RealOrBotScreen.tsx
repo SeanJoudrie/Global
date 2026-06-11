@@ -112,19 +112,24 @@ function RealOrBotGame({ onBack, onReplay }: Props & { onReplay: () => void }) {
           </div>
         </div>
 
-        {/* the flag card */}
-        <div
-          onMouseDown={e => onDown(e.clientX)} onMouseMove={e => onMove(e.clientX)} onMouseUp={onUp} onMouseLeave={onUp}
-          onTouchStart={e => onDown(e.touches[0].clientX)} onTouchMove={e => onMove(e.touches[0].clientX)} onTouchEnd={onUp}
-          style={{
-            width: 300, height: 200, borderRadius: 16, overflow: "hidden", border: `1px solid ${T.lineHi}`,
-            boxShadow: IS_CARTO ? "0 14px 34px -16px rgba(31,58,60,0.5)" : "0 0 40px rgba(0,0,0,0.5)",
-            background: "#fff", cursor: "grab", touchAction: "pan-y",
-            transform: cardTransform, transition: exit || !dragging.current ? "transform 0.24s ease" : "none",
-          }}>
-          {card.real && card.flag
-            ? <FlagImage code={card.flag.code} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", pointerEvents: "none" }} />
-            : <img src={card.botSrc} alt="" draggable={false} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", pointerEvents: "none" }} />}
+        {/* the flag card — with a deck stacked behind so swiping reveals more */}
+        <div style={{ position: "relative", width: 300, height: 200 }}>
+          <div style={{ position: "absolute", inset: 0, transform: "translateY(16px) scale(0.92)", borderRadius: 16, background: T.surface, border: `1px solid ${T.line}`, zIndex: 0 }} />
+          <div style={{ position: "absolute", inset: 0, transform: "translateY(8px) scale(0.96)", borderRadius: 16, background: T.surfaceHi, border: `1px solid ${T.lineHi}`, zIndex: 1 }} />
+          <div
+            onMouseDown={e => onDown(e.clientX)} onMouseMove={e => onMove(e.clientX)} onMouseUp={onUp} onMouseLeave={onUp}
+            onTouchStart={e => onDown(e.touches[0].clientX)} onTouchMove={e => onMove(e.touches[0].clientX)} onTouchEnd={onUp}
+            style={{
+              position: "relative", zIndex: 2,
+              width: 300, height: 200, borderRadius: 16, overflow: "hidden", border: `1px solid ${T.lineHi}`,
+              boxShadow: IS_CARTO ? "0 14px 34px -16px rgba(31,58,60,0.5)" : "0 0 40px rgba(0,0,0,0.5)",
+              background: "#fff", cursor: "grab", touchAction: "pan-y",
+              transform: cardTransform, transition: exit || !dragging.current ? "transform 0.24s ease" : "none",
+            }}>
+            {card.real && card.flag
+              ? <FlagImage code={card.flag.code} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", pointerEvents: "none" }} />
+              : <img src={card.botSrc} alt="" draggable={false} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", pointerEvents: "none" }} />}
+          </div>
         </div>
 
         <p style={{ color: T.muted, fontSize: 12, marginTop: 18, textAlign: "center", maxWidth: 280 }}>

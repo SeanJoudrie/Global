@@ -85,7 +85,12 @@ function SubdivisionStumperScreenGame({ onBack, onSubLearned , onReplay }: Props
           <img src={round.target.flagUrl} alt="subdivision flag" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
             onError={e => { (e.target as HTMLImageElement).style.opacity = "0.3" }} />
         </div>
-        <div className="text-sm font-semibold" style={{ color: "#34D399" }}>This is a subdivision of which country?</div>
+        {/* answer sits right under the flag once you've guessed */}
+        {answered
+          ? <div className="w-full max-w-sm px-4 py-2.5 rounded-xl text-sm text-center" style={{ background: "#2D1F52", border: "1px solid #8B6CFF22", color: "#B8A9E0" }}>
+              {round.target.countryEmoji} <span style={{ color: "#F5F3FF", fontWeight: 600 }}>{round.target.name}</span> — {round.target.countryName}
+            </div>
+          : <div className="text-sm font-semibold" style={{ color: "#34D399" }}>This is a subdivision of which country?</div>}
 
         <div className="grid grid-cols-1 gap-2.5 w-full max-w-sm">
           {round.choices.map(c => {
@@ -106,14 +111,9 @@ function SubdivisionStumperScreenGame({ onBack, onSubLearned , onReplay }: Props
         </div>
 
         {answered && (
-          <>
-            <div className="w-full max-w-sm px-4 py-2.5 rounded-xl text-sm" style={{ background: "#2D1F52", border: "1px solid #8B6CFF22", color: "#B8A9E0" }}>
-              {round.target.countryEmoji} <span style={{ color: "#F5F3FF", fontWeight: 600 }}>{round.target.name}</span> — {round.target.countryName}
-            </div>
-            <button onClick={next} className="w-full max-w-sm py-3.5 rounded-xl font-bold transition-all active:scale-95" style={{ background: "linear-gradient(135deg,#34D399,#10B981)", color: "#fff" }}>
-              {idx + 1 >= ROUNDS ? "See Results →" : "Next →"}
-            </button>
-          </>
+          <button onClick={next} className="w-full max-w-sm py-3.5 rounded-xl font-bold transition-all active:scale-95" style={{ background: "linear-gradient(135deg,#34D399,#10B981)", color: "#fff" }}>
+            {idx + 1 >= ROUNDS ? "See Results →" : "Next →"}
+          </button>
         )}
       </div>
     </div>

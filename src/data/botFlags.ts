@@ -67,4 +67,4 @@ function build(seed: string): string {
   return "data:image/svg+xml;utf8," + encodeURIComponent(svg)
 }
 
-export const BOT_FLAGS: string[] = Array.from({ length: 50 }, (_, i) => build("botflag-" + i))
+export const BOT_FLAGS: string[] = Array.from({ length: 84 }, (_, i) => build("botflag-" + i))
