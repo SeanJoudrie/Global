@@ -54,6 +54,7 @@ const FlagTimelineScreen = lazy(() => import("./components/FlagTimelineScreen"))
 const BorderMapScreen = lazy(() => import("./components/BorderMapScreen"))
 const BorderChainScreen = lazy(() => import("./components/BorderChainScreen"))
 const FlagGachaScreen = lazy(() => import("./components/FlagGachaScreen"))
+const PrideRouletteScreen = lazy(() => import("./components/PrideRouletteScreen"))
 const SymbolHuntScreen = lazy(() => import("./components/SymbolHuntScreen"))
 const TwoTruthsScreen = lazy(() => import("./components/TwoTruthsScreen"))
 const CapitalMatchScreen = lazy(() => import("./components/CapitalMatchScreen"))
@@ -70,7 +71,7 @@ import type { Question } from "./utils/quiz"
 import { todayString } from "./utils/prng"
 import { loadTheme } from "./components/SettingsScreen"
 
-type Screen = "splash" | "home" | "flags" | "quiz" | "reversequiz" | "result" | "achievements" | "profile" | "flashcards" | "language" | "capitalquiz" | "challenge" | "codex" | "geo" | "gauntlet" | "tierlist" | "settings" | "oddoneout" | "thecrop" | "flagdna" | "buildflag" | "thepeel" | "lookalikes" | "composer" | "silhouette" | "flagfamilies" | "funfact" | "progressmap" | "historical" | "identity" | "provinceroulette" | "substumper" | "lineage" | "substats" | "megacodex" | "flagle" | "higherlower" | "deadoralive" | "frankenflag" | "describeit" | "flagbracket" | "realorbot" | "timeline" | "bordermap" | "borderchain" | "gacha" | "symbolhunt" | "twotruths" | "capitalmatch" | "oddborder" | "continentsort" | "statclash" | "uscityflags"
+type Screen = "splash" | "home" | "flags" | "quiz" | "reversequiz" | "result" | "achievements" | "profile" | "flashcards" | "language" | "capitalquiz" | "challenge" | "codex" | "geo" | "gauntlet" | "tierlist" | "settings" | "oddoneout" | "thecrop" | "flagdna" | "buildflag" | "thepeel" | "lookalikes" | "composer" | "silhouette" | "flagfamilies" | "funfact" | "progressmap" | "historical" | "identity" | "provinceroulette" | "substumper" | "lineage" | "substats" | "megacodex" | "flagle" | "higherlower" | "deadoralive" | "frankenflag" | "describeit" | "flagbracket" | "realorbot" | "timeline" | "bordermap" | "borderchain" | "gacha" | "symbolhunt" | "twotruths" | "capitalmatch" | "oddborder" | "continentsort" | "statclash" | "uscityflags" | "prideroulette"
 
 interface ActiveQuiz {
   questions: Question[]
@@ -300,6 +301,7 @@ export default function App() {
       {screen === "bordermap"    && <BorderMapScreen    onBack={() => setScreen("home")} />}
       {screen === "borderchain"  && <BorderChainScreen  onBack={() => setScreen("home")} />}
       {screen === "gacha"        && <FlagGachaScreen    onBack={() => setScreen("home")} />}
+      {screen === "prideroulette" && <PrideRouletteScreen onBack={() => setScreen("home")} />}
       {screen === "symbolhunt"   && <SymbolHuntScreen   onBack={() => setScreen("home")} />}
       {screen === "twotruths"    && <TwoTruthsScreen    onBack={() => setScreen("home")} />}
       {screen === "capitalmatch" && <CapitalMatchScreen onBack={() => setScreen("home")} />}

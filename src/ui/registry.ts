@@ -52,6 +52,7 @@ export const REGISTRY: Entry[] = [
   { id: "flagle", title: "Flagle", subtitle: "Daily flag Wordle · 6 guesses", icon: "🟩", tab: "play", group: "Quick games", size: "tile", accent: "play" },
   { id: "gacha", title: "Flag Gacha", subtitle: "Daily pull · collect them all", icon: "🎁", tab: "play", group: "Quick games", size: "tile", accent: "play" },
   { id: "timeline", title: "Flag Timeline", subtitle: "Order a country's flags in time", icon: "⏳", tab: "play", group: "Quick games", size: "tile", accent: "play" },
+  { id: "prideroulette", title: "Pride Roulette", subtitle: "Name the pride flag · survival", icon: "🏳️‍🌈", tab: "play", group: "Quick games", size: "tile", accent: "play" },
   { id: "oddoneout", title: "Odd One Out", subtitle: "Find the impostor", icon: "🕵️", tab: "play", group: "Quick games", size: "tile", accent: "play" },
   { id: "thecrop", title: "The Crop", subtitle: "Zoom out to guess", icon: "🔍", tab: "play", group: "Quick games", size: "tile", accent: "play" },
   { id: "flagdna", title: "Flag DNA", subtitle: "Guess by attributes", icon: "🧬", tab: "play", group: "Quick games", size: "tile", accent: "play" },
