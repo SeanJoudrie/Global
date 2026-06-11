@@ -44,17 +44,22 @@ export const HISTORICAL_FLAGS: HistoricalEntity[] = [
   },
   {
     id: "german-empire", name: "German Empire", era: "1871–1918", region: "Europe",
-    flagUrl: fp("Flag_of_the_German_Empire.svg"),
+    flagUrl: fp("Flag_of_the_German_Empire.svg"), relatedCode: "DE",
     note: "The black-white-red tricolor combined Prussia's black-and-white with the Hanseatic red-and-white. It was officially adopted as the national flag only in 1892.",
   },
   {
     id: "weimar", name: "Weimar Republic", era: "1919–1933", region: "Europe",
-    flagUrl: fp("Flag_of_Germany_(3-2_aspect_ratio).svg"),
+    flagUrl: fp("Flag_of_Germany_(3-2_aspect_ratio).svg"), relatedCode: "DE",
     note: "The black-red-gold tricolor revived the colors of the 1848 liberal revolution, deliberately tying the new democracy to earlier anti-autocratic movements.",
   },
   {
+    id: "nazi-germany", name: "Nazi Germany", era: "1935–1945", region: "Europe",
+    flagUrl: fp("Flag_of_the_German_Reich_(1935–1945).svg"), relatedCode: "DE",
+    note: "The swastika flag became Germany's sole national flag in 1935. It was outlawed after WWII, and Germany returned to the black-red-gold of the Weimar era.",
+  },
+  {
     id: "east-germany", name: "East Germany (GDR)", era: "1959–1990", region: "Europe",
-    flagUrl: fp("Flag_of_East_Germany.svg"),
+    flagUrl: fp("Flag_of_East_Germany.svg"), relatedCode: "DE",
     note: "The hammer-and-compass-in-wheat emblem represented workers, intelligentsia, and farmers. Before 1959 East and West Germany flew the identical plain tricolor.",
   },
   {
