@@ -106,23 +106,11 @@ async function handle(title) {
     }
   }
   try {
-    let buf = await fetchBuf(info.url)
-    let ext = info.ext
-    const isSvg = info.ext === "svg"
-    const tooBig = isSvg ? buf.length > SVG_KEEP_LIMIT : buf.length > RASTER_KEEP_LIMIT
-    if (tooBig) {
-      try {
-        const tbuf = await fetchBuf(thumbUrl(info.finalTitle))
-        if (tbuf && tbuf.length > 0 && tbuf.length < buf.length) {
-          buf = tbuf
-          ext = "png"
-          thumbed++
-        }
-      } catch {
-        /* keep original if thumbnail fails */
-      }
-    }
-    const name = `${slug}.${ext}`
+    // Download the original once (no server-side thumbnail round-trip — that
+    // halves request count and avoids slow on-demand SVG rasterisation under the
+    // CDN rate limit). Oversized files are shrunk in a separate local pass later.
+    const buf = await fetchBuf(info.url)
+    const name = `${slug}.${info.ext}`
     writeFileSync(new URL(name, OUT_DIR), buf)
     titleToFile.set(title, name)
     downloaded++

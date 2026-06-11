@@ -24,8 +24,15 @@ export interface ChallengeContinent {
   countries: ChallengeCountry[]
 }
 
-// Wikimedia Commons Special:FilePath — reliable redirect to actual CDN URL
-const wiki = (file: string) => `https://commons.wikimedia.org/wiki/Special:FilePath/${file.replace(/ /g, '_')}`
+import { LOCAL_FLAGS } from "./localFlags"
+
+// Self-hosted local copy when available (see LOCAL_FLAGS); empty string = dead
+// link with no replacement; otherwise fall back to the live Commons redirect.
+const wiki = (file: string): string => {
+  const key = file.replace(/ /g, '_')
+  const local = LOCAL_FLAGS[key]
+  return local !== undefined ? local : `https://commons.wikimedia.org/wiki/Special:FilePath/${key}`
+}
 
 // ── UNITED STATES (50 states) ─────────────────────────────────────────────────
 const US_STATES: SubRegion[] = [

@@ -1,110 +1,90 @@
-// Final step: produce src/data/localFlags.ts from
-//   live-map.json   (key -> /flags/wm/... for working flags)
-//   repairs.json    ({repairs:[...], unrepairable:[...]})  [optional]
-// Repaired dead links are downloaded (hybrid SVG/thumbnail) and mapped to their
-// new local path; unrepairable dead links map to "" so the UI shows a "No flag"
-// tile and quizzes skip them (flagUrl becomes falsy).
-import { readFileSync, writeFileSync, existsSync, mkdirSync, statSync, readdirSync } from "node:fs"
-import { createHash } from "node:crypto"
-import { sleep } from "./lib.mjs"
+// Produce src/data/localFlags.ts from whatever is on disk + repairs.
+// - Live flags: any audit entry whose image exists in public/flags/wm/ is mapped
+//   to its local path. Flags not yet downloaded are simply omitted, so fp()/wiki()
+//   falls back to the live Wikimedia hotlink (no regression — partial-download safe).
+// - Repaired dead links: downloaded and mapped to their new local path.
+// - Unrepairable dead links: mapped to "" so the UI shows "No flag" and quizzes skip.
+import { readFileSync, writeFileSync, existsSync, mkdirSync, readdirSync, statSync } from "node:fs"
+import { assignLiveSlugs, slugify, sleep } from "./lib.mjs"
 
 const ROOT = new URL("../../", import.meta.url)
 const OUT_DIR = new URL("public/flags/wm/", ROOT)
 mkdirSync(OUT_DIR, { recursive: true })
-
 const here = (p) => new URL(p, import.meta.url)
 const keyOf = (arg) => arg.replace(/ /g, "_")
-const SVG_KEEP_LIMIT = 80_000
-const RASTER_KEEP_LIMIT = 250_000
-const THUMB_WIDTH = 1000
 
-function slugify(title) {
-  const base = title.replace(/^File:/i, "").replace(/\.[a-z0-9]+$/i, "")
-  return (
-    base
-      .normalize("NFKD")
-      .replace(/[̀-ͯ]/g, "")
-      .replace(/%[0-9a-f]{2}/gi, "-")
-      .replace(/[^a-zA-Z0-9]+/g, "-")
-      .replace(/^-+|-+$/g, "")
-      .toLowerCase() || "flag"
-  )
+const report = JSON.parse(readFileSync(here("./audit-report.json")))
+
+// Index existing files by slug.
+const bySlug = new Map()
+for (const f of readdirSync(OUT_DIR)) {
+  const slug = f.replace(/\.[a-z0-9]+$/i, "")
+  if (statSync(new URL(f, OUT_DIR)).size > 0) bySlug.set(slug, f)
 }
 
-const existingSlugs = new Set(readdirSync(OUT_DIR).map((f) => f.replace(/\.[a-z0-9]+$/i, "")))
+// ── Live flags present on disk ──────────────────────────────────────────────
+const { titleToSlug } = assignLiveSlugs(report)
+const map = {}
+let liveMapped = 0
+for (const r of report) {
+  if (!r.exists) continue
+  const slug = titleToSlug.get(r.title)
+  const file = slug && bySlug.get(slug)
+  if (file) {
+    map[keyOf(r.arg)] = `/flags/wm/${file}`
+    liveMapped++
+  }
+}
 
+// ── Repairs (downloaded on demand) ──────────────────────────────────────────
 async function fetchBuf(url) {
-  for (let attempt = 0; attempt <= 12; attempt++) {
+  for (let attempt = 0; attempt <= 30; attempt++) {
     try {
       const res = await fetch(url, {
         headers: { "User-Agent": "Globalio-flag-audit/1.0 (self-hosting)" },
         redirect: "follow",
       })
       if (res.status === 429 || res.status === 403 || res.status >= 500) {
-        await sleep(1200 + 400 * Math.min(attempt, 6))
+        await sleep(500 + Math.random() * 500)
         continue
       }
       if (!res.ok) throw new Error(`HTTP ${res.status}`)
       return Buffer.from(await res.arrayBuffer())
     } catch (e) {
-      if (attempt === 12) throw e
-      await sleep(1200 + 400 * Math.min(attempt, 6))
+      if (attempt === 30) throw e
+      await sleep(500 + Math.random() * 500)
     }
   }
 }
-
-const thumbUrl = (title) =>
-  `https://commons.wikimedia.org/wiki/Special:FilePath/${encodeURIComponent(
-    title.replace(/^File:/, ""),
-  )}?width=${THUMB_WIDTH}`
-
-// Download one repaired flag, returning its local filename (slug.ext).
-async function saveFlag({ url, ext, finalTitle }) {
-  let slug = slugify(finalTitle)
-  if (existingSlugs.has(slug)) {
-    // already have a file with this slug — reuse it
-    const f = readdirSync(OUT_DIR).find((x) => x.replace(/\.[a-z0-9]+$/i, "") === slug)
-    if (f && statSync(new URL(f, OUT_DIR)).size > 0) return f
-  }
-  let buf = await fetchBuf(url)
-  let outExt = ext
-  const tooBig = ext === "svg" ? buf.length > SVG_KEEP_LIMIT : buf.length > RASTER_KEEP_LIMIT
-  if (tooBig) {
-    try {
-      const t = await fetchBuf(thumbUrl(finalTitle))
-      if (t && t.length > 0 && t.length < buf.length) {
-        buf = t
-        outExt = "png"
-      }
-    } catch {
-      /* keep original */
-    }
-  }
-  const name = `${slug}.${outExt}`
-  writeFileSync(new URL(name, OUT_DIR), buf)
-  existingSlugs.add(slug)
-  return name
-}
-
-// ── Build the combined map ──────────────────────────────────────────────────
-const map = JSON.parse(readFileSync(here("./live-map.json")))
 
 let repaired = 0
 let removed = 0
 if (existsSync(here("./repairs.json"))) {
   const { repairs, unrepairable } = JSON.parse(readFileSync(here("./repairs.json")))
   for (const r of repairs) {
-    const name = await saveFlag({ url: r.url, ext: r.ext, finalTitle: r.finalTitle })
-    map[keyOf(r.arg)] = `/flags/wm/${name}`
+    const slug = `fix-${slugify(r.finalTitle)}`
+    let file = bySlug.get(slug)
+    if (!file) {
+      try {
+        const buf = await fetchBuf(r.url)
+        file = `${slug}.${r.ext}`
+        writeFileSync(new URL(file, OUT_DIR), buf)
+        bySlug.set(slug, file)
+      } catch (e) {
+        process.stdout.write(`  repair download FAILED ${r.chosen}: ${e}\n`)
+        continue
+      }
+    }
+    map[keyOf(r.arg)] = `/flags/wm/${file}`
     repaired++
-    process.stdout.write(`  repaired ${r.arg} -> ${name}\n`)
   }
   for (const u of unrepairable) {
-    map[keyOf(u.arg)] = "" // no working flag — render as "No flag", skip in quizzes
+    map[keyOf(u.arg)] = "" // dead, no replacement -> "no flag"
     removed++
   }
 }
 
+// ── Emit module ─────────────────────────────────────────────────────────────
 const keys = Object.keys(map).sort()
 const lines = keys.map((k) => `  ${JSON.stringify(k)}: ${JSON.stringify(map[k])},`)
 writeFileSync(
@@ -112,14 +92,14 @@ writeFileSync(
   `// AUTO-GENERATED by scripts/flags/generate.mjs — do not edit by hand.
 // Maps a Wikimedia Commons filename (as passed to fp()/wiki(), with spaces
 // normalised to underscores) to a self-hosted local path under /flags/wm/.
-// An empty-string value means the original link was dead and no replacement
-// flag exists — callers treat that as "no flag".
-// Regenerate: node scripts/flags/audit.mjs && node scripts/flags/download.mjs && node scripts/flags/repair.mjs && node scripts/flags/generate.mjs
+// An empty-string value means the original link was dead with no replacement —
+// callers treat that as "no flag". Filenames absent here fall back to the live
+// Wikimedia hotlink, so a partial image set still works.
 export const LOCAL_FLAGS: Record<string, string> = {
 ${lines.join("\n")}
 }
 `,
 )
 
-console.log(`\nMap entries: ${keys.length} (live ${Object.keys(JSON.parse(readFileSync(here("./live-map.json")))).length}, repaired ${repaired}, removed→"" ${removed}).`)
+console.log(`Map entries: ${keys.length} (live ${liveMapped}, repaired ${repaired}, removed→"" ${removed}).`)
 console.log("Wrote src/data/localFlags.ts")

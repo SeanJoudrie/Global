@@ -1,3 +1,5 @@
+import { LOCAL_FLAGS } from "./localFlags"
+
 export interface HistoricalFlag {
   fromYear: number
   toYear: number | null
@@ -18,10 +20,15 @@ export interface CodexEntry {
   flagHistory: HistoricalFlag[]
 }
 
-/** Wikimedia Commons file → a stable image URL that resolves without knowing the
- *  internal hash path. Pass the exact "Flag_of_…svg" filename. */
-export const fp = (file: string) =>
-  `https://commons.wikimedia.org/wiki/Special:FilePath/${file}`
+/** Wikimedia Commons file → a stable image URL. Self-hosted copies (see
+ *  LOCAL_FLAGS) are served locally; an empty string marks a dead link with no
+ *  replacement; anything unmapped falls back to the live Commons redirect. */
+export const fp = (file: string): string => {
+  const local = LOCAL_FLAGS[file.replace(/ /g, "_")]
+  return local !== undefined
+    ? local
+    : `https://commons.wikimedia.org/wiki/Special:FilePath/${file}`
+}
 
 const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
   CA: [

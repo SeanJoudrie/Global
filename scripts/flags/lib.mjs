@@ -1,5 +1,40 @@
 // Shared helpers for the flag audit / self-hosting scripts.
 import { readFileSync, writeFileSync, existsSync } from "node:fs"
+import { createHash } from "node:crypto"
+
+// Local filename slug from a Commons title (must match across download/generate).
+export function slugify(title) {
+  const base = title.replace(/^File:/i, "").replace(/\.[a-z0-9]+$/i, "")
+  return (
+    base
+      .normalize("NFKD")
+      .replace(/[̀-ͯ]/g, "")
+      .replace(/%[0-9a-f]{2}/gi, "-")
+      .replace(/[^a-zA-Z0-9]+/g, "-")
+      .replace(/^-+|-+$/g, "")
+      .toLowerCase() || "flag"
+  )
+}
+
+// Deterministic title -> slug assignment with collision resolution, shared by
+// download.mjs and generate.mjs so on-disk filenames always match the map.
+export function assignLiveSlugs(report) {
+  const liveByTitle = new Map()
+  for (const r of report) {
+    if (r.exists && !liveByTitle.has(r.title)) {
+      liveByTitle.set(r.title, { url: r.url, ext: r.ext, finalTitle: r.finalTitle || r.title })
+    }
+  }
+  const titleToSlug = new Map()
+  const used = new Set()
+  for (const [title, info] of liveByTitle) {
+    let slug = slugify(info.finalTitle)
+    if (used.has(slug)) slug = `${slug}-${createHash("sha1").update(title).digest("hex").slice(0, 6)}`
+    used.add(slug)
+    titleToSlug.set(title, slug)
+  }
+  return { liveByTitle, titleToSlug }
+}
 
 export const FILES = {
   challenges: "src/data/challenges.ts",
@@ -63,21 +98,20 @@ const API = "https://commons.wikimedia.org/w/api.php"
 
 async function apiGet(params) {
   const url = `${API}?${new URLSearchParams(params)}`
-  for (let attempt = 0; attempt <= 5; attempt++) {
+  for (let attempt = 0; attempt <= 9; attempt++) {
     try {
       const res = await fetch(url, {
         headers: { "User-Agent": "Globalio-flag-audit/1.0 (quiz app self-hosting)" },
       })
       if (res.status === 200) return await res.json()
       if (res.status === 429 || res.status === 403 || res.status >= 500) {
-        process.stderr.write(`    [retry] HTTP ${res.status} (attempt ${attempt})\n`)
-        await sleep(1500 * 2 ** attempt)
+        await sleep(Math.min(1000 * 2 ** attempt, 15000) + Math.random() * 500)
         continue
       }
       throw new Error(`HTTP ${res.status}`)
     } catch (e) {
-      if (attempt === 5) throw e
-      await sleep(1000 * 2 ** attempt)
+      if (attempt === 9) throw e
+      await sleep(Math.min(1000 * 2 ** attempt, 15000) + Math.random() * 500)
     }
   }
   throw new Error("apiGet: exhausted retries")

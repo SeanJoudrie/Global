@@ -1868,10 +1868,14 @@ const effectiveTier = (f: IdentityFlag) =>
   TIER_1.has(f.id) ? 1 : TIER_4_EXTRA.has(f.id) ? 4 : (f.tier ?? 2)
 
 // Sorted so that, within any category filter, flags read most-influential first
-// then alphabetically inside each tier.
-export const IDENTITY_FLAGS: IdentityFlag[] = [...RAW_IDENTITY_FLAGS].sort(
-  (a, b) => effectiveTier(a) - effectiveTier(b) || a.name.localeCompare(b.name)
-)
+// then alphabetically inside each tier. Entries whose flagUrl is empty are dead
+// Wikimedia links with no self-hostable replacement — drop them so quizzes and
+// browse never show a broken/blank tile.
+export const IDENTITY_FLAGS: IdentityFlag[] = [...RAW_IDENTITY_FLAGS]
+  .filter(f => f.flagUrl)
+  .sort(
+    (a, b) => effectiveTier(a) - effectiveTier(b) || a.name.localeCompare(b.name)
+  )
 
 // Maritime & Signal (the ICS / phonetic-alphabet signal flags) are their own
 // thing — they live in a separate section, NOT under Identity.

@@ -13,7 +13,10 @@ export interface CityFlag {
 const c = (id: string, name: string, state: string, file: string, note: string): CityFlag =>
   ({ id, name, state, flagUrl: fp(file), note })
 
-export const US_CITY_FLAGS: CityFlag[] = [
+// Entries whose flagUrl is empty are dead Wikimedia links with no self-hostable
+// replacement; they are filtered out of US_CITY_FLAGS below so the quiz never
+// shows a blank flag.
+const RAW_US_CITY_FLAGS: CityFlag[] = [
   c("chicago", "Chicago", "IL", "Flag_of_Chicago,_Illinois.svg",
     "Two blue bars and four red six-pointed stars — each star marks a defining event in the city's history. Routinely voted America's best city flag."),
   c("dc", "Washington", "D.C.", "Flag_of_the_District_of_Columbia.svg",
@@ -243,3 +246,5 @@ export const US_CITY_FLAGS: CityFlag[] = [
   c("topeka", "Topeka", "KS", "Flag_of_Topeka,_Kansas.svg",
     "A field with the city emblem — Kansas's capital."),
 ]
+
+export const US_CITY_FLAGS: CityFlag[] = RAW_US_CITY_FLAGS.filter(f => f.flagUrl)

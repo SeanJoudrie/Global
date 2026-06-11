@@ -2,11 +2,35 @@
 // Commons filename via File-namespace search. Conservative: only accept a
 // candidate that clearly IS the subject's flag. Writes scripts/flags/repairs.json
 // with {repairs: [...], unrepairable: [...]} for review before applying.
-import { readFileSync, writeFileSync } from "node:fs"
+import { readFileSync, writeFileSync, existsSync } from "node:fs"
 import { searchFiles, lookupTitles, sleep } from "./lib.mjs"
 
 const report = JSON.parse(readFileSync(new URL("./audit-report.json", import.meta.url)))
 const dead = report.filter((r) => !r.exists)
+
+// Persistent cache of search results (keyed by query) so the throttle can't lose
+// progress: reruns resume, and a failed search is retried next run rather than
+// crashing the whole pass.
+const SEARCH_CACHE = new URL("./search-cache.json", import.meta.url)
+const searchCache = existsSync(SEARCH_CACHE)
+  ? new Map(Object.entries(JSON.parse(readFileSync(SEARCH_CACHE, "utf8"))))
+  : new Map()
+function saveSearchCache() {
+  writeFileSync(SEARCH_CACHE, JSON.stringify(Object.fromEntries(searchCache), null, 0))
+}
+async function cachedSearch(query) {
+  if (searchCache.has(query)) return searchCache.get(query)
+  let res
+  try {
+    res = await searchFiles(`Flag ${query}`, 10)
+  } catch (e) {
+    process.stdout.write(`  [search failed, will retry next run] ${query}: ${e}\n`)
+    return null // signal "unknown" — do not cache, so a rerun retries
+  }
+  searchCache.set(query, res)
+  saveSearchCache()
+  return res
+}
 
 // Strict matching: a candidate is accepted ONLY when its meaningful tokens are
 // exactly the same set as the dead title's. This rejects different-entity
@@ -69,10 +93,16 @@ function score(deadTitle, candidate) {
 const repairs = []
 const unrepairable = []
 let i = 0
+let pending = 0
 for (const d of dead) {
   i++
   const query = queryOf(d.title)
-  const candidates = query ? await searchFiles(`Flag ${query}`, 10) : []
+  const wasCached = searchCache.has(query)
+  const candidates = query ? await cachedSearch(query) : []
+  if (candidates === null) {
+    pending++
+    continue // search failed this run; rerun to resolve
+  }
   let best = null
   let bestScore = 0
   for (const c of candidates) {
@@ -88,8 +118,9 @@ for (const d of dead) {
     unrepairable.push({ ...d, query, candidates })
   }
   process.stdout.write(`  ${i}/${dead.length} ${best ? "FIX " : "----"} ${d.title} ${best ? "=> " + best : ""}\n`)
-  await sleep(500)
+  if (!wasCached) await sleep(500)
 }
+if (pending) process.stdout.write(`\n${pending} searches failed (throttled) — rerun to resolve them.\n`)
 
 // Verify chosen titles actually resolve, and capture url/ext.
 const chosenTitles = [...new Set(repairs.map((r) => r.chosen))]
