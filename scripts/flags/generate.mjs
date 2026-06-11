@@ -122,11 +122,18 @@ if (existsSync(here("./repairs.json"))) {
   // Candidate previews: Commons search hits that *might* be the right flag, for
   // the user to eyeball. Drop photos, maps, seals, logos and other non-flags.
   const JUNK = /\.(jpe?g|tiff?)$|flag.?map|map of|outline|\blabel\b|corner|disputed|simple map|\bseal\b|coat of arms|\blogo\b|\bemblem\b|locator|orthographic|\btemple\b|\bvisit\b|assembly|parliament|construction|\brugby\b|\bpin\b|\bicon\b|background|\bday\b/i
+  // Richer cross-wiki candidates (Commons + en.wikipedia, with real URLs) when
+  // available; otherwise fall back to the Commons-only string candidates.
+  const extra = existsSync(here("./candidates-extra.json"))
+    ? JSON.parse(readFileSync(here("./candidates-extra.json")))
+    : {}
   const candsFor = (u) =>
-    (u.candidates || [])
-      .filter((c) => /flag|bandera|drapeau|bandiera|vlag/i.test(c) && !JUNK.test(c))
-      .slice(0, 5)
-      .map((c) => ({ file: c, url: hotlink(c) }))
+    extra[u.arg]?.length
+      ? extra[u.arg].slice(0, 5)
+      : (u.candidates || [])
+          .filter((c) => /flag|bandera|drapeau|bandiera|vlag/i.test(c) && !JUNK.test(c))
+          .slice(0, 5)
+          .map((c) => ({ file: c, url: hotlink(c) }))
   const missing = [...d.unrepairable, ...d.repairs.filter((r) => REJECT_REPAIRS.has(r.arg))]
     .map((u) => ({ arg: u.arg, label: clean(u.arg), cands: candsFor(u) }))
     .sort((a, b) => a.label.localeCompare(b.label))

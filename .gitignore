@@ -31,3 +31,5 @@ scripts/flags/download-failures.json
 scripts/flags/live-map.json
 scripts/flags/search-cache.json
 scripts/flags/repairs.backup.json
+scripts/flags/xwiki-cache.json
+scripts/flags/candidates-extra.json
