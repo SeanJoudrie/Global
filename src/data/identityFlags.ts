@@ -1193,6 +1193,308 @@ export const IDENTITY_FLAGS: IdentityFlag[] = [
     flagUrl: fp("Flag_of_the_FAO.svg"),
     note: "A wheat-wreathed UN emblem with the motto 'Fiat Panis' (Let there be bread) — the UN Food and Agriculture Organization.",
   },
+
+  // ── Pride & LGBTQ+ (batch 2) ──────────────────────────────────────────────
+  {
+    id: "pride-aroace", name: "Aroace Flag", category: "Pride & LGBTQ+",
+    flagUrl: fp("Aroace_flag.svg"),
+    note: "Orange-to-yellow over white and two shades of blue, combining aromantic and asexual identity for people who are both.",
+  },
+  {
+    id: "pride-queer", name: "Queer Pride Flag", category: "Pride & LGBTQ+",
+    flagUrl: fp("Queer_Pride_Flag.svg"),
+    note: "Lavender, white and green bands — an umbrella flag reclaiming 'queer' for the whole community.",
+  },
+  {
+    id: "pride-leather", name: "Leather Pride Flag", category: "Pride & LGBTQ+",
+    flagUrl: fp("Leather,_Latex,_and_BDSM_pride_-_Light.svg"),
+    note: "Black and blue stripes with a white line and a red heart — Tony DeBlase's 1989 design for the leather/BDSM subculture.",
+  },
+  {
+    id: "pride-bear", name: "Bear Brotherhood Flag", category: "Pride & LGBTQ+",
+    flagUrl: fp("Bear_Brotherhood_flag.svg"),
+    note: "Earthy brown-to-tan stripes with a bear paw — for the burly, hairy 'bear' community of gay culture.",
+  },
+  {
+    id: "pride-rubber", name: "Rubber Pride Flag", category: "Pride & LGBTQ+",
+    flagUrl: fp("Rubber_pride_flag.svg"),
+    note: "Black and red with a yellow chevron — a 1995 flag for the rubber and latex fetish community.",
+  },
+  {
+    id: "pride-demiboy", name: "Demiboy Flag", category: "Pride & LGBTQ+",
+    flagUrl: fp("Demiboy_flag.svg"),
+    note: "Grey, blue and white stripes for someone who partially, but not wholly, identifies as a boy or man.",
+  },
+  {
+    id: "pride-demigirl", name: "Demigirl Flag", category: "Pride & LGBTQ+",
+    flagUrl: fp("Demigirl_flag.svg"),
+    note: "Grey, pink and white stripes for someone who partially identifies as a girl or woman.",
+  },
+  {
+    id: "pride-maverique", name: "Maverique Flag", category: "Pride & LGBTQ+",
+    flagUrl: fp("Maverique_flag.svg"),
+    note: "Yellow, white and orange — a non-binary gender independent of the male/female binary, defined by autonomy.",
+  },
+  {
+    id: "pride-neutrois", name: "Neutrois Flag", category: "Pride & LGBTQ+",
+    flagUrl: fp("Neutrois_flag.svg"),
+    note: "White, green and black — a neutral or null gender within the non-binary spectrum.",
+  },
+  {
+    id: "pride-pangender", name: "Pangender Flag", category: "Pride & LGBTQ+",
+    flagUrl: fp("Pangender_Pride_Flag.svg"),
+    note: "Soft pinks, yellows and white for people who experience many or all genders.",
+  },
+  {
+    id: "pride-androgyne", name: "Androgyne Flag", category: "Pride & LGBTQ+",
+    flagUrl: fp("Androgyne_flag.svg"),
+    note: "Pink, purple and blue for a gender blending masculine and feminine.",
+  },
+  {
+    id: "pride-trigender", name: "Trigender Flag", category: "Pride & LGBTQ+",
+    flagUrl: fp("Trigender_Pride_flag.svg"),
+    note: "Five symmetric stripes for those who move between three genders.",
+  },
+
+  // ── Pan-National & Ethnic (batch 2) ───────────────────────────────────────
+  {
+    id: "turkic-states", name: "Organization of Turkic States", category: "Pan-National & Ethnic",
+    flagUrl: fp("Flag_of_the_Organization_of_Turkic_States.svg"),
+    note: "A sky-blue field with the emblems of its member states — a pan-Turkic body spanning Turkey to Central Asia.",
+  },
+  {
+    id: "pan-iranian", name: "Pan-Iranian Flag", category: "Pan-National & Ethnic",
+    flagUrl: fp("Pan_Iranian_flag.svg"),
+    note: "A green-white-red tricolour with a golden lion and sun — a symbol of pan-Iranian (Iranic peoples') unity.",
+  },
+  {
+    id: "hispanidad", name: "Flag of the Hispanic People", category: "Pan-National & Ethnic",
+    flagUrl: fp("Flag_of_the_Hispanic_People.svg"),
+    note: "Three crosses on white with a blazing sun — representing the shared heritage of the Spanish-speaking world (Hispanidad).",
+  },
+  {
+    id: "yoruba", name: "Yoruba People", category: "Pan-National & Ethnic",
+    flagUrl: fp("Flag_of_the_Yoruba_people.svg"),
+    note: "A flag for the Yoruba, one of West Africa's largest ethnic groups, spread across Nigeria, Benin and Togo.",
+  },
+  {
+    id: "nordic-council", name: "Nordic Council", category: "Pan-National & Ethnic",
+    flagUrl: fp("Flag_of_the_Nordic_Council.svg"),
+    note: "A white swan on blue — the symbol of Nordic cooperation among Denmark, Norway, Sweden, Finland and Iceland.",
+  },
+  {
+    id: "hmong", name: "Hmong Flag", category: "Pan-National & Ethnic",
+    flagUrl: fp("Hmong_flag.svg"),
+    note: "A flag for the Hmong, a stateless people scattered across China, Vietnam, Laos and the global diaspora.",
+  },
+
+  // ── Indigenous Peoples (batch 2) ──────────────────────────────────────────
+  {
+    id: "inuit-circumpolar", name: "Inuit Circumpolar Council", category: "Indigenous Peoples",
+    flagUrl: fp("Flag_of_the_Inuit_Circumpolar_Council.svg"),
+    note: "Represents the Inuit of Greenland, Canada, Alaska and Chukotka — a single people across four states.",
+  },
+  {
+    id: "afn", name: "Assembly of First Nations", category: "Indigenous Peoples",
+    flagUrl: fp("Assembly_of_First_Nations_flag.svg"),
+    note: "The national advocacy body for the First Nations peoples of Canada.",
+  },
+  {
+    id: "hopi", name: "Hopi Tribe", category: "Indigenous Peoples",
+    flagUrl: fp("Flag_of_the_Hopi.svg"),
+    note: "A Puebloan people of northeastern Arizona, known for mesa-top villages among the oldest continuously inhabited in North America.",
+  },
+  {
+    id: "cree", name: "Cree Nation", category: "Indigenous Peoples",
+    flagUrl: fp("Flag_of_the_Cree_Nation.svg"),
+    note: "One of the largest Indigenous groups in North America, spanning the Canadian Subarctic and Plains.",
+  },
+  {
+    id: "ainu", name: "Ainu Flag", category: "Indigenous Peoples",
+    flagUrl: fp("Ainu_flag.svg"),
+    note: "Designed in 1973 for the Ainu, the Indigenous people of Hokkaido, Sakhalin and the Kurils.",
+  },
+  {
+    id: "taino", name: "Taíno Flag", category: "Indigenous Peoples",
+    flagUrl: fp("Taino_flag.svg"),
+    note: "A revival symbol of the Taíno, the Indigenous people of the Caribbean encountered by Columbus in 1492.",
+  },
+  {
+    id: "garifuna", name: "Garifuna Flag", category: "Indigenous Peoples",
+    flagUrl: fp("Flag_of_the_Garifuna.svg"),
+    note: "Black, white and yellow stripes for the Garifuna, an Afro-Indigenous people of Central America's Caribbean coast.",
+  },
+  {
+    id: "nez-perce", name: "Nez Perce Tribe", category: "Indigenous Peoples",
+    flagUrl: fp("Flag_of_the_Nez_Perce.svg"),
+    note: "A Plateau people of the U.S. Pacific Northwest, famed for the 1877 flight led by Chief Joseph.",
+  },
+  {
+    id: "anishinaabe", name: "Anishinaabe / Ojibwe", category: "Indigenous Peoples",
+    flagUrl: fp("Anishinaabe_flag.svg"),
+    note: "Among the most populous Indigenous nations of the Great Lakes region.",
+  },
+  {
+    id: "wampanoag", name: "Wampanoag", category: "Indigenous Peoples",
+    flagUrl: fp("Flag_of_the_Wampanoag.svg"),
+    note: "The people of present-day Massachusetts who met the Plymouth colonists in 1620.",
+  },
+
+  // ── Separatist & Autonomous (batch 2) ─────────────────────────────────────
+  {
+    id: "catalonia-senyera", name: "Catalonia (Senyera)", category: "Separatist & Autonomous",
+    flagUrl: fp("Flag_of_Catalonia.svg"),
+    note: "Four red bars on gold — one of Europe's oldest flags and the official banner of Catalonia.",
+  },
+  {
+    id: "scotland", name: "Scotland (Saltire)", category: "Separatist & Autonomous",
+    flagUrl: fp("Flag_of_Scotland.svg"),
+    note: "The white St Andrew's cross on blue — emblem of Scotland and its independence movement.",
+  },
+  {
+    id: "wales", name: "Wales (Y Ddraig Goch)", category: "Separatist & Autonomous",
+    flagUrl: fp("Flag_of_Wales.svg"),
+    note: "The red dragon on green and white — a Welsh national symbol that flies no place on the Union Jack.",
+  },
+  {
+    id: "england", name: "England (St George)", category: "Separatist & Autonomous",
+    flagUrl: fp("Flag_of_England.svg"),
+    note: "The red St George's cross on white — the flag of England within the United Kingdom.",
+  },
+  {
+    id: "ulster-banner", name: "Ulster Banner", category: "Separatist & Autonomous",
+    flagUrl: fp("Ulster_Banner.svg"),
+    note: "The former flag of Northern Ireland (1953–72), still used by unionists at sporting events.",
+  },
+  {
+    id: "texas", name: "Texas (Lone Star)", category: "Separatist & Autonomous",
+    flagUrl: fp("Flag_of_Texas.svg"),
+    note: "Once the banner of the independent Republic of Texas (1836–45), now a touchstone for secessionist sentiment.",
+  },
+  {
+    id: "california-republic", name: "California Republic", category: "Separatist & Autonomous",
+    flagUrl: fp("Flag_of_California.svg"),
+    note: "The Bear Flag of the short-lived 1846 California Republic, now the state flag and a 'Calexit' symbol.",
+  },
+  {
+    id: "hawaii-kingdom", name: "Hawaiian Kingdom", category: "Separatist & Autonomous",
+    flagUrl: fp("Flag_of_Hawaii.svg"),
+    note: "The flag of the former Kingdom of Hawai'i, central to the Native Hawaiian sovereignty movement.",
+  },
+  {
+    id: "crimea", name: "Crimea", category: "Separatist & Autonomous",
+    flagUrl: fp("Flag_of_Crimea.svg"),
+    note: "The flag of the contested Crimean peninsula, annexed by Russia in 2014.",
+  },
+  {
+    id: "rif-republic", name: "Republic of the Rif", category: "Separatist & Autonomous",
+    flagUrl: fp("Flag_of_the_Republic_of_the_Rif.svg"),
+    note: "A red field with a white diamond bearing a green crescent and star — the 1920s Berber republic of northern Morocco.",
+  },
+  {
+    id: "kabylia", name: "Kabylia", category: "Separatist & Autonomous",
+    flagUrl: fp("Flag_of_Kabylie.svg"),
+    note: "The flag of the Kabyle Berber region of Algeria and its autonomy movement.",
+  },
+  {
+    id: "balochistan", name: "Balochistan", category: "Separatist & Autonomous",
+    flagUrl: fp("Flag_of_Balochistan.svg"),
+    note: "A symbol of Baloch nationalism spanning Pakistan, Iran and Afghanistan.",
+  },
+  {
+    id: "south-yemen", name: "South Yemen", category: "Separatist & Autonomous",
+    flagUrl: fp("Flag_of_South_Yemen.svg"),
+    note: "The banner of the former independent south, revived by the Southern Movement.",
+  },
+  {
+    id: "hong-kong-colonial", name: "Hong Kong (Colonial)", category: "Separatist & Autonomous",
+    flagUrl: fp("Flag_of_Hong_Kong_(1959–1997).svg"),
+    note: "The pre-handover colonial ensign, waved by some pro-democracy and localist protesters.",
+  },
+  {
+    id: "newfoundland-tricolour", name: "Newfoundland (Tricolour)", category: "Separatist & Autonomous",
+    flagUrl: fp("Flag_of_Newfoundland_(Tricolour).svg"),
+    note: "The unofficial pink-white-green flag, a symbol of Newfoundland identity.",
+  },
+  {
+    id: "acadia", name: "Acadia", category: "Separatist & Autonomous",
+    flagUrl: fp("Flag_of_Acadia.svg"),
+    note: "The French tricolour with a gold star, flag of the Acadian people of Atlantic Canada.",
+  },
+
+  // ── Micronations (batch 2) ────────────────────────────────────────────────
+  {
+    id: "kugelmugel", name: "Republic of Kugelmugel", category: "Micronations",
+    flagUrl: fp("Flag_of_Kugelmugel.svg"),
+    note: "A spherical house turned micronation in Vienna, declared by artist Edwin Lipburger in 1984.",
+  },
+  {
+    id: "wirtland", name: "Wirtland", category: "Micronations",
+    flagUrl: fp("Flag_of_Wirtland.svg"),
+    note: "One of the first 'countries' to exist purely online, founded in 2008.",
+  },
+  {
+    id: "slowjamastan", name: "Slowjamastan", category: "Micronations",
+    flagUrl: fp("Flag_of_Slowjamastan.svg"),
+    note: "A patch of California desert declared a 'republic' in 2021 by radio DJ Randy Williams.",
+  },
+  {
+    id: "akhzivland", name: "Akhzivland", category: "Micronations",
+    flagUrl: fp("Flag_of_Akhzivland.svg"),
+    note: "A beachside micronation on the Israeli coast founded by Eli Avivi in the 1970s.",
+  },
+  {
+    id: "filettino", name: "Principality of Filettino", category: "Micronations",
+    flagUrl: fp("Flag_of_Filettino.svg"),
+    note: "An Italian village that declared itself a principality in 2011 to protest a merger.",
+  },
+  {
+    id: "forvik", name: "Forvik", category: "Micronations",
+    flagUrl: fp("Flag_of_Forvik.svg"),
+    note: "A tiny Shetland island declared a Crown dependency by Stuart Hill in 2008.",
+  },
+
+  // ── Civic & Ideological (batch 2) ─────────────────────────────────────────
+  {
+    id: "disability-pride", name: "Disability Pride Flag", category: "Civic & Ideological",
+    flagUrl: fp("Disability_Pride_Flag.svg"),
+    note: "A charcoal field with a diagonal band of five colours — Ann Magill's 2019 design for the disability community.",
+  },
+  {
+    id: "vegan-flag", name: "Vegan Flag", category: "Civic & Ideological",
+    flagUrl: fp("Vegan_flag.svg"),
+    note: "Two blue and green triangles forming a 'V' — a 2017 international symbol of veganism.",
+  },
+  {
+    id: "ecology-flag", name: "Ecology Flag", category: "Civic & Ideological",
+    flagUrl: fp("Ecology_Flag.svg"),
+    note: "Green and white stripes with a theta-like symbol — a 1969 banner of the environmental movement.",
+  },
+  {
+    id: "peace-flag", name: "Peace Flag (PACE)", category: "Civic & Ideological",
+    flagUrl: fp("Flag_of_Peace.svg"),
+    note: "The rainbow 'PACE' banner widely flown in peace marches, especially in Italy.",
+  },
+  {
+    id: "paralympic", name: "Paralympic Movement", category: "Civic & Ideological",
+    flagUrl: fp("Paralympic_flag.svg"),
+    note: "Three 'agitos' in red, blue and green on white — the symbol of the Paralympic Games.",
+  },
+  {
+    id: "happy-human", name: "Humanism (Happy Human)", category: "Civic & Ideological",
+    flagUrl: fp("Happy_Human.svg"),
+    note: "A stylised figure with arms raised — the international icon of secular humanism.",
+  },
+  {
+    id: "extinction-rebellion", name: "Extinction Rebellion", category: "Civic & Ideological",
+    flagUrl: fp("Extinction_Symbol.svg"),
+    note: "An hourglass inside a circle — the emblem of the climate-action movement, signalling time running out.",
+  },
+  {
+    id: "red-flag", name: "Red Flag (Socialism)", category: "Civic & Ideological",
+    flagUrl: fp("Red_flag.svg"),
+    note: "The plain red banner — a universal symbol of socialism and the labour movement since the 19th century.",
+  },
 ]
 
 // Maritime & Signal (the ICS / phonetic-alphabet signal flags) are their own
