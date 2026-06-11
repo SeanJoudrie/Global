@@ -23,6 +23,7 @@ function makeCard(): Card {
 
 function RealOrBotGame({ onBack, onReplay }: Props & { onReplay: () => void }) {
   const [card, setCard] = useState<Card>(makeCard)
+  const [nextCard, setNextCard] = useState<Card>(makeCard)   // the card waiting underneath
   const [streak, setStreak] = useState(0)
   const [best, setBest] = useState(loadBest)
   const [over, setOver] = useState<null | { wasReal: boolean }>(null)
@@ -43,7 +44,8 @@ function RealOrBotGame({ onBack, onReplay }: Props & { onReplay: () => void }) {
       window.setTimeout(() => {
         setStreak(ns)
         if (ns > best) { setBest(ns); saveBest(ns) }
-        setCard(makeCard()); setDx(0); setExit(null); locked.current = false
+        // the card that was peeking underneath becomes the active card
+        setCard(nextCard); setNextCard(makeCard()); setDx(0); setExit(null); locked.current = false
       }, 240)
     } else {
       window.setTimeout(() => {
@@ -52,6 +54,12 @@ function RealOrBotGame({ onBack, onReplay }: Props & { onReplay: () => void }) {
       }, 240)
     }
   }
+
+  // The underneath card rises toward full as you drag the top card away.
+  const peek = Math.min(Math.abs(dx) / 120, 1)
+  const nextFlag = (c: Card) => c.real && c.flag
+    ? <FlagImage code={c.flag.code} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", pointerEvents: "none" }} />
+    : <img src={c.botSrc} alt="" draggable={false} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", pointerEvents: "none" }} />
 
   const onDown = (x: number) => { if (over) return; startX.current = x; dragging.current = true }
   const onMove = (x: number) => { if (!dragging.current || startX.current === null) return; setDx(x - startX.current) }
@@ -72,7 +80,10 @@ function RealOrBotGame({ onBack, onReplay }: Props & { onReplay: () => void }) {
         <div className="w-full max-w-sm" style={{ display: "flex", flexDirection: "column", gap: 14 }}>
           <div style={{ borderRadius: 16, padding: 22, textAlign: "center", background: T.surface, border: `1px solid ${T.line}` }}>
             <div style={{ fontSize: 40 }}>{over.wasReal ? "🚩" : "🤖"}</div>
-            <div className="geo-display" style={{ color: T.text, fontWeight: 700, fontSize: 20, marginTop: 6 }}>
+            <div className="geo-micro" style={{ fontSize: 10, color: ACCENT.play, marginTop: 6 }}>
+              {streak >= 8 ? "🔥 Great run!" : streak >= 3 ? "👏 Nice job!" : "Good try!"}
+            </div>
+            <div className="geo-display" style={{ color: T.text, fontWeight: 700, fontSize: 20, marginTop: 4 }}>
               That one was {over.wasReal ? "a real flag" : "an AI fake"}
             </div>
             <div style={{ color: T.muted, fontSize: 12, marginTop: 4 }}>
@@ -112,10 +123,17 @@ function RealOrBotGame({ onBack, onReplay }: Props & { onReplay: () => void }) {
           </div>
         </div>
 
-        {/* the flag card — with a deck stacked behind so swiping reveals more */}
+        {/* the flag card — the actual NEXT flag peeks through underneath, rising
+            toward full as you swipe the current one away */}
         <div style={{ position: "relative", width: 300, height: 200 }}>
-          <div style={{ position: "absolute", inset: 0, transform: "translateY(16px) scale(0.92)", borderRadius: 16, background: T.surface, border: `1px solid ${T.line}`, zIndex: 0 }} />
-          <div style={{ position: "absolute", inset: 0, transform: "translateY(8px) scale(0.96)", borderRadius: 16, background: T.surfaceHi, border: `1px solid ${T.lineHi}`, zIndex: 1 }} />
+          <div style={{
+            position: "absolute", inset: 0, zIndex: 1,
+            transform: `translateY(${10 - peek * 10}px) scale(${0.95 + peek * 0.05})`,
+            borderRadius: 16, overflow: "hidden", border: `1px solid ${T.lineHi}`, background: "#fff",
+            opacity: 0.45 + peek * 0.45,
+          }}>
+            {nextFlag(nextCard)}
+          </div>
           <div
             onMouseDown={e => onDown(e.clientX)} onMouseMove={e => onMove(e.clientX)} onMouseUp={onUp} onMouseLeave={onUp}
             onTouchStart={e => onDown(e.touches[0].clientX)} onTouchMove={e => onMove(e.touches[0].clientX)} onTouchEnd={onUp}

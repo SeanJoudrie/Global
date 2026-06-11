@@ -86,25 +86,27 @@ export default function HigherLowerScreen({ onBack }: Props) {
       </header>
 
       <div className="flex-1 flex flex-col items-center justify-center px-5 gap-5">
-        <p style={{ fontSize: 13, color: T.muted }}>Are there more flags with…</p>
+        <p style={{ fontSize: 13, color: T.muted }}>Tap the one you think has more — or use the buttons.</p>
 
-        {/* Trait A */}
-        <div className="w-full max-w-sm rounded-2xl px-5 py-6 text-center"
-          style={{ background: T.surface, border: `1.5px solid ${tint(ACCENT.play, 0.4)}` }}>
+        {/* Trait A — tap it to say "this one has more" */}
+        <button onClick={() => answer(true)} disabled={!!reveal}
+          className="geo-tap w-full max-w-sm rounded-2xl px-5 py-6 text-center"
+          style={{ background: reveal && q.answer ? tint(T.green, 0.18) : T.surface, border: `1.5px solid ${reveal && q.answer ? T.green : tint(ACCENT.play, 0.4)}`, cursor: reveal ? "default" : "pointer" }}>
           <div style={{ fontSize: 36 }}>{q.a.emoji}</div>
           <div className="geo-display" style={{ fontSize: 18, fontWeight: 700, marginTop: 4, color: T.text }}>{q.a.label}</div>
           {reveal && <div style={{ fontFamily: FONT.mono, fontSize: 24, fontWeight: 800, marginTop: 4, color: ACCENT.play }}>{q.a.count}</div>}
-        </div>
+        </button>
 
         <div className="geo-micro" style={{ fontSize: 11, color: T.muted }}>— than —</div>
 
-        {/* Trait B */}
-        <div className="w-full max-w-sm rounded-2xl px-5 py-6 text-center"
-          style={{ background: T.surface, border: `1.5px solid ${tint(ACCENT.play, 0.4)}` }}>
+        {/* Trait B — tap it to say "this one has more" */}
+        <button onClick={() => answer(false)} disabled={!!reveal}
+          className="geo-tap w-full max-w-sm rounded-2xl px-5 py-6 text-center"
+          style={{ background: reveal && !q.answer ? tint(T.green, 0.18) : T.surface, border: `1.5px solid ${reveal && !q.answer ? T.green : tint(ACCENT.play, 0.4)}`, cursor: reveal ? "default" : "pointer" }}>
           <div style={{ fontSize: 36 }}>{q.b.emoji}</div>
           <div className="geo-display" style={{ fontSize: 18, fontWeight: 700, marginTop: 4, color: T.text }}>{q.b.label}</div>
           {reveal && <div style={{ fontFamily: FONT.mono, fontSize: 24, fontWeight: 800, marginTop: 4, color: ACCENT.play }}>{q.b.count}</div>}
-        </div>
+        </button>
 
         {!reveal ? (
           <div className="flex gap-3 w-full max-w-sm">

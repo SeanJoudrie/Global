@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { FLAGS } from "../data/flags"
 import { HISTORICAL_FLAGS } from "../data/historicalFlags"
 import { T, ACCENT, FONT } from "../ui/tokens"
@@ -8,10 +8,12 @@ interface Props { onBack: () => void }
 interface Card { flagUrl: string; name: string; alive: boolean; sub: string }
 
 const ALIVE: Card[] = FLAGS.map(f => ({ flagUrl: f.flagUrl, name: f.name, alive: true, sub: f.region }))
-// A few vanished states had flags identical to a modern country's (e.g. the
-// Weimar Republic = today's Germany), which makes them unguessable — skip them.
-const SAME_AS_MODERN = new Set(["weimar"])
-const DEAD: Card[]  = HISTORICAL_FLAGS.filter(h => !SAME_AS_MODERN.has(h.id)).map(h => ({ flagUrl: h.flagUrl, name: h.name, alive: false, sub: h.era }))
+// Skip "dead" entries that would be misleading: flags identical to a modern
+// country (Weimar = today's Germany), entities that actually STILL EXIST (the
+// Order of Malta and the city of Gouda are "present"), or symbols still flown
+// today (the Wiphala is an official flag of Bolivia).
+const MISLEADING = new Set(["weimar", "smom", "gouda", "inca-wiphala"])
+const DEAD: Card[]  = HISTORICAL_FLAGS.filter(h => !MISLEADING.has(h.id)).map(h => ({ flagUrl: h.flagUrl, name: h.name, alive: false, sub: h.era }))
 
 function nextCard(): Card {
   // ~50/50 alive vs dead
@@ -42,6 +44,14 @@ export default function DeadOrAliveScreen({ onBack }: Props) {
     setReveal(null)
   }
 
+  // After a reveal, auto-advance after 10s (the Next button still works too).
+  useEffect(() => {
+    if (!reveal) return
+    const t = window.setTimeout(cont, 10000)
+    return () => window.clearTimeout(t)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [reveal])
+
   const border = reveal ? (card.alive ? T.green : T.warm) : T.lineHi
 
   return (
@@ -64,7 +74,7 @@ export default function DeadOrAliveScreen({ onBack }: Props) {
           border: `2.5px solid ${border}`, background: "#fff", position: "relative",
         }}>
           <img src={card.flagUrl} alt="mystery flag"
-            style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+            style={{ width: "100%", height: "100%", objectFit: "contain", display: "block" }}
             onError={e => { (e.target as HTMLImageElement).style.opacity = "0.15" }} />
           {reveal && (
             <div style={{

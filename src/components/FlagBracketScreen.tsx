@@ -18,15 +18,16 @@ interface Match { a: FlagRecord; b: FlagRecord; winnerCode: string; roundSize: n
 
 const shuffle = <X,>(a: X[]): X[] => [...a].sort(() => Math.random() - 0.5)
 const roundName = (n: number) =>
-  n === 16 ? "Round of 16" : n === 8 ? "Quarter-finals" : n === 4 ? "Semi-finals" : n === 2 ? "Final" : "Round"
+  n === 2 ? "Final" : n === 4 ? "Semi-finals" : n === 8 ? "Quarter-finals" : n === 16 ? "Round of 16" : `Round of ${n}`
 
 function FlagChoice({ flag, onPick }: { flag: FlagRecord; onPick: (f: FlagRecord) => void }) {
   return (
     <button onClick={() => onPick(flag)}
       className="w-full max-w-sm rounded-2xl overflow-hidden transition-all active:scale-95 hover:brightness-110"
       style={{ border: "2px solid #8B6CFF33", background: "#2D1F52" }}>
+      {/* contain (not cover) so no flag edges get cropped off */}
       <img src={flag.flagUrl} alt={flag.name}
-        style={{ width: "100%", height: 150, objectFit: "cover", display: "block" }}
+        style={{ width: "100%", height: 150, objectFit: "contain", display: "block", background: "#1A1033" }}
         onError={e => { (e.target as HTMLImageElement).style.opacity = "0.2" }} />
       <div className="py-3 font-bold text-lg" style={{ color: "#F5F3FF" }}>{flag.name}</div>
     </button>
@@ -42,6 +43,7 @@ function MiniFlag({ src, dim }: { src: string; dim?: boolean }) {
 
 function BracketGame({ onBack, onReplay }: Props & { onReplay: () => void }) {
   const [scope, setScope] = useState<Scope | null>(null)
+  const [full, setFull] = useState(false)   // false = top 16, true = whole pool
   const [field, setField] = useState<FlagRecord[]>([])
   const [pair, setPair] = useState(0)
   const [winners, setWinners] = useState<FlagRecord[]>([])
@@ -50,7 +52,9 @@ function BracketGame({ onBack, onReplay }: Props & { onReplay: () => void }) {
 
   const start = (s: Scope) => {
     const pool = s === "World" ? FLAGS : getFlagsByRegion(s)
-    const size = fieldSize(pool.length)
+    // "full" = everyone in the pool (odd counts get a bye each round); otherwise
+    // the classic 16-flag bracket.
+    const size = full ? pool.length : fieldSize(pool.length)
     setScope(s)
     setField(shuffle(pool).slice(0, size))
     setPair(0); setWinners([]); setChampion(null); setHistory([])
@@ -69,6 +73,18 @@ function BracketGame({ onBack, onReplay }: Props & { onReplay: () => void }) {
           <div className="text-5xl">🏆</div>
           <p className="text-base font-bold text-center" style={{ color: "#F5F3FF" }}>Crown the coolest flag</p>
           <p className="text-xs text-center" style={{ color: "#B8A9E0", maxWidth: 280 }}>Pick a pool — a fresh random bracket is drawn every run.</p>
+
+          {/* size toggle: classic 16 vs everyone in the pool */}
+          <div className="inline-flex p-0.5 rounded-full" style={{ background: "#2D1F52", border: "1px solid #8B6CFF33" }}>
+            {([["16", false], ["Everyone", true]] as const).map(([label, v]) => (
+              <button key={label} onClick={() => setFull(v)}
+                className="px-4 py-1 rounded-full text-xs font-bold transition-all"
+                style={{ background: full === v ? "#8B6CFF" : "transparent", color: full === v ? "#fff" : "#B8A9E0" }}>
+                {label}
+              </button>
+            ))}
+          </div>
+
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10, width: "100%", maxWidth: 340 }}>
             {SCOPES.map(s => (
               <button key={s} onClick={() => start(s)}
@@ -87,11 +103,15 @@ function BracketGame({ onBack, onReplay }: Props & { onReplay: () => void }) {
     const a = field[pair * 2], b = field[pair * 2 + 1]
     setHistory(h => [...h, { a, b, winnerCode: f.code, roundSize: field.length }])
     const nextWinners = [...winners, f]
-    if (pair + 1 < field.length / 2) {
+    const pairs = Math.floor(field.length / 2)
+    if (pair + 1 < pairs) {
       setWinners(nextWinners); setPair(pair + 1)
     } else {
-      if (nextWinners.length === 1) { setChampion(nextWinners[0]); return }
-      setField(nextWinners); setWinners([]); setPair(0)
+      // round over — an odd flag out gets a bye into the next round
+      const bye = field.length % 2 === 1 ? [field[field.length - 1]] : []
+      const advanced = [...nextWinners, ...bye]
+      if (advanced.length === 1) { setChampion(advanced[0]); return }
+      setField(advanced); setWinners([]); setPair(0)
     }
   }
 
@@ -110,7 +130,7 @@ function BracketGame({ onBack, onReplay }: Props & { onReplay: () => void }) {
             <div className="rounded-2xl p-6 mb-4" style={{ background: "#2D1F52", border: "1px solid #FBBF2455", boxShadow: "0 0 40px #FBBF2433" }}>
               <div className="text-4xl mb-2">👑</div>
               <img src={champion.flagUrl} alt={champion.name}
-                style={{ width: 200, height: 133, objectFit: "cover", borderRadius: 12, margin: "0 auto 10px", border: "2px solid #FBBF24" }} />
+                style={{ width: 200, height: 133, objectFit: "contain", background: "#1A1033", borderRadius: 12, margin: "0 auto 10px", border: "2px solid #FBBF24" }} />
               <div className="text-2xl font-black" style={{ color: "#F5F3FF" }}>{champion.name}</div>
               <div className="text-xs mt-1" style={{ color: "#B8A9E0" }}>your coolest flag — {scope}</div>
             </div>
@@ -151,7 +171,7 @@ function BracketGame({ onBack, onReplay }: Props & { onReplay: () => void }) {
   }
 
   const a = field[pair * 2], b = field[pair * 2 + 1]
-  const totalPairs = field.length / 2
+  const totalPairs = Math.floor(field.length / 2)
 
   return (
     <div className="min-h-screen flex flex-col" style={{ background: "linear-gradient(135deg,var(--bg-from) 0%,var(--bg-to) 100%)" }}>
