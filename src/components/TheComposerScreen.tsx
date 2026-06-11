@@ -143,39 +143,29 @@ export default function TheComposerScreen({ onBack }: Props) {
             const col = i % 3
             const revealed = flipped.has(i)
             return (
-              <div key={i} style={{ width: TILE_W, height: TILE_H, perspective: 600 }}>
+              <div key={i} style={{ width: TILE_W, height: TILE_H, position: 'relative' }}>
+                {/* the correct flag slice for this tile (always mounted) */}
+                <div style={{ position: 'absolute', inset: 0, overflow: 'hidden', background: '#1A1033' }}>
+                  <FlagImage
+                    code={target.code}
+                    style={{
+                      position: 'absolute',
+                      width: TILE_W * 3, height: TILE_H * 3,
+                      objectFit: 'cover',
+                      left: -(col * TILE_W), top: -(row * TILE_H),
+                    }}
+                  />
+                </div>
+                {/* face-down cover that fades away when the tile is revealed */}
                 <div style={{
-                  position: 'relative', width: '100%', height: '100%',
-                  transformStyle: 'preserve-3d',
-                  transition: 'transform 0.55s cubic-bezier(0.4,0,0.2,1)',
-                  transitionDelay: `${(row + col) * 40}ms`,
-                  transform: revealed ? 'rotateY(180deg)' : 'rotateY(0deg)',
+                  position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  background: 'linear-gradient(135deg,#2D1F52,#1A1033)',
+                  opacity: revealed ? 0 : 1,
+                  transform: revealed ? 'scale(1.08)' : 'scale(1)',
+                  transition: `opacity 0.45s ${(row + col) * 40}ms ease, transform 0.45s ease`,
+                  pointerEvents: 'none',
                 }}>
-                  {/* Front — face-down card */}
-                  <div style={{
-                    position: 'absolute', inset: 0, backfaceVisibility: 'hidden',
-                    WebkitBackfaceVisibility: 'hidden',
-                    background: 'linear-gradient(135deg,#2D1F52,#1A1033)',
-                    display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  }}>
-                    <span style={{ fontSize: 18, opacity: 0.3 }}>🎴</span>
-                  </div>
-                  {/* Back — the flag piece */}
-                  <div style={{
-                    position: 'absolute', inset: 0, overflow: 'hidden',
-                    backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden',
-                    transform: 'rotateY(180deg)', background: '#1A1033',
-                  }}>
-                    <FlagImage
-                      code={target.code}
-                      style={{
-                        position: 'absolute',
-                        width: TILE_W * 3, height: TILE_H * 3,
-                        objectFit: 'cover',
-                        left: -(col * TILE_W), top: -(row * TILE_H),
-                      }}
-                    />
-                  </div>
+                  <span style={{ fontSize: 18, opacity: 0.3 }}>🎴</span>
                 </div>
               </div>
             )

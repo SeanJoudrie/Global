@@ -13,6 +13,14 @@ interface DragState {
 const FLAG_W = 270
 const FLAG_H = 170
 
+// A slot is correct if the COLOUR placed matches the colour the solution wants —
+// not the specific piece id. (Latvia is maroon-white-maroon: the two maroon
+// pieces are interchangeable, so comparing ids would mark a valid build wrong.)
+const colorOfPiece = (puzzle: BuildPuzzle, pieceId?: string) =>
+  puzzle.pieces.find(p => p.id === pieceId)?.color
+const slotIsCorrect = (puzzle: BuildPuzzle, placed: Record<string, string>, slotId: string) =>
+  !!placed[slotId] && colorOfPiece(puzzle, placed[slotId]) === colorOfPiece(puzzle, puzzle.solution[slotId])
+
 // ── Flag canvas renderer ─────────────────────────────────────────────────────
 function FlagCanvas({
   puzzle, placed, phase, slotRefs,
@@ -29,8 +37,8 @@ function FlagCanvas({
 
   const slotStyle = (slotId: string): React.CSSProperties => {
     const piece = getPiece(slotId)
-    const isCorrect = phase === 'result' && placed[slotId] === puzzle.solution[slotId]
-    const isWrong   = phase === 'result' && placed[slotId] && placed[slotId] !== puzzle.solution[slotId]
+    const isCorrect = phase === 'result' && slotIsCorrect(puzzle, placed, slotId)
+    const isWrong   = phase === 'result' && !!placed[slotId] && !slotIsCorrect(puzzle, placed, slotId)
     const isEmpty   = !placed[slotId]
     return {
       background: piece ? piece.color : 'rgba(139,108,255,0.06)',
@@ -49,7 +57,7 @@ function FlagCanvas({
   const resultOverlay = (slotId: string) => {
     if (phase !== 'result') return null
     if (!placed[slotId]) return <span style={{ position:'absolute', inset:0, display:'flex', alignItems:'center', justifyContent:'center', fontSize:18, color:'#F43F5E' }}>✗</span>
-    const ok = placed[slotId] === puzzle.solution[slotId]
+    const ok = slotIsCorrect(puzzle, placed, slotId)
     return <span style={{ position:'absolute', inset:0, display:'flex', alignItems:'center', justifyContent:'center', fontSize:18, color: ok ? '#34D399' : '#F43F5E' }}>{ok ? '✓' : '✗'}</span>
   }
 
@@ -84,8 +92,8 @@ function FlagCanvas({
   if (puzzle.layout === 'disc') {
     const bg   = getPiece('bg')
     const disc = getPiece('disc')
-    const bgOk   = phase === 'result' && placed['bg']   === puzzle.solution['bg']
-    const discOk = phase === 'result' && placed['disc']  === puzzle.solution['disc']
+    const bgOk   = phase === 'result' && slotIsCorrect(puzzle, placed, 'bg')
+    const discOk = phase === 'result' && slotIsCorrect(puzzle, placed, 'disc')
     return (
       <div ref={el => { slotRefs.current['bg'] = el }}
         onClick={() => onSlotClick('bg')}
@@ -213,7 +221,7 @@ export default function BuildFlagScreen({ onBack }: Props) {
   }, [dragging, placePieceInSlot])
 
   // ── Result ────────────────────────────────────────────────────────────────
-  const correct = puzzle.slots.filter(s => placed[s] === puzzle.solution[s]).length
+  const correct = puzzle.slots.filter(s => slotIsCorrect(puzzle, placed, s)).length
   const total   = puzzle.slots.length
   const perfect = correct === total
 
