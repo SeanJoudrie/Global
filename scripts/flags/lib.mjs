@@ -102,6 +102,7 @@ async function apiGet(params) {
     try {
       const res = await fetch(url, {
         headers: { "User-Agent": "Globalio-flag-audit/1.0 (quiz app self-hosting)" },
+        signal: AbortSignal.timeout(20000), // fail fast on a hung connection
       })
       if (res.status === 200) return await res.json()
       if (res.status === 429 || res.status === 403 || res.status >= 500) {
