@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import { FLAGS } from '../data/flags'
 import type { FlagRecord } from '../data/flags'
 import { shuffleWithSeed, seededRandom, todayString } from '../utils/prng'
@@ -46,13 +46,23 @@ export default function GeoQuizScreen({ onBack }: Props) {
   // One hint per game: reveals the continent of whichever question it's used on.
   const [hintUsed, setHintUsed] = useState(false)
   const [hintShownFor, setHintShownFor] = useState<number | null>(null)
+  // Answer mode — multiple choice or free type-in.
+  const [mode, setMode] = useState<'mc' | 'type'>('mc')
+  const [input, setInput] = useState('')
+  const [showDrop, setShowDrop] = useState(false)
 
   const q = questions[idx]
-  useEffect(() => { setSelected(null) }, [idx, seed])
+  useEffect(() => { setSelected(null); setInput('') }, [idx, seed])
+
+  const matches = useMemo(() => {
+    const qq = input.trim().toLowerCase()
+    if (qq.length < 1) return []
+    return FLAGS.filter(f => f.name.toLowerCase().includes(qq) || f.code.toLowerCase() === qq).slice(0, 6)
+  }, [input])
 
   const resetGame = () => {
     setIdx(0); setScore(0); setAnswers([]); setSelected(null)
-    setHintUsed(false); setHintShownFor(null); setPhase('quiz')
+    setHintUsed(false); setHintShownFor(null); setPhase('quiz'); setInput('')
   }
 
   const useHint = () => {
@@ -69,16 +79,28 @@ export default function GeoQuizScreen({ onBack }: Props) {
     catch { alert(text) }
   }
 
-  const handleAnswer = (i: number) => {
-    if (selected !== null) return
-    setSelected(i)
-    const correct = q.choices[i].code === q.target.code
+  const advance = (correct: boolean) => {
     if (correct) setScore(s => s + 1)
     setAnswers(prev => [...prev, correct ? 'correct' : 'wrong'])
     setTimeout(() => {
       if (idx + 1 >= questions.length) { setPhase('result') }
       else setIdx(i => i + 1)
     }, 1000)
+  }
+
+  const handleAnswer = (i: number) => {
+    if (selected !== null) return
+    setSelected(i)
+    advance(q.choices[i].code === q.target.code)
+  }
+
+  const [typedGuess, setTypedGuess] = useState<FlagRecord | null>(null)
+  useEffect(() => { setTypedGuess(null) }, [idx, seed])
+
+  const handleType = (f: FlagRecord) => {
+    if (typedGuess) return
+    setTypedGuess(f); setInput(''); setShowDrop(false)
+    advance(f.code === q.target.code)
   }
 
   if (phase === 'result') {
@@ -151,6 +173,19 @@ export default function GeoQuizScreen({ onBack }: Props) {
           style={{ width: `${(idx / questions.length) * 100}%`, background: 'linear-gradient(90deg,#8B6CFF,#A78BFA)' }} />
       </div>
 
+      {/* Answer-mode toggle */}
+      <div className="mx-5 mb-2 flex justify-center">
+        <div className="inline-flex p-0.5 rounded-full" style={{ background: '#2D1F52', border: '1px solid #8B6CFF33' }}>
+          {(['mc', 'type'] as const).map(m => (
+            <button key={m} onClick={() => setMode(m)}
+              className="px-4 py-1 rounded-full text-xs font-bold transition-all"
+              style={{ background: mode === m ? '#8B6CFF' : 'transparent', color: mode === m ? '#fff' : '#B8A9E0' }}>
+              {m === 'mc' ? 'Choices' : 'Type-in'}
+            </button>
+          ))}
+        </div>
+      </div>
+
       <div className="flex-1 flex flex-col items-center px-5 pb-8 gap-6">
         {/* Shape */}
         <div style={{
@@ -178,29 +213,68 @@ export default function GeoQuizScreen({ onBack }: Props) {
           <div style={{ height: 25 }} />
         )}
 
-        {/* Choices */}
-        <div style={{ width: '100%', maxWidth: 340, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
-          {q.choices.map((choice, i) => {
-            const isCorrect = choice.code === q.target.code
-            const isSelected = selected === i
-            let bg = '#2D1F52'
-            let border = '1px solid #8B6CFF33'
-            if (selected !== null) {
-              if (isCorrect) { bg = '#34D39922'; border = '1px solid #34D399' }
-              else if (isSelected) { bg = '#F43F5E22'; border = '1px solid #F43F5E' }
-            }
-            return (
-              <button
-                key={choice.code}
-                onClick={() => handleAnswer(i)}
-                className="py-3 px-4 rounded-2xl font-semibold text-sm text-left transition-all active:scale-95"
-                style={{ background: bg, border, color: '#F5F3FF' }}
-              >
-                {choice.name}
-              </button>
-            )
-          })}
-        </div>
+        {/* Choices (MC) or type-in */}
+        {mode === 'mc' ? (
+          <div style={{ width: '100%', maxWidth: 340, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
+            {q.choices.map((choice, i) => {
+              const isCorrect = choice.code === q.target.code
+              const isSelected = selected === i
+              let bg = '#2D1F52'
+              let border = '1px solid #8B6CFF33'
+              if (selected !== null) {
+                if (isCorrect) { bg = '#34D39922'; border = '1px solid #34D399' }
+                else if (isSelected) { bg = '#F43F5E22'; border = '1px solid #F43F5E' }
+              }
+              return (
+                <button
+                  key={choice.code}
+                  onClick={() => handleAnswer(i)}
+                  className="py-3 px-4 rounded-2xl font-semibold text-sm text-left transition-all active:scale-95"
+                  style={{ background: bg, border, color: '#F5F3FF' }}
+                >
+                  {choice.name}
+                </button>
+              )
+            })}
+          </div>
+        ) : (
+          <div style={{ width: '100%', maxWidth: 340 }} className="relative">
+            {typedGuess ? (
+              <div className="w-full px-4 py-3.5 rounded-2xl font-semibold text-sm text-center"
+                style={{
+                  background: typedGuess.code === q.target.code ? '#34D39922' : '#F43F5E22',
+                  border: `1px solid ${typedGuess.code === q.target.code ? '#34D399' : '#F43F5E'}`,
+                  color: '#F5F3FF',
+                }}>
+                {typedGuess.code === q.target.code ? `✓ ${q.target.name}` : `✗ ${typedGuess.name} — it was ${q.target.name}`}
+              </div>
+            ) : (
+              <>
+                <input
+                  value={input} autoFocus autoComplete="off"
+                  onChange={e => { setInput(e.target.value); setShowDrop(true) }}
+                  onFocus={() => setShowDrop(true)}
+                  onBlur={() => setTimeout(() => setShowDrop(false), 150)}
+                  onKeyDown={e => { if (e.key === 'Enter' && matches.length >= 1) handleType(matches[0]) }}
+                  placeholder="Name the country…"
+                  className="w-full px-4 py-3.5 rounded-2xl outline-none font-semibold"
+                  style={{ background: '#2D1F52', border: '1.5px solid #8B6CFF44', color: '#F5F3FF', fontSize: 15 }} />
+                {showDrop && matches.length > 0 && (
+                  <div className="absolute left-0 right-0 top-full mt-1 rounded-xl overflow-hidden z-20"
+                    style={{ background: '#2D1F52', border: '1px solid #8B6CFF44', boxShadow: '0 8px 32px #00000055' }}>
+                    {matches.map(f => (
+                      <button key={f.code} onMouseDown={() => handleType(f)}
+                        className="w-full flex items-center gap-3 px-4 py-2.5 text-left hover:brightness-125"
+                        style={{ background: 'transparent', borderBottom: '1px solid #8B6CFF11', color: '#F5F3FF' }}>
+                        <span className="font-semibold text-sm">{f.name}</span>
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </>
+            )}
+          </div>
+        )}
       </div>
     </div>
   )
