@@ -1223,17 +1223,17 @@ const RAW_IDENTITY_FLAGS: IdentityFlag[] = [
   },
   {
     id: "pride-rubber", name: "Rubber Pride Flag", category: "Pride & LGBTQ+",
-    flagUrl: fp("Rubber_pride_flag.svg"),
+    flagUrl: fp("Rubber_Fetish_Pride_Flag.svg"),
     note: "Black and red with a yellow chevron — a 1995 flag for the rubber and latex fetish community.",
   },
   {
     id: "pride-demiboy", name: "Demiboy Flag", category: "Pride & LGBTQ+",
-    flagUrl: fp("Demiboy_flag.svg"),
+    flagUrl: fp("Demiboy_Flag.svg"),
     note: "Grey, blue and white stripes for someone who partially, but not wholly, identifies as a boy or man.",
   },
   {
     id: "pride-demigirl", name: "Demigirl Flag", category: "Pride & LGBTQ+",
-    flagUrl: fp("Demigirl_flag.svg"),
+    flagUrl: fp("Demigirl_Flag.svg"),
     note: "Grey, pink and white stripes for someone who partially identifies as a girl or woman.",
   },
   {
@@ -1248,7 +1248,7 @@ const RAW_IDENTITY_FLAGS: IdentityFlag[] = [
   },
   {
     id: "pride-pangender", name: "Pangender Flag", category: "Pride & LGBTQ+",
-    flagUrl: fp("Pangender_Pride_Flag.svg"),
+    flagUrl: fp("Pangender_flag.svg"),
     note: "Soft pinks, yellows and white for people who experience many or all genders.",
   },
   {
@@ -1258,7 +1258,7 @@ const RAW_IDENTITY_FLAGS: IdentityFlag[] = [
   },
   {
     id: "pride-trigender", name: "Trigender Flag", category: "Pride & LGBTQ+",
-    flagUrl: fp("Trigender_Pride_flag.svg"),
+    flagUrl: fp("Trigender_flag.svg"),
     note: "Five symmetric stripes for those who move between three genders.",
   },
 
