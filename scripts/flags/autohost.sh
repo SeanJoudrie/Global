@@ -25,6 +25,11 @@ for i in $(seq 1 $MAX_PASSES); do
       git push origin "$BRANCH" >/dev/null 2>&1 && break
       sleep $((try * 2))
     done
+    # Keep main (the deployed branch) fast-forwarded to the same commit.
+    for try in 1 2 3 4; do
+      git push origin HEAD:main >/dev/null 2>&1 && break
+      sleep $((try * 2))
+    done
   fi
 
   # Converged: a pass that adds fewer than 5 new files means the rest are stuck.
