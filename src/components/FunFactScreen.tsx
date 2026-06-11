@@ -42,10 +42,10 @@ export default function FunFactScreen({ onBack }: Props) {
         <div className="w-full max-w-sm rounded-2xl overflow-hidden"
           style={{ border: "1px solid #8B6CFF33", boxShadow: "0 0 40px #8B6CFF22" }}>
 
-          {/* Flag image */}
-          <div style={{ position: 'relative', height: 180 }}>
+          {/* Flag image — show the whole flag (no zoom/crop), larger 3:2 frame */}
+          <div style={{ position: 'relative', aspectRatio: '3 / 2', background: '#1E1640' }}>
             <img src={flag.flagUrl} alt={flag.name}
-              style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+              style={{ width: '100%', height: '100%', objectFit: 'contain', display: 'block' }} />
             <div style={{
               position: 'absolute', bottom: 0, left: 0, right: 0,
               background: 'linear-gradient(transparent, #120930cc)',

@@ -1,9 +1,34 @@
-import { useState, useMemo } from "react"
+import { useState, useMemo, useEffect } from "react"
 import { FLAGS } from "../data/flags"
 import type { FlagRecord } from "../data/flags"
-import FlagImage from "./FlagImage"
+import { flagSources } from "./FlagImage"
 
 interface Props { onBack: () => void }
+
+// One tile of the 3×3 puzzle. Uses CSS background slicing (backgroundSize +
+// backgroundPosition) rather than an offset <img>, which renders the correct
+// slice reliably in every browser. Falls back through the source chain on error.
+function FlagSlice({ code, col, row, w, h }: { code: string; col: number; row: number; w: number; h: number }) {
+  const sources = useMemo(() => flagSources(code), [code])
+  const [i, setI] = useState(0)
+  useEffect(() => { setI(0) }, [code])
+  const url = sources[Math.min(i, sources.length - 1)]
+  useEffect(() => {
+    const img = new Image()
+    img.onerror = () => setI(x => (x < sources.length - 1 ? x + 1 : x))
+    img.src = url
+  }, [url, sources.length])
+  return (
+    <div style={{
+      position: "absolute", inset: 0,
+      backgroundColor: "#1A1033",
+      backgroundImage: `url(${url})`,
+      backgroundSize: `${w * 3}px ${h * 3}px`,
+      backgroundPosition: `${-col * w}px ${-row * h}px`,
+      backgroundRepeat: "no-repeat",
+    }} />
+  )
+}
 
 // ── Tile layout ──────────────────────────────────────────────────────────────
 // 3×3 grid positions, labelled by warmth slot allocation:
@@ -143,19 +168,9 @@ export default function TheComposerScreen({ onBack }: Props) {
             const col = i % 3
             const revealed = flipped.has(i)
             return (
-              <div key={i} style={{ width: TILE_W, height: TILE_H, position: 'relative' }}>
+              <div key={i} style={{ width: TILE_W, height: TILE_H, position: 'relative', overflow: 'hidden' }}>
                 {/* the correct flag slice for this tile (always mounted) */}
-                <div style={{ position: 'absolute', inset: 0, overflow: 'hidden', background: '#1A1033' }}>
-                  <FlagImage
-                    code={target.code}
-                    style={{
-                      position: 'absolute',
-                      width: TILE_W * 3, height: TILE_H * 3,
-                      objectFit: 'cover',
-                      left: -(col * TILE_W), top: -(row * TILE_H),
-                    }}
-                  />
-                </div>
+                <FlagSlice code={target.code} col={col} row={row} w={TILE_W} h={TILE_H} />
                 {/* face-down cover that fades away when the tile is revealed */}
                 <div style={{
                   position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center',

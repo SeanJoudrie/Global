@@ -65,6 +65,7 @@ function FlagFamiliesScreenGame({ onBack , onReplay }: Props & { onReplay: () =>
   const [selected, setSelected]       = useState<string | null>(null)
   const [dragged, setDragged]         = useState<string | null>(null)
   const [checked, setChecked]         = useState(false)
+  const [revealSwap, setRevealSwap]   = useState(false)   // player's A actually = familyB
   const [hadWrong, setHadWrong]       = useState(false)   // any wrong attempt this round?
   const [tryAgain, setTryAgain]       = useState(false)   // show "try again" hint
   const [scores, setScores]           = useState<boolean[]>([])
@@ -104,13 +105,18 @@ function FlagFamiliesScreenGame({ onBack , onReplay }: Props & { onReplay: () =>
 
   const handleCheck = () => {
     if (!allAssigned) return
-    const correct = round.flags.every(f => assignments[f.flag.code] === f.family)
-    if (!correct) {
+    // The groups are SECRET, so all that matters is the partition: every flag of
+    // one family together, every flag of the other together. Either direction
+    // (A=familyA or A=familyB) counts as correct.
+    const direct  = round.flags.every(f => assignments[f.flag.code] === f.family)
+    const swapped = round.flags.every(f => assignments[f.flag.code] !== f.family)
+    if (!direct && !swapped) {
       // Don't lock — let them keep re-sorting. First wrong attempt costs the
       // "first try" point but they can still get it green.
       setHadWrong(true); setTryAgain(true); setSelected(null)
       return
     }
+    setRevealSwap(swapped && !direct)   // their A maps to familyB
     setScores(prev => [...prev, !hadWrong])
     setChecked(true); setSelected(null); setTryAgain(false)
   }
@@ -120,7 +126,7 @@ function FlagFamiliesScreenGame({ onBack , onReplay }: Props & { onReplay: () =>
     setIdx(i => i + 1)
     setAssignments({})
     setSelected(null); setDragged(null)
-    setChecked(false); setHadWrong(false); setTryAgain(false)
+    setChecked(false); setRevealSwap(false); setHadWrong(false); setTryAgain(false)
   }
 
   // ── Result ──────────────────────────────────────────────────────────────────
@@ -166,7 +172,8 @@ function FlagFamiliesScreenGame({ onBack , onReplay }: Props & { onReplay: () =>
     inRow: 'A' | 'B' | null,
   ) => {
     const isSelected = selected === flag.code
-    const correctRow = inRow !== null ? inRow === family : null
+    // Once checked we know it's a valid partition; honour the swap direction.
+    const correctRow = inRow !== null ? (revealSwap ? inRow !== family : inRow === family) : null
     let border = '1.5px solid #8B6CFF22'
     if (checked && inRow !== null) {
       border = `2px solid ${correctRow ? '#34D399' : '#F43F5E'}`
@@ -248,8 +255,8 @@ function FlagFamiliesScreenGame({ onBack , onReplay }: Props & { onReplay: () =>
             cursor: selected && !checked ? 'pointer' : 'default',
           }}>
           <div className="flex items-center gap-2 mb-2">
-            <span style={{ fontSize: 18 }}>{checked ? round.familyA.emoji : '🅰️'}</span>
-            <span className="text-sm font-bold" style={{ color: checked ? '#F5F3FF' : ACCENT_A }}>{checked ? round.familyA.label : 'Group A'}</span>
+            <span style={{ fontSize: 18 }}>{checked ? (revealSwap ? round.familyB : round.familyA).emoji : '🅰️'}</span>
+            <span className="text-sm font-bold" style={{ color: checked ? '#F5F3FF' : ACCENT_A }}>{checked ? (revealSwap ? round.familyB : round.familyA).label : 'Group A'}</span>
           </div>
           <div className="flex flex-wrap gap-2">
             {flagsInA.map(item => renderFlag(item, 'A'))}
@@ -273,8 +280,8 @@ function FlagFamiliesScreenGame({ onBack , onReplay }: Props & { onReplay: () =>
             cursor: selected && !checked ? 'pointer' : 'default',
           }}>
           <div className="flex items-center gap-2 mb-2">
-            <span style={{ fontSize: 18 }}>{checked ? round.familyB.emoji : '🅱️'}</span>
-            <span className="text-sm font-bold" style={{ color: checked ? '#F5F3FF' : ACCENT_B }}>{checked ? round.familyB.label : 'Group B'}</span>
+            <span style={{ fontSize: 18 }}>{checked ? (revealSwap ? round.familyA : round.familyB).emoji : '🅱️'}</span>
+            <span className="text-sm font-bold" style={{ color: checked ? '#F5F3FF' : ACCENT_B }}>{checked ? (revealSwap ? round.familyA : round.familyB).label : 'Group B'}</span>
           </div>
           <div className="flex flex-wrap gap-2">
             {flagsInB.map(item => renderFlag(item, 'B'))}

@@ -3,7 +3,7 @@ import SplashScreen from "./components/SplashScreen"
 import MainTabs from "./components/MainTabs"
 import HomeScreen from "./components/HomeScreen"
 import type { TabKey } from "./ui/registry"
-import { AESTHETIC } from "./ui/tokens"
+import { AESTHETIC, T } from "./ui/tokens"
 import FlagsScreen from "./components/FlagsScreen"
 import QuizScreen from "./components/QuizScreen"
 import ReverseQuizScreen from "./components/ReverseQuizScreen"
@@ -156,7 +156,7 @@ export default function App() {
   }, [])
 
   return (
-    <div style={{ background: 'linear-gradient(135deg,var(--bg-from) 0%,var(--bg-to) 100%)', minHeight: "100vh" }}>
+    <div style={{ background: AESTHETIC === "original" ? 'linear-gradient(135deg,var(--bg-from) 0%,var(--bg-to) 100%)' : T.bg, minHeight: "100vh" }}>
       {screen !== "splash" && <StarField />}
 
       {/* Persistent home logo — fixed top-left on every screen except splash/home.
