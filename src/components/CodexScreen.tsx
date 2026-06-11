@@ -59,6 +59,8 @@ export default function CodexScreen({ onBack }: Props) {
     setSubdivisionsExpanded(false)
     setPredecessorsExpanded(false)
     setPhase('country')
+    // Always start a country page at the top (don't inherit the list's scroll).
+    window.scrollTo({ top: 0 })
   }
 
   const toggleRegion = (region: string) => {
