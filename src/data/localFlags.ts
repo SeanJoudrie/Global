@@ -82,6 +82,7 @@ export const LOCAL_FLAGS: Record<string, string> = {
   "Bandera_de_la_Provincia_de_Chiriquí.svg": "/flags/wm/bandera-de-la-provincia-de-chiriqui.svg",
   "Bandera_de_la_Provincia_de_Colón.svg": "/flags/wm/bandera-de-la-provincia-de-colon.svg",
   "Bandera_de_la_Provincia_de_Corrientes.svg": "/flags/wm/bandera-de-la-provincia-de-corrientes.svg",
+  "Bandera_de_la_Provincia_de_Córdoba.svg": "/flags/wm/bandera-de-la-provincia-de-cordoba.svg",
   "Bandera_de_la_Provincia_de_Entre_Ríos.svg": "/flags/wm/bandera-de-la-provincia-de-entre-rios.svg",
   "Bandera_de_la_Provincia_de_Formosa.svg": "/flags/wm/bandera-de-la-provincia-de-formosa.svg",
   "Bandera_de_la_Provincia_de_Heredia.svg": "/flags/wm/bandera-de-la-provincia-de-heredia.svg",
