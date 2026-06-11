@@ -13,11 +13,14 @@ interface Family {
 
 const FAMILY_DEFS: Family[] = [
   { id: 'nordic',     label: 'Nordic Cross',        emoji: '✚',  codes: ['DK','NO','SE','FI','IS'] },
-  { id: 'crescent',   label: 'Crescent & Star',      emoji: '☪️', codes: ['TR','PK','MY','TN','DZ','AZ','TM','LY','MV','UZ'] },
+  { id: 'crescent',   label: 'Crescent & Star',      emoji: '☪️', codes: ['TR','PK','MY','TN','DZ','AZ','TM','MV','UZ'] },
   { id: 'v-tricolor', label: 'Vertical Tricolor',    emoji: '🎨', codes: ['FR','IT','IE','BE','RO','NG','ML','SN','CI','GN','CM'] },
   { id: 'h-tricolor', label: 'Horizontal Tricolor',  emoji: '═',  codes: ['DE','NL','RU','HU','AT','BG','LT','EE','LV','AM'] },
-  { id: 'pan-african',label: 'Pan-African Colors',   emoji: '🌍', codes: ['ET','GH','SN','ML','GN','CI','NG','CM','KE','ZM','TZ'] },
+  { id: 'pan-african',label: 'Pan-African Colors',   emoji: '🌍', codes: ['ET','GH','SN','ML','GN','CI','KE','ZM','TZ'] },
   { id: 'uk-ensign',  label: 'Union Jack Family',    emoji: '🇬🇧', codes: ['AU','NZ','FJ','NR','CK','TV'] },
+  { id: 'pan-arab',   label: 'Pan-Arab Colors',      emoji: '🟥', codes: ['EG','IQ','SY','YE','JO','KW','AE','LY','PS'] },
+  { id: 'disc',       label: 'Disc / Sun Center',    emoji: '🔴', codes: ['JP','BD','LA','PW'] },
+  { id: 'hoist-tri',  label: 'Hoist Triangle',       emoji: '◢',  codes: ['CZ','PH','ER','DJ','BS','GY','MZ','ZA'] },
 ]
 
 interface Round {
@@ -33,8 +36,10 @@ function buildRounds(count: number): Round[] {
   for (let i = 0; i < shuffledDefs.length - 1 && rounds.length < count; i += 2) {
     const famA = shuffledDefs[i]
     const famB = shuffledDefs[i + 1]
-    const flagsA = FLAGS.filter(f => famA.codes.includes(f.code)).sort(() => Math.random() - 0.5).slice(0, 3)
-    const flagsB = FLAGS.filter(f => famB.codes.includes(f.code)).sort(() => Math.random() - 0.5).slice(0, 3)
+    // Exclude any code that belongs to BOTH families, so a flag is never
+    // ambiguous within a round.
+    const flagsA = FLAGS.filter(f => famA.codes.includes(f.code) && !famB.codes.includes(f.code)).sort(() => Math.random() - 0.5).slice(0, 3)
+    const flagsB = FLAGS.filter(f => famB.codes.includes(f.code) && !famA.codes.includes(f.code)).sort(() => Math.random() - 0.5).slice(0, 3)
     if (flagsA.length < 2 || flagsB.length < 2) continue
     const combined = [
       ...flagsA.map(flag => ({ flag, family: 'A' as const })),
@@ -58,7 +63,10 @@ function FlagFamiliesScreenGame({ onBack , onReplay }: Props & { onReplay: () =>
   // assignments: code → 'A' | 'B'
   const [assignments, setAssignments] = useState<Record<string, 'A' | 'B'>>({})
   const [selected, setSelected]       = useState<string | null>(null)
+  const [dragged, setDragged]         = useState<string | null>(null)
   const [checked, setChecked]         = useState(false)
+  const [hadWrong, setHadWrong]       = useState(false)   // any wrong attempt this round?
+  const [tryAgain, setTryAgain]       = useState(false)   // show "try again" hint
   const [scores, setScores]           = useState<boolean[]>([])
   const [done, setDone]               = useState(false)
 
@@ -70,11 +78,15 @@ function FlagFamiliesScreenGame({ onBack , onReplay }: Props & { onReplay: () =>
     setSelected(prev => prev === code ? null : code)
   }
 
+  const assign = (code: string, row: 'A' | 'B') => {
+    setAssignments(prev => ({ ...prev, [code]: row }))
+    setSelected(null); setTryAgain(false)
+  }
+
   // Tap a row (A or B) to assign the selected flag
   const handleRowTap = (row: 'A' | 'B') => {
     if (checked || !selected) return
-    setAssignments(prev => ({ ...prev, [selected]: row }))
-    setSelected(null)
+    assign(selected, row)
   }
 
   // Tap a flag already in a row to move it back to pool
@@ -85,7 +97,7 @@ function FlagFamiliesScreenGame({ onBack , onReplay }: Props & { onReplay: () =>
       delete next[code]
       return next
     })
-    setSelected(null)
+    setSelected(null); setTryAgain(false)
   }
 
   const allAssigned = round?.flags.every(f => !!assignments[f.flag.code])
@@ -93,17 +105,22 @@ function FlagFamiliesScreenGame({ onBack , onReplay }: Props & { onReplay: () =>
   const handleCheck = () => {
     if (!allAssigned) return
     const correct = round.flags.every(f => assignments[f.flag.code] === f.family)
-    setScores(prev => [...prev, correct])
-    setChecked(true)
-    setSelected(null)
+    if (!correct) {
+      // Don't lock — let them keep re-sorting. First wrong attempt costs the
+      // "first try" point but they can still get it green.
+      setHadWrong(true); setTryAgain(true); setSelected(null)
+      return
+    }
+    setScores(prev => [...prev, !hadWrong])
+    setChecked(true); setSelected(null); setTryAgain(false)
   }
 
   const handleNext = () => {
     if (idx + 1 >= rounds.length) { setDone(true); return }
     setIdx(i => i + 1)
     setAssignments({})
-    setSelected(null)
-    setChecked(false)
+    setSelected(null); setDragged(null)
+    setChecked(false); setHadWrong(false); setTryAgain(false)
   }
 
   // ── Result ──────────────────────────────────────────────────────────────────
@@ -159,9 +176,12 @@ function FlagFamiliesScreenGame({ onBack , onReplay }: Props & { onReplay: () =>
 
     return (
       <button key={flag.code}
+        draggable={!checked}
+        onDragStart={() => setDragged(flag.code)}
+        onDragEnd={() => setDragged(null)}
         onClick={() => inRow !== null ? handleUnassign(flag.code) : handleFlagTap(flag.code)}
         className="flex flex-col items-center rounded-xl overflow-hidden transition-all active:scale-95"
-        style={{ border, background: isSelected ? '#FBBF2418' : '#1A1033', width: FLAG_W }}>
+        style={{ border, background: isSelected ? '#FBBF2418' : '#1A1033', width: FLAG_W, cursor: checked ? 'default' : 'grab' }}>
         <img src={flag.flagUrl} alt={flag.name}
           style={{ width: FLAG_W, height: FLAG_H, objectFit: 'cover', display: 'block' }} />
         <div style={{ padding: '2px 4px', textAlign: 'center', width: '100%' }}>
@@ -205,27 +225,31 @@ function FlagFamiliesScreenGame({ onBack , onReplay }: Props & { onReplay: () =>
 
       <div className="flex flex-col items-center px-5 gap-4">
 
-        {/* Instruction */}
+        {/* Instruction — categories stay secret; sort by the visual pattern */}
         <p className="text-xs text-center" style={{ color: '#B8A9E0' }}>
-          {selected
-            ? `"${round.flags.find(f => f.flag.code === selected)?.flag.name}" — tap a row to place it`
-            : 'Tap a flag, then tap a row to sort it'}
+          {checked
+            ? 'Revealed! Two hidden families:'
+            : selected
+              ? `"${round.flags.find(f => f.flag.code === selected)?.flag.name}" — tap a group to place it`
+              : 'Two secret groups. Sort each flag by what it shares — tap or drag.'}
         </p>
 
         {/* Row A */}
         <button
           onClick={() => handleRowTap('A')}
-          disabled={!selected || checked}
+          disabled={(!selected && !dragged) || checked}
+          onDragOver={e => { if (!checked) e.preventDefault() }}
+          onDrop={() => { if (dragged && !checked) { assign(dragged, 'A'); setDragged(null) } }}
           className="w-full max-w-sm rounded-xl transition-all"
           style={{
-            background: selected && !checked ? `${ACCENT_A}18` : '#2D1F5218',
-            border: `2px solid ${selected && !checked ? ACCENT_A : ACCENT_A + '44'}`,
+            background: (selected || dragged) && !checked ? `${ACCENT_A}18` : '#2D1F5218',
+            border: `2px solid ${(selected || dragged) && !checked ? ACCENT_A : ACCENT_A + '44'}`,
             minHeight: 80, padding: '8px 10px',
             cursor: selected && !checked ? 'pointer' : 'default',
           }}>
           <div className="flex items-center gap-2 mb-2">
-            <span style={{ fontSize: 18 }}>{round.familyA.emoji}</span>
-            <span className="text-sm font-bold" style={{ color: '#F5F3FF' }}>{round.familyA.label}</span>
+            <span style={{ fontSize: 18 }}>{checked ? round.familyA.emoji : '🅰️'}</span>
+            <span className="text-sm font-bold" style={{ color: checked ? '#F5F3FF' : ACCENT_A }}>{checked ? round.familyA.label : 'Group A'}</span>
           </div>
           <div className="flex flex-wrap gap-2">
             {flagsInA.map(item => renderFlag(item, 'A'))}
@@ -238,17 +262,19 @@ function FlagFamiliesScreenGame({ onBack , onReplay }: Props & { onReplay: () =>
         {/* Row B */}
         <button
           onClick={() => handleRowTap('B')}
-          disabled={!selected || checked}
+          disabled={(!selected && !dragged) || checked}
+          onDragOver={e => { if (!checked) e.preventDefault() }}
+          onDrop={() => { if (dragged && !checked) { assign(dragged, 'B'); setDragged(null) } }}
           className="w-full max-w-sm rounded-xl transition-all"
           style={{
-            background: selected && !checked ? `${ACCENT_B}18` : '#2D1F5218',
-            border: `2px solid ${selected && !checked ? ACCENT_B : ACCENT_B + '44'}`,
+            background: (selected || dragged) && !checked ? `${ACCENT_B}18` : '#2D1F5218',
+            border: `2px solid ${(selected || dragged) && !checked ? ACCENT_B : ACCENT_B + '44'}`,
             minHeight: 80, padding: '8px 10px',
             cursor: selected && !checked ? 'pointer' : 'default',
           }}>
           <div className="flex items-center gap-2 mb-2">
-            <span style={{ fontSize: 18 }}>{round.familyB.emoji}</span>
-            <span className="text-sm font-bold" style={{ color: '#F5F3FF' }}>{round.familyB.label}</span>
+            <span style={{ fontSize: 18 }}>{checked ? round.familyB.emoji : '🅱️'}</span>
+            <span className="text-sm font-bold" style={{ color: checked ? '#F5F3FF' : ACCENT_B }}>{checked ? round.familyB.label : 'Group B'}</span>
           </div>
           <div className="flex flex-wrap gap-2">
             {flagsInB.map(item => renderFlag(item, 'B'))}
@@ -260,7 +286,9 @@ function FlagFamiliesScreenGame({ onBack , onReplay }: Props & { onReplay: () =>
 
         {/* Unassigned pool */}
         {unassigned.length > 0 && (
-          <div className="w-full max-w-sm">
+          <div className="w-full max-w-sm"
+            onDragOver={e => { if (!checked) e.preventDefault() }}
+            onDrop={() => { if (dragged && !checked) { handleUnassign(dragged); setDragged(null) } }}>
             <div className="text-xs mb-2 font-semibold" style={{ color: '#B8A9E0' }}>Unsorted flags:</div>
             <div className="flex flex-wrap gap-3">
               {unassigned.map(item => renderFlag(item, null))}
@@ -268,13 +296,21 @@ function FlagFamiliesScreenGame({ onBack , onReplay }: Props & { onReplay: () =>
           </div>
         )}
 
+        {/* "Try again" hint after a wrong check (round stays editable) */}
+        {tryAgain && !checked && (
+          <div className="w-full max-w-sm px-4 py-3 rounded-xl"
+            style={{ background: '#2D1F52', border: '1px solid #F43F5E44' }}>
+            <p className="text-sm font-semibold" style={{ color: '#F43F5E' }}>✗ Not quite — those aren't the groups. Try again.</p>
+          </div>
+        )}
+
         {/* Result feedback */}
         {checked && (
           <div className="w-full max-w-sm px-4 py-3 rounded-xl"
-            style={{ background: '#2D1F52', border: `1px solid ${roundScore ? '#34D39944' : '#F43F5E44'}` }}>
+            style={{ background: '#2D1F52', border: `1px solid ${roundScore ? '#34D39944' : '#FBBF2444'}` }}>
             {roundScore
-              ? <p className="text-sm font-semibold" style={{ color: '#34D399' }}>✓ All flags sorted correctly!</p>
-              : <p className="text-sm font-semibold" style={{ color: '#F43F5E' }}>✗ Some were wrong — see corrections above</p>}
+              ? <p className="text-sm font-semibold" style={{ color: '#34D399' }}>✓ Yes — these are the categories! Nailed it first try.</p>
+              : <p className="text-sm font-semibold" style={{ color: '#FBBF24' }}>✓ Right groups — got there after a retry.</p>}
           </div>
         )}
 
