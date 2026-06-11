@@ -62,7 +62,9 @@ async function resolve(titles) {
         let key = `File:${t}`, seen = new Set()
         while (norm.has(key) && !seen.has(key)) { seen.add(key); key = norm.get(key) }
         const p = byTitle.get(key)
-        const ii = p && !p.missing && p.imageinfo?.[0]
+        // Commons files queried via en.wiki come back missing:true + "shared" but
+        // still carry imageinfo — accept imageinfo whenever it is present.
+        const ii = p?.imageinfo?.[0]
         if (ii) {
           const m = { "image/svg+xml": "svg", "image/png": "png", "image/gif": "gif" }
           got[t] = { url: ii.url, ext: m[ii.mime] || (t.match(/\.([a-z0-9]+)$/i)?.[1]?.toLowerCase() ?? "svg") }
