@@ -7,7 +7,7 @@ interface Props { onBack: () => void }
 const CANVAS_W = 300
 const CANVAS_H = 190
 
-const BRUSH_SIZES = { small: 10, medium: 22, large: 38 } as const
+const BRUSH_SIZES = { small: 5, medium: 22, large: 38 } as const
 type BrushSize = keyof typeof BRUSH_SIZES
 
 function scoreFromPct(pct: number): number {

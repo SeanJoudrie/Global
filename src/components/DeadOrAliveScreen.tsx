@@ -8,7 +8,10 @@ interface Props { onBack: () => void }
 interface Card { flagUrl: string; name: string; alive: boolean; sub: string }
 
 const ALIVE: Card[] = FLAGS.map(f => ({ flagUrl: f.flagUrl, name: f.name, alive: true, sub: f.region }))
-const DEAD: Card[]  = HISTORICAL_FLAGS.map(h => ({ flagUrl: h.flagUrl, name: h.name, alive: false, sub: h.era }))
+// A few vanished states had flags identical to a modern country's (e.g. the
+// Weimar Republic = today's Germany), which makes them unguessable — skip them.
+const SAME_AS_MODERN = new Set(["weimar"])
+const DEAD: Card[]  = HISTORICAL_FLAGS.filter(h => !SAME_AS_MODERN.has(h.id)).map(h => ({ flagUrl: h.flagUrl, name: h.name, alive: false, sub: h.era }))
 
 function nextCard(): Card {
   // ~50/50 alive vs dead

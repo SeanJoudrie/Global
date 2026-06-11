@@ -25,7 +25,8 @@ function TheCropScreenGame({ onBack , onReplay }: Props & { onReplay: () => void
   const guessedCodes = useRef<Set<string>>(new Set())
 
   const scaleIdx = Math.min(wrongGuesses, SCALES.length - 1)
-  const scale    = SCALES[scaleIdx]
+  // On the reveal, zoom all the way out to 1× so the whole flag is visible.
+  const scale    = phase === "result" ? 1 : SCALES[scaleIdx]
 
   const matches = useMemo(() => {
     const q = input.trim().toLowerCase()

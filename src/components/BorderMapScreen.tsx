@@ -3,6 +3,7 @@ import worldMap from "@svg-maps/world"
 import { FLAGS } from "../data/flags"
 import { neighborsOf, countriesWithBorders } from "../data/borders"
 import { T, ACCENT, FONT, tint, IS_CARTO } from "../ui/tokens"
+import FlagImage from "./FlagImage"
 
 interface Props { onBack: () => void }
 
@@ -43,7 +44,9 @@ function BorderMapGame({ onBack, onReplay }: Props & { onReplay: () => void }) {
   useLayoutEffect(() => {
     if (!primRef.current) return
     const b = primRef.current.getBBox()
-    const pad = Math.max(b.width, b.height) * 0.55
+    // Frame the country with generous breathing room so it isn't over-zoomed
+    // (especially on wide desktop screens) and neighbours stay visible.
+    const pad = Math.max(b.width, b.height) * 0.95
     setVb(`${b.x - pad} ${b.y - pad} ${b.width + pad * 2} ${b.height + pad * 2}`)
   }, [primary])
 
@@ -84,7 +87,12 @@ function BorderMapGame({ onBack, onReplay }: Props & { onReplay: () => void }) {
         <button onClick={onBack} className="geo-tap" style={{ width: 34, height: 34, borderRadius: 9, background: T.surface, border: `1px solid ${T.line}`, color: T.muted }}>‹</button>
         <div style={{ textAlign: "center" }}>
           <div className="geo-micro" style={{ fontSize: 9, color: T.muted }}>Name the neighbours of</div>
-          <div className="geo-display" style={{ fontWeight: 700, fontSize: 20, color: T.text }}>{NAME(primary)}</div>
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 8 }}>
+            <div style={{ width: 28, height: 19, borderRadius: 3, overflow: "hidden", border: `1px solid ${T.line}`, flexShrink: 0 }}>
+              <FlagImage code={primary} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+            </div>
+            <div className="geo-display" style={{ fontWeight: 700, fontSize: 20, color: T.text }}>{NAME(primary)}</div>
+          </div>
         </div>
         <div style={{ fontFamily: FONT.mono, fontSize: 14, color: ACCENT.codex, fontWeight: 700 }}>{found.size}<span style={{ color: T.dim }}>/{targets.length}</span></div>
       </header>

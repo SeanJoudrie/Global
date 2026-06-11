@@ -1,8 +1,6 @@
-import { useState, useRef } from "react"
+import { useState } from "react"
 import { FLAGS } from "../data/flags"
-import { todayString } from "../utils/prng"
 import type { AppState } from "../utils/storage"
-import { recordFunFactViewed } from "../utils/storage"
 
 interface Props {
   state: AppState
@@ -10,31 +8,19 @@ interface Props {
   onStateChange: (state: AppState) => void
 }
 
-// Shuffle FLAGS in a deterministic daily order, starting from today's offset
-function getDailyOrder() {
-  const DAY_MS = 86400000
-  const start  = Math.floor(Date.now() / DAY_MS) % FLAGS.length
-  return [...FLAGS.slice(start), ...FLAGS.slice(0, start)]
+// Randomly shuffle so facts aren't clustered by region.
+function shuffled() {
+  return [...FLAGS].sort(() => Math.random() - 0.5)
 }
 
-export default function FunFactScreen({ state, onBack, onStateChange }: Props) {
-  const [ordered]        = useState(getDailyOrder)
+export default function FunFactScreen({ onBack }: Props) {
+  const [ordered] = useState(shuffled)
   const [cardIdx, setCardIdx] = useState(0)
-  const today            = todayString()
-  const alreadySeen      = state.lastFunFactDate === today
-  const streak           = state.funFactStreak ?? 0
-  const seenRef          = useRef(alreadySeen)
 
   const flag = ordered[cardIdx % ordered.length]
 
-  const handleNext = () => {
-    if (!seenRef.current) {
-      seenRef.current = true
-      onStateChange(recordFunFactViewed(state, today))
-    }
-    setCardIdx(i => i + 1)
-  }
-  const handlePrev = () => { setCardIdx(i => Math.max(0, i - 1)) }
+  const handleNext = () => setCardIdx(i => i + 1)
+  const handlePrev = () => setCardIdx(i => Math.max(0, i - 1))
 
   return (
     <div className="min-h-screen flex flex-col"
@@ -47,10 +33,7 @@ export default function FunFactScreen({ state, onBack, onStateChange }: Props) {
           <div className="text-xs font-semibold uppercase tracking-widest" style={{ color: "#B8A9E0" }}>Fun Facts</div>
           <div className="text-xs" style={{ color: "#8B6CFF" }}>{cardIdx + 1} of {ordered.length}</div>
         </div>
-        <div className="flex flex-col items-end">
-          <div className="text-xs font-black" style={{ color: '#FBBF24' }}>🔥 {streak}</div>
-          <div className="text-xs" style={{ color: '#8B6CFF88' }}>streak</div>
-        </div>
+        <div className="w-9" />
       </header>
 
       <div className="flex flex-col items-center px-5 gap-4 pb-10 flex-1">
@@ -107,20 +90,6 @@ export default function FunFactScreen({ state, onBack, onStateChange }: Props) {
             Next →
           </button>
         </div>
-
-        {/* Streak card */}
-        {(streak > 0 || alreadySeen) && (
-          <div className="w-full max-w-sm px-5 py-4 rounded-2xl"
-            style={{ background: "#2D1F52", border: "1px solid #FBBF2444" }}>
-            <div className="flex items-center gap-3">
-              <div className="text-3xl">🔥</div>
-              <div>
-                <div className="font-black text-lg" style={{ color: "#FBBF24" }}>{streak} day streak</div>
-                <div className="text-xs" style={{ color: "#B8A9E0" }}>Come back tomorrow to keep it going!</div>
-              </div>
-            </div>
-          </div>
-        )}
       </div>
     </div>
   )
