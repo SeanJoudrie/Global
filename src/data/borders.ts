@@ -191,3 +191,38 @@ export function neighborsOf(code: string): string[] {
 export function countriesWithBorders(min = 1): string[] {
   return FLAGS.map(f => f.code).filter(c => neighborsOf(c).length >= min)
 }
+
+/** BFS distances (in land-border hops) from `from` to every reachable country. */
+export function bfsDistances(from: string): Map<string, number> {
+  const dist = new Map<string, number>([[from, 0]])
+  const q = [from]
+  while (q.length) {
+    const cur = q.shift()!
+    for (const n of neighborsOf(cur)) {
+      if (!dist.has(n)) { dist.set(n, dist.get(cur)! + 1); q.push(n) }
+    }
+  }
+  return dist
+}
+
+/** A shortest land-border path between two countries, or null if disconnected. */
+export function shortestPath(from: string, to: string): string[] | null {
+  if (from === to) return [from]
+  const prev = new Map<string, string>()
+  const seen = new Set([from])
+  const q = [from]
+  while (q.length) {
+    const cur = q.shift()!
+    for (const n of neighborsOf(cur)) {
+      if (seen.has(n)) continue
+      seen.add(n); prev.set(n, cur)
+      if (n === to) {
+        const path = [to]; let c = to
+        while (c !== from) { c = prev.get(c)!; path.unshift(c) }
+        return path
+      }
+      q.push(n)
+    }
+  }
+  return null
+}

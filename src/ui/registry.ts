@@ -49,7 +49,7 @@ export const REGISTRY: Entry[] = [
   { id: "gacha", title: "Flag Gacha", subtitle: "Daily pull · collect them all", icon: "🎁", tab: "play", group: "Daily & New", size: "module", accent: "codex" },
 
   { id: "bordermap", title: "Border Map", subtitle: "Fill in a country's neighbours", icon: "🗺️", tab: "play", group: "Geography", size: "module", accent: "learn" },
-  { id: "borderchain", title: "Border Chain", subtitle: "Hop from border to border", icon: "🔗", tab: "play", group: "Geography", size: "module", accent: "learn" },
+  { id: "borderchain", title: "Border Path", subtitle: "Connect two countries by land", icon: "🔗", tab: "play", group: "Geography", size: "module", accent: "learn" },
   { id: "oddborder", title: "Odd Border Out", subtitle: "Spot the non-neighbour", icon: "🧭", tab: "play", group: "Geography", size: "module", accent: "learn" },
 
   { id: "oddoneout", title: "Odd One Out", subtitle: "Find the impostor", icon: "🕵️", tab: "play", group: "Quick games", size: "tile", accent: "play" },
