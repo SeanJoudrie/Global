@@ -5,15 +5,19 @@ import { SUB_FLAGS } from "../data/subdivisions"
 import { HISTORICAL_FLAGS } from "../data/historicalFlags"
 import { seededRandom, todayString } from "../utils/prng"
 import { T, ACCENT, FONT, tint, IS_CARTO } from "../ui/tokens"
+import { REGISTRY } from "../ui/registry"
 import { LineIcon } from "./icons"
 import FlagImage from "./FlagImage"
 
 interface Props {
   onNavigate: (screen: string) => void
+  onGoPlay?: () => void
 }
 
 const dayIdx = Math.floor(Date.now() / 86400000)
 const CARD_H = 186
+// How many games live in the Play tab — drives the "X games" advert.
+const GAME_COUNT = REGISTRY.filter(r => r.tab === "play").length
 
 interface Featured { id: string; label: string; title: string; sub: string; img: string; accent: string }
 
@@ -39,7 +43,7 @@ function FlagChip({ code, w, h }: { code: string; w: number; h: number }) {
   )
 }
 
-export default function HeroCarousel({ onNavigate }: Props) {
+export default function HeroCarousel({ onNavigate, onGoPlay }: Props) {
   const fotd = useMemo(() => FLAGS[Math.floor(seededRandom(todayString() + "fotd")() * FLAGS.length)], [])
   const factFlag = useMemo(() => FLAGS[Math.floor(seededRandom(todayString() + "fact")() * FLAGS.length)], [])
   const featured = useMemo(buildFeatured, [])
@@ -48,7 +52,7 @@ export default function HeroCarousel({ onNavigate }: Props) {
   const dragX = useRef<number | null>(null)
   const dragging = useRef(false)
   const timer = useRef<ReturnType<typeof setInterval> | null>(null)
-  const NUM = 4
+  const NUM = 5
 
   // Auto-advance every 9s; resets when the user interacts.
   const reset = () => {
@@ -157,9 +161,31 @@ export default function HeroCarousel({ onNavigate }: Props) {
         </div>
       ), () => onNavigate("settings"))
     })(),
+
+    // 4 — "Look how many games" advert → jumps to the Play tab
+    shellCard(ACCENT.play, (
+      <div style={{ display: "flex", gap: 14, height: "100%" }}>
+        <div style={{ flex: 1, minWidth: 0, display: "flex", flexDirection: "column" }}>
+          {eyebrow("The Arcade", ACCENT.play)}
+          <div className="geo-display" style={{ color: T.text, fontWeight: 700, fontSize: 21, lineHeight: 1.05 }}>
+            <span className="geo-mono" style={{ color: ACCENT.play }}>{GAME_COUNT}</span> games to play
+          </div>
+          <p style={{ marginTop: 6, fontSize: 11.5, lineHeight: 1.5, color: T.muted, display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>
+            Drills, dailies, swipers, sorters & brain-benders — all in one place.
+          </p>
+          <div style={{ marginTop: "auto", display: "inline-flex", alignSelf: "flex-start", alignItems: "center", gap: 6, padding: "7px 13px", borderRadius: 999, background: ACCENT.play, color: T.onAccent }}>
+            <span style={{ fontFamily: FONT.display, fontWeight: 700, fontSize: 12 }}>Explore all</span>
+            <span style={{ fontSize: 13 }}>→</span>
+          </div>
+        </div>
+        <div style={{ flexShrink: 0, width: 84, height: "100%", borderRadius: 12, display: "flex", alignItems: "center", justifyContent: "center", background: tint(ACCENT.play, 0.1), border: `1px solid ${tint(ACCENT.play, 0.3)}`, fontSize: 38 }}>
+          🎮
+        </div>
+      </div>
+    ), () => (onGoPlay ? onGoPlay() : onNavigate("flagbracket"))),
   ]
 
-  const dotAccent = [ACCENT.codex, ACCENT.learn, featured.accent, ACCENT.challenge][idx]
+  const dotAccent = [ACCENT.codex, ACCENT.learn, featured.accent, ACCENT.challenge, ACCENT.play][idx]
 
   return (
     <div>

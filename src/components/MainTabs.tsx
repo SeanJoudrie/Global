@@ -97,7 +97,7 @@ export default function MainTabs({ state, tab, onTab, onNavigate, onQuickPlay, o
       <main style={{ position: "relative", padding: "8px 16px 96px" }}>
         {tab === "today" && (
           <TodayTab state={state} dailyDone={dailyDone} spotlight={spotlight}
-            onNavigate={onNavigate} onQuickPlay={onQuickPlay} onStartDaily={onStartDaily} launch={launch} playTiles={playTiles} />
+            onNavigate={onNavigate} onGoPlay={() => onTab("play")} onQuickPlay={onQuickPlay} onStartDaily={onStartDaily} launch={launch} playTiles={playTiles} />
         )}
         {tab === "learn" && <ListTab tab="learn" launch={launch} state={state} />}
         {tab === "play" && <PlayTab launch={launch} />}
@@ -111,9 +111,9 @@ export default function MainTabs({ state, tab, onTab, onNavigate, onQuickPlay, o
 }
 
 /* ── TODAY ─────────────────────────────────────────────────────────────── */
-function TodayTab({ state, dailyDone, spotlight, onNavigate, onQuickPlay, onStartDaily, launch, playTiles }: {
+function TodayTab({ state, dailyDone, spotlight, onNavigate, onGoPlay, onQuickPlay, onStartDaily, launch, playTiles }: {
   state: AppState; dailyDone: boolean; spotlight: Entry
-  onNavigate: (s: string) => void; onQuickPlay: () => void; onStartDaily: () => void
+  onNavigate: (s: string) => void; onGoPlay: () => void; onQuickPlay: () => void; onStartDaily: () => void
   launch: (e: Entry) => void; playTiles: Entry[]
 }) {
   const posterFlag = FLAGS[(dayIdx * 13) % FLAGS.length]
@@ -123,8 +123,8 @@ function TodayTab({ state, dailyDone, spotlight, onNavigate, onQuickPlay, onStar
   const tryGames = [...learnGames, ...playTiles].slice(0, 12)
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 18 }}>
-      {/* Swipeable hero carousel: Flag of the Day · Did You Know · featured game · personalise */}
-      <HeroCarousel onNavigate={onNavigate} />
+      {/* Swipeable hero carousel: Flag of the Day · Did You Know · featured game · personalise · arcade */}
+      <HeroCarousel onNavigate={onNavigate} onGoPlay={onGoPlay} />
 
       {/* Primary action bento */}
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
@@ -234,24 +234,11 @@ function CollectionBanner({ state }: { state: AppState }) {
   )
 }
 
-/* ── PLAY — casual games + cross-listed quiz games + challenge modules ──── */
-const QUIZ_GAME_IDS = ["reversequiz", "capitalquiz", "language", "geo", "substumper", "lineage"]
-
+/* ── PLAY — all the games, grouped (Featured first) ────────────────────── */
 function PlayTab({ launch }: { launch: (e: Entry) => void }) {
   const groups = groupsFor("play")
-  // Multiple pathways: the game-like LEARN entries also live here so players who
-  // never open Learn still find them.
-  const quizGames = QUIZ_GAME_IDS.map(id => REGISTRY.find(r => r.id === id)).filter(Boolean) as Entry[]
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
-      <div>
-        <SectionHeader title="Quiz Games" accent={ACCENT.learn} action={<span className="geo-micro" style={{ fontSize: 8, color: T.dim }}>also in Learn</span>} />
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(108px,1fr))", gap: 10 }}>
-          {quizGames.map(e => (
-            <GameTile key={e.id} icon={e.icon} glyph={e.id} title={e.title} subtitle={e.subtitle} accent={ACCENT.learn} onClick={() => launch(e)} style={{ width: "100%" }} />
-          ))}
-        </div>
-      </div>
       {groups.map(g => {
         const isTiles = g.entries[0].size === "tile"
         return (
