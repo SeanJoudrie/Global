@@ -1,85 +1,85 @@
-// Produce src/data/localFlags.ts from whatever is on disk + repairs.
-// - Live flags: any audit entry whose image exists in public/flags/wm/ is mapped
-//   to its local path. Flags not yet downloaded are simply omitted, so fp()/wiki()
-//   falls back to the live Wikimedia hotlink (no regression — partial-download safe).
-// - Repaired dead links: downloaded and mapped to their new local path.
-// - Unrepairable dead links: mapped to "" so the UI shows "No flag" and quizzes skip.
+// Produce src/data/localFlags.ts from on-disk images + repairs.json. Network-free
+// and throttle-proof: each flag resolves to the best available source.
+//
+//   LIVE flag        -> local file if downloaded, else OMITTED (falls back to the
+//                       original working Wikimedia hotlink — no regression).
+//   REPAIRED dead    -> local fix- file if downloaded, else a Wikimedia hotlink to
+//                       the CORRECT replacement file (loads correctly, just not
+//                       self-hosted yet). Either way the flag is fixed.
+//   UNREPAIRABLE/    -> "" so the UI shows "No flag" and quizzes skip it.
+//   vetoed repair
 import { readFileSync, writeFileSync, existsSync, mkdirSync, readdirSync, statSync } from "node:fs"
-import { assignLiveSlugs, slugify, sleep } from "./lib.mjs"
+import { assignLiveSlugs, slugify } from "./lib.mjs"
 
 const ROOT = new URL("../../", import.meta.url)
 const OUT_DIR = new URL("public/flags/wm/", ROOT)
 mkdirSync(OUT_DIR, { recursive: true })
 const here = (p) => new URL(p, import.meta.url)
 const keyOf = (arg) => arg.replace(/ /g, "_")
+const hotlink = (title) =>
+  `https://commons.wikimedia.org/wiki/Special:FilePath/${title.replace(/^File:/, "").replace(/ /g, "_")}`
 
 const report = JSON.parse(readFileSync(here("./audit-report.json")))
 
 // Index existing files by slug.
 const bySlug = new Map()
 for (const f of readdirSync(OUT_DIR)) {
-  const slug = f.replace(/\.[a-z0-9]+$/i, "")
-  if (statSync(new URL(f, OUT_DIR)).size > 0) bySlug.set(slug, f)
+  if (statSync(new URL(f, OUT_DIR)).size > 0) bySlug.set(f.replace(/\.[a-z0-9]+$/i, ""), f)
 }
 
-// ── Live flags present on disk ──────────────────────────────────────────────
+// ── Live flags ──────────────────────────────────────────────────────────────
 const { titleToSlug } = assignLiveSlugs(report)
 const map = {}
-let liveMapped = 0
+let liveLocal = 0
 for (const r of report) {
   if (!r.exists) continue
-  const slug = titleToSlug.get(r.title)
-  const file = slug && bySlug.get(slug)
+  const file = bySlug.get(titleToSlug.get(r.title))
   if (file) {
     map[keyOf(r.arg)] = `/flags/wm/${file}`
-    liveMapped++
+    liveLocal++
   }
+  // else: omit -> fp()/wiki() keeps the original (working) Commons hotlink.
 }
 
-// ── Repairs (downloaded on demand) ──────────────────────────────────────────
-async function fetchBuf(url) {
-  for (let attempt = 0; attempt <= 30; attempt++) {
-    try {
-      const res = await fetch(url, {
-        headers: { "User-Agent": "Globalio-flag-audit/1.0 (self-hosting)" },
-        redirect: "follow",
-      })
-      if (res.status === 429 || res.status === 403 || res.status >= 500) {
-        await sleep(500 + Math.random() * 500)
-        continue
-      }
-      if (!res.ok) throw new Error(`HTTP ${res.status}`)
-      return Buffer.from(await res.arrayBuffer())
-    } catch (e) {
-      if (attempt === 30) throw e
-      await sleep(500 + Math.random() * 500)
-    }
-  }
-}
+// Manually vetoed repairs — the auto-matcher accepted a wrong-entity/type file
+// (city→state, city→county, governorate→municipality, or a flag-MAP, or only an
+// obsolete historical flag). These are demoted to "no flag".
+const REJECT_REPAIRS = new Set([
+  "Flag of Oklahoma City.svg",
+  "Flag of Jersey City, New Jersey.svg",
+  "Flag of Dallas, Texas.svg",
+  "Flag of Chon Buri Province.svg",
+  "Flag of Basra Governorate.svg",
+  "Flag_of_Seattle,_Washington.svg",
+  "Flag_of_Nashville,_Tennessee.svg",
+  "Flag_of_Louisville,_Kentucky.svg",
+  "Flag_of_Fort_Worth,_Texas.svg",
+  "Flag_of_Akron,_Ohio.svg",
+  "Flag_of_Boise,_Idaho.svg",
+  "Flag_of_Lansing,_Michigan.svg",
+  "Flag_of_Ann_Arbor,_Michigan.svg",
+])
 
-let repaired = 0
+// ── Repairs + unrepairable ──────────────────────────────────────────────────
+let repairedLocal = 0
+let repairedHotlink = 0
 let removed = 0
 if (existsSync(here("./repairs.json"))) {
-  const { repairs, unrepairable } = JSON.parse(readFileSync(here("./repairs.json")))
+  const data = JSON.parse(readFileSync(here("./repairs.json")))
+  const repairs = data.repairs.filter((r) => !REJECT_REPAIRS.has(r.arg))
+  const vetoed = data.repairs.filter((r) => REJECT_REPAIRS.has(r.arg))
   for (const r of repairs) {
-    const slug = `fix-${slugify(r.finalTitle)}`
-    let file = bySlug.get(slug)
-    if (!file) {
-      try {
-        const buf = await fetchBuf(r.url)
-        file = `${slug}.${r.ext}`
-        writeFileSync(new URL(file, OUT_DIR), buf)
-        bySlug.set(slug, file)
-      } catch (e) {
-        process.stdout.write(`  repair download FAILED ${r.chosen}: ${e}\n`)
-        continue
-      }
+    const file = bySlug.get(`fix-${slugify(r.finalTitle)}`)
+    if (file) {
+      map[keyOf(r.arg)] = `/flags/wm/${file}`
+      repairedLocal++
+    } else {
+      map[keyOf(r.arg)] = hotlink(r.finalTitle || r.chosen)
+      repairedHotlink++
     }
-    map[keyOf(r.arg)] = `/flags/wm/${file}`
-    repaired++
   }
-  for (const u of unrepairable) {
-    map[keyOf(u.arg)] = "" // dead, no replacement -> "no flag"
+  for (const u of [...data.unrepairable, ...vetoed]) {
+    map[keyOf(u.arg)] = ""
     removed++
   }
 }
@@ -90,16 +90,22 @@ const lines = keys.map((k) => `  ${JSON.stringify(k)}: ${JSON.stringify(map[k])}
 writeFileSync(
   new URL("src/data/localFlags.ts", ROOT),
   `// AUTO-GENERATED by scripts/flags/generate.mjs — do not edit by hand.
-// Maps a Wikimedia Commons filename (as passed to fp()/wiki(), with spaces
-// normalised to underscores) to a self-hosted local path under /flags/wm/.
-// An empty-string value means the original link was dead with no replacement —
-// callers treat that as "no flag". Filenames absent here fall back to the live
-// Wikimedia hotlink, so a partial image set still works.
+// Maps a Wikimedia Commons filename (as passed to fp()/wiki(), space->underscore)
+// to its image source:
+//   "/flags/wm/…"  self-hosted local copy
+//   "https://…"    a working Wikimedia hotlink to the CORRECT (repaired) file
+//                  that hasn't been self-hosted yet
+//   ""             dead link with no replacement — treated as "no flag"
+// Filenames absent here fall back to the original live Commons hotlink, so a
+// partial self-hosted image set is always safe.
 export const LOCAL_FLAGS: Record<string, string> = {
 ${lines.join("\n")}
 }
 `,
 )
 
-console.log(`Map entries: ${keys.length} (live ${liveMapped}, repaired ${repaired}, removed→"" ${removed}).`)
+console.log(
+  `Map entries: ${keys.length} — live-local ${liveLocal}, repaired-local ${repairedLocal}, ` +
+    `repaired-hotlink ${repairedHotlink}, removed→"" ${removed}.`,
+)
 console.log("Wrote src/data/localFlags.ts")
