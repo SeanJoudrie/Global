@@ -645,11 +645,6 @@ export const IDENTITY_FLAGS: IdentityFlag[] = [
     note: "Based on the Hiawatha Wampum Belt: a central white pine tree flanked by four squares on a purple field, representing the founding Mohawk, Oneida, Onondaga, Cayuga and Seneca nations. Still flown today — the Haudenosaunee even field their own lacrosse team under it.",
   },
   {
-    id: "sami", name: "Sámi Flag (Sápmi)", category: "Indigenous Peoples",
-    flagUrl: fp("Sami_flag.svg"),
-    note: "Adopted in 1986 for the Sámi people of northern Scandinavia and Russia. The circle echoes a shaman's drum and the sun & moon; the red-green-yellow-blue draws on traditional gákti dress.",
-  },
-  {
     id: "metis", name: "Métis Nation Flag", category: "Indigenous Peoples",
     flagUrl: fp("Métis_flag.svg"),
     note: "A white infinity symbol on blue (a red variant also exists) — one of North America's oldest Indigenous flags, dating to about 1815. The infinity represents the joining of two peoples and the endurance of the Métis Nation.",
@@ -732,6 +727,129 @@ export const IDENTITY_FLAGS: IdentityFlag[] = [
     id: "uzupis", name: "Republic of Užupis", category: "Micronations",
     flagUrl: fp("Flag_of_Užupis.svg"),
     note: "A bohemian artists' 'republic' in a Vilnius neighbourhood, declared on 1 April 1997. Its flag shows a hand with a hole in the palm — 'you can't take anything with you.'",
+  },
+
+  // ── More Pan-National & Ethnic ───────────────────────────────────────────
+  {
+    id: "yazidi", name: "Yazidi Flag", category: "Pan-National & Ethnic",
+    flagUrl: fp("Flag_of_the_Yazidis.svg"),
+    note: "A golden sun on white with a red-bordered field, used by the Yazidi people of northern Iraq, Syria and beyond; the sun reflects their veneration of light.",
+  },
+  {
+    id: "pan-celtic", name: "Pan-Celtic Flag", category: "Pan-National & Ethnic",
+    flagUrl: fp("Pan-Celtic_flag.svg"),
+    note: "Joins the symbols of the six Celtic nations — Ireland, Scotland, Wales, Brittany, Cornwall and the Isle of Man — used at inter-Celtic festivals.",
+  },
+
+  // ── More Indigenous Peoples ──────────────────────────────────────────────
+  {
+    id: "mikmaq", name: "Mi'kmaq Grand Council", category: "Indigenous Peoples",
+    flagUrl: fp("Mi'kmaq_State_Flag.svg"),
+    note: "A red cross, sun and crescent moon on white — the historic flag of the Mi'kmaq Grand Council of Atlantic Canada, one of the oldest Indigenous flags in North America.",
+  },
+  {
+    id: "cusco-inca", name: "Cusco / Inca Rainbow", category: "Indigenous Peoples",
+    flagUrl: fp("Flag_of_Cusco.svg"),
+    note: "A seven-colour rainbow flag flown over Cusco, Peru and widely embraced as a symbol of Andean and Inca (Tawantinsuyu) Indigenous identity. (Not to be confused with the Pride flag.)",
+  },
+
+  // ── More Separatist & Autonomous ─────────────────────────────────────────
+  {
+    id: "biafra", name: "Biafra", category: "Separatist & Autonomous",
+    flagUrl: fp("Flag_of_Biafra.svg"),
+    note: "Red-black-green with a rising golden sun — flag of the short-lived Republic of Biafra (1967–70) and of present-day south-eastern Nigerian separatism.",
+  },
+  {
+    id: "padania", name: "Padania", category: "Separatist & Autonomous",
+    flagUrl: fp("Flag_of_Padania.svg"),
+    note: "The green 'Sun of the Alps' on white, devised by Italy's Lega Nord for its proposed northern Italian state of Padania.",
+  },
+  {
+    id: "veneto", name: "Veneto (Lion of St Mark)", category: "Separatist & Autonomous",
+    flagUrl: fp("Flag_of_Veneto.svg"),
+    note: "The winged Lion of St Mark on a many-tailed banner — flag of the autonomous Veneto region and of Venetian independence sentiment.",
+  },
+  {
+    id: "flanders", name: "Flanders (Flemish Lion)", category: "Separatist & Autonomous",
+    flagUrl: fp("Flag_of_Flanders.svg"),
+    note: "A black lion on yellow — emblem of Dutch-speaking Flanders and the Flemish Movement within Belgium.",
+  },
+  {
+    id: "occitania", name: "Occitania", category: "Separatist & Autonomous",
+    flagUrl: fp("Flag_of_Occitania.svg"),
+    note: "The Occitan cross of Toulouse, sometimes with a star, representing the Occitan-speaking lands of southern France and their cultural revival.",
+  },
+  {
+    id: "faroe", name: "Faroe Islands (Merkið)", category: "Separatist & Autonomous",
+    flagUrl: fp("Flag_of_the_Faroe_Islands.svg"),
+    note: "A red-and-blue Nordic cross on white for the self-governing Faroe Islands, an autonomous nation within the Kingdom of Denmark.",
+  },
+  {
+    id: "greenland", name: "Greenland (Erfalasorput)", category: "Separatist & Autonomous",
+    flagUrl: fp("Flag_of_Greenland.svg"),
+    note: "Red-and-white halves with an offset circle evoking the midnight sun on ice — flag of autonomous Greenland (Kalaallit Nunaat), adopted 1985.",
+  },
+  {
+    id: "aland", name: "Åland Islands", category: "Separatist & Autonomous",
+    flagUrl: fp("Flag_of_Åland.svg"),
+    note: "A red Nordic cross over a yellow one on blue — flag of the autonomous, Swedish-speaking Åland Islands of Finland.",
+  },
+  {
+    id: "republika-srpska", name: "Republika Srpska", category: "Separatist & Autonomous",
+    flagUrl: fp("Flag_of_Republika_Srpska.svg"),
+    note: "A red-blue-white Serbian tricolour — flag of the Serb-majority autonomous entity within Bosnia and Herzegovina.",
+  },
+
+  // ── International & ideological (Civic & Ideological) ─────────────────────
+  {
+    id: "united-nations", name: "United Nations", category: "Civic & Ideological",
+    flagUrl: fp("Flag_of_the_United_Nations.svg"),
+    note: "A world map seen from the North Pole wrapped in olive branches of peace, on UN blue — adopted 1946.",
+  },
+  {
+    id: "flag-of-europe", name: "Flag of Europe", category: "Civic & Ideological",
+    flagUrl: fp("Flag_of_Europe.svg"),
+    note: "A ring of twelve gold stars on blue — symbol of unity used by both the Council of Europe and the European Union; the twelve is fixed, not a count of members.",
+  },
+  {
+    id: "olympic", name: "Olympic Movement", category: "Civic & Ideological",
+    flagUrl: fp("Olympic_flag.svg"),
+    note: "Five interlocking rings for the five inhabited continents, in colours chosen so every national flag contains at least one. Designed by Pierre de Coubertin in 1913.",
+  },
+  {
+    id: "commonwealth", name: "Commonwealth of Nations", category: "Civic & Ideological",
+    flagUrl: fp("Flag_of_the_Commonwealth_of_Nations.svg"),
+    note: "A golden globe radiating spokes on blue — flag of the 56-member association of mostly former British Empire states.",
+  },
+  {
+    id: "nato", name: "NATO", category: "Civic & Ideological",
+    flagUrl: fp("Flag_of_NATO.svg"),
+    note: "A white compass star inside a circle on dark blue — emblem of the North Atlantic Treaty Organization, adopted 1953.",
+  },
+  {
+    id: "african-union", name: "African Union", category: "Civic & Ideological",
+    flagUrl: fp("Flag_of_the_African_Union.svg"),
+    note: "A gold map of Africa ringed by 55 stars (one per member) on green — flag of the African Union, adopted 2010.",
+  },
+  {
+    id: "arab-league", name: "Arab League", category: "Civic & Ideological",
+    flagUrl: fp("Flag_of_the_Arab_League.svg"),
+    note: "A green field with the league's name in white Arabic script encircled by a chain and laurel — the League of Arab States.",
+  },
+  {
+    id: "asean", name: "ASEAN", category: "Civic & Ideological",
+    flagUrl: fp("Flag_of_ASEAN.svg"),
+    note: "Ten rice stalks bound together in a red circle on blue — the Association of Southeast Asian Nations, the stalks standing for its founding aspiration of unity.",
+  },
+  {
+    id: "buddhist", name: "Buddhist Flag", category: "Civic & Ideological",
+    flagUrl: fp("Buddhist_flag.svg"),
+    note: "Five vertical colour bands plus a sixth combined band, designed in 1885 to represent the aura of the Buddha; now flown by Buddhists worldwide.",
+  },
+  {
+    id: "christian", name: "Christian Flag", category: "Civic & Ideological",
+    flagUrl: fp("Christian_flag.svg"),
+    note: "A red Latin cross on a blue canton over white — an interdenominational flag dating to 1897 in the United States.",
   },
 ]
 
