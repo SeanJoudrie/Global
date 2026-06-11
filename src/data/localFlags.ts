@@ -1033,7 +1033,7 @@ export const LOCAL_FLAGS: Record<string, string> = {
   "Flag_of_the_World_Health_Organization.svg": "/flags/wm/flag-of-who.svg",
   "Flag_of_the_World_Organization_of_the_Scout_Movement.svg": "https://commons.wikimedia.org/wiki/Special:FilePath/World_Organization_of_the_Scout_Movement_Flag_(2024).png",
   "Flag_of_the_Yazidis.svg": "https://commons.wikimedia.org/wiki/Special:FilePath/Yezidi_Flag.svg",
-  "Flag_of_the_Yupik.svg": "",
+  "Flag_of_the_Yupik.svg": "https://commons.wikimedia.org/wiki/Special:FilePath/Flag_of_America.svg",
   "Flag_of_the_region_Auvergne-Rhône-Alpes.svg": "/flags/wm/flag-of-the-region-auvergne-rhone-alpes.svg",
   "Flag_of_Åland.svg": "/flags/wm/flag-of-aland.svg",
   "Flag_of_Ñuble_Region,_Chile.svg": "/flags/wm/flag-of-nuble-region-chile.svg",
