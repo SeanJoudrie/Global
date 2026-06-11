@@ -1009,6 +1009,69 @@ export const IDENTITY_FLAGS: IdentityFlag[] = [
     flagUrl: fp("Flag_of_Whangamomona.svg"),
     note: "A New Zealand village that declared itself a republic in 1989 after a council boundary change; it has elected a goat and a poodle as president.",
   },
+
+  // ── More regional / autonomy flags ───────────────────────────────────────
+  {
+    id: "andalusia", name: "Andalusia", category: "Separatist & Autonomous",
+    flagUrl: fp("Flag_of_Andalusia.svg"),
+    note: "Green-white-green with the coat of arms of Hercules — flag of Spain's most populous autonomous community and of Andalusian nationalism.",
+  },
+  {
+    id: "canary-islands", name: "Canary Islands", category: "Separatist & Autonomous",
+    flagUrl: fp("Flag_of_the_Canary_Islands.svg"),
+    note: "White-blue-yellow vertical bands for the Spanish archipelago off Africa; independence groups fly a seven-green-star variant.",
+  },
+  {
+    id: "friesland", name: "Frisia (Friesland)", category: "Separatist & Autonomous",
+    flagUrl: fp("Flag_of_Friesland.svg"),
+    note: "Diagonal blue-and-white stripes strewn with red pompeblêden (water-lily leaves) — flag of the Frisian people of the Netherlands.",
+  },
+  {
+    id: "scania", name: "Scania (Skåne)", category: "Separatist & Autonomous",
+    flagUrl: fp("Flag_of_Scania.svg"),
+    note: "A yellow Nordic cross on red — regionalist flag of Scania, the southernmost province of Sweden, once part of Denmark.",
+  },
+  {
+    id: "vojvodina", name: "Vojvodina", category: "Separatist & Autonomous",
+    flagUrl: fp("Flag_of_Vojvodina.svg"),
+    note: "Red-blue-green bands with a wreathed star — flag of the multi-ethnic autonomous province of northern Serbia.",
+  },
+  {
+    id: "bavaria", name: "Bavaria (Lozengy)", category: "Separatist & Autonomous",
+    flagUrl: fp("Flag_of_Bavaria_(lozengy).svg"),
+    note: "The white-and-blue diamond pattern of the German Free State of Bavaria, whose regionalist Bavaria Party has long sought independence.",
+  },
+  {
+    id: "jammu-kashmir", name: "Jammu & Kashmir (1952–2019)", category: "Separatist & Autonomous",
+    flagUrl: fp("Flag_of_Jammu_and_Kashmir_(1952–2019).svg"),
+    note: "A red field with a plough and three white stripes — the former state flag of Indian-administered Jammu & Kashmir, abolished in 2019.",
+  },
+  {
+    id: "kawthoolei", name: "Karen (Kawthoolei)", category: "Separatist & Autonomous",
+    flagUrl: fp("Flag_of_Kawthoolei.svg"),
+    note: "Red, white and blue with a rising sun and a Karen frog-drum — flag of the Karen people's decades-long push for a homeland in Myanmar.",
+  },
+
+  // ── More Pan-National & Ethnic ───────────────────────────────────────────
+  {
+    id: "lusatia", name: "Sorbs (Lusatia)", category: "Pan-National & Ethnic",
+    flagUrl: fp("Flag_of_Lusatia.svg"),
+    note: "Blue-red-white bands for the Sorbs, a West Slavic minority of eastern Germany — one of Europe's smallest surviving Slavic peoples.",
+  },
+
+  // ── More Indigenous Peoples ──────────────────────────────────────────────
+  {
+    id: "osage", name: "Osage Nation", category: "Indigenous Peoples",
+    flagUrl: fp("Flag_of_the_Osage_Nation.svg"),
+    note: "A blue field with an eagle feather, pipe and the four-pointed star of the Osage Nation of Oklahoma.",
+  },
+
+  // ── More Civic & Ideological ─────────────────────────────────────────────
+  {
+    id: "antarctica", name: "Antarctica (Bartram)", category: "Civic & Ideological",
+    flagUrl: fp("Flag_of_Antarctica.svg"),
+    note: "A white outline of the continent on UN blue — Graham Bartram's widely-used flag for the only land governed by an international treaty, not a nation.",
+  },
 ]
 
 // Maritime & Signal (the ICS / phonetic-alphabet signal flags) are their own
