@@ -19,6 +19,20 @@ function buildRounds(): Round[] {
   return rounds
 }
 
+// Once a half is named, the input is replaced by this chip (name + clear ✕).
+function SelectedChip({ flag, onClear }: { flag: FlagRecord; onClear: () => void }) {
+  return (
+    <div className="px-3 py-2.5 rounded-xl flex items-center gap-3"
+      style={{ background: "#2D1F52", border: "1.5px solid #A78BFA66" }}>
+      <img src={flag.flagUrl} alt="" style={{ width: 38, height: 25, objectFit: "cover", borderRadius: 4, flexShrink: 0 }} />
+      <span style={{ color: "#F5F3FF", fontWeight: 700, fontSize: 17, flex: 1, lineHeight: 1.1 }}>{flag.name}</span>
+      <button onClick={onClear} aria-label="Clear"
+        className="active:scale-90 transition-all"
+        style={{ width: 26, height: 26, borderRadius: 999, background: "#1A1033", color: "#B8A9E0", fontSize: 13, flexShrink: 0 }}>✕</button>
+    </div>
+  )
+}
+
 // Small inline autocomplete (same pattern as The Crop / The Peel)
 function FlagInput({ placeholder, onPick, disabled }: {
   placeholder: string; onPick: (f: FlagRecord) => void; disabled?: boolean
@@ -138,23 +152,25 @@ export default function FrankenflagScreen({ onBack }: Props) {
         <div className="w-full max-w-sm flex flex-col gap-3">
           <div>
             <div className="text-xs font-semibold mb-1" style={{ color: "#8B6CFF" }}>Top half</div>
-            {!checked
-              ? <FlagInput placeholder="Name the top flag…" onPick={setTopGuess} />
-              : <div className="px-4 py-3 rounded-xl font-semibold flex items-center justify-between"
+            {checked
+              ? <div className="px-4 py-3 rounded-xl font-semibold flex items-center justify-between"
                   style={{ background: "#2D1F52", border: `1.5px solid ${topOK ? "#34D399" : "#F43F5E"}`, color: "#F5F3FF" }}>
                   <span>{round.top.name}</span><span>{topOK ? "✓" : `✗ (you: ${topGuess?.name ?? "—"})`}</span>
-                </div>}
-            {!checked && topGuess && <div className="text-xs mt-1" style={{ color: "#A78BFA" }}>Selected: {topGuess.name}</div>}
+                </div>
+              : topGuess
+                ? <SelectedChip flag={topGuess} onClear={() => setTopGuess(null)} />
+                : <FlagInput placeholder="Name the top flag…" onPick={setTopGuess} />}
           </div>
           <div>
             <div className="text-xs font-semibold mb-1" style={{ color: "#8B6CFF" }}>Bottom half</div>
-            {!checked
-              ? <FlagInput placeholder="Name the bottom flag…" onPick={setBotGuess} />
-              : <div className="px-4 py-3 rounded-xl font-semibold flex items-center justify-between"
+            {checked
+              ? <div className="px-4 py-3 rounded-xl font-semibold flex items-center justify-between"
                   style={{ background: "#2D1F52", border: `1.5px solid ${botOK ? "#34D399" : "#F43F5E"}`, color: "#F5F3FF" }}>
                   <span>{round.bottom.name}</span><span>{botOK ? "✓" : `✗ (you: ${botGuess?.name ?? "—"})`}</span>
-                </div>}
-            {!checked && botGuess && <div className="text-xs mt-1" style={{ color: "#A78BFA" }}>Selected: {botGuess.name}</div>}
+                </div>
+              : botGuess
+                ? <SelectedChip flag={botGuess} onClear={() => setBotGuess(null)} />
+                : <FlagInput placeholder="Name the bottom flag…" onPick={setBotGuess} />}
           </div>
         </div>
 

@@ -164,11 +164,15 @@ function SilhouetteGame({ onBack, onReplay }: Props & { onReplay: () => void }) 
           border: revealed ? `2px solid ${solved ? "#34D399" : "#F43F5E"}` : "2px solid #8B6CFF33",
           background: "#000", position: "relative",
         }}>
+          {/* key by round so a fresh, already-dark image mounts each round —
+              otherwise the filter transition animates the new flag up from the
+              previous round's fully-revealed state (a flash of the answer). */}
           <FlagImage
+            key={idx}
             code={target.code}
             style={{
               width: "100%", height: "100%", objectFit: "cover", display: "block",
-              filter, transition: "filter 0.5s ease",
+              filter, transition: revealed ? "none" : "filter 0.5s ease",
             }}
           />
           {revealed && !solved && (
