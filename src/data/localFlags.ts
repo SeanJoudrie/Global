@@ -197,6 +197,7 @@ export const LOCAL_FLAGS: Record<string, string> = {
   "Flag_of_Catalonia.svg": "/flags/wm/flag-of-catalonia.svg",
   "Flag_of_Central_Bohemian_Region.svg": "/flags/wm/flag-of-central-bohemian-region.svg",
   "Flag_of_Central_Department,_Paraguay.svg": "/flags/wm/flag-of-central-department-paraguay.svg",
+  "Flag_of_Central_Region,_Malta.svg": "/flags/wm/flag-of-central-region-malta.svg",
   "Flag_of_Centre-Val_de_Loire.svg": "/flags/wm/flag-of-centre-val-de-loire.svg",
   "Flag_of_Chachoengsao_Province.svg": "https://commons.wikimedia.org/wiki/Special:FilePath/Flag_of_Chachoengsao_province_(pavillion_badge).svg",
   "Flag_of_Chainat_Province.svg": "https://commons.wikimedia.org/wiki/Special:FilePath/Chainat_provincial_flag_.png",
