@@ -136,7 +136,9 @@ if (existsSync(here("./repairs.json"))) {
           .map((c) => ({ file: c, url: hotlink(c) }))
   const missing = [...d.unrepairable, ...d.repairs.filter((r) => REJECT_REPAIRS.has(r.arg))]
     .map((u) => ({ arg: u.arg, label: clean(u.arg), cands: candsFor(u) }))
-    .sort((a, b) => a.label.localeCompare(b.label))
+    // Sort most-likely-to-have-a-real-flag first: entries with candidates float
+    // up (more candidates = more likely), no-candidate ones sink to the bottom.
+    .sort((a, b) => b.cands.length - a.cands.length || a.label.localeCompare(b.label))
   // "New" tab: recently added/recovered flags to verify they load. Covers every
   // recovered repair (lenient + user picks) plus flags added directly in the data.
   const EXTRA_RECENT = [
