@@ -1,62 +1,65 @@
-﻿import { useState, useCallback, useEffect } from "react"
+﻿import { useState, useCallback, useEffect, lazy, Suspense } from "react"
 import SplashScreen from "./components/SplashScreen"
 import MainTabs from "./components/MainTabs"
 import HomeScreen from "./components/HomeScreen"
 import type { TabKey } from "./ui/registry"
 import { AESTHETIC, T } from "./ui/tokens"
-import FlagsScreen from "./components/FlagsScreen"
-import QuizScreen from "./components/QuizScreen"
-import ReverseQuizScreen from "./components/ReverseQuizScreen"
-import CapitalQuizScreen from "./components/CapitalQuizScreen"
-import ChallengeScreen from "./components/ChallengeScreen"
-import ResultScreen from "./components/ResultScreen"
-import AchievementsScreen from "./components/AchievementsScreen"
-import ProfileScreen from "./components/ProfileScreen"
-import FlashcardsScreen from "./components/FlashcardsScreen"
-import LanguageQuizScreen from "./components/LanguageQuizScreen"
-import CodexScreen from "./components/CodexScreen"
-import GeoQuizScreen from "./components/GeoQuizScreen"
-import GauntletScreen from "./components/GauntletScreen"
-import SettingsScreen from "./components/SettingsScreen"
-import TierListScreen from "./components/TierListScreen"
-import OddOneOutScreen from "./components/OddOneOutScreen"
-import TheCropScreen from "./components/TheCropScreen"
-import FlagDNAScreen from "./components/FlagDNAScreen"
-import BuildFlagScreen from "./components/BuildFlagScreen"
-import ThePeelScreen from "./components/ThePeelScreen"
-import ConfusablesScreen from "./components/ConfusablesScreen"
-import TheComposerScreen from "./components/TheComposerScreen"
-import SilhouetteScreen from "./components/SilhouetteScreen"
-import FlagFamiliesScreen from "./components/FlagFamiliesScreen"
-import FunFactScreen from "./components/FunFactScreen"
-import ProgressMapScreen from "./components/ProgressMapScreen"
-import HistoricalFlagScreen from "./components/HistoricalFlagScreen"
-import type { HistoricalRegion } from "./data/historicalFlags"
-import IdentityFlagScreen from "./components/IdentityFlagScreen"
-import ProvinceRouletteScreen from "./components/ProvinceRouletteScreen"
-import SubdivisionStumperScreen from "./components/SubdivisionStumperScreen"
-import LineageScreen from "./components/LineageScreen"
-import SubdivisionStatsScreen from "./components/SubdivisionStatsScreen"
-import MegaCodexScreen from "./components/MegaCodexScreen"
-import FlagleScreen from "./components/FlagleScreen"
-import HigherLowerScreen from "./components/HigherLowerScreen"
-import DeadOrAliveScreen from "./components/DeadOrAliveScreen"
-import FrankenflagScreen from "./components/FrankenflagScreen"
-import DescribeItScreen from "./components/DescribeItScreen"
-import FlagBracketScreen from "./components/FlagBracketScreen"
-import RealOrBotScreen from "./components/RealOrBotScreen"
-import FlagTimelineScreen from "./components/FlagTimelineScreen"
-import BorderMapScreen from "./components/BorderMapScreen"
-import BorderChainScreen from "./components/BorderChainScreen"
-import FlagGachaScreen from "./components/FlagGachaScreen"
-import SymbolHuntScreen from "./components/SymbolHuntScreen"
-import TwoTruthsScreen from "./components/TwoTruthsScreen"
-import CapitalMatchScreen from "./components/CapitalMatchScreen"
-import OddBorderOutScreen from "./components/OddBorderOutScreen"
-import ContinentSortScreen from "./components/ContinentSortScreen"
-import StatClashScreen from "./components/StatClashScreen"
 import StarField from "./components/StarField"
 import EarthLogo from "./components/EarthLogo"
+import type { HistoricalRegion } from "./data/historicalFlags"
+
+// Every game/destination screen is code-split so the initial load only ships
+// the dashboard shell — each screen's JS is fetched the first time it's opened.
+const FlagsScreen = lazy(() => import("./components/FlagsScreen"))
+const QuizScreen = lazy(() => import("./components/QuizScreen"))
+const ReverseQuizScreen = lazy(() => import("./components/ReverseQuizScreen"))
+const CapitalQuizScreen = lazy(() => import("./components/CapitalQuizScreen"))
+const ChallengeScreen = lazy(() => import("./components/ChallengeScreen"))
+const ResultScreen = lazy(() => import("./components/ResultScreen"))
+const AchievementsScreen = lazy(() => import("./components/AchievementsScreen"))
+const ProfileScreen = lazy(() => import("./components/ProfileScreen"))
+const FlashcardsScreen = lazy(() => import("./components/FlashcardsScreen"))
+const LanguageQuizScreen = lazy(() => import("./components/LanguageQuizScreen"))
+const CodexScreen = lazy(() => import("./components/CodexScreen"))
+const GeoQuizScreen = lazy(() => import("./components/GeoQuizScreen"))
+const GauntletScreen = lazy(() => import("./components/GauntletScreen"))
+const SettingsScreen = lazy(() => import("./components/SettingsScreen"))
+const TierListScreen = lazy(() => import("./components/TierListScreen"))
+const OddOneOutScreen = lazy(() => import("./components/OddOneOutScreen"))
+const TheCropScreen = lazy(() => import("./components/TheCropScreen"))
+const FlagDNAScreen = lazy(() => import("./components/FlagDNAScreen"))
+const BuildFlagScreen = lazy(() => import("./components/BuildFlagScreen"))
+const ThePeelScreen = lazy(() => import("./components/ThePeelScreen"))
+const ConfusablesScreen = lazy(() => import("./components/ConfusablesScreen"))
+const TheComposerScreen = lazy(() => import("./components/TheComposerScreen"))
+const SilhouetteScreen = lazy(() => import("./components/SilhouetteScreen"))
+const FlagFamiliesScreen = lazy(() => import("./components/FlagFamiliesScreen"))
+const FunFactScreen = lazy(() => import("./components/FunFactScreen"))
+const ProgressMapScreen = lazy(() => import("./components/ProgressMapScreen"))
+const HistoricalFlagScreen = lazy(() => import("./components/HistoricalFlagScreen"))
+const IdentityFlagScreen = lazy(() => import("./components/IdentityFlagScreen"))
+const ProvinceRouletteScreen = lazy(() => import("./components/ProvinceRouletteScreen"))
+const SubdivisionStumperScreen = lazy(() => import("./components/SubdivisionStumperScreen"))
+const LineageScreen = lazy(() => import("./components/LineageScreen"))
+const SubdivisionStatsScreen = lazy(() => import("./components/SubdivisionStatsScreen"))
+const MegaCodexScreen = lazy(() => import("./components/MegaCodexScreen"))
+const FlagleScreen = lazy(() => import("./components/FlagleScreen"))
+const HigherLowerScreen = lazy(() => import("./components/HigherLowerScreen"))
+const DeadOrAliveScreen = lazy(() => import("./components/DeadOrAliveScreen"))
+const FrankenflagScreen = lazy(() => import("./components/FrankenflagScreen"))
+const DescribeItScreen = lazy(() => import("./components/DescribeItScreen"))
+const FlagBracketScreen = lazy(() => import("./components/FlagBracketScreen"))
+const RealOrBotScreen = lazy(() => import("./components/RealOrBotScreen"))
+const FlagTimelineScreen = lazy(() => import("./components/FlagTimelineScreen"))
+const BorderMapScreen = lazy(() => import("./components/BorderMapScreen"))
+const BorderChainScreen = lazy(() => import("./components/BorderChainScreen"))
+const FlagGachaScreen = lazy(() => import("./components/FlagGachaScreen"))
+const SymbolHuntScreen = lazy(() => import("./components/SymbolHuntScreen"))
+const TwoTruthsScreen = lazy(() => import("./components/TwoTruthsScreen"))
+const CapitalMatchScreen = lazy(() => import("./components/CapitalMatchScreen"))
+const OddBorderOutScreen = lazy(() => import("./components/OddBorderOutScreen"))
+const ContinentSortScreen = lazy(() => import("./components/ContinentSortScreen"))
+const StatClashScreen = lazy(() => import("./components/StatClashScreen"))
 import { FLAGS } from "./data/flags"
 import type { FlagRecord } from "./data/flags"
 import { loadState, saveState, markFlagLearned, markSubLearned, recordDailyResult, awardCrown, saveShareResult } from "./utils/storage"
@@ -74,6 +77,18 @@ interface ActiveQuiz {
   isDaily: boolean
   setId: string
   setFlags: FlagRecord[]
+}
+
+// Brief placeholder while a code-split screen's chunk loads (usually a blink).
+function ScreenFallback() {
+  return (
+    <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", background: AESTHETIC === "original" ? "transparent" : T.bg }}>
+      <div style={{ opacity: 0.6, animation: "geoPulse 1s ease-in-out infinite" }}>
+        <EarthLogo size={46} />
+      </div>
+      <style>{`@keyframes geoPulse{0%,100%{opacity:0.35}50%{opacity:0.85}}`}</style>
+    </div>
+  )
 }
 
 export default function App() {
@@ -181,6 +196,7 @@ export default function App() {
 
       {screen === "splash" && <SplashScreen onDone={() => setScreen("home")} />}
 
+      <Suspense fallback={<ScreenFallback />}>
       {screen === "home" && AESTHETIC === "original" && (
         <HomeScreen state={appState} onStartDaily={startDaily}
           onGoFlags={() => setScreen("flags")}
@@ -307,6 +323,7 @@ export default function App() {
           onHome={() => setScreen("home")} onRetry={activeQuiz.isDaily ? undefined : handleRetry}
           onSaveShare={(r: ShareResult) => setAppState(s => saveShareResult(s, r))} />
       )}
+      </Suspense>
     </div>
   )
 }
