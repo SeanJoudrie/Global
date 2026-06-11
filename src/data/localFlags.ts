@@ -225,6 +225,7 @@ export const LOCAL_FLAGS: Record<string, string> = {
   "Flag_of_Boise,_Idaho.svg": "",
   "Flag_of_Bolívar_State.svg": "/flags/wm/flag-of-bolivar-state.svg",
   "Flag_of_Boquerón_Department.svg": "/flags/wm/flag-of-boqueron-department.svg",
+  "Flag_of_Bougainville.svg": "/flags/wm/flag-of-bougainville.svg",
   "Flag_of_Boyacá_Department.svg": "/flags/wm/flag-of-boyaca-department.svg",
   "Flag_of_Brandenburg.svg": "/flags/wm/flag-of-brandenburg.svg",
   "Flag_of_Bremen.svg": "/flags/wm/flag-of-bremen.svg",

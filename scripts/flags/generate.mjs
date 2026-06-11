@@ -125,10 +125,10 @@ if (existsSync(here("./repairs.json"))) {
   const candsFor = (u) =>
     (u.candidates || [])
       .filter((c) => /flag|bandera|drapeau|bandiera|vlag/i.test(c) && !JUNK.test(c))
-      .slice(0, 3)
+      .slice(0, 5)
       .map((c) => ({ file: c, url: hotlink(c) }))
   const missing = [...d.unrepairable, ...d.repairs.filter((r) => REJECT_REPAIRS.has(r.arg))]
-    .map((u) => ({ label: clean(u.arg), url: hotlink(u.arg), cands: candsFor(u) }))
+    .map((u) => ({ arg: u.arg, label: clean(u.arg), cands: candsFor(u) }))
     .sort((a, b) => a.label.localeCompare(b.label))
   writeFileSync(
     new URL("src/data/flagDiagnostics.ts", ROOT),
@@ -138,8 +138,9 @@ if (existsSync(here("./repairs.json"))) {
 // name, so most will be broken — that is the "needs a filename" to-do list).
 export interface DiagCand { file: string; url: string }
 export interface DiagFlag { label: string; url: string; cands?: DiagCand[] }
+export interface MissingFlag { arg: string; label: string; cands: DiagCand[] }
 export const FIXED_FLAGS: DiagFlag[] = ${JSON.stringify(fixed, null, 0)}
-export const MISSING_FLAGS: DiagFlag[] = ${JSON.stringify(missing, null, 0)}
+export const MISSING_FLAGS: MissingFlag[] = ${JSON.stringify(missing, null, 0)}
 `,
   )
   console.log(`Wrote src/data/flagDiagnostics.ts (fixed ${fixed.length}, missing ${missing.length})`)
