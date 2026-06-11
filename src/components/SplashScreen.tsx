@@ -12,22 +12,33 @@ export default function SplashScreen({ onDone }: Props) {
   return (
     <div
       className="fixed inset-0 flex flex-col items-center justify-center"
-      style={{ background: 'linear-gradient(135deg, #1A1033 0%, #2A1A4A 100%)', zIndex: 100 }}
+      style={{
+        background: 'linear-gradient(160deg, #F7F0E1 0%, #EADCC2 100%)',
+        zIndex: 100,
+        animation: 'splashFade 1.6s ease forwards',
+      }}
     >
       <div style={{
         display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 20,
-        animation: 'splashAnim 1.6s cubic-bezier(0.25,0.46,0.45,0.94) forwards',
+        animation: 'splashAnim 1.6s cubic-bezier(0.4,0,0.2,1) forwards',
       }}>
-        <EarthLogo size={140} />
-        <h1 style={{ color: '#F5F3FF', fontSize: 36, fontWeight: 900, letterSpacing: '-0.5px', margin: 0 }}>
+        <EarthLogo size={150} />
+        <h1 style={{ color: '#3A2A16', fontSize: 38, fontWeight: 900, letterSpacing: '-0.5px', margin: 0 }}>
           Globalio
         </h1>
       </div>
       <style>{`
+        /* Logo starts big, holds, then shrinks away to reveal the dashboard */
         @keyframes splashAnim {
-          0%   { transform: scale(0.05); opacity: 0; }
-          28%  { transform: scale(1.12); opacity: 1; }
-          100% { transform: scale(0.05); opacity: 0; }
+          0%   { transform: scale(1.6); opacity: 0; }
+          18%  { transform: scale(1.35); opacity: 1; }
+          55%  { transform: scale(1.0);  opacity: 1; }
+          100% { transform: scale(0.15); opacity: 0; }
+        }
+        /* The cream backdrop itself fades out at the end */
+        @keyframes splashFade {
+          0%, 70% { opacity: 1; }
+          100%    { opacity: 0; }
         }
       `}</style>
     </div>
