@@ -25,10 +25,12 @@ function buildRounds(): Round[] {
   })
 }
 
-function FlagTile({ src, dim, badge, onClick }: { src: string; dim?: boolean; badge?: string; onClick?: () => void }) {
+function FlagTile({ src, dim, badge, onClick, onDragStart }: { src: string; dim?: boolean; badge?: string; onClick?: () => void; onDragStart?: () => void }) {
   return (
     <button onClick={onClick} disabled={!onClick} className={onClick ? "geo-tap" : ""}
-      style={{ position: "relative", width: 60, height: 40, borderRadius: 6, overflow: "hidden", border: `1px solid ${T.line}`, background: "#fff", opacity: dim ? 0.32 : 1, flexShrink: 0 }}>
+      draggable={!!onDragStart}
+      onDragStart={onDragStart}
+      style={{ position: "relative", width: 60, height: 40, borderRadius: 6, overflow: "hidden", border: `1px solid ${T.line}`, background: "#fff", opacity: dim ? 0.32 : 1, flexShrink: 0, cursor: onDragStart ? "grab" : undefined }}>
       <img src={src} alt="" draggable={false} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
         onError={e => { (e.target as HTMLImageElement).style.opacity = "0.2" }} />
       {badge && <span style={{ position: "absolute", top: -6, left: -6, width: 16, height: 16, borderRadius: "50%", background: ACCENT.learn, color: "#fff", fontSize: 9, fontWeight: 700, display: "flex", alignItems: "center", justifyContent: "center", fontFamily: FONT.mono }}>{badge}</span>}
@@ -46,9 +48,11 @@ function TimelineGame({ onBack, onReplay }: Props & { onReplay: () => void }) {
 
   const round = rounds[idx]
   const placed = new Set(order)
+  const [dragIdx, setDragIdx] = useState<number | null>(null)
 
   const tap = (i: number) => { if (locked || placed.has(i)) return; setOrder(o => [...o, i]) }
   const undo = () => { if (locked) return; setOrder(o => o.slice(0, -1)) }
+  const dropToStrip = () => { if (dragIdx !== null) { tap(dragIdx); setDragIdx(null) } }
 
   const lockIn = () => {
     // correct positions: chrono order should equal the tapped flags oldest→newest
@@ -98,11 +102,12 @@ function TimelineGame({ onBack, onReplay }: Props & { onReplay: () => void }) {
 
       <div style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", padding: "10px 18px 24px", gap: 18 }}>
         <p style={{ color: T.muted, fontSize: 12.5, textAlign: "center", maxWidth: 300 }}>
-          Tap the flags in order — <b style={{ color: ACCENT.learn }}>oldest → newest</b>.
+          Tap <i>or drag</i> the flags in order — <b style={{ color: ACCENT.learn }}>oldest → newest</b>.
         </p>
 
         {/* ordered slots */}
-        <div style={{ display: "flex", alignItems: "center", gap: 6, flexWrap: "wrap", justifyContent: "center", minHeight: 52 }}>
+        <div onDragOver={e => { if (!locked) e.preventDefault() }} onDrop={dropToStrip}
+          style={{ display: "flex", alignItems: "center", gap: 6, flexWrap: "wrap", justifyContent: "center", minHeight: 52, padding: "4px 8px", borderRadius: 10, outline: dragIdx !== null ? `1.5px dashed ${tint(ACCENT.learn, 0.5)}` : "none" }}>
           {round.chrono.map((_, pos) => {
             const shufIdx = order[pos]
             const filled = shufIdx !== undefined
@@ -142,7 +147,9 @@ function TimelineGame({ onBack, onReplay }: Props & { onReplay: () => void }) {
         {!locked && (
           <div style={{ display: "flex", gap: 10, flexWrap: "wrap", justifyContent: "center", marginTop: 4 }}>
             {round.shuffled.map((h, i) => (
-              <FlagTile key={i} src={h.flagUrl} dim={placed.has(i)} badge={placed.has(i) ? String(order.indexOf(i) + 1) : undefined} onClick={placed.has(i) ? undefined : () => tap(i)} />
+              <FlagTile key={i} src={h.flagUrl} dim={placed.has(i)} badge={placed.has(i) ? String(order.indexOf(i) + 1) : undefined}
+                onClick={placed.has(i) ? undefined : () => tap(i)}
+                onDragStart={placed.has(i) ? undefined : () => setDragIdx(i)} />
             ))}
           </div>
         )}

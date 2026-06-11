@@ -12,17 +12,25 @@ const saveBest = (n: number) => { try { localStorage.setItem(BEST_KEY, String(n)
 const NAME = (c: string) => FLAGS.find(f => f.code === c)?.name ?? c
 const rand = () => STAT_CODES[Math.floor(Math.random() * STAT_CODES.length)]
 
-type Metric = "pop" | "area"
+type Metric = "pop" | "area" | "density"
 interface Q { metric: Metric; a: string; b: string }
+const METRICS: Metric[] = ["pop", "area", "density"]
+
+// Raw value for a metric. Density (people per km²) is derived from pop & area,
+// which gives a whole extra category of questions from the same data.
+const val = (metric: Metric, code: string) => {
+  const s = STATS[code]
+  return metric === "density" ? (s.pop * 1000) / s.area : s[metric]
+}
 
 // Only ask when the two values differ comfortably (>=25%), so there's always a
 // clear right answer and rounding can't mislead.
 function nextQ(): Q {
-  for (let i = 0; i < 60; i++) {
-    const metric: Metric = Math.random() < 0.5 ? "pop" : "area"
+  for (let i = 0; i < 80; i++) {
+    const metric = METRICS[Math.floor(Math.random() * METRICS.length)]
     const a = rand(), b = rand()
     if (a === b) continue
-    const va = STATS[a][metric], vb = STATS[b][metric]
+    const va = val(metric, a), vb = val(metric, b)
     const hi = Math.max(va, vb), lo = Math.min(va, vb)
     if (lo > 0 && hi / lo >= 1.25) return { metric, a, b }
   }
@@ -30,6 +38,7 @@ function nextQ(): Q {
 }
 
 const fmt = (metric: Metric, code: string) => {
+  if (metric === "density") return `${Math.round(val("density", code)).toLocaleString()} /km²`
   const v = STATS[code][metric]
   if (metric === "pop") return v >= 1 ? `${v % 1 ? v.toFixed(1) : v} M people` : `${Math.round(v * 1e6).toLocaleString()} people`
   const km2 = v * 1000
@@ -42,8 +51,8 @@ function StatClashGame({ onBack, onReplay }: Props & { onReplay: () => void }) {
   const [best, setBest] = useState(loadBest)
   const [reveal, setReveal] = useState<null | { correct: boolean; pick: string }>(null)
 
-  const prompt = q.metric === "pop" ? "more people?" : "the bigger area?"
-  const winner = STATS[q.a][q.metric] >= STATS[q.b][q.metric] ? q.a : q.b
+  const prompt = q.metric === "pop" ? "more people?" : q.metric === "area" ? "the bigger area?" : "more people per km²?"
+  const winner = val(q.metric, q.a) >= val(q.metric, q.b) ? q.a : q.b
 
   const choose = (code: string) => {
     if (reveal) return
@@ -67,7 +76,7 @@ function StatClashGame({ onBack, onReplay }: Props & { onReplay: () => void }) {
         <div className="w-full max-w-sm" style={{ display: "flex", flexDirection: "column", gap: 14 }}>
           <div style={{ borderRadius: 16, padding: 22, textAlign: "center", background: T.surface, border: `1px solid ${T.line}` }}>
             <div style={{ fontSize: 38 }}>📉</div>
-            <div className="geo-display" style={{ fontWeight: 700, fontSize: 18, color: T.text, marginTop: 4 }}>{NAME(winner)} had {q.metric === "pop" ? "more people" : "more land"}</div>
+            <div className="geo-display" style={{ fontWeight: 700, fontSize: 18, color: T.text, marginTop: 4 }}>{NAME(winner)} had {q.metric === "pop" ? "more people" : q.metric === "area" ? "more land" : "higher density"}</div>
             <div style={{ color: T.muted, fontSize: 12, marginTop: 6 }}>{NAME(q.a)}: {fmt(q.metric, q.a)}<br />{NAME(q.b)}: {fmt(q.metric, q.b)}</div>
             <div style={{ display: "flex", justifyContent: "center", gap: 28, marginTop: 16 }}>
               <div><div style={{ fontFamily: FONT.mono, fontWeight: 800, fontSize: 28, color: ACCENT.play }}>{streak}</div><div className="geo-micro" style={{ fontSize: 8, color: T.muted }}>streak</div></div>
@@ -113,7 +122,7 @@ function StatClashGame({ onBack, onReplay }: Props & { onReplay: () => void }) {
 
       <div style={{ flex: 1, display: "flex", flexDirection: "column", justifyContent: "center", padding: "0 18px 30px", gap: 16 }}>
         <div style={{ textAlign: "center" }}>
-          <div className="geo-micro" style={{ fontSize: 9, color: q.metric === "pop" ? ACCENT.learn : ACCENT.codex }}>{q.metric === "pop" ? "👥 Population" : "🗺 Land area"}</div>
+          <div className="geo-micro" style={{ fontSize: 9, color: q.metric === "pop" ? ACCENT.learn : ACCENT.codex }}>{q.metric === "pop" ? "👥 Population" : q.metric === "area" ? "🗺 Land area" : "🏙 Density"}</div>
           <div className="geo-display" style={{ fontWeight: 700, fontSize: 21, color: T.text, marginTop: 2 }}>Which has {prompt}</div>
         </div>
         <div style={{ display: "flex", gap: 12, alignItems: "stretch" }}>
