@@ -119,8 +119,16 @@ if (existsSync(here("./repairs.json"))) {
     .map((r) => ({ label: clean(r.arg), url: map[keyOf(r.arg)] }))
     .filter((x) => x.url)
     .sort((a, b) => a.label.localeCompare(b.label))
+  // Candidate previews: Commons search hits that *might* be the right flag, for
+  // the user to eyeball. Drop photos, maps, seals, logos and other non-flags.
+  const JUNK = /\.(jpe?g|tiff?)$|flag.?map|map of|outline|\blabel\b|corner|disputed|simple map|\bseal\b|coat of arms|\blogo\b|\bemblem\b|locator|orthographic|\btemple\b|\bvisit\b|assembly|parliament|construction|\brugby\b|\bpin\b|\bicon\b|background|\bday\b/i
+  const candsFor = (u) =>
+    (u.candidates || [])
+      .filter((c) => /flag|bandera|drapeau|bandiera|vlag/i.test(c) && !JUNK.test(c))
+      .slice(0, 3)
+      .map((c) => ({ file: c, url: hotlink(c) }))
   const missing = [...d.unrepairable, ...d.repairs.filter((r) => REJECT_REPAIRS.has(r.arg))]
-    .map((u) => ({ label: clean(u.arg), url: hotlink(u.arg) }))
+    .map((u) => ({ label: clean(u.arg), url: hotlink(u.arg), cands: candsFor(u) }))
     .sort((a, b) => a.label.localeCompare(b.label))
   writeFileSync(
     new URL("src/data/flagDiagnostics.ts", ROOT),
@@ -128,7 +136,8 @@ if (existsSync(here("./repairs.json"))) {
 // FIXED: dead links now repaired (these images should load). MISSING: dead
 // links with no confirmed replacement (rendered from their original Wikimedia
 // name, so most will be broken — that is the "needs a filename" to-do list).
-export interface DiagFlag { label: string; url: string }
+export interface DiagCand { file: string; url: string }
+export interface DiagFlag { label: string; url: string; cands?: DiagCand[] }
 export const FIXED_FLAGS: DiagFlag[] = ${JSON.stringify(fixed, null, 0)}
 export const MISSING_FLAGS: DiagFlag[] = ${JSON.stringify(missing, null, 0)}
 `,

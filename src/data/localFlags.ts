@@ -913,6 +913,7 @@ export const LOCAL_FLAGS: Record<string, string> = {
   "Flag_of_Yamaguchi_Prefecture.svg": "/flags/wm/flag-of-yamaguchi-prefecture.svg",
   "Flag_of_Yamal-Nenets_Autonomous_District.svg": "/flags/wm/flag-of-yamal-nenets-autonomous-district.svg",
   "Flag_of_Yamanashi_Prefecture.svg": "/flags/wm/flag-of-yamanashi-prefecture.svg",
+  "Flag_of_Yaracuy_State.svg": "/flags/wm/flag-of-yaracuy-state.svg",
   "Flag_of_Yaroslavl_Oblast.svg": "/flags/wm/flag-of-yaroslavl-oblast.svg",
   "Flag_of_Yasothon_Province.svg": "https://commons.wikimedia.org/wiki/Special:FilePath/Flag_of_Yasothon_province.svg",
   "Flag_of_Yorkshire.svg": "/flags/wm/flag-of-yorkshire.svg",

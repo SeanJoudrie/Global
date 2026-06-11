@@ -1,6 +1,36 @@
 import { useState } from "react"
 import { FIXED_FLAGS, MISSING_FLAGS } from "../data/flagDiagnostics"
-import type { DiagFlag } from "../data/flagDiagnostics"
+import type { DiagFlag, DiagCand } from "../data/flagDiagnostics"
+
+// One candidate thumbnail with its Commons filename caption.
+function Candidate({ c }: { c: DiagCand }) {
+  const [err, setErr] = useState(false)
+  if (err) return null
+  return (
+    <div style={{ width: 96, flexShrink: 0 }}>
+      <div style={{ width: 96, height: 64, borderRadius: 4, overflow: "hidden", background: "rgba(255,255,255,0.06)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+        <img src={c.url} alt={c.file} loading="lazy" onError={() => setErr(true)}
+          style={{ width: "100%", height: "100%", objectFit: "contain" }} />
+      </div>
+      <div style={{ fontSize: 9, color: "#B8A9E0", marginTop: 2, lineHeight: 1.2, wordBreak: "break-word" }}>{c.file}</div>
+    </div>
+  )
+}
+
+// A missing flag: label + any candidate guesses to eyeball.
+function MissingRow({ f }: { f: DiagFlag }) {
+  const cands = f.cands ?? []
+  return (
+    <div style={{ padding: "8px 10px", borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
+      <div style={{ fontSize: 13, color: "#F5F3FF", fontWeight: 600, marginBottom: 4 }}>{f.label}</div>
+      {cands.length === 0
+        ? <div style={{ fontSize: 11, color: "#ff8a8a" }}>no candidate found — needs a filename</div>
+        : <div style={{ display: "flex", gap: 8, overflowX: "auto", paddingBottom: 2 }}>
+            {cands.map((c, i) => <Candidate key={i} c={c} />)}
+          </div>}
+    </div>
+  )
+}
 
 // Temporary QA screen (Settings → Flag Check). Two lists:
 //  • FIXED   – dead links that were repaired; every image should load.
@@ -60,11 +90,13 @@ export default function FlagDiagnosticsScreen({ onBack }: Props) {
       </div>
       <div style={{ padding: "0 12px 8px", fontSize: 11, color: "#8B6CFF99", lineHeight: 1.4 }}>
         {tab === "missing"
-          ? "These dead links have no confirmed flag. Anything BROKEN below likely has a real flag — send me the correct Commons filename and I'll wire it in."
+          ? "Each missing flag shows my best candidate guesses (with filenames). Tell me which candidates are the correct flag and I'll wire them in; ignore maps/wrong ones."
           : "These were repaired. Every one should show “loads ✓”. Flag anything that looks wrong."}
       </div>
       <div style={{ flex: 1, overflowY: "auto", WebkitOverflowScrolling: "touch" }}>
-        {list.map((f, i) => <Tile key={tab + i} f={f} />)}
+        {tab === "missing"
+          ? list.map((f, i) => <MissingRow key={"m" + i} f={f} />)
+          : list.map((f, i) => <Tile key={"f" + i} f={f} />)}
       </div>
     </div>
   )
