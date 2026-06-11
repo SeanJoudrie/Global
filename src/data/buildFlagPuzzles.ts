@@ -1,4 +1,4 @@
-export type Layout = 'v3' | 'h3' | 'h2' | 'v2' | 'h4' | 'disc'
+export type Layout = 'v3' | 'h3' | 'h2' | 'v2' | 'h4' | 'disc' | 'star'
 
 export interface Piece {
   id: string
@@ -27,6 +27,7 @@ const WHITE   = (id: string) => p(id, '#F5F5F5', 'White')
 const BLACK   = (id: string) => p(id, '#1A1A1A', 'Black')
 const YELLOW  = (id: string) => p(id, '#FFCE00', 'Yellow')
 const ORANGE  = (id: string) => p(id, '#FF883E', 'Orange')
+const SKYBLUE = (id: string) => p(id, '#4189DD', 'Light Blue')
 
 function shuffle<T>(arr: T[]): T[] {
   return [...arr].sort(() => Math.random() - 0.5)
@@ -176,6 +177,26 @@ const raw: BuildPuzzle[] = [
       WHITE('w'), RED('r'),
       BLUE('b'), GREEN('g'), p('y','#FFD500','Yellow'),
     ]),
+  },
+
+  // ── Single big star (star) ────────────────────────────────────────────────
+  {
+    code: 'VN', name: 'Vietnam', layout: 'star',
+    slots: ['bg', 'star'],
+    solution: { bg: 'r', star: 'y' },
+    pieces: shuffle([RED('r'), YELLOW('y'), WHITE('w'), GREEN('g'), BLUE('b')]),
+  },
+  {
+    code: 'MA', name: 'Morocco', layout: 'star',
+    slots: ['bg', 'star'],
+    solution: { bg: 'r', star: 'g' },
+    pieces: shuffle([RED('r'), GREEN('g'), YELLOW('y'), WHITE('w'), BLACK('k')]),
+  },
+  {
+    code: 'SO', name: 'Somalia', layout: 'star',
+    slots: ['bg', 'star'],
+    solution: { bg: 's', star: 'w' },
+    pieces: shuffle([SKYBLUE('s'), WHITE('w'), RED('r'), YELLOW('y'), BLUE('b')]),
   },
 
   // ── More vertical tricolors (v3) ─────────────────────────────────────────

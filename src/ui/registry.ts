@@ -37,7 +37,7 @@ export const REGISTRY: Entry[] = [
 
   // ── PLAY ───────────────────────────────────────────────────────────────
   // Featured — the standout games surface first, plus Guess the Language up top.
-  { id: "language", title: "Guess the Language", subtitle: "76 languages · easy → extreme", icon: "🗣️", tab: "play", group: "Featured", size: "tile", accent: "play" },
+  { id: "language", title: "Guess the Language", subtitle: "82 languages · easy → extreme", icon: "🗣️", tab: "play", group: "Featured", size: "tile", accent: "play" },
   { id: "deadoralive", title: "Dead or Alive", subtitle: "Live or vanished?", icon: "💀", tab: "play", group: "Featured", size: "tile", accent: "play" },
   { id: "frankenflag", title: "Frankenflag", subtitle: "Name both halves", icon: "🧟", tab: "play", group: "Featured", size: "tile", accent: "play" },
   { id: "buildflag", title: "Build the Flag", subtitle: "Assemble the bands", icon: "🧩", tab: "play", group: "Featured", size: "tile", accent: "play" },

@@ -11,33 +11,24 @@ interface Round {
 }
 
 function buildRounds(count: number): Round[] {
-  // Only use flags that have at least 1 confusable
-  const eligible = FLAGS.filter(f => f.confusableWith.length > 0)
+  // Only flags with at least 3 GENUINE look-alikes — so every distractor really
+  // does resemble the answer (no padding with random same-region flags, which
+  // produced nonsense like "Estonia vs Belgium/Germany/UK").
+  const eligible = FLAGS.filter(f => f.confusableWith.length >= 3)
   const shuffled  = [...eligible].sort(() => Math.random() - 0.5)
   const rounds: Round[] = []
 
   for (const target of shuffled) {
     if (rounds.length >= count) break
 
-    // Get confusable flags (by code)
     const confusables = target.confusableWith
       .map(code => FLAGS.find(f => f.code === code))
       .filter((f): f is FlagRecord => !!f)
 
-    if (confusables.length < 1) continue
+    if (confusables.length < 3) continue
 
-    // Fill to 4 choices using confusables first, then same-region
-    const extra = FLAGS.filter(
-      f => f.code !== target.code && !confusables.some(c => c.code === f.code)
-        && f.region === target.region
-    ).sort(() => Math.random() - 0.5)
-
-    const distractors = [
-      ...confusables,
-      ...extra,
-    ].slice(0, 3)
-
-    if (distractors.length < 3) continue  // can't fill a full set of 4
+    // Distractors are exclusively real look-alikes.
+    const distractors = [...confusables].sort(() => Math.random() - 0.5).slice(0, 3)
 
     const all = [target, ...distractors].sort(() => Math.random() - 0.5)
     rounds.push({ target, choices: all, correctIndex: all.indexOf(target) })

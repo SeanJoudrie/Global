@@ -312,6 +312,26 @@ export const LANGUAGES: LanguageRecord[] = [
   { code:'egy', name:'Ancient Egyptian', nativeName:'𓂋𓏤𓈖𓆎𓅓𓏏𓊖', difficulty:'extreme', isLatinScript:false, confusableWith:['sux','akk','cop'],
     sample:'𓂋𓂝𓇳',
     romanized:'Rꜥ — “Ra”, the sun god' },
+
+  // ── Added languages — each paired with its closest relatives as distractors ──
+  { code:'hr', name:'Croatian', nativeName:'Hrvatski', difficulty:'medium', isLatinScript:true, confusableWith:['sr','sk','cs'],
+    sample:'Sunce izlazi na istoku i zalazi na zapadu svaki dan.',
+    romanized:'Sunce izlazi na istoku i zalazi na zapadu svaki dan.' },
+  { code:'sl', name:'Slovenian', nativeName:'Slovenščina', difficulty:'hard', isLatinScript:true, confusableWith:['hr','sk','cs'],
+    sample:'Sonce vzhaja na vzhodu in zahaja na zahodu vsak dan.',
+    romanized:'Sonce vzhaja na vzhodu in zahaja na zahodu vsak dan.' },
+  { code:'mk', name:'Macedonian', nativeName:'Македонски', difficulty:'hard', isLatinScript:false, confusableWith:['bg','sr','ru'],
+    sample:'Сонцето изгрева на исток и заоѓа на запад секој ден.',
+    romanized:'Sonceto izgreva na istok i zaogja na zapad sekoj den.' },
+  { code:'mt', name:'Maltese', nativeName:'Malti', difficulty:'hard', isLatinScript:true, confusableWith:['it','ar','sq'],
+    sample:'Ix-xemx titla\' mil-lvant u tinżel mill-punent kuljum.',
+    romanized:'Ix-xemx titla\' mil-lvant u tinżel mill-punent kuljum.' },
+  { code:'az', name:'Azerbaijani', nativeName:'Azərbaycan', difficulty:'medium', isLatinScript:true, confusableWith:['tr','uz','kk'],
+    sample:'Günəş hər gün şərqdən doğur və qərbdə batır.',
+    romanized:'Günəş hər gün şərqdən doğur və qərbdə batır.' },
+  { code:'mr', name:'Marathi', nativeName:'मराठी', difficulty:'hard', isLatinScript:false, confusableWith:['hi','ne','sa'],
+    sample:'सूर्य दररोज पूर्वेला उगवतो आणि पश्चिमेला मावळतो.',
+    romanized:'Surya dararoj purvela ugavto ani paschimela mavalto.' },
 ]
 
 // Notes shown on the answer reveal — short, true statements (the ancient languages

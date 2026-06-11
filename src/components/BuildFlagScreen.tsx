@@ -89,6 +89,44 @@ function FlagCanvas({
     )
   }
 
+  if (puzzle.layout === 'star') {
+    const bg   = getPiece('bg')
+    const star = getPiece('star')
+    const bgOk   = phase === 'result' && slotIsCorrect(puzzle, placed, 'bg')
+    const starOk = phase === 'result' && slotIsCorrect(puzzle, placed, 'star')
+    const STAR_CLIP = 'polygon(50% 0%,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%)'
+    return (
+      <div ref={el => { slotRefs.current['bg'] = el }}
+        onClick={() => onSlotClick('bg')}
+        style={{
+          width: FLAG_W, height: FLAG_H, borderRadius: 8,
+          background: bg ? bg.color : 'rgba(139,108,255,0.06)',
+          border: phase === 'playing' ? '2px dashed rgba(139,108,255,0.3)' : bgOk ? '2.5px solid #34D399' : '2.5px solid #F43F5E',
+          position: 'relative', cursor: 'pointer', overflow: 'hidden',
+          boxShadow: '0 0 24px #8B6CFF22',
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+        }}>
+        {/* Star slot */}
+        <div ref={el => { slotRefs.current['star'] = el }}
+          onClick={e => { e.stopPropagation(); onSlotClick('star') }}
+          style={{
+            width: 86, height: 86,
+            clipPath: STAR_CLIP, WebkitClipPath: STAR_CLIP,
+            background: star ? star.color : 'rgba(139,108,255,0.25)',
+            cursor: 'pointer',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+          }}>
+          {phase === 'result' && <span style={{ fontSize: 16, color: starOk ? '#0c3' : '#900', fontWeight: 800 }}>{starOk ? '✓' : '✗'}</span>}
+        </div>
+        {phase === 'result' && (
+          <div style={{ position:'absolute', top:4, right:6, fontSize:16, color: bgOk ? '#34D399' : '#F43F5E' }}>
+            {bgOk ? '✓' : '✗'}
+          </div>
+        )}
+      </div>
+    )
+  }
+
   if (puzzle.layout === 'disc') {
     const bg   = getPiece('bg')
     const disc = getPiece('disc')
