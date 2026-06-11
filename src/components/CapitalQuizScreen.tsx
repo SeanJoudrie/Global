@@ -1,6 +1,7 @@
 ﻿import { useState } from "react"
 import { CAPITALS } from "../data/capitals"
 import type { CapitalRecord } from "../data/capitals"
+import { CITIES } from "../data/cities"
 
 interface Props { onBack: () => void }
 
@@ -12,17 +13,26 @@ interface CapQ {
   correctIndex: number
 }
 
+const shuffle = <X,>(a: X[]): X[] => [...a].sort(() => Math.random() - 0.5)
+
 function buildCapitalQuiz(count = 10): CapQ[] {
-  const shuffled = [...CAPITALS].sort(() => Math.random() - 0.5).slice(0, count)
+  const shuffled = shuffle([...CAPITALS]).slice(0, count)
   return shuffled.map(target => {
-    const sameRegion = CAPITALS.filter(c => c.region === target.region && c.code !== target.code)
-    const distractors = [...sameRegion].sort(() => Math.random() - 0.5).slice(0, 3)
-    while (distractors.length < 3) {
-      const fallback = CAPITALS.filter(c => c.code !== target.code && !distractors.find(d => d.code === c.code))
-      const pick = fallback[Math.floor(Math.random() * fallback.length)]
-      if (pick) distractors.push(pick)
+    const distractors: string[] = []
+    // Up to 2 real *non-capital* cities from the same country — the sneaky part:
+    // they're genuinely in that country, so you can't answer on vibes alone.
+    const cities = shuffle((CITIES[target.code] ?? []).filter(c => c !== target.capital))
+    for (const c of cities.slice(0, 2)) if (!distractors.includes(c)) distractors.push(c)
+    // Fill the rest with other countries' capitals (prefer same region).
+    const otherCaps = shuffle([
+      ...CAPITALS.filter(c => c.region === target.region && c.code !== target.code),
+      ...CAPITALS.filter(c => c.region !== target.region && c.code !== target.code),
+    ])
+    for (const c of otherCaps) {
+      if (distractors.length >= 3) break
+      if (c.capital !== target.capital && !distractors.includes(c.capital)) distractors.push(c.capital)
     }
-    const allChoices = [target.capital, ...distractors.map(d => d.capital)].sort(() => Math.random() - 0.5)
+    const allChoices = shuffle([target.capital, ...distractors])
     const correctIndex = allChoices.indexOf(target.capital)
     return { target, choices: allChoices, correctIndex }
   })
