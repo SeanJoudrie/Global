@@ -15,9 +15,15 @@ export interface IdentityFlag {
   category: IdentityCategory
   flagUrl: string
   note: string
+  /**
+   * Relevance tier, 1 (most influential / widely recognised) … 4 (very obscure).
+   * Hidden from players — it only controls ordering: within each category we show
+   * tier 1 first, then 2, etc., alphabetised inside each tier. Defaults to 2.
+   */
+  tier?: number
 }
 
-export const IDENTITY_FLAGS: IdentityFlag[] = [
+const RAW_IDENTITY_FLAGS: IdentityFlag[] = [
   // ── Pride & Identity ────────────────────────────────────────────────────────
   {
     id: "pride-8", name: "Original 8-Stripe Pride Flag", category: "Pride & LGBTQ+",
@@ -1495,7 +1501,175 @@ export const IDENTITY_FLAGS: IdentityFlag[] = [
     flagUrl: fp("Red_flag.svg"),
     note: "The plain red banner — a universal symbol of socialism and the labour movement since the 19th century.",
   },
+
+  // ════════════════════════════════════════════════════════════════════════════
+  // Cultural-flags import — ethnic & people-group flags (skipping anything that is
+  // simply a sovereign nation's flag). Tiers set by rough recognisability.
+  // ════════════════════════════════════════════════════════════════════════════
+
+  // ── Pan-National & Ethnic (cultural batch) ───────────────────────────────────
+  { id: "szekely", name: "Székely Land", category: "Pan-National & Ethnic", tier: 3,
+    flagUrl: fp("Flag_of_the_Szekely_Land.svg"),
+    note: "Blue with gold sun and silver moon — the Hungarian-speaking Székely people of Transylvania, Romania." },
+  { id: "kashubia", name: "Kashubians", category: "Pan-National & Ethnic", tier: 3,
+    flagUrl: fp("Flag_of_Kashubia.svg"),
+    note: "A black griffin on gold — the Kashubs, a West Slavic people of northern Poland." },
+  { id: "rusyn", name: "Rusyns (Carpatho-Ruthenia)", category: "Pan-National & Ethnic", tier: 3,
+    flagUrl: fp("Flag_of_Carpatho-Ukraine.svg"),
+    note: "An East Slavic people of the Carpathians spread across Ukraine, Slovakia and Poland." },
+  { id: "silesia", name: "Silesians", category: "Pan-National & Ethnic", tier: 3,
+    flagUrl: fp("Flag_of_Upper_Silesia.svg"),
+    note: "A yellow-and-blue banner for the Silesian people of southern Poland and Czechia." },
+  { id: "moravia", name: "Moravia", category: "Pan-National & Ethnic", tier: 3,
+    flagUrl: fp("Flag_of_Moravia.svg"),
+    note: "A checkered red-and-white eagle — the historic Moravian lands of the Czech Republic." },
+  { id: "aromanians", name: "Aromanians", category: "Pan-National & Ethnic", tier: 3,
+    flagUrl: fp("Flag_of_the_Aromanians.svg"),
+    note: "A Latin-speaking people scattered across Greece, Albania, North Macedonia and Romania." },
+  { id: "lombardy", name: "Lombardy", category: "Pan-National & Ethnic", tier: 3,
+    flagUrl: fp("Flag_of_Lombardy.svg"),
+    note: "A green field with the white Camunian rose — the Lombard region and its identity in northern Italy." },
+  { id: "tyrol", name: "Tyrol", category: "Pan-National & Ethnic", tier: 3,
+    flagUrl: fp("Flag_of_Tirol.svg"),
+    note: "A red eagle on white — the Alpine people of Tyrol, split between Austria and Italy." },
+  { id: "aragon", name: "Aragon", category: "Pan-National & Ethnic", tier: 3,
+    flagUrl: fp("Flag_of_Aragon.svg"),
+    note: "Red-and-gold bars with crowns — the historic kingdom and region of north-east Spain." },
+  { id: "valencia", name: "Valencian Community", category: "Pan-National & Ethnic", tier: 3,
+    flagUrl: fp("Flag_of_the_Valencian_Community_(2x3).svg"),
+    note: "The Senyera Coronada — a crowned blue stripe added to the Aragonese bars, for Valencia." },
+  { id: "manchu", name: "Manchu People", category: "Pan-National & Ethnic", tier: 3,
+    flagUrl: fp("Flag_of_the_Manchu_people.svg"),
+    note: "A yellow banner for the Manchus, founders of China's last dynasty, the Qing." },
+  { id: "dravidian", name: "Dravidian Movement", category: "Pan-National & Ethnic", tier: 3,
+    flagUrl: fp("Dravidian_flag.svg"),
+    note: "A black-and-red flag for the Dravidian peoples and political movement of South India." },
+  { id: "rohingya", name: "Rohingya", category: "Pan-National & Ethnic", tier: 2,
+    flagUrl: fp("Flag_of_Rohingya.svg"),
+    note: "A stateless Muslim people of Myanmar's Rakhine State, subject to mass displacement." },
+  { id: "hazara", name: "Hazara People", category: "Pan-National & Ethnic", tier: 3,
+    flagUrl: fp("Flag_of_Hazara_people.svg"),
+    note: "A Persian-speaking people of central Afghanistan's Hazarajat highlands." },
+  { id: "chaldean", name: "Chaldean Catholics", category: "Pan-National & Ethnic", tier: 3,
+    flagUrl: fp("Chaldean_flag.svg"),
+    note: "An Aramaic-speaking Christian people of Iraq, related to the Assyrians." },
+  { id: "samaritan", name: "Samaritans", category: "Pan-National & Ethnic", tier: 4,
+    flagUrl: fp("Samaritan_flag.svg"),
+    note: "One of the world's smallest ethno-religious groups, centred on Mount Gerizim near Nablus." },
+  { id: "ashanti", name: "Ashanti", category: "Pan-National & Ethnic", tier: 3,
+    flagUrl: fp("Flag_of_Ashanti.svg"),
+    note: "A gold-fronted banner of the Akan Ashanti people and kingdom of central Ghana." },
+  { id: "kongo", name: "Kingdom of Kongo", category: "Pan-National & Ethnic", tier: 3,
+    flagUrl: fp("Flag_of_the_Kingdom_of_Kongo.svg"),
+    note: "For the Bakongo people of Angola, the DRC and the Republic of the Congo." },
+  { id: "ogoni", name: "Ogoni People", category: "Pan-National & Ethnic", tier: 3,
+    flagUrl: fp("Flag_of_Ogoniland.svg"),
+    note: "A people of the Niger Delta known for their environmental struggle against oil extraction." },
+  { id: "oromo", name: "Oromo People", category: "Pan-National & Ethnic", tier: 2,
+    flagUrl: fp("Flag_of_the_Oromo_Liberation_Front.svg"),
+    note: "The largest ethnic group in Ethiopia, with a long autonomy and rights movement." },
+  { id: "afar", name: "Afar People", category: "Pan-National & Ethnic", tier: 3,
+    flagUrl: fp("Flag_of_the_Afars.svg"),
+    note: "A pastoral people of the Horn of Africa, spread across Ethiopia, Eritrea and Djibouti." },
+
+  // ── Indigenous Peoples (cultural batch) ──────────────────────────────────────
+  { id: "haida", name: "Haida Nation", category: "Indigenous Peoples", tier: 3,
+    flagUrl: fp("Flag_of_the_Haida_Nation.svg"),
+    note: "A people of Haida Gwaii off British Columbia, renowned for monumental cedar carving." },
+  { id: "tlingit", name: "Tlingit", category: "Indigenous Peoples", tier: 3,
+    flagUrl: fp("Flag_of_the_Tlingit.svg"),
+    note: "An Indigenous people of the Pacific Northwest coast of Alaska and Canada." },
+  { id: "guarani", name: "Guaraní", category: "Indigenous Peoples", tier: 3,
+    flagUrl: fp("Flag_of_the_Guarani_people.svg"),
+    note: "A people of Paraguay, Brazil, Argentina and Bolivia; Guaraní is an official language of Paraguay." },
+  { id: "shuar", name: "Shuar", category: "Indigenous Peoples", tier: 4,
+    flagUrl: fp("Bandera_Shuar.svg"),
+    note: "An Amazonian people of Ecuador and Peru, historically known to outsiders as the Jívaro." },
+  { id: "miskito", name: "Miskito", category: "Indigenous Peoples", tier: 4,
+    flagUrl: fp("Flag_of_Mosquitia.svg"),
+    note: "An Indigenous people of the Caribbean coast of Nicaragua and Honduras." },
+  { id: "wayuu", name: "Wayuu", category: "Indigenous Peoples", tier: 4,
+    flagUrl: fp("Bandera_Wayuu.svg"),
+    note: "The largest Indigenous people of Colombia and Venezuela, on the arid Guajira Peninsula." },
+  { id: "aymara", name: "Aymara", category: "Indigenous Peoples", tier: 2,
+    flagUrl: fp("Bandera_Aymara.svg"),
+    note: "An Andean people of Bolivia, Peru and Chile — the Wiphala is closely tied to them." },
+  { id: "kichwa", name: "Kichwa (Quichua)", category: "Indigenous Peoples", tier: 4,
+    flagUrl: fp("Bandera_Kichwa.svg"),
+    note: "Quechua-speaking peoples of the Ecuadorian Andes and Amazon." },
+  { id: "yup-ik", name: "Yup'ik", category: "Indigenous Peoples", tier: 4,
+    flagUrl: fp("Flag_of_the_Yupik.svg"),
+    note: "An Indigenous people of western Alaska and the Russian Far East." },
+
+  // ── Separatist & Autonomous (cultural batch) ─────────────────────────────────
+  { id: "uyghur-alt", name: "Uyghur People", category: "Separatist & Autonomous", tier: 2,
+    flagUrl: fp("Flag_of_the_Uyghur_people.svg"),
+    note: "The Kökbayraq (blue with crescent and star), symbol of the Uyghurs of Xinjiang / East Turkestan." },
+  { id: "talysh", name: "Talysh", category: "Separatist & Autonomous", tier: 4,
+    flagUrl: fp("Flag_of_Talysh-Mughan.svg"),
+    note: "An Iranian-speaking people of south-east Azerbaijan and northern Iran." },
+  { id: "lezgi", name: "Lezgins", category: "Separatist & Autonomous", tier: 4,
+    flagUrl: fp("Flag_of_Lezgistan.svg"),
+    note: "A people of the eastern Caucasus split between Russia's Dagestan and Azerbaijan." },
+  { id: "buryat", name: "Buryatia", category: "Separatist & Autonomous", tier: 3,
+    flagUrl: fp("Flag_of_Buryatia.svg"),
+    note: "A Mongolic people and republic of southern Siberia around Lake Baikal." },
+  { id: "kalmyk", name: "Kalmykia", category: "Separatist & Autonomous", tier: 3,
+    flagUrl: fp("Flag_of_Kalmykia.svg"),
+    note: "Europe's only Buddhist-majority people, a Mongolic group on the Caspian steppe of Russia." },
+  { id: "chuvash", name: "Chuvashia", category: "Separatist & Autonomous", tier: 3,
+    flagUrl: fp("Flag_of_Chuvashia.svg"),
+    note: "A Turkic people of the Volga region of Russia." },
+  { id: "mari", name: "Mari People", category: "Separatist & Autonomous", tier: 4,
+    flagUrl: fp("Flag_of_Mari_El.svg"),
+    note: "A Finno-Ugric people of the Volga, keepers of one of Europe's last Indigenous pagan traditions." },
+  { id: "udmurt", name: "Udmurtia", category: "Separatist & Autonomous", tier: 4,
+    flagUrl: fp("Flag_of_Udmurtia.svg"),
+    note: "A Finno-Ugric people and republic of the western Urals." },
+  { id: "ingria", name: "Ingria", category: "Separatist & Autonomous", tier: 4,
+    flagUrl: fp("Flag_of_Ingria.svg"),
+    note: "A Nordic-cross flag for the Finnic people of the region around St Petersburg." },
+  { id: "kachin", name: "Kachin", category: "Separatist & Autonomous", tier: 3,
+    flagUrl: fp("Flag_of_Kachin.svg"),
+    note: "A people of northern Myanmar with a long-running autonomy struggle." },
+  { id: "meitei", name: "Meitei (Manipur)", category: "Separatist & Autonomous", tier: 3,
+    flagUrl: fp("Salai_Taret_flag.svg"),
+    note: "The Salai Taret flag of the Meitei people of Manipur, north-east India." },
+  { id: "sindh", name: "Sindhudesh", category: "Separatist & Autonomous", tier: 3,
+    flagUrl: fp("Flag_of_Sindhudesh.svg"),
+    note: "A symbol of Sindhi nationalism in southern Pakistan." },
+  { id: "lombardy-padania", name: "Two Sicilies", category: "Separatist & Autonomous", tier: 3,
+    flagUrl: fp("Flag_of_the_Kingdom_of_the_Two_Sicilies_(1816).svg"),
+    note: "The flag of the former southern Italian kingdom, a symbol of southern (Neapolitan) identity." },
+  { id: "savoy", name: "Savoy", category: "Separatist & Autonomous", tier: 3,
+    flagUrl: fp("Flag_of_Savoie.svg"),
+    note: "A white cross on red for the historic Alpine duchy split between France and Italy." },
 ]
+
+// ── Relevance overrides ──────────────────────────────────────────────────────
+// The most globally recognised identity flags float to tier 1 (top of their
+// category); a handful of deep-cuts sink to the bottom. Anything unlisted keeps
+// its authored tier (default 2). Players never see the tier — only the order.
+const TIER_1 = new Set([
+  "pride-6", "pride-progress", "pride-trans", "pride-bi", "pride-pan", "pride-ace", "pride-nb", "lesbian-sunset",
+  "tibet", "kurdistan", "ikurrina", "estelada-blava", "romani", "sami", "maori", "aboriginal-au", "torres-strait",
+  "pan-african", "pan-arab", "pan-slavic", "pan-celtic", "amazigh", "quebec", "scotland", "wales",
+  "flag-of-europe", "united-nations", "nato", "olympic", "red-cross", "buddhist", "gadsden", "christian", "esperanto", "wiphala-id",
+  "west-papua", "sadr", "somaliland", "trnc", "tamil-eelam", "khalistan", "sealand",
+  "cherokee", "navajo", "greenland", "brittany", "cornwall", "hawaii-kingdom",
+])
+const TIER_4_EXTRA = new Set([
+  "aerican", "atlantium", "westarctica", "talossa", "ladonia", "molossia", "minerva", "rose-island",
+  "whangamomona", "hutt-river", "wirtland", "akhzivland", "filettino", "forvik", "kugelmugel", "slowjamastan",
+])
+const effectiveTier = (f: IdentityFlag) =>
+  TIER_1.has(f.id) ? 1 : TIER_4_EXTRA.has(f.id) ? 4 : (f.tier ?? 2)
+
+// Sorted so that, within any category filter, flags read most-influential first
+// then alphabetically inside each tier.
+export const IDENTITY_FLAGS: IdentityFlag[] = [...RAW_IDENTITY_FLAGS].sort(
+  (a, b) => effectiveTier(a) - effectiveTier(b) || a.name.localeCompare(b.name)
+)
 
 // Maritime & Signal (the ICS / phonetic-alphabet signal flags) are their own
 // thing — they live in a separate section, NOT under Identity.
