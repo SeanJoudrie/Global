@@ -1072,6 +1072,127 @@ export const IDENTITY_FLAGS: IdentityFlag[] = [
     flagUrl: fp("Flag_of_Antarctica.svg"),
     note: "A white outline of the continent on UN blue — Graham Bartram's widely-used flag for the only land governed by an international treaty, not a nation.",
   },
+
+  // ── More Indigenous Peoples (tribal nations) ─────────────────────────────
+  {
+    id: "mohawk-warrior", name: "Mohawk Warrior (Unity)", category: "Indigenous Peoples",
+    flagUrl: fp("Mohawk_Warrior_Flag.svg"),
+    note: "A profile of a Native warrior before a red sun on red — the Kanien'kehá:ka 'Unity' flag, widely flown as a pan-Indigenous symbol of resistance since the 1990 Oka Crisis.",
+  },
+  {
+    id: "rapa-nui", name: "Rapa Nui (Easter Island)", category: "Indigenous Peoples",
+    flagUrl: fp("Flag_of_Rapa_Nui,_Chile.svg"),
+    note: "A white field with a red reimiro (a crescent-shaped pectoral ornament) — flag of the Rapa Nui people of Easter Island.",
+  },
+  {
+    id: "n-cheyenne", name: "Northern Cheyenne", category: "Indigenous Peoples",
+    flagUrl: fp("Flag_of_the_Northern_Cheyenne.svg"),
+    note: "Flag of the Northern Cheyenne Nation of Montana, the 'Morning Star People'.",
+  },
+  {
+    id: "san-carlos-apache", name: "San Carlos Apache", category: "Indigenous Peoples",
+    flagUrl: fp("Flag_of_the_San_Carlos_Apache_Tribe.svg"),
+    note: "Flag of the San Carlos Apache Tribe of Arizona.",
+  },
+  {
+    id: "blackfeet", name: "Blackfeet Nation", category: "Indigenous Peoples",
+    flagUrl: fp("Flag_of_the_Blackfeet_Nation.svg"),
+    note: "Flag of the Blackfeet (Niitsítapi) Nation of the northern Plains.",
+  },
+  {
+    id: "crow", name: "Crow Nation", category: "Indigenous Peoples",
+    flagUrl: fp("Flag_of_the_Crow_Tribe.svg"),
+    note: "Flag of the Apsáalooke (Crow) Nation of Montana.",
+  },
+  {
+    id: "oglala", name: "Oglala Lakota (Sioux)", category: "Indigenous Peoples",
+    flagUrl: fp("Flag_of_the_Oglala_Sioux.svg"),
+    note: "Red field with eight white tipis in a circle — flag of the Oglala Lakota Nation of Pine Ridge.",
+  },
+  {
+    id: "ho-chunk", name: "Ho-Chunk Nation", category: "Indigenous Peoples",
+    flagUrl: fp("Flag_of_the_Ho-Chunk_Nation.svg"),
+    note: "Flag of the Ho-Chunk Nation of Wisconsin.",
+  },
+  {
+    id: "kiowa", name: "Kiowa Tribe", category: "Indigenous Peoples",
+    flagUrl: fp("Flag_of_the_Kiowa_Tribe.svg"),
+    note: "Flag of the Kiowa Tribe of Oklahoma.",
+  },
+  {
+    id: "pawnee", name: "Pawnee Nation", category: "Indigenous Peoples",
+    flagUrl: fp("Flag_of_the_Pawnee_Nation.svg"),
+    note: "Flag of the Pawnee Nation of Oklahoma.",
+  },
+  {
+    id: "standing-rock", name: "Standing Rock Sioux", category: "Indigenous Peoples",
+    flagUrl: fp("Flag_of_the_Standing_Rock_Sioux_Tribe.svg"),
+    note: "Flag of the Standing Rock Sioux Tribe of the Dakotas, prominent in the 2016 Dakota Access Pipeline protests.",
+  },
+
+  // ── More autonomous republics & regions ──────────────────────────────────
+  {
+    id: "tatarstan", name: "Tatarstan", category: "Separatist & Autonomous",
+    flagUrl: fp("Flag_of_Tatarstan.svg"),
+    note: "Green-white-red bands — flag of the Tatar-majority republic within Russia.",
+  },
+  {
+    id: "bashkortostan", name: "Bashkortostan", category: "Separatist & Autonomous",
+    flagUrl: fp("Flag_of_Bashkortostan.svg"),
+    note: "Blue-white-green with a golden kurai flower — flag of the Bashkir republic within Russia.",
+  },
+  {
+    id: "sakha", name: "Sakha (Yakutia)", category: "Separatist & Autonomous",
+    flagUrl: fp("Flag_of_Sakha.svg"),
+    note: "A white sun disc on blue above red, green and white bands — flag of the vast Sakha Republic in Siberia.",
+  },
+  {
+    id: "tuva", name: "Tuva", category: "Separatist & Autonomous",
+    flagUrl: fp("Flag_of_Tuva.svg"),
+    note: "A blue field split by yellow stripes — flag of the Tuvan republic of southern Siberia, an independent state from 1921–44.",
+  },
+  {
+    id: "karelia", name: "Karelia", category: "Separatist & Autonomous",
+    flagUrl: fp("Flag_of_Karelia.svg"),
+    note: "Red-blue-green bands — flag of the Republic of Karelia, a Finnic region of north-west Russia.",
+  },
+  {
+    id: "galicia-es", name: "Galicia", category: "Separatist & Autonomous",
+    flagUrl: fp("Flag_of_Galicia.svg"),
+    note: "A blue diagonal stripe on white — flag of the Celtic-rooted autonomous community of north-west Spain.",
+  },
+  {
+    id: "asturias", name: "Asturias", category: "Separatist & Autonomous",
+    flagUrl: fp("Flag_of_Asturias.svg"),
+    note: "A blue field with the golden Victory Cross — flag of the Principality of Asturias in northern Spain.",
+  },
+  {
+    id: "wallonia", name: "Wallonia", category: "Separatist & Autonomous",
+    flagUrl: fp("Flag_of_Wallonia.svg"),
+    note: "A red rooster ('coq hardi') on yellow — flag of French-speaking Wallonia in southern Belgium.",
+  },
+  {
+    id: "puerto-rico-ind", name: "Puerto Rico", category: "Separatist & Autonomous",
+    flagUrl: fp("Flag_of_Puerto_Rico.svg"),
+    note: "The single-starred flag of Puerto Rico — a US territory whose status is still debated; this flag was once banned as a separatist symbol.",
+  },
+
+  // ── More Civic & Ideological ─────────────────────────────────────────────
+  {
+    id: "anarcho-syndicalism", name: "Anarcho-Syndicalism", category: "Civic & Ideological",
+    flagUrl: fp("Anarcho-syndicalism_flag.svg"),
+    note: "A diagonally split red-and-black flag — red for the labour movement, black for anarchism.",
+  },
+  {
+    id: "unicef", name: "UNICEF", category: "Civic & Ideological",
+    flagUrl: fp("Flag_of_UNICEF.svg"),
+    note: "A mother and child before a globe inside olive branches — the UN's children's agency.",
+  },
+  {
+    id: "fao", name: "FAO", category: "Civic & Ideological",
+    flagUrl: fp("Flag_of_the_FAO.svg"),
+    note: "A wheat-wreathed UN emblem with the motto 'Fiat Panis' (Let there be bread) — the UN Food and Agriculture Organization.",
+  },
 ]
 
 // Maritime & Signal (the ICS / phonetic-alphabet signal flags) are their own
