@@ -851,6 +851,164 @@ export const IDENTITY_FLAGS: IdentityFlag[] = [
     flagUrl: fp("Christian_flag.svg"),
     note: "A red Latin cross on a blue canton over white — an interdenominational flag dating to 1897 in the United States.",
   },
+  {
+    id: "sikh", name: "Sikh Nishan Sahib", category: "Civic & Ideological",
+    flagUrl: fp("Nishan_Sahib.svg"),
+    note: "The saffron (or blue) triangular flag bearing the Khanda emblem, flown at every gurdwara — the standard of the Sikh faith.",
+  },
+  {
+    id: "jain", name: "Jain Flag", category: "Civic & Ideological",
+    flagUrl: fp("Jain_Flag.svg"),
+    note: "Five horizontal bands with a central swastika (an ancient symbol of well-being) and the three dots and crescent of Jain cosmology.",
+  },
+  {
+    id: "interpol", name: "Interpol", category: "Civic & Ideological",
+    flagUrl: fp("Flag_of_Interpol.svg"),
+    note: "The globe, scales of justice and olive branches of the International Criminal Police Organization, which links the police of 196 countries.",
+  },
+  {
+    id: "who", name: "World Health Organization", category: "Civic & Ideological",
+    flagUrl: fp("Flag_of_the_World_Health_Organization.svg"),
+    note: "The UN emblem with the Rod of Asclepius (a snake-entwined staff of medicine) on UN blue.",
+  },
+  {
+    id: "unesco", name: "UNESCO", category: "Civic & Ideological",
+    flagUrl: fp("Flag_of_UNESCO.svg"),
+    note: "A stylised temple façade on blue — the UN's education, science and culture agency, keeper of the World Heritage list.",
+  },
+  {
+    id: "oas", name: "Organization of American States", category: "Civic & Ideological",
+    flagUrl: fp("Flag_of_the_Organization_of_American_States.svg"),
+    note: "The member states' flags furled around a central staff on blue — the main political body of the Americas.",
+  },
+  {
+    id: "oic", name: "Organisation of Islamic Cooperation", category: "Civic & Ideological",
+    flagUrl: fp("Flag_of_the_Organisation_of_Islamic_Cooperation.svg"),
+    note: "A red crescent within a white disc tilted on green — the 57-member bloc that calls itself the collective voice of the Muslim world.",
+  },
+  {
+    id: "scouts", name: "World Scout Movement", category: "Civic & Ideological",
+    flagUrl: fp("Flag_of_the_World_Organization_of_the_Scout_Movement.svg"),
+    note: "A white fleur-de-lis encircled by rope tied in a reef knot, on purple — the worldwide emblem of Scouting.",
+  },
+  {
+    id: "eaeu", name: "Eurasian Economic Union", category: "Civic & Ideological",
+    flagUrl: fp("Flag_of_the_Eurasian_Economic_Union.svg"),
+    note: "A circle of gold lines forming a stylised globe on white — the Russia-led economic union of post-Soviet states.",
+  },
+  {
+    id: "mercosur", name: "Mercosur", category: "Civic & Ideological",
+    flagUrl: fp("Flag_of_Mercosur.svg"),
+    note: "The Southern Cross over a green wreath on blue — South America's main trade bloc.",
+  },
+  {
+    id: "caricom", name: "CARICOM", category: "Civic & Ideological",
+    flagUrl: fp("Flag_of_CARICOM.svg"),
+    note: "A blue-and-green field with a yellow disc broken by a black ring — the Caribbean Community of fifteen member states.",
+  },
+
+  // ── More Separatist & Autonomous ─────────────────────────────────────────
+  {
+    id: "quebec", name: "Quebec (Fleurdelisé)", category: "Separatist & Autonomous",
+    flagUrl: fp("Flag_of_Quebec.svg"),
+    note: "A white cross and four fleurs-de-lis on blue — flag of the French-speaking Canadian province and a banner of Québécois sovereignty.",
+  },
+  {
+    id: "crimean-tatar", name: "Crimean Tatars", category: "Separatist & Autonomous",
+    flagUrl: fp("Flag_of_the_Crimean_Tatar_people.svg"),
+    note: "A golden tamga (clan seal) on light blue — emblem of the Indigenous Crimean Tatar people of the Black Sea peninsula.",
+  },
+  {
+    id: "khalistan", name: "Khalistan", category: "Separatist & Autonomous",
+    flagUrl: fp("Flag_of_Khalistan.svg"),
+    note: "A yellow field with the Khanda — flag of the movement for a sovereign Sikh state in the Punjab.",
+  },
+  {
+    id: "aceh", name: "Aceh (Free Aceh Movement)", category: "Separatist & Autonomous",
+    flagUrl: fp("Flag_of_the_Free_Aceh_Movement.svg"),
+    note: "A red field with white and black bands and a star and crescent — banner of the long Acehnese independence struggle in Indonesia.",
+  },
+  {
+    id: "south-moluccas", name: "South Moluccas (RMS)", category: "Separatist & Autonomous",
+    flagUrl: fp("Flag_of_the_South_Moluccas.svg"),
+    note: "Blue-white-green-red bands — flag of the self-proclaimed Republic of South Maluku, declared against Indonesia in 1950.",
+  },
+  {
+    id: "tigray", name: "Tigray", category: "Separatist & Autonomous",
+    flagUrl: fp("Flag_of_the_Tigray_Region.svg"),
+    note: "A red field with a central yellow sunburst — flag of Ethiopia's northern Tigray Region.",
+  },
+  {
+    id: "katanga", name: "Katanga", category: "Separatist & Autonomous",
+    flagUrl: fp("Flag_of_Katanga.svg"),
+    note: "Green-white-red with three red crosses — flag of the mineral-rich State of Katanga that seceded from the Congo, 1960–63.",
+  },
+  {
+    id: "zanzibar", name: "Zanzibar", category: "Separatist & Autonomous",
+    flagUrl: fp("Flag_of_Zanzibar.svg"),
+    note: "Black, blue and green bands with the green flag of Tanzania in the canton — flag of the semi-autonomous archipelago of Tanzania.",
+  },
+  {
+    id: "bangsamoro", name: "Bangsamoro", category: "Separatist & Autonomous",
+    flagUrl: fp("Flag_of_Bangsamoro.svg"),
+    note: "Green with a yellow sword, crescent and seven-rayed star — flag of the Bangsamoro autonomous region of the southern Philippines.",
+  },
+  {
+    id: "shan", name: "Shan State", category: "Separatist & Autonomous",
+    flagUrl: fp("Flag_of_the_Shan_State.svg"),
+    note: "Yellow-green-red with a white disc — flag of the Shan people and their long campaign for autonomy within Myanmar.",
+  },
+
+  // ── More Indigenous Peoples (tribal nations) ─────────────────────────────
+  {
+    id: "choctaw", name: "Choctaw Nation", category: "Indigenous Peoples",
+    flagUrl: fp("Flag_of_the_Choctaw_Nation.svg"),
+    note: "A blue field with the Choctaw seal — an unstrung bow, three arrows and a peace pipe — of the Choctaw Nation of Oklahoma.",
+  },
+  {
+    id: "chickasaw", name: "Chickasaw Nation", category: "Indigenous Peoples",
+    flagUrl: fp("Flag_of_the_Chickasaw_Nation.svg"),
+    note: "A Chickasaw warrior emblem on a light field — flag of one of the 'Five Tribes' of the American South-east.",
+  },
+  {
+    id: "muscogee", name: "Muscogee (Creek) Nation", category: "Indigenous Peoples",
+    flagUrl: fp("Flag_of_the_Muscogee_Nation.svg"),
+    note: "A golden field bearing a sheaf of wheat and a ceremonial plough — flag of the Muscogee (Creek) Nation.",
+  },
+  {
+    id: "seminole", name: "Seminole Tribe of Florida", category: "Indigenous Peoples",
+    flagUrl: fp("Flag_of_the_Seminole_Tribe_of_Florida.svg"),
+    note: "Bands of the four sacred colours with a chickee, fire and figures — flag of the Florida Seminole, the 'Unconquered' people.",
+  },
+  {
+    id: "comanche", name: "Comanche Nation", category: "Indigenous Peoples",
+    flagUrl: fp("Flag_of_the_Comanche_Nation.svg"),
+    note: "A red-and-blue field with the Comanche seal — flag of the Lords of the Southern Plains.",
+  },
+
+  // ── More Pan-National & Ethnic ───────────────────────────────────────────
+  {
+    id: "coptic", name: "Coptic Flag", category: "Pan-National & Ethnic",
+    flagUrl: fp("Coptic_flag.svg"),
+    note: "Bears the Coptic cross — identity flag of Egypt's Coptic Christians, one of the world's oldest Christian communities.",
+  },
+  {
+    id: "tuareg", name: "Tuareg Flag", category: "Pan-National & Ethnic",
+    flagUrl: fp("Tuareg_flag.svg"),
+    note: "Blue, green and yellow with a red tifinagh symbol — used by the Tuareg, the Amazigh nomads of the Sahara and Sahel.",
+  },
+
+  // ── More Micronations ────────────────────────────────────────────────────
+  {
+    id: "minerva", name: "Republic of Minerva", category: "Micronations",
+    flagUrl: fp("Flag_of_the_Republic_of_Minerva.svg"),
+    note: "A torch on blue for the 1972 libertarian project to build a nation on reclaimed reefs near Tonga — promptly annexed by Tonga.",
+  },
+  {
+    id: "whangamomona", name: "Republic of Whangamomona", category: "Micronations",
+    flagUrl: fp("Flag_of_Whangamomona.svg"),
+    note: "A New Zealand village that declared itself a republic in 1989 after a council boundary change; it has elected a goat and a poodle as president.",
+  },
 ]
 
 // Maritime & Signal (the ICS / phonetic-alphabet signal flags) are their own
