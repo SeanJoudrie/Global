@@ -22,3 +22,10 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# flag audit work files
+scripts/flags/lookup-cache.json
+scripts/flags/audit-report.json
+scripts/flags/repairs.json
+scripts/flags/download-failures.json
+scripts/flags/live-map.json
