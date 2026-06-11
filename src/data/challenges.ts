@@ -1156,8 +1156,8 @@ export const CHALLENGE_CONTINENTS: ChallengeContinent[] = [
           { code: "cn-xj",  name: "Xinjiang",       group: "Autonomous Regions" },
           { code: "cn-xz",  name: "Tibet",          group: "Autonomous Regions" },
           // Special Administrative Regions
-          { code: "cn-hk",  name: "Hong Kong", flagUrl: wiki("Flag of Hong Kong.svg"),      group: "Special Administrative Regions" },
-          { code: "cn-mo",  name: "Macao", flagUrl: wiki("Flag of Macau.svg"),          group: "Special Administrative Regions" },
+          { code: "cn-hk",  name: "Hong Kong", flagUrl: "/flags/hk.svg",      group: "Special Administrative Regions" },
+          { code: "cn-mo",  name: "Macao", flagUrl: "/flags/mo.svg",          group: "Special Administrative Regions" },
         ],
       },
 
