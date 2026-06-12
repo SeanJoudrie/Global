@@ -2,12 +2,16 @@ import { useState, useEffect } from 'react'
 import { FLAGS, REGIONS, getFlagsByRegion } from '../data/flags'
 import type { Region } from '../data/flags'
 import { OTHER_IDENTITY_FLAGS } from '../data/identityFlags'
+import { T, ACCENT, FONT, tint } from '../ui/tokens'
+import { ScreenHeader } from './ui'
 
 interface Props { onBack: () => void }
 
 interface Chip { code: string; flagUrl: string; name: string }
 
 type TierId = 'S' | 'A' | 'B' | 'C' | 'D' | 'F'
+// Rank colours are game content (the classic S→F rainbow) — kept distinct,
+// dark ink label on top works on every hue in every aesthetic.
 const TIERS: { id: TierId; color: string }[] = [
   { id: 'S', color: '#F43F5E' },
   { id: 'A', color: '#FB923C' },
@@ -16,6 +20,7 @@ const TIERS: { id: TierId; color: string }[] = [
   { id: 'D', color: '#38BDF8' },
   { id: 'F', color: '#8B6CFF' },
 ]
+const TIER_LABEL_INK = '#1F2430'
 const POOL = 'pool'
 
 type RegionChoice = 'World' | 'Other' | Region
@@ -65,8 +70,8 @@ export default function TierListScreen({ onBack }: Props) {
       title={name}
       style={{
         position: 'relative', cursor: 'grab', borderRadius: 5, overflow: 'hidden',
-        outline: selected === code ? '2px solid #fff' : '1px solid #00000040',
-        boxShadow: selected === code ? '0 0 10px #ffffffaa' : 'none',
+        outline: selected === code ? `2px solid ${ACCENT.play}` : `1px solid ${T.line}`,
+        boxShadow: selected === code ? `0 0 10px ${tint(ACCENT.play, 0.6)}` : 'none',
         flexShrink: 0, lineHeight: 0,
       }}
     >
@@ -83,17 +88,14 @@ export default function TierListScreen({ onBack }: Props) {
   })
 
   return (
-    <div className="min-h-screen flex flex-col" style={{ background: 'linear-gradient(135deg,var(--bg-from) 0%,var(--bg-to) 100%)', position: 'relative', zIndex: 1 }}>
-      <header className="flex items-center gap-3 px-5 pt-8 pb-3">
-        <button onClick={onBack} className="w-9 h-9 flex items-center justify-center rounded-full text-xl"
-          style={{ background: '#2D1F52', color: '#B8A9E0' }}>‹</button>
-        <div className="flex-1">
-          <h1 className="text-xl font-black" style={{ color: '#F5F3FF' }}>Tier List Maker</h1>
-          <div className="text-xs" style={{ color: '#B8A9E0' }}>Drag flags into tiers — or tap a flag, then tap a tier</div>
-        </div>
-        <button onClick={resetAll} className="px-3 h-9 rounded-full text-xs font-bold"
-          style={{ background: '#2D1F52', border: '1px solid #F43F5E44', color: '#F43F5E', cursor: 'pointer' }}>Reset</button>
-      </header>
+    <div className="min-h-screen flex flex-col" style={{ background: T.bg, color: T.text, position: 'relative', zIndex: 1 }}>
+      <ScreenHeader title="Tier List Maker"
+        subtitle="Drag flags into tiers — or tap a flag, then tap a tier"
+        onBack={onBack}
+        right={
+          <button onClick={resetAll} className="px-3 h-9 rounded-full text-xs font-bold geo-tap"
+            style={{ background: T.surface, border: `1px solid ${tint(T.danger, 0.35)}`, color: T.danger, cursor: 'pointer' }}>Reset</button>
+        } />
 
       {/* Region selector */}
       <div className="px-5 pb-2" style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
@@ -101,9 +103,9 @@ export default function TierListScreen({ onBack }: Props) {
           <button key={r} onClick={() => setRegion(r)}
             style={{
               padding: '4px 11px', borderRadius: 999, fontSize: 12, fontWeight: 600,
-              border: `1px solid ${region === r ? '#8B6CFF' : '#8B6CFF33'}`,
-              background: region === r ? '#8B6CFF33' : 'transparent',
-              color: region === r ? '#A78BFA' : '#B8A9E0', cursor: 'pointer',
+              border: `1px solid ${region === r ? ACCENT.play : T.line}`,
+              background: region === r ? tint(ACCENT.play, 0.15) : 'transparent',
+              color: region === r ? ACCENT.play : T.muted, cursor: 'pointer',
             }}>{r}</button>
         ))}
       </div>
@@ -111,18 +113,19 @@ export default function TierListScreen({ onBack }: Props) {
       <div className="flex-1 overflow-y-auto px-3 pb-6">
         {/* Tier rows */}
         {TIERS.map(t => (
-          <div key={t.id} style={{ display: 'flex', marginBottom: 6, minHeight: 46, borderRadius: 8, overflow: 'hidden', border: '1px solid #00000030' }}>
+          <div key={t.id} style={{ display: 'flex', marginBottom: 6, minHeight: 46, borderRadius: 8, overflow: 'hidden', border: `1px solid ${T.line}` }}>
             <div
               {...dropProps(t.id)}
               style={{
                 width: 46, flexShrink: 0, background: t.color,
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
-                fontWeight: 900, fontSize: 22, color: '#1A1033', cursor: selected ? 'pointer' : 'default',
+                fontWeight: 900, fontSize: 22, fontFamily: FONT.display, color: TIER_LABEL_INK,
+                cursor: selected ? 'pointer' : 'default',
               }}>{t.id}</div>
             <div
               {...dropProps(t.id)}
               style={{
-                flex: 1, background: '#2D1F52', display: 'flex', flexWrap: 'wrap', gap: 4,
+                flex: 1, background: T.surface, display: 'flex', flexWrap: 'wrap', gap: 4,
                 alignContent: 'flex-start', padding: 5, minHeight: 46,
               }}>
               {flagsIn(t.id).map(f => <FlagChip key={f.code} code={f.code} url={f.flagUrl} name={f.name} />)}
@@ -132,17 +135,17 @@ export default function TierListScreen({ onBack }: Props) {
 
         {/* Unranked pool */}
         <div style={{ marginTop: 14 }}>
-          <div className="text-xs font-semibold uppercase tracking-widest mb-2 px-1" style={{ color: '#B8A9E0' }}>
+          <div className="text-xs font-semibold uppercase tracking-widest mb-2 px-1" style={{ color: T.muted }}>
             Unranked {selected ? '· tap a tier to place the selected flag' : `· ${flagsIn(POOL).length} left`}
           </div>
           <div {...dropProps(POOL)}
             style={{
-              background: '#1A1033', borderRadius: 12, border: '1px dashed #8B6CFF44',
+              background: T.surfaceHi, borderRadius: 12, border: `1px dashed ${T.lineHi}`,
               display: 'flex', flexWrap: 'wrap', gap: 5, padding: 8, minHeight: 70,
             }}>
             {flagsIn(POOL).map(f => <FlagChip key={f.code} code={f.code} url={f.flagUrl} name={f.name} />)}
             {flagsIn(POOL).length === 0 && (
-              <div style={{ color: '#8B6CFF66', fontSize: 13, padding: 8 }}>Every flag has been ranked! 🎉</div>
+              <div style={{ color: T.dim, fontSize: 13, padding: 8 }}>Every flag has been ranked! 🎉</div>
             )}
           </div>
         </div>
