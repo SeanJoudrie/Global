@@ -5,6 +5,10 @@ import { CHALLENGE_CONTINENTS } from '../data/challenges'
 import { HISTORICAL_FLAGS } from '../data/historicalFlags'
 import { LGBTQ_FLAGS, OTHER_IDENTITY_FLAGS } from '../data/identityFlags'
 import { shuffleWithSeed } from '../utils/prng'
+import { T, ACCENT, FONT, tint } from '../ui/tokens'
+import { ScreenHeader } from './ui'
+import { LineIcon } from './icons'
+import { Brain, ChevronLeft, ChevronRight } from 'lucide-react'
 
 interface Props {
   onBack: () => void
@@ -15,10 +19,18 @@ type Mode = 'menu' | 'learn'
 type DeckType = 'countries' | 'subdivisions' | 'historical' | 'lgbtq' | 'identity'
 
 // Decks built from a flat list (no region/continent filtering).
-const SIMPLE_DECKS: { id: DeckType; label: string; emoji: string; blurb: string }[] = [
-  { id: 'historical', label: 'Historical', emoji: '📜',     blurb: 'Flags of vanished states & empires' },
-  { id: 'lgbtq',      label: 'LGBTQ+',     emoji: '🏳️‍🌈', blurb: 'Pride & identity flags' },
-  { id: 'identity',   label: 'Identity',   emoji: '🏴',     blurb: 'Civic, ethnic & movement flags' },
+const SIMPLE_DECKS: { id: DeckType; label: string; glyph: string; blurb: string }[] = [
+  { id: 'historical', label: 'Historical', glyph: 'historical', blurb: 'Flags of vanished states & empires' },
+  { id: 'lgbtq',      label: 'LGBTQ+',     glyph: 'identity',   blurb: 'Pride & identity flags' },
+  { id: 'identity',   label: 'Identity',   glyph: 'flags',      blurb: 'Civic, ethnic & movement flags' },
+]
+
+const DECK_TABS: { id: DeckType; label: string; glyph: string }[] = [
+  { id: 'countries',    label: 'Countries',    glyph: 'flags' },
+  { id: 'subdivisions', label: 'Subdivisions', glyph: 'substumper' },
+  { id: 'historical',   label: 'Historical',   glyph: 'historical' },
+  { id: 'lgbtq',        label: 'LGBTQ+',       glyph: 'identity' },
+  { id: 'identity',     label: 'Identity',     glyph: 'flags' },
 ]
 
 // A unified card used by the flip view, built from either a country flag or a subdivision flag.
@@ -173,30 +185,22 @@ export default function FlashcardsScreen({ onBack, onQuizSet }: Props) {
     const recent = recentCodes.map(c => sourceFlags.find(f => f.code === c)).filter(Boolean) as typeof FLAGS
 
     return (
-      <div className="min-h-screen flex flex-col" style={{ background: 'linear-gradient(135deg,var(--bg-from) 0%,var(--bg-to) 100%)' }}>
-        <header className="flex items-center gap-3 px-5 pt-8 pb-4" style={{ zIndex: 1, position: 'relative' }}>
-          <button onClick={onBack} className="w-9 h-9 flex items-center justify-center rounded-full text-xl"
-            style={{ background: '#2D1F52', color: '#B8A9E0' }}>‹</button>
-          <h1 className="text-2xl font-black" style={{ color: '#F5F3FF' }}>Flashcards</h1>
-        </header>
+      <div className="min-h-screen flex flex-col" style={{ background: T.bg, color: T.text }}>
+        <ScreenHeader title="Flashcards" subtitle="Swipe through flags & facts" onBack={onBack} />
 
         {/* Deck type tabs */}
         <div className="px-5 mb-4" style={{ zIndex: 1, position: 'relative' }}>
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, background: '#2D1F52', padding: 4, borderRadius: 14 }}>
-            {([
-              { id: 'countries' as DeckType,    label: '🏳️ Countries' },
-              { id: 'subdivisions' as DeckType, label: '📍 Subdivisions' },
-              { id: 'historical' as DeckType,   label: '📜 Historical' },
-              { id: 'lgbtq' as DeckType,        label: '🏳️‍🌈 LGBTQ+' },
-              { id: 'identity' as DeckType,     label: '🏴 Identity' },
-            ]).map(t => (
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, background: T.surface, border: `1px solid ${T.line}`, padding: 4, borderRadius: 14 }}>
+            {DECK_TABS.map(t => (
               <button key={t.id} onClick={() => setDeckType(t.id)}
                 style={{
                   flex: '1 0 28%', padding: '8px 4px', borderRadius: 10, fontSize: 12.5, fontWeight: 700,
                   border: 'none', cursor: 'pointer',
-                  background: deckType === t.id ? 'linear-gradient(135deg,#8B6CFF,#A78BFA)' : 'transparent',
-                  color: deckType === t.id ? '#fff' : '#B8A9E0',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 5,
+                  background: deckType === t.id ? ACCENT.learn : 'transparent',
+                  color: deckType === t.id ? T.onAccent : T.muted,
                 }}>
+                <LineIcon name={t.glyph} size={14} color={deckType === t.id ? T.onAccent : T.muted} />
                 {t.label}
               </button>
             ))}
@@ -207,35 +211,35 @@ export default function FlashcardsScreen({ onBack, onQuizSet }: Props) {
           <>
             {/* Region filter */}
             <div className="px-5 mb-4" style={{ zIndex: 1, position: 'relative' }}>
-              <div className="text-xs font-semibold uppercase tracking-widest mb-2" style={{ color: '#B8A9E0' }}>Region</div>
+              <div className="text-xs font-semibold uppercase tracking-widest mb-2" style={{ color: T.muted }}>Region</div>
               <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
                 {REGION_OPTS.map(opt => (
                   <button key={opt.value} onClick={() => setSelectedRegion(opt.value)}
                     style={{
                       padding: '5px 12px', borderRadius: 999, fontSize: 12, fontWeight: 600,
-                      border: `1px solid ${selectedRegion === opt.value ? '#8B6CFF' : '#8B6CFF33'}`,
-                      background: selectedRegion === opt.value ? '#8B6CFF33' : 'transparent',
-                      color: selectedRegion === opt.value ? '#A78BFA' : '#B8A9E0', cursor: 'pointer',
+                      border: `1px solid ${selectedRegion === opt.value ? ACCENT.learn : T.line}`,
+                      background: selectedRegion === opt.value ? ACCENT.learn : 'transparent',
+                      color: selectedRegion === opt.value ? T.onAccent : T.muted, cursor: 'pointer',
                     }}>
                     {opt.label}
                   </button>
                 ))}
               </div>
-              <div className="text-xs mt-2" style={{ color: '#B8A9E066' }}>
+              <div className="text-xs mt-2" style={{ color: T.dim }}>
                 {countryCards.length} flag{countryCards.length !== 1 ? 's' : ''}{recent.length > 0 ? ` · ${recent.length} recently studied` : ''}
               </div>
             </div>
 
             {recent.length > 0 && (
               <div className="px-5 mb-4" style={{ zIndex: 1, position: 'relative' }}>
-                <div className="text-xs font-semibold uppercase tracking-widest mb-2" style={{ color: '#B8A9E0' }}>Recently Studied</div>
+                <div className="text-xs font-semibold uppercase tracking-widest mb-2" style={{ color: T.muted }}>Recently Studied</div>
                 <div style={{ display: 'flex', gap: 8 }}>
                   {recent.map(f => (
                     <div key={f.code} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4 }}>
                       <img src={f.flagUrl} alt={f.name}
-                        style={{ width: 44, height: 30, objectFit: 'cover', borderRadius: 6, border: '1px solid #8B6CFF33' }}
+                        style={{ width: 44, height: 30, objectFit: 'cover', borderRadius: 6, border: `1px solid ${T.line}` }}
                         onError={e => { (e.target as HTMLImageElement).style.opacity = '0.3' }} />
-                      <span style={{ fontSize: 8, color: '#B8A9E0', textAlign: 'center', maxWidth: 44, lineHeight: 1.2 }}>{f.name}</span>
+                      <span style={{ fontSize: 8, color: T.muted, textAlign: 'center', maxWidth: 44, lineHeight: 1.2 }}>{f.name}</span>
                     </div>
                   ))}
                 </div>
@@ -244,15 +248,19 @@ export default function FlashcardsScreen({ onBack, onQuizSet }: Props) {
 
             <div className="flex-1 flex flex-col items-center justify-center px-5 gap-5" style={{ zIndex: 1, position: 'relative' }}>
               <button onClick={startLearn}
-                className="w-full max-w-sm py-4 rounded-2xl font-bold text-lg transition-all active:scale-95"
-                style={{ background: 'linear-gradient(135deg,#8B6CFF,#A78BFA)', color: '#fff', boxShadow: '0 4px 20px #8B6CFF55' }}>
-                📖 Learn
+                className="geo-tap w-full max-w-sm py-4 rounded-2xl font-bold text-lg transition-all active:scale-95"
+                style={{ background: ACCENT.learn, color: T.onAccent, boxShadow: `0 4px 20px ${tint(ACCENT.learn, 0.33)}`, fontFamily: FONT.display }}>
+                <span style={{ display: 'inline-flex', alignItems: 'center', gap: 8 }}>
+                  <LineIcon name="codex" size={19} color={T.onAccent} /> Learn
+                </span>
                 <div className="text-xs font-normal mt-0.5 opacity-75">Swipe through flags & facts</div>
               </button>
               <button onClick={() => onQuizSet(sourceFlags)}
-                className="w-full max-w-sm py-4 rounded-2xl font-bold text-lg transition-all active:scale-95"
-                style={{ background: '#2D1F52', border: '1px solid #8B6CFF44', color: '#A78BFA' }}>
-                🧠 Quiz Me
+                className="geo-tap w-full max-w-sm py-4 rounded-2xl font-bold text-lg transition-all active:scale-95"
+                style={{ background: T.surface, border: `1px solid ${tint(ACCENT.learn, 0.3)}`, color: ACCENT.learn, fontFamily: FONT.display }}>
+                <span style={{ display: 'inline-flex', alignItems: 'center', gap: 8 }}>
+                  <Brain size={19} color={ACCENT.learn} strokeWidth={1.6} absoluteStrokeWidth /> Quiz Me
+                </span>
                 <div className="text-xs font-normal mt-0.5 opacity-75">Test yourself on {countryCards.length} flags</div>
               </button>
             </div>
@@ -260,7 +268,7 @@ export default function FlashcardsScreen({ onBack, onQuizSet }: Props) {
         ) : deckType === 'subdivisions' ? (
           /* ── Subdivisions browser: continent → country ── */
           <div className="flex-1 px-5 overflow-y-auto" style={{ zIndex: 1, position: 'relative' }}>
-            <div className="text-xs mb-3" style={{ color: '#B8A9E066' }}>
+            <div className="text-xs mb-3" style={{ color: T.dim }}>
               Pick a continent, then a country to study its subdivision flags. Only countries with subdivision flags are shown.
             </div>
             <div className="space-y-2 pb-10">
@@ -269,16 +277,16 @@ export default function FlashcardsScreen({ onBack, onQuizSet }: Props) {
                 if (eligible.length === 0) return null
                 const open = subContinent === cont.id
                 return (
-                  <div key={cont.id} style={{ background: '#2D1F52', borderRadius: 14, border: '1px solid #8B6CFF22', overflow: 'hidden' }}>
+                  <div key={cont.id} style={{ background: T.surface, borderRadius: 14, border: `1px solid ${T.line}`, overflow: 'hidden' }}>
                     <button onClick={() => setSubContinent(open ? null : cont.id)}
                       className="w-full flex items-center justify-between px-4 py-3"
                       style={{ background: 'transparent', cursor: 'pointer' }}>
                       <span style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
                         <span style={{ fontSize: 20 }}>{cont.emoji}</span>
-                        <span style={{ fontWeight: 800, color: '#F5F3FF' }}>{cont.name}</span>
-                        <span style={{ fontSize: 11, color: '#B8A9E0' }}>{eligible.length} countries</span>
+                        <span className="geo-display" style={{ fontWeight: 800, color: T.text }}>{cont.name}</span>
+                        <span style={{ fontSize: 11, color: T.muted }}>{eligible.length} countries</span>
                       </span>
-                      <span style={{ color: '#A78BFA', transform: open ? 'rotate(90deg)' : 'none', transition: 'transform 0.2s' }}>›</span>
+                      <span style={{ color: ACCENT.learn, transform: open ? 'rotate(90deg)' : 'none', transition: 'transform 0.2s' }}>›</span>
                     </button>
                     {open && (
                       <div style={{ padding: '0 10px 10px', display: 'flex', flexWrap: 'wrap', gap: 8 }}>
@@ -289,11 +297,11 @@ export default function FlashcardsScreen({ onBack, onQuizSet }: Props) {
                               onClick={() => { setSubCountry({ code: c.code, name: c.name }); setCardIdx(0); setFlipped(false); setMode('learn') }}
                               style={{
                                 display: 'flex', alignItems: 'center', gap: 6, padding: '7px 12px', borderRadius: 999,
-                                background: '#1A1033', border: '1px solid #8B6CFF33', color: '#F5F3FF',
+                                background: T.surfaceHi, border: `1px solid ${T.line}`, color: T.text,
                                 fontSize: 13, fontWeight: 600, cursor: 'pointer',
                               }}>
                               <span>{c.emoji}</span>{c.name}
-                              <span style={{ fontSize: 10, color: '#8B6CFF' }}>{n}</span>
+                              <span style={{ fontSize: 10, fontFamily: FONT.mono, color: ACCENT.learn }}>{n}</span>
                             </button>
                           )
                         })}
@@ -312,15 +320,25 @@ export default function FlashcardsScreen({ onBack, onQuizSet }: Props) {
               return (
                 <>
                   <div style={{ textAlign: 'center' }}>
-                    <div style={{ fontSize: 48 }}>{d.emoji}</div>
-                    <div className="font-black text-xl mt-1" style={{ color: '#F5F3FF' }}>{d.label}</div>
-                    <div className="text-xs mt-1" style={{ color: '#B8A9E0' }}>{d.blurb}</div>
-                    <div className="text-xs mt-2" style={{ color: '#8B6CFF' }}>{cards.length} cards</div>
+                    <div style={{ display: 'flex', justifyContent: 'center' }}>
+                      <span style={{
+                        width: 72, height: 72, borderRadius: 18,
+                        display: 'flex', alignItems: 'center', justifyContent: 'center',
+                        background: tint(ACCENT.learn, 0.12), border: `1px solid ${tint(ACCENT.learn, 0.28)}`,
+                      }}>
+                        <LineIcon name={d.glyph} size={36} color={ACCENT.learn} />
+                      </span>
+                    </div>
+                    <div className="geo-display font-black text-xl mt-2" style={{ color: T.text }}>{d.label}</div>
+                    <div className="text-xs mt-1" style={{ color: T.muted }}>{d.blurb}</div>
+                    <div className="text-xs mt-2" style={{ color: ACCENT.learn, fontFamily: FONT.mono, fontVariantNumeric: 'tabular-nums' }}>{cards.length} cards</div>
                   </div>
                   <button onClick={startLearn}
-                    className="w-full max-w-sm py-4 rounded-2xl font-bold text-lg transition-all active:scale-95"
-                    style={{ background: 'linear-gradient(135deg,#8B6CFF,#A78BFA)', color: '#fff', boxShadow: '0 4px 20px #8B6CFF55' }}>
-                    📖 Learn
+                    className="geo-tap w-full max-w-sm py-4 rounded-2xl font-bold text-lg transition-all active:scale-95"
+                    style={{ background: ACCENT.learn, color: T.onAccent, boxShadow: `0 4px 20px ${tint(ACCENT.learn, 0.33)}`, fontFamily: FONT.display }}>
+                    <span style={{ display: 'inline-flex', alignItems: 'center', gap: 8 }}>
+                      <LineIcon name="codex" size={19} color={T.onAccent} /> Learn
+                    </span>
                     <div className="text-xs font-normal mt-0.5 opacity-75">Swipe through flags & facts</div>
                   </button>
                 </>
@@ -336,10 +354,10 @@ export default function FlashcardsScreen({ onBack, onQuizSet }: Props) {
   if (!card) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center px-5 gap-4"
-        style={{ background: 'linear-gradient(135deg,var(--bg-from) 0%,var(--bg-to) 100%)' }}>
-        <p style={{ color: '#B8A9E0' }}>No flags to study here yet.</p>
-        <button onClick={() => setMode('menu')} className="px-6 py-3 rounded-2xl font-bold"
-          style={{ background: '#2D1F52', border: '1px solid #8B6CFF44', color: '#A78BFA' }}>‹ Back</button>
+        style={{ background: T.bg, color: T.text }}>
+        <p style={{ color: T.muted }}>No flags to study here yet.</p>
+        <button onClick={() => setMode('menu')} className="geo-tap px-6 py-3 rounded-2xl font-bold"
+          style={{ background: T.surface, border: `1px solid ${tint(ACCENT.learn, 0.3)}`, color: ACCENT.learn }}>‹ Back</button>
       </div>
     )
   }
@@ -352,17 +370,11 @@ export default function FlashcardsScreen({ onBack, onQuizSet }: Props) {
     : (subCountry?.name ?? '')
 
   return (
-    <div className="min-h-screen flex flex-col" style={{ background: 'linear-gradient(135deg,var(--bg-from) 0%,var(--bg-to) 100%)' }}>
-      <header className="flex items-center gap-3 px-5 pt-8 pb-2" style={{ zIndex: 1, position: 'relative' }}>
-        <button onClick={() => setMode('menu')} className="w-9 h-9 flex items-center justify-center rounded-full text-xl"
-          style={{ background: '#2D1F52', color: '#B8A9E0' }}>‹</button>
-        <div className="flex-1">
-          <h1 className="text-xl font-black" style={{ color: '#F5F3FF' }}>
-            {deckType === 'subdivisions' ? `${headerSub} Subdivisions` : simpleDeck ? simpleDeck.label : 'Flashcards'}
-          </h1>
-          <div className="text-xs" style={{ color: '#B8A9E0' }}>#{relIdx + 1} / {cards.length} · {deckType === 'subdivisions' ? 'subdivision flags' : headerSub}</div>
-        </div>
-      </header>
+    <div className="min-h-screen flex flex-col" style={{ background: T.bg, color: T.text }}>
+      <ScreenHeader
+        title={deckType === 'subdivisions' ? `${headerSub} Subdivisions` : simpleDeck ? simpleDeck.label : 'Flashcards'}
+        subtitle={`#${relIdx + 1} / ${cards.length} · ${deckType === 'subdivisions' ? 'subdivision flags' : headerSub}`}
+        onBack={() => setMode('menu')} />
 
       <div className="flex-1 flex flex-col items-center justify-center px-5 pb-10" style={{ zIndex: 1, position: 'relative' }}>
         <div style={{ width: '100%', maxWidth: 360, position: 'relative' }}>
@@ -370,16 +382,20 @@ export default function FlashcardsScreen({ onBack, onQuizSet }: Props) {
           <button onClick={e => { e.stopPropagation(); goPrev() }} aria-label="Previous card"
             className="hidden sm:flex items-center justify-center active:scale-90 transition-transform"
             style={{ position: 'absolute', left: -64, top: '50%', transform: 'translateY(-50%)', zIndex: 5,
-              width: 44, height: 44, borderRadius: 999, fontSize: 22,
-              background: '#2D1F52', border: '1px solid #8B6CFF44', color: '#A78BFA', cursor: 'pointer' }}>‹</button>
+              width: 44, height: 44, borderRadius: 999,
+              background: T.surface, border: `1px solid ${tint(ACCENT.learn, 0.3)}`, color: ACCENT.learn, cursor: 'pointer' }}>
+            <ChevronLeft size={22} color={ACCENT.learn} strokeWidth={1.6} absoluteStrokeWidth />
+          </button>
           <button onClick={e => { e.stopPropagation(); advance('left') }} aria-label="Next card"
             className="hidden sm:flex items-center justify-center active:scale-90 transition-transform"
             style={{ position: 'absolute', right: -64, top: '50%', transform: 'translateY(-50%)', zIndex: 5,
-              width: 44, height: 44, borderRadius: 999, fontSize: 22,
-              background: '#2D1F52', border: '1px solid #8B6CFF44', color: '#A78BFA', cursor: 'pointer' }}>›</button>
+              width: 44, height: 44, borderRadius: 999,
+              background: T.surface, border: `1px solid ${tint(ACCENT.learn, 0.3)}`, color: ACCENT.learn, cursor: 'pointer' }}>
+            <ChevronRight size={22} color={ACCENT.learn} strokeWidth={1.6} absoluteStrokeWidth />
+          </button>
 
-          <div className="absolute inset-0 rounded-2xl" style={{ background: '#2D1F52', transform: 'rotate(3deg) scale(0.97) translateY(8px)', opacity: 0.4 }} />
-          <div className="absolute inset-0 rounded-2xl" style={{ background: '#2D1F52', transform: 'rotate(-1.5deg) scale(0.985) translateY(4px)', opacity: 0.65 }} />
+          <div className="absolute inset-0 rounded-2xl" style={{ background: T.surface, border: `1px solid ${T.line}`, transform: 'rotate(3deg) scale(0.97) translateY(8px)', opacity: 0.4 }} />
+          <div className="absolute inset-0 rounded-2xl" style={{ background: T.surface, border: `1px solid ${T.line}`, transform: 'rotate(-1.5deg) scale(0.985) translateY(4px)', opacity: 0.65 }} />
 
           <div
             style={{ perspective: 1000, ...cardStyle() }}
@@ -399,41 +415,43 @@ export default function FlashcardsScreen({ onBack, onQuizSet }: Props) {
               {/* FRONT */}
               <div style={{
                 backfaceVisibility: 'hidden', position: flipped ? 'absolute' : 'relative',
-                inset: 0, background: '#2D1F52', border: '1px solid #8B6CFF44', borderRadius: 16,
-                boxShadow: '0 8px 40px #00000060',
+                inset: 0, background: T.surface, border: `1px solid ${T.line}`, borderRadius: 16,
+                boxShadow: `0 8px 30px ${tint(T.text, 0.16)}`,
                 display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
                 padding: 24, gap: 16, minHeight: 300,
               }}>
                 <img src={card.flagUrl} alt="flag"
-                  style={{ width: '100%', height: 180, objectFit: 'cover', borderRadius: 12, border: '2px solid #8B6CFF33' }}
+                  style={{ width: '100%', height: 180, objectFit: 'cover', borderRadius: 12, border: `2px solid ${T.line}` }}
                   onError={e => { (e.target as HTMLImageElement).style.visibility = 'hidden' }} />
-                <p style={{ color: '#8B6CFF', fontSize: 14, margin: 0 }}>Tap to reveal · Swipe to skip</p>
+                <p style={{ color: ACCENT.learn, fontSize: 14, margin: 0 }}>Tap to reveal · Swipe to skip</p>
               </div>
 
               {/* BACK */}
               <div style={{
                 backfaceVisibility: 'hidden', transform: 'rotateY(180deg)',
                 position: flipped ? 'relative' : 'absolute', inset: 0,
-                background: '#2D1F52', border: '1px solid #A78BFA44', borderRadius: 16,
-                boxShadow: '0 8px 40px #00000060', padding: 24, minHeight: 300,
+                background: T.surface, border: `1px solid ${tint(ACCENT.learn, 0.3)}`, borderRadius: 16,
+                boxShadow: `0 8px 30px ${tint(T.text, 0.16)}`, padding: 24, minHeight: 300,
               }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 16 }}>
                   <img src={card.flagUrl} alt={card.name}
-                    style={{ width: 56, height: 36, objectFit: 'cover', borderRadius: 6, border: '1.5px solid #8B6CFF33', flexShrink: 0 }}
+                    style={{ width: 56, height: 36, objectFit: 'cover', borderRadius: 6, border: `1.5px solid ${T.line}`, flexShrink: 0 }}
                     onError={e => { (e.target as HTMLImageElement).style.visibility = 'hidden' }} />
                   <div>
-                    <div style={{ color: '#F5F3FF', fontWeight: 900, fontSize: 20 }}>{card.name}</div>
-                    <div style={{ color: '#8B6CFF', fontSize: 12 }}>{card.subtitle}</div>
+                    <div className="geo-display" style={{ color: T.text, fontWeight: 800, fontSize: 20 }}>{card.name}</div>
+                    <div style={{ color: ACCENT.learn, fontSize: 12 }}>{card.subtitle}</div>
                   </div>
                 </div>
-                {card.funFact && <p style={{ color: '#B8A9E0', fontSize: 14, lineHeight: 1.6, marginBottom: 16 }}>{card.funFact}</p>}
+                {card.funFact && <p style={{ color: T.muted, fontSize: 14, lineHeight: 1.6, marginBottom: 16 }}>{card.funFact}</p>}
                 {card.tip && (
-                  <div style={{ background: '#FBBF2411', border: '1px solid #FBBF2433', borderRadius: 10, padding: '10px 12px' }}>
-                    <div style={{ color: '#FBBF24', fontSize: 12, fontWeight: 600, marginBottom: 4 }}>💡 How to recognise it</div>
-                    <p style={{ color: '#F5F3FF', fontSize: 13, margin: 0 }}>{card.tip}</p>
+                  <div style={{ background: tint(T.gold, 0.08), border: `1px solid ${tint(T.gold, 0.25)}`, borderRadius: 10, padding: '10px 12px' }}>
+                    <div style={{ color: T.gold, fontSize: 12, fontWeight: 600, marginBottom: 4, display: 'flex', alignItems: 'center', gap: 5 }}>
+                      <LineIcon name="funfact" size={13} color={T.gold} /> How to recognise it
+                    </div>
+                    <p style={{ color: T.text, fontSize: 13, margin: 0 }}>{card.tip}</p>
                   </div>
                 )}
-                <p style={{ color: '#8B6CFF55', fontSize: 12, marginTop: 16, textAlign: 'center' }}>Swipe to next</p>
+                <p style={{ color: T.dim, fontSize: 12, marginTop: 16, textAlign: 'center' }}>Swipe to next</p>
               </div>
             </div>
           </div>
@@ -442,7 +460,7 @@ export default function FlashcardsScreen({ onBack, onQuizSet }: Props) {
         <div style={{ display: 'flex', gap: 4, marginTop: 24 }}>
           {Array.from({ length: Math.min(7, cards.length) }).map((_, i) => (
             <div key={i} style={{ width: i === relIdx % 7 ? 16 : 6, height: 6, borderRadius: 999,
-              background: i === relIdx % 7 ? '#8B6CFF' : '#8B6CFF33', transition: 'all 0.2s' }} />
+              background: i === relIdx % 7 ? ACCENT.learn : tint(ACCENT.learn, 0.25), transition: 'all 0.2s' }} />
           ))}
         </div>
       </div>
