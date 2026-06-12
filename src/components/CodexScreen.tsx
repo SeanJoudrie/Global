@@ -94,7 +94,7 @@ export default function CodexScreen({ onBack }: Props) {
           </span>
         </header>
 
-        <div className="flex-1 overflow-y-auto px-5 pb-12">
+        <div className="flex-1 overflow-y-auto px-5 pb-12 sheet-up">
           {/* Flag image */}
           <div className="rounded-2xl overflow-hidden mb-5" style={{ border: '1px solid #8B6CFF33' }}>
             <img

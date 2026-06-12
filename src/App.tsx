@@ -184,16 +184,19 @@ export default function App() {
           onClick={() => setScreen("home")}
           aria-label="Home"
           title="Home"
+          className="geo-tap"
           style={{
             position: "fixed", top: 10, right: 12, zIndex: 50,
             display: "flex", alignItems: "center", gap: 6,
             padding: "4px 10px 4px 6px", borderRadius: 999,
-            background: "rgba(45,31,82,0.85)", border: "1px solid #8B6CFF44",
+            background: AESTHETIC === "original" ? "rgba(45,31,82,0.85)" : T.surface,
+            border: `1px solid ${AESTHETIC === "original" ? "#8B6CFF44" : T.line}`,
             backdropFilter: "blur(6px)", cursor: "pointer",
+            boxShadow: "0 4px 14px -8px rgba(0,0,0,0.4)",
           }}
         >
           <EarthLogo size={24} />
-          <span style={{ color: "#F5F3FF", fontWeight: 800, fontSize: 13 }}>Home</span>
+          <span style={{ color: AESTHETIC === "original" ? "#F5F3FF" : T.text, fontWeight: 800, fontSize: 13 }}>Home</span>
         </button>
       )}
 

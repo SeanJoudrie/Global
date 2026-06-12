@@ -1,7 +1,13 @@
+import { useState } from "react"
 import type { CSSProperties, ReactNode } from "react"
 import { T, FONT, tint, IS_CARTO } from "../ui/tokens"
 import type { TabKey } from "../ui/registry"
 import { LineIcon } from "./icons"
+import { Collapse } from "./motion"
+
+// Hover/press treatment: parchment cards lift via .carto-card; the dark skins
+// get the equivalent .geo-lift shadow-lift.
+export const cardMotion = IS_CARTO ? "carto-card" : "geo-lift"
 
 // Render an etched line icon (Cartographer) or the original emoji (Tactical).
 function Glyph({ glyph, emoji, size, color }: { glyph?: string; emoji?: ReactNode; size: number; color: string }) {
@@ -65,6 +71,28 @@ export function SectionHeader({ title, accent = T.muted, action }:
   )
 }
 
+/* ── Collapsible section: SectionHeader + chevron, smooth height animation ── */
+export function CollapsibleSection({ title, accent = T.muted, count, defaultOpen = true, children }:
+  { title: string; accent?: string; count?: number; defaultOpen?: boolean; children: ReactNode }) {
+  const [open, setOpen] = useState(defaultOpen)
+  return (
+    <div>
+      <button onClick={() => setOpen(o => !o)} aria-expanded={open}
+        style={{ width: "100%", display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: open ? 10 : 0, background: "transparent", padding: "2px 0", transition: "margin-bottom 0.3s ease" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+          <span style={{ width: 12, height: 1.5, background: accent, opacity: 0.7 }} />
+          <span className="geo-micro" style={{ fontSize: 10, color: accent }}>{title}</span>
+          {count !== undefined && (
+            <span className="geo-mono" style={{ fontSize: 9, color: T.dim }}>· {count}</span>
+          )}
+        </div>
+        <span style={{ color: T.dim, fontSize: 13, display: "inline-flex", transition: "transform 0.3s var(--motion-ease, ease)", transform: open ? "rotate(90deg)" : "rotate(0deg)" }}>›</span>
+      </button>
+      <Collapse open={open}>{children}</Collapse>
+    </div>
+  )
+}
+
 /* ── Module card: heavy learning tasks (icon, title, subtitle, progress) ── */
 export function ModuleCard({ icon, glyph, title, subtitle, accent, progress, onClick }:
   {
@@ -77,7 +105,7 @@ export function ModuleCard({ icon, glyph, title, subtitle, accent, progress, onC
     : { background: mastered ? undefined : T.surface, border: mastered ? undefined : `1px solid ${T.line}` }
   return (
     <button onClick={onClick}
-      className={`geo-tap ${mastered ? "geo-foil" : IS_CARTO ? "carto-card" : ""}`}
+      className={`geo-tap ${mastered ? "geo-foil" : cardMotion}`}
       style={{
         width: "100%", display: "flex", alignItems: "center", gap: 13, textAlign: "left",
         padding: "13px 14px", borderRadius: 12, position: "relative", overflow: "hidden",
@@ -112,7 +140,7 @@ export function ModuleCard({ icon, glyph, title, subtitle, accent, progress, onC
 export function GameTile({ icon, glyph, title, subtitle, accent, onClick, style }:
   { icon?: ReactNode; glyph?: string; title: string; subtitle: string; accent: string; onClick: () => void; style?: CSSProperties }) {
   return (
-    <button onClick={onClick} className={`geo-tap ${IS_CARTO ? "carto-card" : ""}`}
+    <button onClick={onClick} className={`geo-tap ${cardMotion}`}
       style={{
         width: 124, flexShrink: 0, textAlign: "left", padding: "12px 12px 13px",
         borderRadius: 12, display: "flex", flexDirection: "column", gap: 8, position: "relative", overflow: "hidden",
@@ -181,7 +209,8 @@ export function TabBar({ active, onChange }: { active: TabKey; onChange: (t: Tab
               position: "absolute", top: 0, height: 2, width: 26, borderRadius: 2,
               background: on ? t.accent : "transparent", boxShadow: on && !IS_CARTO ? `0 0 10px ${t.accent}` : "none",
             }} />
-            <span style={{ display: "flex", color: on ? t.accent : T.dim, opacity: on ? 1 : IS_CARTO ? 0.8 : 0.55, transition: "all 0.15s" }}>
+            <span key={on ? "on" : "off"} className={on ? "tab-pop" : undefined}
+              style={{ display: "flex", color: on ? t.accent : T.dim, opacity: on ? 1 : IS_CARTO ? 0.8 : 0.55, transition: "all 0.15s" }}>
               <Glyph glyph={t.glyph} emoji={t.emoji} size={IS_CARTO ? 19 : 17} color={on ? t.accent : T.dim} />
             </span>
             <span className="geo-micro" style={{ fontSize: 8, color: on ? t.accent : T.dim }}>{t.label}</span>

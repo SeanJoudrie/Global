@@ -155,6 +155,124 @@ body {
 .geo-tap:active { transform: scale(0.94); }
 
 /* ════════════════════════════════════════════════════════════════════════
+   MOTION SYSTEM — shared micro-animation vocabulary.
+   Tactile presses · tab cross-fades · success stamps & confetti · streak
+   glow · map paint-in · skeleton shimmer. Everything respects
+   prefers-reduced-motion at the bottom of this block.
+   ════════════════════════════════════════════════════════════════════════ */
+:root {
+  --shimmer-base: rgba(126, 141, 166, 0.14);
+  --shimmer-sweep: rgba(233, 239, 248, 0.18);
+  --motion-ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+body.aesthetic-carto {
+  --shimmer-base: rgba(31, 58, 60, 0.08);
+  --shimmer-sweep: rgba(255, 252, 244, 0.75);
+}
+
+/* Universal tactile press — every button confirms the tap with a tiny
+   scale-down. Components with bespoke press transforms (.geo-tap,
+   .carto-card, tailwind active:scale-*) win on specificity. */
+button { transition: transform 0.13s ease; }
+button:active { transform: scale(0.96); }
+
+/* Skeleton shimmer for loading flag images / empty tiles */
+@keyframes shimmer-sweep {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+.img-shimmer {
+  background-color: var(--shimmer-base);
+  background-image: linear-gradient(100deg, transparent 30%, var(--shimmer-sweep) 50%, transparent 70%);
+  background-size: 200% 100%;
+  animation: shimmer-sweep 1.3s linear infinite;
+}
+
+/* Cross-fade + gentle rise when switching main tabs */
+@keyframes tab-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.tab-pane { animation: tab-in 0.3s var(--motion-ease) both; }
+
+/* Hero-carousel slide hand-off */
+@keyframes slide-fade {
+  from { opacity: 0.2; transform: translateX(16px) scale(0.995); }
+  to   { opacity: 1; transform: none; }
+}
+.slide-fade { animation: slide-fade 0.32s var(--motion-ease) both; }
+
+/* Bottom-sheet style entrance for detail panels (Codex country view) */
+@keyframes sheet-up {
+  from { opacity: 0; transform: translateY(28px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.sheet-up { animation: sheet-up 0.34s var(--motion-ease) both; }
+
+/* Confetti burst — each bit flies out along CSS-var vectors */
+@keyframes confetti-burst {
+  0%   { opacity: 1; transform: translate(-50%, -50%) rotate(0deg); }
+  100% { opacity: 0; transform: translate(calc(-50% + var(--cx)), calc(-50% + var(--cy))) rotate(var(--cr)); }
+}
+.confetti-bit {
+  position: absolute; left: 50%; top: 50%; pointer-events: none;
+  animation: confetti-burst 0.85s cubic-bezier(0.16, 0.8, 0.32, 1) var(--cd, 0s) both;
+}
+
+/* "Stamp" seal slammed onto a correctly answered flag */
+@keyframes stamp-in {
+  0%   { opacity: 0; transform: scale(1.7) rotate(-8deg); }
+  62%  { opacity: 1; transform: scale(0.94) rotate(2deg); }
+  100% { opacity: 1; transform: scale(1) rotate(0deg); }
+}
+.stamp-in { animation: stamp-in 0.42s cubic-bezier(0.2, 0.9, 0.3, 1.35) both; }
+
+/* Day-streak flame: slow celebratory glow + heartbeat on the icon */
+@keyframes streak-glow {
+  0%, 100% { box-shadow: 0 0 0 0 transparent; }
+  50%      { box-shadow: 0 0 16px 1px var(--glow, rgba(245, 165, 36, 0.35)); }
+}
+@keyframes streak-pulse {
+  0%, 100% { transform: scale(1); }
+  50%      { transform: scale(1.16); }
+}
+.streak-live { animation: streak-glow 2.6s ease-in-out infinite; }
+.streak-live .flame {
+  display: inline-flex; transform-origin: 50% 80%;
+  animation: streak-pulse 2.6s ease-in-out infinite;
+}
+
+/* Progress-map countries painting in one by one */
+@keyframes paint-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* Hover lift for game cards on the dark (non-carto) skins */
+.geo-lift { transition: transform 0.22s var(--motion-ease), box-shadow 0.22s ease; }
+.geo-lift:hover, .geo-lift:focus-visible {
+  transform: translateY(-3px);
+  box-shadow: 0 16px 28px -16px rgba(0, 0, 0, 0.55);
+}
+
+/* Active tab icon springs once when selected */
+@keyframes tab-pop {
+  0%   { transform: scale(1); }
+  45%  { transform: scale(1.22); }
+  100% { transform: scale(1); }
+}
+.tab-pop { animation: tab-pop 0.32s var(--motion-ease); }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001s !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001s !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ════════════════════════════════════════════════════════════════════════
    MODERN CARTOGRAPHER — warm parchment archive skin (switchable aesthetic)
    Classic serif headers · ink-teal text · watercolour washes · paper cards.
    ════════════════════════════════════════════════════════════════════════ */

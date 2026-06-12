@@ -193,7 +193,8 @@ export default function HeroCarousel({ onNavigate, onGoPlay }: Props) {
         onMouseDown={e => onDown(e.clientX)} onMouseUp={e => onUp(e.clientX)}
         onMouseLeave={() => { dragging.current = false; dragX.current = null }}
         onTouchStart={e => onDown(e.touches[0].clientX)} onTouchEnd={e => onUp(e.changedTouches[0].clientX)}>
-        {slides[idx]}
+        {/* keyed wrapper cross-fades each slide hand-off */}
+        <div key={idx} className="slide-fade">{slides[idx]}</div>
       </div>
       <div style={{ display: "flex", justifyContent: "center", gap: 7, marginTop: 11 }}>
         {Array.from({ length: NUM }).map((_, i) => (

@@ -36,49 +36,55 @@ export const REGISTRY: Entry[] = [
   { id: "substumper", title: "Subdivision Stumper", subtitle: "Province flag → country", icon: "📍", tab: "learn", group: "Subdivisions", size: "module", accent: "learn", progress: subProgress },
 
   // ── PLAY ───────────────────────────────────────────────────────────────
-  // Featured — the standout games surface first, plus Guess the Language up top.
-  { id: "language", title: "Guess the Language", subtitle: "82 languages · easy → extreme", icon: "🗣️", tab: "play", group: "Featured", size: "tile", accent: "play" },
-  { id: "deadoralive", title: "Dead or Alive", subtitle: "Live or vanished?", icon: "💀", tab: "play", group: "Featured", size: "tile", accent: "play" },
-  { id: "frankenflag", title: "Frankenflag", subtitle: "Name both halves", icon: "🧟", tab: "play", group: "Featured", size: "tile", accent: "play" },
-  { id: "buildflag", title: "Build the Flag", subtitle: "Assemble the bands", icon: "🧩", tab: "play", group: "Featured", size: "tile", accent: "play" },
-  { id: "thepeel", title: "The Peel", subtitle: "Scratch to reveal", icon: "🖌️", tab: "play", group: "Featured", size: "tile", accent: "play" },
-  { id: "realorbot", title: "Real or Bot", subtitle: "Swipe: real flag or AI fake?", icon: "🤖", tab: "play", group: "Featured", size: "tile", accent: "play" },
-  { id: "lineage", title: "Lineage", subtitle: "Trace a flag's family tree", icon: "🌳", tab: "play", group: "Featured", size: "tile", accent: "play" },
+  // App-Store-style discovery: every game lives in exactly one horizontal
+  // "vibe" row. Same ids/screens as before — only the shelf labels changed.
 
-  // Quick games — everything else, uniform tiles (drills & daily folded in here)
-  { id: "reversequiz", action: "reverse", title: "Flag ID Challenge", subtitle: "See the name, pick the flag", icon: "🎯", tab: "play", group: "Quick games", size: "tile", accent: "play" },
-  { id: "capitalquiz", title: "Capital Cities", subtitle: "Name that capital", icon: "🏛️", tab: "play", group: "Quick games", size: "tile", accent: "play" },
-  { id: "geo", title: "Geography", subtitle: "Identify countries by shape", icon: "🗺️", tab: "play", group: "Quick games", size: "tile", accent: "play" },
-  { id: "flagle", title: "Flagle", subtitle: "Daily flag Wordle · 6 guesses", icon: "🟩", tab: "play", group: "Quick games", size: "tile", accent: "play" },
-  { id: "gacha", title: "Flag Gacha", subtitle: "Daily pull · collect them all", icon: "🎁", tab: "play", group: "Quick games", size: "tile", accent: "play" },
-  { id: "timeline", title: "Flag Timeline", subtitle: "Order a country's flags in time", icon: "⏳", tab: "play", group: "Quick games", size: "tile", accent: "play" },
-  { id: "prideroulette", title: "Pride Roulette", subtitle: "Name the pride flag · survival", icon: "🏳️‍🌈", tab: "play", group: "Quick games", size: "tile", accent: "play" },
-  { id: "oddoneout", title: "Odd One Out", subtitle: "Find the impostor", icon: "🕵️", tab: "play", group: "Quick games", size: "tile", accent: "play" },
-  { id: "thecrop", title: "The Crop", subtitle: "Zoom out to guess", icon: "🔍", tab: "play", group: "Quick games", size: "tile", accent: "play" },
-  { id: "flagdna", title: "Flag DNA", subtitle: "Guess by attributes", icon: "🧬", tab: "play", group: "Quick games", size: "tile", accent: "play" },
-  { id: "silhouette", title: "Silhouette", subtitle: "Guess from the dark", icon: "🌑", tab: "play", group: "Quick games", size: "tile", accent: "play" },
-  { id: "lookalikes", title: "Lookalikes", subtitle: "Spot the real one", icon: "👯", tab: "play", group: "Quick games", size: "tile", accent: "play" },
-  { id: "composer", title: "The Composer", subtitle: "Reassemble the flag", icon: "🎴", tab: "play", group: "Quick games", size: "tile", accent: "play" },
-  { id: "flagfamilies", title: "Flag Families", subtitle: "Sort into families", icon: "👪", tab: "play", group: "Quick games", size: "tile", accent: "play" },
-  { id: "funfact", title: "Fun Fact", subtitle: "Daily flag fact", icon: "💡", tab: "play", group: "Quick games", size: "tile", accent: "play" },
-  { id: "symbolhunt", title: "Symbol Hunt", subtitle: "Find every flag with a symbol", icon: "🔎", tab: "play", group: "Quick games", size: "tile", accent: "play" },
-  { id: "twotruths", title: "Two Truths", subtitle: "Spot the lie about a country", icon: "🕵️", tab: "play", group: "Quick games", size: "tile", accent: "play" },
-  { id: "higherlower", title: "Higher / Lower", subtitle: "More red or blue?", icon: "📊", tab: "play", group: "Quick games", size: "tile", accent: "play" },
-  { id: "describeit", title: "Describe-It", subtitle: "Guess from the clues", icon: "📝", tab: "play", group: "Quick games", size: "tile", accent: "play" },
-  { id: "flagbracket", title: "Flag Bracket", subtitle: "Vote your champion", icon: "🏆", tab: "play", group: "Quick games", size: "tile", accent: "play" },
-  { id: "capitalmatch", title: "Capital Match", subtitle: "Match flags to capitals", icon: "🏛️", tab: "play", group: "Quick games", size: "tile", accent: "play" },
-  { id: "continentsort", title: "Continent Sort", subtitle: "Sort flags by region", icon: "🌍", tab: "play", group: "Quick games", size: "tile", accent: "play" },
-  { id: "statclash", title: "Stat Clash", subtitle: "Bigger population or area?", icon: "⚖️", tab: "play", group: "Quick games", size: "tile", accent: "play" },
-  { id: "uscityflags", title: "US City Flags", subtitle: "Name the American city", icon: "🏙️", tab: "play", group: "Quick games", size: "tile", accent: "play" },
+  // Daily Puzzles — once-a-day rituals, the habit loop.
+  { id: "flagle", title: "Flagle", subtitle: "Daily flag Wordle · 6 guesses", icon: "🟩", tab: "play", group: "Daily Puzzles", size: "tile", accent: "play" },
+  { id: "gacha", title: "Flag Gacha", subtitle: "Daily pull · collect them all", icon: "🎁", tab: "play", group: "Daily Puzzles", size: "tile", accent: "play" },
+  { id: "funfact", title: "Fun Fact", subtitle: "Daily flag fact", icon: "💡", tab: "play", group: "Daily Puzzles", size: "tile", accent: "play" },
+  { id: "timeline", title: "Flag Timeline", subtitle: "Order a country's flags in time", icon: "⏳", tab: "play", group: "Daily Puzzles", size: "tile", accent: "play" },
 
-  // Geography games
-  { id: "bordermap", title: "Border Map", subtitle: "Fill in a country's neighbours", icon: "🗺️", tab: "play", group: "Geography", size: "tile", accent: "play" },
-  { id: "borderchain", title: "Border Path", subtitle: "Connect two countries by land", icon: "🔗", tab: "play", group: "Geography", size: "tile", accent: "play" },
-  { id: "oddborder", title: "Odd Border Out", subtitle: "Spot the non-neighbour", icon: "🧭", tab: "play", group: "Geography", size: "tile", accent: "play" },
+  // Rapid Fire — snappy rounds, instant feedback.
+  { id: "reversequiz", action: "reverse", title: "Flag ID Challenge", subtitle: "See the name, pick the flag", icon: "🎯", tab: "play", group: "Rapid Fire", size: "tile", accent: "play" },
+  { id: "capitalquiz", title: "Capital Cities", subtitle: "Name that capital", icon: "🏛️", tab: "play", group: "Rapid Fire", size: "tile", accent: "play" },
+  { id: "deadoralive", title: "Dead or Alive", subtitle: "Live or vanished?", icon: "💀", tab: "play", group: "Rapid Fire", size: "tile", accent: "play" },
+  { id: "higherlower", title: "Higher / Lower", subtitle: "More red or blue?", icon: "📊", tab: "play", group: "Rapid Fire", size: "tile", accent: "play" },
+  { id: "statclash", title: "Stat Clash", subtitle: "Bigger population or area?", icon: "⚖️", tab: "play", group: "Rapid Fire", size: "tile", accent: "play" },
+  { id: "continentsort", title: "Continent Sort", subtitle: "Sort flags by region", icon: "🌍", tab: "play", group: "Rapid Fire", size: "tile", accent: "play" },
+  { id: "capitalmatch", title: "Capital Match", subtitle: "Match flags to capitals", icon: "🏛️", tab: "play", group: "Rapid Fire", size: "tile", accent: "play" },
+  { id: "oddoneout", title: "Odd One Out", subtitle: "Find the impostor", icon: "🕵️", tab: "play", group: "Rapid Fire", size: "tile", accent: "play" },
+  { id: "twotruths", title: "Two Truths", subtitle: "Spot the lie about a country", icon: "🕵️", tab: "play", group: "Rapid Fire", size: "tile", accent: "play" },
+  { id: "prideroulette", title: "Pride Roulette", subtitle: "Name the pride flag · survival", icon: "🏳️‍🌈", tab: "play", group: "Rapid Fire", size: "tile", accent: "play" },
+  { id: "flagfamilies", title: "Flag Families", subtitle: "Sort into families", icon: "👪", tab: "play", group: "Rapid Fire", size: "tile", accent: "play" },
 
-  { id: "gauntlet", title: "Gauntlet", subtitle: "One life · every flag", icon: "⚔️", tab: "play", group: "Challenge", size: "module", accent: "challenge" },
-  { id: "challenge", title: "Challenge Mode", subtitle: "States, provinces & regions", icon: "🎖️", tab: "play", group: "Challenge", size: "module", accent: "challenge" },
-  { id: "tierlist", title: "Tier List Maker", subtitle: "Rank flags S–F", icon: "🏆", tab: "play", group: "Challenge", size: "module", accent: "challenge" },
+  // Visual Deduction — squint, scratch, reassemble, spot the fake.
+  { id: "frankenflag", title: "Frankenflag", subtitle: "Name both halves", icon: "🧟", tab: "play", group: "Visual Deduction", size: "tile", accent: "play" },
+  { id: "buildflag", title: "Build the Flag", subtitle: "Assemble the bands", icon: "🧩", tab: "play", group: "Visual Deduction", size: "tile", accent: "play" },
+  { id: "thepeel", title: "The Peel", subtitle: "Scratch to reveal", icon: "🖌️", tab: "play", group: "Visual Deduction", size: "tile", accent: "play" },
+  { id: "realorbot", title: "Real or Bot", subtitle: "Swipe: real flag or AI fake?", icon: "🤖", tab: "play", group: "Visual Deduction", size: "tile", accent: "play" },
+  { id: "thecrop", title: "The Crop", subtitle: "Zoom out to guess", icon: "🔍", tab: "play", group: "Visual Deduction", size: "tile", accent: "play" },
+  { id: "silhouette", title: "Silhouette", subtitle: "Guess from the dark", icon: "🌑", tab: "play", group: "Visual Deduction", size: "tile", accent: "play" },
+  { id: "lookalikes", title: "Lookalikes", subtitle: "Spot the real one", icon: "👯", tab: "play", group: "Visual Deduction", size: "tile", accent: "play" },
+  { id: "composer", title: "The Composer", subtitle: "Reassemble the flag", icon: "🎴", tab: "play", group: "Visual Deduction", size: "tile", accent: "play" },
+  { id: "symbolhunt", title: "Symbol Hunt", subtitle: "Find every flag with a symbol", icon: "🔎", tab: "play", group: "Visual Deduction", size: "tile", accent: "play" },
+  { id: "flagdna", title: "Flag DNA", subtitle: "Guess by attributes", icon: "🧬", tab: "play", group: "Visual Deduction", size: "tile", accent: "play" },
+  { id: "describeit", title: "Describe-It", subtitle: "Guess from the clues", icon: "📝", tab: "play", group: "Visual Deduction", size: "tile", accent: "play" },
+  { id: "uscityflags", title: "US City Flags", subtitle: "Name the American city", icon: "🏙️", tab: "play", group: "Visual Deduction", size: "tile", accent: "play" },
+
+  // Deep Geography — maps, borders, languages and lineages.
+  { id: "geo", title: "Geography", subtitle: "Identify countries by shape", icon: "🗺️", tab: "play", group: "Deep Geography", size: "tile", accent: "play" },
+  { id: "language", title: "Guess the Language", subtitle: "82 languages · easy → extreme", icon: "🗣️", tab: "play", group: "Deep Geography", size: "tile", accent: "play" },
+  { id: "lineage", title: "Lineage", subtitle: "Trace a flag's family tree", icon: "🌳", tab: "play", group: "Deep Geography", size: "tile", accent: "play" },
+  { id: "bordermap", title: "Border Map", subtitle: "Fill in a country's neighbours", icon: "🗺️", tab: "play", group: "Deep Geography", size: "tile", accent: "play" },
+  { id: "borderchain", title: "Border Path", subtitle: "Connect two countries by land", icon: "🔗", tab: "play", group: "Deep Geography", size: "tile", accent: "play" },
+  { id: "oddborder", title: "Odd Border Out", subtitle: "Spot the non-neighbour", icon: "🧭", tab: "play", group: "Deep Geography", size: "tile", accent: "play" },
+
+  // Tournaments & Marathons — long-form, high-stakes modes.
+  { id: "gauntlet", title: "Gauntlet", subtitle: "One life · every flag", icon: "⚔️", tab: "play", group: "Tournaments & Marathons", size: "module", accent: "challenge" },
+  { id: "challenge", title: "Challenge Mode", subtitle: "States, provinces & regions", icon: "🎖️", tab: "play", group: "Tournaments & Marathons", size: "module", accent: "challenge" },
+  { id: "flagbracket", title: "Flag Bracket", subtitle: "Vote your champion", icon: "🏆", tab: "play", group: "Tournaments & Marathons", size: "module", accent: "challenge" },
+  { id: "tierlist", title: "Tier List Maker", subtitle: "Rank flags S–F", icon: "🏆", tab: "play", group: "Tournaments & Marathons", size: "module", accent: "challenge" },
 
   // ── CODEX ──────────────────────────────────────────────────────────────
   { id: "codex", title: "The Codex", subtitle: "Every country's flag history", icon: "📖", tab: "codex", group: "Reference", size: "module", accent: "codex", progress: flagProgress },

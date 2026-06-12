@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import type { Question } from '../utils/quiz'
+import { ConfettiBurst } from './motion'
 
 interface Props {
   questions: Question[]
@@ -94,15 +95,29 @@ export default function QuizScreen({ questions, title, onFinish, onBack }: Props
 
       <div className="flex-1 flex flex-col items-center px-5 py-4" style={{ zIndex: 1 }}>
         <div className="mb-4 relative">
-          <div className="rounded-2xl overflow-hidden shadow-2xl" style={{ border: '2px solid #8B6CFF44' }}>
+          <div className="rounded-2xl overflow-hidden shadow-2xl" style={{ border: `2px solid ${answerState === 'correct' ? '#34D39988' : '#8B6CFF44'}`, transition: 'border-color 0.3s ease' }}>
             {imgError ? (
-              <div className="flex items-center justify-center text-5xl"
-                style={{ width: 280, height: 175, background: '#2D1F52', color: '#B8A9E0' }}>🏳️</div>
+              <div className="img-shimmer flex items-center justify-center text-5xl"
+                style={{ width: 280, height: 175, color: '#B8A9E0' }}>🏳️</div>
             ) : (
               <img src={q.target.flagUrl} alt="mystery flag" width={280} height={175}
-                className="object-cover" style={{ display: 'block' }} onError={() => setImgError(true)} />
+                className="object-cover img-shimmer" style={{ display: 'block' }} onError={() => setImgError(true)} />
             )}
           </div>
+
+          {/* Success: stamp seal slams onto the flag + a confetti burst */}
+          {answerState === 'correct' && (
+            <>
+              <div className="stamp-in" style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', pointerEvents: 'none' }}>
+                <div style={{
+                  width: 66, height: 66, borderRadius: '50%', border: '3px solid #34D399', background: '#34D39926',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 30, color: '#34D399',
+                  boxShadow: '0 0 26px #34D39955', backdropFilter: 'blur(1px)',
+                }}>✓</div>
+              </div>
+              <ConfettiBurst colors={['#34D399', '#FBBF24', '#8B6CFF', '#6EE7B7', '#A78BFA']} spread={110} />
+            </>
+          )}
 
           {answerState !== 'idle' && (
             <button

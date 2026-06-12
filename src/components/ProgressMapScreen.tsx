@@ -37,19 +37,31 @@ export default function ProgressMapScreen({ state, onBack }: Props) {
       <div className="px-4 pt-2">
         <div style={{ borderRadius: 16, overflow: "hidden", border: "1px solid #8B6CFF33", background: OCEAN }}>
           <svg viewBox={worldMap.viewBox} width="100%" style={{ display: "block" }}>
-            {worldMap.locations.map(loc => {
-              const lit = learned.has(loc.id.toUpperCase())
-              return (
-                <path
-                  key={loc.id}
-                  d={loc.path}
-                  fill={lit ? LIT : UNLIT}
-                  stroke={OCEAN}
-                  strokeWidth={0.4}
-                  style={lit ? { filter: "drop-shadow(0 0 1.2px rgba(251,191,36,0.9))" } : undefined}
-                />
-              )
-            })}
+            {/* base layer: every country unlit */}
+            {worldMap.locations.map(loc => (
+              <path key={loc.id} d={loc.path} fill={UNLIT} stroke={OCEAN} strokeWidth={0.4} />
+            ))}
+            {/* lit overlay: learned countries paint in one after another */}
+            {(() => {
+              let litIdx = 0
+              return worldMap.locations.map(loc => {
+                if (!learned.has(loc.id.toUpperCase())) return null
+                const delay = Math.min(litIdx++ * 16, 1400)
+                return (
+                  <path
+                    key={`lit-${loc.id}`}
+                    d={loc.path}
+                    fill={LIT}
+                    stroke={OCEAN}
+                    strokeWidth={0.4}
+                    style={{
+                      filter: "drop-shadow(0 0 1.2px rgba(251,191,36,0.9))",
+                      animation: `paint-in 0.7s ease ${delay}ms both`,
+                    }}
+                  />
+                )
+              })
+            })()}
           </svg>
         </div>
         <div className="text-center mt-3 mb-1">

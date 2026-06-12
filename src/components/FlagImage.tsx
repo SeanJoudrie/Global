@@ -33,18 +33,19 @@ interface Props {
 export default function FlagImage({ code, alt = "", style, className, placeholder = "🏳️" }: Props) {
   const sources = useMemo(() => flagSources(code), [code])
   const [idx, setIdx] = useState(0)
+  const [loaded, setLoaded] = useState(false)
 
   // Reset to the primary source whenever the flag changes.
-  useEffect(() => { setIdx(0) }, [code])
+  useEffect(() => { setIdx(0); setLoaded(false) }, [code])
 
   if (idx >= sources.length) {
+    // All sources failed: soft themed placeholder, never a broken-image icon.
     return (
       <div
-        className={className}
+        className={`img-shimmer ${className ?? ""}`.trim()}
         style={{
           ...style,
           display: "flex", alignItems: "center", justifyContent: "center",
-          background: style?.background ?? "#1A1033",
           color: "#8B6CFF66", fontSize: 28,
         }}
       >
@@ -57,11 +58,13 @@ export default function FlagImage({ code, alt = "", style, className, placeholde
     <img
       src={sources[idx]}
       alt={alt}
-      className={className}
+      // Skeleton shimmer behind the image until it paints.
+      className={`${className ?? ""} ${loaded ? "" : "img-shimmer"}`.trim() || undefined}
       style={style}
       loading="lazy"
       decoding="async"
-      onError={() => setIdx(i => i + 1)}
+      onLoad={() => setLoaded(true)}
+      onError={() => { setIdx(i => i + 1); setLoaded(false) }}
     />
   )
 }
