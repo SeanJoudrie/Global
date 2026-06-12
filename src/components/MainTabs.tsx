@@ -81,13 +81,16 @@ export default function MainTabs({ state, tab, onTab, onNavigate, onQuickPlay, o
           </span>
         </div>
         <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 5, padding: "5px 10px", borderRadius: IS_CARTO ? 999 : 8, background: T.surface, border: `1px solid ${tint(T.amber, IS_CARTO ? 0.45 : 0.3)}` }}>
-            {IS_CARTO ? <FlameIcon size={13} color={T.amber} strokeWidth={1.7} /> : <span style={{ fontSize: 12 }}>🔥</span>}
-            <span style={{ fontFamily: FONT.mono, fontWeight: IS_CARTO ? 600 : 800, fontSize: 14, color: T.amber, letterSpacing: "-0.02em" }}>{state.currentStreak}</span>
-          </div>
+          {/* Today already opens on a big streak celebration — don't show it twice */}
+          {tab !== "today" && (
+            <div style={{ display: "flex", alignItems: "center", gap: 5, padding: "5px 10px", borderRadius: IS_CARTO ? 999 : 8, background: T.surface, border: `1px solid ${tint(T.amber, IS_CARTO ? 0.45 : 0.3)}` }}>
+              {IS_CARTO ? <FlameIcon size={13} color={T.amber} strokeWidth={1.7} /> : <span style={{ fontSize: 12 }}>🔥</span>}
+              <span style={{ fontFamily: FONT.mono, fontWeight: IS_CARTO ? 600 : 800, fontSize: 14, color: T.amber, letterSpacing: "-0.02em" }}>{state.currentStreak}</span>
+            </div>
+          )}
           <button onClick={() => onNavigate("settings")} aria-label="Settings" className="geo-tap"
-            style={{ width: 32, height: 32, borderRadius: IS_CARTO ? 999 : 8, background: T.surface, border: `1px solid ${T.line}`, color: T.muted, display: "flex", alignItems: "center", justifyContent: "center" }}>
-            {IS_CARTO ? <LineIcon name="settings" size={16} color={T.muted} /> : "⚙"}
+            style={{ width: 44, height: 44, borderRadius: IS_CARTO ? 999 : 8, background: T.surface, border: `1px solid ${T.line}`, color: T.muted, display: "flex", alignItems: "center", justifyContent: "center" }}>
+            {IS_CARTO ? <LineIcon name="settings" size={18} color={T.muted} /> : "⚙"}
           </button>
         </div>
       </header>
@@ -115,6 +118,7 @@ function TodayTab({ state, dailyDone, onNavigate, onQuickPlay, onStartDaily }: {
   onNavigate: (s: string) => void; onQuickPlay: () => void; onStartDaily: () => void
 }) {
   const fotd = FLAGS[dayIdx % FLAGS.length]
+  const todayResult = state.dailyHistory[todayString()]
   return (
     <div className={IS_CARTO ? "carto-slide-up" : undefined} style={{ display: "flex", flexDirection: "column", gap: 18 }}>
       {/* Streak celebration */}
@@ -135,24 +139,31 @@ function TodayTab({ state, dailyDone, onNavigate, onQuickPlay, onStartDaily }: {
         </div>
       </div>
 
-      {/* Massive primary action */}
-      <button onClick={onStartDaily} className={`geo-tap ${IS_CARTO ? "carto-card" : ""}`}
+      {/* Massive primary action — becomes a recap once today's run is logged
+          ("once a day" means once: no accidental replays that re-record) */}
+      <button onClick={dailyDone ? undefined : onStartDaily} className={`${dailyDone ? "" : "geo-tap"} ${IS_CARTO ? "carto-card" : ""}`}
+        aria-disabled={dailyDone || undefined}
         style={{
           position: "relative", overflow: "hidden", padding: "22px 20px", borderRadius: 16, textAlign: "left",
-          border: `1px solid ${tint(ACCENT.play, 0.36)}`,
-          background: `linear-gradient(150deg, ${tint(ACCENT.play, 0.16)}, ${T.surface} 70%)`,
-          ...(IS_CARTO ? { ["--wash" as string]: tint(ACCENT.play, 0.42) } : {}),
+          border: `1px solid ${tint(dailyDone ? T.green : ACCENT.play, 0.36)}`,
+          background: `linear-gradient(150deg, ${tint(dailyDone ? T.green : ACCENT.play, 0.16)}, ${T.surface} 70%)`,
+          cursor: dailyDone ? "default" : "pointer",
+          ...(IS_CARTO ? { ["--wash" as string]: tint(dailyDone ? T.green : ACCENT.play, 0.42) } : {}),
         }}>
-        <div style={{ position: "absolute", right: -18, bottom: -22, opacity: 0.12, color: ACCENT.play, pointerEvents: "none" }}>
-          {IS_CARTO ? <LineIcon name="today" size={132} color={ACCENT.play} strokeWidth={1.1} /> : <span style={{ fontSize: 110 }}>🧭</span>}
+        <div style={{ position: "absolute", right: -18, bottom: -22, opacity: 0.12, color: dailyDone ? T.green : ACCENT.play, pointerEvents: "none" }}>
+          {IS_CARTO ? <LineIcon name="today" size={132} color={dailyDone ? T.green : ACCENT.play} strokeWidth={1.1} /> : <span style={{ fontSize: 110 }}>🧭</span>}
         </div>
-        <div className="geo-micro" style={{ fontSize: 9, color: ACCENT.play, marginBottom: 8 }}>◦ Today's expedition</div>
+        <div className="geo-micro" style={{ fontSize: 9, color: dailyDone ? T.green : ACCENT.play, marginBottom: 8 }}>◦ Today's expedition</div>
         <div className="geo-display" style={{ fontWeight: 800, fontSize: 30, lineHeight: 1.02, letterSpacing: "-0.02em", color: T.text, maxWidth: 240 }}>
           Daily Expedition
         </div>
-        <div style={{ color: T.muted, fontSize: 12.5, marginTop: 6, maxWidth: 220 }}>Ten flags from across the world. One run, once a day.</div>
+        <div style={{ color: T.muted, fontSize: 12.5, marginTop: 6, maxWidth: 220 }}>
+          {dailyDone ? "Logged for today — a fresh expedition lands tomorrow." : "Ten flags from across the world. One run, once a day."}
+        </div>
         <div style={{ marginTop: 16, display: "inline-flex", alignItems: "center", gap: 8, padding: "11px 20px", borderRadius: 999, background: dailyDone ? T.green : ACCENT.play, color: T.onAccent }}>
-          <span style={{ fontFamily: FONT.display, fontWeight: 700, fontSize: 15 }}>{dailyDone ? "✓ Done today" : "Start"}</span>
+          <span style={{ fontFamily: FONT.display, fontWeight: 700, fontSize: 15 }}>
+            {dailyDone ? (todayResult ? `✓ ${todayResult.score}/${todayResult.total} today` : "✓ Done today") : "Start"}
+          </span>
           {!dailyDone && <span style={{ fontSize: 16 }}>→</span>}
         </div>
       </button>
@@ -284,7 +295,7 @@ function ContinentDrawer({ continent, flags, learned, open, onToggle, onOpenCoun
   return (
     <div className={IS_CARTO ? "carto-card" : undefined}
       style={{ borderRadius: 14, overflow: "hidden", ...(IS_CARTO ? { ["--wash" as string]: tint(ACCENT.codex, 0.42) } : { background: T.surface, border: `1px solid ${T.line}` }) }}>
-      <button onClick={onToggle} className="geo-tap"
+      <button onClick={onToggle} className="geo-tap" aria-expanded={open}
         style={{ width: "100%", display: "flex", alignItems: "center", gap: 13, padding: "13px 14px", background: "transparent", textAlign: "left" }}>
         <ProgressRing done={done} total={flags.length} accent={ACCENT.codex} size={40} />
         <div style={{ flex: 1 }}>
@@ -366,7 +377,7 @@ function PlayTab({ launch }: { launch: (e: Entry) => void }) {
 
       {/* Beta Sandbox — progressively disclosed, nothing deleted */}
       <div style={{ marginTop: 4 }}>
-        <button onClick={() => setSandboxOpen(o => !o)} className="geo-tap"
+        <button onClick={() => setSandboxOpen(o => !o)} className="geo-tap" aria-expanded={sandboxOpen}
           style={{ width: "100%", display: "flex", alignItems: "center", gap: 10, padding: "12px 14px",
             borderRadius: 12, background: T.surfaceHi, border: `1px dashed ${T.lineHi}`, textAlign: "left" }}>
           <span style={{ display: "flex", color: T.muted }}>{IS_CARTO ? <FlaskIcon size={18} color={T.muted} strokeWidth={1.6} /> : <span style={{ fontSize: 16 }}>🧪</span>}</span>

@@ -1,7 +1,36 @@
 import type { CSSProperties, ReactNode } from "react"
 import { T, FONT, tint, IS_CARTO } from "../ui/tokens"
 import type { TabKey } from "../ui/registry"
-import { LineIcon } from "./icons"
+import { LineIcon, ChevronLeftIcon } from "./icons"
+
+/* ── Screen chrome: the ONE back button + header used by every destination
+   screen. 44px touch target, token colours, serif display title. ─────────── */
+export function BackButton({ onClick, label = "Back" }: { onClick: () => void; label?: string }) {
+  return (
+    <button onClick={onClick} aria-label={label} className="geo-tap"
+      style={{
+        width: 44, height: 44, borderRadius: 999, flexShrink: 0,
+        background: T.surface, border: `1px solid ${T.line}`, color: T.muted,
+        display: "flex", alignItems: "center", justifyContent: "center",
+      }}>
+      <ChevronLeftIcon size={22} color={T.muted} strokeWidth={1.8} />
+    </button>
+  )
+}
+
+export function ScreenHeader({ title, subtitle, onBack, right }:
+  { title: ReactNode; subtitle?: ReactNode; onBack: () => void; right?: ReactNode }) {
+  return (
+    <header style={{ display: "flex", alignItems: "center", gap: 12, padding: "14px 16px 10px", position: "relative" }}>
+      <BackButton onClick={onBack} />
+      <div style={{ flex: 1, minWidth: 0 }}>
+        <h1 className="geo-display" style={{ color: T.text, fontWeight: 700, fontSize: 20, letterSpacing: "-0.01em", lineHeight: 1.1, margin: 0 }}>{title}</h1>
+        {subtitle && <div style={{ color: T.muted, fontSize: 12, marginTop: 2 }}>{subtitle}</div>}
+      </div>
+      {right}
+    </header>
+  )
+}
 
 // Render an etched line icon (Cartographer) or the original emoji (Tactical).
 function Glyph({ glyph, emoji, size, color }: { glyph?: string; emoji?: ReactNode; size: number; color: string }) {
@@ -175,8 +204,8 @@ export function TabBar({ active, onChange }: { active: TabKey; onChange: (t: Tab
       {TAB_META.map(t => {
         const on = active === t.key
         return (
-          <button key={t.key} onClick={() => onChange(t.key)}
-            style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 3, padding: "9px 0 8px", position: "relative", background: "transparent" }}>
+          <button key={t.key} onClick={() => onChange(t.key)} aria-label={t.label} aria-current={on ? "page" : undefined}
+            style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 4, padding: "11px 0 10px", minHeight: 54, position: "relative", background: "transparent" }}>
             <span style={{
               position: "absolute", top: 0, height: 2, width: 26, borderRadius: 2,
               background: on ? t.accent : "transparent", boxShadow: on && !IS_CARTO ? `0 0 10px ${t.accent}` : "none",
@@ -184,7 +213,7 @@ export function TabBar({ active, onChange }: { active: TabKey; onChange: (t: Tab
             <span style={{ display: "flex", color: on ? t.accent : T.dim, opacity: on ? 1 : IS_CARTO ? 0.8 : 0.55, transition: "all 0.15s" }}>
               <Glyph glyph={t.glyph} emoji={t.emoji} size={IS_CARTO ? 19 : 17} color={on ? t.accent : T.dim} />
             </span>
-            <span className="geo-micro" style={{ fontSize: 8, color: on ? t.accent : T.dim }}>{t.label}</span>
+            <span className="geo-micro" style={{ fontSize: 9.5, color: on ? t.accent : T.dim }}>{t.label}</span>
           </button>
         )
       })}
