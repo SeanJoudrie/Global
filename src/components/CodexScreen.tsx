@@ -12,7 +12,13 @@ import type { SubRegion } from '../data/challenges'
 import { T, ACCENT, FONT, tint } from '../ui/tokens'
 import { ScreenHeader } from './ui'
 import { LineIcon } from './icons'
-import { Search, Anchor } from 'lucide-react'
+import { Search, Anchor, ChevronDown, Castle, Sun, Mountain, Landmark, MoonStar, Sailboat } from 'lucide-react'
+
+// Etched line icon per continent — cartographer style, never emoji.
+const REGION_ICONS: Record<string, typeof Castle> = {
+  Europe: Castle, Africa: Sun, Asia: Mountain, Americas: Landmark,
+  'Middle East': MoonStar, Oceania: Sailboat,
+}
 
 interface Props {
   onBack?: () => void
@@ -108,27 +114,27 @@ export default function CodexScreen({ onBack, initialCode, embedded = false }: P
             const isExpanded = isSearching || expandedRegions.has(region)
             return (
               <div key={region} className="mb-3">
-                {/* Region header — clickable to expand/collapse */}
+                {/* Region header — open underline row, no box */}
                 <button
                   onClick={() => toggleRegion(region)}
-                  className="geo-tap w-full flex items-center justify-between px-4 py-3 rounded-xl transition-all active:scale-[0.98]"
+                  aria-expanded={isExpanded}
+                  className="geo-tap w-full flex items-center justify-between px-1 py-3 transition-all active:scale-[0.99]"
                   style={{
-                    background: isExpanded ? T.surface : T.surfaceHi,
-                    border: `1px solid ${isExpanded ? tint(ACCENT.codex, 0.35) : T.line}`,
+                    background: 'transparent',
+                    borderBottom: `1px solid ${isExpanded ? tint(ACCENT.codex, 0.45) : T.line}`,
                   }}
                 >
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2.5">
+                    {(() => { const Icon = REGION_ICONS[region] ?? Landmark; return <Icon size={15} color={ACCENT.codex} strokeWidth={1.6} absoluteStrokeWidth /> })()}
                     <h3 className="text-sm font-bold uppercase tracking-widest" style={{ color: ACCENT.codex }}>{region}</h3>
                     <span className="text-xs" style={{ color: T.dim, fontFamily: FONT.mono, fontVariantNumeric: 'tabular-nums' }}>{flags.length}</span>
                   </div>
-                  <span style={{
-                    color: ACCENT.codex, fontSize: 18, transition: 'transform 0.2s',
-                    transform: isExpanded ? 'rotate(90deg)' : 'rotate(0deg)',
-                  }}>›</span>
+                  <ChevronDown size={17} color={ACCENT.codex} strokeWidth={1.6} absoluteStrokeWidth
+                    style={{ transition: 'transform 0.2s', transform: isExpanded ? 'rotate(180deg)' : 'rotate(0deg)' }} />
                 </button>
 
                 {isExpanded && (
-                  <div className="mt-1.5 space-y-1.5">
+                  <div className="mt-2.5 space-y-1.5">
                     {flags.map(f => {
                       const open = selectedCode === f.code
                       const capital = CAPITAL_BY_CODE.get(f.code)
@@ -148,7 +154,12 @@ export default function CodexScreen({ onBack, initialCode, embedded = false }: P
                             />
                             <div className="flex-1 min-w-0">
                               <div className="font-semibold text-sm truncate" style={{ color: T.text }}>{f.name}</div>
-                              {capital && <div className="text-xs truncate" style={{ color: T.muted, marginTop: 1 }}>{capital}</div>}
+                              {capital && (
+                                <div className="flex items-center gap-1 truncate" style={{ color: T.muted, marginTop: 2, fontSize: 11, opacity: 0.75 }}>
+                                  <LineIcon name="capitalquiz" size={10} color={T.muted} />
+                                  <span className="truncate">{capital}</span>
+                                </div>
+                              )}
                             </div>
                             <span style={{ color: ACCENT.codex, fontSize: 18, transition: 'transform 0.2s', transform: open ? 'rotate(90deg)' : 'rotate(0deg)', flexShrink: 0 }}>›</span>
                           </button>
@@ -189,6 +200,7 @@ export default function CodexScreen({ onBack, initialCode, embedded = false }: P
 function CountryDetail({ flag }: { flag: FlagRecord }) {
   const entry = CODEX[flag.code]
   const [sumExpanded, setSumExpanded] = useState(false)
+  const [triviaExpanded, setTriviaExpanded] = useState(false)
   const [historyExpanded, setHistoryExpanded] = useState(false)
   const [historyIdx, setHistoryIdx] = useState(0)
   const [subdivisionsExpanded, setSubdivisionsExpanded] = useState(false)
@@ -206,7 +218,7 @@ function CountryDetail({ flag }: { flag: FlagRecord }) {
         <img
           src={flag.flagUrl}
           alt={flag.name}
-          style={{ width: '100%', height: 130, objectFit: 'cover', display: 'block' }}
+          style={{ width: '100%', height: 140, objectFit: 'contain', display: 'block', background: T.surface, padding: '8px 0' }}
           onError={e => { (e.target as HTMLImageElement).style.opacity = '0' }}
         />
       </div>
@@ -224,6 +236,33 @@ function CountryDetail({ flag }: { flag: FlagRecord }) {
           <button onClick={() => setSumExpanded(v => !v)} className="text-xs mt-1" style={{ color: ACCENT.codex, background: 'transparent', fontWeight: 600, padding: '2px 0' }}>
             {sumExpanded ? 'show less' : 'read more'}
           </button>
+        </div>
+      )}
+
+      {/* Subdivisions — collapsible */}
+      {hasSubdivisions && (
+        <div className="mb-3">
+          <button
+            onClick={() => setSubdivisionsExpanded(v => !v)}
+            aria-expanded={subdivisionsExpanded}
+            className="geo-tap w-full flex items-center justify-between px-4 py-3 rounded-xl transition-all active:scale-[0.98]"
+            style={{ background: T.surface, border: `1px solid ${tint(T.green, 0.3)}` }}
+          >
+            <div className="flex items-center gap-2">
+              <h2 className="text-xs font-bold uppercase tracking-widest" style={{ color: T.green }}>Subdivisions</h2>
+              <span className="text-xs" style={{ color: T.muted }}>{subRegions.length} regions</span>
+            </div>
+            <span style={{ color: T.green, transition: 'transform 0.2s', transform: subdivisionsExpanded ? 'rotate(90deg)' : 'rotate(0deg)' }}>›</span>
+          </button>
+
+          {subdivisionsExpanded && (
+            <SubdivisionGrid
+              subRegions={subRegions}
+              confirmedNoFlags={NO_SUBDIVISION_FLAG_COUNTRIES.has(flag.code)}
+              headerLabel={flag.code === 'IE' ? 'Province' : flag.code === 'GB' ? 'Nation' : undefined}
+              memberLabel={flag.code === 'IE' ? 'Counties' : flag.code === 'GB' ? 'Council areas' : undefined}
+            />
+          )}
         </div>
       )}
 
@@ -325,33 +364,6 @@ function CountryDetail({ flag }: { flag: FlagRecord }) {
         )}
       </div>
 
-      {/* Subdivisions — collapsible */}
-      {hasSubdivisions && (
-        <div className="mb-3">
-          <button
-            onClick={() => setSubdivisionsExpanded(v => !v)}
-            aria-expanded={subdivisionsExpanded}
-            className="geo-tap w-full flex items-center justify-between px-4 py-3 rounded-xl transition-all active:scale-[0.98]"
-            style={{ background: T.surface, border: `1px solid ${tint(T.green, 0.3)}` }}
-          >
-            <div className="flex items-center gap-2">
-              <h2 className="text-xs font-bold uppercase tracking-widest" style={{ color: T.green }}>Subdivisions</h2>
-              <span className="text-xs" style={{ color: T.muted }}>{subRegions.length} regions</span>
-            </div>
-            <span style={{ color: T.green, transition: 'transform 0.2s', transform: subdivisionsExpanded ? 'rotate(90deg)' : 'rotate(0deg)' }}>›</span>
-          </button>
-
-          {subdivisionsExpanded && (
-            <SubdivisionGrid
-              subRegions={subRegions}
-              confirmedNoFlags={NO_SUBDIVISION_FLAG_COUNTRIES.has(flag.code)}
-              headerLabel={flag.code === 'IE' ? 'Province' : flag.code === 'GB' ? 'Nation' : undefined}
-              memberLabel={flag.code === 'IE' ? 'Counties' : flag.code === 'GB' ? 'Council areas' : undefined}
-            />
-          )}
-        </div>
-      )}
-
       {/* Predecessor & related states — collapsible */}
       {predecessors.length > 0 && (
         <div className="mb-3">
@@ -395,26 +407,29 @@ function CountryDetail({ flag }: { flag: FlagRecord }) {
         </div>
       )}
 
-      {/* Trivia last — history, subdivisions & predecessors deserve the spotlight */}
+      {/* Trivia — quiet expandable; just the label and an arrow until opened */}
       {(flag.funFact || flag.distinguishingTip) && (
-        <div className="rounded-2xl overflow-hidden" style={{ border: `1px solid ${tint(T.gold, 0.3)}` }}>
-          {flag.funFact && (
-            <div style={{ background: T.surface, padding: '13px 15px' }}>
-              <div className="text-xs font-bold uppercase tracking-widest mb-1.5"
-                style={{ color: T.gold, display: 'flex', alignItems: 'center', gap: 6 }}>
-                <LineIcon name="funfact" size={13} color={T.gold} /> Did you know?
-              </div>
-              <p className="text-xs leading-relaxed" style={{ color: T.text, lineHeight: 1.6 }}>
-                {flag.funFact}
-              </p>
-            </div>
-          )}
-          {flag.distinguishingTip && (
-            <div style={{ background: T.surfaceHi, padding: '11px 15px', borderTop: `1px solid ${T.line}` }}>
-              <div className="text-xs font-semibold mb-1" style={{ color: ACCENT.codex }}>How to tell it apart</div>
-              <p className="text-xs leading-relaxed" style={{ color: T.muted, lineHeight: 1.6 }}>
-                {flag.distinguishingTip}
-              </p>
+        <div>
+          <button onClick={() => setTriviaExpanded(v => !v)} aria-expanded={triviaExpanded}
+            className="geo-tap w-full flex items-center justify-between px-1 py-2"
+            style={{ background: 'transparent' }}>
+            <span className="text-xs font-bold uppercase tracking-widest flex items-center gap-1.5" style={{ color: T.gold }}>
+              <LineIcon name="funfact" size={13} color={T.gold} /> Did you know?
+            </span>
+            <ChevronDown size={15} color={T.gold} strokeWidth={1.6} absoluteStrokeWidth
+              style={{ transition: 'transform 0.2s', transform: triviaExpanded ? 'rotate(180deg)' : 'rotate(0deg)' }} />
+          </button>
+          {triviaExpanded && (
+            <div className="carto-slide-up">
+              {flag.funFact && (
+                <p className="text-xs leading-relaxed px-1 pt-1" style={{ color: T.text, lineHeight: 1.6 }}>{flag.funFact}</p>
+              )}
+              {flag.distinguishingTip && (
+                <div className="mt-2.5 rounded-xl" style={{ background: T.surface, border: `1px solid ${T.line}`, padding: '10px 12px' }}>
+                  <div className="text-xs font-semibold mb-1" style={{ color: ACCENT.codex }}>How to tell it apart</div>
+                  <p className="text-xs leading-relaxed" style={{ color: T.muted, lineHeight: 1.6 }}>{flag.distinguishingTip}</p>
+                </div>
+              )}
             </div>
           )}
         </div>
@@ -433,13 +448,14 @@ function IdentityCodexSection() {
       {/* Collapsed by default — countries come first; tap to reveal the extras */}
       <button
         onClick={() => setSectionOpen(o => !o)}
-        className="geo-tap w-full flex items-center justify-between px-4 py-3 rounded-xl transition-all active:scale-[0.98]"
-        style={{ background: sectionOpen ? T.surface : T.surfaceHi, border: `1px solid ${sectionOpen ? tint(T.warm, 0.4) : T.line}` }}>
+        className="geo-tap w-full flex items-center justify-between px-1 py-3 transition-all active:scale-[0.99]"
+        style={{ background: 'transparent', borderBottom: `1px solid ${sectionOpen ? tint(T.warm, 0.45) : T.line}` }}>
         <div className="text-left">
           <h3 className="text-sm font-bold uppercase tracking-widest" style={{ color: T.warm }}>Identity &amp; Other Flags</h3>
           <p className="text-xs" style={{ color: T.dim }}>{IDENTITY_FLAGS.length - SIGNAL_FLAGS.length} flags beyond countries</p>
         </div>
-        <span style={{ color: T.warm, fontSize: 20, transition: 'transform 0.2s', transform: sectionOpen ? 'rotate(90deg)' : 'rotate(0deg)' }}>›</span>
+        <ChevronDown size={17} color={T.warm} strokeWidth={1.6} absoluteStrokeWidth
+          style={{ transition: 'transform 0.2s', transform: sectionOpen ? 'rotate(180deg)' : 'rotate(0deg)', flexShrink: 0 }} />
       </button>
 
       {sectionOpen && <div className="mt-3" />}
@@ -499,15 +515,16 @@ function AmericanCitiesCodexSection() {
     <div className="mt-5">
       <button
         onClick={() => setOpen(o => !o)}
-        className="geo-tap w-full flex items-center justify-between px-4 py-3 rounded-xl transition-all active:scale-[0.98]"
-        style={{ background: open ? T.surface : T.surfaceHi, border: `1px solid ${open ? tint(T.cyan, 0.4) : T.line}` }}>
+        className="geo-tap w-full flex items-center justify-between px-1 py-3 transition-all active:scale-[0.99]"
+        style={{ background: 'transparent', borderBottom: `1px solid ${open ? tint(T.cyan, 0.45) : T.line}` }}>
         <div className="text-left">
           <h3 className="text-sm font-bold uppercase tracking-widest" style={{ color: T.cyan }}>
             American Cities <span style={{ color: tint(T.cyan, 0.6), fontSize: 10 }}>(Beta)</span>
           </h3>
           <p className="text-xs" style={{ color: T.dim }}>{cities.length} U.S. municipal flags</p>
         </div>
-        <span style={{ color: T.cyan, fontSize: 20, transition: 'transform 0.2s', transform: open ? 'rotate(90deg)' : 'rotate(0deg)' }}>›</span>
+        <ChevronDown size={17} color={T.cyan} strokeWidth={1.6} absoluteStrokeWidth
+        style={{ transition: 'transform 0.2s', transform: open ? 'rotate(180deg)' : 'rotate(0deg)', flexShrink: 0 }} />
       </button>
       {open && (
         <div className="mt-1.5 space-y-1.5">
@@ -547,8 +564,8 @@ function SignalCodexSection() {
     <div className="mt-3">
       <button
         onClick={() => setOpen(o => !o)}
-        className="geo-tap w-full flex items-center justify-between px-4 py-3 rounded-xl transition-all active:scale-[0.98]"
-        style={{ background: open ? T.surface : T.surfaceHi, border: `1px solid ${open ? tint(T.cyan, 0.4) : tint(T.cyan, 0.25)}` }}>
+        className="geo-tap w-full flex items-center justify-between px-1 py-3 transition-all active:scale-[0.99]"
+        style={{ background: 'transparent', borderBottom: `1px solid ${open ? tint(T.cyan, 0.45) : T.line}` }}>
         <div className="text-left">
           <h3 className="text-sm font-bold uppercase tracking-widest"
             style={{ color: T.cyan, display: 'flex', alignItems: 'center', gap: 6 }}>
@@ -556,7 +573,8 @@ function SignalCodexSection() {
           </h3>
           <p className="text-xs" style={{ color: T.dim }}>{SIGNAL_FLAGS.length} international code / phonetic flags</p>
         </div>
-        <span style={{ color: T.cyan, fontSize: 20, transition: 'transform 0.2s', transform: open ? 'rotate(90deg)' : 'rotate(0deg)' }}>›</span>
+        <ChevronDown size={17} color={T.cyan} strokeWidth={1.6} absoluteStrokeWidth
+        style={{ transition: 'transform 0.2s', transform: open ? 'rotate(180deg)' : 'rotate(0deg)', flexShrink: 0 }} />
       </button>
       {open && (
         <div className="mt-2 space-y-1.5">
