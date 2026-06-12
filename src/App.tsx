@@ -274,7 +274,8 @@ export default function App() {
       {screen === "home" && AESTHETIC !== "original" && (
         <MainTabs state={appState} tab={tab} onTab={setTab}
           onNavigate={(s) => setScreen(s as Screen)}
-          onQuickPlay={startQuickPlay} onStartDaily={startDaily} onReverseQuiz={startReverseQuiz} />
+          onQuickPlay={startQuickPlay} onStartDaily={startDaily} onReverseQuiz={startReverseQuiz}
+          onSetUsername={name => setAppState(s => ({ ...s, username: name }))} />
       )}
 
       {screen === "flags" && (

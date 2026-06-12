@@ -8,7 +8,7 @@ import { T, ACCENT, FONT, tint, IS_CARTO } from "../ui/tokens"
 import { groupsFor, REGISTRY, recommendFor, discoverGames, trendingGames } from "../ui/registry"
 import type { Entry, TabKey } from "../ui/registry"
 import { TabBar, ModuleCard, GameTile, FlagTile, StatPill, SectionHeader, ProgressRing } from "./ui"
-import { LineIcon, FlameIcon, ChevronDownIcon, FlaskIcon, SearchIcon, ShuffleIcon, CompassIcon, SparklesIcon, HistoryIcon, TrendingUpIcon } from "./icons"
+import { LineIcon, FlameIcon, ChevronDownIcon, FlaskIcon, SearchIcon, ShuffleIcon, CompassIcon, SparklesIcon, HistoryIcon, TrendingUpIcon, CrownIcon, PencilIcon } from "./icons"
 import FlagImage from "./FlagImage"
 import { GamePoster } from "./GamePoster"
 
@@ -56,6 +56,7 @@ interface Props {
   onQuickPlay: () => void
   onStartDaily: () => void
   onReverseQuiz: () => void
+  onSetUsername: (name: string) => void
 }
 
 const dayIdx = Math.floor(Date.now() / 86400000)
@@ -75,7 +76,7 @@ function pushRecent(id: string) {
   } catch { /* ignore */ }
 }
 
-export default function MainTabs({ state, tab, onTab, onNavigate, onQuickPlay, onStartDaily, onReverseQuiz }: Props) {
+export default function MainTabs({ state, tab, onTab, onNavigate, onQuickPlay, onStartDaily, onReverseQuiz, onSetUsername }: Props) {
   const today = todayString()
   const dailyDone = state.lastDailyDate === today
 
@@ -128,7 +129,7 @@ export default function MainTabs({ state, tab, onTab, onNavigate, onQuickPlay, o
             <CodexScreenLazy embedded />
           </Suspense>
         )}
-        {tab === "you" && <YouTab state={state} learned={learned} onNavigate={onNavigate} />}
+        {tab === "you" && <YouTab state={state} learned={learned} onNavigate={onNavigate} onSetUsername={onSetUsername} />}
       </main>
 
       <TabBar active={tab} onChange={onTab} />
@@ -694,51 +695,160 @@ function TrendingDeck({ games, launch }: { games: Entry[]; launch: (e: Entry) =>
   )
 }
 
-/* ── YOU — trophy room ─────────────────────────────────────────────────── */
-function YouTab({ state, learned, onNavigate }: { state: AppState; learned: number; onNavigate: (s: string) => void }) {
+/* ── YOU — the explorer's logbook. One page, everything that used to be split
+   across You / Full Profile / Achievements: identity (editable name), world
+   mastery with the regional breakdown, the field record, a compact trophy
+   shelf of the seven set-crowns, the daily log, and the Collection tools.
+   No Settings / Full Profile links — the gear lives in the header and the
+   profile IS this page now. ──────────────────────────────────────────────── */
+const CROWN_SETS = [
+  { id: "world", label: "World" },
+  { id: "europe", label: "Europe" },
+  { id: "africa", label: "Africa" },
+  { id: "asia", label: "Asia" },
+  { id: "americas", label: "Americas" },
+  { id: "oceania", label: "Oceania" },
+  { id: "middle-east", label: "Mid-East" },
+]
+const REGIONS = ["Europe", "Africa", "Asia", "Americas", "Middle East", "Oceania"] as const
+
+function YouTab({ state, learned, onNavigate, onSetUsername }: {
+  state: AppState; learned: number; onNavigate: (s: string) => void; onSetUsername: (name: string) => void
+}) {
+  const [editing, setEditing] = useState(false)
+  const [draft, setDraft] = useState(state.username)
+  const name = state.username.trim() || "Explorer"
   const pct = FLAGS.length ? Math.round((learned / FLAGS.length) * 100) : 0
+  const saveName = () => { onSetUsername(draft.trim().slice(0, 24)); setEditing(false) }
+
+  const regionStats = REGIONS.map(region => {
+    const inRegion = FLAGS.filter(f => f.region === region)
+    const got = inRegion.filter(f => state.learnedFlags.includes(f.code)).length
+    return { region, got, total: inRegion.length, done: inRegion.length > 0 && got >= inRegion.length }
+  })
+  const dailyDates = Object.keys(state.dailyHistory).sort().slice(-7)
+
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
-      {/* Completion hero */}
-      <div className="geo-grid-soft" style={{ display: "flex", alignItems: "center", gap: 18, padding: 18, borderRadius: 16, background: T.surface, border: `1px solid ${T.line}` }}>
-        <ProgressRing done={learned} total={FLAGS.length} accent={T.cyan} size={72} stroke={6} />
-        <div>
-          <div className="geo-micro" style={{ fontSize: 9, color: T.cyan, marginBottom: 4 }}>◦ World Mastery</div>
-          <div className="geo-display" style={{ color: T.text, fontWeight: 700, fontSize: 22 }}>
-            <span className="geo-mono">{pct}</span><span style={{ color: T.dim, fontSize: 15 }}>%</span>
+    <div className={IS_CARTO ? "carto-slide-up" : undefined} style={{ display: "flex", flexDirection: "column", gap: 20 }}>
+      {/* Identity — tap the name to edit it (saved locally) */}
+      <div style={{ display: "flex", alignItems: "center", gap: 14, padding: "4px 2px" }}>
+        <div style={{ width: 56, height: 56, borderRadius: "50%", flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center",
+          background: tint(ACCENT.learn, 0.13), border: `1px solid ${tint(ACCENT.learn, 0.32)}` }}>
+          <LineIcon name="geo" size={26} color={ACCENT.learn} />
+        </div>
+        <div style={{ flex: 1, minWidth: 0 }}>
+          {editing ? (
+            <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+              <input autoFocus value={draft} maxLength={24} placeholder="Your name"
+                onChange={e => setDraft(e.target.value)}
+                onKeyDown={e => { if (e.key === "Enter") saveName(); if (e.key === "Escape") setEditing(false) }}
+                style={{ flex: 1, minWidth: 0, padding: "7px 10px", borderRadius: 10, fontSize: 17, fontWeight: 700,
+                  fontFamily: FONT.display, background: T.surfaceHi, border: `1px solid ${tint(ACCENT.learn, 0.4)}`, color: T.text, outline: "none" }} />
+              <button onClick={saveName} className="geo-tap"
+                style={{ padding: "9px 16px", borderRadius: 999, flexShrink: 0, background: ACCENT.learn, color: T.onAccent, fontFamily: FONT.display, fontWeight: 700, fontSize: 13 }}>
+                Save
+              </button>
+            </div>
+          ) : (
+            <button onClick={() => { setDraft(state.username); setEditing(true) }} aria-label="Edit your name"
+              style={{ display: "flex", alignItems: "center", gap: 8, background: "transparent", padding: 0, textAlign: "left" }}>
+              <span className="geo-display" style={{ color: T.text, fontWeight: 800, fontSize: 24, letterSpacing: "-0.02em", lineHeight: 1.05 }}>{name}</span>
+              <PencilIcon size={14} color={ACCENT.learn} strokeWidth={1.6} />
+            </button>
+          )}
+          <div style={{ color: T.muted, fontSize: 12, marginTop: 3 }}>
+            {learned} flags learned · {state.crowns.length} {state.crowns.length === 1 ? "crown" : "crowns"}
           </div>
-          <div style={{ color: T.muted, fontSize: 11, marginTop: 2 }}>{learned} of {FLAGS.length} flags mastered</div>
         </div>
       </div>
 
-      {/* Metric grid */}
+      {/* World mastery — the ring plus the regional breakdown, one card */}
+      <div className={IS_CARTO ? "carto-card" : "geo-grid-soft"} style={{ padding: 18, borderRadius: 16, ...(IS_CARTO ? { ["--wash" as string]: tint(ACCENT.learn, 0.35) } : { background: T.surface, border: `1px solid ${T.line}` }) }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 18 }}>
+          <ProgressRing done={learned} total={FLAGS.length} accent={ACCENT.learn} size={72} stroke={6} />
+          <div>
+            <div className="geo-micro" style={{ fontSize: 9, color: ACCENT.learn, marginBottom: 4 }}>◦ World Mastery</div>
+            <div className="geo-display" style={{ color: T.text, fontWeight: 700, fontSize: 22 }}>
+              <span className="geo-mono">{pct}</span><span style={{ color: T.dim, fontSize: 15 }}>%</span>
+            </div>
+            <div style={{ color: T.muted, fontSize: 11, marginTop: 2 }}>{learned} of {FLAGS.length} flags mastered</div>
+          </div>
+        </div>
+        <div style={{ height: 1, background: T.line, margin: "14px 0 12px" }} />
+        <div style={{ display: "flex", flexDirection: "column", gap: 9 }}>
+          {regionStats.map(rs => (
+            <div key={rs.region} style={{ display: "flex", alignItems: "center", gap: 10 }}>
+              <span className="geo-display" style={{ width: 86, flexShrink: 0, fontSize: 12.5, fontWeight: 600, color: T.text }}>
+                {rs.region}{rs.done && <span style={{ marginLeft: 4 }}>👑</span>}
+              </span>
+              <div style={{ flex: 1, height: 5, borderRadius: 3, overflow: "hidden", background: tint(T.text, 0.08) }}>
+                <div style={{ width: `${rs.total ? (rs.got / rs.total) * 100 : 0}%`, height: "100%", borderRadius: 3,
+                  background: rs.done ? T.gold : ACCENT.learn, transition: "width 0.7s ease" }} />
+              </div>
+              <span style={{ width: 52, flexShrink: 0, textAlign: "right", fontFamily: FONT.mono, fontVariantNumeric: "tabular-nums", fontSize: 10.5, color: T.muted }}>
+                {rs.got}/{rs.total}
+              </span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Field record */}
       <div>
         <SectionHeader title="Field Record" accent={T.amber} />
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 10 }}>
-          <StatPill icon="🔥" value={state.currentStreak} label="Day streak" accent={T.amber} big />
-          <StatPill icon="⚡" value={state.longestStreak} label="Best streak" accent={T.chartreuse} big />
-          <StatPill icon="👑" value={state.crowns.length} label="Crowns" accent={T.cyan} big />
+          <StatPill icon={<FlameIcon size={15} color={T.amber} strokeWidth={1.7} />} value={state.currentStreak} label="Day streak" accent={T.amber} big />
+          <StatPill icon={<LineIcon name="quickplay" size={15} color={T.chartreuse} />} value={state.longestStreak} label="Best streak" accent={T.chartreuse} big />
+          <StatPill icon={<CrownIcon size={15} color={T.gold} strokeWidth={1.7} />} value={state.crowns.length} label="Crowns" accent={T.gold} big />
         </div>
       </div>
 
-      {/* Crowns shelf */}
+      {/* Trophy shelf — all seven set-crowns, earned and waiting */}
       <div>
-        <SectionHeader title="Crowns earned" accent={T.cyan} />
-        {state.crowns.length === 0 ? (
-          <div className="geo-grid-soft" style={{ padding: 18, borderRadius: 12, border: `1px dashed ${T.line}`, textAlign: "center", color: T.dim, fontSize: 12 }}>
-            Complete a full set to earn your first crown.
-          </div>
-        ) : (
-          <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
-            {state.crowns.map(c => (
-              <div key={c} style={{ display: "flex", alignItems: "center", gap: 6, padding: "7px 11px", borderRadius: 999, background: tint(T.amber, 0.1), border: `1px solid ${tint(T.amber, 0.35)}` }}>
-                <span style={{ fontSize: 13 }}>👑</span>
-                <span className="geo-display" style={{ color: T.text, fontSize: 12, fontWeight: 600, textTransform: "capitalize" }}>{c.replace(/-/g, " ")}</span>
+        <SectionHeader title={`Trophy Shelf · ${state.crowns.length}/${CROWN_SETS.length}`} accent={T.gold} />
+        <div style={{ display: "flex", justifyContent: "space-between", gap: 4 }}>
+          {CROWN_SETS.map(c => {
+            const earned = state.crowns.includes(c.id)
+            return (
+              <div key={c.id} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 5, flex: 1, minWidth: 0 }}>
+                <div className={earned ? "geo-foil" : undefined} style={{
+                  width: 42, height: 42, borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center",
+                  ...(earned
+                    ? { background: tint(T.gold, 0.14), border: `1px solid ${tint(T.gold, 0.5)}` }
+                    : { border: `1.5px dashed ${T.line}`, opacity: 0.65 }),
+                }}>
+                  {earned ? <span style={{ fontSize: 17 }}>👑</span> : <CrownIcon size={15} color={T.dim} strokeWidth={1.5} />}
+                </div>
+                <span className="geo-micro" style={{ fontSize: 8, color: earned ? T.gold : T.dim, whiteSpace: "nowrap" }}>{c.label}</span>
               </div>
-            ))}
-          </div>
-        )}
+            )
+          })}
+        </div>
       </div>
+
+      {/* Daily log — the last week of expeditions */}
+      {dailyDates.length > 0 && (
+        <div>
+          <SectionHeader title="Daily Log" accent={ACCENT.today} />
+          <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+            {dailyDates.map(date => {
+              const r = state.dailyHistory[date]
+              const ratio = r ? r.score / r.total : 0
+              const c = ratio >= 0.8 ? T.green : ratio >= 0.5 ? T.amber : T.danger
+              return (
+                <div key={date} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 4 }}>
+                  <div style={{ minWidth: 44, padding: "9px 6px", borderRadius: 11, textAlign: "center",
+                    background: tint(c, 0.12), border: `1.5px solid ${tint(c, 0.4)}`,
+                    color: c, fontFamily: FONT.mono, fontVariantNumeric: "tabular-nums", fontWeight: 700, fontSize: 12 }}>
+                    {r.score}/{r.total}
+                  </div>
+                  <span style={{ color: T.muted, fontSize: 9.5, fontFamily: FONT.mono }}>{date.slice(5)}</span>
+                </div>
+              )
+            })}
+          </div>
+        </div>
+      )}
 
       {/* Collection — the codex's companion reference tools */}
       <div>
@@ -749,13 +859,6 @@ function YouTab({ state, learned, onNavigate }: { state: AppState; learned: numb
               progress={e.progress?.(state)} onClick={() => onNavigate(e.id)} />
           ))}
         </div>
-      </div>
-
-      {/* Links */}
-      <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-        <ModuleCard icon="📊" glyph="profile" title="Full Profile" subtitle="Detailed history & badges" accent={T.cyan} onClick={() => onNavigate("profile")} />
-        <ModuleCard icon="🏅" glyph="achievements" title="Achievements" subtitle="Milestones & medals" accent={T.amber} onClick={() => onNavigate("achievements")} />
-        <ModuleCard icon="⚙️" glyph="settings" title="Settings" subtitle="Themes & aesthetic" accent={T.muted} onClick={() => onNavigate("settings")} />
       </div>
     </div>
   )
