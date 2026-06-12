@@ -1,14 +1,14 @@
-import { useState, lazy, Suspense } from "react"
+import { useState, useRef, lazy, Suspense } from "react"
 import type { ReactNode } from "react"
 import worldMap from "@svg-maps/world"
 import { FLAGS } from "../data/flags"
 import type { AppState } from "../utils/storage"
 import { todayString } from "../utils/prng"
 import { T, ACCENT, FONT, tint, IS_CARTO } from "../ui/tokens"
-import { groupsFor, REGISTRY, featuredGames, recommendFor, discoverGames } from "../ui/registry"
+import { groupsFor, REGISTRY, recommendFor, discoverGames, trendingGames, posterFlagFor } from "../ui/registry"
 import type { Entry, TabKey } from "../ui/registry"
-import { TabBar, ModuleCard, GameTile, StatPill, SectionHeader, ProgressRing } from "./ui"
-import { LineIcon, FlameIcon, ChevronDownIcon, FlaskIcon, SearchIcon, ShuffleIcon, CompassIcon, SparklesIcon, HeartIcon, HistoryIcon } from "./icons"
+import { TabBar, ModuleCard, GameTile, FlagTile, StatPill, SectionHeader, ProgressRing } from "./ui"
+import { LineIcon, FlameIcon, ChevronDownIcon, FlaskIcon, SearchIcon, ShuffleIcon, CompassIcon, SparklesIcon, HistoryIcon, TrendingUpIcon } from "./icons"
 import FlagImage from "./FlagImage"
 
 // Faint antique world-map backdrop (Cartographer skin only). Fixed to the
@@ -58,6 +58,7 @@ interface Props {
 }
 
 const dayIdx = Math.floor(Date.now() / 86400000)
+const weekIdx = Math.floor(Date.now() / (7 * 86400000))
 
 // Lightweight recently-played memory (ids only) so a favourite game is one tap
 // away instead of a re-swipe through the shelves. Separate key from AppState —
@@ -363,18 +364,13 @@ function PlayTab({ launch, state }: { launch: (e: Entry) => void; state: AppStat
   const curriculum = playable.filter(r => r.group === "Curriculum")
   const categoryGroups = groupsFor("play").filter(g => g.group !== "Curriculum" && !g.entries[0].sandbox)
 
-  // Local personalization signal — recents drive both rails below.
+  // Local personalization, all derived on-device from recently-played ids.
   const recentIds = loadRecent()
   const recents = recentIds.map(id => all.find(r => r.id === id)).filter((e): e is Entry => !!e)
   const rec = recommendFor(recentIds)
-  const featured = featuredGames()
   const discover = discoverGames(recentIds, dayIdx)
-
-  // Hero: Game of the Day rotates through every catalogue game tile.
-  const gotdPool = playable.filter(r => r.size === "tile")
-  const gotd = gotdPool[dayIdx % gotdPool.length]
-  const gotdAccent = ACCENT[gotd.accent]
-  const posterFlag = FLAGS[(dayIdx * 13) % FLAGS.length]
+  // Trending deck — featured A-tier games lead, then a stable weekly rotation.
+  const trending = trendingGames(weekIdx)
 
   const shuffle = () => launch(playable[Math.floor(Math.random() * playable.length)])
 
@@ -455,7 +451,7 @@ function PlayTab({ launch, state }: { launch: (e: Entry) => void; state: AppStat
         ) : filtered.length ? (
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
             {filtered.map(e => (
-              <GameTile key={e.id} icon={e.icon} glyph={e.id} title={e.title} subtitle={e.subtitle}
+              <FlagTile key={e.id} flag={posterFlagFor(e.id)} glyph={e.id} icon={e.icon} title={e.title} subtitle={e.subtitle}
                 accent={e.sandbox ? T.muted : ACCENT[e.accent]} onClick={() => launch(e)} style={{ width: "100%" }} />
             ))}
           </div>
@@ -466,25 +462,8 @@ function PlayTab({ launch, state }: { launch: (e: Entry) => void; state: AppStat
         )
       ) : (
       <>
-        {/* Game of the Day — big, colourful, flags front and centre */}
-        <button onClick={() => launch(gotd)} className={`geo-tap ${IS_CARTO ? "carto-card" : ""}`}
-          style={{ width: "100%", textAlign: "left", borderRadius: 16, padding: 16, position: "relative", overflow: "hidden", display: "flex", gap: 14, alignItems: "center",
-            border: `1px solid ${tint(gotdAccent, 0.4)}`,
-            background: `linear-gradient(150deg, ${tint(gotdAccent, 0.16)}, ${T.surface} 72%)`,
-            ...(IS_CARTO ? { ["--wash" as string]: tint(gotdAccent, 0.45) } : {}) }}>
-          <div style={{ flex: 1, minWidth: 0 }}>
-            <div className="geo-micro" style={{ fontSize: 9, color: gotdAccent, marginBottom: 5 }}>◦ Game of the Day · rotates daily</div>
-            <div className="geo-display" style={{ color: T.text, fontWeight: 800, fontSize: 24, lineHeight: 1.05, letterSpacing: "-0.01em" }}>{gotd.title}</div>
-            <p style={{ color: T.muted, fontSize: 12, marginTop: 5 }}>{gotd.subtitle}</p>
-            <div style={{ marginTop: 12, display: "inline-flex", alignItems: "center", gap: 6, padding: "8px 16px", borderRadius: 999, background: gotdAccent, color: T.onAccent }}>
-              <span style={{ fontFamily: FONT.display, fontWeight: 700, fontSize: 13 }}>Play</span><span style={{ fontSize: 14 }}>→</span>
-            </div>
-          </div>
-          <div style={{ flexShrink: 0, width: 96, height: 96, borderRadius: 14, overflow: "hidden", position: "relative", border: `1px solid ${T.line}`, background: tint(gotdAccent, 0.1), display: "flex", alignItems: "center", justifyContent: "center" }}>
-            <FlagImage code={posterFlag.code} style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", opacity: 0.3 }} />
-            <span style={{ position: "relative", color: gotdAccent, display: "flex" }}><LineIcon name={gotd.id} size={40} color={gotdAccent} strokeWidth={1.5} /></span>
-          </div>
-        </button>
+        {/* Trending this week — the swipeable flag-card deck (showpiece) */}
+        <TrendingDeck games={trending} launch={launch} />
 
         {/* Jump back in — your recent rotation, one tap away */}
         {recents.length > 0 && (
@@ -493,7 +472,7 @@ function PlayTab({ launch, state }: { launch: (e: Entry) => void; state: AppStat
               title="Jump back in" reason="Pick up a recent game" />
             <Rail>
               {recents.map(e => (
-                <GameTile key={e.id} icon={e.icon} glyph={e.id} title={e.title} subtitle={e.subtitle}
+                <FlagTile key={e.id} flag={posterFlagFor(e.id)} glyph={e.id} icon={e.icon} title={e.title} subtitle={e.subtitle}
                   accent={e.sandbox ? T.muted : ACCENT[e.accent]} onClick={() => launch(e)} />
               ))}
             </Rail>
@@ -507,20 +486,7 @@ function PlayTab({ launch, state }: { launch: (e: Entry) => void; state: AppStat
               title="Recommended for you" reason={`Because you played ${rec.seed.title}`} />
             <Rail>
               {rec.entries.map(e => (
-                <GameTile key={e.id} icon={e.icon} glyph={e.id} title={e.title} subtitle={e.subtitle} accent={ACCENT[e.accent]} onClick={() => launch(e)} />
-              ))}
-            </Rail>
-          </div>
-        )}
-
-        {/* Most Loved — hand-picked A-tier shelf */}
-        {featured.length > 0 && (
-          <div>
-            <ShelfHead icon={<HeartIcon size={15} color={ACCENT.challenge} strokeWidth={1.7} />} accent={ACCENT.challenge}
-              title="Most Loved" reason="Hand-picked favourites" />
-            <Rail>
-              {featured.map(e => (
-                <GameTile key={e.id} icon={e.icon} glyph={e.id} title={e.title} subtitle={e.subtitle} accent={ACCENT[e.accent]} onClick={() => launch(e)} />
+                <FlagTile key={e.id} flag={posterFlagFor(e.id)} glyph={e.id} icon={e.icon} title={e.title} subtitle={e.subtitle} accent={ACCENT[e.accent]} onClick={() => launch(e)} />
               ))}
             </Rail>
           </div>
@@ -539,13 +505,13 @@ function PlayTab({ launch, state }: { launch: (e: Entry) => void; state: AppStat
           </div>
         </div>
 
-        {/* The full catalogue, by category — every shelf swipes */}
+        {/* The collections — every game, filed by appetite. Each shelf swipes */}
         {categoryGroups.map(g => (
           <div key={g.group}>
             <SectionHeader title={g.group} accent={ACCENT[g.entries[0].accent]} />
             <Rail>
               {g.entries.map(e => (
-                <GameTile key={e.id} icon={e.icon} glyph={e.id} title={e.title} subtitle={e.subtitle} accent={ACCENT[e.accent]} onClick={() => launch(e)} />
+                <FlagTile key={e.id} flag={posterFlagFor(e.id)} glyph={e.id} icon={e.icon} title={e.title} subtitle={e.subtitle} accent={ACCENT[e.accent]} onClick={() => launch(e)} />
               ))}
             </Rail>
           </div>
@@ -566,7 +532,7 @@ function PlayTab({ launch, state }: { launch: (e: Entry) => void; state: AppStat
               } />
             <Rail>
               {discover.map(e => (
-                <GameTile key={e.id} icon={e.icon} glyph={e.id} title={e.title} subtitle={e.subtitle} accent={ACCENT[e.accent]} onClick={() => launch(e)} />
+                <FlagTile key={e.id} flag={posterFlagFor(e.id)} glyph={e.id} icon={e.icon} title={e.title} subtitle={e.subtitle} accent={ACCENT[e.accent]} onClick={() => launch(e)} />
               ))}
             </Rail>
           </div>
@@ -629,6 +595,95 @@ function ShelfHead({ icon, title, reason, accent, action }: {
         </div>
       </div>
       {action}
+    </div>
+  )
+}
+
+/* ── Trending this week — the showpiece. A swipeable stack of bold, full-colour
+   flag cards: flick through games like a deck of postcards, one tap to play.
+   Pointer-drag is an enhancement; explicit Play + Skip buttons and a position
+   counter keep every game reachable without dragging, and it honours
+   prefers-reduced-motion (instant swap, no fly-out). ─────────────────────── */
+function TrendingDeck({ games, launch }: { games: Entry[]; launch: (e: Entry) => void }) {
+  const [idx, setIdx] = useState(0)
+  const [dx, setDx] = useState(0)
+  const startX = useRef(0)
+  const dragging = useRef(false)
+  const [reduce] = useState(() =>
+    typeof window !== "undefined" && !!window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches)
+
+  if (!games.length) return null
+  const n = games.length
+  const advance = () => { setIdx(i => (i + 1) % n); setDx(0) }
+  const commit = (dir: number) => {
+    if (reduce) { advance(); return }
+    setDx(dir * 540)
+    window.setTimeout(advance, 230)
+  }
+
+  const top = games[idx]
+  const accent = ACCENT[top.accent]
+
+  return (
+    <div>
+      <div style={{ position: "relative", height: 300 }}>
+        {/* Depth cards peeking behind, for the "stack of postcards" feel */}
+        {[2, 1].filter(off => off < n).map(off => (
+          <div key={off} aria-hidden style={{
+            position: "absolute", inset: 0, borderRadius: 18,
+            background: T.surface, border: `1px solid ${T.line}`,
+            transform: `translateY(${off * 9}px) scale(${1 - off * 0.035})`,
+            opacity: 1 - off * 0.16, boxShadow: "0 8px 20px -16px rgba(31,58,60,0.4)",
+          }} />
+        ))}
+
+        {/* Live top card — drag surface */}
+        <div
+          onPointerDown={e => { dragging.current = true; startX.current = e.clientX; try { (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId) } catch { /* ignore */ } }}
+          onPointerMove={e => { if (dragging.current) setDx(e.clientX - startX.current) }}
+          onPointerUp={() => { if (!dragging.current) return; dragging.current = false; if (Math.abs(dx) > 80) commit(dx > 0 ? 1 : -1); else setDx(0) }}
+          style={{
+            position: "absolute", inset: 0, borderRadius: 18, overflow: "hidden", touchAction: "pan-y", cursor: "grab",
+            background: tint(accent, 0.12), border: `1px solid ${tint(accent, 0.5)}`,
+            boxShadow: `0 2px 6px rgba(31,58,60,0.08), 0 22px 42px -22px ${tint(accent, 0.95)}`,
+            transform: `translateX(${dx}px) rotate(${dx * 0.022}deg)`,
+            transition: dragging.current ? "none" : "transform 0.26s cubic-bezier(0.2,0.7,0.2,1)",
+            opacity: Math.max(0, 1 - Math.abs(dx) / 620),
+          }}>
+          {/* Full-bleed flag poster + parchment scrim so the caption stays legible */}
+          <FlagImage code={posterFlagFor(top.id)} style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+          <div aria-hidden style={{ position: "absolute", inset: 0, background: `linear-gradient(180deg, ${tint(T.text, 0.14)} 0%, transparent 26%, transparent 42%, ${T.surface} 88%)` }} />
+
+          {/* Eyebrow chip */}
+          <div style={{ position: "absolute", top: 12, left: 14, display: "inline-flex", alignItems: "center", gap: 6, padding: "5px 10px", borderRadius: 999, background: `${T.surface}E6`, border: `1px solid ${tint(accent, 0.4)}` }}>
+            <TrendingUpIcon size={12} color={accent} strokeWidth={2} />
+            <span className="geo-micro" style={{ fontSize: 8.5, color: accent }}>Trending · {idx + 1}/{n}</span>
+          </div>
+
+          {/* Caption + actions */}
+          <div style={{ position: "absolute", left: 0, right: 0, bottom: 0, padding: "0 16px 15px" }}>
+            <div className="geo-display" style={{ color: T.text, fontWeight: 800, fontSize: 24, letterSpacing: "-0.02em", lineHeight: 1.04 }}>{top.title}</div>
+            <div style={{ color: T.muted, fontSize: 12, marginTop: 3, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{top.subtitle}</div>
+            <div style={{ display: "flex", alignItems: "center", gap: 10, marginTop: 13 }}>
+              <button onClick={() => launch(top)} onPointerDown={e => e.stopPropagation()}
+                style={{ display: "inline-flex", alignItems: "center", gap: 7, padding: "11px 22px", borderRadius: 999, minHeight: 44, background: accent, color: T.onAccent }}>
+                <span style={{ fontFamily: FONT.display, fontWeight: 700, fontSize: 15 }}>Play</span><span style={{ fontSize: 15 }}>→</span>
+              </button>
+              <button onClick={() => commit(-1)} onPointerDown={e => e.stopPropagation()} aria-label="Skip to next game"
+                style={{ display: "inline-flex", alignItems: "center", padding: "11px 18px", borderRadius: 999, minHeight: 44, background: `${T.surface}E6`, border: `1px solid ${T.line}`, color: T.muted }}>
+                <span style={{ fontFamily: FONT.display, fontWeight: 600, fontSize: 13 }}>Skip</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Position dots */}
+      <div style={{ display: "flex", justifyContent: "center", gap: 5, marginTop: 13 }} aria-hidden>
+        {games.map((_, i) => (
+          <span key={i} style={{ width: i === idx ? 16 : 5, height: 5, borderRadius: 3, background: i === idx ? accent : T.line, transition: "width 0.25s, background 0.2s" }} />
+        ))}
+      </div>
     </div>
   )
 }
