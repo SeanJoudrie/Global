@@ -12,12 +12,18 @@ import type { SubRegion } from '../data/challenges'
 import { T, ACCENT, FONT, tint } from '../ui/tokens'
 import { ScreenHeader } from './ui'
 import { LineIcon } from './icons'
-import { Search, Anchor, ChevronDown, Castle, Sun, Mountain, Landmark, MoonStar, Sailboat } from 'lucide-react'
+import { Search, Anchor, ChevronDown, Castle, Sun, Mountain, Landmark, MoonStar, Sailboat, Rainbow, Users, Feather, MapPin, Crown, Vote, Building2, HeartHandshake } from 'lucide-react'
 
 // Etched line icon per continent — cartographer style, never emoji.
 const REGION_ICONS: Record<string, typeof Castle> = {
   Europe: Castle, Africa: Sun, Asia: Mountain, Americas: Landmark,
   'Middle East': MoonStar, Oceania: Sailboat,
+}
+
+// Same etched treatment for the identity collections.
+const CAT_ICONS: Record<string, typeof Castle> = {
+  'Pride & LGBTQ+': Rainbow, 'Pan-National & Ethnic': Users, 'Indigenous Peoples': Feather,
+  'Separatist & Autonomous': MapPin, Micronations: Crown, 'Civic & Ideological': Vote,
 }
 
 interface Props {
@@ -134,7 +140,7 @@ export default function CodexScreen({ onBack, initialCode, embedded = false }: P
                 </button>
 
                 {isExpanded && (
-                  <div className="mt-2.5 space-y-1.5">
+                  <div className="mt-1.5">
                     {flags.map(f => {
                       const open = selectedCode === f.code
                       const capital = CAPITAL_BY_CODE.get(f.code)
@@ -143,8 +149,8 @@ export default function CodexScreen({ onBack, initialCode, embedded = false }: P
                           <button
                             onClick={() => setSelectedCode(c => (c === f.code ? null : f.code))}
                             aria-expanded={open}
-                            className="geo-tap w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all active:scale-[0.98] text-left"
-                            style={{ background: T.surface, border: `1px solid ${open ? tint(ACCENT.codex, 0.4) : T.line}` }}>
+                            className="geo-tap w-full flex items-center gap-3 px-1.5 py-2.5 rounded-lg transition-all active:scale-[0.99] text-left"
+                            style={{ background: open ? tint(ACCENT.codex, 0.07) : 'transparent', borderBottom: `1px solid ${tint(T.line, 0.55)}` }}>
                             {/* Flag thumbnail */}
                             <img
                               src={f.flagUrl}
@@ -451,7 +457,9 @@ function IdentityCodexSection() {
         className="geo-tap w-full flex items-center justify-between px-1 py-3 transition-all active:scale-[0.99]"
         style={{ background: 'transparent', borderBottom: `1px solid ${sectionOpen ? tint(T.warm, 0.45) : T.line}` }}>
         <div className="text-left">
-          <h3 className="text-sm font-bold uppercase tracking-widest" style={{ color: T.warm }}>Identity &amp; Other Flags</h3>
+          <h3 className="text-sm font-bold uppercase tracking-widest flex items-center gap-2" style={{ color: T.warm }}>
+            <HeartHandshake size={15} color={T.warm} strokeWidth={1.6} absoluteStrokeWidth /> Identity &amp; Other Flags
+          </h3>
           <p className="text-xs" style={{ color: T.dim }}>{IDENTITY_FLAGS.length - SIGNAL_FLAGS.length} flags beyond countries</p>
         </div>
         <ChevronDown size={17} color={T.warm} strokeWidth={1.6} absoluteStrokeWidth
@@ -466,13 +474,16 @@ function IdentityCodexSection() {
           <div key={cat} className="mb-3">
             <button
               onClick={() => setOpenCat(o => o === cat ? null : cat)}
-              className="geo-tap w-full flex items-center justify-between px-4 py-3 rounded-xl transition-all active:scale-[0.98]"
-              style={{ background: isOpen ? T.surface : T.surfaceHi, border: `1px solid ${isOpen ? tint(T.warm, 0.4) : T.line}` }}>
-              <div className="flex items-center gap-2">
+              aria-expanded={isOpen}
+              className="geo-tap w-full flex items-center justify-between px-1 py-3 transition-all active:scale-[0.99]"
+              style={{ background: 'transparent', borderBottom: `1px solid ${isOpen ? tint(T.warm, 0.45) : T.line}` }}>
+              <div className="flex items-center gap-2.5">
+                {(() => { const Icon = CAT_ICONS[cat] ?? Users; return <Icon size={15} color={T.warm} strokeWidth={1.6} absoluteStrokeWidth /> })()}
                 <h3 className="text-sm font-bold uppercase tracking-widest" style={{ color: T.warm }}>{cat}</h3>
                 <span className="text-xs" style={{ color: T.dim, fontFamily: FONT.mono, fontVariantNumeric: 'tabular-nums' }}>{flags.length}</span>
               </div>
-              <span style={{ color: T.warm, fontSize: 18, transition: 'transform 0.2s', transform: isOpen ? 'rotate(90deg)' : 'rotate(0deg)' }}>›</span>
+              <ChevronDown size={16} color={T.warm} strokeWidth={1.6} absoluteStrokeWidth
+                style={{ transition: 'transform 0.2s', transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)', flexShrink: 0 }} />
             </button>
             {isOpen && (
               <div className="mt-1.5 space-y-1.5">
@@ -480,8 +491,8 @@ function IdentityCodexSection() {
                   const showNote = openFlag === f.id
                   return (
                     <button key={f.id} onClick={() => setOpenFlag(o => o === f.id ? null : f.id)}
-                      className="geo-tap w-full px-4 py-3 rounded-xl transition-all active:scale-[0.99] text-left"
-                      style={{ background: T.surface, border: `1px solid ${showNote ? tint(T.warm, 0.35) : T.line}` }}>
+                      className="geo-tap w-full px-1.5 py-2.5 rounded-lg transition-all active:scale-[0.99] text-left"
+                      style={{ background: showNote ? tint(T.warm, 0.07) : 'transparent', borderBottom: `1px solid ${tint(T.line, 0.55)}` }}>
                       <div className="flex items-center gap-3">
                         <img src={f.flagUrl} alt={f.name}
                           style={{ width: 46, height: 30, objectFit: 'contain', borderRadius: 5, border: `1px solid ${T.line}`, flexShrink: 0, background: T.surfaceHi }}
@@ -518,8 +529,8 @@ function AmericanCitiesCodexSection() {
         className="geo-tap w-full flex items-center justify-between px-1 py-3 transition-all active:scale-[0.99]"
         style={{ background: 'transparent', borderBottom: `1px solid ${open ? tint(T.cyan, 0.45) : T.line}` }}>
         <div className="text-left">
-          <h3 className="text-sm font-bold uppercase tracking-widest" style={{ color: T.cyan }}>
-            American Cities <span style={{ color: tint(T.cyan, 0.6), fontSize: 10 }}>(Beta)</span>
+          <h3 className="text-sm font-bold uppercase tracking-widest flex items-center gap-2" style={{ color: T.cyan }}>
+            <Building2 size={15} color={T.cyan} strokeWidth={1.6} absoluteStrokeWidth /> American Cities <span style={{ color: tint(T.cyan, 0.6), fontSize: 10 }}>(Beta)</span>
           </h3>
           <p className="text-xs" style={{ color: T.dim }}>{cities.length} U.S. municipal flags</p>
         </div>
@@ -532,8 +543,8 @@ function AmericanCitiesCodexSection() {
             const showNote = openFlag === f.id
             return (
               <button key={f.id} onClick={() => setOpenFlag(o => o === f.id ? null : f.id)}
-                className="geo-tap w-full px-4 py-3 rounded-xl transition-all active:scale-[0.99] text-left"
-                style={{ background: T.surface, border: `1px solid ${showNote ? tint(T.cyan, 0.35) : T.line}` }}>
+                className="geo-tap w-full px-1.5 py-2.5 rounded-lg transition-all active:scale-[0.99] text-left"
+                style={{ background: showNote ? tint(T.cyan, 0.07) : 'transparent', borderBottom: `1px solid ${tint(T.line, 0.55)}` }}>
                 <div className="flex items-center gap-3">
                   <img src={f.flagUrl} alt={f.name}
                     style={{ width: 46, height: 30, objectFit: 'contain', borderRadius: 5, border: `1px solid ${T.line}`, flexShrink: 0, background: T.surfaceHi }}
@@ -582,8 +593,8 @@ function SignalCodexSection() {
             const showNote = openFlag === f.id
             return (
               <button key={f.id} onClick={() => setOpenFlag(o => o === f.id ? null : f.id)}
-                className="geo-tap w-full px-4 py-3 rounded-xl transition-all active:scale-[0.99] text-left"
-                style={{ background: T.surface, border: `1px solid ${showNote ? tint(T.cyan, 0.35) : T.line}` }}>
+                className="geo-tap w-full px-1.5 py-2.5 rounded-lg transition-all active:scale-[0.99] text-left"
+                style={{ background: showNote ? tint(T.cyan, 0.07) : 'transparent', borderBottom: `1px solid ${tint(T.line, 0.55)}` }}>
                 <div className="flex items-center gap-3">
                   <img src={f.flagUrl} alt={f.name}
                     style={{ width: 46, height: 30, objectFit: 'contain', borderRadius: 5, border: `1px solid ${T.line}`, flexShrink: 0, background: T.surfaceHi }}
