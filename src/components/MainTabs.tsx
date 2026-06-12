@@ -1,6 +1,7 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import worldMap from "@svg-maps/world"
 import { FLAGS } from "../data/flags"
+import type { FlagRecord } from "../data/flags"
 import { CAPITALS } from "../data/capitals"
 import type { AppState } from "../utils/storage"
 import { todayString } from "../utils/prng"
@@ -270,6 +271,9 @@ const CAPITAL_BY_CODE = new Map(CAPITALS.map(c => [c.code, c.capital]))
 
 function CodexTab({ state, launch, onOpenCodexCountry }: { state: AppState; launch: (e: Entry) => void; onOpenCodexCountry: (code: string) => void }) {
   const [open, setOpen] = useState<string | null>("Europe")
+  // Tapping a country opens a dismissable peek sheet on THIS page (casual
+  // tap-through browsing) — the full codex page is one tap deeper, opt-in.
+  const [peek, setPeek] = useState<FlagRecord | null>(null)
   const learned = new Set(state.learnedFlags)
   const blocks = CONTINENT_ORDER
     .map(continent => ({ continent, flags: FLAGS.filter(f => f.region === continent) }))
@@ -285,7 +289,7 @@ function CodexTab({ state, launch, onOpenCodexCountry }: { state: AppState; laun
             <ContinentDrawer key={b.continent} continent={b.continent} flags={b.flags} learned={learned}
               open={open === b.continent}
               onToggle={() => setOpen(o => (o === b.continent ? null : b.continent))}
-              onOpenCountry={onOpenCodexCountry} />
+              onOpenCountry={code => setPeek(FLAGS.find(f => f.code === code) ?? null)} />
           ))}
         </div>
       </div>
@@ -298,6 +302,81 @@ function CodexTab({ state, launch, onOpenCodexCountry }: { state: AppState; laun
               progress={e.progress?.(state)} onClick={() => launch(e)} />
           ))}
         </div>
+      </div>
+
+      {peek && (
+        <CountryPeek flag={peek} learned={learned.has(peek.code)}
+          onClose={() => setPeek(null)}
+          onOpenFull={() => { const code = peek.code; setPeek(null); onOpenCodexCountry(code) }} />
+      )}
+    </div>
+  )
+}
+
+/* ── Country peek sheet — a light, dismissable popup over the Codex tab so
+   browsing stays casual: tap a country, skim, tap away, tap the next one.
+   The full history page is opt-in via the button at the bottom. ──────────── */
+function CountryPeek({ flag, learned, onClose, onOpenFull }: {
+  flag: FlagRecord; learned: boolean; onClose: () => void; onOpenFull: () => void
+}) {
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") onClose() }
+    window.addEventListener("keydown", onKey)
+    return () => window.removeEventListener("keydown", onKey)
+  }, [onClose])
+  return (
+    <div role="dialog" aria-modal="true" aria-label={flag.name}
+      style={{ position: "fixed", inset: 0, zIndex: 80, display: "flex", alignItems: "flex-end", justifyContent: "center" }}>
+      <div onClick={onClose} aria-hidden
+        style={{ position: "absolute", inset: 0, background: tint(T.text, 0.38), backdropFilter: "blur(2px)" }} />
+      <div className="carto-slide-up"
+        style={{
+          position: "relative", width: "100%", maxWidth: 520, maxHeight: "82vh", overflowY: "auto",
+          background: T.surface, border: `1px solid ${T.line}`, borderBottom: "none",
+          borderRadius: "20px 20px 0 0", padding: "10px 18px calc(20px + env(safe-area-inset-bottom))",
+          boxShadow: `0 -12px 40px -18px ${tint(T.text, 0.45)}`,
+        }}>
+        <div aria-hidden style={{ width: 36, height: 4, borderRadius: 2, background: T.line, margin: "0 auto 12px" }} />
+        <button onClick={onClose} aria-label="Close"
+          style={{ position: "absolute", top: 10, right: 10, width: 44, height: 44, borderRadius: 999, background: "transparent", color: T.dim, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 22, lineHeight: 1 }}>
+          ×
+        </button>
+
+        <div style={{ width: "100%", aspectRatio: "5 / 3", borderRadius: 12, overflow: "hidden", border: `1px solid ${T.line}`, boxShadow: `0 4px 14px -8px ${tint(T.text, 0.4)}` }}>
+          <FlagImage code={flag.code} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+        </div>
+
+        <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: 10, marginTop: 14 }}>
+          <div style={{ minWidth: 0 }}>
+            <div className="geo-micro" style={{ fontSize: 9, color: ACCENT.codex, marginBottom: 4 }}>
+              ◦ {flag.region}{CAPITAL_BY_CODE.get(flag.code) ? ` · ${CAPITAL_BY_CODE.get(flag.code)}` : ""}
+            </div>
+            <h2 className="geo-display" style={{ color: T.text, fontWeight: 700, fontSize: 24, lineHeight: 1.05, margin: 0 }}>{flag.name}</h2>
+          </div>
+          {learned
+            ? <span style={{ display: "flex", alignItems: "center", gap: 4, color: T.green, fontSize: 10.5, fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.12em", marginTop: 6, flexShrink: 0 }}>
+                <CheckIcon size={14} color={T.green} strokeWidth={1.8} /> learned
+              </span>
+            : <span className="geo-micro" style={{ fontSize: 8, color: T.muted, padding: "4px 9px", borderRadius: 999, border: `1px solid ${T.lineHi}`, marginTop: 6, flexShrink: 0 }}>new</span>}
+        </div>
+
+        <p style={{ color: T.muted, fontSize: 13, lineHeight: 1.55, marginTop: 10 }}>{flag.funFact}</p>
+
+        {flag.distinguishingTip && (
+          <div style={{ display: "flex", gap: 10, alignItems: "flex-start", marginTop: 12, padding: "11px 12px", borderRadius: 10, background: T.surfaceHi, border: `1px solid ${T.line}` }}>
+            <span style={{ flexShrink: 0, display: "flex", marginTop: 1 }}><SearchIcon size={15} color={ACCENT.codex} strokeWidth={1.6} /></span>
+            <div>
+              <div className="geo-micro" style={{ fontSize: 8.5, color: ACCENT.codex, marginBottom: 3 }}>How to spot it</div>
+              <div style={{ color: T.muted, fontSize: 12, lineHeight: 1.5 }}>{flag.distinguishingTip}</div>
+            </div>
+          </div>
+        )}
+
+        <button onClick={onOpenFull} className="geo-tap"
+          style={{ width: "100%", marginTop: 16, padding: "13px 18px", borderRadius: 999, background: ACCENT.codex, color: T.onAccent, display: "flex", alignItems: "center", justifyContent: "center", gap: 8 }}>
+          <span style={{ fontFamily: FONT.display, fontWeight: 700, fontSize: 14 }}>Full flag history</span>
+          <span style={{ fontSize: 15 }}>→</span>
+        </button>
       </div>
     </div>
   )
