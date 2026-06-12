@@ -1,5 +1,9 @@
 import { useState, useEffect } from 'react'
+import { Lightbulb } from 'lucide-react'
 import type { Question } from '../utils/quiz'
+import { T, ACCENT, tint } from '../ui/tokens'
+import { ScreenHeader } from './ui'
+import { LineIcon } from './icons'
 
 interface Props {
   questions: Question[]
@@ -20,6 +24,7 @@ export default function QuizScreen({ questions, title, onFinish, onBack }: Props
   const [imgError, setImgError] = useState(false)
 
   const q = questions[idx]
+  const accent = ACCENT.play
 
   useEffect(() => {
     setAnswerState('idle')
@@ -50,24 +55,24 @@ export default function QuizScreen({ questions, title, onFinish, onBack }: Props
   }
 
   const choiceBg = (i: number) => {
-    if (answerState === 'idle') return '#2D1F52'
-    if (i === q.correctIndex) return '#34D39922'
-    if (i === selectedIdx && answerState === 'wrong') return '#F43F5E22'
-    return '#2D1F52'
+    if (answerState === 'idle') return T.surface
+    if (i === q.correctIndex) return tint(T.green, 0.13)
+    if (i === selectedIdx && answerState === 'wrong') return tint(T.danger, 0.13)
+    return T.surface
   }
 
   const choiceBorder = (i: number) => {
-    if (answerState === 'idle') return '#8B6CFF33'
-    if (i === q.correctIndex) return '#34D399'
-    if (i === selectedIdx && answerState === 'wrong') return '#F43F5E'
-    return '#8B6CFF22'
+    if (answerState === 'idle') return T.line
+    if (i === q.correctIndex) return T.green
+    if (i === selectedIdx && answerState === 'wrong') return T.danger
+    return T.line
   }
 
   const choiceTextColor = (i: number) => {
-    if (answerState === 'idle') return '#F5F3FF'
-    if (i === q.correctIndex) return '#34D399'
-    if (i === selectedIdx && answerState === 'wrong') return '#F43F5E'
-    return '#B8A9E0'
+    if (answerState === 'idle') return T.text
+    if (i === q.correctIndex) return T.green
+    if (i === selectedIdx && answerState === 'wrong') return T.danger
+    return T.muted
   }
 
   const choiceAnimClass = (i: number) => {
@@ -76,28 +81,22 @@ export default function QuizScreen({ questions, title, onFinish, onBack }: Props
   }
 
   return (
-    <div className="min-h-screen flex flex-col" style={{ background: 'linear-gradient(135deg,var(--bg-from) 0%,var(--bg-to) 100%)' }}>
-      <header className="flex items-center justify-between px-5 pt-8 pb-2" style={{ zIndex: 1 }}>
-        <button onClick={onBack} className="w-9 h-9 flex items-center justify-center rounded-full text-xl"
-          style={{ background: '#2D1F52', color: '#B8A9E0' }}>‹</button>
-        <div className="text-center">
-          <div className="text-xs font-semibold uppercase tracking-widest" style={{ color: '#B8A9E0' }}>{title}</div>
-          <div className="text-sm font-bold" style={{ color: '#F5F3FF' }}>{idx + 1} / {questions.length}</div>
-        </div>
-        <div className="w-9" />
-      </header>
+    <div className="min-h-screen flex flex-col" style={{ background: T.bg, minHeight: '100vh', color: T.text }}>
+      <ScreenHeader title={title} subtitle={`${idx + 1} / ${questions.length}`} onBack={onBack} />
 
-      <div className="mx-5 mt-2 h-1.5 rounded-full overflow-hidden" style={{ background: '#2D1F52', zIndex: 1 }}>
+      <div className="mx-5 mt-2 h-1.5 rounded-full overflow-hidden" style={{ background: T.line, zIndex: 1 }}>
         <div className="h-full rounded-full transition-all duration-500"
-          style={{ width: `${(idx / questions.length) * 100}%`, background: 'linear-gradient(90deg,#8B6CFF,#A78BFA)' }} />
+          style={{ width: `${(idx / questions.length) * 100}%`, background: accent }} />
       </div>
 
       <div className="flex-1 flex flex-col items-center px-5 py-4" style={{ zIndex: 1 }}>
         <div className="mb-4 relative">
-          <div className="rounded-2xl overflow-hidden shadow-2xl" style={{ border: '2px solid #8B6CFF44' }}>
+          <div className="rounded-2xl overflow-hidden shadow-2xl" style={{ border: `2px solid ${tint(accent, 0.3)}` }}>
             {imgError ? (
-              <div className="flex items-center justify-center text-5xl"
-                style={{ width: 280, height: 175, background: '#2D1F52', color: '#B8A9E0' }}>🏳️</div>
+              <div className="flex items-center justify-center"
+                style={{ width: 280, height: 175, background: T.surface, color: T.muted }}>
+                <LineIcon name="flags" size={48} color={T.muted} />
+              </div>
             ) : (
               <img src={q.target.flagUrl} alt="mystery flag" width={280} height={175}
                 className="object-cover" style={{ display: 'block' }} onError={() => setImgError(true)} />
@@ -107,17 +106,17 @@ export default function QuizScreen({ questions, title, onFinish, onBack }: Props
           {answerState !== 'idle' && (
             <button
               onClick={() => setShowLightbulb(s => !s)}
-              className="absolute -bottom-3 -right-3 w-9 h-9 rounded-full flex items-center justify-center text-lg transition-all active:scale-90 animate-fade-in"
-              style={{ background: '#2D1F52', border: '1px solid #FBBF2466', boxShadow: '0 2px 8px #00000066' }}
-            >💡</button>
+              className="absolute -bottom-3 -right-3 w-9 h-9 rounded-full flex items-center justify-center transition-all active:scale-90 animate-fade-in"
+              style={{ background: T.surface, border: `1px solid ${tint(T.gold, 0.4)}`, boxShadow: `0 2px 8px ${tint(T.text, 0.18)}` }}
+            ><Lightbulb size={17} color={T.gold} strokeWidth={1.6} absoluteStrokeWidth /></button>
           )}
         </div>
 
         {answerState === 'correct' && (
           <div className="w-full max-w-sm mb-3 px-4 py-3 rounded-xl animate-slide-up"
-            style={{ background: '#2D1F52', border: '1px solid #34D39944' }}>
-            <div className="text-xs font-semibold mb-1" style={{ color: '#34D399' }}>✓ Correct — {q.target.name}</div>
-            <p className="text-sm" style={{ color: '#F5F3FF' }}>{q.target.funFact}</p>
+            style={{ background: T.surface, border: `1px solid ${tint(T.green, 0.27)}` }}>
+            <div className="text-xs font-semibold mb-1" style={{ color: T.green }}>✓ Correct — {q.target.name}</div>
+            <p className="text-sm" style={{ color: T.text }}>{q.target.funFact}</p>
           </div>
         )}
 
@@ -126,15 +125,18 @@ export default function QuizScreen({ questions, title, onFinish, onBack }: Props
           // below — no answer/fun-fact box — so it's a calmer moment to learn. The fun
           // fact is the reward for getting it right.
           <div className="w-full max-w-sm mb-1 text-center animate-fade-in">
-            <span className="text-xs font-semibold" style={{ color: '#F43F5E' }}>✗ The answer was {q.target.name}</span>
+            <span className="text-xs font-semibold" style={{ color: T.danger }}>✗ The answer was {q.target.name}</span>
           </div>
         )}
 
         {showLightbulb && answerState !== 'idle' && (
           <div className="w-full max-w-sm mb-3 px-4 py-3 rounded-xl animate-slide-up"
-            style={{ background: '#2D1F52', border: '1px solid #FBBF2444' }}>
-            <div className="text-xs font-semibold mb-1" style={{ color: '#FBBF24' }}>💡 How to tell them apart</div>
-            <p className="text-sm" style={{ color: '#F5F3FF' }}>{q.target.distinguishingTip}</p>
+            style={{ background: T.surface, border: `1px solid ${tint(T.gold, 0.27)}` }}>
+            <div className="text-xs font-semibold mb-1 flex items-center gap-1.5" style={{ color: T.gold }}>
+              <Lightbulb size={13} color={T.gold} strokeWidth={1.6} absoluteStrokeWidth />
+              How to tell them apart
+            </div>
+            <p className="text-sm" style={{ color: T.text }}>{q.target.distinguishingTip}</p>
           </div>
         )}
 
@@ -161,7 +163,7 @@ export default function QuizScreen({ questions, title, onFinish, onBack }: Props
           <button
             onClick={handleNext}
             className="w-full max-w-sm py-3.5 rounded-xl font-bold text-base transition-all active:scale-95 animate-slide-up"
-            style={{ background: 'linear-gradient(135deg,#8B6CFF,#A78BFA)', color: '#fff' }}
+            style={{ background: accent, color: T.onAccent }}
           >
             {idx + 1 >= questions.length ? 'See Results →' : 'Next →'}
           </button>

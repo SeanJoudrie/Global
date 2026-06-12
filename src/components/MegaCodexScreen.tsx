@@ -4,6 +4,8 @@ import { SUB_FLAGS } from "../data/subdivisions"
 import { HISTORICAL_FLAGS } from "../data/historicalFlags"
 import { IDENTITY_FLAGS } from "../data/identityFlags"
 import { CODEX } from "../data/codex"
+import { T, tint } from "../ui/tokens"
+import { ChevronLeftIcon } from "./icons"
 
 interface Props { onBack: () => void }
 
@@ -66,15 +68,17 @@ export default function MegaCodexScreen({ onBack }: Props) {
   }
 
   return (
-    <div style={{ position: "fixed", inset: 0, background: "#0B0717", zIndex: 1 }}>
-      <button onClick={onBack} aria-label="Back"
+    <div style={{ position: "fixed", inset: 0, background: T.void, color: T.text, zIndex: 1 }}>
+      <button onClick={onBack} aria-label="Back" className="geo-tap"
         style={{
           position: "fixed", top: 12, left: 12, zIndex: 50,
-          width: 40, height: 40, borderRadius: 999, fontSize: 22,
+          width: 44, height: 44, borderRadius: 999,
           display: "flex", alignItems: "center", justifyContent: "center",
-          background: "rgba(11,7,23,0.82)", color: "#F5F3FF",
-          border: "1px solid rgba(139,108,255,0.4)", backdropFilter: "blur(6px)", cursor: "pointer",
-        }}>‹</button>
+          background: tint(T.surface, 0.85), color: T.muted,
+          border: `1px solid ${T.line}`, backdropFilter: "blur(6px)", cursor: "pointer",
+        }}>
+        <ChevronLeftIcon size={22} color={T.muted} strokeWidth={1.8} />
+      </button>
 
       <div ref={scrollRef} onScroll={onScroll}
         style={{ position: "absolute", inset: 0, overflowY: "auto", WebkitOverflowScrolling: "touch" }}>
@@ -92,7 +96,7 @@ export default function MegaCodexScreen({ onBack }: Props) {
                 alt=""
                 loading="lazy"
                 decoding="async"
-                style={{ width: "100%", aspectRatio: "3 / 2", objectFit: "cover", borderRadius: 3, display: "block", background: "#16102E" }}
+                style={{ width: "100%", aspectRatio: "3 / 2", objectFit: "cover", borderRadius: 3, display: "block", background: T.surface }}
                 onError={e => {
                   const el = e.target as HTMLImageElement
                   const t = Number(el.dataset.t || "0")

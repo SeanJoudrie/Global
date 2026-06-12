@@ -1,4 +1,5 @@
-﻿import { useState, useCallback, useEffect, lazy, Suspense } from "react"
+﻿import { useState, useCallback, useEffect, lazy, Suspense, Component } from "react"
+import type { ReactNode } from "react"
 import SplashScreen from "./components/SplashScreen"
 import MainTabs from "./components/MainTabs"
 import HomeScreen from "./components/HomeScreen"
@@ -82,6 +83,30 @@ interface ActiveQuiz {
   setFlags: FlagRecord[]
 }
 
+// A failed lazy chunk (flaky network, stale deploy) used to white-screen the
+// whole app. Catch it and offer a reload instead.
+class ScreenErrorBoundary extends Component<{ children: ReactNode }, { failed: boolean }> {
+  constructor(props: { children: ReactNode }) {
+    super(props)
+    this.state = { failed: false }
+  }
+  static getDerivedStateFromError() { return { failed: true } }
+  render() {
+    if (!this.state.failed) return this.props.children
+    return (
+      <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 14, background: T.bg, color: T.text, padding: 24, textAlign: "center" }}>
+        <EarthLogo size={46} />
+        <div style={{ fontWeight: 700, fontSize: 17 }}>That screen failed to load</div>
+        <div style={{ color: T.muted, fontSize: 13, maxWidth: 260 }}>Usually a connection blip or a fresh update. Reloading fixes it.</div>
+        <button onClick={() => window.location.reload()}
+          style={{ marginTop: 6, padding: "10px 22px", borderRadius: 999, background: T.amber, color: T.onAccent, fontWeight: 700, fontSize: 14 }}>
+          Reload
+        </button>
+      </div>
+    )
+  }
+}
+
 // Brief placeholder while a code-split screen's chunk loads (usually a blink).
 function ScreenFallback() {
   return (
@@ -100,6 +125,9 @@ export default function App() {
   const [activeQuiz, setActiveQuiz] = useState<ActiveQuiz | null>(null)
   const [lastResult, setLastResult] = useState<{ score: number; total: number; answers: ("correct" | "wrong")[] } | null>(null)
   const [histRegion, setHistRegion] = useState<HistoricalRegion | undefined>(undefined)
+  // Deep-link target for the Codex: set when a country row in the dashboard
+  // accordion is tapped, so CodexScreen opens straight on that country.
+  const [codexCode, setCodexCode] = useState<string | null>(null)
   const [tab, setTab] = useState<TabKey>("today")
 
   useEffect(() => { saveState(appState) }, [appState])
@@ -175,7 +203,9 @@ export default function App() {
 
   return (
     <div style={{ background: AESTHETIC === "original" ? 'linear-gradient(135deg,var(--bg-from) 0%,var(--bg-to) 100%)' : T.bg, minHeight: "100vh" }}>
-      {screen !== "splash" && <StarField />}
+      {/* Space embers belong to the original deep-space skin only — on
+          parchment/tactical they rendered as a faint purple haze. */}
+      {screen !== "splash" && AESTHETIC === "original" && <StarField />}
 
       {/* Persistent home logo — fixed top-left on every screen except splash/home.
           Tapping it always jumps back to the home page. */}
@@ -187,18 +217,21 @@ export default function App() {
           style={{
             position: "fixed", top: 10, right: 12, zIndex: 50,
             display: "flex", alignItems: "center", gap: 6,
-            padding: "4px 10px 4px 6px", borderRadius: 999,
-            background: "rgba(45,31,82,0.85)", border: "1px solid #8B6CFF44",
+            padding: "6px 12px 6px 8px", borderRadius: 999,
+            background: AESTHETIC === "original" ? "rgba(45,31,82,0.85)" : `${T.surface}EB`,
+            border: `1px solid ${AESTHETIC === "original" ? "#8B6CFF44" : T.line}`,
+            boxShadow: AESTHETIC === "original" ? "none" : "0 1px 2px rgba(31,58,60,0.05), 0 8px 20px -14px rgba(31,58,60,0.25)",
             backdropFilter: "blur(6px)", cursor: "pointer",
           }}
         >
           <EarthLogo size={24} />
-          <span style={{ color: "#F5F3FF", fontWeight: 800, fontSize: 13 }}>Home</span>
+          <span style={{ color: AESTHETIC === "original" ? "#F5F3FF" : T.text, fontWeight: 700, fontSize: 13 }}>Home</span>
         </button>
       )}
 
       {screen === "splash" && <SplashScreen onDone={() => setScreen("home")} />}
 
+      <ScreenErrorBoundary>
       <Suspense fallback={<ScreenFallback />}>
       {screen === "home" && AESTHETIC === "original" && (
         <HomeScreen state={appState} onStartDaily={startDaily}
@@ -243,7 +276,8 @@ export default function App() {
 
       {screen === "home" && AESTHETIC !== "original" && (
         <MainTabs state={appState} tab={tab} onTab={setTab}
-          onNavigate={(s) => setScreen(s as Screen)}
+          onNavigate={(s) => { setCodexCode(null); setScreen(s as Screen) }}
+          onOpenCodexCountry={(code) => { setCodexCode(code); setScreen("codex") }}
           onQuickPlay={startQuickPlay} onStartDaily={startDaily} onReverseQuiz={startReverseQuiz} />
       )}
 
@@ -260,7 +294,7 @@ export default function App() {
       {screen === "language" && <LanguageQuizScreen onBack={() => setScreen("home")} />}
       {screen === "capitalquiz" && <CapitalQuizScreen onBack={() => setScreen("home")} />}
       {screen === "challenge" && <ChallengeScreen onBack={() => setScreen("home")} />}
-      {screen === "codex" && <CodexScreen onBack={() => setScreen("home")} />}
+      {screen === "codex" && <CodexScreen initialCode={codexCode} onBack={() => { setCodexCode(null); setScreen("home") }} />}
       {screen === "geo" && <GeoQuizScreen onBack={() => setScreen("home")} />}
       {screen === "gauntlet" && <GauntletScreen onBack={() => setScreen("home")} />}
       {screen === "tierlist" && <TierListScreen onBack={() => setScreen("home")} />}
@@ -330,6 +364,7 @@ export default function App() {
           onSaveShare={(r: ShareResult) => setAppState(s => saveShareResult(s, r))} />
       )}
       </Suspense>
+      </ScreenErrorBoundary>
     </div>
   )
 }

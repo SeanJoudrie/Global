@@ -1,6 +1,10 @@
 import { useState } from "react"
 import { LGBTQ_FLAGS } from "../data/identityFlags"
 import type { IdentityFlag } from "../data/identityFlags"
+import { T, ACCENT, FONT, tint } from "../ui/tokens"
+import { ScreenHeader } from "./ui"
+import { LineIcon } from "./icons"
+import { Trophy } from "lucide-react"
 
 interface Props { onBack: () => void }
 
@@ -51,15 +55,17 @@ export default function PrideRouletteScreen({ onBack }: Props) {
   if (over) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center px-5"
-        style={{ background: "linear-gradient(135deg,var(--bg-from) 0%,var(--bg-to) 100%)" }}>
+        style={{ background: T.bg, minHeight: "100vh", color: T.text }}>
         <div className="w-full max-w-sm">
           <div className="rounded-2xl p-6 text-center mb-4"
-            style={{ background: "#2D1F52", border: "1px solid #FF6FD855", boxShadow: "0 0 32px #FF6FD822" }}>
-            <div className="text-5xl mb-2">🏳️‍🌈</div>
-            <div className="text-6xl font-black mb-1" style={{ color: "#F5F3FF" }}>{streak}</div>
-            <div className="text-sm" style={{ color: "#B8A9E0" }}>flags in a row · best {best}</div>
-            <div className="text-xs mt-3" style={{ color: "#B8A9E0" }}>
-              It was <span style={{ color: "#F5F3FF", fontWeight: 700 }}>{round.target.name}</span>
+            style={{ background: T.surface, border: `1px solid ${T.line}`, boxShadow: `0 12px 32px -14px ${tint(T.text, 0.45)}` }}>
+            <div className="mb-2 flex justify-center" style={{ color: ACCENT.play }}>
+              <LineIcon name="identity" size={44} color={ACCENT.play} />
+            </div>
+            <div className="text-6xl font-black mb-1" style={{ color: T.text, fontFamily: FONT.mono, fontVariantNumeric: "tabular-nums" }}>{streak}</div>
+            <div className="text-sm" style={{ color: T.muted }}>flags in a row · best {best}</div>
+            <div className="text-xs mt-3" style={{ color: T.muted }}>
+              It was <span style={{ color: T.text, fontWeight: 700 }}>{round.target.name}</span>
             </div>
           </div>
           <div className="flex flex-col gap-3">
@@ -70,7 +76,7 @@ export default function PrideRouletteScreen({ onBack }: Props) {
             </button>
             <button onClick={onBack}
               className="w-full py-3.5 rounded-xl font-bold transition-all active:scale-95"
-              style={{ background: "#2D1F52", border: "1px solid #8B6CFF33", color: "#B8A9E0" }}>
+              style={{ background: T.surface, border: `1px solid ${T.line}`, color: T.muted }}>
               ← Home
             </button>
           </div>
@@ -81,25 +87,24 @@ export default function PrideRouletteScreen({ onBack }: Props) {
 
   return (
     <div className="min-h-screen flex flex-col"
-      style={{ background: "linear-gradient(135deg,var(--bg-from) 0%,var(--bg-to) 100%)" }}>
-      <header className="flex items-center justify-between px-5 pt-8 pb-4">
-        <button onClick={onBack} className="w-9 h-9 flex items-center justify-center rounded-full text-xl"
-          style={{ background: "#2D1F52", color: "#B8A9E0" }}>&#8249;</button>
-        <div className="text-center">
-          <div className="text-xs font-semibold uppercase tracking-widest" style={{ color: "#B8A9E0" }}>Pride Roulette</div>
-          <div className="text-sm font-bold" style={{ color: "#F5F3FF" }}>Streak {streak}</div>
-        </div>
-        <div className="text-xs font-black" style={{ color: "#FBBF24" }}>🏆 {best}</div>
-      </header>
+      style={{ background: T.bg, minHeight: "100vh", color: T.text }}>
+      <ScreenHeader title="Pride Roulette" subtitle={`Streak ${streak}`} onBack={onBack}
+        right={
+          <div style={{ display: "flex", alignItems: "center", gap: 5, padding: "5px 10px", borderRadius: 999, background: T.surface, border: `1px solid ${tint(T.gold, 0.4)}` }}>
+            <Trophy size={13} color={T.gold} strokeWidth={1.6} absoluteStrokeWidth />
+            <span style={{ fontFamily: FONT.mono, fontWeight: 700, fontSize: 13, color: T.gold }}>{best}</span>
+          </div>
+        } />
 
       <div className="flex-1 flex flex-col items-center px-5 gap-4">
-        <p className="text-sm" style={{ color: "#B8A9E0" }}>Name that pride flag — one wrong ends the run.</p>
+        <p className="text-sm" style={{ color: T.muted }}>Name that pride flag — one wrong ends the run.</p>
 
         {/* Flag */}
         <div style={{
           width: 300, height: 200, borderRadius: 12, overflow: "hidden",
-          border: `2px solid ${answered ? (picked === round.target.id ? "#6BCB77" : "#F43F5E") : "#8B6CFF33"}`,
-          background: "#1E1640", position: "relative",
+          border: `2px solid ${answered ? (picked === round.target.id ? T.green : T.danger) : T.line}`,
+          background: T.surface, position: "relative",
+          boxShadow: `0 10px 28px -12px ${tint(T.text, 0.45)}`,
         }}>
           <img src={round.target.flagUrl} alt="pride flag"
             style={{ width: "100%", height: "100%", objectFit: "contain", display: "block", padding: 8 }}
@@ -111,18 +116,18 @@ export default function PrideRouletteScreen({ onBack }: Props) {
           {round.choices.map(f => {
             const isTarget = f.id === round.target.id
             const isChosen = picked === f.id
-            let border = "1.5px solid #8B6CFF22"
+            let border = `1.5px solid ${T.line}`
             if (answered) {
-              if (isTarget) border = "2px solid #6BCB77"
-              else if (isChosen) border = "2px solid #F43F5E"
+              if (isTarget) border = `2px solid ${T.green}`
+              else if (isChosen) border = `2px solid ${T.danger}`
             }
             return (
               <button key={f.id} onClick={() => pick(f.id)} disabled={answered}
                 className="py-3 px-4 rounded-xl font-semibold text-sm transition-all active:scale-95"
-                style={{ background: "#2D1F52", border, color: "#F5F3FF", textAlign: "left" }}>
+                style={{ background: T.surface, border, color: T.text, textAlign: "left" }}>
                 {f.name}
-                {answered && isTarget && <span style={{ float: "right" }}>✓</span>}
-                {answered && isChosen && !isTarget && <span style={{ float: "right", color: "#F43F5E" }}>✗</span>}
+                {answered && isTarget && <span style={{ float: "right", color: T.green }}>✓</span>}
+                {answered && isChosen && !isTarget && <span style={{ float: "right", color: T.danger }}>✗</span>}
               </button>
             )
           })}

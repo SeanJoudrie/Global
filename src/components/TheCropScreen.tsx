@@ -1,9 +1,14 @@
 import { useState, useMemo, useRef } from "react"
+import { Target, Frown } from "lucide-react"
 import { FLAGS } from "../data/flags"
 import type { FlagRecord } from "../data/flags"
 import FlagImage from "./FlagImage"
+import { T, ACCENT, FONT, tint } from "../ui/tokens"
+import { ScreenHeader } from "./ui"
 
 interface Props { onBack: () => void }
+
+const ACC = ACCENT.play
 
 // Scale = CSS transform scale factor. We zoom from 6× down to 1×.
 const SCALES = [6, 4, 2.8, 2, 1.4, 1]
@@ -63,28 +68,26 @@ function TheCropScreenGame({ onBack , onReplay }: Props & { onReplay: () => void
 
   return (
     <div className="min-h-screen flex flex-col"
-      style={{ background: "linear-gradient(135deg,var(--bg-from) 0%,var(--bg-to) 100%)" }}>
+      style={{ background: T.bg, color: T.text }}>
 
-      <header className="flex items-center justify-between px-5 pt-8 pb-4">
-        <button onClick={onBack} className="w-9 h-9 flex items-center justify-center rounded-full text-xl"
-          style={{ background: "#2D1F52", color: "#B8A9E0" }}>&#8249;</button>
-        <div className="text-center">
-          <div className="text-xs font-semibold uppercase tracking-widest" style={{ color: "#B8A9E0" }}>The Crop</div>
-          <div className="text-xs" style={{ color: "#8B6CFF" }}>
+      <ScreenHeader title="The Crop" onBack={onBack}
+        subtitle={
+          <span style={{ color: ACC }}>
             {phase === "playing"
               ? `${SCALES.length - 1 - wrongGuesses} reveal${SCALES.length - 1 - wrongGuesses !== 1 ? "s" : ""} left`
               : solved ? "Identified!" : "Better luck next time"}
+          </span>
+        }
+        right={
+          <div className="flex gap-1.5 items-center">
+            {Array.from({ length: SCALES.length - 1 }).map((_, i) => (
+              <div key={i} style={{
+                width: 7, height: 7, borderRadius: "50%",
+                background: i < wrongGuesses ? T.danger : T.line,
+              }} />
+            ))}
           </div>
-        </div>
-        <div className="flex gap-1.5 items-center">
-          {Array.from({ length: SCALES.length - 1 }).map((_, i) => (
-            <div key={i} style={{
-              width: 7, height: 7, borderRadius: "50%",
-              background: i < wrongGuesses ? "#F43F5E" : "#8B6CFF33",
-            }} />
-          ))}
-        </div>
-      </header>
+        } />
 
       <div className="flex flex-col items-center px-5 gap-4">
 
@@ -94,11 +97,11 @@ function TheCropScreenGame({ onBack , onReplay }: Props & { onReplay: () => void
           overflow: "hidden",
           borderRadius: 14,
           border: phase === "result"
-            ? `2px solid ${solved ? "#34D399" : "#F43F5E"}`
-            : "2px solid #8B6CFF44",
-          boxShadow: "0 0 32px #8B6CFF22",
+            ? `2px solid ${solved ? T.green : T.danger}`
+            : `2px solid ${tint(ACC, 0.4)}`,
+          boxShadow: `0 8px 24px -10px ${tint(T.text, 0.35)}`,
           position: "relative",
-          background: "#1A1033",
+          background: T.surface,
         }}>
           <FlagImage
             code={target.code}
@@ -116,21 +119,21 @@ function TheCropScreenGame({ onBack , onReplay }: Props & { onReplay: () => void
           {phase === "result" && !solved && (
             <div style={{
               position: "absolute", bottom: 0, left: 0, right: 0,
-              background: "linear-gradient(transparent,#12093088)",
+              background: `linear-gradient(transparent,${tint(T.text, 0.55)})`,
               padding: "20px 12px 10px", textAlign: "center",
             }}>
-              <span style={{ color: "#F5F3FF", fontWeight: 700 }}>{target.name}</span>
+              <span style={{ color: T.bg, fontWeight: 700, fontFamily: FONT.display }}>{target.name}</span>
             </div>
           )}
         </div>
 
         {/* Zoom indicator */}
         <div className="flex items-center gap-2">
-          <span style={{ fontSize: 11, color: "#8B6CFF55" }}>zoom</span>
+          <span style={{ fontSize: 11, color: T.dim }}>zoom</span>
           {SCALES.map((_s, i) => (
             <div key={i} style={{
               width: 18, height: 4, borderRadius: 2,
-              background: i === scaleIdx ? "#8B6CFF" : "#8B6CFF22",
+              background: i === scaleIdx ? ACC : T.line,
               transition: "background 0.3s",
             }} />
           ))}
@@ -140,10 +143,14 @@ function TheCropScreenGame({ onBack , onReplay }: Props & { onReplay: () => void
         {phase === "result" ? (
           <div className="w-full max-w-sm flex flex-col gap-3">
             <div className="rounded-xl p-4 text-center"
-              style={{ background: "#2D1F52", border: `1px solid ${solved ? "#34D39944" : "#F43F5E44"}` }}>
-              <div className="text-2xl mb-1">{solved ? "🎯" : "😬"}</div>
-              <div className="font-bold text-lg" style={{ color: "#F5F3FF" }}>{target.name}</div>
-              <div className="text-xs mt-1" style={{ color: "#B8A9E0" }}>
+              style={{ background: T.surface, border: `1px solid ${tint(solved ? T.green : T.danger, 0.4)}` }}>
+              <div className="mb-1 flex justify-center" style={{ color: solved ? T.green : T.danger }}>
+                {solved
+                  ? <Target size={28} strokeWidth={1.6} absoluteStrokeWidth />
+                  : <Frown size={28} strokeWidth={1.6} absoluteStrokeWidth />}
+              </div>
+              <div className="font-bold text-lg" style={{ color: T.text, fontFamily: FONT.display }}>{target.name}</div>
+              <div className="text-xs mt-1" style={{ color: T.muted }}>
                 {solved
                   ? `Found in ${wrongGuesses + 1} guess${wrongGuesses + 1 !== 1 ? "es" : ""}!`
                   : "Fully revealed — better luck next time."}
@@ -151,12 +158,12 @@ function TheCropScreenGame({ onBack , onReplay }: Props & { onReplay: () => void
             </div>
             <button onClick={onReplay}
               className="w-full py-3.5 rounded-xl font-bold transition-all active:scale-95"
-              style={{ background: "linear-gradient(135deg,#8B6CFF,#A78BFA)", color: "#fff" }}>
+              style={{ background: ACC, color: T.onAccent, fontFamily: FONT.display }}>
               New Flag
             </button>
             <button onClick={onBack}
               className="w-full py-3.5 rounded-xl font-bold transition-all active:scale-95"
-              style={{ background: "#2D1F52", border: "1px solid #8B6CFF33", color: "#B8A9E0" }}>
+              style={{ background: T.surface, border: `1px solid ${T.line}`, color: T.muted }}>
               ← Home
             </button>
           </div>
@@ -174,21 +181,21 @@ function TheCropScreenGame({ onBack , onReplay }: Props & { onReplay: () => void
               autoComplete="off"
               className="w-full px-4 py-3.5 rounded-xl outline-none font-semibold"
               style={{
-                background: "#2D1F52", border: "1.5px solid #8B6CFF44",
-                color: "#F5F3FF", fontSize: 15,
+                background: T.surface, border: `1.5px solid ${T.line}`,
+                color: T.text, fontSize: 15,
               }}
             />
             {showDrop && matches.length > 0 && (
               <div className="absolute left-0 right-0 top-full mt-1 rounded-xl overflow-hidden z-10"
-                style={{ background: "#2D1F52", border: "1px solid #8B6CFF44", boxShadow: "0 8px 32px #00000044" }}>
+                style={{ background: T.surface, border: `1px solid ${T.line}`, boxShadow: `0 8px 32px ${tint(T.text, 0.18)}` }}>
                 {matches.map(flag => (
                   <button key={flag.code}
                     onMouseDown={() => submitGuess(flag)}
-                    className="w-full flex items-center gap-3 px-4 py-3 hover:brightness-125 transition-all"
-                    style={{ background: "transparent", borderBottom: "1px solid #8B6CFF11" }}>
+                    className="w-full flex items-center gap-3 px-4 py-3 hover:brightness-95 transition-all"
+                    style={{ background: "transparent", borderBottom: `1px solid ${T.line}` }}>
                     <img src={flag.flagUrl} alt="" style={{ width: 32, height: 21, objectFit: "cover", borderRadius: 3 }} />
-                    <span style={{ color: "#F5F3FF", fontWeight: 600 }}>{flag.name}</span>
-                    <span style={{ color: "#8B6CFF88", fontSize: 11, marginLeft: "auto" }}>{flag.code}</span>
+                    <span style={{ color: T.text, fontWeight: 600 }}>{flag.name}</span>
+                    <span style={{ color: T.dim, fontSize: 11, marginLeft: "auto", fontFamily: FONT.mono }}>{flag.code}</span>
                   </button>
                 ))}
               </div>

@@ -1,6 +1,11 @@
 import { useState } from "react"
 import { FLAGS } from "../data/flags"
 import type { FlagRecord } from "../data/flags"
+import { T, ACCENT, FONT, tint } from "../ui/tokens"
+import { ScreenHeader } from "./ui"
+import { Trophy, Target, BookOpen } from "lucide-react"
+
+const ACC = ACCENT.play
 
 interface Props { onBack: () => void }
 
@@ -69,28 +74,34 @@ function ConfusablesScreenGame({ onBack , onReplay }: Props & { onReplay: () => 
     const pct     = total > 0 ? Math.round((correct / total) * 100) : 0
     return (
       <div className="min-h-screen flex flex-col items-center justify-center px-5"
-        style={{ background: "linear-gradient(135deg,var(--bg-from) 0%,var(--bg-to) 100%)" }}>
+        style={{ background: T.bg, minHeight: "100vh", color: T.text }}>
         <div className="w-full max-w-sm">
           <div className="rounded-2xl p-6 text-center mb-4"
-            style={{ background: "#2D1F52", border: "1px solid #8B6CFF44", boxShadow: "0 0 32px #8B6CFF22" }}>
-            <div className="text-5xl mb-3">{pct === 100 ? "🏆" : pct >= 60 ? "🎯" : "📚"}</div>
-            <div className="text-6xl font-black mb-1" style={{ color: "#F5F3FF" }}>{correct}/{total}</div>
-            <div className="text-sm" style={{ color: "#B8A9E0" }}>
+            style={{ background: T.surface, border: `1px solid ${T.line}`, boxShadow: `0 12px 32px -14px ${tint(T.text, 0.45)}` }}>
+            <div className="mb-3 flex justify-center" style={{ color: pct === 100 ? T.gold : pct >= 60 ? T.green : ACC }}>
+              {pct === 100
+                ? <Trophy size={44} strokeWidth={1.6} absoluteStrokeWidth />
+                : pct >= 60
+                  ? <Target size={44} strokeWidth={1.6} absoluteStrokeWidth />
+                  : <BookOpen size={44} strokeWidth={1.6} absoluteStrokeWidth />}
+            </div>
+            <div className="text-6xl font-black mb-1" style={{ color: T.text, fontFamily: FONT.mono, fontVariantNumeric: "tabular-nums" }}>{correct}/{total}</div>
+            <div className="text-sm" style={{ color: T.muted }}>
               {pct === 100 ? "Unbeatable! You know your lookalikes." : "These are the trickiest flags in the world — don't feel bad."}
             </div>
             <div className="flex justify-center gap-2 mt-3">
-              {scores.map((ok, i) => <span key={i} style={{ fontSize: 24 }}>{ok ? '🟩' : '🟥'}</span>)}
+              {scores.map((ok, i) => <span key={i} style={{ width: 16, height: 16, borderRadius: 4, display: 'inline-block', background: ok ? T.green : T.danger }} />)}
             </div>
           </div>
           <div className="flex flex-col gap-3">
             <button onClick={onReplay}
               className="w-full py-3.5 rounded-xl font-bold transition-all active:scale-95"
-              style={{ background: "linear-gradient(135deg,#8B6CFF,#A78BFA)", color: "#fff" }}>
+              style={{ background: ACC, color: T.onAccent, fontFamily: FONT.display }}>
               Play Again
             </button>
             <button onClick={onBack}
               className="w-full py-3.5 rounded-xl font-bold transition-all active:scale-95"
-              style={{ background: "#2D1F52", border: "1px solid #8B6CFF33", color: "#B8A9E0" }}>
+              style={{ background: T.surface, border: `1px solid ${T.line}`, color: T.muted }}>
               ← Home
             </button>
           </div>
@@ -102,39 +113,34 @@ function ConfusablesScreenGame({ onBack , onReplay }: Props & { onReplay: () => 
   // ── Quiz ───────────────────────────────────────────────────────────────────
   return (
     <div className="min-h-screen flex flex-col"
-      style={{ background: "linear-gradient(135deg,var(--bg-from) 0%,var(--bg-to) 100%)" }}>
+      style={{ background: T.bg, minHeight: "100vh", color: T.text }}>
 
-      <header className="flex items-center justify-between px-5 pt-8 pb-4" style={{ zIndex: 1 }}>
-        <button onClick={onBack} className="w-9 h-9 flex items-center justify-center rounded-full text-xl"
-          style={{ background: "#2D1F52", color: "#B8A9E0" }}>&#8249;</button>
-        <div className="text-center">
-          <div className="text-xs font-semibold uppercase tracking-widest" style={{ color: "#B8A9E0" }}>Lookalikes</div>
-          <div className="text-sm font-bold" style={{ color: "#F5F3FF" }}>{idx + 1} / {rounds.length}</div>
-        </div>
-        <div className="flex gap-1.5 items-center">
-          {Array.from({ length: rounds.length }).map((_, i) => (
-            <div key={i} style={{
-              width: 7, height: 7, borderRadius: '50%',
-              background: i < scores.length ? (scores[i] ? '#34D399' : '#F43F5E') : '#8B6CFF33',
-            }} />
-          ))}
-        </div>
-      </header>
+      <ScreenHeader title="Lookalikes" subtitle={`${idx + 1} / ${rounds.length}`} onBack={onBack}
+        right={
+          <div className="flex gap-1.5 items-center">
+            {Array.from({ length: rounds.length }).map((_, i) => (
+              <div key={i} style={{
+                width: 7, height: 7, borderRadius: '50%',
+                background: i < scores.length ? (scores[i] ? T.green : T.danger) : T.line,
+              }} />
+            ))}
+          </div>
+        } />
 
       {/* Progress */}
-      <div className="mx-5 h-1.5 rounded-full overflow-hidden mb-5" style={{ background: "#2D1F52", zIndex: 1 }}>
+      <div className="mx-5 h-1.5 rounded-full overflow-hidden mb-5" style={{ background: T.line, zIndex: 1 }}>
         <div className="h-full rounded-full transition-all duration-500"
-          style={{ width: `${(idx / rounds.length) * 100}%`, background: "linear-gradient(90deg,#8B6CFF,#A78BFA)" }} />
+          style={{ width: `${(idx / rounds.length) * 100}%`, background: ACC }} />
       </div>
 
       <div className="flex-1 flex flex-col items-center px-5" style={{ zIndex: 1 }}>
         {/* Prompt */}
         <div className="w-full max-w-sm mb-5 rounded-2xl px-5 py-4 text-center"
-          style={{ background: "#2D1F52", border: "1px solid #8B6CFF44" }}>
-          <p className="text-xs uppercase tracking-widest mb-1" style={{ color: "#B8A9E0" }}>Which flag is…</p>
-          <p className="text-2xl font-black" style={{ color: "#F5F3FF" }}>{round.target.name}</p>
+          style={{ background: T.surface, border: `1px solid ${T.line}` }}>
+          <p className="text-xs uppercase tracking-widest mb-1" style={{ color: T.muted }}>Which flag is…</p>
+          <p className="text-2xl font-black" style={{ color: T.text, fontFamily: FONT.display, fontWeight: 800 }}>{round.target.name}</p>
           {answered && (
-            <p className="text-xs mt-1.5" style={{ color: "#8B6CFF88" }}>
+            <p className="text-xs mt-1.5" style={{ color: T.muted }}>
               {round.target.distinguishingTip}
             </p>
           )}
@@ -145,27 +151,27 @@ function ConfusablesScreenGame({ onBack , onReplay }: Props & { onReplay: () => 
           {round.choices.map((flag, i) => {
             const isCorrect = i === round.correctIndex
             const isChosen  = selected === i
-            let border = '1.5px solid #8B6CFF22'
+            let border = `1.5px solid ${T.line}`
             if (answered) {
-              if (isCorrect)          border = '2px solid #34D399'
-              else if (isChosen)      border = '2px solid #F43F5E'
+              if (isCorrect)          border = `2px solid ${T.green}`
+              else if (isChosen)      border = `2px solid ${T.danger}`
             } else if (isChosen) {
-              border = '2px solid #8B6CFF'
+              border = `2px solid ${ACC}`
             }
 
             return (
               <button key={flag.code} onClick={() => handlePick(i)}
                 disabled={answered}
                 className="relative rounded-xl overflow-hidden transition-all active:scale-95"
-                style={{ border, background: "#1A1033", aspectRatio: "3/2" }}>
+                style={{ border, background: T.surface, aspectRatio: "3/2" }}>
                 <img src={flag.flagUrl} alt={flag.name} className="w-full h-full object-cover" />
                 {answered && (isCorrect || isChosen) && (
                   <div style={{
                     position: 'absolute', inset: 0,
-                    background: isCorrect ? '#34D39918' : '#F43F5E18',
+                    background: isCorrect ? tint(T.green, 0.15) : tint(T.danger, 0.15),
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
                   }}>
-                    <span style={{ fontSize: 28 }}>{isCorrect ? '✓' : '✗'}</span>
+                    <span style={{ fontSize: 28, color: "#fff", textShadow: "0 1px 4px rgba(0,0,0,0.55)" }}>{isCorrect ? '✓' : '✗'}</span>
                   </div>
                 )}
               </button>
@@ -176,12 +182,12 @@ function ConfusablesScreenGame({ onBack , onReplay }: Props & { onReplay: () => 
         {/* Feedback */}
         {answered && (
           <div className="w-full max-w-sm mb-3 px-4 py-3 rounded-xl"
-            style={{ background: '#2D1F52', border: `1px solid ${isRight ? '#34D39944' : '#F43F5E44'}` }}>
-            <p className="text-sm font-semibold" style={{ color: isRight ? '#34D399' : '#F43F5E' }}>
+            style={{ background: T.surface, border: `1px solid ${tint(isRight ? T.green : T.danger, 0.35)}` }}>
+            <p className="text-sm font-semibold" style={{ color: isRight ? T.green : T.danger }}>
               {isRight ? `✓ Correct — ${round.target.name}` : `✗ That was ${round.choices[selected!].name}`}
             </p>
             {!isRight && (
-              <p className="text-xs mt-1" style={{ color: '#B8A9E0' }}>
+              <p className="text-xs mt-1" style={{ color: T.muted }}>
                 {round.target.name}: {round.target.distinguishingTip}
               </p>
             )}
@@ -191,7 +197,7 @@ function ConfusablesScreenGame({ onBack , onReplay }: Props & { onReplay: () => 
         {answered && (
           <button onClick={handleNext}
             className="w-full max-w-sm py-3.5 rounded-xl font-bold transition-all active:scale-95"
-            style={{ background: "linear-gradient(135deg,#8B6CFF,#A78BFA)", color: "#fff" }}>
+            style={{ background: ACC, color: T.onAccent, fontFamily: FONT.display }}>
             {idx + 1 >= rounds.length ? "See Results →" : "Next →"}
           </button>
         )}

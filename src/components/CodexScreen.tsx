@@ -7,9 +7,14 @@ import { IDENTITY_FLAGS, IDENTITY_CATEGORIES, SIGNAL_FLAGS } from '../data/ident
 import { US_CITY_FLAGS } from '../data/usCityFlags'
 import { CHALLENGE_CONTINENTS } from '../data/challenges'
 import type { SubRegion } from '../data/challenges'
+import { T, ACCENT, FONT, tint } from '../ui/tokens'
+import { ScreenHeader } from './ui'
+import { LineIcon, FlaskIcon } from './icons'
+import { Search, Anchor } from 'lucide-react'
 
 interface Props {
   onBack: () => void
+  initialCode?: string | null
 }
 
 type Phase = 'list' | 'country'
@@ -25,9 +30,9 @@ function getSubRegions(code: string) {
   return []
 }
 
-export default function CodexScreen({ onBack }: Props) {
-  const [phase, setPhase] = useState<Phase>('list')
-  const [selectedCode, setSelectedCode] = useState<string | null>(null)
+export default function CodexScreen({ onBack, initialCode }: Props) {
+  const [phase, setPhase] = useState<Phase>(initialCode != null ? 'country' : 'list')
+  const [selectedCode, setSelectedCode] = useState<string | null>(initialCode != null ? initialCode : null)
   const [search, setSearch] = useState('')
   // Regions start collapsed; store which are expanded
   const [expandedRegions, setExpandedRegions] = useState<Set<string>>(new Set())
@@ -82,21 +87,18 @@ export default function CodexScreen({ onBack }: Props) {
     const predecessors = historicalFor(selectedFlag.code)
 
     return (
-      <div className="min-h-screen flex flex-col" style={{ background: 'linear-gradient(135deg,var(--bg-from) 0%,var(--bg-to) 100%)', position: 'relative', zIndex: 1 }}>
-        <header className="flex items-center gap-3 px-5 pt-8 pb-4">
-          <button onClick={() => setPhase('list')}
-            className="w-9 h-9 flex items-center justify-center rounded-full text-xl"
-            style={{ background: '#2D1F52', color: '#B8A9E0' }}>‹</button>
-          <h1 className="text-xl font-black" style={{ color: '#F5F3FF' }}>{selectedFlag.name}</h1>
-          <span className="text-xs px-2 py-0.5 rounded-full ml-auto"
-            style={{ background: '#8B6CFF22', color: '#A78BFA', border: '1px solid #8B6CFF33' }}>
-            {selectedFlag.region}
-          </span>
-        </header>
+      <div className="min-h-screen flex flex-col" style={{ background: T.bg, color: T.text, position: 'relative', zIndex: 1 }}>
+        <ScreenHeader title={selectedFlag.name} onBack={() => setPhase('list')}
+          right={
+            <span className="text-xs px-2 py-0.5 rounded-full"
+              style={{ background: tint(ACCENT.codex, 0.12), color: ACCENT.codex, border: `1px solid ${tint(ACCENT.codex, 0.3)}` }}>
+              {selectedFlag.region}
+            </span>
+          } />
 
-        <div className="flex-1 overflow-y-auto px-5 pb-12">
+        <div className="flex-1 overflow-y-auto px-5 pb-12 pt-2">
           {/* Flag image */}
-          <div className="rounded-2xl overflow-hidden mb-5" style={{ border: '1px solid #8B6CFF33' }}>
+          <div className="rounded-2xl overflow-hidden mb-5" style={{ border: `1px solid ${T.line}` }}>
             <img
               src={selectedFlag.flagUrl}
               alt={selectedFlag.name}
@@ -107,29 +109,30 @@ export default function CodexScreen({ onBack }: Props) {
 
           {/* Summary */}
           <div className="mb-5">
-            <h2 className="text-sm font-bold uppercase tracking-widest mb-3" style={{ color: '#8B6CFF' }}>Overview</h2>
-            <p className="text-sm leading-relaxed" style={{ color: '#D4CCF0', lineHeight: 1.75 }}>
+            <h2 className="text-sm font-bold uppercase tracking-widest mb-3" style={{ color: ACCENT.codex }}>Overview</h2>
+            <p className="text-sm leading-relaxed" style={{ color: T.text, lineHeight: 1.75 }}>
               {selectedEntry.summary}
             </p>
           </div>
 
           {/* Did you know? — surfaces the flag's fun fact + how to tell it apart */}
           {(selectedFlag.funFact || selectedFlag.distinguishingTip) && (
-            <div className="mb-5 rounded-2xl overflow-hidden" style={{ border: '1px solid #FBBF2433' }}>
+            <div className="mb-5 rounded-2xl overflow-hidden" style={{ border: `1px solid ${tint(T.gold, 0.3)}` }}>
               {selectedFlag.funFact && (
-                <div style={{ background: '#2D1F52', padding: '16px 18px' }}>
-                  <div className="text-xs font-bold uppercase tracking-widest mb-2" style={{ color: '#FBBF24' }}>
-                    💡 Did you know?
+                <div style={{ background: T.surface, padding: '16px 18px' }}>
+                  <div className="text-xs font-bold uppercase tracking-widest mb-2"
+                    style={{ color: T.gold, display: 'flex', alignItems: 'center', gap: 6 }}>
+                    <LineIcon name="funfact" size={14} color={T.gold} /> Did you know?
                   </div>
-                  <p className="text-sm leading-relaxed" style={{ color: '#F5F3FF', lineHeight: 1.65 }}>
+                  <p className="text-sm leading-relaxed" style={{ color: T.text, lineHeight: 1.65 }}>
                     {selectedFlag.funFact}
                   </p>
                 </div>
               )}
               {selectedFlag.distinguishingTip && (
-                <div style={{ background: '#1A1033', padding: '12px 18px', borderTop: '1px solid #8B6CFF22' }}>
-                  <div className="text-xs font-semibold mb-1" style={{ color: '#8B6CFF' }}>How to tell it apart</div>
-                  <p className="text-xs leading-relaxed" style={{ color: '#B8A9E0', lineHeight: 1.6 }}>
+                <div style={{ background: T.surfaceHi, padding: '12px 18px', borderTop: `1px solid ${T.line}` }}>
+                  <div className="text-xs font-semibold mb-1" style={{ color: ACCENT.codex }}>How to tell it apart</div>
+                  <p className="text-xs leading-relaxed" style={{ color: T.muted, lineHeight: 1.6 }}>
                     {selectedFlag.distinguishingTip}
                   </p>
                 </div>
@@ -141,36 +144,37 @@ export default function CodexScreen({ onBack }: Props) {
           <div className="mb-5">
             <button
               onClick={() => setHistoryExpanded(v => !v)}
-              className="w-full flex items-center justify-between px-4 py-3 rounded-xl transition-all active:scale-[0.98]"
-              style={{ background: '#2D1F52', border: '1px solid #8B6CFF33' }}
+              className="geo-tap w-full flex items-center justify-between px-4 py-3 rounded-xl transition-all active:scale-[0.98]"
+              style={{ background: T.surface, border: `1px solid ${T.line}` }}
             >
               <div className="flex items-center gap-2">
-                <h2 className="text-sm font-bold uppercase tracking-widest" style={{ color: '#8B6CFF' }}>Flag History</h2>
+                <h2 className="text-sm font-bold uppercase tracking-widest" style={{ color: ACCENT.codex }}>Flag History</h2>
                 <span className="text-xs px-2 py-0.5 rounded-full font-semibold"
-                  style={{ background: '#F59E0B22', color: '#F59E0B', border: '1px solid #F59E0B44' }}>
-                  🔬 Beta
+                  style={{ background: tint(T.gold, 0.12), color: T.gold, border: `1px solid ${tint(T.gold, 0.3)}`,
+                    display: 'inline-flex', alignItems: 'center', gap: 4 }}>
+                  <FlaskIcon size={12} color={T.gold} strokeWidth={1.6} absoluteStrokeWidth /> Beta
                 </span>
                 {hasHistory && (
-                  <span className="text-xs" style={{ color: '#B8A9E0' }}>{selectedEntry.flagHistory.length} flags</span>
+                  <span className="text-xs" style={{ color: T.muted }}>{selectedEntry.flagHistory.length} flags</span>
                 )}
               </div>
-              <span style={{ color: '#8B6CFF', transition: 'transform 0.2s', transform: historyExpanded ? 'rotate(90deg)' : 'rotate(0deg)' }}>›</span>
+              <span style={{ color: ACCENT.codex, transition: 'transform 0.2s', transform: historyExpanded ? 'rotate(90deg)' : 'rotate(0deg)' }}>›</span>
             </button>
 
             {historyExpanded && (
               <div className="mt-3">
                 {!hasHistory ? (
                   <div className="rounded-2xl p-5 text-center"
-                    style={{ background: '#2D1F52', border: '1px solid #8B6CFF22' }}>
-                    <div className="text-3xl mb-2">🏳️</div>
-                    <p className="text-sm" style={{ color: '#B8A9E0' }}>Flag history for {selectedFlag.name} is coming soon.</p>
-                    <p className="text-xs mt-1" style={{ color: '#8B6CFF88' }}>This feature is in beta — we're adding countries one by one.</p>
+                    style={{ background: T.surface, border: `1px solid ${T.line}` }}>
+                    <div className="mb-2 flex justify-center"><LineIcon name="flags" size={30} color={T.dim} /></div>
+                    <p className="text-sm" style={{ color: T.muted }}>Flag history for {selectedFlag.name} is coming soon.</p>
+                    <p className="text-xs mt-1" style={{ color: T.dim }}>This feature is in beta — we're adding countries one by one.</p>
                   </div>
                 ) : (
                   <div>
                     {/* Navigation row */}
                     <div className="flex items-center justify-between mb-3">
-                      <span className="text-xs" style={{ color: '#8B6CFF88' }}>
+                      <span className="text-xs" style={{ color: T.dim, fontFamily: FONT.mono, fontVariantNumeric: 'tabular-nums' }}>
                         {historyIdx + 1} / {selectedEntry.flagHistory.length} · newest → oldest
                       </span>
                       <div className="flex gap-2">
@@ -179,9 +183,10 @@ export default function CodexScreen({ onBack }: Props) {
                           disabled={historyIdx === 0}
                           className="w-8 h-8 flex items-center justify-center rounded-full transition-all active:scale-90"
                           style={{
-                            background: historyIdx === 0 ? '#2D1F5266' : '#2D1F52',
-                            border: `1px solid ${historyIdx === 0 ? '#8B6CFF11' : '#8B6CFF44'}`,
-                            color: historyIdx === 0 ? '#8B6CFF22' : '#8B6CFF',
+                            background: T.surface,
+                            border: `1px solid ${historyIdx === 0 ? T.line : tint(ACCENT.codex, 0.4)}`,
+                            color: historyIdx === 0 ? T.dim : ACCENT.codex,
+                            opacity: historyIdx === 0 ? 0.5 : 1,
                             fontSize: 18,
                           }}>‹</button>
                         <button
@@ -189,9 +194,10 @@ export default function CodexScreen({ onBack }: Props) {
                           disabled={historyIdx === selectedEntry.flagHistory.length - 1}
                           className="w-8 h-8 flex items-center justify-center rounded-full transition-all active:scale-90"
                           style={{
-                            background: historyIdx === selectedEntry.flagHistory.length - 1 ? '#2D1F5266' : '#2D1F52',
-                            border: `1px solid ${historyIdx === selectedEntry.flagHistory.length - 1 ? '#8B6CFF11' : '#8B6CFF44'}`,
-                            color: historyIdx === selectedEntry.flagHistory.length - 1 ? '#8B6CFF22' : '#8B6CFF',
+                            background: T.surface,
+                            border: `1px solid ${historyIdx === selectedEntry.flagHistory.length - 1 ? T.line : tint(ACCENT.codex, 0.4)}`,
+                            color: historyIdx === selectedEntry.flagHistory.length - 1 ? T.dim : ACCENT.codex,
+                            opacity: historyIdx === selectedEntry.flagHistory.length - 1 ? 0.5 : 1,
                             fontSize: 18,
                           }}>›</button>
                       </div>
@@ -205,23 +211,23 @@ export default function CodexScreen({ onBack }: Props) {
 
                     {/* Timeline strip */}
                     <div className="mt-4">
-                      <p className="text-xs mb-2" style={{ color: '#8B6CFF55' }}>Timeline — tap to jump</p>
+                      <p className="text-xs mb-2" style={{ color: T.dim }}>Timeline — tap to jump</p>
                       <div style={{ display: 'flex', gap: 8, overflowX: 'auto', paddingBottom: 6 }}>
                         {selectedEntry.flagHistory.map((hf: HistoricalFlag, i: number) => (
                           <button key={i} onClick={() => setHistoryIdx(i)}
                             style={{
                               flexShrink: 0, borderRadius: 8, overflow: 'hidden',
-                              border: `2px solid ${i === historyIdx ? '#8B6CFF' : '#8B6CFF22'}`,
+                              border: `2px solid ${i === historyIdx ? ACCENT.codex : T.line}`,
                               opacity: i === historyIdx ? 1 : 0.55,
                               transition: 'opacity 0.2s, border-color 0.2s',
-                              background: '#1A1033',
+                              background: T.surfaceHi,
                             }}>
                             <img src={hf.flagUrl} alt={hf.label}
                               style={{ width: 72, height: 46, objectFit: 'cover', display: 'block' }}
                               onError={e => { (e.target as HTMLImageElement).style.opacity = '0.15' }}
                             />
-                            <div style={{ padding: '3px 5px', textAlign: 'center', background: '#2D1F52' }}>
-                              <span style={{ fontSize: 9, color: i === historyIdx ? '#A78BFA' : '#8B6CFF66', fontWeight: 600 }}>
+                            <div style={{ padding: '3px 5px', textAlign: 'center', background: T.surface }}>
+                              <span style={{ fontSize: 9, fontFamily: FONT.mono, color: i === historyIdx ? ACCENT.codex : T.dim, fontWeight: 600 }}>
                                 {hf.fromYear}
                               </span>
                             </div>
@@ -237,7 +243,7 @@ export default function CodexScreen({ onBack }: Props) {
                           style={{
                             width: i === historyIdx ? 20 : 7,
                             height: 7, borderRadius: 4,
-                            background: i === historyIdx ? '#8B6CFF' : '#8B6CFF33',
+                            background: i === historyIdx ? ACCENT.codex : tint(ACCENT.codex, 0.25),
                             transition: 'width 0.25s, background 0.2s',
                             border: 'none', padding: 0,
                           }} />
@@ -254,14 +260,14 @@ export default function CodexScreen({ onBack }: Props) {
             <div className="mb-5">
               <button
                 onClick={() => setSubdivisionsExpanded(v => !v)}
-                className="w-full flex items-center justify-between px-4 py-3 rounded-xl transition-all active:scale-[0.98]"
-                style={{ background: '#2D1F52', border: '1px solid #34D39933' }}
+                className="geo-tap w-full flex items-center justify-between px-4 py-3 rounded-xl transition-all active:scale-[0.98]"
+                style={{ background: T.surface, border: `1px solid ${tint(T.green, 0.3)}` }}
               >
                 <div className="flex items-center gap-2">
-                  <h2 className="text-sm font-bold uppercase tracking-widest" style={{ color: '#34D399' }}>Subdivisions</h2>
-                  <span className="text-xs" style={{ color: '#B8A9E0' }}>{subRegions.length} regions</span>
+                  <h2 className="text-sm font-bold uppercase tracking-widest" style={{ color: T.green }}>Subdivisions</h2>
+                  <span className="text-xs" style={{ color: T.muted }}>{subRegions.length} regions</span>
                 </div>
-                <span style={{ color: '#34D399', transition: 'transform 0.2s', transform: subdivisionsExpanded ? 'rotate(90deg)' : 'rotate(0deg)' }}>›</span>
+                <span style={{ color: T.green, transition: 'transform 0.2s', transform: subdivisionsExpanded ? 'rotate(90deg)' : 'rotate(0deg)' }}>›</span>
               </button>
 
               {subdivisionsExpanded && (
@@ -280,34 +286,34 @@ export default function CodexScreen({ onBack }: Props) {
             <div className="mb-5">
               <button
                 onClick={() => setPredecessorsExpanded(v => !v)}
-                className="w-full flex items-center justify-between px-4 py-3 rounded-xl transition-all active:scale-[0.98]"
-                style={{ background: '#2D1F52', border: '1px solid #C084FC33' }}
+                className="geo-tap w-full flex items-center justify-between px-4 py-3 rounded-xl transition-all active:scale-[0.98]"
+                style={{ background: T.surface, border: `1px solid ${tint(T.warm, 0.3)}` }}
               >
                 <div className="flex items-center gap-2">
-                  <h2 className="text-sm font-bold uppercase tracking-widest" style={{ color: '#C084FC' }}>Predecessor & Related States</h2>
-                  <span className="text-xs" style={{ color: '#B8A9E0' }}>{predecessors.length}</span>
+                  <h2 className="text-sm font-bold uppercase tracking-widest" style={{ color: T.warm }}>Predecessor & Related States</h2>
+                  <span className="text-xs" style={{ color: T.muted }}>{predecessors.length}</span>
                 </div>
-                <span style={{ color: '#C084FC', transition: 'transform 0.2s', transform: predecessorsExpanded ? 'rotate(90deg)' : 'rotate(0deg)' }}>›</span>
+                <span style={{ color: T.warm, transition: 'transform 0.2s', transform: predecessorsExpanded ? 'rotate(90deg)' : 'rotate(0deg)' }}>›</span>
               </button>
 
               {predecessorsExpanded && (
                 <div className="mt-3">
-                  <p className="text-xs mb-3" style={{ color: '#C084FC88' }}>
+                  <p className="text-xs mb-3" style={{ color: tint(T.warm, 0.7) }}>
                     Vanished empires and states tied to this land's history — featured in the Historical Flag game.
                   </p>
                   <div className="space-y-2.5">
                     {predecessors.map(h => (
-                      <div key={h.id} className="rounded-2xl overflow-hidden" style={{ background: '#2D1F52', border: '1px solid #C084FC22' }}>
+                      <div key={h.id} className="rounded-2xl overflow-hidden" style={{ background: T.surface, border: `1px solid ${tint(T.warm, 0.2)}` }}>
                         <FlagImg src={h.flagUrl} alt={h.name} height={140} />
                         <div className="p-4">
                           <div className="flex items-start justify-between gap-2 mb-1.5">
-                            <div className="font-bold text-sm" style={{ color: '#F5F3FF' }}>{h.name}</div>
+                            <div className="geo-display font-bold text-sm" style={{ color: T.text }}>{h.name}</div>
                             <span className="text-xs px-2 py-0.5 rounded-full flex-shrink-0"
-                              style={{ background: '#C084FC22', color: '#C084FC', border: '1px solid #C084FC33', whiteSpace: 'nowrap' }}>
+                              style={{ background: tint(T.warm, 0.12), color: T.warm, border: `1px solid ${tint(T.warm, 0.25)}`, whiteSpace: 'nowrap' }}>
                               {h.era}
                             </span>
                           </div>
-                          <p className="text-xs leading-relaxed" style={{ color: '#B8A9E0', lineHeight: 1.65 }}>{h.note}</p>
+                          <p className="text-xs leading-relaxed" style={{ color: T.muted, lineHeight: 1.65 }}>{h.note}</p>
                         </div>
                       </div>
                     ))}
@@ -322,38 +328,30 @@ export default function CodexScreen({ onBack }: Props) {
   }
 
   return (
-    <div className="min-h-screen flex flex-col" style={{ background: 'linear-gradient(135deg,var(--bg-from) 0%,var(--bg-to) 100%)', position: 'relative', zIndex: 1 }}>
-      <header className="flex items-center gap-3 px-5 pt-8 pb-3">
-        <button onClick={onBack}
-          className="w-9 h-9 flex items-center justify-center rounded-full text-xl"
-          style={{ background: '#2D1F52', color: '#B8A9E0' }}>‹</button>
-        <div>
-          <h1 className="text-2xl font-black" style={{ color: '#F5F3FF' }}>Codex</h1>
-          <p className="text-xs" style={{ color: '#B8A9E0' }}>{FLAGS.length} countries · flag histories in beta</p>
-        </div>
-      </header>
+    <div className="min-h-screen flex flex-col" style={{ background: T.bg, color: T.text, position: 'relative', zIndex: 1 }}>
+      <ScreenHeader title="Codex" subtitle={`${FLAGS.length} countries · flag histories in beta`} onBack={onBack} />
 
       {/* Search */}
       <div className="px-5 mb-3">
-        <div className="flex items-center gap-2 px-4 py-2.5 rounded-xl" style={{ background: '#2D1F52', border: '1px solid #8B6CFF33' }}>
-          <span style={{ color: '#8B6CFF88' }}>🔍</span>
+        <div className="flex items-center gap-2 px-4 py-2.5 rounded-xl" style={{ background: T.surface, border: `1px solid ${T.line}` }}>
+          <Search size={16} color={T.dim} strokeWidth={1.6} absoluteStrokeWidth />
           <input
             type="text"
             placeholder="Search countries…"
             value={search}
             onChange={e => setSearch(e.target.value)}
             className="flex-1 bg-transparent text-sm outline-none"
-            style={{ color: '#F5F3FF' }}
+            style={{ color: T.text }}
           />
           {search && (
-            <button onClick={() => setSearch('')} style={{ color: '#8B6CFF88', fontSize: 16 }}>✕</button>
+            <button onClick={() => setSearch('')} style={{ color: T.dim, fontSize: 16 }}>✕</button>
           )}
         </div>
       </div>
 
       <div className="flex-1 overflow-y-auto px-5 pb-12">
         {grouped.length === 0 ? (
-          <div className="text-center py-12" style={{ color: '#B8A9E0' }}>No countries match "{search}"</div>
+          <div className="text-center py-12" style={{ color: T.muted }}>No countries match "{search}"</div>
         ) : (
           grouped.map(({ region, flags }) => {
             const isExpanded = isSearching || expandedRegions.has(region)
@@ -362,18 +360,18 @@ export default function CodexScreen({ onBack }: Props) {
                 {/* Region header — clickable to expand/collapse */}
                 <button
                   onClick={() => toggleRegion(region)}
-                  className="w-full flex items-center justify-between px-4 py-3 rounded-xl transition-all active:scale-[0.98]"
+                  className="geo-tap w-full flex items-center justify-between px-4 py-3 rounded-xl transition-all active:scale-[0.98]"
                   style={{
-                    background: isExpanded ? '#2D1F52' : '#221740',
-                    border: `1px solid ${isExpanded ? '#8B6CFF44' : '#8B6CFF22'}`,
+                    background: isExpanded ? T.surface : T.surfaceHi,
+                    border: `1px solid ${isExpanded ? tint(ACCENT.codex, 0.35) : T.line}`,
                   }}
                 >
                   <div className="flex items-center gap-2">
-                    <h3 className="text-sm font-bold uppercase tracking-widest" style={{ color: '#8B6CFF' }}>{region}</h3>
-                    <span className="text-xs" style={{ color: '#B8A9E066' }}>{flags.length}</span>
+                    <h3 className="text-sm font-bold uppercase tracking-widest" style={{ color: ACCENT.codex }}>{region}</h3>
+                    <span className="text-xs" style={{ color: T.dim, fontFamily: FONT.mono, fontVariantNumeric: 'tabular-nums' }}>{flags.length}</span>
                   </div>
                   <span style={{
-                    color: '#8B6CFF', fontSize: 18, transition: 'transform 0.2s',
+                    color: ACCENT.codex, fontSize: 18, transition: 'transform 0.2s',
                     transform: isExpanded ? 'rotate(90deg)' : 'rotate(0deg)',
                   }}>›</span>
                 </button>
@@ -387,26 +385,26 @@ export default function CodexScreen({ onBack }: Props) {
                         <button
                           key={f.code}
                           onClick={() => openCountry(f.code)}
-                          className="w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all active:scale-[0.98] hover:brightness-110 text-left"
-                          style={{ background: '#2D1F52', border: '1px solid #8B6CFF22' }}>
+                          className="geo-tap w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all active:scale-[0.98] text-left"
+                          style={{ background: T.surface, border: `1px solid ${T.line}` }}>
                           {/* Flag thumbnail */}
                           <img
                             src={f.flagUrl}
                             alt={f.name}
-                            style={{ width: 46, height: 30, objectFit: 'cover', borderRadius: 5, border: '1px solid #8B6CFF22', flexShrink: 0 }}
+                            style={{ width: 46, height: 30, objectFit: 'cover', borderRadius: 5, border: `1px solid ${T.line}`, flexShrink: 0 }}
                             onError={e => { (e.target as HTMLImageElement).style.opacity = '0.3' }}
                           />
                           <div className="flex-1 min-w-0">
-                            <div className="font-semibold text-sm truncate" style={{ color: '#F5F3FF' }}>{f.name}</div>
+                            <div className="font-semibold text-sm truncate" style={{ color: T.text }}>{f.name}</div>
                           </div>
                           <div className="flex items-center gap-2 flex-shrink-0">
                             {hasHistory && (
-                              <span className="text-xs px-1.5 py-0.5 rounded-full"
-                                style={{ background: '#F59E0B22', color: '#F59E0B', border: '1px solid #F59E0B33', fontSize: 9 }}>
-                                🔬
+                              <span className="text-xs px-1.5 py-0.5 rounded-full inline-flex items-center"
+                                style={{ background: tint(T.gold, 0.12), color: T.gold, border: `1px solid ${tint(T.gold, 0.25)}` }}>
+                                <FlaskIcon size={11} color={T.gold} strokeWidth={1.6} absoluteStrokeWidth />
                               </span>
                             )}
-                            <span style={{ color: '#8B6CFF' }}>›</span>
+                            <span style={{ color: ACCENT.codex }}>›</span>
                           </div>
                         </button>
                       )
@@ -439,13 +437,13 @@ function IdentityCodexSection() {
       {/* Collapsed by default — countries come first; tap to reveal the extras */}
       <button
         onClick={() => setSectionOpen(o => !o)}
-        className="w-full flex items-center justify-between px-4 py-3 rounded-xl transition-all active:scale-[0.98]"
-        style={{ background: sectionOpen ? '#2D1F52' : '#221740', border: `1px solid ${sectionOpen ? '#FF6FD855' : '#8B6CFF33'}` }}>
+        className="geo-tap w-full flex items-center justify-between px-4 py-3 rounded-xl transition-all active:scale-[0.98]"
+        style={{ background: sectionOpen ? T.surface : T.surfaceHi, border: `1px solid ${sectionOpen ? tint(T.warm, 0.4) : T.line}` }}>
         <div className="text-left">
-          <h3 className="text-sm font-bold uppercase tracking-widest" style={{ color: '#FF6FD8' }}>Identity &amp; Other Flags</h3>
-          <p className="text-xs" style={{ color: '#B8A9E088' }}>{IDENTITY_FLAGS.length - SIGNAL_FLAGS.length} flags beyond countries</p>
+          <h3 className="text-sm font-bold uppercase tracking-widest" style={{ color: T.warm }}>Identity &amp; Other Flags</h3>
+          <p className="text-xs" style={{ color: T.dim }}>{IDENTITY_FLAGS.length - SIGNAL_FLAGS.length} flags beyond countries</p>
         </div>
-        <span style={{ color: '#FF6FD8', fontSize: 20, transition: 'transform 0.2s', transform: sectionOpen ? 'rotate(90deg)' : 'rotate(0deg)' }}>›</span>
+        <span style={{ color: T.warm, fontSize: 20, transition: 'transform 0.2s', transform: sectionOpen ? 'rotate(90deg)' : 'rotate(0deg)' }}>›</span>
       </button>
 
       {sectionOpen && <div className="mt-3" />}
@@ -456,13 +454,13 @@ function IdentityCodexSection() {
           <div key={cat} className="mb-3">
             <button
               onClick={() => setOpenCat(o => o === cat ? null : cat)}
-              className="w-full flex items-center justify-between px-4 py-3 rounded-xl transition-all active:scale-[0.98]"
-              style={{ background: isOpen ? '#2D1F52' : '#221740', border: `1px solid ${isOpen ? '#FF6FD855' : '#8B6CFF22'}` }}>
+              className="geo-tap w-full flex items-center justify-between px-4 py-3 rounded-xl transition-all active:scale-[0.98]"
+              style={{ background: isOpen ? T.surface : T.surfaceHi, border: `1px solid ${isOpen ? tint(T.warm, 0.4) : T.line}` }}>
               <div className="flex items-center gap-2">
-                <h3 className="text-sm font-bold uppercase tracking-widest" style={{ color: '#C084FC' }}>{cat}</h3>
-                <span className="text-xs" style={{ color: '#B8A9E066' }}>{flags.length}</span>
+                <h3 className="text-sm font-bold uppercase tracking-widest" style={{ color: T.warm }}>{cat}</h3>
+                <span className="text-xs" style={{ color: T.dim, fontFamily: FONT.mono, fontVariantNumeric: 'tabular-nums' }}>{flags.length}</span>
               </div>
-              <span style={{ color: '#C084FC', fontSize: 18, transition: 'transform 0.2s', transform: isOpen ? 'rotate(90deg)' : 'rotate(0deg)' }}>›</span>
+              <span style={{ color: T.warm, fontSize: 18, transition: 'transform 0.2s', transform: isOpen ? 'rotate(90deg)' : 'rotate(0deg)' }}>›</span>
             </button>
             {isOpen && (
               <div className="mt-1.5 space-y-1.5">
@@ -470,19 +468,19 @@ function IdentityCodexSection() {
                   const showNote = openFlag === f.id
                   return (
                     <button key={f.id} onClick={() => setOpenFlag(o => o === f.id ? null : f.id)}
-                      className="w-full px-4 py-3 rounded-xl transition-all active:scale-[0.99] text-left"
-                      style={{ background: '#2D1F52', border: `1px solid ${showNote ? '#C084FC44' : '#8B6CFF22'}` }}>
+                      className="geo-tap w-full px-4 py-3 rounded-xl transition-all active:scale-[0.99] text-left"
+                      style={{ background: T.surface, border: `1px solid ${showNote ? tint(T.warm, 0.35) : T.line}` }}>
                       <div className="flex items-center gap-3">
                         <img src={f.flagUrl} alt={f.name}
-                          style={{ width: 46, height: 30, objectFit: 'contain', borderRadius: 5, border: '1px solid #8B6CFF22', flexShrink: 0, background: '#1E1640' }}
+                          style={{ width: 46, height: 30, objectFit: 'contain', borderRadius: 5, border: `1px solid ${T.line}`, flexShrink: 0, background: T.surfaceHi }}
                           onError={e => { (e.target as HTMLImageElement).style.opacity = '0.3' }} />
                         <div className="flex-1 min-w-0">
-                          <div className="font-semibold text-sm truncate" style={{ color: '#F5F3FF' }}>{f.name}</div>
+                          <div className="font-semibold text-sm truncate" style={{ color: T.text }}>{f.name}</div>
                         </div>
-                        <span style={{ color: '#C084FC', fontSize: 16, transition: 'transform 0.2s', transform: showNote ? 'rotate(90deg)' : 'rotate(0deg)' }}>›</span>
+                        <span style={{ color: T.warm, fontSize: 16, transition: 'transform 0.2s', transform: showNote ? 'rotate(90deg)' : 'rotate(0deg)' }}>›</span>
                       </div>
                       {showNote && (
-                        <p className="text-xs leading-relaxed mt-2.5" style={{ color: '#B8A9E0', lineHeight: 1.65 }}>{f.note}</p>
+                        <p className="text-xs leading-relaxed mt-2.5" style={{ color: T.muted, lineHeight: 1.65 }}>{f.note}</p>
                       )}
                     </button>
                   )
@@ -505,15 +503,15 @@ function AmericanCitiesCodexSection() {
     <div className="mt-5">
       <button
         onClick={() => setOpen(o => !o)}
-        className="w-full flex items-center justify-between px-4 py-3 rounded-xl transition-all active:scale-[0.98]"
-        style={{ background: open ? '#2D1F52' : '#221740', border: `1px solid ${open ? '#5CC9F555' : '#8B6CFF33'}` }}>
+        className="geo-tap w-full flex items-center justify-between px-4 py-3 rounded-xl transition-all active:scale-[0.98]"
+        style={{ background: open ? T.surface : T.surfaceHi, border: `1px solid ${open ? tint(T.cyan, 0.4) : T.line}` }}>
         <div className="text-left">
-          <h3 className="text-sm font-bold uppercase tracking-widest" style={{ color: '#5CC9F5' }}>
-            American Cities <span style={{ color: '#5CC9F599', fontSize: 10 }}>(Beta)</span>
+          <h3 className="text-sm font-bold uppercase tracking-widest" style={{ color: T.cyan }}>
+            American Cities <span style={{ color: tint(T.cyan, 0.6), fontSize: 10 }}>(Beta)</span>
           </h3>
-          <p className="text-xs" style={{ color: '#B8A9E088' }}>{cities.length} U.S. municipal flags</p>
+          <p className="text-xs" style={{ color: T.dim }}>{cities.length} U.S. municipal flags</p>
         </div>
-        <span style={{ color: '#5CC9F5', fontSize: 20, transition: 'transform 0.2s', transform: open ? 'rotate(90deg)' : 'rotate(0deg)' }}>›</span>
+        <span style={{ color: T.cyan, fontSize: 20, transition: 'transform 0.2s', transform: open ? 'rotate(90deg)' : 'rotate(0deg)' }}>›</span>
       </button>
       {open && (
         <div className="mt-1.5 space-y-1.5">
@@ -521,20 +519,20 @@ function AmericanCitiesCodexSection() {
             const showNote = openFlag === f.id
             return (
               <button key={f.id} onClick={() => setOpenFlag(o => o === f.id ? null : f.id)}
-                className="w-full px-4 py-3 rounded-xl transition-all active:scale-[0.99] text-left"
-                style={{ background: '#2D1F52', border: `1px solid ${showNote ? '#5CC9F544' : '#8B6CFF22'}` }}>
+                className="geo-tap w-full px-4 py-3 rounded-xl transition-all active:scale-[0.99] text-left"
+                style={{ background: T.surface, border: `1px solid ${showNote ? tint(T.cyan, 0.35) : T.line}` }}>
                 <div className="flex items-center gap-3">
                   <img src={f.flagUrl} alt={f.name}
-                    style={{ width: 46, height: 30, objectFit: 'contain', borderRadius: 5, border: '1px solid #8B6CFF22', flexShrink: 0, background: '#1E1640' }}
+                    style={{ width: 46, height: 30, objectFit: 'contain', borderRadius: 5, border: `1px solid ${T.line}`, flexShrink: 0, background: T.surfaceHi }}
                     onError={e => { (e.target as HTMLImageElement).style.opacity = '0.3' }} />
                   <div className="flex-1 min-w-0">
-                    <div className="font-semibold text-sm truncate" style={{ color: '#F5F3FF' }}>{f.name}</div>
-                    <div className="text-xs" style={{ color: '#B8A9E088' }}>{f.state}</div>
+                    <div className="font-semibold text-sm truncate" style={{ color: T.text }}>{f.name}</div>
+                    <div className="text-xs" style={{ color: T.dim }}>{f.state}</div>
                   </div>
-                  <span style={{ color: '#5CC9F5', fontSize: 16, transition: 'transform 0.2s', transform: showNote ? 'rotate(90deg)' : 'rotate(0deg)' }}>›</span>
+                  <span style={{ color: T.cyan, fontSize: 16, transition: 'transform 0.2s', transform: showNote ? 'rotate(90deg)' : 'rotate(0deg)' }}>›</span>
                 </div>
                 {showNote && (
-                  <p className="text-xs leading-relaxed mt-2.5" style={{ color: '#B8A9E0', lineHeight: 1.65 }}>{f.note}</p>
+                  <p className="text-xs leading-relaxed mt-2.5" style={{ color: T.muted, lineHeight: 1.65 }}>{f.note}</p>
                 )}
               </button>
             )
@@ -553,13 +551,16 @@ function SignalCodexSection() {
     <div className="mt-3">
       <button
         onClick={() => setOpen(o => !o)}
-        className="w-full flex items-center justify-between px-4 py-3 rounded-xl transition-all active:scale-[0.98]"
-        style={{ background: open ? '#11314f' : '#0F2238', border: `1px solid ${open ? '#3CC4D055' : '#3CC4D033'}` }}>
+        className="geo-tap w-full flex items-center justify-between px-4 py-3 rounded-xl transition-all active:scale-[0.98]"
+        style={{ background: open ? T.surface : T.surfaceHi, border: `1px solid ${open ? tint(T.cyan, 0.4) : tint(T.cyan, 0.25)}` }}>
         <div className="text-left">
-          <h3 className="text-sm font-bold uppercase tracking-widest" style={{ color: '#3CC4D0' }}>⚓ Signal &amp; Maritime Flags</h3>
-          <p className="text-xs" style={{ color: '#B8A9E088' }}>{SIGNAL_FLAGS.length} international code / phonetic flags</p>
+          <h3 className="text-sm font-bold uppercase tracking-widest"
+            style={{ color: T.cyan, display: 'flex', alignItems: 'center', gap: 6 }}>
+            <Anchor size={14} color={T.cyan} strokeWidth={1.6} absoluteStrokeWidth /> Signal &amp; Maritime Flags
+          </h3>
+          <p className="text-xs" style={{ color: T.dim }}>{SIGNAL_FLAGS.length} international code / phonetic flags</p>
         </div>
-        <span style={{ color: '#3CC4D0', fontSize: 20, transition: 'transform 0.2s', transform: open ? 'rotate(90deg)' : 'rotate(0deg)' }}>›</span>
+        <span style={{ color: T.cyan, fontSize: 20, transition: 'transform 0.2s', transform: open ? 'rotate(90deg)' : 'rotate(0deg)' }}>›</span>
       </button>
       {open && (
         <div className="mt-2 space-y-1.5">
@@ -567,19 +568,19 @@ function SignalCodexSection() {
             const showNote = openFlag === f.id
             return (
               <button key={f.id} onClick={() => setOpenFlag(o => o === f.id ? null : f.id)}
-                className="w-full px-4 py-3 rounded-xl transition-all active:scale-[0.99] text-left"
-                style={{ background: '#2D1F52', border: `1px solid ${showNote ? '#3CC4D044' : '#8B6CFF22'}` }}>
+                className="geo-tap w-full px-4 py-3 rounded-xl transition-all active:scale-[0.99] text-left"
+                style={{ background: T.surface, border: `1px solid ${showNote ? tint(T.cyan, 0.35) : T.line}` }}>
                 <div className="flex items-center gap-3">
                   <img src={f.flagUrl} alt={f.name}
-                    style={{ width: 46, height: 30, objectFit: 'contain', borderRadius: 5, border: '1px solid #8B6CFF22', flexShrink: 0, background: '#1E1640' }}
+                    style={{ width: 46, height: 30, objectFit: 'contain', borderRadius: 5, border: `1px solid ${T.line}`, flexShrink: 0, background: T.surfaceHi }}
                     onError={e => { (e.target as HTMLImageElement).style.opacity = '0.3' }} />
                   <div className="flex-1 min-w-0">
-                    <div className="font-semibold text-sm truncate" style={{ color: '#F5F3FF' }}>{f.name}</div>
+                    <div className="font-semibold text-sm truncate" style={{ color: T.text }}>{f.name}</div>
                   </div>
-                  <span style={{ color: '#3CC4D0', fontSize: 16, transition: 'transform 0.2s', transform: showNote ? 'rotate(90deg)' : 'rotate(0deg)' }}>›</span>
+                  <span style={{ color: T.cyan, fontSize: 16, transition: 'transform 0.2s', transform: showNote ? 'rotate(90deg)' : 'rotate(0deg)' }}>›</span>
                 </div>
                 {showNote && (
-                  <p className="text-xs leading-relaxed mt-2.5" style={{ color: '#B8A9E0', lineHeight: 1.65 }}>{f.note}</p>
+                  <p className="text-xs leading-relaxed mt-2.5" style={{ color: T.muted, lineHeight: 1.65 }}>{f.note}</p>
                 )}
               </button>
             )
@@ -592,19 +593,19 @@ function SignalCodexSection() {
 
 // Shown when a subdivision is positively confirmed to have no flag.
 const NO_FLAG_PLACEHOLDER = (
-  <div style={{ width: '100%', aspectRatio: '3/2', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'rgba(0,0,0,0.45)', borderRadius: 4 }}>
-    <span style={{ fontSize: 10, fontWeight: 600, color: 'rgba(255,255,255,0.55)', textAlign: 'center', lineHeight: 1.2 }}>No flag</span>
+  <div style={{ width: '100%', aspectRatio: '3/2', display: 'flex', alignItems: 'center', justifyContent: 'center', background: T.surfaceHi, border: `1px solid ${T.line}`, borderRadius: 4 }}>
+    <span style={{ fontSize: 10, fontWeight: 600, color: T.dim, textAlign: 'center', lineHeight: 1.2 }}>No flag</span>
   </div>
 )
 
 // Shown when a flag may exist but hasn't been added yet (the default for unknowns).
 const UNKNOWN_FLAG_PLACEHOLDER = (
-  <div style={{ width: '100%', aspectRatio: '3/2', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'rgba(139,108,255,0.10)', border: '1px dashed rgba(139,108,255,0.30)', borderRadius: 4 }}>
+  <div style={{ width: '100%', aspectRatio: '3/2', display: 'flex', alignItems: 'center', justifyContent: 'center', background: tint(ACCENT.codex, 0.1), border: `1px dashed ${tint(ACCENT.codex, 0.3)}`, borderRadius: 4 }}>
     <span style={{ fontSize: 16, lineHeight: 1 }}>🏳️</span>
   </div>
 )
 // HTML string version for the <img> onError fallback (a broken URL = unverified, not "no flag").
-const UNKNOWN_FLAG_HTML = 'width:100%;aspect-ratio:3/2;display:flex;align-items:center;justify-content:center;background:rgba(139,108,255,0.10);border:1px dashed rgba(139,108,255,0.30);border-radius:4px'
+const UNKNOWN_FLAG_HTML = `width:100%;aspect-ratio:3/2;display:flex;align-items:center;justify-content:center;background:${tint(ACCENT.codex, 0.1)};border:1px dashed ${tint(ACCENT.codex, 0.3)};border-radius:4px`
 
 // Countries whose first-level subdivisions are confirmed to have NO official flags —
 // their flagless tiles read "No flag" rather than the ambiguous 🏳️ placeholder.
@@ -642,13 +643,13 @@ function SubRegionTile({ sr, confirmedNoFlags }: { sr: SubRegion; confirmedNoFla
           />
         : (sr.noFlag || confirmedNoFlags) ? NO_FLAG_PLACEHOLDER : UNKNOWN_FLAG_PLACEHOLDER
       }
-      <span style={{ fontSize: 8.5, color: '#B8A9E0', textAlign: 'center', lineHeight: 1.2, wordBreak: 'break-word' }}>{sr.name}</span>
+      <span style={{ fontSize: 8.5, color: T.muted, textAlign: 'center', lineHeight: 1.2, wordBreak: 'break-word' }}>{sr.name}</span>
     </div>
   )
 }
 
 const SUBLABEL_STYLE: React.CSSProperties = {
-  fontSize: 9, fontWeight: 700, color: '#8B6CFF', letterSpacing: '0.08em',
+  fontSize: 9, fontWeight: 700, color: ACCENT.codex, letterSpacing: '0.08em',
   textTransform: 'uppercase', margin: '0 0 6px 2px',
 }
 const GRID_STYLE: React.CSSProperties = { display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: '10px 6px' }
@@ -674,12 +675,12 @@ function SubdivisionGrid({ subRegions, headerLabel, memberLabel, confirmedNoFlag
         return (
           <div key={g.label}>
             <div style={{
-              fontSize: 10, fontWeight: 700, color: '#34D399',
+              fontSize: 10, fontWeight: 700, color: T.green,
               letterSpacing: '0.1em', textTransform: 'uppercase',
               marginBottom: 8, paddingLeft: 2, display: 'flex', alignItems: 'center', gap: 6,
             }}>
               {g.label}
-              <span style={{ color: '#34D39966', fontWeight: 400 }}>{members.length}</span>
+              <span style={{ color: tint(T.green, 0.5), fontWeight: 400, fontFamily: FONT.mono, fontVariantNumeric: 'tabular-nums' }}>{members.length}</span>
             </div>
             {headers.length > 0 && (
               <div style={{ marginBottom: 12 }}>
@@ -710,8 +711,8 @@ function FlagImg({ src, alt, height }: { src: string; alt: string; height: numbe
           if (placeholder) (placeholder as HTMLElement).style.display = 'flex'
         }}
       />
-      <div className="flag-placeholder" style={{ display: 'none', position: 'absolute', inset: 0, alignItems: 'center', justifyContent: 'center', background: '#1E1640' }}>
-        <span style={{ color: '#8B6CFF44', fontSize: 40 }}>🏳️</span>
+      <div className="flag-placeholder" style={{ display: 'none', position: 'absolute', inset: 0, alignItems: 'center', justifyContent: 'center', background: T.surfaceHi }}>
+        <span style={{ color: T.dim, fontSize: 40 }}>🏳️</span>
       </div>
     </div>
   )
@@ -723,41 +724,41 @@ function yearRange(hf: HistoricalFlag) {
 
 function FlagHistoryCard({ hf, isFirst }: { hf: HistoricalFlag; isFirst: boolean }) {
   return (
-    <div className="rounded-2xl overflow-hidden" style={{ background: '#2D1F52', border: `1px solid ${isFirst ? '#8B6CFF44' : '#8B6CFF22'}` }}>
+    <div className="rounded-2xl overflow-hidden" style={{ background: T.surface, border: `1px solid ${isFirst ? tint(ACCENT.codex, 0.35) : T.line}` }}>
       {isFirst && (
         <div className="flex items-center justify-center gap-1.5 py-1.5"
-          style={{ background: '#8B6CFF18', borderBottom: '1px solid #8B6CFF22' }}>
-          <span style={{ color: '#A78BFA', fontSize: 11, fontWeight: 600 }}>↑ Current flag</span>
+          style={{ background: tint(ACCENT.codex, 0.1), borderBottom: `1px solid ${tint(ACCENT.codex, 0.2)}` }}>
+          <span style={{ color: ACCENT.codex, fontSize: 11, fontWeight: 600 }}>↑ Current flag</span>
         </div>
       )}
       <FlagImg src={hf.flagUrl} alt={hf.label} height={160} />
       <div className="p-4">
         <div className="flex items-start justify-between gap-2 mb-2">
-          <div className="font-bold text-sm" style={{ color: '#F5F3FF' }}>{hf.label}</div>
+          <div className="geo-display font-bold text-sm" style={{ color: T.text }}>{hf.label}</div>
           <span className="text-xs px-2 py-0.5 rounded-full flex-shrink-0"
-            style={{ background: '#8B6CFF22', color: '#A78BFA', border: '1px solid #8B6CFF33', whiteSpace: 'nowrap' }}>
+            style={{ background: tint(ACCENT.codex, 0.12), color: ACCENT.codex, border: `1px solid ${tint(ACCENT.codex, 0.25)}`, whiteSpace: 'nowrap', fontFamily: FONT.mono, fontVariantNumeric: 'tabular-nums' }}>
             {yearRange(hf)}
           </span>
         </div>
-        <p className="text-xs leading-relaxed" style={{ color: '#B8A9E0', lineHeight: 1.65 }}>{hf.note}</p>
+        <p className="text-xs leading-relaxed" style={{ color: T.muted, lineHeight: 1.65 }}>{hf.note}</p>
 
         {/* Branch — flags that existed at the same time (e.g. East/West Germany) */}
         {hf.parallel && hf.parallel.length > 0 && (
-          <div className="mt-3 pt-3" style={{ borderTop: '1px dashed #8B6CFF44' }}>
+          <div className="mt-3 pt-3" style={{ borderTop: `1px dashed ${T.lineHi}` }}>
             <div className="flex items-center gap-1.5 mb-2.5">
-              <span style={{ color: '#F59E0B', fontSize: 13 }}>⌥</span>
-              <span className="text-xs font-semibold uppercase tracking-wider" style={{ color: '#F59E0B' }}>
+              <span style={{ color: T.gold, fontSize: 13 }}>⌥</span>
+              <span className="text-xs font-semibold uppercase tracking-wider" style={{ color: T.gold }}>
                 {hf.parallelCaption ?? 'Flown at the same time'}
               </span>
             </div>
             <div className={`grid gap-2.5 ${hf.parallel.length > 1 ? 'grid-cols-2' : 'grid-cols-1'}`}>
               {hf.parallel.map((p, i) => (
-                <div key={i} className="rounded-xl overflow-hidden" style={{ background: '#241A45', border: '1px solid #8B6CFF22' }}>
+                <div key={i} className="rounded-xl overflow-hidden" style={{ background: T.surfaceHi, border: `1px solid ${T.line}` }}>
                   <FlagImg src={p.flagUrl} alt={p.label} height={90} />
                   <div className="p-2.5">
-                    <div className="font-semibold mb-0.5" style={{ color: '#F5F3FF', fontSize: 12 }}>{p.label}</div>
-                    <div className="mb-1" style={{ color: '#A78BFA', fontSize: 10 }}>{yearRange(p)}</div>
-                    <p style={{ color: '#B8A9E0', fontSize: 10.5, lineHeight: 1.5 }}>{p.note}</p>
+                    <div className="font-semibold mb-0.5" style={{ color: T.text, fontSize: 12 }}>{p.label}</div>
+                    <div className="mb-1" style={{ color: ACCENT.codex, fontSize: 10, fontFamily: FONT.mono, fontVariantNumeric: 'tabular-nums' }}>{yearRange(p)}</div>
+                    <p style={{ color: T.muted, fontSize: 10.5, lineHeight: 1.5 }}>{p.note}</p>
                   </div>
                 </div>
               ))}

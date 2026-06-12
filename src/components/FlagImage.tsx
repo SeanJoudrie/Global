@@ -1,5 +1,6 @@
 import { useState, useMemo, useEffect } from "react"
 import type { CSSProperties } from "react"
+import { T, tint } from "../ui/tokens"
 
 /**
  * Shared flag image with a robust multi-source fallback chain.
@@ -44,8 +45,8 @@ export default function FlagImage({ code, alt = "", style, className, placeholde
         style={{
           ...style,
           display: "flex", alignItems: "center", justifyContent: "center",
-          background: style?.background ?? "#1A1033",
-          color: "#8B6CFF66", fontSize: 28,
+          background: style?.background ?? T.surfaceHi,
+          color: tint(T.muted, 0.6), fontSize: 28,
         }}
       >
         {placeholder}

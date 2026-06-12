@@ -1,6 +1,9 @@
 import { useState, useMemo } from "react"
 import { FLAGS } from "../data/flags"
 import type { FlagRecord } from "../data/flags"
+import { T, ACCENT, FONT, tint } from "../ui/tokens"
+import { ScreenHeader } from "./ui"
+import { LineIcon } from "./icons"
 
 interface Props { onBack: () => void }
 
@@ -23,12 +26,12 @@ function buildRounds(): Round[] {
 function SelectedChip({ flag, onClear }: { flag: FlagRecord; onClear: () => void }) {
   return (
     <div className="px-3 py-2.5 rounded-xl flex items-center gap-3"
-      style={{ background: "#2D1F52", border: "1.5px solid #A78BFA66" }}>
+      style={{ background: T.surface, border: `1.5px solid ${tint(ACCENT.play, 0.45)}` }}>
       <img src={flag.flagUrl} alt="" style={{ width: 38, height: 25, objectFit: "cover", borderRadius: 4, flexShrink: 0 }} />
-      <span style={{ color: "#F5F3FF", fontWeight: 700, fontSize: 17, flex: 1, lineHeight: 1.1 }}>{flag.name}</span>
+      <span style={{ color: T.text, fontWeight: 700, fontSize: 17, flex: 1, lineHeight: 1.1 }}>{flag.name}</span>
       <button onClick={onClear} aria-label="Clear"
         className="active:scale-90 transition-all"
-        style={{ width: 26, height: 26, borderRadius: 999, background: "#1A1033", color: "#B8A9E0", fontSize: 13, flexShrink: 0 }}>✕</button>
+        style={{ width: 26, height: 26, borderRadius: 999, background: T.surfaceHi, border: `1px solid ${T.line}`, color: T.muted, fontSize: 13, flexShrink: 0 }}>✕</button>
     </div>
   )
 }
@@ -53,16 +56,16 @@ function FlagInput({ placeholder, onPick, disabled }: {
         onKeyDown={e => { if (e.key === "Enter" && matches.length === 1) { onPick(matches[0]); setInput("") } }}
         placeholder={placeholder}
         className="w-full px-4 py-3 rounded-xl outline-none font-semibold"
-        style={{ background: "#2D1F52", border: "1.5px solid #8B6CFF44", color: "#F5F3FF", fontSize: 14 }} />
+        style={{ background: T.surface, border: `1.5px solid ${T.line}`, color: T.text, fontSize: 14 }} />
       {show && matches.length > 0 && (
         <div className="absolute left-0 right-0 top-full mt-1 rounded-xl overflow-hidden z-20"
-          style={{ background: "#2D1F52", border: "1px solid #8B6CFF44", boxShadow: "0 8px 32px #00000055" }}>
+          style={{ background: T.surface, border: `1px solid ${T.line}`, boxShadow: `0 8px 32px ${tint(T.text, 0.18)}` }}>
           {matches.map(f => (
             <button key={f.code} onMouseDown={() => { onPick(f); setInput(""); setShow(false) }}
-              className="w-full flex items-center gap-3 px-4 py-2.5 hover:brightness-125"
-              style={{ background: "transparent", borderBottom: "1px solid #8B6CFF11" }}>
+              className="w-full flex items-center gap-3 px-4 py-2.5 hover:brightness-95"
+              style={{ background: "transparent", borderBottom: `1px solid ${T.line}` }}>
               <img src={f.flagUrl} alt="" style={{ width: 30, height: 20, objectFit: "cover", borderRadius: 3 }} />
-              <span style={{ color: "#F5F3FF", fontWeight: 600, fontSize: 13 }}>{f.name}</span>
+              <span style={{ color: T.text, fontWeight: 600, fontSize: 13 }}>{f.name}</span>
             </button>
           ))}
         </div>
@@ -98,21 +101,24 @@ export default function FrankenflagScreen({ onBack }: Props) {
     const total = scores.reduce((a, b) => a + b, 0)
     return (
       <div className="min-h-screen flex flex-col items-center justify-center px-5"
-        style={{ background: "linear-gradient(135deg,var(--bg-from) 0%,var(--bg-to) 100%)" }}>
+        style={{ background: T.bg, color: T.text }}>
         <div className="w-full max-w-sm">
           <div className="rounded-2xl p-6 text-center mb-4"
-            style={{ background: "#2D1F52", border: "1px solid #8B6CFF44", boxShadow: "0 0 32px #8B6CFF22" }}>
-            <div className="text-5xl mb-3">🧟</div>
-            <div className="text-6xl font-black mb-1" style={{ color: "#F5F3FF" }}>{total}/{ROUNDS}</div>
-            <div className="text-sm" style={{ color: "#B8A9E0" }}>halves identified</div>
+            style={{ background: T.surface, border: `1px solid ${T.line}` }}>
+            <div className="mb-3 flex justify-center"><LineIcon name="frankenflag" size={44} color={ACCENT.play} /></div>
+            <div className="text-6xl font-black mb-1"
+              style={{ color: T.text, fontFamily: FONT.mono, fontVariantNumeric: "tabular-nums", letterSpacing: "-0.03em" }}>
+              {total}/{ROUNDS}
+            </div>
+            <div className="text-sm" style={{ color: T.muted }}>halves identified</div>
           </div>
           <div className="flex flex-col gap-3">
             <button onClick={() => window.location.reload()}
-              className="w-full py-3.5 rounded-xl font-bold transition-all active:scale-95"
-              style={{ background: "linear-gradient(135deg,#8B6CFF,#A78BFA)", color: "#fff" }}>Play Again</button>
+              className="w-full py-3.5 rounded-xl font-bold transition-all active:scale-95 geo-tap"
+              style={{ background: ACCENT.play, color: T.onAccent, fontFamily: FONT.display }}>Play Again</button>
             <button onClick={onBack}
-              className="w-full py-3.5 rounded-xl font-bold transition-all active:scale-95"
-              style={{ background: "#2D1F52", border: "1px solid #8B6CFF33", color: "#B8A9E0" }}>← Home</button>
+              className="w-full py-3.5 rounded-xl font-bold transition-all active:scale-95 geo-tap"
+              style={{ background: T.surface, border: `1px solid ${T.line}`, color: T.muted }}>← Home</button>
           </div>
         </div>
       </div>
@@ -123,24 +129,15 @@ export default function FrankenflagScreen({ onBack }: Props) {
   const botOK = checked && botGuess?.code === round.bottom.code
 
   return (
-    <div className="min-h-screen flex flex-col"
-      style={{ background: "linear-gradient(135deg,var(--bg-from) 0%,var(--bg-to) 100%)" }}>
-      <header className="flex items-center justify-between px-5 pt-8 pb-4">
-        <button onClick={onBack} className="w-9 h-9 flex items-center justify-center rounded-full text-xl"
-          style={{ background: "#2D1F52", color: "#B8A9E0" }}>&#8249;</button>
-        <div className="text-center">
-          <div className="text-xs font-semibold uppercase tracking-widest" style={{ color: "#B8A9E0" }}>Frankenflag</div>
-          <div className="text-sm font-bold" style={{ color: "#F5F3FF" }}>{idx + 1} / {ROUNDS}</div>
-        </div>
-        <div style={{ width: 36 }} />
-      </header>
+    <div className="min-h-screen flex flex-col" style={{ background: T.bg, color: T.text }}>
+      <ScreenHeader title="Frankenflag" subtitle={`Round ${idx + 1} / ${ROUNDS}`} onBack={onBack} />
 
       <div className="flex flex-col items-center px-5 gap-4">
-        <p className="text-xs text-center" style={{ color: "#B8A9E0" }}>Two flags stitched together — name the top and bottom halves.</p>
+        <p className="text-xs text-center" style={{ color: T.muted }}>Two flags stitched together — name the top and bottom halves.</p>
 
         {/* Composite flag */}
-        <div style={{ width: 280, height: 188, borderRadius: 12, overflow: "hidden", border: "2px solid #8B6CFF33", boxShadow: "0 0 28px #8B6CFF22" }}>
-          <div style={{ width: "100%", height: "50%", overflow: "hidden", position: "relative", borderBottom: "2px solid #120930" }}>
+        <div style={{ width: 280, height: 188, borderRadius: 12, overflow: "hidden", border: `2px solid ${T.line}`, boxShadow: `0 6px 18px ${tint(T.text, 0.18)}` }}>
+          <div style={{ width: "100%", height: "50%", overflow: "hidden", position: "relative", borderBottom: `2px solid ${T.void}` }}>
             <img src={round.top.flagUrl} alt="top" style={{ width: "100%", height: 188, objectFit: "cover", display: "block" }} />
           </div>
           <div style={{ width: "100%", height: "50%", overflow: "hidden", position: "relative" }}>
@@ -151,22 +148,22 @@ export default function FrankenflagScreen({ onBack }: Props) {
         {/* Inputs / results */}
         <div className="w-full max-w-sm flex flex-col gap-3">
           <div>
-            <div className="text-xs font-semibold mb-1" style={{ color: "#8B6CFF" }}>Top half</div>
+            <div className="text-xs font-semibold mb-1" style={{ color: ACCENT.play }}>Top half</div>
             {checked
               ? <div className="px-4 py-3 rounded-xl font-semibold flex items-center justify-between"
-                  style={{ background: "#2D1F52", border: `1.5px solid ${topOK ? "#34D399" : "#F43F5E"}`, color: "#F5F3FF" }}>
-                  <span>{round.top.name}</span><span>{topOK ? "✓" : `✗ (you: ${topGuess?.name ?? "—"})`}</span>
+                  style={{ background: T.surface, border: `1.5px solid ${topOK ? T.green : T.danger}`, color: T.text }}>
+                  <span>{round.top.name}</span><span style={{ color: topOK ? T.green : T.danger }}>{topOK ? "✓" : `✗ (you: ${topGuess?.name ?? "—"})`}</span>
                 </div>
               : topGuess
                 ? <SelectedChip flag={topGuess} onClear={() => setTopGuess(null)} />
                 : <FlagInput placeholder="Name the top flag…" onPick={setTopGuess} />}
           </div>
           <div>
-            <div className="text-xs font-semibold mb-1" style={{ color: "#8B6CFF" }}>Bottom half</div>
+            <div className="text-xs font-semibold mb-1" style={{ color: ACCENT.play }}>Bottom half</div>
             {checked
               ? <div className="px-4 py-3 rounded-xl font-semibold flex items-center justify-between"
-                  style={{ background: "#2D1F52", border: `1.5px solid ${botOK ? "#34D399" : "#F43F5E"}`, color: "#F5F3FF" }}>
-                  <span>{round.bottom.name}</span><span>{botOK ? "✓" : `✗ (you: ${botGuess?.name ?? "—"})`}</span>
+                  style={{ background: T.surface, border: `1.5px solid ${botOK ? T.green : T.danger}`, color: T.text }}>
+                  <span>{round.bottom.name}</span><span style={{ color: botOK ? T.green : T.danger }}>{botOK ? "✓" : `✗ (you: ${botGuess?.name ?? "—"})`}</span>
                 </div>
               : botGuess
                 ? <SelectedChip flag={botGuess} onClear={() => setBotGuess(null)} />
@@ -176,15 +173,15 @@ export default function FrankenflagScreen({ onBack }: Props) {
 
         {!checked ? (
           <button onClick={check} disabled={!topGuess && !botGuess}
-            className="w-full max-w-sm py-3.5 rounded-xl font-bold transition-all active:scale-95"
-            style={{ background: (topGuess || botGuess) ? "linear-gradient(135deg,#8B6CFF,#A78BFA)" : "#2D1F52",
-              color: (topGuess || botGuess) ? "#fff" : "#8B6CFF55", border: "1px solid #8B6CFF22" }}>
+            className="w-full max-w-sm py-3.5 rounded-xl font-bold transition-all active:scale-95 geo-tap"
+            style={{ background: (topGuess || botGuess) ? ACCENT.play : T.surface,
+              color: (topGuess || botGuess) ? T.onAccent : T.dim, border: `1px solid ${T.line}`, fontFamily: FONT.display }}>
             Check →
           </button>
         ) : (
           <button onClick={next}
-            className="w-full max-w-sm py-3.5 rounded-xl font-bold transition-all active:scale-95"
-            style={{ background: "linear-gradient(135deg,#8B6CFF,#A78BFA)", color: "#fff" }}>
+            className="w-full max-w-sm py-3.5 rounded-xl font-bold transition-all active:scale-95 geo-tap"
+            style={{ background: ACCENT.play, color: T.onAccent, fontFamily: FONT.display }}>
             {idx + 1 >= ROUNDS ? "See Results →" : "Next →"}
           </button>
         )}

@@ -1,6 +1,9 @@
 import { useState } from "react"
 import { FLAGS, REGIONS, getFlagsByRegion } from "../data/flags"
 import type { FlagRecord, Region } from "../data/flags"
+import { T, ACCENT, FONT, tint } from "../ui/tokens"
+import { ScreenHeader } from "./ui"
+import { LineIcon, CrownIcon } from "./icons"
 
 interface Props { onBack: () => void }
 
@@ -23,20 +26,20 @@ const roundName = (n: number) =>
 function FlagChoice({ flag, onPick }: { flag: FlagRecord; onPick: (f: FlagRecord) => void }) {
   return (
     <button onClick={() => onPick(flag)}
-      className="w-full max-w-sm rounded-2xl overflow-hidden transition-all active:scale-95 hover:brightness-110"
-      style={{ border: "2px solid #8B6CFF33", background: "#2D1F52" }}>
+      className="w-full max-w-sm rounded-2xl overflow-hidden transition-all active:scale-95 geo-tap"
+      style={{ border: `2px solid ${T.line}`, background: T.surface }}>
       {/* contain (not cover) so no flag edges get cropped off */}
       <img src={flag.flagUrl} alt={flag.name}
-        style={{ width: "100%", height: 150, objectFit: "contain", display: "block", background: "#1A1033" }}
+        style={{ width: "100%", height: 150, objectFit: "contain", display: "block", background: T.void }}
         onError={e => { (e.target as HTMLImageElement).style.opacity = "0.2" }} />
-      <div className="py-3 font-bold text-lg" style={{ color: "#F5F3FF" }}>{flag.name}</div>
+      <div className="py-3 font-bold text-lg" style={{ color: T.text, fontFamily: FONT.display }}>{flag.name}</div>
     </button>
   )
 }
 
 function MiniFlag({ src, dim }: { src: string; dim?: boolean }) {
   return (
-    <img src={src} alt="" style={{ width: 34, height: 22, objectFit: "cover", borderRadius: 3, opacity: dim ? 0.3 : 1, border: "1px solid #8B6CFF33" }}
+    <img src={src} alt="" style={{ width: 34, height: 22, objectFit: "cover", borderRadius: 3, opacity: dim ? 0.3 : 1, border: `1px solid ${T.line}` }}
       onError={e => { (e.target as HTMLImageElement).style.opacity = "0.2" }} />
   )
 }
@@ -63,23 +66,19 @@ function BracketGame({ onBack, onReplay }: Props & { onReplay: () => void }) {
   // ── scope picker ──
   if (!scope) {
     return (
-      <div className="min-h-screen flex flex-col" style={{ background: "linear-gradient(135deg,var(--bg-from) 0%,var(--bg-to) 100%)" }}>
-        <header className="flex items-center justify-between px-5 pt-8 pb-4">
-          <button onClick={onBack} className="w-9 h-9 flex items-center justify-center rounded-full text-xl" style={{ background: "#2D1F52", color: "#B8A9E0" }}>&#8249;</button>
-          <div className="text-xs font-semibold uppercase tracking-widest" style={{ color: "#B8A9E0" }}>Flag Bracket</div>
-          <div style={{ width: 36 }} />
-        </header>
+      <div className="min-h-screen flex flex-col" style={{ background: T.bg, color: T.text }}>
+        <ScreenHeader title="Flag Bracket" onBack={onBack} />
         <div className="flex-1 flex flex-col items-center justify-center px-6 gap-5">
-          <div className="text-5xl">🏆</div>
-          <p className="text-base font-bold text-center" style={{ color: "#F5F3FF" }}>Crown the coolest flag</p>
-          <p className="text-xs text-center" style={{ color: "#B8A9E0", maxWidth: 280 }}>Pick a pool — a fresh random bracket is drawn every run.</p>
+          <LineIcon name="flagbracket" size={48} color={ACCENT.play} />
+          <p className="text-base font-bold text-center" style={{ color: T.text, fontFamily: FONT.display }}>Crown the coolest flag</p>
+          <p className="text-xs text-center" style={{ color: T.muted, maxWidth: 280 }}>Pick a pool — a fresh random bracket is drawn every run.</p>
 
           {/* size toggle: classic 16 vs everyone in the pool */}
-          <div className="inline-flex p-0.5 rounded-full" style={{ background: "#2D1F52", border: "1px solid #8B6CFF33" }}>
+          <div className="inline-flex p-0.5 rounded-full" style={{ background: T.surface, border: `1px solid ${T.line}` }}>
             {([["16", false], ["Everyone", true]] as const).map(([label, v]) => (
               <button key={label} onClick={() => setFull(v)}
                 className="px-4 py-1 rounded-full text-xs font-bold transition-all"
-                style={{ background: full === v ? "#8B6CFF" : "transparent", color: full === v ? "#fff" : "#B8A9E0" }}>
+                style={{ background: full === v ? ACCENT.play : "transparent", color: full === v ? T.onAccent : T.muted }}>
                 {label}
               </button>
             ))}
@@ -88,9 +87,11 @@ function BracketGame({ onBack, onReplay }: Props & { onReplay: () => void }) {
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10, width: "100%", maxWidth: 340 }}>
             {SCOPES.map(s => (
               <button key={s} onClick={() => start(s)}
-                className="py-3.5 px-3 rounded-xl font-bold text-sm transition-all active:scale-95"
-                style={{ background: s === "World" ? "linear-gradient(135deg,#8B6CFF,#A78BFA)" : "#2D1F52", border: s === "World" ? "none" : "1px solid #8B6CFF44", color: s === "World" ? "#fff" : "#F5F3FF", gridColumn: s === "World" ? "1 / -1" : undefined }}>
-                {s === "World" ? "🌍 Random (World)" : s}
+                className="py-3.5 px-3 rounded-xl font-bold text-sm transition-all active:scale-95 geo-tap"
+                style={{ background: s === "World" ? ACCENT.play : T.surface, border: s === "World" ? "none" : `1px solid ${T.line}`, color: s === "World" ? T.onAccent : T.text, gridColumn: s === "World" ? "1 / -1" : undefined }}>
+                {s === "World"
+                  ? <span className="inline-flex items-center justify-center gap-2"><LineIcon name="geo" size={16} color={T.onAccent} /> Random (World)</span>
+                  : s}
               </button>
             ))}
           </div>
@@ -119,34 +120,30 @@ function BracketGame({ onBack, onReplay }: Props & { onReplay: () => void }) {
   if (champion) {
     const rounds = Array.from(new Set(history.map(m => m.roundSize))).sort((a, b) => b - a)
     return (
-      <div className="min-h-screen flex flex-col" style={{ background: "linear-gradient(135deg,var(--bg-from) 0%,var(--bg-to) 100%)" }}>
-        <header className="flex items-center justify-between px-5 pt-8 pb-3">
-          <button onClick={onBack} className="w-9 h-9 flex items-center justify-center rounded-full text-xl" style={{ background: "#2D1F52", color: "#B8A9E0" }}>&#8249;</button>
-          <div className="text-xs font-semibold uppercase tracking-widest" style={{ color: "#B8A9E0" }}>Your Champion</div>
-          <div style={{ width: 36 }} />
-        </header>
+      <div className="min-h-screen flex flex-col" style={{ background: T.bg, color: T.text }}>
+        <ScreenHeader title="Your Champion" onBack={onBack} />
         <div className="flex-1 overflow-y-auto px-5 pb-6">
           <div className="w-full max-w-sm mx-auto text-center">
-            <div className="rounded-2xl p-6 mb-4" style={{ background: "#2D1F52", border: "1px solid #FBBF2455", boxShadow: "0 0 40px #FBBF2433" }}>
-              <div className="text-4xl mb-2">👑</div>
+            <div className="rounded-2xl p-6 mb-4" style={{ background: T.surface, border: `1px solid ${tint(T.gold, 0.45)}` }}>
+              <div className="mb-2 flex justify-center"><CrownIcon size={34} color={T.gold} strokeWidth={1.6} absoluteStrokeWidth /></div>
               <img src={champion.flagUrl} alt={champion.name}
-                style={{ width: 200, height: 133, objectFit: "contain", background: "#1A1033", borderRadius: 12, margin: "0 auto 10px", border: "2px solid #FBBF24" }} />
-              <div className="text-2xl font-black" style={{ color: "#F5F3FF" }}>{champion.name}</div>
-              <div className="text-xs mt-1" style={{ color: "#B8A9E0" }}>your coolest flag — {scope}</div>
+                style={{ width: 200, height: 133, objectFit: "contain", background: T.void, borderRadius: 12, margin: "0 auto 10px", border: `2px solid ${T.gold}` }} />
+              <div className="text-2xl font-black" style={{ color: T.text, fontFamily: FONT.display }}>{champion.name}</div>
+              <div className="text-xs mt-1" style={{ color: T.muted }}>your coolest flag — {scope}</div>
             </div>
 
             {/* Bracket recap */}
-            <div className="rounded-2xl p-4 mb-4 text-left" style={{ background: "#1A1033", border: "1px solid #8B6CFF22" }}>
-              <div className="text-xs font-semibold uppercase tracking-widest mb-3" style={{ color: "#B8A9E0" }}>The Bracket</div>
+            <div className="rounded-2xl p-4 mb-4 text-left" style={{ background: T.surfaceHi, border: `1px solid ${T.line}` }}>
+              <div className="text-xs font-semibold uppercase tracking-widest mb-3" style={{ color: T.muted }}>The Bracket</div>
               {rounds.map(rs => (
                 <div key={rs} style={{ marginBottom: 12 }}>
-                  <div className="text-xs font-bold mb-1.5" style={{ color: "#8B6CFF" }}>{roundName(rs)}</div>
+                  <div className="text-xs font-bold mb-1.5" style={{ color: ACCENT.play }}>{roundName(rs)}</div>
                   <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
                     {history.filter(m => m.roundSize === rs).map((m, i) => (
-                      <div key={i} className="flex items-center gap-2 text-xs" style={{ color: "#F5F3FF" }}>
+                      <div key={i} className="flex items-center gap-2 text-xs" style={{ color: T.text }}>
                         <MiniFlag src={m.a.flagUrl} dim={m.winnerCode !== m.a.code} />
                         <span style={{ flex: 1, opacity: m.winnerCode === m.a.code ? 1 : 0.4, fontWeight: m.winnerCode === m.a.code ? 700 : 400 }}>{m.a.name}</span>
-                        <span style={{ color: "#8B6CFF66" }}>vs</span>
+                        <span style={{ color: T.dim }}>vs</span>
                         <span style={{ flex: 1, textAlign: "right", opacity: m.winnerCode === m.b.code ? 1 : 0.4, fontWeight: m.winnerCode === m.b.code ? 700 : 400 }}>{m.b.name}</span>
                         <MiniFlag src={m.b.flagUrl} dim={m.winnerCode !== m.b.code} />
                       </div>
@@ -158,11 +155,11 @@ function BracketGame({ onBack, onReplay }: Props & { onReplay: () => void }) {
 
             <div className="flex flex-col gap-3">
               <button onClick={onReplay}
-                className="w-full py-3.5 rounded-xl font-bold transition-all active:scale-95"
-                style={{ background: "linear-gradient(135deg,#8B6CFF,#A78BFA)", color: "#fff" }}>New Bracket</button>
+                className="w-full py-3.5 rounded-xl font-bold transition-all active:scale-95 geo-tap"
+                style={{ background: ACCENT.play, color: T.onAccent, fontFamily: FONT.display }}>New Bracket</button>
               <button onClick={onBack}
-                className="w-full py-3.5 rounded-xl font-bold transition-all active:scale-95"
-                style={{ background: "#2D1F52", border: "1px solid #8B6CFF33", color: "#B8A9E0" }}>← Home</button>
+                className="w-full py-3.5 rounded-xl font-bold transition-all active:scale-95 geo-tap"
+                style={{ background: T.surface, border: `1px solid ${T.line}`, color: T.muted }}>← Home</button>
             </div>
           </div>
         </div>
@@ -174,21 +171,15 @@ function BracketGame({ onBack, onReplay }: Props & { onReplay: () => void }) {
   const totalPairs = Math.floor(field.length / 2)
 
   return (
-    <div className="min-h-screen flex flex-col" style={{ background: "linear-gradient(135deg,var(--bg-from) 0%,var(--bg-to) 100%)" }}>
-      <header className="flex items-center justify-between px-5 pt-8 pb-4">
-        <button onClick={onBack} className="w-9 h-9 flex items-center justify-center rounded-full text-xl"
-          style={{ background: "#2D1F52", color: "#B8A9E0" }}>&#8249;</button>
-        <div className="text-center">
-          <div className="text-xs font-semibold uppercase tracking-widest" style={{ color: "#B8A9E0" }}>Flag Bracket · {scope}</div>
-          <div className="text-sm font-bold" style={{ color: "#F5F3FF" }}>{roundName(field.length)} · {pair + 1}/{totalPairs}</div>
-        </div>
-        <div style={{ width: 36 }} />
-      </header>
+    <div className="min-h-screen flex flex-col" style={{ background: T.bg, color: T.text }}>
+      <ScreenHeader title="Flag Bracket"
+        subtitle={<span>{scope} · {roundName(field.length)} · <span style={{ fontFamily: FONT.mono, fontVariantNumeric: "tabular-nums" }}>{pair + 1}/{totalPairs}</span></span>}
+        onBack={onBack} />
 
       <div className="flex-1 flex flex-col items-center justify-center px-5 gap-4">
-        <p className="text-sm font-semibold" style={{ color: "#B8A9E0" }}>Which flag is cooler?</p>
+        <p className="text-sm font-semibold" style={{ color: T.muted }}>Which flag is cooler?</p>
         <FlagChoice flag={a} onPick={pick} />
-        <div className="text-sm font-black" style={{ color: "#8B6CFF" }}>VS</div>
+        <div className="text-sm font-black" style={{ color: ACCENT.play, fontFamily: FONT.display }}>VS</div>
         <FlagChoice flag={b} onPick={pick} />
       </div>
     </div>

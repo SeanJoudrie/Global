@@ -1,5 +1,7 @@
-import { AESTHETIC, saveAesthetic } from "../ui/tokens"
+import { AESTHETIC, saveAesthetic, T, ACCENT, tint } from "../ui/tokens"
 import type { Aesthetic } from "../ui/tokens"
+import { ScreenHeader } from "./ui"
+import { LineIcon } from "./icons"
 
 interface Props { onBack: () => void; onMegaCodex: () => void; onFlagCheck: () => void }
 
@@ -107,87 +109,94 @@ export default function SettingsScreen({ onBack, onMegaCodex, onFlagCheck }: Pro
   ]
 
   return (
-    <div className="min-h-screen flex flex-col" style={{
-      background: 'linear-gradient(135deg,var(--bg-from) 0%,var(--bg-to) 100%)',
-      position: 'relative', zIndex: 1,
-    }}>
-      <header className="flex items-center gap-3 px-5 pt-8 pb-6">
-        <button onClick={onBack} className="w-9 h-9 flex items-center justify-center rounded-full text-xl"
-          style={{ background: '#2D1F52', color: '#B8A9E0' }}>‹</button>
-        <h1 className="text-2xl font-black" style={{ color: '#F5F3FF' }}>Settings</h1>
-      </header>
+    <div className="min-h-screen flex flex-col" style={{ background: T.bg, color: T.text, position: 'relative', zIndex: 1 }}>
+      <ScreenHeader title="Settings" subtitle="Aesthetic & themes" onBack={onBack} />
 
-      <div className="px-5">
-        <h2 className="text-xs font-semibold uppercase tracking-widest mb-4" style={{ color: '#B8A9E0' }}>Dashboard Aesthetic</h2>
+      <div className="px-5 pb-10">
+        <h2 className="text-xs font-semibold uppercase tracking-widest mb-4" style={{ color: T.muted }}>Dashboard Aesthetic</h2>
         <div className="grid grid-cols-1 gap-3 mb-8">
           {AESTHETICS.map(a => {
             const active = a.id === currentAesthetic
             return (
               <button key={a.id} onClick={() => pickAesthetic(a.id)}
-                className="flex items-center gap-4 p-4 rounded-2xl text-left transition-all active:scale-[0.98]"
-                style={{ background: '#2D1F52', border: `2px solid ${active ? '#A78BFA' : '#8B6CFF33'}`, boxShadow: active ? '0 0 20px #8B6CFF33' : 'none' }}>
-                <div style={{ display: 'flex', borderRadius: 8, overflow: 'hidden', border: '1px solid #00000033', flexShrink: 0 }}>
+                className="flex items-center gap-4 p-4 rounded-2xl text-left transition-all active:scale-[0.98] geo-tap"
+                style={{
+                  background: T.surface,
+                  border: `2px solid ${active ? ACCENT.codex : T.line}`,
+                  boxShadow: active ? `0 0 0 3px ${tint(ACCENT.codex, 0.15)}` : 'none',
+                }}>
+                <div style={{ display: 'flex', borderRadius: 8, overflow: 'hidden', border: `1px solid ${T.line}`, flexShrink: 0 }}>
                   {a.swatch.map((c, i) => <div key={i} style={{ width: 16, height: 40, background: c }} />)}
                 </div>
                 <div style={{ flex: 1 }}>
-                  <div style={{ color: '#F5F3FF', fontWeight: 700, fontSize: 14 }}>{a.name}</div>
-                  <div style={{ color: '#B8A9E0', fontSize: 11, marginTop: 2 }}>{a.sub}</div>
+                  <div style={{ color: T.text, fontWeight: 700, fontSize: 14 }}>{a.name}</div>
+                  <div style={{ color: T.muted, fontSize: 11, marginTop: 2 }}>{a.sub}</div>
                 </div>
-                {active && <div style={{ width: 20, height: 20, borderRadius: '50%', background: '#A78BFA', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 12 }}>✓</div>}
+                {active && <div style={{ width: 20, height: 20, borderRadius: '50%', background: ACCENT.codex, color: T.onAccent, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 12 }}>✓</div>}
               </button>
             )
           })}
         </div>
 
-        <h2 className="text-xs font-semibold uppercase tracking-widest mb-4" style={{ color: '#B8A9E0' }}>Colour Theme</h2>
-        <div className="grid grid-cols-2 gap-3">
-          {THEMES.map(t => {
-            const active = t.id === currentId
-            return (
-              <button
-                key={t.id}
-                onClick={() => pick(t.id)}
-                className="flex flex-col gap-3 p-4 rounded-2xl text-left transition-all active:scale-95"
-                style={{
-                  background: `linear-gradient(135deg,${t.bgFrom},${t.bgTo})`,
-                  border: `2px solid ${active ? t.accent : t.accent + '33'}`,
-                  boxShadow: active ? `0 0 20px ${t.accent}44` : 'none',
-                }}
-              >
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                  <span style={{ fontSize: 24 }}>{t.icon}</span>
-                  {active && (
-                    <div style={{
-                      width: 20, height: 20, borderRadius: '50%',
-                      background: t.accent, display: 'flex', alignItems: 'center', justifyContent: 'center',
-                      fontSize: 12,
-                    }}>✓</div>
-                  )}
-                </div>
-                {/* Color preview row */}
-                <div style={{ display: 'flex', gap: 5 }}>
-                  {[t.cardBg, t.accent, t.accentLight, t.muted].map((c, i) => (
-                    <div key={i} style={{ flex: 1, height: 8, borderRadius: 999, background: c }} />
-                  ))}
-                </div>
-                <div style={{ color: '#F5F3FF', fontWeight: 700, fontSize: 14 }}>{t.name}</div>
-              </button>
-            )
-          })}
-        </div>
+        <h2 className="text-xs font-semibold uppercase tracking-widest mb-4" style={{ color: T.muted }}>Colour Theme</h2>
+        {/* The 8 colour themes drive the CSS vars used only by the "original"
+            aesthetic — cartographer/tactical ignore them, so hide the picker
+            there instead of presenting buttons that do nothing visible. */}
+        {AESTHETIC === 'original' ? (
+          <div className="grid grid-cols-2 gap-3">
+            {THEMES.map(t => {
+              const active = t.id === currentId
+              return (
+                <button
+                  key={t.id}
+                  onClick={() => pick(t.id)}
+                  className="flex flex-col gap-3 p-4 rounded-2xl text-left transition-all active:scale-95"
+                  style={{
+                    background: `linear-gradient(135deg,${t.bgFrom},${t.bgTo})`,
+                    border: `2px solid ${active ? t.accent : t.accent + '33'}`,
+                    boxShadow: active ? `0 0 20px ${t.accent}44` : 'none',
+                  }}
+                >
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                    <span style={{ fontSize: 24 }}>{t.icon}</span>
+                    {active && (
+                      <div style={{
+                        width: 20, height: 20, borderRadius: '50%',
+                        background: t.accent, display: 'flex', alignItems: 'center', justifyContent: 'center',
+                        fontSize: 12,
+                      }}>✓</div>
+                    )}
+                  </div>
+                  {/* Color preview row */}
+                  <div style={{ display: 'flex', gap: 5 }}>
+                    {[t.cardBg, t.accent, t.accentLight, t.muted].map((c, i) => (
+                      <div key={i} style={{ flex: 1, height: 8, borderRadius: 999, background: c }} />
+                    ))}
+                  </div>
+                  {/* theme cards preview their own dark palettes, so the label stays light */}
+                  <div style={{ color: '#F5F3FF', fontWeight: 700, fontSize: 14 }}>{t.name}</div>
+                </button>
+              )
+            })}
+          </div>
+        ) : (
+          <div className="text-xs" style={{ color: T.muted }}>
+            Colour themes apply to the Original look — switch aesthetic above to use them.
+          </div>
+        )}
 
         {/* secret */}
         <button onClick={onMegaCodex}
           className="w-full mt-8 py-2.5 rounded-xl text-xs font-semibold transition-all active:scale-95"
-          style={{ background: 'transparent', border: '1px dashed #8B6CFF22', color: '#8B6CFF55' }}>
-          🌈 Mega Codex
+          style={{ background: 'transparent', border: `1px dashed ${T.line}`, color: T.dim }}>
+          <span className="inline-flex items-center justify-center gap-2"><LineIcon name="codex" size={14} color={T.dim} /> Mega Codex</span>
         </button>
 
         {/* temporary flag-QA list */}
         <button onClick={onFlagCheck}
           className="w-full mt-3 py-2.5 rounded-xl text-xs font-semibold transition-all active:scale-95"
-          style={{ background: 'transparent', border: '1px dashed #8B6CFF22', color: '#8B6CFF55' }}>
-          🚩 Flag Check (QA)
+          style={{ background: 'transparent', border: `1px dashed ${T.line}`, color: T.dim }}>
+          <span className="inline-flex items-center justify-center gap-2"><LineIcon name="flags" size={14} color={T.dim} /> Flag Check (QA)</span>
         </button>
       </div>
     </div>

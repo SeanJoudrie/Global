@@ -1,10 +1,15 @@
+import { Flag, Flame, Star } from 'lucide-react'
 import type { AppState } from '../utils/storage'
 import { FLAGS } from '../data/flags'
+import { T, ACCENT, FONT, tint } from '../ui/tokens'
+import { ScreenHeader } from './ui'
 
 interface Props {
   state: AppState
   onBack: () => void
 }
+
+const A = ACCENT.codex
 
 const SET_IDS = [
   { id: 'world', label: 'World', emoji: '🌍' },
@@ -22,46 +27,37 @@ export default function AchievementsScreen({ state, onBack }: Props) {
   const pct = totalFlags ? Math.round((learned / totalFlags) * 100) : 0
 
   return (
-    <div className="min-h-screen flex flex-col" style={{ background: 'linear-gradient(135deg,var(--bg-from) 0%,var(--bg-to) 100%)' }}>
-      <header className="flex items-center gap-3 px-5 pt-8 pb-4">
-        <button
-          onClick={onBack}
-          className="w-9 h-9 flex items-center justify-center rounded-full text-xl transition-all active:scale-90"
-          style={{ background: '#2D1F52', color: '#B8A9E0' }}
-        >
-          ‹
-        </button>
-        <h1 className="text-2xl font-black" style={{ color: '#F5F3FF' }}>Trophy Case</h1>
-      </header>
+    <div className="min-h-screen flex flex-col" style={{ background: T.bg, color: T.text }}>
+      <ScreenHeader title="Trophy Case" onBack={onBack} />
 
       <div className="flex-1 px-5 pb-8 space-y-4">
         {/* Overall stats */}
-        <div className="rounded-2xl p-5" style={{ background: '#2D1F52', border: '1px solid #8B6CFF44' }}>
+        <div className="rounded-2xl p-5" style={{ background: T.surface, border: `1px solid ${tint(A, 0.3)}` }}>
           <div className="grid grid-cols-3 gap-3 mb-4">
             {[
-              { label: 'Flags Learned', value: learned, icon: '🏳️' },
-              { label: 'Day Streak', value: state.currentStreak, icon: '🔥' },
-              { label: 'Best Streak', value: state.longestStreak, icon: '⭐' },
+              { label: 'Flags Learned', value: learned, icon: <Flag size={22} color={A} strokeWidth={1.6} absoluteStrokeWidth /> },
+              { label: 'Day Streak', value: state.currentStreak, icon: <Flame size={22} color={T.amber} strokeWidth={1.6} absoluteStrokeWidth /> },
+              { label: 'Best Streak', value: state.longestStreak, icon: <Star size={22} color={T.gold} strokeWidth={1.6} absoluteStrokeWidth /> },
             ].map(({ label, value, icon }) => (
               <div key={label} className="text-center py-2">
-                <div className="text-2xl mb-1">{icon}</div>
-                <div className="text-2xl font-black" style={{ color: '#F5F3FF' }}>{value}</div>
-                <div className="text-xs" style={{ color: '#B8A9E0' }}>{label}</div>
+                <div className="mb-1 flex justify-center">{icon}</div>
+                <div className="text-2xl font-black" style={{ color: T.text, fontFamily: FONT.mono, fontVariantNumeric: 'tabular-nums' }}>{value}</div>
+                <div className="text-xs" style={{ color: T.muted }}>{label}</div>
               </div>
             ))}
           </div>
-          <div className="w-full h-2 rounded-full overflow-hidden" style={{ background: '#1A1033' }}>
+          <div className="w-full h-2 rounded-full overflow-hidden" style={{ background: tint(T.text, 0.08) }}>
             <div
               className="h-full rounded-full"
-              style={{ width: `${pct}%`, background: 'linear-gradient(90deg, #8B6CFF, #A78BFA)' }}
+              style={{ width: `${pct}%`, background: A }}
             />
           </div>
-          <div className="text-xs mt-1 text-right" style={{ color: '#B8A9E0' }}>{pct}% of all flags mastered</div>
+          <div className="text-xs mt-1 text-right" style={{ color: T.muted }}>{pct}% of all flags mastered</div>
         </div>
 
         {/* Crowns */}
         <div>
-          <h2 className="text-xs font-semibold uppercase tracking-widest mb-3" style={{ color: '#B8A9E0' }}>
+          <h2 className="text-xs font-semibold uppercase tracking-widest mb-3" style={{ color: T.muted }}>
             Crowns ({state.crowns.length}/{SET_IDS.length})
           </h2>
           <div className="grid grid-cols-2 gap-3">
@@ -72,15 +68,15 @@ export default function AchievementsScreen({ state, onBack }: Props) {
                   key={id}
                   className="flex items-center gap-3 px-4 py-3 rounded-xl"
                   style={{
-                    background: '#2D1F52',
-                    border: `1px solid ${earned ? '#FBBF2466' : '#8B6CFF22'}`,
+                    background: T.surface,
+                    border: `1px solid ${earned ? tint(T.gold, 0.45) : T.line}`,
                     opacity: earned ? 1 : 0.45,
                   }}
                 >
                   <span className="text-2xl">{earned ? '👑' : '○'}</span>
                   <div>
-                    <div className="font-semibold text-sm" style={{ color: earned ? '#FBBF24' : '#B8A9E0' }}>{label}</div>
-                    <div className="text-xs" style={{ color: '#B8A9E0' }}>{emoji} Crown</div>
+                    <div className="font-semibold text-sm" style={{ color: earned ? T.gold : T.muted }}>{label}</div>
+                    <div className="text-xs" style={{ color: T.muted }}>{emoji} Crown</div>
                   </div>
                 </div>
               )
@@ -91,22 +87,22 @@ export default function AchievementsScreen({ state, onBack }: Props) {
         {/* Daily history */}
         {Object.keys(state.dailyHistory).length > 0 && (
           <div>
-            <h2 className="text-xs font-semibold uppercase tracking-widest mb-3" style={{ color: '#B8A9E0' }}>Daily History</h2>
+            <h2 className="text-xs font-semibold uppercase tracking-widest mb-3" style={{ color: T.muted }}>Daily History</h2>
             <div className="space-y-2">
               {Object.entries(state.dailyHistory)
                 .sort(([a], [b]) => b.localeCompare(a))
                 .slice(0, 7)
                 .map(([date, result]) => (
                   <div key={date} className="flex items-center justify-between px-4 py-3 rounded-xl"
-                    style={{ background: '#2D1F52', border: '1px solid #8B6CFF22' }}>
-                    <div className="text-sm" style={{ color: '#B8A9E0' }}>{date}</div>
+                    style={{ background: T.surface, border: `1px solid ${T.line}` }}>
+                    <div className="text-sm" style={{ color: T.muted }}>{date}</div>
                     <div className="flex items-center gap-2">
                       <div className="flex gap-0.5">
                         {result.answers.map((a, i) => (
                           <span key={i} className="text-sm">{a === 'correct' ? '🟩' : '🟥'}</span>
                         ))}
                       </div>
-                      <span className="font-bold text-sm" style={{ color: '#F5F3FF' }}>{result.score}/{result.total}</span>
+                      <span className="font-bold text-sm" style={{ color: T.text, fontFamily: FONT.mono, fontVariantNumeric: 'tabular-nums' }}>{result.score}/{result.total}</span>
                     </div>
                   </div>
                 ))}

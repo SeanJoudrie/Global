@@ -1,5 +1,7 @@
-﻿import { useState, useEffect } from "react"
+import { useState, useEffect } from "react"
 import type { Question } from "../utils/quiz"
+import { T, ACCENT, tint } from "../ui/tokens"
+import { ScreenHeader } from "./ui"
 
 interface Props {
   questions: Question[]
@@ -18,6 +20,7 @@ export default function ReverseQuizScreen({ questions, title, onFinish, onBack }
   const [animatingIdx, setAnimatingIdx] = useState<number | null>(null)
 
   const q = questions[idx]
+  const accent = ACCENT.drill
 
   useEffect(() => {
     setAnswerState("idle")
@@ -44,16 +47,16 @@ export default function ReverseQuizScreen({ questions, title, onFinish, onBack }
   }
 
   const borderColor = (i: number) => {
-    if (answerState === "idle") return "#8B6CFF33"
-    if (i === q.correctIndex) return "#34D399"
-    if (i === selectedIdx && answerState === "wrong") return "#F43F5E"
-    return "#8B6CFF22"
+    if (answerState === "idle") return T.line
+    if (i === q.correctIndex) return T.green
+    if (i === selectedIdx && answerState === "wrong") return T.danger
+    return T.line
   }
 
   const overlayColor = (i: number) => {
     if (answerState === "idle") return "transparent"
-    if (i === q.correctIndex) return "#34D39933"
-    if (i === selectedIdx && answerState === "wrong") return "#F43F5E33"
+    if (i === q.correctIndex) return tint(T.green, 0.2)
+    if (i === selectedIdx && answerState === "wrong") return tint(T.danger, 0.2)
     return "transparent"
   }
 
@@ -63,30 +66,22 @@ export default function ReverseQuizScreen({ questions, title, onFinish, onBack }
   }
 
   return (
-    <div className="min-h-screen flex flex-col" style={{ background: "linear-gradient(135deg,var(--bg-from) 0%,var(--bg-to) 100%)" }}>
-      <header className="flex items-center justify-between px-5 pt-8 pb-2" style={{ zIndex: 1 }}>
-        <button onClick={onBack} className="w-9 h-9 flex items-center justify-center rounded-full text-xl"
-          style={{ background: "#2D1F52", color: "#B8A9E0" }}>&#8249;</button>
-        <div className="text-center">
-          <div className="text-xs font-semibold uppercase tracking-widest" style={{ color: "#B8A9E0" }}>{title}</div>
-          <div className="text-sm font-bold" style={{ color: "#F5F3FF" }}>{idx + 1} / {questions.length}</div>
-        </div>
-        <div className="w-9" />
-      </header>
+    <div className="min-h-screen flex flex-col" style={{ background: T.bg, minHeight: "100vh", color: T.text }}>
+      <ScreenHeader title={title} subtitle={`${idx + 1} / ${questions.length}`} onBack={onBack} />
 
-      <div className="mx-5 mt-2 h-1.5 rounded-full overflow-hidden" style={{ background: "#2D1F52", zIndex: 1 }}>
+      <div className="mx-5 mt-2 h-1.5 rounded-full overflow-hidden" style={{ background: T.line, zIndex: 1 }}>
         <div className="h-full rounded-full transition-all duration-500"
-          style={{ width: `${(idx / questions.length) * 100}%`, background: "linear-gradient(90deg,#A78BFA,#8B6CFF)" }} />
+          style={{ width: `${(idx / questions.length) * 100}%`, background: accent }} />
       </div>
 
       <div className="flex-1 flex flex-col items-center px-5 py-5" style={{ zIndex: 1 }}>
         <div className="w-full max-w-sm mb-5 rounded-2xl p-5 text-center"
-          style={{ background: "#2D1F52", border: "1px solid #8B6CFF44" }}>
-          <div className="text-xs font-semibold uppercase tracking-widest mb-2" style={{ color: "#A78BFA" }}>
+          style={{ background: T.surface, border: `1px solid ${T.line}` }}>
+          <div className="text-xs font-semibold uppercase tracking-widest mb-2" style={{ color: accent }}>
             Which flag belongs to...
           </div>
-          <div className="text-3xl font-black" style={{ color: "#F5F3FF" }}>{q.target.name}</div>
-          <div className="text-sm mt-1" style={{ color: "#B8A9E0" }}>{q.target.region}</div>
+          <div className="text-3xl font-black geo-display" style={{ color: T.text }}>{q.target.name}</div>
+          <div className="text-sm mt-1" style={{ color: T.muted }}>{q.target.region}</div>
         </div>
 
         <div className="w-full max-w-sm grid grid-cols-2 gap-3 mb-4">
@@ -97,7 +92,7 @@ export default function ReverseQuizScreen({ questions, title, onFinish, onBack }
                 border: `2.5px solid ${borderColor(i)}`,
                 cursor: answerState !== "idle" ? "default" : "pointer",
                 position: "relative",
-                boxShadow: answerState !== "idle" && i === q.correctIndex ? "0 0 16px #34D39944" : "none",
+                boxShadow: answerState !== "idle" && i === q.correctIndex ? `0 0 16px ${tint(T.green, 0.27)}` : "none",
               }}>
               <img src={choice.flagUrl} alt={choice.name}
                 style={{ width: "100%", height: 90, objectFit: "cover", display: "block" }}
@@ -109,10 +104,10 @@ export default function ReverseQuizScreen({ questions, title, onFinish, onBack }
                 transition: "background 0.2s",
               }}>
                 {answerState !== "idle" && i === q.correctIndex && (
-                  <span className="text-2xl">✓</span>
+                  <span className="text-2xl" style={{ color: "#FFFFFF", textShadow: "0 1px 4px rgba(0,0,0,0.6)" }}>✓</span>
                 )}
                 {answerState !== "idle" && i === selectedIdx && answerState === "wrong" && (
-                  <span className="text-2xl">✗</span>
+                  <span className="text-2xl" style={{ color: "#FFFFFF", textShadow: "0 1px 4px rgba(0,0,0,0.6)" }}>✗</span>
                 )}
               </div>
             </button>
@@ -122,10 +117,10 @@ export default function ReverseQuizScreen({ questions, title, onFinish, onBack }
         {answerState !== "idle" && (
           <div className="w-full max-w-sm mb-3 px-4 py-3 rounded-xl animate-slide-up"
             style={{
-              background: "#2D1F52",
-              border: `1px solid ${answerState === "correct" ? "#34D39944" : "#F43F5E44"}`,
+              background: T.surface,
+              border: `1px solid ${tint(answerState === "correct" ? T.green : T.danger, 0.27)}`,
             }}>
-            <div className="text-xs font-semibold" style={{ color: answerState === "correct" ? "#34D399" : "#F43F5E" }}>
+            <div className="text-xs font-semibold" style={{ color: answerState === "correct" ? T.green : T.danger }}>
               {answerState === "correct"
                 ? `✓ Correct — ${q.target.name}`
                 : `✗ That was the flag of ${q.target.name}`}
@@ -136,7 +131,7 @@ export default function ReverseQuizScreen({ questions, title, onFinish, onBack }
         {answerState !== "idle" && (
           <button onClick={handleNext}
             className="w-full max-w-sm py-3.5 rounded-xl font-bold text-base transition-all active:scale-95 animate-slide-up"
-            style={{ background: "linear-gradient(135deg,#8B6CFF,#A78BFA)", color: "#fff" }}>
+            style={{ background: accent, color: T.onAccent }}>
             {idx + 1 >= questions.length ? "See Results →" : "Next →"}
           </button>
         )}

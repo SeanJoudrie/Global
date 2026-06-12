@@ -8,7 +8,7 @@ import { T, ACCENT, FONT, tint, IS_CARTO } from "../ui/tokens"
 import { groupsFor, REGISTRY } from "../ui/registry"
 import type { Entry, TabKey } from "../ui/registry"
 import { TabBar, ModuleCard, GameTile, StatPill, SectionHeader, ProgressRing } from "./ui"
-import { LineIcon, FlameIcon, ChevronDownIcon, CheckIcon, FlaskIcon } from "./icons"
+import { LineIcon, FlameIcon, ChevronDownIcon, CheckIcon, FlaskIcon, SearchIcon } from "./icons"
 import FlagImage from "./FlagImage"
 
 // Faint antique world-map backdrop (Cartographer skin only). Fixed to the
@@ -48,6 +48,7 @@ interface Props {
   tab: TabKey
   onTab: (t: TabKey) => void
   onNavigate: (screen: string) => void
+  onOpenCodexCountry: (code: string) => void
   onQuickPlay: () => void
   onStartDaily: () => void
   onReverseQuiz: () => void
@@ -55,11 +56,26 @@ interface Props {
 
 const dayIdx = Math.floor(Date.now() / 86400000)
 
-export default function MainTabs({ state, tab, onTab, onNavigate, onQuickPlay, onStartDaily, onReverseQuiz }: Props) {
+// Lightweight recently-played memory (ids only) so a favourite game is one tap
+// away instead of a re-swipe through the shelves. Separate key from AppState —
+// purely presentational, safe to lose.
+const RECENT_KEY = "globalio_recent_games"
+function loadRecent(): string[] {
+  try { return JSON.parse(localStorage.getItem(RECENT_KEY) || "[]") as string[] } catch { return [] }
+}
+function pushRecent(id: string) {
+  try {
+    const next = [id, ...loadRecent().filter(x => x !== id)].slice(0, 8)
+    localStorage.setItem(RECENT_KEY, JSON.stringify(next))
+  } catch { /* ignore */ }
+}
+
+export default function MainTabs({ state, tab, onTab, onNavigate, onOpenCodexCountry, onQuickPlay, onStartDaily, onReverseQuiz }: Props) {
   const today = todayString()
   const dailyDone = state.lastDailyDate === today
 
   const launch = (e: Entry) => {
+    pushRecent(e.id)
     if (e.action === "quickplay") return onQuickPlay()
     if (e.action === "reverse") return onReverseQuiz()
     if (e.action === "daily") return onStartDaily()
@@ -81,13 +97,16 @@ export default function MainTabs({ state, tab, onTab, onNavigate, onQuickPlay, o
           </span>
         </div>
         <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 5, padding: "5px 10px", borderRadius: IS_CARTO ? 999 : 8, background: T.surface, border: `1px solid ${tint(T.amber, IS_CARTO ? 0.45 : 0.3)}` }}>
-            {IS_CARTO ? <FlameIcon size={13} color={T.amber} strokeWidth={1.7} /> : <span style={{ fontSize: 12 }}>🔥</span>}
-            <span style={{ fontFamily: FONT.mono, fontWeight: IS_CARTO ? 600 : 800, fontSize: 14, color: T.amber, letterSpacing: "-0.02em" }}>{state.currentStreak}</span>
-          </div>
+          {/* Today already opens on a big streak celebration — don't show it twice */}
+          {tab !== "today" && (
+            <div style={{ display: "flex", alignItems: "center", gap: 5, padding: "5px 10px", borderRadius: IS_CARTO ? 999 : 8, background: T.surface, border: `1px solid ${tint(T.amber, IS_CARTO ? 0.45 : 0.3)}` }}>
+              {IS_CARTO ? <FlameIcon size={13} color={T.amber} strokeWidth={1.7} /> : <span style={{ fontSize: 12 }}>🔥</span>}
+              <span style={{ fontFamily: FONT.mono, fontWeight: IS_CARTO ? 600 : 800, fontSize: 14, color: T.amber, letterSpacing: "-0.02em" }}>{state.currentStreak}</span>
+            </div>
+          )}
           <button onClick={() => onNavigate("settings")} aria-label="Settings" className="geo-tap"
-            style={{ width: 32, height: 32, borderRadius: IS_CARTO ? 999 : 8, background: T.surface, border: `1px solid ${T.line}`, color: T.muted, display: "flex", alignItems: "center", justifyContent: "center" }}>
-            {IS_CARTO ? <LineIcon name="settings" size={16} color={T.muted} /> : "⚙"}
+            style={{ width: 44, height: 44, borderRadius: IS_CARTO ? 999 : 8, background: T.surface, border: `1px solid ${T.line}`, color: T.muted, display: "flex", alignItems: "center", justifyContent: "center" }}>
+            {IS_CARTO ? <LineIcon name="settings" size={18} color={T.muted} /> : "⚙"}
           </button>
         </div>
       </header>
@@ -99,7 +118,7 @@ export default function MainTabs({ state, tab, onTab, onNavigate, onQuickPlay, o
         )}
         {tab === "learn" && <ListTab tab="learn" launch={launch} state={state} />}
         {tab === "play" && <PlayTab launch={launch} />}
-        {tab === "codex" && <CodexTab state={state} launch={launch} onNavigate={onNavigate} />}
+        {tab === "codex" && <CodexTab state={state} launch={launch} onOpenCodexCountry={onOpenCodexCountry} />}
         {tab === "you" && <YouTab state={state} learned={learned} onNavigate={onNavigate} />}
       </main>
 
@@ -115,6 +134,7 @@ function TodayTab({ state, dailyDone, onNavigate, onQuickPlay, onStartDaily }: {
   onNavigate: (s: string) => void; onQuickPlay: () => void; onStartDaily: () => void
 }) {
   const fotd = FLAGS[dayIdx % FLAGS.length]
+  const todayResult = state.dailyHistory[todayString()]
   return (
     <div className={IS_CARTO ? "carto-slide-up" : undefined} style={{ display: "flex", flexDirection: "column", gap: 18 }}>
       {/* Streak celebration */}
@@ -135,24 +155,31 @@ function TodayTab({ state, dailyDone, onNavigate, onQuickPlay, onStartDaily }: {
         </div>
       </div>
 
-      {/* Massive primary action */}
-      <button onClick={onStartDaily} className={`geo-tap ${IS_CARTO ? "carto-card" : ""}`}
+      {/* Massive primary action — becomes a recap once today's run is logged
+          ("once a day" means once: no accidental replays that re-record) */}
+      <button onClick={dailyDone ? undefined : onStartDaily} className={`${dailyDone ? "" : "geo-tap"} ${IS_CARTO ? "carto-card" : ""}`}
+        aria-disabled={dailyDone || undefined}
         style={{
           position: "relative", overflow: "hidden", padding: "22px 20px", borderRadius: 16, textAlign: "left",
-          border: `1px solid ${tint(ACCENT.play, 0.36)}`,
-          background: `linear-gradient(150deg, ${tint(ACCENT.play, 0.16)}, ${T.surface} 70%)`,
-          ...(IS_CARTO ? { ["--wash" as string]: tint(ACCENT.play, 0.42) } : {}),
+          border: `1px solid ${tint(dailyDone ? T.green : ACCENT.play, 0.36)}`,
+          background: `linear-gradient(150deg, ${tint(dailyDone ? T.green : ACCENT.play, 0.16)}, ${T.surface} 70%)`,
+          cursor: dailyDone ? "default" : "pointer",
+          ...(IS_CARTO ? { ["--wash" as string]: tint(dailyDone ? T.green : ACCENT.play, 0.42) } : {}),
         }}>
-        <div style={{ position: "absolute", right: -18, bottom: -22, opacity: 0.12, color: ACCENT.play, pointerEvents: "none" }}>
-          {IS_CARTO ? <LineIcon name="today" size={132} color={ACCENT.play} strokeWidth={1.1} /> : <span style={{ fontSize: 110 }}>🧭</span>}
+        <div style={{ position: "absolute", right: -18, bottom: -22, opacity: 0.12, color: dailyDone ? T.green : ACCENT.play, pointerEvents: "none" }}>
+          {IS_CARTO ? <LineIcon name="today" size={132} color={dailyDone ? T.green : ACCENT.play} strokeWidth={1.1} /> : <span style={{ fontSize: 110 }}>🧭</span>}
         </div>
-        <div className="geo-micro" style={{ fontSize: 9, color: ACCENT.play, marginBottom: 8 }}>◦ Today's expedition</div>
+        <div className="geo-micro" style={{ fontSize: 9, color: dailyDone ? T.green : ACCENT.play, marginBottom: 8 }}>◦ Today's expedition</div>
         <div className="geo-display" style={{ fontWeight: 800, fontSize: 30, lineHeight: 1.02, letterSpacing: "-0.02em", color: T.text, maxWidth: 240 }}>
           Daily Expedition
         </div>
-        <div style={{ color: T.muted, fontSize: 12.5, marginTop: 6, maxWidth: 220 }}>Ten flags from across the world. One run, once a day.</div>
+        <div style={{ color: T.muted, fontSize: 12.5, marginTop: 6, maxWidth: 220 }}>
+          {dailyDone ? "Logged for today — a fresh expedition lands tomorrow." : "Ten flags from across the world. One run, once a day."}
+        </div>
         <div style={{ marginTop: 16, display: "inline-flex", alignItems: "center", gap: 8, padding: "11px 20px", borderRadius: 999, background: dailyDone ? T.green : ACCENT.play, color: T.onAccent }}>
-          <span style={{ fontFamily: FONT.display, fontWeight: 700, fontSize: 15 }}>{dailyDone ? "✓ Done today" : "Start"}</span>
+          <span style={{ fontFamily: FONT.display, fontWeight: 700, fontSize: 15 }}>
+            {dailyDone ? (todayResult ? `✓ ${todayResult.score}/${todayResult.total} today` : "✓ Done today") : "Start"}
+          </span>
           {!dailyDone && <span style={{ fontSize: 16 }}>→</span>}
         </div>
       </button>
@@ -241,7 +268,7 @@ function CollectionBanner({ state }: { state: AppState }) {
 const CONTINENT_ORDER = ["Europe", "Africa", "Asia", "Americas", "Middle East", "Oceania"] as const
 const CAPITAL_BY_CODE = new Map(CAPITALS.map(c => [c.code, c.capital]))
 
-function CodexTab({ state, launch, onNavigate }: { state: AppState; launch: (e: Entry) => void; onNavigate: (s: string) => void }) {
+function CodexTab({ state, launch, onOpenCodexCountry }: { state: AppState; launch: (e: Entry) => void; onOpenCodexCountry: (code: string) => void }) {
   const [open, setOpen] = useState<string | null>("Europe")
   const learned = new Set(state.learnedFlags)
   const blocks = CONTINENT_ORDER
@@ -258,7 +285,7 @@ function CodexTab({ state, launch, onNavigate }: { state: AppState; launch: (e: 
             <ContinentDrawer key={b.continent} continent={b.continent} flags={b.flags} learned={learned}
               open={open === b.continent}
               onToggle={() => setOpen(o => (o === b.continent ? null : b.continent))}
-              onOpenCountry={() => onNavigate("codex")} />
+              onOpenCountry={onOpenCodexCountry} />
           ))}
         </div>
       </div>
@@ -278,13 +305,13 @@ function CodexTab({ state, launch, onNavigate }: { state: AppState; launch: (e: 
 
 function ContinentDrawer({ continent, flags, learned, open, onToggle, onOpenCountry }: {
   continent: string; flags: typeof FLAGS; learned: Set<string>
-  open: boolean; onToggle: () => void; onOpenCountry: () => void
+  open: boolean; onToggle: () => void; onOpenCountry: (code: string) => void
 }) {
   const done = flags.filter(f => learned.has(f.code)).length
   return (
     <div className={IS_CARTO ? "carto-card" : undefined}
       style={{ borderRadius: 14, overflow: "hidden", ...(IS_CARTO ? { ["--wash" as string]: tint(ACCENT.codex, 0.42) } : { background: T.surface, border: `1px solid ${T.line}` }) }}>
-      <button onClick={onToggle} className="geo-tap"
+      <button onClick={onToggle} className="geo-tap" aria-expanded={open}
         style={{ width: "100%", display: "flex", alignItems: "center", gap: 13, padding: "13px 14px", background: "transparent", textAlign: "left" }}>
         <ProgressRing done={done} total={flags.length} accent={ACCENT.codex} size={40} />
         <div style={{ flex: 1 }}>
@@ -302,7 +329,7 @@ function ContinentDrawer({ continent, flags, learned, open, onToggle, onOpenCoun
       {open && (
         <div className={IS_CARTO ? "carto-slide-up" : undefined} style={{ padding: "2px 10px 10px" }}>
           {flags.map(f => (
-            <button key={f.code} onClick={onOpenCountry} className="geo-tap"
+            <button key={f.code} onClick={() => onOpenCountry(f.code)} className="geo-tap"
               style={{ width: "100%", display: "flex", alignItems: "center", gap: 12, padding: "9px 6px", background: "transparent", textAlign: "left", borderTop: `1px solid ${T.line}` }}>
               <span style={{ flexShrink: 0, width: 42, height: 28, borderRadius: 6, overflow: "hidden", border: `1px solid ${T.line}`, display: "block" }}>
                 <FlagImage code={f.code} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
@@ -330,9 +357,17 @@ function ContinentDrawer({ continent, flags, learned, open, onToggle, onOpenCoun
    games are buried in a collapsible Beta Sandbox at the very bottom. ──────── */
 function PlayTab({ launch }: { launch: (e: Entry) => void }) {
   const [sandboxOpen, setSandboxOpen] = useState(false)
+  const [q, setQ] = useState("")
   const groups = groupsFor("play").filter(g => !g.entries[0].sandbox)
   const sandbox = REGISTRY.filter(r => r.tab === "play" && r.sandbox)
   const gameCount = REGISTRY.filter(r => r.tab === "play").length
+  const recent = loadRecent()
+    .map(id => REGISTRY.find(r => r.id === id))
+    .filter((e): e is Entry => !!e)
+  const query = q.trim().toLowerCase()
+  const matches = query
+    ? REGISTRY.filter(r => (r.tab === "play" || r.tab === "learn") && `${r.title} ${r.subtitle}`.toLowerCase().includes(query))
+    : []
   return (
     <div className={IS_CARTO ? "carto-slide-up" : undefined} style={{ display: "flex", flexDirection: "column", gap: 20 }}>
       <div>
@@ -341,6 +376,42 @@ function PlayTab({ launch }: { launch: (e: Entry) => void }) {
           <span style={{ fontFamily: FONT.mono, fontWeight: 700, color: ACCENT.play }}>{gameCount}</span> games · swipe each shelf
         </div>
       </div>
+
+      {/* Find any game by name — including everything buried in the sandbox */}
+      <div style={{ display: "flex", alignItems: "center", gap: 8, padding: "0 12px", height: 44, borderRadius: 12, background: T.surface, border: `1px solid ${T.line}` }}>
+        <SearchIcon size={16} color={T.dim} strokeWidth={1.6} />
+        <input value={q} onChange={e => setQ(e.target.value)} placeholder="Find a game…" aria-label="Search games"
+          style={{ flex: 1, background: "transparent", border: "none", outline: "none", color: T.text, fontSize: 14 }} />
+        {q && (
+          <button onClick={() => setQ("")} aria-label="Clear search"
+            style={{ color: T.dim, background: "transparent", fontSize: 18, lineHeight: 1, padding: "4px 2px" }}>×</button>
+        )}
+      </div>
+
+      {query ? (
+        matches.length ? (
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
+            {matches.map(e => (
+              <GameTile key={e.id} icon={e.icon} glyph={e.id} title={e.title} subtitle={e.subtitle} accent={ACCENT[e.accent]} onClick={() => launch(e)} style={{ width: "100%" }} />
+            ))}
+          </div>
+        ) : (
+          <div style={{ padding: 18, borderRadius: 12, border: `1px dashed ${T.line}`, textAlign: "center", color: T.dim, fontSize: 12 }}>
+            No game matches "{q.trim()}".
+          </div>
+        )
+      ) : (
+      <>
+      {recent.length > 0 && (
+        <div>
+          <SectionHeader title="Jump back in" accent={ACCENT.play} />
+          <div className="carto-rail" style={{ display: "flex", gap: 10, overflowX: "auto", margin: "0 -16px", padding: "2px 16px 6px" }}>
+            {recent.map(e => (
+              <GameTile key={e.id} icon={e.icon} glyph={e.id} title={e.title} subtitle={e.subtitle} accent={ACCENT[e.accent]} onClick={() => launch(e)} />
+            ))}
+          </div>
+        </div>
+      )}
 
       {groups.map(g => {
         const isTiles = g.entries[0].size === "tile"
@@ -366,7 +437,7 @@ function PlayTab({ launch }: { launch: (e: Entry) => void }) {
 
       {/* Beta Sandbox — progressively disclosed, nothing deleted */}
       <div style={{ marginTop: 4 }}>
-        <button onClick={() => setSandboxOpen(o => !o)} className="geo-tap"
+        <button onClick={() => setSandboxOpen(o => !o)} className="geo-tap" aria-expanded={sandboxOpen}
           style={{ width: "100%", display: "flex", alignItems: "center", gap: 10, padding: "12px 14px",
             borderRadius: 12, background: T.surfaceHi, border: `1px dashed ${T.lineHi}`, textAlign: "left" }}>
           <span style={{ display: "flex", color: T.muted }}>{IS_CARTO ? <FlaskIcon size={18} color={T.muted} strokeWidth={1.6} /> : <span style={{ fontSize: 16 }}>🧪</span>}</span>
@@ -388,6 +459,8 @@ function PlayTab({ launch }: { launch: (e: Entry) => void }) {
           </div>
         )}
       </div>
+      </>
+      )}
     </div>
   )
 }

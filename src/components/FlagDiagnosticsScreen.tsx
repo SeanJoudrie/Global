@@ -1,6 +1,8 @@
 import { useState } from "react"
 import { FIXED_FLAGS, MISSING_FLAGS, RECENT_FLAGS } from "../data/flagDiagnostics"
 import type { DiagFlag, MissingFlag } from "../data/flagDiagnostics"
+import { T, ACCENT, FONT, tint } from "../ui/tokens"
+import { ScreenHeader } from "./ui"
 
 // Temporary QA screen (Settings → Flag Check).
 //  • Fixed   – repaired dead links; every image should load.
@@ -12,15 +14,15 @@ interface Props { onBack: () => void }
 function FixedTile({ f }: { f: DiagFlag }) {
   const [state, setState] = useState<"loading" | "ok" | "err">("loading")
   return (
-    <div style={{ display: "flex", alignItems: "center", gap: 10, padding: "6px 10px", borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
-      <div style={{ width: 54, height: 36, flexShrink: 0, borderRadius: 4, overflow: "hidden", background: "rgba(255,255,255,0.06)", display: "flex", alignItems: "center", justifyContent: "center", outline: state === "err" ? "2px solid #ff5e5e" : "none" }}>
+    <div style={{ display: "flex", alignItems: "center", gap: 10, padding: "6px 10px", borderBottom: `1px solid ${T.line}` }}>
+      <div style={{ width: 54, height: 36, flexShrink: 0, borderRadius: 4, overflow: "hidden", background: T.surfaceHi, display: "flex", alignItems: "center", justifyContent: "center", outline: state === "err" ? `2px solid ${T.danger}` : "none" }}>
         <img src={f.url} alt={f.label} loading="lazy" onLoad={() => setState("ok")} onError={() => setState("err")}
           style={{ width: "100%", height: "100%", objectFit: "contain", display: state === "err" ? "none" : "block" }} />
-        {state === "err" && <span style={{ fontSize: 16 }}>❌</span>}
+        {state === "err" && <span style={{ fontSize: 16, fontWeight: 800, color: T.danger }}>✕</span>}
       </div>
       <div style={{ minWidth: 0, flex: 1 }}>
-        <div style={{ fontSize: 13, color: "#F5F3FF", fontWeight: 600, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{f.label}</div>
-        <div style={{ fontSize: 10, color: state === "ok" ? "#6BCB77" : state === "err" ? "#ff8a8a" : "#8B6CFF99" }}>
+        <div style={{ fontSize: 13, color: T.text, fontWeight: 600, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{f.label}</div>
+        <div style={{ fontSize: 10, color: state === "ok" ? T.green : state === "err" ? T.danger : T.dim }}>
           {state === "ok" ? "loads ✓" : state === "err" ? "BROKEN" : "…"}
         </div>
       </div>
@@ -38,26 +40,26 @@ function CandidateTile({ url, file, selected, onTap }: { url: string; file: stri
     }}>
       <div style={{
         width: 104, height: 70, borderRadius: 6, overflow: "hidden", position: "relative",
-        background: "rgba(255,255,255,0.06)", display: "flex", alignItems: "center", justifyContent: "center",
-        outline: selected ? "3px solid #6BCB77" : "1px solid rgba(255,255,255,0.12)",
+        background: T.surfaceHi, display: "flex", alignItems: "center", justifyContent: "center",
+        outline: selected ? `3px solid ${T.green}` : `1px solid ${T.line}`,
       }}>
         <img src={url} alt={file} loading="lazy" onError={() => setErr(true)}
           style={{ width: "100%", height: "100%", objectFit: "contain" }} />
         {selected && (
-          <div style={{ position: "absolute", top: 2, right: 2, width: 20, height: 20, borderRadius: 999, background: "#6BCB77", color: "#062", fontSize: 13, fontWeight: 800, display: "flex", alignItems: "center", justifyContent: "center" }}>✓</div>
+          <div style={{ position: "absolute", top: 2, right: 2, width: 20, height: 20, borderRadius: 999, background: T.green, color: T.onAccent, fontSize: 13, fontWeight: 800, display: "flex", alignItems: "center", justifyContent: "center" }}>✓</div>
         )}
       </div>
-      <div style={{ fontSize: 9, color: selected ? "#6BCB77" : "#B8A9E0", marginTop: 2, lineHeight: 1.2, wordBreak: "break-word" }}>{file}</div>
+      <div style={{ fontSize: 9, color: selected ? T.green : T.muted, marginTop: 2, lineHeight: 1.2, wordBreak: "break-word" }}>{file}</div>
     </button>
   )
 }
 
 function MissingRow({ f, sel, toggle }: { f: MissingFlag; sel: Set<string>; toggle: (file: string) => void }) {
   return (
-    <div style={{ padding: "8px 10px", borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
-      <div style={{ fontSize: 13, color: "#F5F3FF", fontWeight: 600, marginBottom: 5 }}>{f.label}</div>
+    <div style={{ padding: "8px 10px", borderBottom: `1px solid ${T.line}` }}>
+      <div style={{ fontSize: 13, color: T.text, fontWeight: 600, marginBottom: 5 }}>{f.label}</div>
       {f.cands.length === 0
-        ? <div style={{ fontSize: 11, color: "#ff8a8a" }}>no candidate found — needs a filename</div>
+        ? <div style={{ fontSize: 11, color: T.danger }}>no candidate found — needs a filename</div>
         : <div style={{ display: "flex", gap: 8, overflowX: "auto", paddingBottom: 2 }}>
             {f.cands.map((c) => (
               <CandidateTile key={c.file} url={c.url} file={c.file}
@@ -100,17 +102,18 @@ export default function FlagDiagnosticsScreen({ onBack }: Props) {
   }
 
   return (
-    <div style={{ position: "fixed", inset: 0, background: "#0B0717", zIndex: 1, display: "flex", flexDirection: "column" }}>
-      <div style={{ display: "flex", alignItems: "center", gap: 8, padding: "12px 12px 8px" }}>
-        <button onClick={onBack} aria-label="Back" style={{ width: 36, height: 36, borderRadius: 999, fontSize: 20, flexShrink: 0, background: "rgba(139,108,255,0.15)", color: "#F5F3FF", border: "1px solid rgba(139,108,255,0.4)", cursor: "pointer" }}>‹</button>
-        <div style={{ color: "#F5F3FF", fontWeight: 700, fontSize: 16 }}>Flag Check</div>
-      </div>
+    <div style={{ position: "fixed", inset: 0, background: T.bg, color: T.text, zIndex: 1, display: "flex", flexDirection: "column" }}>
+      <ScreenHeader title="Flag Check" subtitle="Temporary flag QA tool" onBack={onBack} />
       <div style={{ display: "flex", gap: 6, padding: "0 12px 10px" }}>
         {([["new", `New (${RECENT_FLAGS.length})`], ["missing", `Missing (${MISSING_FLAGS.length})`], ["fixed", `Fixed (${FIXED_FLAGS.length})`]] as const).map(([id, label]) => (
-          <button key={id} onClick={() => setTab(id)} style={{ flex: 1, padding: "8px 0", borderRadius: 10, fontSize: 13, fontWeight: 600, cursor: "pointer", background: tab === id ? "#8B6CFF" : "rgba(255,255,255,0.06)", color: tab === id ? "#fff" : "#B8A9E0", border: "none" }}>{label}</button>
+          <button key={id} onClick={() => setTab(id)} style={{
+            flex: 1, padding: "8px 0", borderRadius: 10, fontSize: 13, fontWeight: 600, cursor: "pointer",
+            background: tab === id ? ACCENT.codex : T.surface, color: tab === id ? T.onAccent : T.muted,
+            border: `1px solid ${tab === id ? ACCENT.codex : T.line}`,
+          }}>{label}</button>
         ))}
       </div>
-      <div style={{ padding: "0 12px 8px", fontSize: 11, color: "#8B6CFF99", lineHeight: 1.4 }}>
+      <div style={{ padding: "0 12px 8px", fontSize: 11, color: T.muted, lineHeight: 1.4 }}>
         {tab === "missing"
           ? "Tap the correct flag(s) for each entry (pick more than one if several are right). Then hit Submit at the bottom and send me the copied text."
           : tab === "new"
@@ -125,22 +128,24 @@ export default function FlagDiagnosticsScreen({ onBack }: Props) {
       </div>
 
       {tab === "missing" && (
-        <div style={{ position: "absolute", left: 0, right: 0, bottom: 0, padding: 10, background: "rgba(11,7,23,0.95)", borderTop: "1px solid rgba(139,108,255,0.3)", backdropFilter: "blur(6px)" }}>
+        <div style={{ position: "absolute", left: 0, right: 0, bottom: 0, padding: 10, background: tint(T.bg, 0.95), borderTop: `1px solid ${T.line}`, backdropFilter: "blur(6px)" }}>
           <button onClick={buildSubmit} disabled={count === 0} style={{
-            width: "100%", padding: "12px 0", borderRadius: 12, fontSize: 14, fontWeight: 700, border: "none",
-            cursor: count ? "pointer" : "default", background: count ? "#6BCB77" : "rgba(255,255,255,0.08)", color: count ? "#062" : "#8B6CFF77",
+            width: "100%", padding: "12px 0", borderRadius: 12, fontSize: 14, fontWeight: 700,
+            cursor: count ? "pointer" : "default",
+            background: count ? T.green : T.surface, color: count ? T.onAccent : T.dim,
+            border: `1px solid ${count ? T.green : T.line}`,
           }}>{count ? `Submit ${count} pick${count > 1 ? "s" : ""}` : "Tap flags to select"}</button>
         </div>
       )}
 
       {submitText !== null && (
-        <div onClick={() => setSubmitText(null)} style={{ position: "fixed", inset: 0, zIndex: 60, background: "rgba(0,0,0,0.7)", display: "flex", alignItems: "center", justifyContent: "center", padding: 16 }}>
-          <div onClick={(e) => e.stopPropagation()} style={{ background: "#160F2E", borderRadius: 14, padding: 16, width: "100%", maxWidth: 460, maxHeight: "80%", display: "flex", flexDirection: "column" }}>
-            <div style={{ color: "#F5F3FF", fontWeight: 700, fontSize: 15, marginBottom: 6 }}>{copied ? "✅ Copied — paste it to me" : "Copy this and paste it to me"}</div>
-            <textarea readOnly value={submitText} style={{ flex: 1, minHeight: 160, fontFamily: "monospace", fontSize: 11, padding: 10, borderRadius: 8, border: "1px solid rgba(139,108,255,0.3)", background: "#0B0717", color: "#D9CCFF", resize: "none" }} />
+        <div onClick={() => setSubmitText(null)} style={{ position: "fixed", inset: 0, zIndex: 60, background: "rgba(0,0,0,0.55)", display: "flex", alignItems: "center", justifyContent: "center", padding: 16 }}>
+          <div onClick={(e) => e.stopPropagation()} style={{ background: T.surface, border: `1px solid ${T.line}`, borderRadius: 14, padding: 16, width: "100%", maxWidth: 460, maxHeight: "80%", display: "flex", flexDirection: "column" }}>
+            <div style={{ color: copied ? T.green : T.text, fontWeight: 700, fontSize: 15, marginBottom: 6 }}>{copied ? "✓ Copied — paste it to me" : "Copy this and paste it to me"}</div>
+            <textarea readOnly value={submitText} style={{ flex: 1, minHeight: 160, fontFamily: FONT.mono, fontSize: 11, padding: 10, borderRadius: 8, border: `1px solid ${T.line}`, background: T.surfaceHi, color: T.text, resize: "none" }} />
             <div style={{ display: "flex", gap: 8, marginTop: 10 }}>
-              <button onClick={() => { navigator.clipboard?.writeText(submitText).then(() => setCopied(true)) }} style={{ flex: 1, padding: "10px 0", borderRadius: 10, fontWeight: 700, border: "none", background: "#6BCB77", color: "#062", cursor: "pointer" }}>Copy</button>
-              <button onClick={() => setSubmitText(null)} style={{ flex: 1, padding: "10px 0", borderRadius: 10, fontWeight: 700, border: "1px solid rgba(139,108,255,0.4)", background: "transparent", color: "#B8A9E0", cursor: "pointer" }}>Close</button>
+              <button onClick={() => { navigator.clipboard?.writeText(submitText).then(() => setCopied(true)) }} style={{ flex: 1, padding: "10px 0", borderRadius: 10, fontWeight: 700, border: "none", background: T.green, color: T.onAccent, cursor: "pointer" }}>Copy</button>
+              <button onClick={() => setSubmitText(null)} style={{ flex: 1, padding: "10px 0", borderRadius: 10, fontWeight: 700, border: `1px solid ${T.line}`, background: "transparent", color: T.muted, cursor: "pointer" }}>Close</button>
             </div>
           </div>
         </div>

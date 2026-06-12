@@ -2,6 +2,12 @@ import { useState, useMemo, useEffect } from "react"
 import { FLAGS } from "../data/flags"
 import type { FlagRecord } from "../data/flags"
 import { flagSources } from "./FlagImage"
+import { T, ACCENT, FONT, tint } from "../ui/tokens"
+import { ScreenHeader } from "./ui"
+import { LineIcon } from "./icons"
+import { Flame, Thermometer, Snowflake, Trophy, PartyPopper, Frown } from "lucide-react"
+
+const ACC = ACCENT.play
 
 interface Props { onBack: () => void }
 
@@ -21,7 +27,7 @@ function FlagSlice({ code, col, row, w, h }: { code: string; col: number; row: n
   return (
     <div style={{
       position: "absolute", inset: 0,
-      backgroundColor: "#1A1033",
+      backgroundColor: T.surfaceHi,
       backgroundImage: `url(${url})`,
       backgroundSize: `${w * 3}px ${h * 3}px`,
       backgroundPosition: `${-col * w}px ${-row * h}px`,
@@ -135,21 +141,16 @@ export default function TheComposerScreen({ onBack }: Props) {
 
   return (
     <div className="min-h-screen flex flex-col"
-      style={{ background: "linear-gradient(135deg,var(--bg-from) 0%,var(--bg-to) 100%)" }}>
+      style={{ background: T.bg, minHeight: "100vh", color: T.text }}>
 
-      <header className="flex items-center justify-between px-5 pt-8 pb-4">
-        <button onClick={onBack} className="w-9 h-9 flex items-center justify-center rounded-full text-xl"
-          style={{ background: "#2D1F52", color: "#B8A9E0" }}>&#8249;</button>
-        <div className="text-center">
-          <div className="text-xs font-semibold uppercase tracking-widest" style={{ color: "#B8A9E0" }}>The Composer</div>
-          <div className="text-xs" style={{ color: "#8B6CFF" }}>
+      <ScreenHeader title="The Composer" onBack={onBack}
+        subtitle={
+          <span style={{ color: ACC }}>
             {done
               ? (solved ? `Solved in ${guesses.length} ${guesses.length === 1 ? 'guess' : 'guesses'} · ${pts} pts` : target.name)
               : `${flipped.size}/9 tiles revealed`}
-          </div>
-        </div>
-        <div style={{ width: 36 }} />
-      </header>
+          </span>
+        } />
 
       <div className="flex flex-col items-center px-5 gap-4">
 
@@ -158,9 +159,9 @@ export default function TheComposerScreen({ onBack }: Props) {
           display: 'grid', gridTemplateColumns: 'repeat(3,1fr)',
           gap: 3, borderRadius: 14, overflow: 'hidden',
           border: done
-            ? `2px solid ${solved ? '#34D399' : '#F43F5E'}`
-            : '2px solid #8B6CFF33',
-          boxShadow: '0 0 40px #8B6CFF22',
+            ? `2px solid ${solved ? T.green : T.danger}`
+            : `2px solid ${T.line}`,
+          boxShadow: `0 12px 32px -14px ${tint(T.text, 0.5)}`,
           width: TILE_W * 3 + 3 * 2 + 2,
         }}>
           {Array.from({ length: 9 }).map((_, i) => {
@@ -174,13 +175,15 @@ export default function TheComposerScreen({ onBack }: Props) {
                 {/* face-down cover that fades away when the tile is revealed */}
                 <div style={{
                   position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  background: 'linear-gradient(135deg,#2D1F52,#1A1033)',
+                  // Face-down cover is game content: it must stay opaque so the slice
+                  // underneath is hidden — ink-dark fill instead of the old purple.
+                  background: T.text,
                   opacity: revealed ? 0 : 1,
                   transform: revealed ? 'scale(1.08)' : 'scale(1)',
                   transition: `opacity 0.45s ${(row + col) * 40}ms ease, transform 0.45s ease`,
                   pointerEvents: 'none',
                 }}>
-                  <span style={{ fontSize: 18, opacity: 0.3 }}>🎴</span>
+                  <span style={{ display: 'flex', opacity: 0.4 }}><LineIcon name="composer" size={18} color={T.bg} /></span>
                 </div>
               </div>
             )
@@ -188,7 +191,7 @@ export default function TheComposerScreen({ onBack }: Props) {
         </div>
 
         {!done && guesses.length === 0 && (
-          <p className="text-xs text-center" style={{ color: "#B8A9E0", maxWidth: 280 }}>
+          <p className="text-xs text-center" style={{ color: T.muted, maxWidth: 280 }}>
             Guess the flag. Each guess flips a tile — closer guesses flip better tiles!
           </p>
         )}
@@ -198,13 +201,15 @@ export default function TheComposerScreen({ onBack }: Props) {
           <div className="w-full max-w-sm flex flex-col gap-1.5">
             {[...guesses].reverse().slice(0, 4).map((g, i) => (
               <div key={i} className="flex items-center gap-2 px-3 py-2 rounded-xl"
-                style={{ background: '#2D1F52', border: '1px solid #8B6CFF22' }}>
+                style={{ background: T.surface, border: `1px solid ${T.line}` }}>
                 <img src={g.flag.flagUrl} alt="" style={{ width: 28, height: 18, objectFit: 'cover', borderRadius: 3 }} />
-                <span style={{ color: '#F5F3FF', fontSize: 13, fontWeight: 600, flex: 1 }}>{g.flag.name}</span>
-                <span style={{ fontSize: 16 }}>
-                  {g.level === 'hot' ? '🔥' : g.level === 'warm' ? '🌡️' : '❄️'}
+                <span style={{ color: T.text, fontSize: 13, fontWeight: 600, flex: 1 }}>{g.flag.name}</span>
+                <span style={{ display: 'flex' }}>
+                  {g.level === 'hot' ? <Flame size={15} color={T.warm} strokeWidth={1.6} absoluteStrokeWidth />
+                    : g.level === 'warm' ? <Thermometer size={15} color={T.gold} strokeWidth={1.6} absoluteStrokeWidth />
+                    : <Snowflake size={15} color={ACCENT.learn} strokeWidth={1.6} absoluteStrokeWidth />}
                 </span>
-                <span style={{ fontSize: 11, color: '#B8A9E0' }}>
+                <span style={{ fontSize: 11, color: T.muted }}>
                   {g.level === 'hot' ? 'Hot' : g.level === 'warm' ? 'Warm' : 'Cold'}
                 </span>
               </div>
@@ -216,19 +221,25 @@ export default function TheComposerScreen({ onBack }: Props) {
         {done && (
           <div className="w-full max-w-sm rounded-2xl p-5 text-center"
             style={{
-              background: '#2D1F52',
-              border: `1px solid ${solved ? '#34D39944' : '#F43F5E44'}`,
+              background: T.surface,
+              border: `1px solid ${tint(solved ? T.green : T.danger, 0.35)}`,
             }}>
-            <div className="text-4xl mb-2">{solved ? (guesses.length <= 3 ? '🏆' : '🎉') : '😬'}</div>
-            <div className="text-2xl font-black mb-1" style={{ color: '#F5F3FF' }}>{target.name}</div>
+            <div className="mb-2 flex justify-center" style={{ color: solved ? (guesses.length <= 3 ? T.gold : T.green) : T.danger }}>
+              {solved
+                ? (guesses.length <= 3
+                    ? <Trophy size={36} strokeWidth={1.6} absoluteStrokeWidth />
+                    : <PartyPopper size={36} strokeWidth={1.6} absoluteStrokeWidth />)
+                : <Frown size={36} strokeWidth={1.6} absoluteStrokeWidth />}
+            </div>
+            <div className="text-2xl font-black mb-1" style={{ color: T.text, fontFamily: FONT.display, fontWeight: 800 }}>{target.name}</div>
             {solved && (
-              <div className="text-lg font-bold mb-1" style={{ color: '#34D399' }}>{pts} pts</div>
+              <div className="text-lg font-bold mb-1" style={{ color: T.green, fontFamily: FONT.mono, fontVariantNumeric: "tabular-nums" }}>{pts} pts</div>
             )}
-            <div className="text-xs mb-2" style={{ color: '#B8A9E0' }}>
+            <div className="text-xs mb-2" style={{ color: T.muted }}>
               {guesses.length} {guesses.length === 1 ? 'guess' : 'guesses'}
             </div>
             {target.distinguishingTip && (
-              <p className="text-xs" style={{ color: '#B8A9E0', fontStyle: 'italic' }}>
+              <p className="text-xs" style={{ color: T.muted, fontStyle: 'italic' }}>
                 {target.distinguishingTip}
               </p>
             )}
@@ -250,19 +261,19 @@ export default function TheComposerScreen({ onBack }: Props) {
               placeholder="Type a country name or code…"
               autoComplete="off"
               className="w-full px-4 py-3.5 rounded-xl outline-none font-semibold"
-              style={{ background: "#2D1F52", border: "1.5px solid #8B6CFF44", color: "#F5F3FF", fontSize: 15 }}
+              style={{ background: T.surface, border: `1.5px solid ${T.line}`, color: T.text, fontSize: 15 }}
             />
             {showDrop && matches.length > 0 && (
               <div className="absolute left-0 right-0 bottom-full mb-1 rounded-xl overflow-hidden z-10"
-                style={{ background: "#2D1F52", border: "1px solid #8B6CFF44", boxShadow: "0 -8px 32px #00000044" }}>
+                style={{ background: T.surface, border: `1px solid ${T.line}`, boxShadow: `0 -8px 32px ${tint(T.text, 0.25)}` }}>
                 {matches.map(flag => (
                   <button key={flag.code}
                     onMouseDown={() => handleGuess(flag)}
                     className="w-full flex items-center gap-3 px-4 py-3 hover:brightness-125 transition-all"
-                    style={{ background: "transparent", borderBottom: "1px solid #8B6CFF11" }}>
+                    style={{ background: "transparent", borderBottom: `1px solid ${T.line}` }}>
                     <img src={flag.flagUrl} alt="" style={{ width: 32, height: 21, objectFit: "cover", borderRadius: 3 }} />
-                    <span style={{ color: "#F5F3FF", fontWeight: 600 }}>{flag.name}</span>
-                    <span style={{ color: "#8B6CFF88", fontSize: 11, marginLeft: "auto" }}>{flag.code}</span>
+                    <span style={{ color: T.text, fontWeight: 600 }}>{flag.name}</span>
+                    <span style={{ color: T.dim, fontSize: 11, marginLeft: "auto" }}>{flag.code}</span>
                   </button>
                 ))}
               </div>
@@ -273,7 +284,7 @@ export default function TheComposerScreen({ onBack }: Props) {
         {!done && guesses.length >= 3 && (
           <button onClick={handleGiveUp}
             className="text-xs px-4 py-2 rounded-full font-semibold transition-all active:scale-95"
-            style={{ background: '#2D1F52', border: '1px solid #F43F5E33', color: '#F43F5E88' }}>
+            style={{ background: T.surface, border: `1px solid ${tint(T.danger, 0.3)}`, color: T.danger }}>
             Give up
           </button>
         )}
@@ -282,12 +293,12 @@ export default function TheComposerScreen({ onBack }: Props) {
           <div className="w-full max-w-sm flex flex-col gap-3">
             <button onClick={handleNewGame}
               className="w-full py-3.5 rounded-xl font-bold transition-all active:scale-95"
-              style={{ background: "linear-gradient(135deg,#8B6CFF,#A78BFA)", color: "#fff" }}>
+              style={{ background: ACC, color: T.onAccent, fontFamily: FONT.display }}>
               New Flag
             </button>
             <button onClick={onBack}
               className="w-full py-3.5 rounded-xl font-bold transition-all active:scale-95"
-              style={{ background: "#2D1F52", border: "1px solid #8B6CFF33", color: "#B8A9E0" }}>
+              style={{ background: T.surface, border: `1px solid ${T.line}`, color: T.muted }}>
               ← Home
             </button>
           </div>
