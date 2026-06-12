@@ -5,11 +5,12 @@ import { FLAGS } from "../data/flags"
 import type { AppState } from "../utils/storage"
 import { todayString } from "../utils/prng"
 import { T, ACCENT, FONT, tint, IS_CARTO } from "../ui/tokens"
-import { groupsFor, REGISTRY, recommendFor, discoverGames, trendingGames, posterFlagFor } from "../ui/registry"
+import { groupsFor, REGISTRY, recommendFor, discoverGames, trendingGames } from "../ui/registry"
 import type { Entry, TabKey } from "../ui/registry"
 import { TabBar, ModuleCard, GameTile, FlagTile, StatPill, SectionHeader, ProgressRing } from "./ui"
 import { LineIcon, FlameIcon, ChevronDownIcon, FlaskIcon, SearchIcon, ShuffleIcon, CompassIcon, SparklesIcon, HistoryIcon, TrendingUpIcon } from "./icons"
 import FlagImage from "./FlagImage"
+import { GamePoster } from "./GamePoster"
 
 // Faint antique world-map backdrop (Cartographer skin only). Fixed to the
 // viewport so it stays put while the page scrolls; heavily blurred, very low
@@ -451,7 +452,7 @@ function PlayTab({ launch, state }: { launch: (e: Entry) => void; state: AppStat
         ) : filtered.length ? (
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
             {filtered.map(e => (
-              <FlagTile key={e.id} flag={posterFlagFor(e.id)} glyph={e.id} icon={e.icon} title={e.title} subtitle={e.subtitle}
+              <FlagTile key={e.id} id={e.id} title={e.title} subtitle={e.subtitle}
                 accent={e.sandbox ? T.muted : ACCENT[e.accent]} onClick={() => launch(e)} style={{ width: "100%" }} />
             ))}
           </div>
@@ -472,7 +473,7 @@ function PlayTab({ launch, state }: { launch: (e: Entry) => void; state: AppStat
               title="Jump back in" reason="Pick up a recent game" />
             <Rail>
               {recents.map(e => (
-                <FlagTile key={e.id} flag={posterFlagFor(e.id)} glyph={e.id} icon={e.icon} title={e.title} subtitle={e.subtitle}
+                <FlagTile key={e.id} id={e.id} title={e.title} subtitle={e.subtitle}
                   accent={e.sandbox ? T.muted : ACCENT[e.accent]} onClick={() => launch(e)} />
               ))}
             </Rail>
@@ -486,7 +487,7 @@ function PlayTab({ launch, state }: { launch: (e: Entry) => void; state: AppStat
               title="Recommended for you" reason={`Because you played ${rec.seed.title}`} />
             <Rail>
               {rec.entries.map(e => (
-                <FlagTile key={e.id} flag={posterFlagFor(e.id)} glyph={e.id} icon={e.icon} title={e.title} subtitle={e.subtitle} accent={ACCENT[e.accent]} onClick={() => launch(e)} />
+                <FlagTile key={e.id} id={e.id} title={e.title} subtitle={e.subtitle} accent={ACCENT[e.accent]} onClick={() => launch(e)} />
               ))}
             </Rail>
           </div>
@@ -511,7 +512,7 @@ function PlayTab({ launch, state }: { launch: (e: Entry) => void; state: AppStat
             <SectionHeader title={g.group} accent={ACCENT[g.entries[0].accent]} />
             <Rail>
               {g.entries.map(e => (
-                <FlagTile key={e.id} flag={posterFlagFor(e.id)} glyph={e.id} icon={e.icon} title={e.title} subtitle={e.subtitle} accent={ACCENT[e.accent]} onClick={() => launch(e)} />
+                <FlagTile key={e.id} id={e.id} title={e.title} subtitle={e.subtitle} accent={ACCENT[e.accent]} onClick={() => launch(e)} />
               ))}
             </Rail>
           </div>
@@ -532,7 +533,7 @@ function PlayTab({ launch, state }: { launch: (e: Entry) => void; state: AppStat
               } />
             <Rail>
               {discover.map(e => (
-                <FlagTile key={e.id} flag={posterFlagFor(e.id)} glyph={e.id} icon={e.icon} title={e.title} subtitle={e.subtitle} accent={ACCENT[e.accent]} onClick={() => launch(e)} />
+                <FlagTile key={e.id} id={e.id} title={e.title} subtitle={e.subtitle} accent={ACCENT[e.accent]} onClick={() => launch(e)} />
               ))}
             </Rail>
           </div>
@@ -623,24 +624,43 @@ function TrendingDeck({ games, launch }: { games: Entry[]; launch: (e: Entry) =>
 
   const top = games[idx]
   const accent = ACCENT[top.accent]
+  const CARD_H = 236
+
+  // Framed poster + caption, shared by the live card and the depth cards behind
+  // it. The flag sits inset with parchment around it (calm, not loud) and the
+  // title is the loudest element.
+  const face = (g: Entry, gAccent: string) => (
+    <>
+      <div style={{ position: "relative", margin: "12px 12px 0", height: 98, borderRadius: 12, overflow: "hidden", border: `1px solid ${T.line}`, background: tint(gAccent, 0.08) }}>
+        <GamePoster id={g.id} accent={gAccent} variant="hero" />
+        <div style={{ position: "absolute", top: 9, left: 9, display: "inline-flex", alignItems: "center", gap: 6, padding: "5px 10px", borderRadius: 999, background: `${T.surface}F0`, border: `1px solid ${tint(gAccent, 0.4)}` }}>
+          <TrendingUpIcon size={12} color={gAccent} strokeWidth={2} />
+          <span className="geo-micro" style={{ fontSize: 8.5, color: gAccent }}>Trending this week</span>
+        </div>
+      </div>
+      <div style={{ padding: "11px 16px 0" }}>
+        <div className="geo-display" style={{ color: T.text, fontWeight: 800, fontSize: 25, letterSpacing: "-0.02em", lineHeight: 1.02, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{g.title}</div>
+        <div style={{ color: T.muted, fontSize: 12.5, marginTop: 4, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{g.subtitle}</div>
+      </div>
+    </>
+  )
 
   return (
     <div>
-      <div style={{ position: "relative", height: 300 }}>
-        {/* Depth cards peek the *next* flags — you can see what's coming, which
-            is the whole pull to keep swiping through the stack. */}
+      <div style={{ position: "relative", height: CARD_H + 18 }}>
+        {/* Depth cards — the next games peek out (now with art that actually
+            represents them), so you can see what's coming and want to swipe. */}
         {[2, 1].filter(off => off < n).map(off => {
           const g = games[(idx + off) % n]
           return (
             <div key={off} aria-hidden style={{
-              position: "absolute", inset: 0, borderRadius: 18, overflow: "hidden",
-              background: tint(ACCENT[g.accent], 0.12), border: `1px solid ${T.line}`,
-              transform: `translateY(${off * 12}px) scale(${1 - off * 0.04})`,
+              position: "absolute", left: 0, right: 0, top: 0, height: CARD_H, borderRadius: 18, overflow: "hidden",
+              background: T.surface, border: `1px solid ${T.line}`,
+              transform: `translate(${off * 7}px, ${off * 8}px) scale(${1 - off * 0.03})`,
               opacity: 1 - off * 0.12, boxShadow: "0 8px 20px -16px rgba(31,58,60,0.4)",
             }}>
-              <FlagImage code={posterFlagFor(g.id)} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
-              {/* light parchment veil so the front card still reads as the hero */}
-              <div style={{ position: "absolute", inset: 0, background: tint(T.surface, off === 1 ? 0.28 : 0.45) }} />
+              {face(g, ACCENT[g.accent])}
+              <div style={{ position: "absolute", inset: 0, background: tint(T.surface, off === 1 ? 0.22 : 0.4) }} />
             </div>
           )
         })}
@@ -651,37 +671,24 @@ function TrendingDeck({ games, launch }: { games: Entry[]; launch: (e: Entry) =>
           onPointerMove={e => { if (dragging.current) setDx(e.clientX - startX.current) }}
           onPointerUp={() => { if (!dragging.current) return; dragging.current = false; if (Math.abs(dx) > 80) commit(dx > 0 ? 1 : -1); else setDx(0) }}
           style={{
-            position: "absolute", inset: 0, borderRadius: 18, overflow: "hidden", touchAction: "pan-y", cursor: "grab",
-            background: tint(accent, 0.12), border: `1px solid ${tint(accent, 0.5)}`,
-            boxShadow: `0 2px 6px rgba(31,58,60,0.08), 0 22px 42px -22px ${tint(accent, 0.95)}`,
+            position: "absolute", left: 0, right: 0, top: 0, height: CARD_H, borderRadius: 18, overflow: "hidden", touchAction: "pan-y", cursor: "grab",
+            background: T.surface, border: `1px solid ${tint(accent, 0.5)}`,
+            boxShadow: `0 2px 6px rgba(31,58,60,0.08), 0 22px 42px -22px ${tint(accent, 0.85)}`,
             transform: `translateX(${dx}px) rotate(${dx * 0.022}deg)`,
             transition: dragging.current ? "none" : "transform 0.26s cubic-bezier(0.2,0.7,0.2,1)",
             opacity: Math.max(0, 1 - Math.abs(dx) / 620),
           }}>
-          {/* Full-bleed flag poster + parchment scrim so the caption stays legible */}
-          <FlagImage code={posterFlagFor(top.id)} style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
-          <div aria-hidden style={{ position: "absolute", inset: 0, background: `linear-gradient(180deg, ${tint(T.text, 0.14)} 0%, transparent 26%, transparent 42%, ${T.surface} 88%)` }} />
-
-          {/* Eyebrow chip */}
-          <div style={{ position: "absolute", top: 12, left: 14, display: "inline-flex", alignItems: "center", gap: 6, padding: "5px 10px", borderRadius: 999, background: `${T.surface}E6`, border: `1px solid ${tint(accent, 0.4)}` }}>
-            <TrendingUpIcon size={12} color={accent} strokeWidth={2} />
-            <span className="geo-micro" style={{ fontSize: 8.5, color: accent }}>Trending · {idx + 1}/{n}</span>
-          </div>
-
-          {/* Caption + actions */}
-          <div style={{ position: "absolute", left: 0, right: 0, bottom: 0, padding: "0 16px 15px" }}>
-            <div className="geo-display" style={{ color: T.text, fontWeight: 800, fontSize: 24, letterSpacing: "-0.02em", lineHeight: 1.04 }}>{top.title}</div>
-            <div style={{ color: T.muted, fontSize: 12, marginTop: 3, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{top.subtitle}</div>
-            <div style={{ display: "flex", alignItems: "center", gap: 10, marginTop: 13 }}>
-              <button onClick={() => launch(top)} onPointerDown={e => e.stopPropagation()}
-                style={{ display: "inline-flex", alignItems: "center", gap: 7, padding: "11px 22px", borderRadius: 999, minHeight: 44, background: accent, color: T.onAccent }}>
-                <span style={{ fontFamily: FONT.display, fontWeight: 700, fontSize: 15 }}>Play</span><span style={{ fontSize: 15 }}>→</span>
-              </button>
-              <button onClick={() => commit(-1)} onPointerDown={e => e.stopPropagation()} aria-label="Skip to next game"
-                style={{ display: "inline-flex", alignItems: "center", padding: "11px 18px", borderRadius: 999, minHeight: 44, background: `${T.surface}E6`, border: `1px solid ${T.line}`, color: T.muted }}>
-                <span style={{ fontFamily: FONT.display, fontWeight: 600, fontSize: 13 }}>Skip</span>
-              </button>
-            </div>
+          {face(top, accent)}
+          {/* Actions */}
+          <div style={{ position: "absolute", left: 16, right: 16, bottom: 14, display: "flex", alignItems: "center", gap: 10 }}>
+            <button onClick={() => launch(top)} onPointerDown={e => e.stopPropagation()}
+              style={{ display: "inline-flex", alignItems: "center", gap: 7, padding: "11px 22px", borderRadius: 999, minHeight: 44, background: accent, color: T.onAccent }}>
+              <span style={{ fontFamily: FONT.display, fontWeight: 700, fontSize: 15 }}>Play</span><span style={{ fontSize: 15 }}>→</span>
+            </button>
+            <button onClick={() => commit(-1)} onPointerDown={e => e.stopPropagation()} aria-label="Skip to next game"
+              style={{ display: "inline-flex", alignItems: "center", padding: "11px 18px", borderRadius: 999, minHeight: 44, background: T.surface, border: `1px solid ${T.line}`, color: T.muted }}>
+              <span style={{ fontFamily: FONT.display, fontWeight: 600, fontSize: 13 }}>Skip</span>
+            </button>
           </div>
         </div>
       </div>

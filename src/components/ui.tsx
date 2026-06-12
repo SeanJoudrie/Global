@@ -2,7 +2,7 @@ import type { CSSProperties, ReactNode } from "react"
 import { T, FONT, tint, IS_CARTO } from "../ui/tokens"
 import type { TabKey } from "../ui/registry"
 import { LineIcon, ChevronLeftIcon } from "./icons"
-import FlagImage from "./FlagImage"
+import { GamePoster } from "./GamePoster"
 
 /* ── Screen chrome: the ONE back button + header used by every destination
    screen. 44px touch target, token colours, serif display title. ─────────── */
@@ -162,33 +162,25 @@ export function GameTile({ icon, glyph, title, subtitle, accent, onClick, style 
   )
 }
 
-/* ── Flag tile: the flag-forward catalogue card. Full-colour flag poster on
-   top (flags are content, not chrome — colour is on-brand), the etched game
-   glyph in an accent chip over it, serif title beneath. Same paper-card body
-   and watercolour wash as the rest of the system. ───────────────────────── */
-export function FlagTile({ flag, glyph, icon, title, subtitle, accent, onClick, style }:
-  { flag: string; glyph?: string; icon?: ReactNode; title: string; subtitle: string; accent: string; onClick: () => void; style?: CSSProperties }) {
+/* ── Flag tile: the flag-forward catalogue card. A framed GamePoster up top
+   (art that *demonstrates* the game — see GamePoster), serif title beneath.
+   The flag is inset with parchment around it so it reads calm, not loud. ─── */
+export function FlagTile({ id, title, subtitle, accent, onClick, style }:
+  { id: string; title: string; subtitle: string; accent: string; onClick: () => void; style?: CSSProperties }) {
   return (
     <button onClick={onClick} className={`geo-tap ${IS_CARTO ? "carto-card" : ""}`}
       style={{
-        width: 136, flexShrink: 0, textAlign: "left", padding: 0, borderRadius: 14,
-        display: "flex", flexDirection: "column", overflow: "hidden", position: "relative",
+        width: 140, flexShrink: 0, textAlign: "left", padding: 7, borderRadius: 14,
+        display: "flex", flexDirection: "column", gap: 8, position: "relative",
         ...(IS_CARTO ? { ["--wash" as string]: tint(accent, 0.4) } : { background: T.surface, border: `1px solid ${T.line}` }),
         ...style,
       }}>
-      <div style={{ position: "relative", width: "100%", height: 82, overflow: "hidden", borderBottom: `1px solid ${T.line}`, background: tint(accent, 0.1) }}>
-        <FlagImage code={flag} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
-        <div aria-hidden style={{ position: "absolute", inset: 0, background: `linear-gradient(180deg, transparent 45%, ${tint(T.text, 0.3)})` }} />
-        <span style={{
-          position: "absolute", left: 8, bottom: 8, width: 27, height: 27, borderRadius: 8,
-          display: "flex", alignItems: "center", justifyContent: "center",
-          background: T.surface, border: `1px solid ${tint(accent, 0.5)}`, color: accent,
-          boxShadow: `0 2px 6px -2px ${tint(T.text, 0.45)}`,
-        }}><Glyph glyph={glyph} emoji={icon} size={15} color={accent} /></span>
+      <div style={{ position: "relative", width: "100%", height: 72, borderRadius: 9, overflow: "hidden", border: `1px solid ${T.line}`, background: tint(accent, 0.08) }}>
+        <GamePoster id={id} accent={accent} />
       </div>
-      <div style={{ padding: "9px 10px 11px" }}>
-        <div className="geo-display" style={{ color: T.text, fontWeight: 600, fontSize: 12.5, lineHeight: 1.12, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{title}</div>
-        <div style={{ color: T.muted, fontSize: 9.5, marginTop: 3, lineHeight: 1.2, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{subtitle}</div>
+      <div style={{ padding: "0 3px 3px" }}>
+        <div className="geo-display" style={{ color: T.text, fontWeight: 700, fontSize: 13, lineHeight: 1.14, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{title}</div>
+        <div style={{ color: T.muted, fontSize: 10, marginTop: 2, lineHeight: 1.2, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{subtitle}</div>
       </div>
     </button>
   )
