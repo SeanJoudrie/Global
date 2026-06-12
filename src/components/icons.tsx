@@ -42,4 +42,4 @@ export function LineIcon({ name, size = 21, strokeWidth = 1.6, color = "currentC
   return <Icon size={size} strokeWidth={strokeWidth} color={color} absoluteStrokeWidth />
 }
 
-export { Flame as FlameIcon, Crown as CrownIcon, Compass as CompassIcon, ChevronDown as ChevronDownIcon, ChevronLeft as ChevronLeftIcon, Check as CheckIcon, FlaskConical as FlaskIcon }
+export { Flame as FlameIcon, Crown as CrownIcon, Compass as CompassIcon, ChevronDown as ChevronDownIcon, ChevronLeft as ChevronLeftIcon, Check as CheckIcon, FlaskConical as FlaskIcon, Search as SearchIcon }

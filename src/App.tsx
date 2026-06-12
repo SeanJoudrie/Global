@@ -125,6 +125,9 @@ export default function App() {
   const [activeQuiz, setActiveQuiz] = useState<ActiveQuiz | null>(null)
   const [lastResult, setLastResult] = useState<{ score: number; total: number; answers: ("correct" | "wrong")[] } | null>(null)
   const [histRegion, setHistRegion] = useState<HistoricalRegion | undefined>(undefined)
+  // Deep-link target for the Codex: set when a country row in the dashboard
+  // accordion is tapped, so CodexScreen opens straight on that country.
+  const [codexCode, setCodexCode] = useState<string | null>(null)
   const [tab, setTab] = useState<TabKey>("today")
 
   useEffect(() => { saveState(appState) }, [appState])
@@ -273,7 +276,8 @@ export default function App() {
 
       {screen === "home" && AESTHETIC !== "original" && (
         <MainTabs state={appState} tab={tab} onTab={setTab}
-          onNavigate={(s) => setScreen(s as Screen)}
+          onNavigate={(s) => { setCodexCode(null); setScreen(s as Screen) }}
+          onOpenCodexCountry={(code) => { setCodexCode(code); setScreen("codex") }}
           onQuickPlay={startQuickPlay} onStartDaily={startDaily} onReverseQuiz={startReverseQuiz} />
       )}
 
@@ -290,7 +294,7 @@ export default function App() {
       {screen === "language" && <LanguageQuizScreen onBack={() => setScreen("home")} />}
       {screen === "capitalquiz" && <CapitalQuizScreen onBack={() => setScreen("home")} />}
       {screen === "challenge" && <ChallengeScreen onBack={() => setScreen("home")} />}
-      {screen === "codex" && <CodexScreen onBack={() => setScreen("home")} />}
+      {screen === "codex" && <CodexScreen initialCode={codexCode} onBack={() => { setCodexCode(null); setScreen("home") }} />}
       {screen === "geo" && <GeoQuizScreen onBack={() => setScreen("home")} />}
       {screen === "gauntlet" && <GauntletScreen onBack={() => setScreen("home")} />}
       {screen === "tierlist" && <TierListScreen onBack={() => setScreen("home")} />}
