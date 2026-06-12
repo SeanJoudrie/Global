@@ -1,6 +1,11 @@
 import { useState, useRef, useEffect, useCallback, useMemo } from "react"
 import { FLAGS } from "../data/flags"
 import type { FlagRecord } from "../data/flags"
+import { T, ACCENT, FONT, tint } from "../ui/tokens"
+import { ScreenHeader } from "./ui"
+import { PartyPopper, Frown } from "lucide-react"
+
+const ACC = ACCENT.play
 
 interface Props { onBack: () => void }
 
@@ -49,7 +54,8 @@ function ThePeelScreenGame({ onBack , onReplay }: Props & { onReplay: () => void
     if (!canvas) return
     const ctx = canvas.getContext('2d')
     if (!ctx) return
-    ctx.fillStyle = '#120930'
+    // Opaque scratch cover — ink-dark in every aesthetic (game content, must hide the flag)
+    ctx.fillStyle = T.text
     ctx.fillRect(0, 0, CANVAS_W, CANVAS_H)
   }, [])
 
@@ -96,31 +102,26 @@ function ThePeelScreenGame({ onBack , onReplay }: Props & { onReplay: () => void
 
   return (
     <div className="min-h-screen flex flex-col"
-      style={{ background: "linear-gradient(135deg,var(--bg-from) 0%,var(--bg-to) 100%)" }}>
+      style={{ background: T.bg, minHeight: "100vh", color: T.text }}>
 
-      <header className="flex items-center justify-between px-5 pt-8 pb-4">
-        <button onClick={onBack} className="w-9 h-9 flex items-center justify-center rounded-full text-xl"
-          style={{ background: "#2D1F52", color: "#B8A9E0" }}>&#8249;</button>
-        <div className="text-center">
-          <div className="text-xs font-semibold uppercase tracking-widest" style={{ color: "#B8A9E0" }}>The Peel</div>
-          {phase === 'scratch' && (
-            <div className="text-xs" style={{ color: "#8B6CFF" }}>
-              {revealed < 5 ? "Scratch to reveal" : `${revealed}% — guess for ${scoreFromPct(revealed)} pts`}
+      <ScreenHeader title="The Peel" onBack={onBack}
+        subtitle={
+          phase === 'scratch'
+            ? <span style={{ color: ACC }}>{revealed < 5 ? "Scratch to reveal" : `${revealed}% — guess for ${scoreFromPct(revealed)} pts`}</span>
+            : phase === 'result'
+              ? <span style={{ fontWeight: 700, color: guess?.code === target.code ? T.green : T.danger }}>
+                  {guess?.code === target.code ? `✓ ${score} pts` : "✗ Wrong flag"}
+                </span>
+              : undefined
+        }
+        right={
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 2 }}>
+            <div style={{ fontSize: 11, fontFamily: FONT.mono, fontVariantNumeric: "tabular-nums", color: T.dim }}>{revealed}%</div>
+            <div style={{ width: 40, height: 5, borderRadius: 3, background: T.line, overflow: 'hidden' }}>
+              <div style={{ height: '100%', width: `${revealed}%`, background: revealed < 20 ? T.green : revealed < 50 ? T.gold : T.danger, transition: 'width 0.1s' }} />
             </div>
-          )}
-          {phase === 'result' && (
-            <div className="text-xs font-bold" style={{ color: guess?.code === target.code ? "#34D399" : "#F43F5E" }}>
-              {guess?.code === target.code ? `🎯 ${score} pts` : "✗ Wrong flag"}
-            </div>
-          )}
-        </div>
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 2 }}>
-          <div className="text-xs" style={{ color: "#8B6CFF88" }}>{revealed}%</div>
-          <div style={{ width: 40, height: 5, borderRadius: 3, background: "#8B6CFF22", overflow: 'hidden' }}>
-            <div style={{ height: '100%', width: `${revealed}%`, background: revealed < 20 ? '#34D399' : revealed < 50 ? '#FBBF24' : '#F43F5E', transition: 'width 0.1s' }} />
           </div>
-        </div>
-      </header>
+        } />
 
       <div className="flex flex-col items-center gap-4 px-5">
 
@@ -129,9 +130,9 @@ function ThePeelScreenGame({ onBack , onReplay }: Props & { onReplay: () => void
           width: CANVAS_W, height: CANVAS_H, position: 'relative', borderRadius: 12,
           overflow: 'hidden',
           border: phase === 'result'
-            ? `2px solid ${guess?.code === target.code ? '#34D399' : '#F43F5E'}`
-            : '2px solid #8B6CFF33',
-          boxShadow: '0 0 32px #8B6CFF22', userSelect: 'none',
+            ? `2px solid ${guess?.code === target.code ? T.green : T.danger}`
+            : `2px solid ${T.line}`,
+          boxShadow: `0 10px 28px -12px ${tint(T.text, 0.5)}`, userSelect: 'none',
         }}>
           <img src={target.flagUrl} alt="hidden flag"
             style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }} />
@@ -152,14 +153,14 @@ function ThePeelScreenGame({ onBack , onReplay }: Props & { onReplay: () => void
         {phase === 'scratch' && (
           <div className="w-full max-w-sm flex flex-col gap-2">
             <div className="flex items-center gap-2">
-              <span className="text-xs" style={{ color: "#B8A9E0" }}>Brush:</span>
+              <span className="text-xs" style={{ color: T.muted }}>Brush:</span>
               {(Object.keys(BRUSH_SIZES) as BrushSize[]).map(sz => (
                 <button key={sz} onClick={() => setBrushSize(sz)}
                   className="px-3 py-1.5 rounded-lg text-xs font-bold transition-all active:scale-95"
                   style={{
-                    background: brushSize === sz ? "#8B6CFF" : "#2D1F52",
-                    color: brushSize === sz ? "#fff" : "#B8A9E0",
-                    border: "1px solid #8B6CFF33",
+                    background: brushSize === sz ? ACC : T.surface,
+                    color: brushSize === sz ? T.onAccent : T.muted,
+                    border: `1px solid ${brushSize === sz ? ACC : T.line}`,
                   }}>
                   {sz === 'small' ? '·' : sz === 'medium' ? '○' : '◯'} {sz}
                 </button>
@@ -167,13 +168,13 @@ function ThePeelScreenGame({ onBack , onReplay }: Props & { onReplay: () => void
             </div>
             <div className="flex gap-2 flex-wrap">
               {[
-                { label: '<5%', pts: '1000', color: '#34D399' },
-                { label: '5–22%', pts: '750–900', color: '#A78BFA' },
-                { label: '22–50%', pts: '400–600', color: '#FBBF24' },
-                { label: '50%+', pts: '100–200', color: '#F43F5E' },
+                { label: '<5%', pts: '1000', color: T.green },
+                { label: '5–22%', pts: '750–900', color: ACC },
+                { label: '22–50%', pts: '400–600', color: T.gold },
+                { label: '50%+', pts: '100–200', color: T.danger },
               ].map(({ label, pts, color }) => (
                 <div key={label} className="text-xs px-2 py-1 rounded-lg"
-                  style={{ background: '#2D1F52', border: `1px solid ${color}44`, color }}>
+                  style={{ background: T.surface, border: `1px solid ${tint(color, 0.35)}`, color }}>
                   {label} → {pts}
                 </div>
               ))}
@@ -184,7 +185,7 @@ function ThePeelScreenGame({ onBack , onReplay }: Props & { onReplay: () => void
         {phase === 'scratch' && (
           <button onClick={() => setPhase('guess')}
             className="w-full max-w-sm py-3.5 rounded-xl font-bold transition-all active:scale-95"
-            style={{ background: "linear-gradient(135deg,#8B6CFF,#A78BFA)", color: "#fff" }}>
+            style={{ background: ACC, color: T.onAccent, fontFamily: FONT.display }}>
             Make My Guess →
           </button>
         )}
@@ -192,7 +193,7 @@ function ThePeelScreenGame({ onBack , onReplay }: Props & { onReplay: () => void
         {/* Guess phase — type-in */}
         {phase === 'guess' && (
           <div className="w-full max-w-sm relative">
-            <p className="text-sm text-center mb-3 font-semibold" style={{ color: "#B8A9E0" }}>
+            <p className="text-sm text-center mb-3 font-semibold" style={{ color: T.muted }}>
               Which flag did you reveal?
             </p>
             <input
@@ -209,19 +210,19 @@ function ThePeelScreenGame({ onBack , onReplay }: Props & { onReplay: () => void
               placeholder="Type a country name or code…"
               autoComplete="off"
               className="w-full px-4 py-3.5 rounded-xl outline-none font-semibold"
-              style={{ background: "#2D1F52", border: "1.5px solid #8B6CFF44", color: "#F5F3FF", fontSize: 15 }}
+              style={{ background: T.surface, border: `1.5px solid ${T.line}`, color: T.text, fontSize: 15 }}
             />
             {showDrop && matches.length > 0 && (
               <div className="absolute left-0 right-0 top-full mt-1 rounded-xl overflow-hidden z-10"
-                style={{ background: "#2D1F52", border: "1px solid #8B6CFF44", boxShadow: "0 8px 32px #00000044" }}>
+                style={{ background: T.surface, border: `1px solid ${T.line}`, boxShadow: `0 8px 32px ${tint(T.text, 0.25)}` }}>
                 {matches.map(flag => (
                   <button key={flag.code}
                     onMouseDown={() => handleGuess(flag)}
                     className="w-full flex items-center gap-3 px-4 py-3 hover:brightness-125 transition-all"
-                    style={{ background: "transparent", borderBottom: "1px solid #8B6CFF11" }}>
+                    style={{ background: "transparent", borderBottom: `1px solid ${T.line}` }}>
                     <img src={flag.flagUrl} alt="" style={{ width: 32, height: 21, objectFit: "cover", borderRadius: 3 }} />
-                    <span style={{ color: "#F5F3FF", fontWeight: 600 }}>{flag.name}</span>
-                    <span style={{ color: "#8B6CFF88", fontSize: 11, marginLeft: "auto" }}>{flag.code}</span>
+                    <span style={{ color: T.text, fontWeight: 600 }}>{flag.name}</span>
+                    <span style={{ color: T.dim, fontSize: 11, marginLeft: "auto" }}>{flag.code}</span>
                   </button>
                 ))}
               </div>
@@ -233,28 +234,32 @@ function ThePeelScreenGame({ onBack , onReplay }: Props & { onReplay: () => void
         {phase === 'result' && (
           <div className="w-full max-w-sm flex flex-col gap-3">
             <div className="rounded-2xl p-5 text-center"
-              style={{ background: '#2D1F52', border: `1px solid ${guess?.code === target.code ? '#34D39944' : '#F43F5E44'}` }}>
-              <div className="text-4xl mb-2">{guess?.code === target.code ? '🎉' : '😬'}</div>
-              <div className="text-3xl font-black mb-1" style={{ color: '#F5F3FF' }}>
+              style={{ background: T.surface, border: `1px solid ${tint(guess?.code === target.code ? T.green : T.danger, 0.35)}` }}>
+              <div className="mb-2 flex justify-center" style={{ color: guess?.code === target.code ? T.green : T.danger }}>
+                {guess?.code === target.code
+                  ? <PartyPopper size={36} strokeWidth={1.6} absoluteStrokeWidth />
+                  : <Frown size={36} strokeWidth={1.6} absoluteStrokeWidth />}
+              </div>
+              <div className="text-3xl font-black mb-1" style={{ color: T.text, fontFamily: FONT.mono, fontVariantNumeric: "tabular-nums" }}>
                 {guess?.code === target.code ? score : 0} pts
               </div>
-              <div className="text-sm" style={{ color: '#B8A9E0' }}>
+              <div className="text-sm" style={{ color: T.muted }}>
                 {guess?.code === target.code
                   ? `${target.name} — you revealed ${revealed}%`
                   : `That was ${target.name} — you guessed ${guess?.name}`}
               </div>
               {guess?.code === target.code && score === 1000 && (
-                <div className="text-xs mt-2" style={{ color: '#34D399' }}>Perfect peel! Under 5% 🏆</div>
+                <div className="text-xs mt-2" style={{ color: T.green }}>Perfect peel! Under 5%</div>
               )}
             </div>
             <button onClick={onReplay}
               className="w-full py-3.5 rounded-xl font-bold transition-all active:scale-95"
-              style={{ background: "linear-gradient(135deg,#8B6CFF,#A78BFA)", color: "#fff" }}>
+              style={{ background: ACC, color: T.onAccent, fontFamily: FONT.display }}>
               New Flag
             </button>
             <button onClick={onBack}
               className="w-full py-3.5 rounded-xl font-bold transition-all active:scale-95"
-              style={{ background: "#2D1F52", border: "1px solid #8B6CFF33", color: "#B8A9E0" }}>
+              style={{ background: T.surface, border: `1px solid ${T.line}`, color: T.muted }}>
               ← Home
             </button>
           </div>

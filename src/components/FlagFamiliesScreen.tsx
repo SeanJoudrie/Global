@@ -1,6 +1,9 @@
 import { useState } from "react"
 import { FLAGS } from "../data/flags"
 import type { FlagRecord } from "../data/flags"
+import { T, ACCENT, FONT, tint } from "../ui/tokens"
+import { ScreenHeader } from "./ui"
+import { Tags, ThumbsUp, BookOpen } from "lucide-react"
 
 interface Props { onBack: () => void }
 
@@ -51,8 +54,8 @@ function buildRounds(count: number): Round[] {
 }
 
 const TOTAL_ROUNDS = 3
-const ACCENT_A = '#8B6CFF'
-const ACCENT_B = '#34D399'
+const ACCENT_A = ACCENT.play
+const ACCENT_B = T.green
 
 const FLAG_W = 72
 const FLAG_H = 48
@@ -134,26 +137,32 @@ function FlagFamiliesScreenGame({ onBack , onReplay }: Props & { onReplay: () =>
     const correct = scores.filter(Boolean).length
     return (
       <div className="min-h-screen flex flex-col items-center justify-center px-5"
-        style={{ background: "linear-gradient(135deg,var(--bg-from) 0%,var(--bg-to) 100%)" }}>
+        style={{ background: T.bg, minHeight: "100vh", color: T.text }}>
         <div className="w-full max-w-sm">
           <div className="rounded-2xl p-6 text-center mb-4"
-            style={{ background: "#2D1F52", border: "1px solid #8B6CFF44", boxShadow: "0 0 32px #8B6CFF22" }}>
-            <div className="text-5xl mb-3">{correct === scores.length ? "🏷️" : correct >= 2 ? "👍" : "📚"}</div>
-            <div className="text-6xl font-black mb-1" style={{ color: "#F5F3FF" }}>{correct}/{scores.length}</div>
-            <div className="text-sm mb-3" style={{ color: "#B8A9E0" }}>rounds sorted correctly</div>
+            style={{ background: T.surface, border: `1px solid ${T.line}`, boxShadow: `0 12px 32px -14px ${tint(T.text, 0.45)}` }}>
+            <div className="mb-3 flex justify-center" style={{ color: correct === scores.length ? T.gold : correct >= 2 ? T.green : ACCENT_A }}>
+              {correct === scores.length
+                ? <Tags size={44} strokeWidth={1.6} absoluteStrokeWidth />
+                : correct >= 2
+                  ? <ThumbsUp size={44} strokeWidth={1.6} absoluteStrokeWidth />
+                  : <BookOpen size={44} strokeWidth={1.6} absoluteStrokeWidth />}
+            </div>
+            <div className="text-6xl font-black mb-1" style={{ color: T.text, fontFamily: FONT.mono, fontVariantNumeric: "tabular-nums" }}>{correct}/{scores.length}</div>
+            <div className="text-sm mb-3" style={{ color: T.muted }}>rounds sorted correctly</div>
             <div className="flex justify-center gap-2">
-              {scores.map((ok, i) => <span key={i} style={{ fontSize: 24 }}>{ok ? '🟩' : '🟥'}</span>)}
+              {scores.map((ok, i) => <span key={i} style={{ width: 16, height: 16, borderRadius: 4, display: 'inline-block', background: ok ? T.green : T.danger }} />)}
             </div>
           </div>
           <div className="flex flex-col gap-3">
             <button onClick={onReplay}
               className="w-full py-3.5 rounded-xl font-bold transition-all active:scale-95"
-              style={{ background: "linear-gradient(135deg,#8B6CFF,#A78BFA)", color: "#fff" }}>
+              style={{ background: ACCENT_A, color: T.onAccent, fontFamily: FONT.display }}>
               Play Again
             </button>
             <button onClick={onBack}
               className="w-full py-3.5 rounded-xl font-bold transition-all active:scale-95"
-              style={{ background: "#2D1F52", border: "1px solid #8B6CFF33", color: "#B8A9E0" }}>
+              style={{ background: T.surface, border: `1px solid ${T.line}`, color: T.muted }}>
               ← Home
             </button>
           </div>
@@ -174,11 +183,11 @@ function FlagFamiliesScreenGame({ onBack , onReplay }: Props & { onReplay: () =>
     const isSelected = selected === flag.code
     // Once checked we know it's a valid partition; honour the swap direction.
     const correctRow = inRow !== null ? (revealSwap ? inRow !== family : inRow === family) : null
-    let border = '1.5px solid #8B6CFF22'
+    let border = `1.5px solid ${T.line}`
     if (checked && inRow !== null) {
-      border = `2px solid ${correctRow ? '#34D399' : '#F43F5E'}`
+      border = `2px solid ${correctRow ? T.green : T.danger}`
     } else if (isSelected) {
-      border = '2px solid #FBBF24'
+      border = `2px solid ${T.gold}`
     }
 
     return (
@@ -188,16 +197,16 @@ function FlagFamiliesScreenGame({ onBack , onReplay }: Props & { onReplay: () =>
         onDragEnd={() => setDragged(null)}
         onClick={() => inRow !== null ? handleUnassign(flag.code) : handleFlagTap(flag.code)}
         className="flex flex-col items-center rounded-xl overflow-hidden transition-all active:scale-95"
-        style={{ border, background: isSelected ? '#FBBF2418' : '#1A1033', width: FLAG_W, cursor: checked ? 'default' : 'grab' }}>
+        style={{ border, background: isSelected ? tint(T.gold, 0.15) : T.surface, width: FLAG_W, cursor: checked ? 'default' : 'grab' }}>
         <img src={flag.flagUrl} alt={flag.name}
           style={{ width: FLAG_W, height: FLAG_H, objectFit: 'cover', display: 'block' }} />
         <div style={{ padding: '2px 4px', textAlign: 'center', width: '100%' }}>
-          <span style={{ fontSize: 9, color: '#B8A9E0', fontWeight: 600, display: 'block',
+          <span style={{ fontSize: 9, color: T.muted, fontWeight: 600, display: 'block',
             whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
             {flag.name}
           </span>
           {checked && inRow !== null && (
-            <span style={{ fontSize: 10 }}>{correctRow ? '✓' : '✗'}</span>
+            <span style={{ fontSize: 10, color: correctRow ? T.green : T.danger }}>{correctRow ? '✓' : '✗'}</span>
           )}
         </div>
       </button>
@@ -206,34 +215,29 @@ function FlagFamiliesScreenGame({ onBack , onReplay }: Props & { onReplay: () =>
 
   return (
     <div className="min-h-screen flex flex-col"
-      style={{ background: "linear-gradient(135deg,var(--bg-from) 0%,var(--bg-to) 100%)" }}>
+      style={{ background: T.bg, minHeight: "100vh", color: T.text }}>
 
-      <header className="flex items-center justify-between px-5 pt-8 pb-4">
-        <button onClick={onBack} className="w-9 h-9 flex items-center justify-center rounded-full text-xl"
-          style={{ background: "#2D1F52", color: "#B8A9E0" }}>&#8249;</button>
-        <div className="text-center">
-          <div className="text-xs font-semibold uppercase tracking-widest" style={{ color: "#B8A9E0" }}>Flag Families</div>
-          <div className="text-sm font-bold" style={{ color: "#F5F3FF" }}>Round {idx + 1} / {rounds.length}</div>
-        </div>
-        <div className="flex gap-1.5">
-          {Array.from({ length: rounds.length }).map((_, i) => (
-            <div key={i} style={{
-              width: 7, height: 7, borderRadius: '50%',
-              background: i < scores.length ? (scores[i] ? '#34D399' : '#F43F5E') : '#8B6CFF33',
-            }} />
-          ))}
-        </div>
-      </header>
+      <ScreenHeader title="Flag Families" subtitle={`Round ${idx + 1} / ${rounds.length}`} onBack={onBack}
+        right={
+          <div className="flex gap-1.5">
+            {Array.from({ length: rounds.length }).map((_, i) => (
+              <div key={i} style={{
+                width: 7, height: 7, borderRadius: '50%',
+                background: i < scores.length ? (scores[i] ? T.green : T.danger) : T.line,
+              }} />
+            ))}
+          </div>
+        } />
 
-      <div className="mx-5 h-1.5 rounded-full overflow-hidden mb-4" style={{ background: "#2D1F52" }}>
+      <div className="mx-5 h-1.5 rounded-full overflow-hidden mb-4" style={{ background: T.line }}>
         <div className="h-full rounded-full transition-all duration-500"
-          style={{ width: `${(idx / rounds.length) * 100}%`, background: "linear-gradient(90deg,#8B6CFF,#A78BFA)" }} />
+          style={{ width: `${(idx / rounds.length) * 100}%`, background: ACCENT_A }} />
       </div>
 
       <div className="flex flex-col items-center px-5 gap-4">
 
         {/* Instruction — categories stay secret; sort by the visual pattern */}
-        <p className="text-xs text-center" style={{ color: '#B8A9E0' }}>
+        <p className="text-xs text-center" style={{ color: T.muted }}>
           {checked
             ? 'Revealed! Two hidden families:'
             : selected
@@ -249,19 +253,21 @@ function FlagFamiliesScreenGame({ onBack , onReplay }: Props & { onReplay: () =>
           onDrop={() => { if (dragged && !checked) { assign(dragged, 'A'); setDragged(null) } }}
           className="w-full max-w-sm rounded-xl transition-all"
           style={{
-            background: (selected || dragged) && !checked ? `${ACCENT_A}18` : '#2D1F5218',
-            border: `2px solid ${(selected || dragged) && !checked ? ACCENT_A : ACCENT_A + '44'}`,
+            background: (selected || dragged) && !checked ? tint(ACCENT_A, 0.12) : T.surface,
+            border: `2px solid ${(selected || dragged) && !checked ? ACCENT_A : tint(ACCENT_A, 0.3)}`,
             minHeight: 80, padding: '8px 10px',
             cursor: selected && !checked ? 'pointer' : 'default',
           }}>
           <div className="flex items-center gap-2 mb-2">
-            <span style={{ fontSize: 18 }}>{checked ? (revealSwap ? round.familyB : round.familyA).emoji : '🅰️'}</span>
-            <span className="text-sm font-bold" style={{ color: checked ? '#F5F3FF' : ACCENT_A }}>{checked ? (revealSwap ? round.familyB : round.familyA).label : 'Group A'}</span>
+            {checked
+              ? <span style={{ fontSize: 18 }}>{(revealSwap ? round.familyB : round.familyA).emoji}</span>
+              : <span style={{ width: 22, height: 22, borderRadius: 999, display: 'flex', alignItems: 'center', justifyContent: 'center', background: tint(ACCENT_A, 0.15), color: ACCENT_A, fontSize: 11, fontWeight: 800 }}>A</span>}
+            <span className="text-sm font-bold" style={{ color: checked ? T.text : ACCENT_A, fontFamily: FONT.display }}>{checked ? (revealSwap ? round.familyB : round.familyA).label : 'Group A'}</span>
           </div>
           <div className="flex flex-wrap gap-2">
             {flagsInA.map(item => renderFlag(item, 'A'))}
             {flagsInA.length === 0 && (
-              <span style={{ fontSize: 11, color: ACCENT_A + '66', paddingLeft: 2 }}>drop here</span>
+              <span style={{ fontSize: 11, color: tint(ACCENT_A, 0.5), paddingLeft: 2 }}>drop here</span>
             )}
           </div>
         </button>
@@ -274,19 +280,21 @@ function FlagFamiliesScreenGame({ onBack , onReplay }: Props & { onReplay: () =>
           onDrop={() => { if (dragged && !checked) { assign(dragged, 'B'); setDragged(null) } }}
           className="w-full max-w-sm rounded-xl transition-all"
           style={{
-            background: (selected || dragged) && !checked ? `${ACCENT_B}18` : '#2D1F5218',
-            border: `2px solid ${(selected || dragged) && !checked ? ACCENT_B : ACCENT_B + '44'}`,
+            background: (selected || dragged) && !checked ? tint(ACCENT_B, 0.12) : T.surface,
+            border: `2px solid ${(selected || dragged) && !checked ? ACCENT_B : tint(ACCENT_B, 0.3)}`,
             minHeight: 80, padding: '8px 10px',
             cursor: selected && !checked ? 'pointer' : 'default',
           }}>
           <div className="flex items-center gap-2 mb-2">
-            <span style={{ fontSize: 18 }}>{checked ? (revealSwap ? round.familyA : round.familyB).emoji : '🅱️'}</span>
-            <span className="text-sm font-bold" style={{ color: checked ? '#F5F3FF' : ACCENT_B }}>{checked ? (revealSwap ? round.familyA : round.familyB).label : 'Group B'}</span>
+            {checked
+              ? <span style={{ fontSize: 18 }}>{(revealSwap ? round.familyA : round.familyB).emoji}</span>
+              : <span style={{ width: 22, height: 22, borderRadius: 999, display: 'flex', alignItems: 'center', justifyContent: 'center', background: tint(ACCENT_B, 0.15), color: ACCENT_B, fontSize: 11, fontWeight: 800 }}>B</span>}
+            <span className="text-sm font-bold" style={{ color: checked ? T.text : ACCENT_B, fontFamily: FONT.display }}>{checked ? (revealSwap ? round.familyA : round.familyB).label : 'Group B'}</span>
           </div>
           <div className="flex flex-wrap gap-2">
             {flagsInB.map(item => renderFlag(item, 'B'))}
             {flagsInB.length === 0 && (
-              <span style={{ fontSize: 11, color: ACCENT_B + '66', paddingLeft: 2 }}>drop here</span>
+              <span style={{ fontSize: 11, color: tint(ACCENT_B, 0.5), paddingLeft: 2 }}>drop here</span>
             )}
           </div>
         </button>
@@ -296,7 +304,7 @@ function FlagFamiliesScreenGame({ onBack , onReplay }: Props & { onReplay: () =>
           <div className="w-full max-w-sm"
             onDragOver={e => { if (!checked) e.preventDefault() }}
             onDrop={() => { if (dragged && !checked) { handleUnassign(dragged); setDragged(null) } }}>
-            <div className="text-xs mb-2 font-semibold" style={{ color: '#B8A9E0' }}>Unsorted flags:</div>
+            <div className="text-xs mb-2 font-semibold" style={{ color: T.muted }}>Unsorted flags:</div>
             <div className="flex flex-wrap gap-3">
               {unassigned.map(item => renderFlag(item, null))}
             </div>
@@ -306,18 +314,18 @@ function FlagFamiliesScreenGame({ onBack , onReplay }: Props & { onReplay: () =>
         {/* "Try again" hint after a wrong check (round stays editable) */}
         {tryAgain && !checked && (
           <div className="w-full max-w-sm px-4 py-3 rounded-xl"
-            style={{ background: '#2D1F52', border: '1px solid #F43F5E44' }}>
-            <p className="text-sm font-semibold" style={{ color: '#F43F5E' }}>✗ Not quite — those aren't the groups. Try again.</p>
+            style={{ background: T.surface, border: `1px solid ${tint(T.danger, 0.35)}` }}>
+            <p className="text-sm font-semibold" style={{ color: T.danger }}>✗ Not quite — those aren't the groups. Try again.</p>
           </div>
         )}
 
         {/* Result feedback */}
         {checked && (
           <div className="w-full max-w-sm px-4 py-3 rounded-xl"
-            style={{ background: '#2D1F52', border: `1px solid ${roundScore ? '#34D39944' : '#FBBF2444'}` }}>
+            style={{ background: T.surface, border: `1px solid ${tint(roundScore ? T.green : T.gold, 0.35)}` }}>
             {roundScore
-              ? <p className="text-sm font-semibold" style={{ color: '#34D399' }}>✓ Yes — these are the categories! Nailed it first try.</p>
-              : <p className="text-sm font-semibold" style={{ color: '#FBBF24' }}>✓ Right groups — got there after a retry.</p>}
+              ? <p className="text-sm font-semibold" style={{ color: T.green }}>✓ Yes — these are the categories! Nailed it first try.</p>
+              : <p className="text-sm font-semibold" style={{ color: T.gold }}>✓ Right groups — got there after a retry.</p>}
           </div>
         )}
 
@@ -325,16 +333,17 @@ function FlagFamiliesScreenGame({ onBack , onReplay }: Props & { onReplay: () =>
           <button onClick={handleCheck} disabled={!allAssigned}
             className="w-full max-w-sm py-3.5 rounded-xl font-bold transition-all active:scale-95"
             style={{
-              background: allAssigned ? "linear-gradient(135deg,#8B6CFF,#A78BFA)" : "#2D1F52",
-              color: allAssigned ? "#fff" : "#8B6CFF44",
-              border: allAssigned ? 'none' : '1px solid #8B6CFF22',
+              background: allAssigned ? ACCENT_A : T.surface,
+              color: allAssigned ? T.onAccent : T.dim,
+              border: allAssigned ? 'none' : `1px solid ${T.line}`,
+              fontFamily: FONT.display,
             }}>
             Check →
           </button>
         ) : (
           <button onClick={handleNext}
             className="w-full max-w-sm py-3.5 rounded-xl font-bold transition-all active:scale-95"
-            style={{ background: "linear-gradient(135deg,#8B6CFF,#A78BFA)", color: "#fff" }}>
+            style={{ background: ACCENT_A, color: T.onAccent, fontFamily: FONT.display }}>
             {idx + 1 >= rounds.length ? "See Results →" : "Next Round →"}
           </button>
         )}

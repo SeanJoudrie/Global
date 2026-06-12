@@ -1,6 +1,11 @@
 import { useState, useRef, useCallback, useEffect } from "react"
 import { PUZZLES } from "../data/buildFlagPuzzles"
 import type { BuildPuzzle, Piece } from "../data/buildFlagPuzzles"
+import { T, ACCENT, FONT, tint } from "../ui/tokens"
+import { ScreenHeader } from "./ui"
+import { Palette as PaletteIcon, Brush } from "lucide-react"
+
+const ACC = ACCENT.play
 
 interface Props { onBack: () => void }
 
@@ -41,12 +46,12 @@ function FlagCanvas({
     const isWrong   = phase === 'result' && !!placed[slotId] && !slotIsCorrect(puzzle, placed, slotId)
     const isEmpty   = !placed[slotId]
     return {
-      background: piece ? piece.color : 'rgba(139,108,255,0.06)',
+      background: piece ? piece.color : tint(ACC, 0.08),
       border: phase === 'playing'
-        ? isEmpty ? '2px dashed rgba(139,108,255,0.3)' : '2px solid rgba(139,108,255,0.5)'
-        : isCorrect ? '2.5px solid #34D399'
-        : isWrong   ? '2.5px solid #F43F5E'
-        : '2px dashed rgba(139,108,255,0.2)',
+        ? isEmpty ? `2px dashed ${tint(ACC, 0.4)}` : `2px solid ${tint(ACC, 0.55)}`
+        : isCorrect ? `2.5px solid ${T.green}`
+        : isWrong   ? `2.5px solid ${T.danger}`
+        : `2px dashed ${tint(ACC, 0.25)}`,
       cursor: phase === 'playing' ? 'pointer' : 'default',
       transition: 'background 0.2s',
       position: 'relative',
@@ -56,14 +61,14 @@ function FlagCanvas({
 
   const resultOverlay = (slotId: string) => {
     if (phase !== 'result') return null
-    if (!placed[slotId]) return <span style={{ position:'absolute', inset:0, display:'flex', alignItems:'center', justifyContent:'center', fontSize:18, color:'#F43F5E' }}>✗</span>
+    if (!placed[slotId]) return <span style={{ position:'absolute', inset:0, display:'flex', alignItems:'center', justifyContent:'center', fontSize:18, color: T.danger }}>✗</span>
     const ok = slotIsCorrect(puzzle, placed, slotId)
-    return <span style={{ position:'absolute', inset:0, display:'flex', alignItems:'center', justifyContent:'center', fontSize:18, color: ok ? '#34D399' : '#F43F5E' }}>{ok ? '✓' : '✗'}</span>
+    return <span style={{ position:'absolute', inset:0, display:'flex', alignItems:'center', justifyContent:'center', fontSize:18, color: ok ? T.green : T.danger }}>{ok ? '✓' : '✗'}</span>
   }
 
   if (puzzle.layout === 'v3') {
     return (
-      <div style={{ display:'flex', width:FLAG_W, height:FLAG_H, borderRadius:8, overflow:'hidden', boxShadow:'0 0 24px #8B6CFF22' }}>
+      <div style={{ display:'flex', width:FLAG_W, height:FLAG_H, borderRadius:8, overflow:'hidden', boxShadow:`0 8px 24px -10px ${tint(T.text, 0.45)}` }}>
         {puzzle.slots.map(s => (
           <div key={s} ref={el => { slotRefs.current[s] = el }}
             style={{ ...slotStyle(s), flex:1, height:'100%' }}
@@ -77,7 +82,7 @@ function FlagCanvas({
 
   if (puzzle.layout === 'h3' || puzzle.layout === 'h2' || puzzle.layout === 'h4') {
     return (
-      <div style={{ display:'flex', flexDirection:'column', width:FLAG_W, height:FLAG_H, borderRadius:8, overflow:'hidden', boxShadow:'0 0 24px #8B6CFF22' }}>
+      <div style={{ display:'flex', flexDirection:'column', width:FLAG_W, height:FLAG_H, borderRadius:8, overflow:'hidden', boxShadow:`0 8px 24px -10px ${tint(T.text, 0.45)}` }}>
         {puzzle.slots.map(s => (
           <div key={s} ref={el => { slotRefs.current[s] = el }}
             style={{ ...slotStyle(s), flex:1, width:'100%' }}
@@ -100,10 +105,10 @@ function FlagCanvas({
         onClick={() => onSlotClick('bg')}
         style={{
           width: FLAG_W, height: FLAG_H, borderRadius: 8,
-          background: bg ? bg.color : 'rgba(139,108,255,0.06)',
-          border: phase === 'playing' ? '2px dashed rgba(139,108,255,0.3)' : bgOk ? '2.5px solid #34D399' : '2.5px solid #F43F5E',
+          background: bg ? bg.color : tint(ACC, 0.08),
+          border: phase === 'playing' ? `2px dashed ${tint(ACC, 0.4)}` : bgOk ? `2.5px solid ${T.green}` : `2.5px solid ${T.danger}`,
           position: 'relative', cursor: 'pointer', overflow: 'hidden',
-          boxShadow: '0 0 24px #8B6CFF22',
+          boxShadow: `0 8px 24px -10px ${tint(T.text, 0.45)}`,
           display: 'flex', alignItems: 'center', justifyContent: 'center',
         }}>
         {/* Star slot */}
@@ -112,14 +117,14 @@ function FlagCanvas({
           style={{
             width: 86, height: 86,
             clipPath: STAR_CLIP, WebkitClipPath: STAR_CLIP,
-            background: star ? star.color : 'rgba(139,108,255,0.25)',
+            background: star ? star.color : tint(ACC, 0.25),
             cursor: 'pointer',
             display: 'flex', alignItems: 'center', justifyContent: 'center',
           }}>
-          {phase === 'result' && <span style={{ fontSize: 16, color: starOk ? '#0c3' : '#900', fontWeight: 800 }}>{starOk ? '✓' : '✗'}</span>}
+          {phase === 'result' && <span style={{ fontSize: 16, color: starOk ? T.green : T.danger, fontWeight: 800 }}>{starOk ? '✓' : '✗'}</span>}
         </div>
         {phase === 'result' && (
-          <div style={{ position:'absolute', top:4, right:6, fontSize:16, color: bgOk ? '#34D399' : '#F43F5E' }}>
+          <div style={{ position:'absolute', top:4, right:6, fontSize:16, color: bgOk ? T.green : T.danger }}>
             {bgOk ? '✓' : '✗'}
           </div>
         )}
@@ -137,10 +142,10 @@ function FlagCanvas({
         onClick={() => onSlotClick('bg')}
         style={{
           width: FLAG_W, height: FLAG_H, borderRadius: 8,
-          background: bg ? bg.color : 'rgba(139,108,255,0.06)',
-          border: phase === 'playing' ? '2px dashed rgba(139,108,255,0.3)' : bgOk ? '2.5px solid #34D399' : '2.5px solid #F43F5E',
+          background: bg ? bg.color : tint(ACC, 0.08),
+          border: phase === 'playing' ? `2px dashed ${tint(ACC, 0.4)}` : bgOk ? `2.5px solid ${T.green}` : `2.5px solid ${T.danger}`,
           position: 'relative', cursor: 'pointer', overflow: 'hidden',
-          boxShadow: '0 0 24px #8B6CFF22',
+          boxShadow: `0 8px 24px -10px ${tint(T.text, 0.45)}`,
         }}>
         {/* Disc slot */}
         <div ref={el => { slotRefs.current['disc'] = el }}
@@ -150,15 +155,15 @@ function FlagCanvas({
             left: '50%', top: '50%',
             transform: 'translate(-50%,-50%)',
             width: 80, height: 80, borderRadius: '50%',
-            background: disc ? disc.color : 'rgba(139,108,255,0.12)',
-            border: phase === 'playing' ? '2px dashed rgba(139,108,255,0.4)' : discOk ? '2.5px solid #34D399' : '2.5px solid #F43F5E',
+            background: disc ? disc.color : tint(ACC, 0.12),
+            border: phase === 'playing' ? `2px dashed ${tint(ACC, 0.4)}` : discOk ? `2.5px solid ${T.green}` : `2.5px solid ${T.danger}`,
             cursor: 'pointer',
             display: 'flex', alignItems: 'center', justifyContent: 'center',
           }}>
-          {phase === 'result' && <span style={{ fontSize:20, color: discOk ? '#34D399' : '#F43F5E' }}>{discOk ? '✓' : '✗'}</span>}
+          {phase === 'result' && <span style={{ fontSize:20, color: discOk ? T.green : T.danger }}>{discOk ? '✓' : '✗'}</span>}
         </div>
         {phase === 'result' && (
-          <div style={{ position:'absolute', top:4, right:6, fontSize:16, color: bgOk ? '#34D399' : '#F43F5E' }}>
+          <div style={{ position:'absolute', top:4, right:6, fontSize:16, color: bgOk ? T.green : T.danger }}>
             {bgOk ? '✓' : '✗'}
           </div>
         )}
@@ -266,13 +271,10 @@ export default function BuildFlagScreen({ onBack }: Props) {
   if (phase === 'result') {
     return (
       <div className="min-h-screen flex flex-col items-center"
-        style={{ background: "linear-gradient(135deg,var(--bg-from) 0%,var(--bg-to) 100%)" }}>
-        <header className="flex items-center justify-between w-full px-5 pt-8 pb-4">
-          <button onClick={onBack} className="w-9 h-9 flex items-center justify-center rounded-full text-xl"
-            style={{ background: "#2D1F52", color: "#B8A9E0" }}>&#8249;</button>
-          <div className="text-base font-bold" style={{ color: "#F5F3FF" }}>Build the Flag</div>
-          <div className="w-9" />
-        </header>
+        style={{ background: T.bg, minHeight: "100vh", color: T.text }}>
+        <div className="w-full">
+          <ScreenHeader title="Build the Flag" subtitle={puzzle.name} onBack={onBack} />
+        </div>
 
         <div className="flex flex-col items-center px-5 gap-4 w-full max-w-sm">
           {/* Show their answer */}
@@ -280,15 +282,19 @@ export default function BuildFlagScreen({ onBack }: Props) {
 
           {/* Score */}
           <div className="w-full rounded-2xl p-5 text-center"
-            style={{ background: "#2D1F52", border: `1px solid ${perfect ? '#34D39944' : '#F43F5E44'}` }}>
-            <div className="text-4xl mb-2">{perfect ? "🎨" : "🖌️"}</div>
-            <div className="text-5xl font-black mb-1" style={{ color: "#F5F3FF" }}>{correct}/{total}</div>
-            <div className="text-sm" style={{ color: "#B8A9E0" }}>
+            style={{ background: T.surface, border: `1px solid ${tint(perfect ? T.green : T.danger, 0.35)}` }}>
+            <div className="mb-2 flex justify-center" style={{ color: perfect ? T.green : ACC }}>
+              {perfect
+                ? <PaletteIcon size={36} strokeWidth={1.6} absoluteStrokeWidth />
+                : <Brush size={36} strokeWidth={1.6} absoluteStrokeWidth />}
+            </div>
+            <div className="text-5xl font-black mb-1" style={{ color: T.text, fontFamily: FONT.mono, fontVariantNumeric: "tabular-nums" }}>{correct}/{total}</div>
+            <div className="text-sm" style={{ color: T.muted }}>
               {perfect ? `Perfect! That's ${puzzle.name}!` : `${correct} of ${total} bands correct for ${puzzle.name}`}
             </div>
             {/* Correct answer hint when wrong */}
             {!perfect && (
-              <div className="mt-3 text-xs" style={{ color: "#8B6CFF" }}>
+              <div className="mt-3 text-xs" style={{ color: ACC }}>
                 Correct order: {puzzle.slots.map(s => {
                   const piece = puzzle.pieces.find(p => p.id === puzzle.solution[s])
                   return piece?.label
@@ -300,12 +306,12 @@ export default function BuildFlagScreen({ onBack }: Props) {
           <div className="flex flex-col gap-3 w-full">
             <button onClick={startNewGame}
               className="w-full py-3.5 rounded-xl font-bold transition-all active:scale-95"
-              style={{ background: "linear-gradient(135deg,#8B6CFF,#A78BFA)", color: "#fff" }}>
+              style={{ background: ACC, color: T.onAccent, fontFamily: FONT.display }}>
               New Flag
             </button>
             <button onClick={onBack}
               className="w-full py-3.5 rounded-xl font-bold transition-all active:scale-95"
-              style={{ background: "#2D1F52", border: "1px solid #8B6CFF33", color: "#B8A9E0" }}>
+              style={{ background: T.surface, border: `1px solid ${T.line}`, color: T.muted }}>
               ← Home
             </button>
           </div>
@@ -317,25 +323,15 @@ export default function BuildFlagScreen({ onBack }: Props) {
   // ── Playing ────────────────────────────────────────────────────────────────
   return (
     <div className="min-h-screen flex flex-col"
-      style={{ background: "linear-gradient(135deg,var(--bg-from) 0%,var(--bg-to) 100%)" }}
+      style={{ background: T.bg, minHeight: "100vh", color: T.text }}
       // Prevent page scroll while dragging
       onTouchMove={dragging ? e => e.preventDefault() : undefined}>
 
-      <header className="flex items-center justify-between px-5 pt-8 pb-4" style={{ zIndex: 1 }}>
-        <button onClick={onBack} className="w-9 h-9 flex items-center justify-center rounded-full text-xl"
-          style={{ background: "#2D1F52", color: "#B8A9E0" }}>&#8249;</button>
-        <div className="text-center">
-          <div className="text-xs font-semibold uppercase tracking-widest" style={{ color: "#B8A9E0" }}>Build the Flag</div>
-          <div className="text-sm font-bold" style={{ color: "#F5F3FF" }}>
-            {puzzle.name}
-          </div>
-        </div>
-        <div className="w-9" />
-      </header>
+      <ScreenHeader title="Build the Flag" subtitle={puzzle.name} onBack={onBack} />
 
       <div className="flex flex-col items-center gap-6 px-5" style={{ zIndex: 1 }}>
         {/* Instruction */}
-        <p className="text-xs text-center" style={{ color: "#B8A9E0" }}>
+        <p className="text-xs text-center" style={{ color: T.muted }}>
           {selected
             ? `"${puzzle.pieces.find(p => p.id === selected)?.label}" selected — tap a slot to place it`
             : 'Drag pieces onto the flag, or tap a piece then tap a slot'}
@@ -353,7 +349,7 @@ export default function BuildFlagScreen({ onBack }: Props) {
             const piece = puzzle.pieces.find(p => p.id === placed[s])
             return (
               <div key={s} className="flex-1 text-center text-xs py-1 rounded"
-                style={{ color: piece ? '#A78BFA' : '#8B6CFF44', fontSize: 10 }}>
+                style={{ color: piece ? ACC : T.dim, fontSize: 10 }}>
                 {piece ? piece.label : s}
               </div>
             )
@@ -363,7 +359,7 @@ export default function BuildFlagScreen({ onBack }: Props) {
         {/* Palette */}
         <div>
           <div className="text-xs mb-3 text-center font-semibold uppercase tracking-widest"
-            style={{ color: "#B8A9E0" }}>
+            style={{ color: T.muted }}>
             {palette.length > 0 ? "Pieces" : "All pieces placed"}
           </div>
           <div className="flex flex-wrap gap-3 justify-center">
@@ -376,16 +372,16 @@ export default function BuildFlagScreen({ onBack }: Props) {
                   onClick={() => !isPlaced && handlePaletteTap(piece.id)}
                   style={{
                     width: 64, height: 44, borderRadius: 10,
-                    background: isPlaced ? 'rgba(139,108,255,0.06)' : piece.color,
-                    border: isSelected ? '3px solid #A78BFA'
-                      : isPlaced       ? '2px dashed rgba(139,108,255,0.2)'
-                      : '2px solid rgba(255,255,255,0.15)',
+                    background: isPlaced ? tint(ACC, 0.08) : piece.color,
+                    border: isSelected ? `3px solid ${ACC}`
+                      : isPlaced       ? `2px dashed ${tint(ACC, 0.25)}`
+                      : `2px solid ${T.line}`,
                     cursor: isPlaced ? 'default' : 'grab',
                     touchAction: 'none',
                     opacity: isPlaced ? 0.25 : 1,
                     transform: isSelected ? 'scale(1.08)' : 'scale(1)',
                     transition: 'transform 0.15s, opacity 0.2s',
-                    boxShadow: isSelected ? '0 0 12px #A78BFA88' : 'none',
+                    boxShadow: isSelected ? `0 0 12px ${tint(ACC, 0.55)}` : 'none',
                     display: 'flex', alignItems: 'flex-end', justifyContent: 'center',
                     paddingBottom: 4,
                     userSelect: 'none',
@@ -407,10 +403,11 @@ export default function BuildFlagScreen({ onBack }: Props) {
           disabled={!allSlotsFilled}
           className="w-full max-w-sm py-3.5 rounded-xl font-bold transition-all active:scale-95"
           style={{
-            background: allSlotsFilled ? "linear-gradient(135deg,#8B6CFF,#A78BFA)" : "#2D1F52",
-            border: allSlotsFilled ? "none" : "1px solid #8B6CFF22",
-            color: allSlotsFilled ? "#fff" : "#8B6CFF44",
+            background: allSlotsFilled ? ACC : T.surface,
+            border: allSlotsFilled ? "none" : `1px solid ${T.line}`,
+            color: allSlotsFilled ? T.onAccent : T.dim,
             cursor: allSlotsFilled ? "pointer" : "not-allowed",
+            fontFamily: FONT.display,
           }}>
           {allSlotsFilled ? "Confirm →" : `Fill all ${total - Object.keys(placed).length} remaining slots`}
         </button>

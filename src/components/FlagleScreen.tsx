@@ -3,15 +3,23 @@ import { FLAGS } from "../data/flags"
 import type { FlagRecord } from "../data/flags"
 import { FLAG_ATTRIBS, STRIPES_V } from "../data/flagAttribs"
 import { todayString, shuffleWithSeed } from "../utils/prng"
+import { T, ACCENT, FONT, tint } from "../ui/tokens"
+import { ScreenHeader } from "./ui"
+import { Share2 } from "lucide-react"
 
 interface Props { onBack: () => void }
+
+const ACC = ACCENT.today
 
 const ELIGIBLE = FLAGS.filter(f => FLAG_ATTRIBS[f.code])
 const MAX_GUESSES = 6
 
 type Tile = "hit" | "near" | "miss"
-const TILE_BG: Record<Tile, string> = { hit: "#34D399", near: "#FBBF24", miss: "#3A2C5E" }
+// Wordle-style semantics kept, remapped so they read on the token palette.
+const TILE_BG: Record<Tile, string> = { hit: T.green, near: T.gold, miss: T.line }
 const TILE_EMOJI: Record<Tile, string> = { hit: "🟩", near: "🟨", miss: "⬛" }
+
+const swatch = (c: string) => ({ width: 10, height: 10, borderRadius: 3, display: "inline-block", background: c })
 
 // Attribute columns shown per guess.
 const COLS: { key: string; label: string }[] = [
@@ -83,22 +91,15 @@ export default function FlagleScreen({ onBack }: Props) {
 
   return (
     <div className="min-h-screen flex flex-col"
-      style={{ background: "linear-gradient(135deg,var(--bg-from) 0%,var(--bg-to) 100%)" }}>
-      <header className="flex items-center justify-between px-5 pt-8 pb-3">
-        <button onClick={onBack} className="w-9 h-9 flex items-center justify-center rounded-full text-xl"
-          style={{ background: "#2D1F52", color: "#B8A9E0" }}>&#8249;</button>
-        <div className="text-center">
-          <div className="text-xs font-semibold uppercase tracking-widest" style={{ color: "#B8A9E0" }}>Flagle · Daily</div>
-          <div className="text-sm font-bold" style={{ color: "#F5F3FF" }}>{Math.min(guesses.length + (finished ? 0 : 1), MAX_GUESSES)} / {MAX_GUESSES}</div>
-        </div>
-        <div style={{ width: 36 }} />
-      </header>
+      style={{ background: T.bg, minHeight: "100vh", color: T.text }}>
+      <ScreenHeader title="Flagle" onBack={onBack}
+        subtitle={`Daily · ${Math.min(guesses.length + (finished ? 0 : 1), MAX_GUESSES)} / ${MAX_GUESSES}`} />
 
       <div className="flex flex-col items-center px-4 gap-3">
         {/* Column legend */}
         <div className="grid w-full max-w-sm items-center" style={{ gridTemplateColumns: `1.4fr repeat(${COLS.length}, 1fr)`, gap: 3 }}>
-          <div className="text-xs font-semibold" style={{ color: "#8B6CFF" }}>Guess</div>
-          {COLS.map(c => <div key={c.key} className="text-center text-xs font-bold" style={{ color: "#8B6CFF" }}>{c.label}</div>)}
+          <div className="text-xs font-semibold" style={{ color: ACC }}>Guess</div>
+          {COLS.map(c => <div key={c.key} className="text-center text-xs font-bold" style={{ color: ACC }}>{c.label}</div>)}
         </div>
 
         {/* Guess rows */}
@@ -106,13 +107,13 @@ export default function FlagleScreen({ onBack }: Props) {
           <div key={gi} className="grid w-full max-w-sm items-center" style={{ gridTemplateColumns: `1.4fr repeat(${COLS.length}, 1fr)`, gap: 3 }}>
             <div className="flex items-center gap-1.5 min-w-0">
               <img src={g.flag.flagUrl} alt="" style={{ width: 22, height: 14, objectFit: "cover", borderRadius: 2, flexShrink: 0 }} />
-              <span className="truncate" style={{ color: "#F5F3FF", fontSize: 10, fontWeight: 600 }}>{g.flag.name}</span>
+              <span className="truncate" style={{ color: T.text, fontSize: 10, fontWeight: 600 }}>{g.flag.name}</span>
             </div>
             {COLS.map(c => (
               <div key={c.key} style={{
                 aspectRatio: "1", borderRadius: 4, background: TILE_BG[g.tiles[c.key]],
                 display: "flex", alignItems: "center", justifyContent: "center",
-                fontSize: 9, color: "#fff", fontWeight: 700,
+                fontSize: 9, color: T.onAccent, fontWeight: 700,
               }}>{g.tiles[c.key] === "hit" ? "" : g.tiles[c.key] === "near" ? "~" : ""}</div>
             ))}
           </div>
@@ -122,7 +123,7 @@ export default function FlagleScreen({ onBack }: Props) {
         {!finished && Array.from({ length: MAX_GUESSES - guesses.length }).map((_, i) => (
           <div key={i} className="grid w-full max-w-sm" style={{ gridTemplateColumns: `1.4fr repeat(${COLS.length}, 1fr)`, gap: 3 }}>
             <div />
-            {COLS.map(c => <div key={c.key} style={{ aspectRatio: "1", borderRadius: 4, background: "#2D1F5266", border: "1px solid #8B6CFF22" }} />)}
+            {COLS.map(c => <div key={c.key} style={{ aspectRatio: "1", borderRadius: 4, background: T.surface, border: `1px solid ${T.line}` }} />)}
           </div>
         ))}
 
@@ -135,44 +136,48 @@ export default function FlagleScreen({ onBack }: Props) {
               onKeyDown={e => { if (e.key === "Enter" && matches.length === 1) submit(matches[0]) }}
               placeholder="Guess a country…"
               className="w-full px-4 py-3 rounded-xl outline-none font-semibold"
-              style={{ background: "#2D1F52", border: "1.5px solid #8B6CFF44", color: "#F5F3FF", fontSize: 15 }} />
+              style={{ background: T.surface, border: `1.5px solid ${T.line}`, color: T.text, fontSize: 15 }} />
             {showDrop && matches.length > 0 && (
               <div className="absolute left-0 right-0 bottom-full mb-1 rounded-xl overflow-hidden z-20"
-                style={{ background: "#2D1F52", border: "1px solid #8B6CFF44", boxShadow: "0 -8px 32px #00000055" }}>
+                style={{ background: T.surface, border: `1px solid ${T.line}`, boxShadow: `0 -8px 32px ${tint(T.text, 0.25)}` }}>
                 {matches.map(f => (
                   <button key={f.code} onMouseDown={() => submit(f)}
                     className="w-full flex items-center gap-3 px-4 py-2.5 hover:brightness-125"
-                    style={{ background: "transparent", borderBottom: "1px solid #8B6CFF11" }}>
+                    style={{ background: "transparent", borderBottom: `1px solid ${T.line}` }}>
                     <img src={f.flagUrl} alt="" style={{ width: 30, height: 20, objectFit: "cover", borderRadius: 3 }} />
-                    <span style={{ color: "#F5F3FF", fontWeight: 600, fontSize: 13 }}>{f.name}</span>
+                    <span style={{ color: T.text, fontWeight: 600, fontSize: 13 }}>{f.name}</span>
                   </button>
                 ))}
               </div>
             )}
-            <p className="text-xs text-center mt-2" style={{ color: "#8B6CFF66" }}>
-              🟩 match · 🟨 partial colours · ⬛ no match
+            <p className="text-xs text-center mt-2 flex items-center justify-center gap-3" style={{ color: T.muted }}>
+              <span className="inline-flex items-center gap-1.5"><span style={swatch(T.green)} /> match</span>
+              <span className="inline-flex items-center gap-1.5"><span style={swatch(T.gold)} /> partial colours</span>
+              <span className="inline-flex items-center gap-1.5"><span style={swatch(T.line)} /> no match</span>
             </p>
           </div>
         ) : (
           <div className="w-full max-w-sm flex flex-col items-center gap-3 mt-1">
             <div className="rounded-2xl p-4 w-full text-center"
-              style={{ background: "#2D1F52", border: `1px solid ${won ? "#34D39944" : "#F43F5E44"}` }}>
+              style={{ background: T.surface, border: `1px solid ${tint(won ? T.green : T.danger, 0.35)}` }}>
               <img src={target.flagUrl} alt={target.name}
-                style={{ width: 120, height: 80, objectFit: "cover", borderRadius: 8, margin: "0 auto 8px", border: "1px solid #8B6CFF33" }} />
-              <div className="text-lg font-black" style={{ color: "#F5F3FF" }}>{target.name}</div>
-              <div className="text-sm font-bold" style={{ color: won ? "#34D399" : "#F43F5E" }}>
+                style={{ width: 120, height: 80, objectFit: "cover", borderRadius: 8, margin: "0 auto 8px", border: `1px solid ${T.line}` }} />
+              <div className="text-lg font-black" style={{ color: T.text, fontFamily: FONT.display, fontWeight: 800 }}>{target.name}</div>
+              <div className="text-sm font-bold" style={{ color: won ? T.green : T.danger }}>
                 {won ? `Solved in ${guesses.length}!` : "Out of guesses"}
               </div>
             </div>
             <button onClick={copyShare}
               className="w-full py-3.5 rounded-xl font-bold transition-all active:scale-95"
-              style={{ background: "linear-gradient(135deg,#8B6CFF,#A78BFA)", color: "#fff" }}>
-              {copied ? "Copied! ✓" : "Share Result 📋"}
+              style={{ background: ACC, color: T.onAccent, fontFamily: FONT.display }}>
+              <span className="inline-flex items-center justify-center gap-2">
+                {copied ? "Copied! ✓" : <>Share Result <Share2 size={16} strokeWidth={1.6} absoluteStrokeWidth /></>}
+              </span>
             </button>
             <button onClick={onBack}
               className="w-full py-3.5 rounded-xl font-bold transition-all active:scale-95"
-              style={{ background: "#2D1F52", border: "1px solid #8B6CFF33", color: "#B8A9E0" }}>← Home</button>
-            <p className="text-xs text-center" style={{ color: "#8B6CFF66" }}>New flag every day · come back tomorrow</p>
+              style={{ background: T.surface, border: `1px solid ${T.line}`, color: T.muted }}>← Home</button>
+            <p className="text-xs text-center" style={{ color: T.dim }}>New flag every day · come back tomorrow</p>
           </div>
         )}
       </div>
