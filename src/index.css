@@ -205,3 +205,28 @@ body.aesthetic-carto .geo-foil::after {
 }
 
 body.aesthetic-carto { background: #FBF4E4; }
+
+/* Streak pulse — counters celebrate (1 → 1.14, calm cadence) */
+@keyframes cartoPulse {
+  0%, 100% { transform: scale(1); }
+  50%      { transform: scale(1.14); }
+}
+.carto-pulse { animation: cartoPulse 1.6s cubic-bezier(0.4,0,0.2,1) infinite; }
+
+/* Horizontal swipe rail (Netflix-style game shelves) — scrollbar hidden */
+.carto-rail { scrollbar-width: none; -ms-overflow-style: none; }
+.carto-rail::-webkit-scrollbar { display: none; }
+
+/* Transform-only entrance for drawers/tabs: fully visible at rest, the slide
+   is a pure enhancement that settles to 0 offset. */
+@keyframes cartoSlideUp {
+  from { transform: translateY(14px); }
+  to   { transform: translateY(0); }
+}
+.carto-slide-up { animation: cartoSlideUp 0.3s cubic-bezier(0.2,0.7,0.2,1) both; }
+
+@media (prefers-reduced-motion: reduce) {
+  .carto-pulse, .carto-slide-up, .geo-foil::after,
+  .animate-spin-slow, .animate-pulse-glow { animation: none; }
+  .carto-card, .geo-tap { transition: none; }
+}

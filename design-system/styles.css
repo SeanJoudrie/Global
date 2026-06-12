@@ -1,0 +1,11 @@
+/* ============================================================================
+   GLOBALIO DESIGN SYSTEM · GLOBAL ENTRY
+   "Modern Cartographer / Chill Cartography"
+   Consumers link THIS file only. It is an @import manifest — no rules live here.
+   ============================================================================ */
+@import "./fonts/fonts.css";
+@import "./tokens/colors.css";
+@import "./tokens/typography.css";
+@import "./tokens/spacing.css";
+@import "./tokens/effects.css";
+@import "./tokens/base.css";

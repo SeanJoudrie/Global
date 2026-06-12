@@ -1,0 +1,120 @@
+/* ============================================================================
+   GLOBALIO · EFFECTS — shadows, washes, motion
+   Soft, natural ink-teal shadows (never neon). Watercolour washes bleed in
+   behind cards on hover. Calm, tactile motion — gentle lifts, no bounce.
+   ============================================================================ */
+:root {
+  /* ── Elevation (warm ink-teal, low & soft) ────────────────────────────── */
+  --shadow-card:
+    0 1px 2px rgba(31, 58, 60, 0.05),
+    0 8px 20px -14px rgba(31, 58, 60, 0.25);
+  --shadow-card-hover:
+    0 2px 4px rgba(31, 58, 60, 0.06),
+    0 16px 30px -16px rgba(31, 58, 60, 0.40);
+  --shadow-pop:
+    0 18px 40px -20px rgba(31, 58, 60, 0.45);
+
+  /* ── Motion ───────────────────────────────────────────────────────────── */
+  --ease-paper: cubic-bezier(0.2, 0.7, 0.2, 1); /* @kind other */
+  --ease-out:   cubic-bezier(0.4, 0, 0.2, 1); /* @kind other */
+  --dur-tap:    0.12s; /* @kind other */
+  --dur-card:   0.22s; /* @kind other */
+  --dur-slide:  0.3s; /* @kind other */
+
+  /* default watercolour wash colour (overridden per-accent via --wash) */
+  --wash: rgba(94, 140, 168, 0.5);
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   PAPER BACKDROP — parchment page with faint dot-matrix grain + ochre wash
+   ════════════════════════════════════════════════════════════════════════ */
+.gl-paper {
+  background-color: var(--surface-page);
+  background-image:
+    radial-gradient(120% 90% at 50% -10%, rgba(192, 136, 58, 0.06), transparent 55%),
+    radial-gradient(circle at 1px 1px, rgba(31, 58, 60, 0.05) 1px, transparent 0);
+  background-size: auto, 26px 26px;
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   PAPER-STOCK CARD — hairline border, soft natural shadow, gentle hover lift,
+   and a single-accent watercolour wash that bleeds in behind it.
+   Set --wash to an accent tint to colour the bleed.
+   ════════════════════════════════════════════════════════════════════════ */
+.gl-card {
+  position: relative;
+  background: var(--surface-card);
+  border: 1px solid var(--border-hairline);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  transition:
+    transform var(--dur-card) var(--ease-paper),
+    box-shadow var(--dur-card) var(--ease-out),
+    border-color var(--dur-card) var(--ease-out);
+}
+.gl-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: radial-gradient(130% 120% at 12% -10%, var(--wash), transparent 58%);
+  opacity: 0;
+  transition: opacity 0.28s var(--ease-out);
+}
+.gl-card.is-interactive:hover,
+.gl-card.is-interactive:focus-visible,
+.gl-card.is-interactive:active {
+  transform: translateY(-2px) rotate(-0.15deg);
+  box-shadow: var(--shadow-card-hover);
+  border-color: var(--border-strong);
+}
+.gl-card.is-interactive:hover::before,
+.gl-card.is-interactive:focus-visible::before,
+.gl-card.is-interactive:active::before { opacity: 0.5; }
+
+/* ── Press feedback for any tappable element ────────────────────────────── */
+.gl-tap { transition: transform var(--dur-tap) var(--ease-out), opacity var(--dur-tap) var(--ease-out); }
+.gl-tap:active { transform: scale(0.96); }
+
+/* ── Aged-gold "mastered" foil edge (collectibles) ──────────────────────── */
+.gl-foil {
+  position: relative;
+  border: 1px solid transparent;
+  background:
+    linear-gradient(var(--surface-card), var(--surface-card)) padding-box,
+    linear-gradient(135deg, #C0883A, #E7CE96 30%, #C0883A 55%, #9C7A33 80%) border-box;
+  overflow: hidden;
+}
+.gl-foil::after {
+  content: "";
+  position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(115deg, transparent 38%, rgba(231, 206, 150, 0.5) 50%, transparent 62%);
+  transform: translateX(-120%);
+  animation: glFoil 4.5s ease-in-out infinite;
+}
+@keyframes glFoil {
+  0%, 100% { transform: translateX(-120%); }
+  55%, 70% { transform: translateX(120%); }
+}
+
+/* ── Streak pulse (counters celebrate) ──────────────────────────────────── */
+@keyframes glPulse {
+  0%, 100% { transform: scale(1); }
+  50%      { transform: scale(1.14); }
+}
+.gl-pulse { animation: glPulse 1.6s var(--ease-out) infinite; }
+
+/* ── Slide / fade entrances (menus, drawers) ────────────────────────────── */
+/* Transform-only entrance: the element is fully visible at rest (opacity 1),
+   so a frozen timeline (screenshots / PDF / reduced-motion) still paints it.
+   The slide is a pure enhancement that settles to 0 offset. */
+@keyframes glSlideUp {
+  from { transform: translateY(14px); }
+  to   { transform: translateY(0); }
+}
+.gl-slide-up { animation: glSlideUp var(--dur-slide) var(--ease-paper) both; }
+
+@media (prefers-reduced-motion: reduce) {
+  .gl-foil::after, .gl-pulse, .gl-slide-up { animation: none; }
+}

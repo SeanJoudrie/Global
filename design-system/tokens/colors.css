@@ -1,0 +1,75 @@
+/* ============================================================================
+   GLOBALIO · COLOR TOKENS — "Modern Cartographer" (Chill Cartography)
+   Warm parchment paper · midnight-teal ink · muted watercolour accents.
+   Base values first, then semantic aliases. Consume the SEMANTIC names in
+   components; reach for base ramp values only when defining new semantics.
+   ============================================================================ */
+:root {
+  /* ── Parchment surfaces (light → deep) ────────────────────────────────── */
+  --paper-0:        #FFFCF4;  /* card / raised surface          */
+  --paper-1:        #FCF6E7;  /* hover / inset surface          */
+  --paper-2:        #FBF4E4;  /* page background (parchment)     */
+  --paper-3:        #EFE3C8;  /* deepest wash / void            */
+
+  /* ── Hairlines & edges ────────────────────────────────────────────────── */
+  --edge-soft:      #DDCEAF;  /* default hairline border        */
+  --edge-strong:    #C8B58C;  /* hover / emphasized border      */
+
+  /* ── Ink (midnight-teal) ──────────────────────────────────────────────── */
+  --ink-900:        #1F3A3C;  /* primary text / headings        */
+  --ink-600:        #5F726D;  /* muted body / subtitles         */
+  --ink-400:        #A09074;  /* dim labels / disabled          */
+  --ink-on-accent:  #FFFCF4;  /* text on an accent fill         */
+
+  /* ── Watercolour accent ramp (the five map inks) ──────────────────────── */
+  --terracotta:     #C2735A;  /* play   — clay rose             */
+  --terracotta-deep:#A85440;
+  --sky:            #5C8CA8;  /* learn  — faded sky blue        */
+  --ochre:          #C0883A;  /* codex / today — antique gold   */
+  --ochre-deep:     #9C7A33;
+  --clay:           #A85440;  /* challenge — burnt clay         */
+  --sage:           #5C8A6B;  /* success / progress green       */
+  --rust:           #B4452F;  /* error / danger                 */
+
+  /* tints — used for fills, washes & borders behind accents */
+  --tint-terracotta:#C2735A24;
+  --tint-sky:       #5C8CA824;
+  --tint-ochre:     #C0883A24;
+  --tint-clay:      #A8544024;
+  --tint-sage:      #5C8A6B24;
+
+  /* ── Brand globe palette (the EarthLogo) ──────────────────────────────── */
+  --globe-cream:    #F4E9D2;
+  --globe-land:     #C0883C;
+  --globe-outline:  #6B4A23;
+
+  /* ════════════════════════════════════════════════════════════════════════
+     SEMANTIC ALIASES — what components should reference
+     ════════════════════════════════════════════════════════════════════════ */
+  --surface-page:   var(--paper-2);
+  --surface-card:   var(--paper-0);
+  --surface-inset:  var(--paper-1);
+  --surface-void:   var(--paper-3);
+
+  --border-hairline:var(--edge-soft);
+  --border-strong:  var(--edge-strong);
+
+  --text-strong:    var(--ink-900);
+  --text-body:      var(--ink-600);
+  --text-muted:     var(--ink-400);
+  --text-on-accent: var(--ink-on-accent);
+
+  /* feature accents — one ink per app section */
+  --accent-learn:     var(--sky);
+  --accent-play:      var(--terracotta);
+  --accent-codex:     var(--ochre);
+  --accent-today:     var(--ochre);
+  --accent-challenge: var(--clay);
+
+  --accent-success: var(--sage);
+  --accent-danger:  var(--rust);
+
+  /* the default interactive accent (antique gold) */
+  --accent:         var(--ochre);
+  --accent-ink:     var(--ink-on-accent);
+}

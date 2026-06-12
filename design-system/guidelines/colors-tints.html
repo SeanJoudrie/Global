@@ -1,0 +1,29 @@
+<!-- @dsCard group="Colors" viewport="700x150" name="Accent tints in use" subtitle="Soft fills & borders behind each feature accent" -->
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8" />
+<link rel="stylesheet" href="../styles.css" />
+<style>
+  body { margin: 0; padding: 20px; background: var(--surface-page); display: flex; flex-direction: column; gap: 12px; }
+  .row { display: flex; gap: 10px; }
+  .pill { display: inline-flex; align-items: center; gap: 7px; padding: 9px 14px; border-radius: var(--radius-pill);
+    font-family: var(--font-body); font-size: 12px; font-weight: 600; }
+  .dot { width: 9px; height: 9px; border-radius: 50%; }
+  .solid { color: var(--text-on-accent); font-family: var(--font-display); font-weight: 700; }
+</style>
+</head>
+<body>
+  <div class="row">
+    <span class="pill solid" style="background:var(--accent-play)">Play</span>
+    <span class="pill solid" style="background:var(--accent-learn)">Learn</span>
+    <span class="pill solid" style="background:var(--accent-codex)">Codex</span>
+    <span class="pill solid" style="background:var(--accent-challenge)">Challenge</span>
+  </div>
+  <div class="row">
+    <span class="pill" style="background:color-mix(in srgb,var(--accent-play) 12%,transparent);color:var(--accent-play);border:1px solid color-mix(in srgb,var(--accent-play) 30%,transparent)"><span class="dot" style="background:var(--accent-play)"></span>tint 12% · border 30%</span>
+    <span class="pill" style="background:color-mix(in srgb,var(--accent-learn) 12%,transparent);color:var(--accent-learn);border:1px solid color-mix(in srgb,var(--accent-learn) 30%,transparent)"><span class="dot" style="background:var(--accent-learn)"></span>tint 12% · border 30%</span>
+    <span class="pill" style="background:color-mix(in srgb,var(--accent-codex) 12%,transparent);color:var(--accent-codex);border:1px solid color-mix(in srgb,var(--accent-codex) 30%,transparent)"><span class="dot" style="background:var(--accent-codex)"></span>tint 12% · border 30%</span>
+  </div>
+</body>
+</html>

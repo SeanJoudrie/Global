@@ -1,0 +1,25 @@
+<!-- @dsCard group="Colors" viewport="700x172" name="Parchment surfaces" subtitle="Page, card, inset & void — the warm paper stack" -->
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8" />
+<link rel="stylesheet" href="../styles.css" />
+<style>
+  body { margin: 0; padding: 20px; background: var(--surface-void); }
+  .row { display: flex; gap: 12px; }
+  .sw { flex: 1; border-radius: var(--radius-md); border: 1px solid var(--border-hairline); overflow: hidden; }
+  .chip { height: 64px; }
+  .meta { padding: 8px 10px; background: var(--surface-card); }
+  .name { font-family: var(--font-body); font-size: 11px; font-weight: 600; color: var(--text-strong); }
+  .hex { font-family: var(--font-data); font-size: 10px; color: var(--text-muted); letter-spacing: -0.02em; margin-top: 2px; }
+</style>
+</head>
+<body>
+  <div class="row">
+    <div class="sw"><div class="chip" style="background:var(--paper-2)"></div><div class="meta"><div class="name">Page</div><div class="hex">--surface-page · #FBF4E4</div></div></div>
+    <div class="sw"><div class="chip" style="background:var(--paper-0);box-shadow:var(--shadow-card)"></div><div class="meta"><div class="name">Card</div><div class="hex">--surface-card · #FFFCF4</div></div></div>
+    <div class="sw"><div class="chip" style="background:var(--paper-1)"></div><div class="meta"><div class="name">Inset</div><div class="hex">--surface-inset · #FCF6E7</div></div></div>
+    <div class="sw"><div class="chip" style="background:var(--paper-3)"></div><div class="meta"><div class="name">Void</div><div class="hex">--surface-void · #EFE3C8</div></div></div>
+  </div>
+</body>
+</html>

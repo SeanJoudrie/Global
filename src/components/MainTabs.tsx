@@ -1,15 +1,15 @@
 import { useState } from "react"
 import worldMap from "@svg-maps/world"
 import { FLAGS } from "../data/flags"
+import { CAPITALS } from "../data/capitals"
 import type { AppState } from "../utils/storage"
 import { todayString } from "../utils/prng"
 import { T, ACCENT, FONT, tint, IS_CARTO } from "../ui/tokens"
 import { groupsFor, REGISTRY } from "../ui/registry"
 import type { Entry, TabKey } from "../ui/registry"
 import { TabBar, ModuleCard, GameTile, StatPill, SectionHeader, ProgressRing } from "./ui"
-import { LineIcon, FlameIcon } from "./icons"
+import { LineIcon, FlameIcon, ChevronDownIcon, CheckIcon, FlaskIcon } from "./icons"
 import FlagImage from "./FlagImage"
-import HeroCarousel from "./HeroCarousel"
 
 // Faint antique world-map backdrop (Cartographer skin only). Fixed to the
 // viewport so it stays put while the page scrolls; heavily blurred, very low
@@ -58,8 +58,6 @@ const dayIdx = Math.floor(Date.now() / 86400000)
 export default function MainTabs({ state, tab, onTab, onNavigate, onQuickPlay, onStartDaily, onReverseQuiz }: Props) {
   const today = todayString()
   const dailyDone = state.lastDailyDate === today
-  const playTiles = REGISTRY.filter(r => r.tab === "play" && r.size === "tile")
-  const spotlight = playTiles[dayIdx % playTiles.length]
 
   const launch = (e: Entry) => {
     if (e.action === "quickplay") return onQuickPlay()
@@ -96,12 +94,12 @@ export default function MainTabs({ state, tab, onTab, onNavigate, onQuickPlay, o
 
       <main style={{ position: "relative", padding: "8px 16px 96px" }}>
         {tab === "today" && (
-          <TodayTab state={state} dailyDone={dailyDone} spotlight={spotlight}
-            onNavigate={onNavigate} onGoPlay={() => onTab("play")} onQuickPlay={onQuickPlay} onStartDaily={onStartDaily} launch={launch} playTiles={playTiles} />
+          <TodayTab state={state} dailyDone={dailyDone}
+            onNavigate={onNavigate} onQuickPlay={onQuickPlay} onStartDaily={onStartDaily} />
         )}
         {tab === "learn" && <ListTab tab="learn" launch={launch} state={state} />}
         {tab === "play" && <PlayTab launch={launch} />}
-        {tab === "codex" && <ListTab tab="codex" launch={launch} state={state} />}
+        {tab === "codex" && <CodexTab state={state} launch={launch} onNavigate={onNavigate} />}
         {tab === "you" && <YouTab state={state} learned={learned} onNavigate={onNavigate} />}
       </main>
 
@@ -110,88 +108,93 @@ export default function MainTabs({ state, tab, onTab, onNavigate, onQuickPlay, o
   )
 }
 
-/* ── TODAY ─────────────────────────────────────────────────────────────── */
-function TodayTab({ state, dailyDone, spotlight, onNavigate, onGoPlay, onQuickPlay, onStartDaily, launch, playTiles }: {
-  state: AppState; dailyDone: boolean; spotlight: Entry
-  onNavigate: (s: string) => void; onGoPlay: () => void; onQuickPlay: () => void; onStartDaily: () => void
-  launch: (e: Entry) => void; playTiles: Entry[]
+/* ── TODAY — the hook. Stripped to a streak celebration, one massive primary
+   action, a secondary Quick Play and a sleek Flag of the Day card. ────────── */
+function TodayTab({ state, dailyDone, onNavigate, onQuickPlay, onStartDaily }: {
+  state: AppState; dailyDone: boolean
+  onNavigate: (s: string) => void; onQuickPlay: () => void; onStartDaily: () => void
 }) {
-  const posterFlag = FLAGS[(dayIdx * 13) % FLAGS.length]
-  // Surface the game-like LEARN entries here too, mixed with casual games.
-  const LEARN_GAME_IDS = ["language", "geo", "capitalquiz", "reversequiz", "substumper", "lineage"]
-  const learnGames = LEARN_GAME_IDS.map(id => REGISTRY.find(r => r.id === id)).filter(Boolean) as Entry[]
-  const tryGames = [...learnGames, ...playTiles].slice(0, 12)
+  const fotd = FLAGS[dayIdx % FLAGS.length]
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: 18 }}>
-      {/* Swipeable hero carousel: Flag of the Day · Did You Know · featured game · personalise · arcade */}
-      <HeroCarousel onNavigate={onNavigate} onGoPlay={onGoPlay} />
+    <div className={IS_CARTO ? "carto-slide-up" : undefined} style={{ display: "flex", flexDirection: "column", gap: 18 }}>
+      {/* Streak celebration */}
+      <div style={{ display: "flex", alignItems: "center", gap: 14, padding: "4px 2px" }}>
+        <div className={IS_CARTO ? "carto-pulse" : undefined} style={{
+          width: 54, height: 54, borderRadius: "50%", flexShrink: 0,
+          display: "flex", alignItems: "center", justifyContent: "center",
+          background: tint(ACCENT.today, 0.14), border: `1px solid ${tint(ACCENT.today, 0.34)}`,
+        }}>
+          {IS_CARTO ? <FlameIcon size={26} color={ACCENT.today} strokeWidth={1.6} /> : <span style={{ fontSize: 24 }}>🔥</span>}
+        </div>
+        <div>
+          <div style={{ display: "flex", alignItems: "baseline", gap: 7 }}>
+            <span style={{ fontFamily: FONT.mono, fontVariantNumeric: "tabular-nums", fontWeight: 800, fontSize: 34, letterSpacing: "-0.04em", color: ACCENT.today, lineHeight: 1 }}>{state.currentStreak}</span>
+            <span className="geo-display" style={{ fontWeight: 700, fontSize: 18, color: T.text }}>day streak</span>
+          </div>
+          <div style={{ color: T.muted, fontSize: 12, marginTop: 3 }}>Best run {state.longestStreak} · keep the map lit</div>
+        </div>
+      </div>
 
-      {/* Primary action bento */}
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
-        {/* Quick Play — pumped-up shading, glow + arrow to pull the tap */}
-        <button onClick={onQuickPlay} className="geo-tap"
-          style={{
-            textAlign: "left", padding: 14, borderRadius: 14, position: "relative", overflow: "hidden",
-            background: `linear-gradient(145deg, ${tint(T.chartreuse, 0.3)}, ${tint(T.chartreuse, 0.07)} 58%, ${T.surface})`,
-            border: `1px solid ${tint(T.chartreuse, 0.5)}`,
-            boxShadow: IS_CARTO ? `0 12px 24px -16px ${tint(T.chartreuse, 0.95)}` : `0 0 28px ${tint(T.chartreuse, 0.2)}`,
-          }}>
-          <div style={{ position: "absolute", right: -12, bottom: -14, opacity: 0.13, color: T.chartreuse, pointerEvents: "none" }}>
-            <LineIcon name="quickplay" size={86} color={T.chartreuse} strokeWidth={1.1} />
+      {/* Massive primary action */}
+      <button onClick={onStartDaily} className={`geo-tap ${IS_CARTO ? "carto-card" : ""}`}
+        style={{
+          position: "relative", overflow: "hidden", padding: "22px 20px", borderRadius: 16, textAlign: "left",
+          border: `1px solid ${tint(ACCENT.play, 0.36)}`,
+          background: `linear-gradient(150deg, ${tint(ACCENT.play, 0.16)}, ${T.surface} 70%)`,
+          ...(IS_CARTO ? { ["--wash" as string]: tint(ACCENT.play, 0.42) } : {}),
+        }}>
+        <div style={{ position: "absolute", right: -18, bottom: -22, opacity: 0.12, color: ACCENT.play, pointerEvents: "none" }}>
+          {IS_CARTO ? <LineIcon name="today" size={132} color={ACCENT.play} strokeWidth={1.1} /> : <span style={{ fontSize: 110 }}>🧭</span>}
+        </div>
+        <div className="geo-micro" style={{ fontSize: 9, color: ACCENT.play, marginBottom: 8 }}>◦ Today's expedition</div>
+        <div className="geo-display" style={{ fontWeight: 800, fontSize: 30, lineHeight: 1.02, letterSpacing: "-0.02em", color: T.text, maxWidth: 240 }}>
+          Daily Expedition
+        </div>
+        <div style={{ color: T.muted, fontSize: 12.5, marginTop: 6, maxWidth: 220 }}>Ten flags from across the world. One run, once a day.</div>
+        <div style={{ marginTop: 16, display: "inline-flex", alignItems: "center", gap: 8, padding: "11px 20px", borderRadius: 999, background: dailyDone ? T.green : ACCENT.play, color: T.onAccent }}>
+          <span style={{ fontFamily: FONT.display, fontWeight: 700, fontSize: 15 }}>{dailyDone ? "✓ Done today" : "Start"}</span>
+          {!dailyDone && <span style={{ fontSize: 16 }}>→</span>}
+        </div>
+      </button>
+
+      {/* Secondary quick play */}
+      <button onClick={onQuickPlay} className={`geo-tap ${IS_CARTO ? "carto-card" : ""}`}
+        style={{ display: "flex", alignItems: "center", gap: 13, padding: "13px 16px", borderRadius: 12, textAlign: "left",
+          ...(IS_CARTO ? { ["--wash" as string]: tint(ACCENT.today, 0.4) } : { background: T.surface, border: `1px solid ${T.line}` }) }}>
+        <span style={{ width: 40, height: 40, borderRadius: 10, flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center",
+          background: tint(ACCENT.today, 0.12), border: `1px solid ${tint(ACCENT.today, 0.28)}` }}>
+          {IS_CARTO ? <LineIcon name="quickplay" size={20} color={ACCENT.today} /> : <span style={{ fontSize: 18 }}>⚡</span>}
+        </span>
+        <div style={{ flex: 1 }}>
+          <div className="geo-display" style={{ fontWeight: 600, fontSize: 15, color: T.text }}>Quick Play</div>
+          <div style={{ color: T.muted, fontSize: 11.5, marginTop: 1 }}>10 random flags · instant, no streak</div>
+        </div>
+        <span style={{ color: ACCENT.today, fontSize: 18, opacity: 0.7 }}>→</span>
+      </button>
+
+      {/* Flag of the Day — sleek premium card */}
+      <div>
+        <SectionHeader title="Flag of the Day" accent={ACCENT.codex} />
+        <button onClick={() => onNavigate("codex")} className={`geo-tap ${IS_CARTO ? "carto-card" : ""}`}
+          style={{ width: "100%", textAlign: "left", borderRadius: 16, padding: 16, display: "flex", gap: 14, alignItems: "center", position: "relative", overflow: "hidden",
+            ...(IS_CARTO ? { ["--wash" as string]: tint(ACCENT.codex, 0.4) } : { background: T.surface, border: `1px solid ${T.line}` }) }}>
+          <div style={{ flex: 1, minWidth: 0 }}>
+            <div className="geo-micro" style={{ fontSize: 9, color: ACCENT.codex, marginBottom: 5 }}>◦ {fotd.region}</div>
+            <div className="geo-display" style={{ color: T.text, fontWeight: 700, fontSize: 22, lineHeight: 1.05 }}>{fotd.name}</div>
+            <p style={{ color: T.muted, fontSize: 12, marginTop: 5, lineHeight: 1.45, display: "-webkit-box", WebkitLineClamp: 3, WebkitBoxOrient: "vertical", overflow: "hidden" }}>{fotd.funFact}</p>
+            <div className="geo-micro" style={{ fontSize: 8.5, color: ACCENT.codex, marginTop: 10 }}>Open in codex →</div>
           </div>
-          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-            <span style={{ color: T.chartreuse, display: "flex" }}>{IS_CARTO ? <LineIcon name="quickplay" size={22} color={T.chartreuse} /> : <span style={{ fontSize: 22 }}>⚡</span>}</span>
-            <span style={{ width: 24, height: 24, borderRadius: 999, background: T.chartreuse, color: T.onAccent, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 13, fontWeight: 800 }}>→</span>
+          <div style={{ flexShrink: 0, width: 104, height: 70, borderRadius: 10, overflow: "hidden", border: `1px solid ${T.line}`, boxShadow: `0 4px 12px -6px ${tint(T.text, 0.35)}` }}>
+            <FlagImage code={fotd.code} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
           </div>
-          <div className="geo-display" style={{ color: T.text, fontWeight: 700, fontSize: 16, marginTop: 20 }}>Quick Play</div>
-          <div className="geo-mono" style={{ color: T.chartreuse, fontSize: 10, marginTop: 2 }}>10 random flags · instant</div>
-        </button>
-        <button onClick={onStartDaily} className={`geo-tap ${IS_CARTO ? "carto-card" : ""}`}
-          style={{ textAlign: "left", padding: 14, borderRadius: 14, position: "relative", overflow: "hidden",
-            ...(IS_CARTO ? { ["--wash" as string]: tint(T.amber, 0.4) } : { background: `linear-gradient(150deg,${tint(T.amber, 0.16)},${T.surface})`, border: `1px solid ${tint(T.amber, 0.4)}` }) }}>
-          <div style={{ marginBottom: 22, color: T.amber }}>{IS_CARTO ? <LineIcon name="reversequiz" size={22} color={T.amber} /> : <span style={{ fontSize: 22 }}>🎯</span>}</div>
-          <div className="geo-display" style={{ color: T.text, fontWeight: 700, fontSize: 16 }}>Daily Game</div>
-          <div className="geo-mono" style={{ color: dailyDone ? T.green : T.amber, fontSize: 10, marginTop: 2 }}>{dailyDone ? "✓ complete" : "new today"}</div>
         </button>
       </div>
 
       {/* Resume */}
-      {/* Today's game — sits above Resume; poster image to demo & entice */}
       <div>
-        <SectionHeader title="Today's game" accent={ACCENT.play} />
-        <button onClick={() => launch(spotlight)} className={`geo-tap ${IS_CARTO ? "carto-card" : ""}`}
-          style={{ width: "100%", textAlign: "left", borderRadius: 16, padding: 14, position: "relative", overflow: "hidden", display: "flex", gap: 14, alignItems: "center",
-            ...(IS_CARTO ? { ["--wash" as string]: tint(ACCENT.play, 0.4) } : { background: T.surface, border: `1px solid ${T.line}` }) }}>
-          <div style={{ flex: 1, minWidth: 0 }}>
-            <div className="geo-micro" style={{ fontSize: 9, color: ACCENT.play, marginBottom: 5 }}>◦ Today's Game · rotates daily</div>
-            <div className="geo-display" style={{ color: T.text, fontWeight: 700, fontSize: 22, lineHeight: 1.05 }}>{spotlight.title}</div>
-            <p style={{ color: T.muted, fontSize: 12, marginTop: 5 }}>{spotlight.subtitle}</p>
-            <div style={{ marginTop: 12, display: "inline-flex", alignItems: "center", gap: 6, padding: "7px 14px", borderRadius: 999, background: ACCENT.play, color: T.onAccent }}>
-              <span style={{ fontFamily: FONT.display, fontWeight: 700, fontSize: 12 }}>Play</span><span style={{ fontSize: 13 }}>→</span>
-            </div>
-          </div>
-          <div style={{ flexShrink: 0, width: 96, height: 96, borderRadius: 14, overflow: "hidden", position: "relative", border: `1px solid ${T.line}`, background: tint(ACCENT.play, 0.1), display: "flex", alignItems: "center", justifyContent: "center" }}>
-            <FlagImage code={posterFlag.code} style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", opacity: 0.26 }} />
-            <span style={{ position: "relative", color: ACCENT.play, display: "flex" }}><LineIcon name={spotlight.id} size={40} color={ACCENT.play} strokeWidth={1.5} /></span>
-          </div>
-        </button>
-      </div>
-
-      <div>
-        <SectionHeader title="Resume" accent={T.cyan} />
-        <ModuleCard icon="🚩" glyph="flags" title="Flag Sets" subtitle="Pick up where you left off" accent={ACCENT.learn}
+        <SectionHeader title="Pick up where you left off" accent={ACCENT.learn} />
+        <ModuleCard icon="🚩" glyph="flags" title="Flag Sets" subtitle="Country, historical & identity sets" accent={ACCENT.learn}
           progress={{ done: state.learnedFlags.length, total: FLAGS.length }} onClick={() => onNavigate("flags")} />
-      </div>
-
-      {/* Games to try — mixes casual games with the learn-section games so they
-          surface here too (multiple pathways to every game) */}
-      <div>
-        <SectionHeader title="Games to try" accent={T.chartreuse} action={<button onClick={() => onNavigate("flags")} className="geo-micro" style={{ fontSize: 8, color: T.dim, background: "transparent" }}>see all →</button>} />
-        <div style={{ display: "flex", gap: 10, overflowX: "auto", margin: "0 -16px", padding: "0 16px 4px" }}>
-          {tryGames.map(e => (
-            <GameTile key={e.id} icon={e.icon} glyph={e.id} title={e.title} subtitle={e.subtitle} accent={ACCENT[e.accent]} onClick={() => launch(e)} />
-          ))}
-        </div>
       </div>
     </div>
   )
@@ -202,7 +205,6 @@ function ListTab({ tab, launch, state }: { tab: TabKey; launch: (e: Entry) => vo
   const groups = groupsFor(tab)
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
-      {tab === "codex" && <CollectionBanner state={state} />}
       {groups.map(g => (
         <div key={g.group}>
           <SectionHeader title={g.group} accent={ACCENT[g.entries[0].accent]} />
@@ -234,20 +236,121 @@ function CollectionBanner({ state }: { state: AppState }) {
   )
 }
 
-/* ── PLAY — all the games, grouped (Featured first) ────────────────────── */
-function PlayTab({ launch }: { launch: (e: Entry) => void }) {
-  const groups = groupsFor("play")
+/* ── CODEX — the collection, rebuilt as a calm nested accordion:
+   Continent → Country. Smooth-sliding drawers replace the wall of tiles. ── */
+const CONTINENT_ORDER = ["Europe", "Africa", "Asia", "Americas", "Middle East", "Oceania"] as const
+const CAPITAL_BY_CODE = new Map(CAPITALS.map(c => [c.code, c.capital]))
+
+function CodexTab({ state, launch, onNavigate }: { state: AppState; launch: (e: Entry) => void; onNavigate: (s: string) => void }) {
+  const [open, setOpen] = useState<string | null>("Europe")
+  const learned = new Set(state.learnedFlags)
+  const blocks = CONTINENT_ORDER
+    .map(continent => ({ continent, flags: FLAGS.filter(f => f.region === continent) }))
+    .filter(b => b.flags.length > 0)
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
+    <div className={IS_CARTO ? "carto-slide-up" : undefined} style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+      <CollectionBanner state={state} />
+
+      <div>
+        <SectionHeader title="By continent" accent={ACCENT.codex} />
+        <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+          {blocks.map(b => (
+            <ContinentDrawer key={b.continent} continent={b.continent} flags={b.flags} learned={learned}
+              open={open === b.continent}
+              onToggle={() => setOpen(o => (o === b.continent ? null : b.continent))}
+              onOpenCountry={() => onNavigate("codex")} />
+          ))}
+        </div>
+      </div>
+
+      <div>
+        <SectionHeader title="Reference" accent={ACCENT.codex} />
+        <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+          {groupsFor("codex").flatMap(g => g.entries).map(e => (
+            <ModuleCard key={e.id} icon={e.icon} glyph={e.id} title={e.title} subtitle={e.subtitle} accent={ACCENT[e.accent]}
+              progress={e.progress?.(state)} onClick={() => launch(e)} />
+          ))}
+        </div>
+      </div>
+    </div>
+  )
+}
+
+function ContinentDrawer({ continent, flags, learned, open, onToggle, onOpenCountry }: {
+  continent: string; flags: typeof FLAGS; learned: Set<string>
+  open: boolean; onToggle: () => void; onOpenCountry: () => void
+}) {
+  const done = flags.filter(f => learned.has(f.code)).length
+  return (
+    <div className={IS_CARTO ? "carto-card" : undefined}
+      style={{ borderRadius: 14, overflow: "hidden", ...(IS_CARTO ? { ["--wash" as string]: tint(ACCENT.codex, 0.42) } : { background: T.surface, border: `1px solid ${T.line}` }) }}>
+      <button onClick={onToggle} className="geo-tap"
+        style={{ width: "100%", display: "flex", alignItems: "center", gap: 13, padding: "13px 14px", background: "transparent", textAlign: "left" }}>
+        <ProgressRing done={done} total={flags.length} accent={ACCENT.codex} size={40} />
+        <div style={{ flex: 1 }}>
+          <div className="geo-display" style={{ fontWeight: 700, fontSize: 16, color: T.text }}>{continent}</div>
+          <div style={{ fontSize: 11, marginTop: 1 }}>
+            <span style={{ fontFamily: FONT.mono, fontWeight: 600, color: ACCENT.codex }}>{done}</span>
+            <span style={{ color: T.muted }}> / {flags.length} catalogued</span>
+          </div>
+        </div>
+        <span style={{ display: "flex", color: T.muted, transform: open ? "rotate(180deg)" : "none", transition: "transform 0.3s cubic-bezier(0.2,0.7,0.2,1)" }}>
+          <ChevronDownIcon size={20} color={T.muted} strokeWidth={1.6} />
+        </span>
+      </button>
+
+      {open && (
+        <div className={IS_CARTO ? "carto-slide-up" : undefined} style={{ padding: "2px 10px 10px" }}>
+          {flags.map(f => (
+            <button key={f.code} onClick={onOpenCountry} className="geo-tap"
+              style={{ width: "100%", display: "flex", alignItems: "center", gap: 12, padding: "9px 6px", background: "transparent", textAlign: "left", borderTop: `1px solid ${T.line}` }}>
+              <span style={{ flexShrink: 0, width: 42, height: 28, borderRadius: 6, overflow: "hidden", border: `1px solid ${T.line}`, display: "block" }}>
+                <FlagImage code={f.code} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+              </span>
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <div className="geo-display" style={{ fontWeight: 600, fontSize: 13.5, color: T.text, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{f.name}</div>
+                <div style={{ color: T.muted, fontSize: 10.5, marginTop: 1, display: "flex", alignItems: "center", gap: 4 }}>
+                  <LineIcon name="capitalquiz" size={11} color={T.muted} /> {CAPITAL_BY_CODE.get(f.code) ?? "—"}
+                </div>
+              </div>
+              {learned.has(f.code)
+                ? <span style={{ display: "flex", alignItems: "center", gap: 4, color: T.green, fontSize: 10.5, fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.12em" }}>
+                    <CheckIcon size={14} color={T.green} strokeWidth={1.8} /> learned
+                  </span>
+                : <span className="geo-micro" style={{ fontSize: 8, color: T.muted, padding: "3px 8px", borderRadius: 999, border: `1px solid ${T.lineHi}` }}>new</span>}
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
+  )
+}
+
+/* ── PLAY — the arcade. Horizontal swipeable Netflix-style rows; the niche
+   games are buried in a collapsible Beta Sandbox at the very bottom. ──────── */
+function PlayTab({ launch }: { launch: (e: Entry) => void }) {
+  const [sandboxOpen, setSandboxOpen] = useState(false)
+  const groups = groupsFor("play").filter(g => !g.entries[0].sandbox)
+  const sandbox = REGISTRY.filter(r => r.tab === "play" && r.sandbox)
+  const gameCount = REGISTRY.filter(r => r.tab === "play").length
+  return (
+    <div className={IS_CARTO ? "carto-slide-up" : undefined} style={{ display: "flex", flexDirection: "column", gap: 20 }}>
+      <div>
+        <div className="geo-display" style={{ fontWeight: 800, fontSize: 26, letterSpacing: "-0.02em", color: T.text }}>The Arcade</div>
+        <div style={{ color: T.muted, fontSize: 12.5, marginTop: 3 }}>
+          <span style={{ fontFamily: FONT.mono, fontWeight: 700, color: ACCENT.play }}>{gameCount}</span> games · swipe each shelf
+        </div>
+      </div>
+
       {groups.map(g => {
         const isTiles = g.entries[0].size === "tile"
         return (
           <div key={g.group}>
             <SectionHeader title={g.group} accent={ACCENT[g.entries[0].accent]} />
             {isTiles ? (
-              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(108px,1fr))", gap: 10 }}>
+              <div className="carto-rail" style={{ display: "flex", gap: 10, overflowX: "auto", margin: "0 -16px", padding: "2px 16px 6px" }}>
                 {g.entries.map(e => (
-                  <GameTile key={e.id} icon={e.icon} glyph={e.id} title={e.title} subtitle={e.subtitle} accent={ACCENT[e.accent]} onClick={() => launch(e)} style={{ width: "100%" }} />
+                  <GameTile key={e.id} icon={e.icon} glyph={e.id} title={e.title} subtitle={e.subtitle} accent={ACCENT[e.accent]} onClick={() => launch(e)} />
                 ))}
               </div>
             ) : (
@@ -260,6 +363,31 @@ function PlayTab({ launch }: { launch: (e: Entry) => void }) {
           </div>
         )
       })}
+
+      {/* Beta Sandbox — progressively disclosed, nothing deleted */}
+      <div style={{ marginTop: 4 }}>
+        <button onClick={() => setSandboxOpen(o => !o)} className="geo-tap"
+          style={{ width: "100%", display: "flex", alignItems: "center", gap: 10, padding: "12px 14px",
+            borderRadius: 12, background: T.surfaceHi, border: `1px dashed ${T.lineHi}`, textAlign: "left" }}>
+          <span style={{ display: "flex", color: T.muted }}>{IS_CARTO ? <FlaskIcon size={18} color={T.muted} strokeWidth={1.6} /> : <span style={{ fontSize: 16 }}>🧪</span>}</span>
+          <div style={{ flex: 1 }}>
+            <div className="geo-display" style={{ fontWeight: 600, fontSize: 14, color: T.text }}>Beta Sandbox</div>
+            <div style={{ color: T.muted, fontSize: 10.5, marginTop: 1 }}>{sandbox.length} experimental & niche games</div>
+          </div>
+          <span className="geo-micro" style={{ fontSize: 8, color: T.muted, padding: "3px 8px", borderRadius: 999, border: `1px solid ${T.lineHi}` }}>beta</span>
+          <span style={{ display: "flex", color: T.muted, transform: sandboxOpen ? "rotate(180deg)" : "none", transition: "transform 0.28s cubic-bezier(0.2,0.7,0.2,1)" }}>
+            <ChevronDownIcon size={18} color={T.muted} strokeWidth={1.6} />
+          </span>
+        </button>
+
+        {sandboxOpen && (
+          <div className={IS_CARTO ? "carto-slide-up" : undefined} style={{ marginTop: 10, display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
+            {sandbox.map(e => (
+              <GameTile key={e.id} icon={e.icon} glyph={e.id} title={e.title} subtitle={e.subtitle} accent={T.muted} onClick={() => launch(e)} style={{ width: "100%" }} />
+            ))}
+          </div>
+        )}
+      </div>
     </div>
   )
 }

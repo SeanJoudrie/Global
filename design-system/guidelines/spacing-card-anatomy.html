@@ -1,0 +1,38 @@
+<!-- @dsCard group="Spacing" viewport="700x230" name="Card anatomy" subtitle="Paper stock: hairline border, soft shadow, watercolour wash" -->
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8" />
+<link rel="stylesheet" href="../styles.css" />
+<style>
+  body { margin: 0; padding: 24px; background: var(--surface-page); display: flex; gap: 18px; }
+  .demo { flex: 1; }
+  .lbl { font-family: var(--font-body); text-transform: uppercase; letter-spacing: 0.14em; font-size: 8px; font-weight: 600; color: var(--text-muted); margin-bottom: 8px; }
+  .card { padding: 16px; }
+  .eyebrow { font-family: var(--font-body); text-transform: uppercase; letter-spacing: 0.18em; font-weight: 600; font-size: 9px; }
+  .title { font-family: var(--font-display); font-weight: 700; font-size: 18px; color: var(--text-strong); margin-top: 6px; }
+  .sub { font-family: var(--font-body); font-size: 12px; color: var(--text-body); margin-top: 5px; line-height: 1.5; }
+  /* force the wash visible on the right demo to show the bleed */
+  .washed::before { opacity: 0.5 !important; }
+  .washed { transform: translateY(-2px) rotate(-0.15deg); box-shadow: var(--shadow-card-hover); border-color: var(--border-strong); }
+</style>
+</head>
+<body>
+  <div class="demo">
+    <div class="lbl">Resting</div>
+    <div class="gl-card card" style="--wash:color-mix(in srgb,var(--accent-learn) 42%,transparent)">
+      <div class="eyebrow" style="color:var(--accent-learn)">◦ Flashcards</div>
+      <div class="title">Swipe &amp; learn all 195</div>
+      <div class="sub">Hairline #DDCEAF · radius 14 · soft ink-teal shadow.</div>
+    </div>
+  </div>
+  <div class="demo">
+    <div class="lbl">Hover — wash bleeds in</div>
+    <div class="gl-card card washed" style="--wash:color-mix(in srgb,var(--accent-play) 42%,transparent)">
+      <div class="eyebrow" style="color:var(--accent-play)">◦ Flag DNA</div>
+      <div class="title">Guess by attributes</div>
+      <div class="sub">Lifts 2px, tilts −0.15°, accent watercolour bleeds from the top-left.</div>
+    </div>
+  </div>
+</body>
+</html>

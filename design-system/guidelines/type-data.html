@@ -1,0 +1,33 @@
+<!-- @dsCard group="Type" viewport="700x168" name="Data & micro labels" subtitle="Tabular figures for metrics · tracked uppercase eyebrows" -->
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8" />
+<link rel="stylesheet" href="../styles.css" />
+<style>
+  body { margin: 0; padding: 22px 24px; background: var(--surface-card); display: flex; flex-direction: column; gap: 16px; }
+  .data { font-family: var(--font-data); font-variant-numeric: tabular-nums; font-weight: 800; letter-spacing: -0.04em; color: var(--accent-codex); }
+  .micro { font-family: var(--font-body); text-transform: uppercase; letter-spacing: 0.18em; font-weight: 600; font-size: 10px; }
+  .lbl { font-family: var(--font-body); text-transform: uppercase; letter-spacing: 0.14em; font-size: 8px; font-weight: 600; color: var(--text-muted); margin-bottom: 6px; }
+  .row { display: flex; align-items: baseline; gap: 18px; }
+</style>
+</head>
+<body>
+  <div>
+    <div class="lbl">Data readout · tabular-nums</div>
+    <div class="row">
+      <span class="data" style="font-size:30px">42</span>
+      <span class="data" style="font-size:30px;color:var(--accent-play)">88<span style="color:var(--text-muted);font-size:18px">/195</span></span>
+      <span class="data" style="font-size:30px;color:var(--accent-learn)">100<span style="color:var(--text-muted);font-size:18px">%</span></span>
+    </div>
+  </div>
+  <div>
+    <div class="lbl">Micro eyebrow · 0.18em</div>
+    <div class="row">
+      <span class="micro" style="color:var(--accent-codex)">◦ Flag of the Day</span>
+      <span class="micro" style="color:var(--accent-play)">◦ Today's Game</span>
+      <span class="micro" style="color:var(--text-muted)">◦ World Mastery</span>
+    </div>
+  </div>
+</body>
+</html>
