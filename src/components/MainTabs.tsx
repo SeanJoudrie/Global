@@ -671,7 +671,7 @@ function TrendingDeck({ games, launch }: { games: Entry[]; launch: (e: Entry) =>
           onPointerMove={e => { if (dragging.current) setDx(e.clientX - startX.current) }}
           onPointerUp={() => { if (!dragging.current) return; dragging.current = false; if (Math.abs(dx) > 80) commit(dx > 0 ? 1 : -1); else setDx(0) }}
           style={{
-            position: "absolute", left: 0, right: 0, top: 0, height: CARD_H, borderRadius: 18, overflow: "hidden", touchAction: "pan-y", cursor: "grab",
+            position: "absolute", left: 0, right: 0, top: 0, height: CARD_H, borderRadius: 18, overflow: "hidden", touchAction: "pan-y pinch-zoom", cursor: "grab",
             background: T.surface, border: `1px solid ${tint(accent, 0.5)}`,
             boxShadow: `0 2px 6px rgba(31,58,60,0.08), 0 22px 42px -22px ${tint(accent, 0.85)}`,
             transform: `translateX(${dx}px) rotate(${dx * 0.022}deg)`,

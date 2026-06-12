@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react"
 import type { CSSProperties, ReactNode } from "react"
 import worldMap from "@svg-maps/world"
-import { Pointer, MousePointer2 } from "lucide-react"
+import { Pointer, MousePointer2, Search, Speech, Check, X, ArrowUp, ArrowDown, Heart, Swords } from "lucide-react"
 import { SUB_FLAGS } from "../data/subdivisions"
 import { T, tint } from "../ui/tokens"
 import { LineIcon } from "./icons"
@@ -9,14 +9,15 @@ import FlagImage from "./FlagImage"
 
 /**
  * GamePoster — the art for a game card. Every poster *demonstrates* its game:
- * Silhouette is a black-and-white US flag in the dark, The Peel is a flag
- * scratched out from under a dark coating by a finger, Build the Flag is the
- * French tricolore with one band missing, … All hand-curated per game id (no
- * random flags), composed from data we already ship plus CSS — so changing a
- * poster is editing this one file, not producing 37 image assets.
+ * Silhouette is a black-and-white US flag, The Peel is a finger scratching a
+ * dark coating off Brazil, Border Map is yellow Spain with its mystery
+ * neighbours outlined, … All hand-curated per game id (no random flags),
+ * composed from data we already ship plus CSS — so changing a poster is
+ * editing this one file, not producing 40 image assets.
  *
- * Colours *inside* a poster are scene art (flag content), so specific paint
- * (French blue, scratch-card grey) is allowed there; chrome still uses tokens.
+ * Colours *inside* a poster are scene art (flag content, map paint), so
+ * specific pigments (Spanish yellow, scratch-card grey) are allowed here;
+ * chrome still uses tokens.
  *
  * Fills its parent; the caller owns size, radius and overflow:hidden.
  * variant="hero" (the Trending deck) insets full-bleed art in a framed stage
@@ -28,6 +29,9 @@ const WM = (file: string) => `https://commons.wikimedia.org/wiki/Special:FilePat
 const HOLY_ROMAN = WM("Banner_of_the_Holy_Roman_Emperor_with_haloes_(1430-1806).svg")
 const SOVIET = WM("Flag_of_the_Soviet_Union.svg")
 const RUSSIAN_EMPIRE = WM("Flag_of_the_Russian_Empire_(black-yellow-white).svg")
+const DC_FLAG = "/flags/wm/flag-of-washington-d-c-388ae2.svg" // self-hosted
+
+const SLATE = "#1c2e36" // deep slate backdrop for map/landmark scenes
 
 const subUrl = (code: string) => SUB_FLAGS.find(s => s.code === code)?.flagUrl
 
@@ -70,6 +74,41 @@ function MapShape({ loc, fill = "none", stroke, dashed = false }:
   )
 }
 
+// Border Map scene: solid-yellow Spain, its mystery neighbours (Portugal and
+// southern France) outlined in white with question marks. The view is derived
+// from Portugal's bounding box so Spain's offshore islands can't distort it.
+function BordersScene() {
+  const ptRef = useRef<SVGPathElement>(null)
+  const [vb, setVb] = useState<{ x: number; y: number; w: number; h: number } | null>(null)
+  const map = worldMap as { viewBox: string; locations: { id: string; path: string }[] }
+  const path = (id: string) => map.locations.find(l => l.id === id)?.path
+  const es = path("es"), pt = path("pt"), fr = path("fr")
+  useEffect(() => {
+    if (!ptRef.current) return
+    const b = ptRef.current.getBBox()
+    setVb({ x: b.x - b.width * 0.2, y: b.y - b.height * 0.62, w: b.width * 3.7, h: b.height * 1.9 })
+  }, [])
+  if (!es || !pt || !fr) return null
+  const sw = vb ? vb.w * 0.008 : 1
+  const fs = vb ? vb.h * 0.24 : 10
+  return (
+    <svg viewBox={vb ? `${vb.x} ${vb.y} ${vb.w} ${vb.h}` : map.viewBox} preserveAspectRatio="xMidYMid meet"
+      style={{ width: "100%", height: "100%", display: "block", opacity: vb ? 1 : 0 }}>
+      <path d={fr} fill="none" stroke="#FFFFFF" strokeWidth={sw} strokeLinejoin="round" />
+      <path ref={ptRef} d={pt} fill="none" stroke="#FFFFFF" strokeWidth={sw} strokeLinejoin="round" />
+      <path d={es} fill="#F1BF00" stroke="none" />
+      {vb && (
+        <>
+          <text x={vb.x + vb.w * 0.135} y={vb.y + vb.h * 0.72} fill="#FFFFFF" fontSize={fs} fontWeight={800}
+            textAnchor="middle" fontFamily="'Playfair Display', Georgia, serif">?</text>
+          <text x={vb.x + vb.w * 0.56} y={vb.y + vb.h * 0.26} fill="#FFFFFF" fontSize={fs} fontWeight={800}
+            textAnchor="middle" fontFamily="'Playfair Display', Georgia, serif">?</text>
+        </>
+      )}
+    </svg>
+  )
+}
+
 // 2×2 grid of curated flags; `ring` highlights one cell (the impostor).
 function FourGrid({ codes, ring, badge }: { codes: string[]; ring?: number; badge?: ReactNode }) {
   return (
@@ -87,12 +126,19 @@ function FourGrid({ codes, ring, badge }: { codes: string[]; ring?: number; badg
   )
 }
 
-// Two flags head-to-head with a VS seal.
-function Versus({ a, b, accent, hero }: { a: string; b: string; accent: string; hero: boolean }) {
+// Two flags head-to-head with a VS seal (plus optional higher/lower arrows).
+function Versus({ a, b, accent, hero, arrows = false }: { a: string; b: string; accent: string; hero: boolean; arrows?: boolean }) {
+  const badge: CSSProperties = { position: "absolute", top: "8%", borderRadius: 999, padding: hero ? 4 : 2, display: "flex", background: `${T.surface}F0`, boxShadow: `0 2px 6px -2px ${tint(T.text, 0.6)}` }
   return (
     <div style={{ position: "absolute", inset: 0, display: "flex", gap: 2, background: T.line }}>
       <div style={{ flex: 1, overflow: "hidden" }}>{flag(a)}</div>
       <div style={{ flex: 1, overflow: "hidden" }}>{flag(b)}</div>
+      {arrows && (
+        <>
+          <span style={{ ...badge, left: "7%" }}><ArrowUp size={hero ? 16 : 12} color={T.green} strokeWidth={2.4} /></span>
+          <span style={{ ...badge, right: "7%" }}><ArrowDown size={hero ? 16 : 12} color={T.danger} strokeWidth={2.4} /></span>
+        </>
+      )}
       <div style={{ position: "absolute", left: "50%", top: "50%", transform: "translate(-50%,-50%)", width: hero ? 34 : 24, height: hero ? 34 : 24, borderRadius: 999, background: accent, color: T.onAccent, display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "'Playfair Display', Georgia, serif", fontWeight: 800, fontSize: hero ? 13 : 9, boxShadow: `0 2px 8px -2px ${tint(T.text, 0.6)}` }}>VS</div>
     </div>
   )
@@ -167,39 +213,42 @@ function buildArt(id: string, accent: string, hero: boolean): { node: ReactNode;
 
     // ── One Glance ──
     case "silhouette":
-      // A black-and-white American flag, edges visible, floating in the dark.
+      // The American flag drained to pure black and white, on the normal wash.
       return { bleed: false, node: (
-        <div style={{ ...box, background: "#10171c", display: "flex", alignItems: "center", justifyContent: "center" }}>
-          <div style={{ width: hero ? "52%" : "64%", aspectRatio: "3 / 2", borderRadius: 4, overflow: "hidden", border: "1px solid #2c3940", boxShadow: "0 0 18px rgba(0,0,0,0.7)" }}>
-            {flag("us", { filter: "grayscale(1) contrast(1.05)" })}
+        <div style={{ ...box, background: wash, display: "flex", alignItems: "center", justifyContent: "center" }}>
+          <div style={{ width: hero ? "52%" : "64%", aspectRatio: "3 / 2", borderRadius: 4, overflow: "hidden", border: `1px solid ${T.line}`, boxShadow: `0 3px 10px -4px ${tint(T.text, 0.6)}` }}>
+            {flag("us", { filter: "grayscale(1) contrast(1.6)" })}
           </div>
         </div>
       ) }
     case "thecrop":
-      // Deep zoom into the Vatican flag (SVG source, so it stays crisp).
+      // Deep zoom into the Vatican flag, magnifier in the corner.
       return { bleed: true, node: (
         <div style={{ ...box, background: tint(accent, 0.1) }}>
           {flag("va", { transform: `scale(${hero ? 3.2 : 2.8})`, transformOrigin: "62% 58%" })}
+          <div style={{ position: "absolute", right: hero ? 10 : 5, bottom: hero ? 8 : 4, color: accent, background: `${T.surface}F0`, borderRadius: 999, padding: hero ? 6 : 4, display: "flex", border: `1px solid ${tint(accent, 0.5)}` }}>
+            <Search size={hero ? 20 : 13} color={accent} strokeWidth={1.8} />
+          </div>
         </div>
       ) }
     case "thepeel":
-      // A finger scratching dark coating off a flag — the reveal pops.
+      // A solid finger scratching a zigzag path of coating off Brazil.
       return { bleed: true, node: (
         <div style={{ ...box, background: "#22282b" }}>
-          <div style={{ position: "absolute", inset: 0, clipPath: "polygon(16% 34%, 44% 18%, 72% 36%, 86% 28%, 80% 60%, 52% 76%, 28% 62%)" }}>
+          <div style={{ position: "absolute", inset: 0, clipPath: "polygon(8% 58%, 28% 42%, 50% 47%, 70% 27%, 90% 16%, 92% 40%, 72% 53%, 50% 73%, 30% 68%, 12% 82%)" }}>
             {flag("br")}
           </div>
-          <Pointer size={hero ? 26 : 17} color="#EDE6D4" strokeWidth={1.7} style={{ position: "absolute", right: "16%", top: "20%", transform: "rotate(-14deg)" }} />
+          <Pointer size={hero ? 30 : 20} color="#22282b" fill="#F2EBDB" strokeWidth={1.4} style={{ position: "absolute", right: "5%", top: "10%", transform: "rotate(-18deg)" }} />
         </div>
       ) }
     case "composer":
-      // The 3×3 tile board mid-game: two tiles flipped, Mexico underneath.
+      // The 3×3 tile board mid-game: centre + a corner flipped, Mexico beneath.
       return { bleed: true, node: (
         <div style={{ ...box }}>
           {flag("mx")}
           <div style={{ position: "absolute", inset: 0, display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gridTemplateRows: "1fr 1fr 1fr", gap: 1 }}>
             {Array.from({ length: 9 }, (_, i) => (
-              <div key={i} style={{ background: [1, 5].includes(i) ? "transparent" : T.surfaceHi, border: `1px solid ${T.line}` }} />
+              <div key={i} style={{ background: [2, 4].includes(i) ? "transparent" : T.surfaceHi, border: `1px solid ${T.line}` }} />
             ))}
           </div>
         </div>
@@ -237,11 +286,11 @@ function buildArt(id: string, accent: string, hero: boolean): { node: ReactNode;
       // Four genuinely confusable tricolores.
       return { bleed: true, node: <FourGrid codes={["ro", "td", "ad", "md"]} /> }
     case "flagdna":
-      // A DNA helix and a mystery flag to deduce.
+      // The helix and a white flag bearing a big red question mark.
       return { bleed: false, node: (
         <div style={{ ...box, background: wash, display: "flex", alignItems: "center", justifyContent: "center", gap: hero ? 16 : 9 }}>
-          <LineIcon name="flagdna" size={hero ? 36 : 24} color={accent} strokeWidth={1.4} />
-          <div style={{ width: hero ? "28%" : "36%", aspectRatio: "3 / 2", borderRadius: 4, border: `1.5px dashed ${tint(accent, 0.6)}`, display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "'Playfair Display', Georgia, serif", fontWeight: 800, fontSize: hero ? 22 : 15, color: accent }}>?</div>
+          <LineIcon name="flagdna" size={hero ? 42 : 27} color={accent} strokeWidth={1.5} />
+          <div style={{ width: hero ? "30%" : "38%", aspectRatio: "3 / 2", borderRadius: 4, background: "#FFFFFF", border: `1px solid ${T.line}`, boxShadow: `0 2px 6px -3px ${tint(T.text, 0.55)}`, display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "'Playfair Display', Georgia, serif", fontWeight: 800, fontSize: hero ? 26 : 18, color: "#C8102E" }}>?</div>
         </div>
       ) }
     case "symbolhunt":
@@ -261,18 +310,30 @@ function buildArt(id: string, accent: string, hero: boolean): { node: ReactNode;
     case "geo":
       // Italy's shape, bright white on deep slate.
       return { bleed: false, node: (
-        <div style={{ ...box, background: "#1c2e36", padding: hero ? 8 : 5 }}>
+        <div style={{ ...box, background: SLATE, padding: hero ? 8 : 5 }}>
           <MapShape loc="it" fill="#FFFFFF" />
         </div>
       ) }
     case "bordermap":
-      // Poland's flag beside its neighbour Czechia, waiting to be filled in.
+      // Solid-yellow Spain; Portugal & southern France outlined with ?s.
       return { bleed: false, node: (
-        <div style={{ ...box, background: wash, display: "flex", alignItems: "center", justifyContent: "center", gap: hero ? 14 : 8, padding: hero ? 10 : 6 }}>
-          <MiniFlag code="pl" style={{ width: "34%" }} />
-          <div style={{ width: "34%", height: "78%" }}>
-            <MapShape loc="cz" stroke={T.text} dashed />
-          </div>
+        <div style={{ ...box, background: SLATE, padding: hero ? 6 : 4 }}>
+          <BordersScene />
+        </div>
+      ) }
+    case "borderchain":
+      // Greece to China, hop by hop along a dotted path.
+      return { bleed: false, node: (
+        <div style={{ ...box, background: wash, display: "flex", alignItems: "center", padding: hero ? "0 14px" : "0 8px", gap: hero ? 8 : 5 }}>
+          <MiniFlag code="gr" style={{ width: "24%" }} />
+          <svg viewBox="0 0 100 60" preserveAspectRatio="none" style={{ flex: 1, height: "60%" }}>
+            <polyline points="2,44 26,18 50,42 74,16 98,34" fill="none" stroke={tint(accent, 0.8)} strokeWidth={2.5}
+              strokeDasharray="5 4" vectorEffect="non-scaling-stroke" />
+            {[[26, 18], [50, 42], [74, 16]].map(([x, y]) => (
+              <circle key={`${x}`} cx={x} cy={y} r={4.5} fill={accent} stroke={T.surface} strokeWidth={1.5} vectorEffect="non-scaling-stroke" />
+            ))}
+          </svg>
+          <MiniFlag code="cn" style={{ width: "24%" }} />
         </div>
       ) }
     case "continentsort":
@@ -280,13 +341,66 @@ function buildArt(id: string, accent: string, hero: boolean): { node: ReactNode;
       return { bleed: true, node: <FourGrid codes={["jp", "br", "fr", "za"]} /> }
 
     // ── Sharp Recall ──
+    case "reversequiz":
+      // Name in mind, flags on the table: a mystery mark and Nepal's
+      // unmistakable shape to find.
+      return { bleed: false, node: (
+        <div style={{ ...box, background: wash, display: "flex", alignItems: "center", justifyContent: "center", gap: hero ? 18 : 10 }}>
+          <span style={{ fontFamily: "'Playfair Display', Georgia, serif", fontWeight: 800, fontSize: hero ? 40 : 26, color: accent }}>?</span>
+          <div style={{ width: hero ? "26%" : "34%", aspectRatio: "4 / 3", display: "flex", alignItems: "center", justifyContent: "center" }}>
+            <FlagImage code="np" style={{ maxWidth: "100%", maxHeight: "100%", display: "block", filter: `drop-shadow(0 2px 5px ${tint(T.text, 0.45)})` }} />
+          </div>
+        </div>
+      ) }
+    case "capitalquiz":
+      // The Washington Monument — an unmistakable capital, in white on slate.
+      return { bleed: false, node: (
+        <div style={{ ...box, background: SLATE, display: "flex", alignItems: "center", justifyContent: "center" }}>
+          <svg viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet" style={{ height: "84%" }}>
+            <polygon points="50,6 45.5,17 54.5,17" fill="#FFFFFF" />
+            <polygon points="46,17 54,17 57.5,78 42.5,78" fill="#FFFFFF" />
+            <rect x="20" y="80" width="60" height="2.5" rx="1.2" fill="#FFFFFF" opacity="0.85" />
+            <rect x="30" y="87" width="40" height="1.6" rx="0.8" fill="#FFFFFF" opacity="0.35" />
+          </svg>
+        </div>
+      ) }
     case "statclash":
       // Largest country vs smallest.
       return { bleed: true, node: <Versus a="ru" b="va" accent={accent} hero={hero} /> }
     case "higherlower":
-      return { bleed: true, node: <Versus a="cn" b="in" accent={accent} hero={hero} /> }
+      return { bleed: true, node: <Versus a="cn" b="in" accent={accent} hero={hero} arrows /> }
 
     // ── Loremaster ──
+    case "language":
+      // Someone speaking; the bubble holds candidate flags and a mystery.
+      return { bleed: false, node: (
+        <div style={{ ...box, background: wash, display: "flex", alignItems: "center", justifyContent: "center", gap: hero ? 12 : 7 }}>
+          <Speech size={hero ? 36 : 24} color={accent} strokeWidth={1.5} />
+          <div style={{ position: "relative", display: "flex", alignItems: "center", gap: hero ? 6 : 4, padding: hero ? "8px 12px" : "5px 8px", borderRadius: 12, background: T.surface, border: `1px solid ${T.line}`, boxShadow: `0 2px 6px -3px ${tint(T.text, 0.5)}` }}>
+            <span style={{ position: "absolute", left: -5, top: "50%", width: 9, height: 9, transform: "translateY(-50%) rotate(45deg)", background: T.surface, borderLeft: `1px solid ${T.line}`, borderBottom: `1px solid ${T.line}` }} />
+            <MiniFlag code="it" style={{ width: hero ? 26 : 18, boxShadow: "none" }} />
+            <MiniFlag code="jp" style={{ width: hero ? 26 : 18, boxShadow: "none" }} />
+            <span style={{ fontFamily: "'Playfair Display', Georgia, serif", fontWeight: 800, fontSize: hero ? 16 : 12, color: accent }}>?</span>
+          </div>
+        </div>
+      ) }
+    case "twotruths":
+      // Three statements about a country — two check out, one is the lie.
+      return { bleed: false, node: (
+        <div style={{ ...box, background: wash, display: "flex", flexDirection: "column", justifyContent: "center", gap: hero ? 6 : 4, padding: hero ? "0 22px" : "0 12px" }}>
+          {[T.green, T.green, T.danger].map((c, i) => (
+            <div key={i} style={{ display: "flex", alignItems: "center", gap: hero ? 8 : 5, padding: hero ? "5px 9px" : "3px 6px", borderRadius: 6, background: T.surface, border: `1px solid ${T.line}` }}>
+              <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: 2 }}>
+                <span style={{ height: hero ? 3 : 2, width: "82%", borderRadius: 2, background: tint(T.text, 0.3) }} />
+                <span style={{ height: hero ? 3 : 2, width: "55%", borderRadius: 2, background: tint(T.text, 0.18) }} />
+              </div>
+              {c === T.danger
+                ? <X size={hero ? 15 : 11} color={c} strokeWidth={2.6} />
+                : <Check size={hero ? 15 : 11} color={c} strokeWidth={2.6} />}
+            </div>
+          ))}
+        </div>
+      ) }
     case "realorbot":
       // A Canada that's the wrong colour — clearly a bot's work.
       return { bleed: true, node: (
@@ -315,6 +429,28 @@ function buildArt(id: string, accent: string, hero: boolean): { node: ReactNode;
     case "lineage":
       // A real family tree: the Union Jack and its descendants.
       return { bleed: false, node: <FlagRow items={[{ code: "gb" }, { code: "au" }, { code: "nz" }]} accent={accent} hero={hero} /> }
+
+    // ── Challenge ──
+    case "gauntlet":
+      // Every flag, one life: crossed swords, the march of flags, one heart.
+      return { bleed: false, node: (
+        <div style={{ ...box, background: SLATE, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: hero ? 8 : 5 }}>
+          <Swords size={hero ? 30 : 20} color="#FFFFFF" strokeWidth={1.5} />
+          <div style={{ display: "flex", gap: hero ? 6 : 4 }}>
+            {["gr", "jp", "br"].map(c => <MiniFlag key={c} code={c} style={{ width: hero ? 30 : 21, border: "1px solid #36464e", boxShadow: "none" }} />)}
+          </div>
+          <Heart size={hero ? 16 : 11} color={T.danger} fill={T.danger} style={{ position: "absolute", right: "9%", top: "12%" }} />
+        </div>
+      ) }
+    case "challenge":
+      // States & provinces: Texas and Bavaria under the medal.
+      return { bleed: false, node: (
+        <div style={{ ...box, background: wash, display: "flex", alignItems: "center", justifyContent: "center", gap: hero ? 12 : 7 }}>
+          <LineIcon name="challenge" size={hero ? 32 : 21} color={accent} strokeWidth={1.5} />
+          <MiniFlag src={subUrl("us-tx")} style={{ width: hero ? "24%" : "30%" }} />
+          <MiniFlag src={subUrl("de-by")} style={{ width: hero ? "24%" : "30%" }} />
+        </div>
+      ) }
 
     // ── Curriculum & subdivisions ──
     case "historical":
@@ -356,6 +492,58 @@ function buildArt(id: string, accent: string, hero: boolean): { node: ReactNode;
                 boxShadow: `0 3px 8px -4px ${tint(T.text, 0.6)}`, zIndex: i }}>{flag(c)}</div>
             ))}
           </div>
+        </div>
+      ) }
+
+    // ── Beta Sandbox ──
+    case "flagle":
+      // Wordle tiles closing in on the answer.
+      return { bleed: false, node: (
+        <div style={{ ...box, background: wash, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: hero ? 5 : 3 }}>
+          {[[tint(T.text, 0.22), T.gold, tint(T.text, 0.22), T.green, tint(T.text, 0.22)],
+            [T.green, T.green, T.green, T.green, T.green]].map((row, r) => (
+            <div key={r} style={{ display: "flex", gap: hero ? 5 : 3 }}>
+              {row.map((c, i) => <span key={i} style={{ width: hero ? 16 : 11, height: hero ? 16 : 11, borderRadius: 3, background: c }} />)}
+            </div>
+          ))}
+        </div>
+      ) }
+    case "uscityflags":
+      // Washington, D.C. — the capital's own city flag.
+      return { bleed: true, node: <div style={{ ...box, background: "#FFFFFF" }}>{urlImg(DC_FLAG)}</div> }
+    case "capitalmatch":
+      // Pair the flag with its capital.
+      return { bleed: false, node: (
+        <div style={{ ...box, background: wash, display: "flex", alignItems: "center", justifyContent: "center", gap: hero ? 10 : 6 }}>
+          <MiniFlag code="fr" style={{ width: hero ? "26%" : "32%" }} />
+          <span style={{ width: hero ? 18 : 11, height: 2, background: tint(accent, 0.7) }} />
+          <span style={{ display: "flex", padding: hero ? 8 : 5, borderRadius: 999, background: T.surface, border: `1px solid ${tint(accent, 0.45)}` }}>
+            <LineIcon name="capitalquiz" size={hero ? 22 : 15} color={accent} strokeWidth={1.6} />
+          </span>
+        </div>
+      ) }
+    case "describeit":
+      // Written clues pointing at a mystery flag.
+      return { bleed: false, node: (
+        <div style={{ ...box, background: wash, display: "flex", alignItems: "center", justifyContent: "center", gap: hero ? 12 : 7 }}>
+          <div style={{ width: hero ? "32%" : "38%", display: "flex", flexDirection: "column", gap: hero ? 4 : 3, padding: hero ? 9 : 6, borderRadius: 6, background: T.surface, border: `1px solid ${T.line}` }}>
+            {[0.85, 0.6, 0.72].map((w, i) => (
+              <span key={i} style={{ height: 2, width: `${w * 100}%`, borderRadius: 2, background: tint(T.text, 0.3) }} />
+            ))}
+          </div>
+          <div style={{ width: hero ? "24%" : "30%", aspectRatio: "3 / 2", borderRadius: 4, border: `1.5px dashed ${tint(accent, 0.6)}`, display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "'Playfair Display', Georgia, serif", fontWeight: 800, fontSize: hero ? 18 : 13, color: accent }}>?</div>
+        </div>
+      ) }
+    case "oddborder":
+      // Three shapes that share borders, one ocean apart — ringed.
+      return { bleed: false, node: (
+        <div style={{ ...box, background: SLATE, display: "grid", gridTemplateColumns: "1fr 1fr", gridTemplateRows: "1fr 1fr", gap: 2, padding: 3 }}>
+          {["it", "ch", "at", "jp"].map((c, i) => (
+            <div key={c} style={{ position: "relative", padding: 2 }}>
+              <MapShape loc={c} fill="#FFFFFF" />
+              {i === 3 && <div style={{ position: "absolute", inset: 0, borderRadius: 4, border: `2px solid ${T.danger}` }} />}
+            </div>
+          ))}
         </div>
       ) }
   }
