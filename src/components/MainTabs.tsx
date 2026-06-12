@@ -362,8 +362,8 @@ function PlayTab({ launch, state }: { launch: (e: Entry) => void; state: AppStat
   const all = REGISTRY.filter(r => r.tab === "play")
   const playable = all.filter(r => !r.sandbox)
   const sandbox = all.filter(r => r.sandbox)
-  const curriculum = playable.filter(r => r.group === "Curriculum")
-  const categoryGroups = groupsFor("play").filter(g => g.group !== "Curriculum" && !g.entries[0].sandbox)
+  const featured = playable.filter(r => r.featured)
+  const categoryGroups = groupsFor("play").filter(g => !g.entries[0].sandbox)
 
   // Local personalization, all derived on-device from recently-played ids.
   const recentIds = loadRecent()
@@ -380,18 +380,21 @@ function PlayTab({ launch, state }: { launch: (e: Entry) => void; state: AppStat
 
   // Browse vs. filter: a search query or a non-"All" chip collapses the shelves
   // into a flat result grid. Search spans the *whole* catalogue (sandbox too)
-  // so every game stays findable by name.
+  // so every game stays findable by name. "Popular" is the hand-picked set.
+  const POPULAR = "__popular"
   const query = q.trim().toLowerCase()
   const filtering = !!query || activeGroup !== null
   const filtered = query
     ? all.filter(r => `${r.title} ${r.subtitle}`.toLowerCase().includes(query))
-    : activeGroup
-      ? all.filter(r => r.group === activeGroup)
-      : []
+    : activeGroup === POPULAR
+      ? featured
+      : activeGroup
+        ? all.filter(r => r.group === activeGroup)
+        : []
 
   const chips: { label: string; group: string | null }[] = [
     { label: "All", group: null },
-    { label: "Learn", group: "Curriculum" },
+    { label: "Popular", group: POPULAR },
     ...categoryGroups.map(g => ({ label: g.group, group: g.group })),
   ]
   const selectChip = (group: string | null) => { setActiveGroup(group); setQ("") }
@@ -431,8 +434,8 @@ function PlayTab({ launch, state }: { launch: (e: Entry) => void; state: AppStat
           const on = c.group === null ? activeGroup === null && !query : activeGroup === c.group
           return (
             <button key={c.label} onClick={() => selectChip(c.group)} aria-pressed={on} className="geo-tap"
-              style={{ flexShrink: 0, padding: "9px 15px", minHeight: 40, borderRadius: 999, whiteSpace: "nowrap",
-                fontFamily: FONT.display, fontWeight: 600, fontSize: 13,
+              style={{ flexShrink: 0, padding: "7px 13px", minHeight: 34, borderRadius: 999, whiteSpace: "nowrap",
+                fontFamily: FONT.display, fontWeight: 600, fontSize: 12.5,
                 background: on ? ACCENT.play : T.surface, color: on ? T.onAccent : T.muted,
                 border: `1px solid ${on ? ACCENT.play : T.line}` }}>
               {c.label}
@@ -442,14 +445,7 @@ function PlayTab({ launch, state }: { launch: (e: Entry) => void; state: AppStat
       </div>
 
       {filtering ? (
-        activeGroup === "Curriculum" ? (
-          <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-            {filtered.map(e => (
-              <ModuleCard key={e.id} icon={e.icon} glyph={e.id} title={e.title} subtitle={e.subtitle} accent={ACCENT[e.accent]}
-                progress={e.progress?.(state)} onClick={() => launch(e)} />
-            ))}
-          </div>
-        ) : filtered.length ? (
+        filtered.length ? (
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
             {filtered.map(e => (
               <FlagTile key={e.id} id={e.id} title={e.title} subtitle={e.subtitle}
@@ -493,23 +489,18 @@ function PlayTab({ launch, state }: { launch: (e: Entry) => void; state: AppStat
           </div>
         )}
 
-        {/* Learn the World — the curriculum spine, with live mastery */}
-        <div>
-          <ShelfHead icon={<LineIcon name="learn" size={15} color={ACCENT.learn} />} accent={ACCENT.learn}
-            title="Learn the World"
-            reason={learned > 0 ? `${learned} of ${FLAGS.length} flags learned · ${learnPct}%` : "Structured sets with mastery tracking"} />
-          <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-            {curriculum.map(e => (
-              <ModuleCard key={e.id} icon={e.icon} glyph={e.id} title={e.title} subtitle={e.subtitle} accent={ACCENT[e.accent]}
-                progress={e.progress?.(state)} onClick={() => launch(e)} />
-            ))}
-          </div>
-        </div>
-
-        {/* The collections — every game, filed by appetite. Each shelf swipes */}
+        {/* The collections — every game, filed by appetite. Each shelf swipes.
+            Learn the World leads with its live mastery line; the curriculum is
+            fully integrated as poster tiles like every other game. */}
         {categoryGroups.map(g => (
           <div key={g.group}>
-            <SectionHeader title={g.group} accent={ACCENT[g.entries[0].accent]} />
+            {g.group === "Learn the World" ? (
+              <ShelfHead icon={<LineIcon name="learn" size={15} color={ACCENT.learn} />} accent={ACCENT.learn}
+                title="Learn the World"
+                reason={learned > 0 ? `${learned} of ${FLAGS.length} flags learned · ${learnPct}%` : "Structured sets with mastery tracking"} />
+            ) : (
+              <SectionHeader title={g.group} accent={ACCENT[g.entries[0].accent]} />
+            )}
             <Rail>
               {g.entries.map(e => (
                 <FlagTile key={e.id} id={e.id} title={e.title} subtitle={e.subtitle} accent={ACCENT[e.accent]} onClick={() => launch(e)} />
@@ -558,7 +549,7 @@ function PlayTab({ launch, state }: { launch: (e: Entry) => void; state: AppStat
           {sandboxOpen && (
             <div className={IS_CARTO ? "carto-slide-up" : undefined} style={{ marginTop: 10, display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
               {sandbox.map(e => (
-                <GameTile key={e.id} icon={e.icon} glyph={e.id} title={e.title} subtitle={e.subtitle} accent={T.muted} onClick={() => launch(e)} style={{ width: "100%" }} />
+                <FlagTile key={e.id} id={e.id} title={e.title} subtitle={e.subtitle} accent={ACCENT[e.accent]} onClick={() => launch(e)} style={{ width: "100%" }} />
               ))}
             </div>
           )}

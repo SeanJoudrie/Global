@@ -75,36 +75,27 @@ function MapShape({ loc, fill = "none", stroke, dashed = false }:
 }
 
 // Border Map scene: solid-yellow Spain, its mystery neighbours (Portugal and
-// southern France) outlined in white with question marks. The view is derived
-// from Portugal's bounding box so Spain's offshore islands can't distort it.
+// southern France) outlined in white with question marks inside them.
+// Framing is hardcoded to the *mainland* bounding boxes (Spain 449→484 ×
+// 328→355, Portugal 448→458 × 333→352, France above from y≈296 in the world
+// map's 1010×666 space) — Portugal's path includes the Azores far out in the
+// Atlantic, so any auto-fit zooms out to open ocean.
 function BordersScene() {
-  const ptRef = useRef<SVGPathElement>(null)
-  const [vb, setVb] = useState<{ x: number; y: number; w: number; h: number } | null>(null)
   const map = worldMap as { viewBox: string; locations: { id: string; path: string }[] }
   const path = (id: string) => map.locations.find(l => l.id === id)?.path
   const es = path("es"), pt = path("pt"), fr = path("fr")
-  useEffect(() => {
-    if (!ptRef.current) return
-    const b = ptRef.current.getBBox()
-    setVb({ x: b.x - b.width * 0.2, y: b.y - b.height * 0.62, w: b.width * 3.7, h: b.height * 1.9 })
-  }, [])
   if (!es || !pt || !fr) return null
-  const sw = vb ? vb.w * 0.008 : 1
-  const fs = vb ? vb.h * 0.24 : 10
   return (
-    <svg viewBox={vb ? `${vb.x} ${vb.y} ${vb.w} ${vb.h}` : map.viewBox} preserveAspectRatio="xMidYMid meet"
-      style={{ width: "100%", height: "100%", display: "block", opacity: vb ? 1 : 0 }}>
-      <path d={fr} fill="none" stroke="#FFFFFF" strokeWidth={sw} strokeLinejoin="round" />
-      <path ref={ptRef} d={pt} fill="none" stroke="#FFFFFF" strokeWidth={sw} strokeLinejoin="round" />
+    <svg viewBox="444 312 44 46" preserveAspectRatio="xMidYMid meet"
+      style={{ width: "100%", height: "100%", display: "block" }}>
+      <path d={fr} fill="none" stroke="#FFFFFF" strokeWidth={0.5} strokeLinejoin="round" />
+      <path d={pt} fill="none" stroke="#FFFFFF" strokeWidth={0.5} strokeLinejoin="round" />
       <path d={es} fill="#F1BF00" stroke="none" />
-      {vb && (
-        <>
-          <text x={vb.x + vb.w * 0.135} y={vb.y + vb.h * 0.72} fill="#FFFFFF" fontSize={fs} fontWeight={800}
-            textAnchor="middle" fontFamily="'Playfair Display', Georgia, serif">?</text>
-          <text x={vb.x + vb.w * 0.56} y={vb.y + vb.h * 0.26} fill="#FFFFFF" fontSize={fs} fontWeight={800}
-            textAnchor="middle" fontFamily="'Playfair Display', Georgia, serif">?</text>
-        </>
-      )}
+      {/* ? inside Portugal, ? inside the visible south of France */}
+      <text x={452.6} y={345} fill="#FFFFFF" fontSize={8} fontWeight={800}
+        textAnchor="middle" fontFamily="'Playfair Display', Georgia, serif">?</text>
+      <text x={477} y={326} fill="#FFFFFF" fontSize={8} fontWeight={800}
+        textAnchor="middle" fontFamily="'Playfair Display', Georgia, serif">?</text>
     </svg>
   )
 }
@@ -174,7 +165,7 @@ function buildArt(id: string, accent: string, hero: boolean): { node: ReactNode;
           <span style={{ display: "flex", filter: `drop-shadow(0 0 ${hero ? 8 : 5}px ${tint(T.gold, 0.85)})` }}>
             <LineIcon name="funfact" size={hero ? 34 : 22} color={T.gold} strokeWidth={1.5} />
           </span>
-          <MiniFlag code="pl" style={{ width: hero ? "30%" : "38%", transform: "rotate(5deg)" }} />
+          <MiniFlag code="ph" style={{ width: hero ? "30%" : "38%", transform: "rotate(5deg)" }} />
         </div>
       ) }
     case "flagbracket":
@@ -353,14 +344,23 @@ function buildArt(id: string, accent: string, hero: boolean): { node: ReactNode;
         </div>
       ) }
     case "capitalquiz":
-      // The Washington Monument — an unmistakable capital, in white on slate.
+      // The Washington Monument and the Capitol dome — unmistakably a capital.
       return { bleed: false, node: (
         <div style={{ ...box, background: SLATE, display: "flex", alignItems: "center", justifyContent: "center" }}>
-          <svg viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet" style={{ height: "84%" }}>
-            <polygon points="50,6 45.5,17 54.5,17" fill="#FFFFFF" />
-            <polygon points="46,17 54,17 57.5,78 42.5,78" fill="#FFFFFF" />
-            <rect x="20" y="80" width="60" height="2.5" rx="1.2" fill="#FFFFFF" opacity="0.85" />
-            <rect x="30" y="87" width="40" height="1.6" rx="0.8" fill="#FFFFFF" opacity="0.35" />
+          <svg viewBox="0 0 130 100" preserveAspectRatio="xMidYMid meet" style={{ height: "84%" }}>
+            {/* monument */}
+            <polygon points="38,6 33.5,17 42.5,17" fill="#FFFFFF" />
+            <polygon points="34,17 42,17 45.5,78 30.5,78" fill="#FFFFFF" />
+            {/* capitol: steps, colonnade, dome, cupola */}
+            <rect x="68" y="72" width="48" height="6" rx="1" fill="#FFFFFF" />
+            <rect x="73" y="58" width="38" height="14" fill="#FFFFFF" />
+            {[78, 84, 90, 96, 102].map(x => <rect key={x} x={x} y={60} width={2.4} height={10} fill={SLATE} />)}
+            <path d="M76 58 Q92 34 108 58 Z" fill="#FFFFFF" />
+            <rect x="90" y="26" width="4" height="9" fill="#FFFFFF" />
+            <circle cx="92" cy="24" r="2.4" fill="#FFFFFF" />
+            {/* ground */}
+            <rect x="16" y="80" width="100" height="2.5" rx="1.2" fill="#FFFFFF" opacity="0.85" />
+            <rect x="32" y="87" width="68" height="1.6" rx="0.8" fill="#FFFFFF" opacity="0.35" />
           </svg>
         </div>
       ) }
@@ -402,12 +402,13 @@ function buildArt(id: string, accent: string, hero: boolean): { node: ReactNode;
         </div>
       ) }
     case "realorbot":
-      // A Canada that's the wrong colour — clearly a bot's work.
+      // A Canada that's the wrong colour — clearly a bot's work. Zoomed in a
+      // touch so the maple leaf owns the left; the bot seal sits to the right.
       return { bleed: true, node: (
         <div style={{ ...box, background: tint(accent, 0.1) }}>
-          {flag("ca", { filter: "hue-rotate(160deg) saturate(1.4)" })}
+          {flag("ca", { filter: "hue-rotate(160deg) saturate(1.4)", transform: "scale(1.25)", transformOrigin: "42% 50%" })}
           <div style={{ position: "absolute", inset: 0, background: "repeating-linear-gradient(0deg, transparent 0 3px, rgba(255,255,255,0.07) 3px 4px)" }} />
-          <div style={{ position: "absolute", left: "50%", top: "50%", transform: "translate(-50%,-50%)", width: hero ? 40 : 28, height: hero ? 40 : 28, borderRadius: 999, background: `${T.surface}F2`, border: `2px solid ${accent}`, color: accent, display: "flex", alignItems: "center", justifyContent: "center", boxShadow: `0 2px 10px -2px ${tint(T.text, 0.6)}` }}>
+          <div style={{ position: "absolute", right: "7%", top: "50%", transform: "translateY(-50%)", width: hero ? 40 : 28, height: hero ? 40 : 28, borderRadius: 999, background: `${T.surface}F2`, border: `2px solid ${accent}`, color: accent, display: "flex", alignItems: "center", justifyContent: "center", boxShadow: `0 2px 10px -2px ${tint(T.text, 0.6)}` }}>
             <LineIcon name="realorbot" size={hero ? 24 : 17} color={accent} strokeWidth={1.8} />
           </div>
         </div>
@@ -481,19 +482,23 @@ function buildArt(id: string, accent: string, hero: boolean): { node: ReactNode;
         </div>
       ) }
     case "flags":
-    case "flashcards":
-      // A fanned stack of cards to learn.
+    case "flashcards": {
+      // A fanned stack of cards to learn — each deck fans its own way with its
+      // own flags so the two posters read differently at a glance.
+      const deck = id === "flags" ? ["us", "jp", "br"] : ["de", "ar", "ke"]
+      const dir = id === "flags" ? 1 : -1
       return { bleed: false, node: (
         <div style={{ ...box, display: "flex", alignItems: "center", justifyContent: "center", background: wash }}>
           <div style={{ position: "relative", width: hero ? "42%" : "58%", aspectRatio: "3 / 2" }}>
-            {["us", "jp", "br"].map((c, i) => (
+            {deck.map((c, i) => (
               <div key={c} style={{ position: "absolute", inset: 0, borderRadius: 5, overflow: "hidden", border: `1px solid ${T.surface}`,
-                transform: `translate(${(i - 1) * (hero ? 9 : 5)}px, ${(i - 1) * (hero ? 7 : 4)}px) rotate(${(i - 1) * 5}deg)`,
+                transform: `translate(${(i - 1) * (hero ? 9 : 5) * dir}px, ${(i - 1) * (hero ? 7 : 4)}px) rotate(${(i - 1) * 5 * dir}deg)`,
                 boxShadow: `0 3px 8px -4px ${tint(T.text, 0.6)}`, zIndex: i }}>{flag(c)}</div>
             ))}
           </div>
         </div>
       ) }
+    }
 
     // ── Beta Sandbox ──
     case "flagle":

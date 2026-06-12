@@ -38,13 +38,14 @@ export const REGISTRY: Entry[] = [
   // games until they earn their way back up. Zero deletions — only resorted.
   // `featured` marks Trending-eligible A-tier games that lead the deck.
 
-  // Curriculum — the learning spine (its own treatment on the page)
-  { id: "flags", title: "Flag Sets", subtitle: "Country, historical & identity sets", icon: "🚩", tab: "play", group: "Curriculum", size: "module", accent: "learn", progress: flagProgress },
-  { id: "flashcards", title: "Flashcards", subtitle: "Swipe & learn all 195", icon: "🃏", tab: "play", group: "Curriculum", size: "module", accent: "learn", progress: flagProgress },
-  { id: "historical", title: "Historical Flags", subtitle: "Vanished empires & states", icon: "📜", tab: "play", group: "Curriculum", size: "module", accent: "learn" },
-  { id: "identity", title: "Identity Flags", subtitle: "Pride · ethnic · signal flags", icon: "🏳️‍🌈", tab: "play", group: "Curriculum", size: "module", accent: "learn" },
-  { id: "provinceroulette", title: "Province Roulette", subtitle: "Continent → country → region", icon: "🎰", tab: "play", group: "Curriculum", size: "module", accent: "learn", progress: subProgress },
-  { id: "substumper", title: "Subdivision Stumper", subtitle: "Province flag → country", icon: "📍", tab: "play", group: "Curriculum", size: "module", accent: "learn", progress: subProgress },
+  // Learn the World — the learning spine, integrated as poster tiles like
+  // every other shelf (leads the page with a live mastery line)
+  { id: "flags", title: "Flag Sets", subtitle: "Country, historical & identity sets", icon: "🚩", tab: "play", group: "Learn the World", size: "module", accent: "learn", progress: flagProgress },
+  { id: "flashcards", title: "Flashcards", subtitle: "Swipe & learn all 195", icon: "🃏", tab: "play", group: "Learn the World", size: "module", accent: "learn", progress: flagProgress },
+  { id: "historical", title: "Historical Flags", subtitle: "Vanished empires & states", icon: "📜", tab: "play", group: "Learn the World", size: "module", accent: "learn" },
+  { id: "identity", title: "Identity Flags", subtitle: "Pride · ethnic · signal flags", icon: "🏳️‍🌈", tab: "play", group: "Learn the World", size: "module", accent: "learn" },
+  { id: "provinceroulette", title: "Province Roulette", subtitle: "Continent → country → region", icon: "🎰", tab: "play", group: "Learn the World", size: "module", accent: "learn", progress: subProgress },
+  { id: "substumper", title: "Subdivision Stumper", subtitle: "Province flag → country", icon: "📍", tab: "play", group: "Learn the World", size: "module", accent: "learn", progress: subProgress },
 
   // Daily Rituals — come back every day
   // (Flag Gacha lives on the TODAY tab only — it's a daily ritual, not an
