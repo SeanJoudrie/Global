@@ -357,7 +357,13 @@ export default function App() {
         <ResultScreen score={lastResult.score} total={lastResult.total} answers={lastResult.answers}
           isDaily={activeQuiz.isDaily} setLabel={activeQuiz.title}
           streak={appState.currentStreak}
-          onHome={() => setScreen("home")} onRetry={activeQuiz.isDaily ? undefined : handleRetry}
+          onHome={() => {
+            // The daily is the day's ritual — landing on Play afterwards rolls
+            // straight into "one more game" instead of a dead end.
+            if (activeQuiz.isDaily) setTab("play")
+            setScreen("home")
+          }}
+          onRetry={activeQuiz.isDaily ? undefined : handleRetry}
           onSaveShare={(r: ShareResult) => setAppState(s => saveShareResult(s, r))} />
       )}
       </Suspense>

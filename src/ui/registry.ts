@@ -83,7 +83,7 @@ export const REGISTRY: Entry[] = [
   { id: "prideroulette", title: "Pride Roulette", subtitle: "Name the pride flag · survival", icon: "🏳️‍🌈", tab: "play", group: "Sharp Recall", size: "tile", accent: "drill" },
 
   // Loremaster — deep knowledge & trivia
-  { id: "language", title: "Guess the Language", subtitle: "82 languages · easy → extreme", icon: "🗣️", tab: "play", group: "Loremaster", size: "tile", accent: "codex", featured: true },
+  { id: "language", title: "Guess the Language", subtitle: "88 languages · easy → extreme", icon: "🗣️", tab: "play", group: "Loremaster", size: "tile", accent: "codex", featured: true },
   { id: "realorbot", title: "Real or Bot", subtitle: "Swipe: real flag or AI fake?", icon: "🤖", tab: "play", group: "Loremaster", size: "tile", accent: "codex", featured: true },
   { id: "twotruths", title: "Two Truths", subtitle: "Spot the lie about a country", icon: "🕵️", tab: "play", group: "Loremaster", size: "tile", accent: "codex" },
   { id: "deadoralive", title: "Dead or Alive", subtitle: "Live or vanished?", icon: "💀", tab: "play", group: "Loremaster", size: "tile", accent: "codex" },

@@ -79,6 +79,11 @@ function pushRecent(id: string) {
 export default function MainTabs({ state, tab, onTab, onNavigate, onQuickPlay, onStartDaily, onReverseQuiz, onSetUsername }: Props) {
   const today = todayString()
   const dailyDone = state.lastDailyDate === today
+  // Deep-link target for the embedded Codex (e.g. Flag of the Day → its entry).
+  // Cleared when the user leaves the Codex so a plain tab tap opens the list.
+  const [codexCode, setCodexCode] = useState<string | null>(null)
+  const goCodex = (code?: string) => { setCodexCode(code ?? null); onTab("codex") }
+  const handleTab = (t: TabKey) => { if (tab === "codex") setCodexCode(null); onTab(t) }
 
   const launch = (e: Entry) => {
     pushRecent(e.id)
@@ -118,19 +123,19 @@ export default function MainTabs({ state, tab, onTab, onNavigate, onQuickPlay, o
       <main style={{ position: "relative", padding: tab === "codex" ? "0 0 96px" : "8px 16px 96px" }}>
         {tab === "today" && (
           <TodayTab state={state} dailyDone={dailyDone} launch={launch}
-            onNavigate={onNavigate} onGoCodex={() => onTab("codex")} onGoPlay={() => onTab("play")}
+            onNavigate={onNavigate} onGoCodex={goCodex} onGoPlay={() => onTab("play")}
             onQuickPlay={onQuickPlay} onStartDaily={onStartDaily} />
         )}
         {tab === "play" && <PlayTab launch={launch} state={state} />}
         {tab === "codex" && (
           <Suspense fallback={<div style={{ padding: 48, textAlign: "center", color: T.dim, fontSize: 13 }}>Opening the codex…</div>}>
-            <CodexScreenLazy embedded />
+            <CodexScreenLazy embedded initialCode={codexCode} />
           </Suspense>
         )}
         {tab === "you" && <YouTab state={state} learned={learned} onNavigate={onNavigate} onSetUsername={onSetUsername} />}
       </main>
 
-      <TabBar active={tab} onChange={onTab} />
+      <TabBar active={tab} onChange={handleTab} />
     </div>
   )
 }
@@ -142,7 +147,7 @@ export default function MainTabs({ state, tab, onTab, onNavigate, onQuickPlay, o
    resume. Every road leads to Play — or the Codex. ───────────────────────── */
 function TodayTab({ state, dailyDone, launch, onNavigate, onGoCodex, onGoPlay, onQuickPlay, onStartDaily }: {
   state: AppState; dailyDone: boolean; launch: (e: Entry) => void
-  onNavigate: (s: string) => void; onGoCodex: () => void; onGoPlay: () => void; onQuickPlay: () => void; onStartDaily: () => void
+  onNavigate: (s: string) => void; onGoCodex: (code?: string) => void; onGoPlay: () => void; onQuickPlay: () => void; onStartDaily: () => void
 }) {
   const fotd = FLAGS[dayIdx % FLAGS.length]
   const dyk = FLAGS[(dayIdx * 7 + 3) % FLAGS.length]
@@ -182,7 +187,7 @@ function TodayTab({ state, dailyDone, launch, onNavigate, onGoCodex, onGoPlay, o
           cta={dailyDone ? (todayResult ? `✓ ${todayResult.score}/${todayResult.total} today` : "✓ Done today") : "Start"}
           onClick={dailyDone ? undefined : onStartDaily} />
         <DeckSlide accent={ACCENT.codex} eyebrow={`Flag of the Day · ${fotd.region}`} title={fotd.name}
-          body={fotd.funFact} cta="Read in the Codex" onClick={onGoCodex}
+          body={fotd.funFact} cta="Read in the Codex" onClick={() => onGoCodex(fotd.code)}
           art={
             <div style={{ width: 100, height: 67, borderRadius: 10, overflow: "hidden", flexShrink: 0, border: `1px solid ${T.line}`, boxShadow: `0 4px 12px -6px ${tint(T.text, 0.45)}` }}>
               <FlagImage code={fotd.code} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
@@ -577,6 +582,11 @@ function TrendingDeck({ games, launch }: { games: Entry[]; launch: (e: Entry) =>
   const [idx, setIdx] = useState(0)
   const [dx, setDx] = useState(0)
   const startX = useRef(0)
+  const startY = useRef(0)
+  // Axis lock: a touch only becomes a card-drag once it moves clearly more
+  // horizontally than vertically — otherwise the page scroll owns it. Without
+  // this, vertical scrolls that *started* on the card froze mid-gesture.
+  const axis = useRef<null | "h" | "v">(null)
   const dragging = useRef(false)
   const [reduce] = useState(() =>
     typeof window !== "undefined" && !!window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches)
@@ -635,9 +645,25 @@ function TrendingDeck({ games, launch }: { games: Entry[]; launch: (e: Entry) =>
 
         {/* Live top card — drag surface */}
         <div
-          onPointerDown={e => { dragging.current = true; startX.current = e.clientX; try { (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId) } catch { /* ignore */ } }}
-          onPointerMove={e => { if (dragging.current) setDx(e.clientX - startX.current) }}
-          onPointerUp={() => { if (!dragging.current) return; dragging.current = false; if (Math.abs(dx) > 80) commit(dx > 0 ? 1 : -1); else setDx(0) }}
+          onPointerDown={e => { dragging.current = true; axis.current = null; startX.current = e.clientX; startY.current = e.clientY; try { (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId) } catch { /* ignore */ } }}
+          onPointerMove={e => {
+            if (!dragging.current) return
+            const ax = e.clientX - startX.current, ay = e.clientY - startY.current
+            if (axis.current === null) {
+              if (Math.abs(ax) < 8 && Math.abs(ay) < 8) return
+              axis.current = Math.abs(ax) > Math.abs(ay) ? "h" : "v"
+            }
+            if (axis.current === "v") { dragging.current = false; setDx(0); return }
+            setDx(ax)
+          }}
+          onPointerUp={() => {
+            if (!dragging.current) { axis.current = null; return }
+            dragging.current = false
+            const horizontal = axis.current === "h"
+            axis.current = null
+            if (horizontal && Math.abs(dx) > 80) commit(dx > 0 ? 1 : -1); else setDx(0)
+          }}
+          onPointerCancel={() => { dragging.current = false; axis.current = null; setDx(0) }}
           style={{
             position: "absolute", left: 0, right: 0, top: 0, height: CARD_H, borderRadius: 18, overflow: "hidden", touchAction: "pan-y pinch-zoom", cursor: "grab",
             background: T.surface, border: `1px solid ${tint(accent, 0.5)}`,

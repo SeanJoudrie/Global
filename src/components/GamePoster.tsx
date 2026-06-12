@@ -169,13 +169,12 @@ function buildArt(id: string, accent: string, hero: boolean): { node: ReactNode;
         </div>
       ) }
     case "gacha":
-      // A flag sealed in a gacha capsule, waiting to be cracked open.
+      // A present, glowing faintly — "oh, a gift" is the whole pitch.
       return { bleed: false, node: (
         <div style={{ ...box, display: "flex", alignItems: "center", justifyContent: "center", background: wash }}>
-          <div style={{ width: hero ? "38%" : "54%", maxWidth: 76, aspectRatio: "1", borderRadius: "50%", overflow: "hidden", border: `2px solid ${tint(accent, 0.6)}`, boxShadow: `0 4px 12px -4px ${tint(T.text, 0.5)}`, background: T.surface }}>
-            <div style={{ width: "100%", height: "50%", background: tint(accent, 0.45) }} />
-            <div style={{ width: "100%", height: "50%", overflow: "hidden" }}>{flag("br")}</div>
-          </div>
+          <span style={{ display: "flex", filter: `drop-shadow(0 0 ${hero ? 9 : 6}px ${tint(accent, 0.75)})` }}>
+            <LineIcon name="gacha" size={hero ? 52 : 30} color={accent} strokeWidth={1.4} />
+          </span>
         </div>
       ) }
     case "flagbracket":
