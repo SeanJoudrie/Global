@@ -47,7 +47,9 @@ export const REGISTRY: Entry[] = [
   { id: "substumper", title: "Subdivision Stumper", subtitle: "Province flag → country", icon: "📍", tab: "play", group: "Curriculum", size: "module", accent: "learn", progress: subProgress },
 
   // Daily Rituals — come back every day
-  { id: "gacha", title: "Flag Gacha", subtitle: "Daily pull · collect them all", icon: "🎁", tab: "play", group: "Daily Rituals", size: "tile", accent: "today", featured: true },
+  // (Flag Gacha lives on the TODAY tab only — it's a daily ritual, not an
+  //  arcade game, and the dev wants it off Play entirely.)
+  { id: "gacha", title: "Flag Gacha", subtitle: "Daily pull · collect them all", icon: "🎁", tab: "today", group: "Daily Rituals", size: "tile", accent: "today" },
   { id: "funfact", title: "Fun Fact", subtitle: "Daily flag fact", icon: "💡", tab: "play", group: "Daily Rituals", size: "tile", accent: "today" },
   { id: "flagbracket", title: "Flag Bracket", subtitle: "Vote your champion", icon: "🏆", tab: "play", group: "Daily Rituals", size: "tile", accent: "today" },
   { id: "tierlist", title: "Tier List Maker", subtitle: "Rank flags S–F", icon: "🏆", tab: "play", group: "Daily Rituals", size: "tile", accent: "today" },
@@ -174,11 +176,4 @@ export function trendingGames(weekSeed: number, count = 9): Entry[] {
     .sort((a, b) => a.k - b.k)
     .map(x => x.r)
     .slice(0, count)
-}
-
-/** A representative, full-colour flag for a game's poster art — deterministic
- *  per game id so cards look varied and stable without any new data. Flags are
- *  *content*, not chrome, so full colour stays on-brand. */
-export function posterFlagFor(id: string): string {
-  return FLAGS[hash(id) % FLAGS.length].code
 }
