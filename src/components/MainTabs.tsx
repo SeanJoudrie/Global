@@ -1,4 +1,5 @@
 import { useState, lazy, Suspense } from "react"
+import type { ReactNode } from "react"
 import worldMap from "@svg-maps/world"
 import { FLAGS } from "../data/flags"
 import type { AppState } from "../utils/storage"
@@ -116,7 +117,8 @@ export default function MainTabs({ state, tab, onTab, onNavigate, onQuickPlay, o
       <main style={{ position: "relative", padding: tab === "codex" ? "0 0 96px" : "8px 16px 96px" }}>
         {tab === "today" && (
           <TodayTab state={state} dailyDone={dailyDone}
-            onNavigate={onNavigate} onGoCodex={() => onTab("codex")} onQuickPlay={onQuickPlay} onStartDaily={onStartDaily} />
+            onNavigate={onNavigate} onGoCodex={() => onTab("codex")} onGoPlay={() => onTab("play")}
+            onQuickPlay={onQuickPlay} onStartDaily={onStartDaily} />
         )}
         {tab === "learn" && <ListTab tab="learn" launch={launch} state={state} />}
         {tab === "play" && <PlayTab launch={launch} />}
@@ -135,11 +137,13 @@ export default function MainTabs({ state, tab, onTab, onNavigate, onQuickPlay, o
 
 /* ── TODAY — the hook. Stripped to a streak celebration, one massive primary
    action, a secondary Quick Play and a sleek Flag of the Day card. ────────── */
-function TodayTab({ state, dailyDone, onNavigate, onGoCodex, onQuickPlay, onStartDaily }: {
+function TodayTab({ state, dailyDone, onNavigate, onGoCodex, onGoPlay, onQuickPlay, onStartDaily }: {
   state: AppState; dailyDone: boolean
-  onNavigate: (s: string) => void; onGoCodex: () => void; onQuickPlay: () => void; onStartDaily: () => void
+  onNavigate: (s: string) => void; onGoCodex: () => void; onGoPlay: () => void; onQuickPlay: () => void; onStartDaily: () => void
 }) {
   const fotd = FLAGS[dayIdx % FLAGS.length]
+  const dyk = FLAGS[(dayIdx * 7 + 3) % FLAGS.length]
+  const gameCount = REGISTRY.filter(r => r.tab === "play").length
   const todayResult = state.dailyHistory[todayString()]
   return (
     <div className={IS_CARTO ? "carto-slide-up" : undefined} style={{ display: "flex", flexDirection: "column", gap: 18 }}>
@@ -161,12 +165,13 @@ function TodayTab({ state, dailyDone, onNavigate, onGoCodex, onQuickPlay, onStar
         </div>
       </div>
 
-      {/* Massive primary action — becomes a recap once today's run is logged
-          ("once a day" means once: no accidental replays that re-record) */}
+      {/* Hero carousel — the Daily Expedition up front, old-style adverts behind
+          (the arcade, personalisation, a daily fact). Swipe to browse. */}
+      <HeroDeck accent={ACCENT.play}>
       <button onClick={dailyDone ? undefined : onStartDaily} className={`${dailyDone ? "" : "geo-tap"} ${IS_CARTO ? "carto-card" : ""}`}
         aria-disabled={dailyDone || undefined}
         style={{
-          position: "relative", overflow: "hidden", padding: "22px 20px", borderRadius: 16, textAlign: "left",
+          flex: 1, position: "relative", overflow: "hidden", padding: "22px 20px", borderRadius: 16, textAlign: "left",
           border: `1px solid ${tint(dailyDone ? T.green : ACCENT.play, 0.36)}`,
           background: `linear-gradient(150deg, ${tint(dailyDone ? T.green : ACCENT.play, 0.16)}, ${T.surface} 70%)`,
           cursor: dailyDone ? "default" : "pointer",
@@ -189,6 +194,19 @@ function TodayTab({ state, dailyDone, onNavigate, onGoCodex, onQuickPlay, onStar
           {!dailyDone && <span style={{ fontSize: 16 }}>→</span>}
         </div>
       </button>
+      <AdSlide accent={ACCENT.challenge} glyph="play" eyebrow="The Arcade"
+        title={`${gameCount} games, one arcade`}
+        body="Daily puzzles, brain benders, geography drills — every shelf swipes."
+        cta="Browse games" onClick={onGoPlay} />
+      <AdSlide accent={ACCENT.learn} glyph="settings" eyebrow="Make it yours"
+        title="Your map, your colours"
+        body="Parchment, tactical or classic purple — switch the whole look in Settings."
+        cta="Open settings" onClick={() => onNavigate("settings")} />
+      <AdSlide accent={ACCENT.codex} glyph="funfact" eyebrow="Did you know?"
+        title={dyk.name}
+        body={dyk.funFact}
+        cta="More fun facts" onClick={() => onNavigate("funfact")} />
+      </HeroDeck>
 
       {/* Secondary quick play */}
       <button onClick={onQuickPlay} className={`geo-tap ${IS_CARTO ? "carto-card" : ""}`}
@@ -230,6 +248,68 @@ function TodayTab({ state, dailyDone, onNavigate, onGoCodex, onQuickPlay, onStar
           progress={{ done: state.learnedFlags.length, total: FLAGS.length }} onClick={() => onNavigate("flags")} />
       </div>
     </div>
+  )
+}
+
+/* ── Hero deck: full-width snap carousel with dot indicators ────────────── */
+function HeroDeck({ children, accent }: { children: ReactNode[]; accent: string }) {
+  const [idx, setIdx] = useState(0)
+  return (
+    <div>
+      <div className="carto-rail"
+        onScroll={e => {
+          const el = e.currentTarget
+          const first = el.firstElementChild as HTMLElement | null
+          const w = (first?.offsetWidth ?? el.clientWidth) + 12
+          setIdx(Math.max(0, Math.min(children.length - 1, Math.round(el.scrollLeft / w))))
+        }}
+        style={{ display: "flex", gap: 12, overflowX: "auto", scrollSnapType: "x mandatory", margin: "0 -16px", padding: "0 16px" }}>
+        {children.map((c, i) => (
+          <div key={i} style={{ flex: "0 0 100%", scrollSnapAlign: "center", display: "flex" }}>{c}</div>
+        ))}
+      </div>
+      <div style={{ display: "flex", justifyContent: "center", gap: 6, marginTop: 10 }} aria-hidden>
+        {children.map((_, i) => (
+          <span key={i} style={{
+            width: i === idx ? 18 : 6, height: 6, borderRadius: 3,
+            background: i === idx ? accent : T.line,
+            transition: "width 0.25s, background 0.2s",
+          }} />
+        ))}
+      </div>
+    </div>
+  )
+}
+
+/* One advert slide — mirrors the Daily Expedition card's shape so the deck
+   reads as a single rotating hero. */
+function AdSlide({ accent, glyph, eyebrow, title, body, cta, onClick }: {
+  accent: string; glyph: string; eyebrow: string; title: string; body: string; cta: string; onClick: () => void
+}) {
+  return (
+    <button onClick={onClick} className={`geo-tap ${IS_CARTO ? "carto-card" : ""}`}
+      style={{
+        flex: 1, position: "relative", overflow: "hidden", padding: "22px 20px", borderRadius: 16, textAlign: "left",
+        border: `1px solid ${tint(accent, 0.36)}`,
+        background: `linear-gradient(150deg, ${tint(accent, 0.16)}, ${T.surface} 70%)`,
+        ...(IS_CARTO ? { ["--wash" as string]: tint(accent, 0.42) } : {}),
+      }}>
+      <div style={{ position: "absolute", right: -18, bottom: -22, opacity: 0.12, color: accent, pointerEvents: "none" }}>
+        <LineIcon name={glyph} size={132} color={accent} strokeWidth={1.1} />
+      </div>
+      <div className="geo-micro" style={{ fontSize: 9, color: accent, marginBottom: 8 }}>◦ {eyebrow}</div>
+      <div className="geo-display" style={{ fontWeight: 800, fontSize: 26, lineHeight: 1.05, letterSpacing: "-0.02em", color: T.text, maxWidth: 250 }}>
+        {title}
+      </div>
+      <div style={{
+        color: T.muted, fontSize: 12.5, marginTop: 6, maxWidth: 240, lineHeight: 1.5,
+        display: "-webkit-box", WebkitLineClamp: 3, WebkitBoxOrient: "vertical", overflow: "hidden",
+      }}>{body}</div>
+      <div style={{ marginTop: 16, display: "inline-flex", alignItems: "center", gap: 8, padding: "11px 20px", borderRadius: 999, background: accent, color: T.onAccent }}>
+        <span style={{ fontFamily: FONT.display, fontWeight: 700, fontSize: 15 }}>{cta}</span>
+        <span style={{ fontSize: 16 }}>→</span>
+      </div>
+    </button>
   )
 }
 

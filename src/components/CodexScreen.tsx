@@ -1,5 +1,7 @@
 import { useState, useMemo } from 'react'
 import { FLAGS } from '../data/flags'
+import type { FlagRecord } from '../data/flags'
+import { CAPITALS } from '../data/capitals'
 import { CODEX } from '../data/codex'
 import type { HistoricalFlag } from '../data/codex'
 import { historicalFor } from '../data/historicalFlags'
@@ -9,7 +11,7 @@ import { CHALLENGE_CONTINENTS } from '../data/challenges'
 import type { SubRegion } from '../data/challenges'
 import { T, ACCENT, FONT, tint } from '../ui/tokens'
 import { ScreenHeader } from './ui'
-import { LineIcon, FlaskIcon } from './icons'
+import { LineIcon } from './icons'
 import { Search, Anchor } from 'lucide-react'
 
 interface Props {
@@ -20,7 +22,7 @@ interface Props {
   embedded?: boolean
 }
 
-type Phase = 'list' | 'country'
+const CAPITAL_BY_CODE = new Map(CAPITALS.map(c => [c.code, c.capital]))
 
 const REGION_ORDER = ['Europe', 'Africa', 'Asia', 'Americas', 'Middle East', 'Oceania'] as const
 
@@ -34,15 +36,15 @@ function getSubRegions(code: string) {
 }
 
 export default function CodexScreen({ onBack, initialCode, embedded = false }: Props) {
-  const [phase, setPhase] = useState<Phase>(initialCode != null ? 'country' : 'list')
-  const [selectedCode, setSelectedCode] = useState<string | null>(initialCode != null ? initialCode : null)
+  // A tapped country expands inline beneath its row — browsing never leaves
+  // the page, so there's nothing to "go back" from.
+  const [selectedCode, setSelectedCode] = useState<string | null>(initialCode ?? null)
   const [search, setSearch] = useState('')
   // Regions start collapsed; store which are expanded
-  const [expandedRegions, setExpandedRegions] = useState<Set<string>>(new Set())
-  const [historyExpanded, setHistoryExpanded] = useState(false)
-  const [historyIdx, setHistoryIdx] = useState(0)
-  const [subdivisionsExpanded, setSubdivisionsExpanded] = useState(false)
-  const [predecessorsExpanded, setPredecessorsExpanded] = useState(false)
+  const [expandedRegions, setExpandedRegions] = useState<Set<string>>(() => {
+    const f = initialCode != null ? FLAGS.find(x => x.code === initialCode) : null
+    return new Set(f ? [f.region] : [])
+  })
 
   const filteredFlags = useMemo(() => {
     const q = search.trim().toLowerCase()
@@ -57,20 +59,6 @@ export default function CodexScreen({ onBack, initialCode, embedded = false }: P
     })).filter(g => g.flags.length > 0)
   }, [filteredFlags])
 
-  const selectedFlag = selectedCode ? FLAGS.find(f => f.code === selectedCode) : null
-  const selectedEntry = selectedCode ? CODEX[selectedCode] : null
-
-  const openCountry = (code: string) => {
-    setSelectedCode(code)
-    setHistoryExpanded(false)
-    setHistoryIdx(0)
-    setSubdivisionsExpanded(false)
-    setPredecessorsExpanded(false)
-    setPhase('country')
-    // Always start a country page at the top (don't inherit the list's scroll).
-    window.scrollTo({ top: 0 })
-  }
-
   const toggleRegion = (region: string) => {
     setExpandedRegions(prev => {
       const next = new Set(prev)
@@ -82,253 +70,6 @@ export default function CodexScreen({ onBack, initialCode, embedded = false }: P
 
   // Auto-expand all regions when searching
   const isSearching = search.trim().length > 0
-
-  if (phase === 'country' && selectedFlag && selectedEntry) {
-    const hasHistory = selectedEntry.flagHistory.length > 0
-    const subRegions = getSubRegions(selectedFlag.code)
-    const hasSubdivisions = subRegions.length > 0
-    const predecessors = historicalFor(selectedFlag.code)
-
-    return (
-      <div className="min-h-screen flex flex-col" style={{ background: T.bg, color: T.text, position: 'relative', zIndex: 1 }}>
-        <ScreenHeader title={selectedFlag.name} onBack={() => setPhase('list')}
-          right={
-            <span className="text-xs px-2 py-0.5 rounded-full"
-              style={{ background: tint(ACCENT.codex, 0.12), color: ACCENT.codex, border: `1px solid ${tint(ACCENT.codex, 0.3)}` }}>
-              {selectedFlag.region}
-            </span>
-          } />
-
-        <div className="flex-1 overflow-y-auto px-5 pb-12 pt-2">
-          {/* Flag image */}
-          <div className="rounded-2xl overflow-hidden mb-5" style={{ border: `1px solid ${T.line}` }}>
-            <img
-              src={selectedFlag.flagUrl}
-              alt={selectedFlag.name}
-              style={{ width: '100%', height: 180, objectFit: 'cover', display: 'block' }}
-              onError={e => { (e.target as HTMLImageElement).style.opacity = '0' }}
-            />
-          </div>
-
-          {/* Summary */}
-          <div className="mb-5">
-            <h2 className="text-sm font-bold uppercase tracking-widest mb-3" style={{ color: ACCENT.codex }}>Overview</h2>
-            <p className="text-sm leading-relaxed" style={{ color: T.text, lineHeight: 1.75 }}>
-              {selectedEntry.summary}
-            </p>
-          </div>
-
-          {/* Did you know? — surfaces the flag's fun fact + how to tell it apart */}
-          {(selectedFlag.funFact || selectedFlag.distinguishingTip) && (
-            <div className="mb-5 rounded-2xl overflow-hidden" style={{ border: `1px solid ${tint(T.gold, 0.3)}` }}>
-              {selectedFlag.funFact && (
-                <div style={{ background: T.surface, padding: '16px 18px' }}>
-                  <div className="text-xs font-bold uppercase tracking-widest mb-2"
-                    style={{ color: T.gold, display: 'flex', alignItems: 'center', gap: 6 }}>
-                    <LineIcon name="funfact" size={14} color={T.gold} /> Did you know?
-                  </div>
-                  <p className="text-sm leading-relaxed" style={{ color: T.text, lineHeight: 1.65 }}>
-                    {selectedFlag.funFact}
-                  </p>
-                </div>
-              )}
-              {selectedFlag.distinguishingTip && (
-                <div style={{ background: T.surfaceHi, padding: '12px 18px', borderTop: `1px solid ${T.line}` }}>
-                  <div className="text-xs font-semibold mb-1" style={{ color: ACCENT.codex }}>How to tell it apart</div>
-                  <p className="text-xs leading-relaxed" style={{ color: T.muted, lineHeight: 1.6 }}>
-                    {selectedFlag.distinguishingTip}
-                  </p>
-                </div>
-              )}
-            </div>
-          )}
-
-          {/* Flag History — collapsible */}
-          <div className="mb-5">
-            <button
-              onClick={() => setHistoryExpanded(v => !v)}
-              className="geo-tap w-full flex items-center justify-between px-4 py-3 rounded-xl transition-all active:scale-[0.98]"
-              style={{ background: T.surface, border: `1px solid ${T.line}` }}
-            >
-              <div className="flex items-center gap-2">
-                <h2 className="text-sm font-bold uppercase tracking-widest" style={{ color: ACCENT.codex }}>Flag History</h2>
-                <span className="text-xs px-2 py-0.5 rounded-full font-semibold"
-                  style={{ background: tint(T.gold, 0.12), color: T.gold, border: `1px solid ${tint(T.gold, 0.3)}`,
-                    display: 'inline-flex', alignItems: 'center', gap: 4 }}>
-                  <FlaskIcon size={12} color={T.gold} strokeWidth={1.6} absoluteStrokeWidth /> Beta
-                </span>
-                {hasHistory && (
-                  <span className="text-xs" style={{ color: T.muted }}>{selectedEntry.flagHistory.length} flags</span>
-                )}
-              </div>
-              <span style={{ color: ACCENT.codex, transition: 'transform 0.2s', transform: historyExpanded ? 'rotate(90deg)' : 'rotate(0deg)' }}>›</span>
-            </button>
-
-            {historyExpanded && (
-              <div className="mt-3">
-                {!hasHistory ? (
-                  <div className="rounded-2xl p-5 text-center"
-                    style={{ background: T.surface, border: `1px solid ${T.line}` }}>
-                    <div className="mb-2 flex justify-center"><LineIcon name="flags" size={30} color={T.dim} /></div>
-                    <p className="text-sm" style={{ color: T.muted }}>Flag history for {selectedFlag.name} is coming soon.</p>
-                    <p className="text-xs mt-1" style={{ color: T.dim }}>This feature is in beta — we're adding countries one by one.</p>
-                  </div>
-                ) : (
-                  <div>
-                    {/* Navigation row */}
-                    <div className="flex items-center justify-between mb-3">
-                      <span className="text-xs" style={{ color: T.dim, fontFamily: FONT.mono, fontVariantNumeric: 'tabular-nums' }}>
-                        {historyIdx + 1} / {selectedEntry.flagHistory.length} · newest → oldest
-                      </span>
-                      <div className="flex gap-2">
-                        <button
-                          onClick={() => setHistoryIdx(i => Math.max(0, i - 1))}
-                          disabled={historyIdx === 0}
-                          className="w-8 h-8 flex items-center justify-center rounded-full transition-all active:scale-90"
-                          style={{
-                            background: T.surface,
-                            border: `1px solid ${historyIdx === 0 ? T.line : tint(ACCENT.codex, 0.4)}`,
-                            color: historyIdx === 0 ? T.dim : ACCENT.codex,
-                            opacity: historyIdx === 0 ? 0.5 : 1,
-                            fontSize: 18,
-                          }}>‹</button>
-                        <button
-                          onClick={() => setHistoryIdx(i => Math.min(selectedEntry.flagHistory.length - 1, i + 1))}
-                          disabled={historyIdx === selectedEntry.flagHistory.length - 1}
-                          className="w-8 h-8 flex items-center justify-center rounded-full transition-all active:scale-90"
-                          style={{
-                            background: T.surface,
-                            border: `1px solid ${historyIdx === selectedEntry.flagHistory.length - 1 ? T.line : tint(ACCENT.codex, 0.4)}`,
-                            color: historyIdx === selectedEntry.flagHistory.length - 1 ? T.dim : ACCENT.codex,
-                            opacity: historyIdx === selectedEntry.flagHistory.length - 1 ? 0.5 : 1,
-                            fontSize: 18,
-                          }}>›</button>
-                      </div>
-                    </div>
-
-                    {/* Main card */}
-                    <FlagHistoryCard
-                      hf={selectedEntry.flagHistory[historyIdx]}
-                      isFirst={historyIdx === 0}
-                    />
-
-                    {/* Timeline strip */}
-                    <div className="mt-4">
-                      <p className="text-xs mb-2" style={{ color: T.dim }}>Timeline — tap to jump</p>
-                      <div style={{ display: 'flex', gap: 8, overflowX: 'auto', paddingBottom: 6 }}>
-                        {selectedEntry.flagHistory.map((hf: HistoricalFlag, i: number) => (
-                          <button key={i} onClick={() => setHistoryIdx(i)}
-                            style={{
-                              flexShrink: 0, borderRadius: 8, overflow: 'hidden',
-                              border: `2px solid ${i === historyIdx ? ACCENT.codex : T.line}`,
-                              opacity: i === historyIdx ? 1 : 0.55,
-                              transition: 'opacity 0.2s, border-color 0.2s',
-                              background: T.surfaceHi,
-                            }}>
-                            <img src={hf.flagUrl} alt={hf.label}
-                              style={{ width: 72, height: 46, objectFit: 'cover', display: 'block' }}
-                              onError={e => { (e.target as HTMLImageElement).style.opacity = '0.15' }}
-                            />
-                            <div style={{ padding: '3px 5px', textAlign: 'center', background: T.surface }}>
-                              <span style={{ fontSize: 9, fontFamily: FONT.mono, color: i === historyIdx ? ACCENT.codex : T.dim, fontWeight: 600 }}>
-                                {hf.fromYear}
-                              </span>
-                            </div>
-                          </button>
-                        ))}
-                      </div>
-                    </div>
-
-                    {/* Dot indicators */}
-                    <div className="flex justify-center gap-1.5 mt-3">
-                      {selectedEntry.flagHistory.map((_: HistoricalFlag, i: number) => (
-                        <button key={i} onClick={() => setHistoryIdx(i)}
-                          style={{
-                            width: i === historyIdx ? 20 : 7,
-                            height: 7, borderRadius: 4,
-                            background: i === historyIdx ? ACCENT.codex : tint(ACCENT.codex, 0.25),
-                            transition: 'width 0.25s, background 0.2s',
-                            border: 'none', padding: 0,
-                          }} />
-                      ))}
-                    </div>
-                  </div>
-                )}
-              </div>
-            )}
-          </div>
-
-          {/* Subdivisions — collapsible */}
-          {hasSubdivisions && (
-            <div className="mb-5">
-              <button
-                onClick={() => setSubdivisionsExpanded(v => !v)}
-                className="geo-tap w-full flex items-center justify-between px-4 py-3 rounded-xl transition-all active:scale-[0.98]"
-                style={{ background: T.surface, border: `1px solid ${tint(T.green, 0.3)}` }}
-              >
-                <div className="flex items-center gap-2">
-                  <h2 className="text-sm font-bold uppercase tracking-widest" style={{ color: T.green }}>Subdivisions</h2>
-                  <span className="text-xs" style={{ color: T.muted }}>{subRegions.length} regions</span>
-                </div>
-                <span style={{ color: T.green, transition: 'transform 0.2s', transform: subdivisionsExpanded ? 'rotate(90deg)' : 'rotate(0deg)' }}>›</span>
-              </button>
-
-              {subdivisionsExpanded && (
-                <SubdivisionGrid
-                  subRegions={subRegions}
-                  confirmedNoFlags={NO_SUBDIVISION_FLAG_COUNTRIES.has(selectedFlag.code)}
-                  headerLabel={selectedFlag.code === 'IE' ? 'Province' : selectedFlag.code === 'GB' ? 'Nation' : undefined}
-                  memberLabel={selectedFlag.code === 'IE' ? 'Counties' : selectedFlag.code === 'GB' ? 'Council areas' : undefined}
-                />
-              )}
-            </div>
-          )}
-
-          {/* Predecessor & related states — collapsible */}
-          {predecessors.length > 0 && (
-            <div className="mb-5">
-              <button
-                onClick={() => setPredecessorsExpanded(v => !v)}
-                className="geo-tap w-full flex items-center justify-between px-4 py-3 rounded-xl transition-all active:scale-[0.98]"
-                style={{ background: T.surface, border: `1px solid ${tint(T.warm, 0.3)}` }}
-              >
-                <div className="flex items-center gap-2">
-                  <h2 className="text-sm font-bold uppercase tracking-widest" style={{ color: T.warm }}>Predecessor & Related States</h2>
-                  <span className="text-xs" style={{ color: T.muted }}>{predecessors.length}</span>
-                </div>
-                <span style={{ color: T.warm, transition: 'transform 0.2s', transform: predecessorsExpanded ? 'rotate(90deg)' : 'rotate(0deg)' }}>›</span>
-              </button>
-
-              {predecessorsExpanded && (
-                <div className="mt-3">
-                  <p className="text-xs mb-3" style={{ color: tint(T.warm, 0.7) }}>
-                    Vanished empires and states tied to this land's history — featured in the Historical Flag game.
-                  </p>
-                  <div className="space-y-2.5">
-                    {predecessors.map(h => (
-                      <div key={h.id} className="rounded-2xl overflow-hidden" style={{ background: T.surface, border: `1px solid ${tint(T.warm, 0.2)}` }}>
-                        <FlagImg src={h.flagUrl} alt={h.name} height={140} />
-                        <div className="p-4">
-                          <div className="flex items-start justify-between gap-2 mb-1.5">
-                            <div className="geo-display font-bold text-sm" style={{ color: T.text }}>{h.name}</div>
-                            <span className="text-xs px-2 py-0.5 rounded-full flex-shrink-0"
-                              style={{ background: tint(T.warm, 0.12), color: T.warm, border: `1px solid ${tint(T.warm, 0.25)}`, whiteSpace: 'nowrap' }}>
-                              {h.era}
-                            </span>
-                          </div>
-                          <p className="text-xs leading-relaxed" style={{ color: T.muted, lineHeight: 1.65 }}>{h.note}</p>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-            </div>
-          )}
-        </div>
-      </div>
-    )
-  }
 
   return (
     <div className="min-h-screen flex flex-col" style={{ background: T.bg, color: T.text, position: 'relative', zIndex: 1 }}>
@@ -389,34 +130,30 @@ export default function CodexScreen({ onBack, initialCode, embedded = false }: P
                 {isExpanded && (
                   <div className="mt-1.5 space-y-1.5">
                     {flags.map(f => {
-                      const entry = CODEX[f.code]
-                      const hasHistory = entry?.flagHistory?.length > 0
+                      const open = selectedCode === f.code
+                      const capital = CAPITAL_BY_CODE.get(f.code)
                       return (
-                        <button
-                          key={f.code}
-                          onClick={() => openCountry(f.code)}
-                          className="geo-tap w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all active:scale-[0.98] text-left"
-                          style={{ background: T.surface, border: `1px solid ${T.line}` }}>
-                          {/* Flag thumbnail */}
-                          <img
-                            src={f.flagUrl}
-                            alt={f.name}
-                            style={{ width: 46, height: 30, objectFit: 'cover', borderRadius: 5, border: `1px solid ${T.line}`, flexShrink: 0 }}
-                            onError={e => { (e.target as HTMLImageElement).style.opacity = '0.3' }}
-                          />
-                          <div className="flex-1 min-w-0">
-                            <div className="font-semibold text-sm truncate" style={{ color: T.text }}>{f.name}</div>
-                          </div>
-                          <div className="flex items-center gap-2 flex-shrink-0">
-                            {hasHistory && (
-                              <span className="text-xs px-1.5 py-0.5 rounded-full inline-flex items-center"
-                                style={{ background: tint(T.gold, 0.12), color: T.gold, border: `1px solid ${tint(T.gold, 0.25)}` }}>
-                                <FlaskIcon size={11} color={T.gold} strokeWidth={1.6} absoluteStrokeWidth />
-                              </span>
-                            )}
-                            <span style={{ color: ACCENT.codex }}>›</span>
-                          </div>
-                        </button>
+                        <div key={f.code}>
+                          <button
+                            onClick={() => setSelectedCode(c => (c === f.code ? null : f.code))}
+                            aria-expanded={open}
+                            className="geo-tap w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all active:scale-[0.98] text-left"
+                            style={{ background: T.surface, border: `1px solid ${open ? tint(ACCENT.codex, 0.4) : T.line}` }}>
+                            {/* Flag thumbnail */}
+                            <img
+                              src={f.flagUrl}
+                              alt={f.name}
+                              style={{ width: 46, height: 30, objectFit: 'cover', borderRadius: 5, border: `1px solid ${T.line}`, flexShrink: 0 }}
+                              onError={e => { (e.target as HTMLImageElement).style.opacity = '0.3' }}
+                            />
+                            <div className="flex-1 min-w-0">
+                              <div className="font-semibold text-sm truncate" style={{ color: T.text }}>{f.name}</div>
+                              {capital && <div className="text-xs truncate" style={{ color: T.muted, marginTop: 1 }}>{capital}</div>}
+                            </div>
+                            <span style={{ color: ACCENT.codex, fontSize: 18, transition: 'transform 0.2s', transform: open ? 'rotate(90deg)' : 'rotate(0deg)', flexShrink: 0 }}>›</span>
+                          </button>
+                          {open && <CountryDetail flag={f} />}
+                        </div>
                       )
                     })}
                   </div>
@@ -426,6 +163,15 @@ export default function CodexScreen({ onBack, initialCode, embedded = false }: P
           })
         )}
 
+        {/* Soft divide: countries above, everything-else collections below */}
+        {!isSearching && (
+          <div aria-hidden className="flex items-center gap-3" style={{ margin: '28px 2px 6px' }}>
+            <span style={{ flex: 1, height: 1, background: T.line }} />
+            <span className="geo-micro" style={{ fontSize: 8.5, color: T.dim }}>Beyond countries</span>
+            <span style={{ flex: 1, height: 1, background: T.line }} />
+          </div>
+        )}
+
         {/* Identity & other flags — pride, ethnic, separatist, micronations… */}
         {!isSearching && <IdentityCodexSection />}
         {/* American city flags — beta, lots of municipal flags */}
@@ -433,6 +179,246 @@ export default function CodexScreen({ onBack, initialCode, embedded = false }: P
         {/* Maritime / signal alphabet — its own section, separate from Identity */}
         {!isSearching && <SignalCodexSection />}
       </div>
+    </div>
+  )
+}
+
+// ── Inline country overview — expands beneath the row so browsing never
+// leaves the page. Quick-jot sized: short clamped overview up top, the deep
+// dives (history · subdivisions · predecessors) as collapsibles, trivia last.
+function CountryDetail({ flag }: { flag: FlagRecord }) {
+  const entry = CODEX[flag.code]
+  const [sumExpanded, setSumExpanded] = useState(false)
+  const [historyExpanded, setHistoryExpanded] = useState(false)
+  const [historyIdx, setHistoryIdx] = useState(0)
+  const [subdivisionsExpanded, setSubdivisionsExpanded] = useState(false)
+  const [predecessorsExpanded, setPredecessorsExpanded] = useState(false)
+  const history = entry?.flagHistory ?? []
+  const hasHistory = history.length > 0
+  const subRegions = getSubRegions(flag.code)
+  const hasSubdivisions = subRegions.length > 0
+  const predecessors = historicalFor(flag.code)
+
+  return (
+    <div className="carto-slide-up" style={{ margin: '6px 0 10px', padding: 14, borderRadius: 14, background: T.surfaceHi, border: `1px solid ${tint(ACCENT.codex, 0.22)}` }}>
+      {/* Flag */}
+      <div className="rounded-xl overflow-hidden mb-3" style={{ border: `1px solid ${T.line}` }}>
+        <img
+          src={flag.flagUrl}
+          alt={flag.name}
+          style={{ width: '100%', height: 130, objectFit: 'cover', display: 'block' }}
+          onError={e => { (e.target as HTMLImageElement).style.opacity = '0' }}
+        />
+      </div>
+
+      {/* Overview — short by default, tap for the full story */}
+      {entry?.summary && (
+        <div className="mb-4">
+          <h2 className="text-xs font-bold uppercase tracking-widest mb-1.5" style={{ color: ACCENT.codex }}>Overview</h2>
+          <p className="text-xs leading-relaxed" style={{
+            color: T.text, fontSize: 12.5, lineHeight: 1.6,
+            ...(sumExpanded ? {} : { display: '-webkit-box', WebkitLineClamp: 4, WebkitBoxOrient: 'vertical' as const, overflow: 'hidden' }),
+          }}>
+            {entry.summary}
+          </p>
+          <button onClick={() => setSumExpanded(v => !v)} className="text-xs mt-1" style={{ color: ACCENT.codex, background: 'transparent', fontWeight: 600, padding: '2px 0' }}>
+            {sumExpanded ? 'show less' : 'read more'}
+          </button>
+        </div>
+      )}
+
+      {/* Flag History — collapsible */}
+      <div className="mb-3">
+        <button
+          onClick={() => setHistoryExpanded(v => !v)}
+          aria-expanded={historyExpanded}
+          className="geo-tap w-full flex items-center justify-between px-4 py-3 rounded-xl transition-all active:scale-[0.98]"
+          style={{ background: T.surface, border: `1px solid ${T.line}` }}
+        >
+          <div className="flex items-center gap-2">
+            <h2 className="text-xs font-bold uppercase tracking-widest" style={{ color: ACCENT.codex }}>Flag History</h2>
+            <span className="text-xs px-2 py-0.5 rounded-full font-semibold"
+              style={{ background: tint(T.gold, 0.12), color: T.gold, border: `1px solid ${tint(T.gold, 0.3)}` }}>
+              Beta
+            </span>
+            {hasHistory && (
+              <span className="text-xs" style={{ color: T.muted, fontFamily: FONT.mono, fontVariantNumeric: 'tabular-nums' }}>{history.length} flags</span>
+            )}
+          </div>
+          <span style={{ color: ACCENT.codex, transition: 'transform 0.2s', transform: historyExpanded ? 'rotate(90deg)' : 'rotate(0deg)' }}>›</span>
+        </button>
+
+        {historyExpanded && (
+          <div className="mt-3">
+            {!hasHistory ? (
+              <div className="rounded-2xl p-5 text-center"
+                style={{ background: T.surface, border: `1px solid ${T.line}` }}>
+                <div className="mb-2 flex justify-center"><LineIcon name="flags" size={30} color={T.dim} /></div>
+                <p className="text-sm" style={{ color: T.muted }}>Flag history for {flag.name} is coming soon.</p>
+                <p className="text-xs mt-1" style={{ color: T.dim }}>This feature is in beta — we're adding countries one by one.</p>
+              </div>
+            ) : (
+              <div>
+                {/* Navigation row */}
+                <div className="flex items-center justify-between mb-3">
+                  <span className="text-xs" style={{ color: T.dim, fontFamily: FONT.mono, fontVariantNumeric: 'tabular-nums' }}>
+                    {historyIdx + 1} / {history.length} · newest → oldest
+                  </span>
+                  <div className="flex gap-2">
+                    <button
+                      onClick={() => setHistoryIdx(i => Math.max(0, i - 1))}
+                      disabled={historyIdx === 0}
+                      className="w-8 h-8 flex items-center justify-center rounded-full transition-all active:scale-90"
+                      style={{
+                        background: T.surface,
+                        border: `1px solid ${historyIdx === 0 ? T.line : tint(ACCENT.codex, 0.4)}`,
+                        color: historyIdx === 0 ? T.dim : ACCENT.codex,
+                        opacity: historyIdx === 0 ? 0.5 : 1,
+                        fontSize: 18,
+                      }}>‹</button>
+                    <button
+                      onClick={() => setHistoryIdx(i => Math.min(history.length - 1, i + 1))}
+                      disabled={historyIdx === history.length - 1}
+                      className="w-8 h-8 flex items-center justify-center rounded-full transition-all active:scale-90"
+                      style={{
+                        background: T.surface,
+                        border: `1px solid ${historyIdx === history.length - 1 ? T.line : tint(ACCENT.codex, 0.4)}`,
+                        color: historyIdx === history.length - 1 ? T.dim : ACCENT.codex,
+                        opacity: historyIdx === history.length - 1 ? 0.5 : 1,
+                        fontSize: 18,
+                      }}>›</button>
+                  </div>
+                </div>
+
+                {/* Main card */}
+                <FlagHistoryCard hf={history[historyIdx]} isFirst={historyIdx === 0} />
+
+                {/* Timeline strip */}
+                <div className="mt-4">
+                  <p className="text-xs mb-2" style={{ color: T.dim }}>Timeline — tap to jump</p>
+                  <div style={{ display: 'flex', gap: 8, overflowX: 'auto', paddingBottom: 6 }}>
+                    {history.map((hf: HistoricalFlag, i: number) => (
+                      <button key={i} onClick={() => setHistoryIdx(i)}
+                        style={{
+                          flexShrink: 0, borderRadius: 8, overflow: 'hidden',
+                          border: `2px solid ${i === historyIdx ? ACCENT.codex : T.line}`,
+                          opacity: i === historyIdx ? 1 : 0.55,
+                          transition: 'opacity 0.2s, border-color 0.2s',
+                          background: T.surfaceHi,
+                        }}>
+                        <img src={hf.flagUrl} alt={hf.label}
+                          style={{ width: 72, height: 46, objectFit: 'contain', display: 'block', background: T.surfaceHi }}
+                          onError={e => { (e.target as HTMLImageElement).style.opacity = '0.15' }}
+                        />
+                        <div style={{ padding: '3px 5px', textAlign: 'center', background: T.surface }}>
+                          <span style={{ fontSize: 9, fontFamily: FONT.mono, color: i === historyIdx ? ACCENT.codex : T.dim, fontWeight: 600 }}>
+                            {hf.fromYear}
+                          </span>
+                        </div>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+        )}
+      </div>
+
+      {/* Subdivisions — collapsible */}
+      {hasSubdivisions && (
+        <div className="mb-3">
+          <button
+            onClick={() => setSubdivisionsExpanded(v => !v)}
+            aria-expanded={subdivisionsExpanded}
+            className="geo-tap w-full flex items-center justify-between px-4 py-3 rounded-xl transition-all active:scale-[0.98]"
+            style={{ background: T.surface, border: `1px solid ${tint(T.green, 0.3)}` }}
+          >
+            <div className="flex items-center gap-2">
+              <h2 className="text-xs font-bold uppercase tracking-widest" style={{ color: T.green }}>Subdivisions</h2>
+              <span className="text-xs" style={{ color: T.muted }}>{subRegions.length} regions</span>
+            </div>
+            <span style={{ color: T.green, transition: 'transform 0.2s', transform: subdivisionsExpanded ? 'rotate(90deg)' : 'rotate(0deg)' }}>›</span>
+          </button>
+
+          {subdivisionsExpanded && (
+            <SubdivisionGrid
+              subRegions={subRegions}
+              confirmedNoFlags={NO_SUBDIVISION_FLAG_COUNTRIES.has(flag.code)}
+              headerLabel={flag.code === 'IE' ? 'Province' : flag.code === 'GB' ? 'Nation' : undefined}
+              memberLabel={flag.code === 'IE' ? 'Counties' : flag.code === 'GB' ? 'Council areas' : undefined}
+            />
+          )}
+        </div>
+      )}
+
+      {/* Predecessor & related states — collapsible */}
+      {predecessors.length > 0 && (
+        <div className="mb-3">
+          <button
+            onClick={() => setPredecessorsExpanded(v => !v)}
+            aria-expanded={predecessorsExpanded}
+            className="geo-tap w-full flex items-center justify-between px-4 py-3 rounded-xl transition-all active:scale-[0.98]"
+            style={{ background: T.surface, border: `1px solid ${tint(T.warm, 0.3)}` }}
+          >
+            <div className="flex items-center gap-2">
+              <h2 className="text-xs font-bold uppercase tracking-widest" style={{ color: T.warm }}>Predecessor & Related States</h2>
+              <span className="text-xs" style={{ color: T.muted }}>{predecessors.length}</span>
+            </div>
+            <span style={{ color: T.warm, transition: 'transform 0.2s', transform: predecessorsExpanded ? 'rotate(90deg)' : 'rotate(0deg)' }}>›</span>
+          </button>
+
+          {predecessorsExpanded && (
+            <div className="mt-3">
+              <p className="text-xs mb-3" style={{ color: tint(T.warm, 0.7) }}>
+                Vanished empires and states tied to this land's history — featured in the Historical Flag game.
+              </p>
+              <div className="space-y-2.5">
+                {predecessors.map(h => (
+                  <div key={h.id} className="rounded-2xl overflow-hidden" style={{ background: T.surface, border: `1px solid ${tint(T.warm, 0.2)}` }}>
+                    <FlagImg src={h.flagUrl} alt={h.name} height={120} />
+                    <div className="p-4">
+                      <div className="flex items-start justify-between gap-2 mb-1.5">
+                        <div className="geo-display font-bold text-sm" style={{ color: T.text }}>{h.name}</div>
+                        <span className="text-xs px-2 py-0.5 rounded-full flex-shrink-0"
+                          style={{ background: tint(T.warm, 0.12), color: T.warm, border: `1px solid ${tint(T.warm, 0.25)}`, whiteSpace: 'nowrap' }}>
+                          {h.era}
+                        </span>
+                      </div>
+                      <p className="text-xs leading-relaxed" style={{ color: T.muted, lineHeight: 1.65 }}>{h.note}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* Trivia last — history, subdivisions & predecessors deserve the spotlight */}
+      {(flag.funFact || flag.distinguishingTip) && (
+        <div className="rounded-2xl overflow-hidden" style={{ border: `1px solid ${tint(T.gold, 0.3)}` }}>
+          {flag.funFact && (
+            <div style={{ background: T.surface, padding: '13px 15px' }}>
+              <div className="text-xs font-bold uppercase tracking-widest mb-1.5"
+                style={{ color: T.gold, display: 'flex', alignItems: 'center', gap: 6 }}>
+                <LineIcon name="funfact" size={13} color={T.gold} /> Did you know?
+              </div>
+              <p className="text-xs leading-relaxed" style={{ color: T.text, lineHeight: 1.6 }}>
+                {flag.funFact}
+              </p>
+            </div>
+          )}
+          {flag.distinguishingTip && (
+            <div style={{ background: T.surfaceHi, padding: '11px 15px', borderTop: `1px solid ${T.line}` }}>
+              <div className="text-xs font-semibold mb-1" style={{ color: ACCENT.codex }}>How to tell it apart</div>
+              <p className="text-xs leading-relaxed" style={{ color: T.muted, lineHeight: 1.6 }}>
+                {flag.distinguishingTip}
+              </p>
+            </div>
+          )}
+        </div>
+      )}
     </div>
   )
 }
@@ -713,7 +699,7 @@ function FlagImg({ src, alt, height }: { src: string; alt: string; height: numbe
       <img
         src={src}
         alt={alt}
-        style={{ width: '100%', height, objectFit: 'cover', display: 'block' }}
+        style={{ width: '100%', height, objectFit: 'contain', display: 'block', background: T.surfaceHi }}
         onError={e => {
           const el = e.target as HTMLImageElement
           el.style.display = 'none'
