@@ -185,6 +185,16 @@ export default function SettingsScreen({ onBack, onMegaCodex, onFlagCheck }: Pro
           </div>
         )}
 
+        {/* Feedback — opens the user's mail app, pre-addressed to the dev */}
+        <a href={"mailto:keganbergeron@gmail.com?subject=" + encodeURIComponent("Globalio feedback") + "&body=" + encodeURIComponent("What I love / what I'd change / an idea:\n\n")}
+          className="w-full mt-8 py-3 rounded-xl text-sm font-semibold transition-all active:scale-95 block text-center"
+          style={{ textDecoration: 'none', background: tint(ACCENT.learn, 0.12), border: `1px solid ${tint(ACCENT.learn, 0.4)}`, color: ACCENT.learn }}>
+          <span className="inline-flex items-center justify-center gap-2"><LineIcon name="historical" size={15} color={ACCENT.learn} /> Send feedback or ideas</span>
+        </a>
+        <div className="text-xs mt-2 text-center" style={{ color: T.muted }}>
+          A one-man operation — I read every message. Thank you for playing.
+        </div>
+
         {/* secret */}
         <button onClick={onMegaCodex}
           className="w-full mt-8 py-2.5 rounded-xl text-xs font-semibold transition-all active:scale-95"

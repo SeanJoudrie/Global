@@ -156,6 +156,24 @@ function buildArt(id: string, accent: string, hero: boolean): { node: ReactNode;
   const box: CSSProperties = { position: "absolute", inset: 0 }
 
   switch (id) {
+    // ── Featured explorer ──
+    case "worldcup":
+      // The three host nations behind a gleaming trophy.
+      return { bleed: false, node: (
+        <div style={{ ...box, background: wash, display: "flex", alignItems: "center", justifyContent: "center" }}>
+          <div style={{ position: "relative", display: "flex", gap: hero ? 5 : 3 }}>
+            {["us", "mx", "ca"].map(c => (
+              <MiniFlag key={c} code={c} style={{ width: hero ? 30 : 21, opacity: 0.85 }} />
+            ))}
+            <span style={{ position: "absolute", left: "50%", top: "50%", transform: "translate(-50%,-50%)", display: "flex",
+              padding: hero ? 7 : 5, borderRadius: 999, background: `${T.surface}F2`, border: `1px solid ${tint(accent, 0.5)}`,
+              boxShadow: `0 2px 10px -2px ${tint(T.text, 0.6)}` }}>
+              <LineIcon name="worldcup" size={hero ? 24 : 16} color={accent} strokeWidth={1.6} />
+            </span>
+          </div>
+        </div>
+      ) }
+
     // ── Daily rituals ──
     case "funfact":
       // The daily fact: a small, tilted Polish flag with a glowing bulb beside

@@ -55,6 +55,9 @@ export const REGISTRY: Entry[] = [
   { id: "flagbracket", title: "Flag Bracket", subtitle: "Vote your champion", icon: "🏆", tab: "play", group: "Daily Rituals", size: "tile", accent: "today" },
   { id: "tierlist", title: "Tier List Maker", subtitle: "Rank flags S–F", icon: "🏆", tab: "play", group: "Daily Rituals", size: "tile", accent: "today" },
 
+  // Featured limited-time explorer — surfaces in Trending & Popular
+  { id: "worldcup", title: "World Cup 2026", subtitle: "48 nations · flags & history", icon: "🏆", tab: "play", group: "Daily Rituals", size: "tile", accent: "today", featured: true },
+
   // One Glance — reveal & make (visual, satisfying, fast)
   { id: "silhouette", title: "Silhouette", subtitle: "Guess from the dark", icon: "🌑", tab: "play", group: "One Glance", size: "tile", accent: "challenge", featured: true },
   { id: "thecrop", title: "The Crop", subtitle: "Zoom out to guess", icon: "🔍", tab: "play", group: "One Glance", size: "tile", accent: "challenge", featured: true },

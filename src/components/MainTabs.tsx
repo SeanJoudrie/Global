@@ -8,7 +8,7 @@ import { T, ACCENT, FONT, tint, IS_CARTO } from "../ui/tokens"
 import { groupsFor, REGISTRY, recommendFor, discoverGames, trendingGames } from "../ui/registry"
 import type { Entry, TabKey } from "../ui/registry"
 import { TabBar, ModuleCard, FlagTile, StatPill, SectionHeader, ProgressRing } from "./ui"
-import { LineIcon, FlameIcon, ChevronDownIcon, FlaskIcon, SearchIcon, ShuffleIcon, CompassIcon, SparklesIcon, HistoryIcon, TrendingUpIcon, CrownIcon, PencilIcon } from "./icons"
+import { LineIcon, FlameIcon, ChevronDownIcon, FlaskIcon, SearchIcon, ShuffleIcon, CompassIcon, SparklesIcon, HistoryIcon, TrendingUpIcon, CrownIcon, PencilIcon, MailIcon } from "./icons"
 import FlagImage from "./FlagImage"
 import { GamePoster } from "./GamePoster"
 
@@ -196,6 +196,20 @@ function TodayTab({ state, dailyDone, launch, onNavigate, onGoCodex, onGoPlay, o
         <DeckSlide accent={ACCENT.challenge} eyebrow="The Arcade" title={`${gameCount} games await`}
           body="A swipeable trending deck, fresh picks daily, every shelf one tap from play."
           cta="Open the Arcade" onClick={onGoPlay} art={flagFan} />
+        <DeckSlide accent={ACCENT.today} eyebrow="World Cup 2026" title="48 nations, one summer"
+          body="Flip through every team's flag, story and historical flags before kickoff."
+          cta="Explore the field" onClick={() => onNavigate("worldcup")}
+          art={
+            <div style={{ position: "relative", width: 88, height: 64, flexShrink: 0 }}>
+              {["us", "mx", "ca"].map((c, i) => (
+                <div key={c} style={{ position: "absolute", inset: 0, borderRadius: 6, overflow: "hidden", border: `1.5px solid ${T.surface}`,
+                  transform: `translate(${(i - 1) * 9}px, ${(i - 1) * 5}px) rotate(${(i - 1) * 6}deg)`,
+                  boxShadow: `0 3px 8px -4px ${tint(T.text, 0.6)}`, zIndex: i }}>
+                  <FlagImage code={c} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+                </div>
+              ))}
+            </div>
+          } />
         <DeckSlide accent={ACCENT.learn} eyebrow="Did you know?" title={dyk.name}
           body={dyk.funFact} cta="More fun facts" onClick={() => onNavigate("funfact")}
           art={
@@ -877,6 +891,38 @@ function YouTab({ state, learned, onNavigate, onSetUsername }: {
             onClick={() => onNavigate("gacha")} />
         </div>
       </div>
+
+      {/* Feedback — a one-man operation that reads every message */}
+      <FeedbackCard />
     </div>
+  )
+}
+
+// Pre-addressed mail to the dev. A static-site-friendly way to collect feedback
+// with zero backend — opens the user's mail app with subject + body filled.
+const FEEDBACK_HREF =
+  "mailto:keganbergeron@gmail.com" +
+  "?subject=" + encodeURIComponent("Globalio feedback") +
+  "&body=" + encodeURIComponent("What I love / what I'd change / an idea:\n\n")
+
+function FeedbackCard() {
+  return (
+    <a href={FEEDBACK_HREF} className={`geo-tap ${IS_CARTO ? "carto-card" : ""}`}
+      style={{ display: "block", textDecoration: "none", borderRadius: 16, padding: 16, position: "relative", overflow: "hidden",
+        border: `1px solid ${tint(ACCENT.learn, 0.36)}`,
+        background: `linear-gradient(150deg, ${tint(ACCENT.learn, 0.14)}, ${T.surface} 75%)`,
+        ...(IS_CARTO ? { ["--wash" as string]: tint(ACCENT.learn, 0.42) } : {}) }}>
+      <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+        <span style={{ width: 42, height: 42, borderRadius: 12, flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center",
+          background: tint(ACCENT.learn, 0.14), border: `1px solid ${tint(ACCENT.learn, 0.3)}`, color: ACCENT.learn }}>
+          <MailIcon size={20} color={ACCENT.learn} strokeWidth={1.6} />
+        </span>
+        <div style={{ flex: 1, minWidth: 0 }}>
+          <div className="geo-display" style={{ fontWeight: 700, fontSize: 16, color: T.text }}>Send feedback or ideas</div>
+          <div style={{ color: T.muted, fontSize: 11.5, marginTop: 2, lineHeight: 1.4 }}>One-man operation — I read every message and would love to make this better for you.</div>
+        </div>
+        <span style={{ color: ACCENT.learn, fontSize: 18, opacity: 0.7 }}>→</span>
+      </div>
+    </a>
   )
 }
