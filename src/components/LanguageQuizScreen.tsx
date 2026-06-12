@@ -1,11 +1,17 @@
-﻿import { useState, useEffect } from "react"
+import { useState, useEffect } from "react"
+import { Trophy, ThumbsUp, BookOpen } from "lucide-react"
 import { LANGUAGES, detectScript, scriptFont, languageNote } from "../data/languages"
 import type { LanguageRecord, Difficulty } from "../data/languages"
 import { shuffleWithSeed, seededRandom } from "../utils/prng"
+import { T, ACCENT, FONT, tint } from "../ui/tokens"
+import { ScreenHeader } from "./ui"
+import { LineIcon } from "./icons"
 
 interface Props { onBack: () => void }
 
 type Phase = "menu" | "quiz" | "result"
+
+const ACC = ACCENT.play
 
 // Build 3 distractors. We pull from ALL languages and strongly prefer the SAME writing
 // system as the target, so you can't win just by recognising the alphabet.
@@ -35,10 +41,10 @@ function getChoices(target: LanguageRecord, all: LanguageRecord[], seed: string)
 }
 
 const DIFF_COLORS: Record<Difficulty, { bg: string; border: string; label: string }> = {
-  easy:    { bg: "#34D39922", border: "#34D399", label: "🟢 Easy" },
-  medium:  { bg: "#F59E0B22", border: "#F59E0B", label: "🟡 Medium" },
-  hard:    { bg: "#F43F5E22", border: "#F43F5E", label: "🔴 Hard" },
-  extreme: { bg: "#8B6CFF22", border: "#8B6CFF", label: "💀 Extreme" },
+  easy:    { bg: tint(T.green, 0.12),  border: T.green,  label: "Easy" },
+  medium:  { bg: tint(T.gold, 0.12),   border: T.gold,   label: "Medium" },
+  hard:    { bg: tint(T.danger, 0.12), border: T.danger, label: "Hard" },
+  extreme: { bg: tint(ACC, 0.12),      border: ACC,      label: "Extreme" },
 }
 
 export default function LanguageQuizScreen({ onBack }: Props) {
@@ -88,25 +94,24 @@ export default function LanguageQuizScreen({ onBack }: Props) {
 
   if (phase === "menu") {
     return (
-      <div className="min-h-screen flex flex-col" style={{ background: "linear-gradient(135deg,var(--bg-from) 0%,var(--bg-to) 100%)" }}>
-        <header className="flex items-center gap-3 px-5 pt-8 pb-4" style={{ zIndex: 1, position: "relative" }}>
-          <button onClick={onBack} className="w-9 h-9 flex items-center justify-center rounded-full text-xl"
-            style={{ background: "#2D1F52", color: "#B8A9E0" }}>&#8249;</button>
-          <h1 className="text-2xl font-black" style={{ color: "#F5F3FF" }}>Guess the Language</h1>
-        </header>
+      <div className="min-h-screen flex flex-col" style={{ background: T.bg, color: T.text }}>
+        <ScreenHeader title="Guess the Language" onBack={onBack} />
         <div className="flex-1 flex flex-col items-center justify-center px-5 gap-5" style={{ zIndex: 1, position: "relative" }}>
-          <div className="text-6xl">🌐</div>
+          <LineIcon name="language" size={56} color={ACC} strokeWidth={1.3} />
           <div className="text-center">
-            <h2 className="text-xl font-black mb-2" style={{ color: "#F5F3FF" }}>Which language is this?</h2>
-            <p className="text-sm" style={{ color: "#B8A9E0" }}>Read a sentence and identify the language from 4 choices.</p>
+            <h2 className="text-xl mb-2" style={{ color: T.text, fontFamily: FONT.display, fontWeight: 800 }}>Which language is this?</h2>
+            <p className="text-sm" style={{ color: T.muted }}>Read a sentence and identify the language from 4 choices.</p>
           </div>
           <div className="w-full max-w-sm space-y-3">
             {(["easy", "medium", "hard", "extreme"] as Difficulty[]).map(d => (
               <button key={d} onClick={() => startQuiz(d)}
-                className="w-full py-4 px-5 rounded-2xl text-left transition-all active:scale-95 hover:brightness-110"
-                style={{ background: DIFF_COLORS[d].bg, border: `1px solid ${DIFF_COLORS[d].border}66`, color: "#F5F3FF" }}>
-                <div className="font-bold text-base">{DIFF_COLORS[d].label}</div>
-                <div className="text-xs mt-0.5" style={{ color: "#B8A9E0" }}>
+                className="w-full py-4 px-5 rounded-2xl text-left transition-all active:scale-95 hover:brightness-95"
+                style={{ background: DIFF_COLORS[d].bg, border: `1px solid ${tint(DIFF_COLORS[d].border, 0.4)}`, color: T.text }}>
+                <div className="font-bold text-base flex items-center gap-2" style={{ fontFamily: FONT.display }}>
+                  <span style={{ width: 9, height: 9, borderRadius: "50%", background: DIFF_COLORS[d].border, display: "inline-block" }} />
+                  {DIFF_COLORS[d].label}
+                </div>
+                <div className="text-xs mt-0.5" style={{ color: T.muted }}>
                   {d === "easy" && "Major world languages — Spanish, French, Mandarin…"}
                   {d === "medium" && "Familiar but tricky — Polish, Greek, Hebrew…"}
                   {d === "hard" && "Obscure & similar-looking — Basque, Georgian, Welsh…"}
@@ -125,30 +130,38 @@ export default function LanguageQuizScreen({ onBack }: Props) {
     const pct = Math.round((score / total) * 100)
     return (
       <div className="min-h-screen flex flex-col items-center justify-center px-5"
-        style={{ background: "linear-gradient(135deg,var(--bg-from) 0%,var(--bg-to) 100%)" }}>
+        style={{ background: T.bg, color: T.text }}>
         <div className="w-full max-w-sm" style={{ zIndex: 1, position: "relative" }}>
           <div className="rounded-2xl p-6 mb-4 text-center"
-            style={{ background: "#2D1F52", border: "1px solid #8B6CFF44", boxShadow: "0 0 32px #8B6CFF22" }}>
-            <div className="text-5xl mb-3">{pct >= 80 ? "🏆" : pct >= 50 ? "👍" : "📚"}</div>
-            <div className="text-6xl font-black mb-1" style={{ color: "#F5F3FF" }}>{score}/{total}</div>
-            <div className="text-sm mb-3" style={{ color: "#B8A9E0" }}>Guess the Language · {DIFF_COLORS[difficulty].label}</div>
-            <div className="flex justify-center gap-1 mb-4">
-              {answers.map((a, i) => <span key={i}>{a === "correct" ? "🟩" : "🟥"}</span>)}
+            style={{ background: T.surface, border: `1px solid ${T.line}` }}>
+            <div className="mb-3 flex justify-center" style={{ color: pct >= 80 ? T.gold : ACC }}>
+              {pct >= 80
+                ? <Trophy size={44} strokeWidth={1.6} absoluteStrokeWidth />
+                : pct >= 50
+                  ? <ThumbsUp size={44} strokeWidth={1.6} absoluteStrokeWidth />
+                  : <BookOpen size={44} strokeWidth={1.6} absoluteStrokeWidth />}
             </div>
-            <div className="w-full h-2 rounded-full overflow-hidden" style={{ background: "#1A1033" }}>
-              <div className="h-full rounded-full" style={{ width: `${pct}%`, background: "linear-gradient(90deg,#8B6CFF,#A78BFA)" }} />
+            <div className="text-6xl mb-1" style={{ color: T.text, fontFamily: FONT.mono, fontWeight: 800, fontVariantNumeric: "tabular-nums" }}>{score}/{total}</div>
+            <div className="text-sm mb-3" style={{ color: T.muted }}>Guess the Language · {DIFF_COLORS[difficulty].label}</div>
+            <div className="flex justify-center gap-1 mb-4">
+              {answers.map((a, i) => (
+                <span key={i} style={{ width: 14, height: 14, borderRadius: 3, background: a === "correct" ? T.green : T.danger, display: "inline-block" }} />
+              ))}
+            </div>
+            <div className="w-full h-2 rounded-full overflow-hidden" style={{ background: T.line }}>
+              <div className="h-full rounded-full" style={{ width: `${pct}%`, background: ACC }} />
             </div>
           </div>
           <div className="flex flex-col gap-3">
             <button onClick={() => startQuiz(difficulty)}
               className="w-full py-3.5 rounded-xl font-bold transition-all active:scale-95"
-              style={{ background: "linear-gradient(135deg,#8B6CFF,#A78BFA)", color: "#fff" }}>Play Again</button>
+              style={{ background: ACC, color: T.onAccent, fontFamily: FONT.display }}>Play Again</button>
             <button onClick={() => setPhase("menu")}
               className="w-full py-3.5 rounded-xl font-bold transition-all active:scale-95"
-              style={{ background: "#2D1F52", border: "1px solid #8B6CFF33", color: "#B8A9E0" }}>Change Difficulty</button>
+              style={{ background: T.surface, border: `1px solid ${T.line}`, color: T.muted }}>Change Difficulty</button>
             <button onClick={onBack}
               className="w-full py-3.5 rounded-xl font-bold transition-all active:scale-95"
-              style={{ background: "#2D1F52", border: "1px solid #8B6CFF22", color: "#B8A9E0" }}>&#8592; Home</button>
+              style={{ background: T.surface, border: `1px solid ${T.line}`, color: T.muted }}>&#8592; Home</button>
           </div>
         </div>
       </div>
@@ -162,32 +175,27 @@ export default function LanguageQuizScreen({ onBack }: Props) {
   const diff = DIFF_COLORS[difficulty]
 
   return (
-    <div className="min-h-screen flex flex-col" style={{ background: "linear-gradient(135deg,var(--bg-from) 0%,var(--bg-to) 100%)" }}>
-      <header className="flex items-center justify-between px-5 pt-8 pb-2" style={{ zIndex: 1, position: "relative" }}>
-        <button onClick={onBack} className="w-9 h-9 flex items-center justify-center rounded-full text-xl"
-          style={{ background: "#2D1F52", color: "#B8A9E0" }}>&#8249;</button>
-        <div className="text-center">
-          <div className="text-xs font-semibold uppercase tracking-widest" style={{ color: "#B8A9E0" }}>
-            Guess the Language · {difficulty}
-          </div>
-          <div className="text-sm font-bold" style={{ color: "#F5F3FF" }}>{idx + 1} / {questions.length}</div>
-        </div>
-        <div className="w-9" />
-      </header>
+    <div className="min-h-screen flex flex-col" style={{ background: T.bg, color: T.text }}>
+      <ScreenHeader title="Guess the Language" subtitle={DIFF_COLORS[difficulty].label} onBack={onBack}
+        right={
+          <span style={{ fontFamily: FONT.mono, fontVariantNumeric: "tabular-nums", fontWeight: 700, fontSize: 14, color: diff.border, padding: "5px 11px", borderRadius: 999, background: tint(diff.border, 0.1), border: `1px solid ${tint(diff.border, 0.3)}` }}>
+            {idx + 1} / {questions.length}
+          </span>
+        } />
 
-      <div className="mx-5 mt-2 h-1.5 rounded-full overflow-hidden" style={{ background: "#2D1F52", zIndex: 1 }}>
+      <div className="mx-5 mt-2 h-1.5 rounded-full overflow-hidden" style={{ background: T.line, zIndex: 1 }}>
         <div className="h-full rounded-full transition-all duration-500"
           style={{ width: `${(idx / questions.length) * 100}%`, background: diff.border }} />
       </div>
 
       <div className="flex-1 flex flex-col px-5 py-4" style={{ zIndex: 1, position: "relative" }}>
         <div className="rounded-2xl p-5 mb-4"
-          style={{ background: "#2D1F52", border: `1px solid ${diff.border}44` }}>
-          <div className="text-xs font-semibold uppercase tracking-widest mb-3" style={{ color: diff.border }}>
-            🌐 What language is this?
+          style={{ background: T.surface, border: `1px solid ${tint(diff.border, 0.3)}` }}>
+          <div className="text-xs font-semibold uppercase tracking-widest mb-3 flex items-center gap-1.5" style={{ color: diff.border }}>
+            <LineIcon name="language" size={13} color={diff.border} /> What language is this?
           </div>
           <p className="text-xl leading-relaxed font-semibold" style={{
-            color: "#F5F3FF",
+            color: T.text,
             fontFamily: (showRoman && !q.target.isLatinScript) ? undefined : scriptFont(detectScript(q.target.sample)),
           }}>
             {showRoman && !q.target.isLatinScript ? q.target.romanized : q.target.sample}
@@ -195,20 +203,20 @@ export default function LanguageQuizScreen({ onBack }: Props) {
           {!q.target.isLatinScript && (
             <button onClick={() => setShowRoman(s => !s)}
               className="mt-3 text-xs px-3 py-1 rounded-full transition-all active:scale-95"
-              style={{ background: "#8B6CFF22", color: "#A78BFA", border: "1px solid #8B6CFF44" }}>
-              {showRoman ? "🔤 Show original script" : "Aa Show Latin alphabet"}
+              style={{ background: tint(ACC, 0.12), color: ACC, border: `1px solid ${tint(ACC, 0.3)}` }}>
+              {showRoman ? "Show original script" : "Aa Show Latin alphabet"}
             </button>
           )}
         </div>
 
         <div className="grid grid-cols-2 gap-3 mb-4">
           {q.choices.map((choice, i) => {
-            let bg = "#2D1F52"
-            let border = "#8B6CFF33"
-            let color = "#F5F3FF"
+            let bg = T.surface
+            let border = T.line
+            let color = T.text
             if (answered) {
-              if (i === correctIdx) { bg = "#34D39922"; border = "#34D399"; color = "#34D399" }
-              else if (i === selected) { bg = "#F43F5E22"; border = "#F43F5E"; color = "#F43F5E" }
+              if (i === correctIdx) { bg = tint(T.green, 0.13); border = T.green; color = T.green }
+              else if (i === selected) { bg = tint(T.danger, 0.13); border = T.danger; color = T.danger }
             }
             return (
               <button key={choice.code} onClick={() => handleAnswer(i)} disabled={answered}
@@ -222,18 +230,18 @@ export default function LanguageQuizScreen({ onBack }: Props) {
 
         {answered && (
           <div className="rounded-xl p-4 mb-4 animate-slide-up"
-            style={{ background: "#2D1F52", border: `1px solid ${selected === correctIdx ? "#34D39944" : "#F43F5E44"}` }}>
-            <div className="text-xs font-semibold mb-1" style={{ color: selected === correctIdx ? "#34D399" : "#F43F5E" }}>
+            style={{ background: T.surface, border: `1px solid ${tint(selected === correctIdx ? T.green : T.danger, 0.4)}` }}>
+            <div className="text-xs font-semibold mb-1" style={{ color: selected === correctIdx ? T.green : T.danger }}>
               {selected === correctIdx ? `✓ Correct — ${q.target.name}` : `✗ That was ${q.target.name}`}
             </div>
-            <p className="text-sm" style={{ color: "#F5F3FF" }}>{languageNote(q.target)}</p>
+            <p className="text-sm" style={{ color: T.text }}>{languageNote(q.target)}</p>
           </div>
         )}
 
         {answered && (
           <button onClick={handleNext}
             className="w-full py-3.5 rounded-xl font-bold text-base transition-all active:scale-95 animate-slide-up"
-            style={{ background: "linear-gradient(135deg,#8B6CFF,#A78BFA)", color: "#fff" }}>
+            style={{ background: ACC, color: T.onAccent, fontFamily: FONT.display }}>
             {idx + 1 >= questions.length ? "See Results →" : "Next →"}
           </button>
         )}

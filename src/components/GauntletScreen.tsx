@@ -1,12 +1,17 @@
 import { useState } from 'react'
+import { Swords, Skull, Trophy, Heart } from 'lucide-react'
 import { FLAGS, REGIONS, getFlagsByRegion } from '../data/flags'
 import type { FlagRecord, Region } from '../data/flags'
 import { shuffleWithSeed } from '../utils/prng'
 import { buildQuestion } from '../utils/quiz'
+import { T, ACCENT, FONT, tint } from '../ui/tokens'
+import { ScreenHeader } from './ui'
 
 interface Props { onBack: () => void }
 
 type Phase = 'menu' | 'run' | 'dead' | 'win'
+
+const ACC = ACCENT.challenge
 
 interface GauntletConfig {
   label: string
@@ -75,20 +80,14 @@ export default function GauntletScreen({ onBack }: Props) {
 
   if (phase === 'menu') {
     return (
-      <div className="min-h-screen flex flex-col" style={{ background: 'linear-gradient(135deg,var(--bg-from) 0%,var(--bg-to) 100%)', position: 'relative', zIndex: 1 }}>
-        <header className="flex items-center gap-3 px-5 pt-8 pb-4">
-          <button onClick={onBack} className="w-9 h-9 flex items-center justify-center rounded-full text-xl"
-            style={{ background: '#2D1F52', color: '#B8A9E0' }}>‹</button>
-          <div>
-            <h1 className="text-2xl font-black" style={{ color: '#F5F3FF' }}>Gauntlet</h1>
-            <p className="text-xs" style={{ color: '#B8A9E0' }}>One wrong answer — game over</p>
-          </div>
-        </header>
+      <div className="min-h-screen flex flex-col" style={{ background: T.bg, color: T.text, position: 'relative', zIndex: 1 }}>
+        <ScreenHeader title="Gauntlet" subtitle="One wrong answer — game over" onBack={onBack} />
 
         <div className="px-5 pb-8 space-y-3">
-          <div className="px-4 py-3 rounded-xl mb-2" style={{ background: '#F43F5E18', border: '1px solid #F43F5E44' }}>
-            <p className="text-sm" style={{ color: '#F43F5E' }}>
-              ⚔️ <strong>Survival mode</strong> — get through every flag without a single mistake
+          <div className="px-4 py-3 rounded-xl mb-2" style={{ background: tint(ACC, 0.1), border: `1px solid ${tint(ACC, 0.3)}` }}>
+            <p className="text-sm flex items-center gap-2" style={{ color: ACC }}>
+              <Swords size={15} strokeWidth={1.6} absoluteStrokeWidth />
+              <span><strong>Survival mode</strong> — get through every flag without a single mistake</span>
             </p>
           </div>
           {configs.map(cfg => (
@@ -96,16 +95,16 @@ export default function GauntletScreen({ onBack }: Props) {
               key={cfg.id}
               onClick={() => startRun(cfg)}
               className="w-full flex items-center justify-between px-5 py-4 rounded-2xl transition-all active:scale-[0.98]"
-              style={{ background: '#2D1F52', border: '1px solid #F43F5E33' }}
+              style={{ background: T.surface, border: `1px solid ${T.line}` }}
             >
               <div className="flex items-center gap-3">
                 <span className="text-2xl">{cfg.emoji}</span>
                 <div className="text-left">
-                  <div className="font-bold" style={{ color: '#F5F3FF' }}>{cfg.label}</div>
-                  <div className="text-xs" style={{ color: '#B8A9E0' }}>{cfg.flags.length} flags to survive</div>
+                  <div className="font-bold" style={{ color: T.text, fontFamily: FONT.display }}>{cfg.label}</div>
+                  <div className="text-xs" style={{ color: T.muted }}>{cfg.flags.length} flags to survive</div>
                 </div>
               </div>
-              <span style={{ color: '#F43F5E' }}>›</span>
+              <span style={{ color: ACC }}>›</span>
             </button>
           ))}
         </div>
@@ -116,23 +115,23 @@ export default function GauntletScreen({ onBack }: Props) {
   if (phase === 'dead') {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center px-5 gap-6"
-        style={{ background: 'linear-gradient(135deg,#1A0808,#2A1010)', position: 'relative', zIndex: 1 }}>
-        <div style={{ fontSize: 72 }}>💀</div>
+        style={{ background: T.bg, color: T.text, position: 'relative', zIndex: 1 }}>
+        <Skull size={64} color={T.danger} strokeWidth={1.4} absoluteStrokeWidth />
         <div style={{ textAlign: 'center' }}>
-          <div className="text-3xl font-black mb-2" style={{ color: '#F5F3FF' }}>Game Over</div>
-          <div style={{ color: '#B8A9E0' }}>You survived <strong style={{ color: '#F43F5E' }}>{score}</strong> flag{score !== 1 ? 's' : ''}</div>
-          {q && <div className="mt-2 text-sm" style={{ color: '#B8A9E088' }}>The answer was <strong style={{ color: '#F5F3FF' }}>{q.target.name}</strong></div>}
+          <div className="text-3xl mb-2" style={{ color: T.text, fontFamily: FONT.display, fontWeight: 800 }}>Game Over</div>
+          <div style={{ color: T.muted }}>You survived <strong style={{ color: T.danger, fontFamily: FONT.mono, fontVariantNumeric: 'tabular-nums' }}>{score}</strong> flag{score !== 1 ? 's' : ''}</div>
+          {q && <div className="mt-2 text-sm" style={{ color: T.dim }}>The answer was <strong style={{ color: T.text }}>{q.target.name}</strong></div>}
         </div>
         <div style={{ display: 'flex', gap: 12 }}>
           <button onClick={onBack}
             className="px-6 py-3 rounded-2xl font-bold"
-            style={{ background: '#2D1F52', border: '1px solid #8B6CFF44', color: '#A78BFA' }}>
+            style={{ background: T.surface, border: `1px solid ${T.line}`, color: T.muted }}>
             Home
           </button>
           {config && (
             <button onClick={() => startRun(config)}
               className="px-6 py-3 rounded-2xl font-bold"
-              style={{ background: 'linear-gradient(135deg,#F43F5E,#FB7185)', color: '#fff' }}>
+              style={{ background: ACC, color: T.onAccent, fontFamily: FONT.display }}>
               Try Again
             </button>
           )}
@@ -144,15 +143,15 @@ export default function GauntletScreen({ onBack }: Props) {
   if (phase === 'win') {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center px-5 gap-6"
-        style={{ background: 'linear-gradient(135deg,#071410,#0F2018)', position: 'relative', zIndex: 1 }}>
-        <div style={{ fontSize: 72 }}>🏆</div>
+        style={{ background: T.bg, color: T.text, position: 'relative', zIndex: 1 }}>
+        <Trophy size={64} color={T.gold} strokeWidth={1.4} absoluteStrokeWidth />
         <div style={{ textAlign: 'center' }}>
-          <div className="text-3xl font-black mb-2" style={{ color: '#F5F3FF' }}>Flawless!</div>
-          <div style={{ color: '#4ADE80' }}>You named all <strong>{score}</strong> flags without a mistake</div>
+          <div className="text-3xl mb-2" style={{ color: T.text, fontFamily: FONT.display, fontWeight: 800 }}>Flawless!</div>
+          <div style={{ color: T.green }}>You named all <strong style={{ fontFamily: FONT.mono, fontVariantNumeric: 'tabular-nums' }}>{score}</strong> flags without a mistake</div>
         </div>
         <button onClick={onBack}
           className="px-8 py-3 rounded-2xl font-bold"
-          style={{ background: 'linear-gradient(135deg,#22C55E,#4ADE80)', color: '#fff' }}>
+          style={{ background: T.green, color: T.onAccent, fontFamily: FONT.display }}>
           Back to Home
         </button>
       </div>
@@ -161,27 +160,23 @@ export default function GauntletScreen({ onBack }: Props) {
 
   // Run phase
   return (
-    <div className="min-h-screen flex flex-col" style={{ background: 'linear-gradient(135deg,var(--bg-from) 0%,var(--bg-to) 100%)', position: 'relative', zIndex: 1 }}>
-      <header className="flex items-center gap-3 px-5 pt-8 pb-4">
-        <button onClick={() => setPhase('menu')} className="w-9 h-9 flex items-center justify-center rounded-full text-xl"
-          style={{ background: '#2D1F52', color: '#B8A9E0' }}>‹</button>
-        <div className="flex-1">
-          <div className="font-black" style={{ color: '#F5F3FF' }}>{config?.label} Gauntlet</div>
-          <div className="text-xs" style={{ color: '#B8A9E0' }}>{idx + 1} / {questions.length} · {score} survived</div>
-        </div>
-        <div style={{
-          padding: '4px 12px', borderRadius: 999,
-          background: '#F43F5E22', border: '1px solid #F43F5E44',
-          color: '#F43F5E', fontSize: 12, fontWeight: 700,
-        }}>⚔️ 1 life</div>
-      </header>
+    <div className="min-h-screen flex flex-col" style={{ background: T.bg, color: T.text, position: 'relative', zIndex: 1 }}>
+      <ScreenHeader title={`${config?.label} Gauntlet`} subtitle={`${idx + 1} / ${questions.length} · ${score} survived`}
+        onBack={() => setPhase('menu')}
+        right={
+          <div style={{
+            padding: '4px 12px', borderRadius: 999, display: 'flex', alignItems: 'center', gap: 5,
+            background: tint(T.danger, 0.1), border: `1px solid ${tint(T.danger, 0.3)}`,
+            color: T.danger, fontSize: 12, fontWeight: 700, fontFamily: FONT.mono,
+          }}><Heart size={12} strokeWidth={1.6} absoluteStrokeWidth /> 1 life</div>
+        } />
 
       <div className="flex-1 flex flex-col items-center px-5 pb-8 gap-5">
         {/* Survival progress */}
-        <div style={{ width: '100%', height: 4, borderRadius: 999, background: '#2D1F52', overflow: 'hidden' }}>
+        <div style={{ width: '100%', height: 4, borderRadius: 999, background: T.line, overflow: 'hidden' }}>
           <div style={{
             width: `${(idx / questions.length) * 100}%`, height: '100%',
-            background: 'linear-gradient(90deg,#F43F5E,#FB7185)',
+            background: ACC,
             borderRadius: 999, transition: 'width 0.3s',
           }} />
         </div>
@@ -189,7 +184,7 @@ export default function GauntletScreen({ onBack }: Props) {
         {/* Flag */}
         <div style={{
           width: '100%', maxWidth: 340, borderRadius: 20, overflow: 'hidden',
-          border: '1px solid #8B6CFF33',
+          border: `1px solid ${T.line}`, background: T.surface,
         }}>
           <img
             key={q.target.code}
@@ -205,12 +200,12 @@ export default function GauntletScreen({ onBack }: Props) {
           {q.choices.map((choice, i) => {
             const isCorrect = choice.code === q.target.code
             const isSelected = selected === i
-            let bg = '#2D1F52'
-            let border = '1px solid #8B6CFF33'
-            let textColor = '#F5F3FF'
+            let bg = T.surface
+            let border = `1px solid ${T.line}`
+            let textColor = T.text
             if (selected !== null) {
-              if (isCorrect) { bg = '#34D39922'; border = '1px solid #34D399'; textColor = '#34D399' }
-              else if (isSelected) { bg = '#F43F5E22'; border = '1px solid #F43F5E'; textColor = '#F43F5E' }
+              if (isCorrect) { bg = tint(T.green, 0.13); border = `1px solid ${T.green}`; textColor = T.green }
+              else if (isSelected) { bg = tint(T.danger, 0.13); border = `1px solid ${T.danger}`; textColor = T.danger }
             }
             return (
               <button

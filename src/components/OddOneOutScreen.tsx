@@ -1,10 +1,15 @@
 import { useState } from "react"
+import { Trophy, ThumbsUp, BookOpen } from "lucide-react"
 import { FLAGS } from "../data/flags"
 import type { FlagRecord } from "../data/flags"
 import { FLAG_ATTRIBS } from "../data/flagAttribs"
 import type { FlagAttribs } from "../data/flagAttribs"
+import { T, ACCENT, FONT, tint } from "../ui/tokens"
+import { ScreenHeader } from "./ui"
 
 const FEATURES = ['stripes', 'cross', 'star', 'crescent', 'emblem'] as const
+
+const ACC = ACCENT.play
 
 // How visually similar `oddCode` is to the in-group of three flags. Higher =
 // blends in better. We reward shared colours and matching the group's majority
@@ -166,28 +171,36 @@ function OddOneOutScreenGame({ onBack , onReplay }: Props & { onReplay: () => vo
     const pct = Math.round((correct / TOTAL_ROUNDS) * 100)
     return (
       <div className="min-h-screen flex flex-col items-center justify-center px-5"
-        style={{ background: "linear-gradient(135deg,var(--bg-from) 0%,var(--bg-to) 100%)" }}>
+        style={{ background: T.bg, color: T.text }}>
         <div className="w-full max-w-sm" style={{ position: "relative", zIndex: 1 }}>
           <div className="rounded-2xl p-6 text-center mb-4"
-            style={{ background: "#2D1F52", border: "1px solid #8B6CFF44", boxShadow: "0 0 32px #8B6CFF22" }}>
-            <div className="text-5xl mb-3">{pct === 100 ? "🏆" : pct >= 60 ? "👍" : "📚"}</div>
-            <div className="text-6xl font-black mb-1" style={{ color: "#F5F3FF" }}>{correct}/{TOTAL_ROUNDS}</div>
-            <div className="text-sm mb-4" style={{ color: "#B8A9E0" }}>
+            style={{ background: T.surface, border: `1px solid ${T.line}` }}>
+            <div className="mb-3 flex justify-center" style={{ color: pct === 100 ? T.gold : ACC }}>
+              {pct === 100
+                ? <Trophy size={44} strokeWidth={1.6} absoluteStrokeWidth />
+                : pct >= 60
+                  ? <ThumbsUp size={44} strokeWidth={1.6} absoluteStrokeWidth />
+                  : <BookOpen size={44} strokeWidth={1.6} absoluteStrokeWidth />}
+            </div>
+            <div className="text-6xl mb-1" style={{ color: T.text, fontFamily: FONT.mono, fontWeight: 800, fontVariantNumeric: "tabular-nums" }}>{correct}/{TOTAL_ROUNDS}</div>
+            <div className="text-sm mb-4" style={{ color: T.muted }}>
               {pct === 100 ? "Perfect round!" : pct >= 60 ? "Well played" : "Keep practising"}
             </div>
             <div className="flex justify-center gap-2">
-              {scores.map((ok, i) => <span key={i} style={{ fontSize: 28 }}>{ok ? "🟩" : "🟥"}</span>)}
+              {scores.map((ok, i) => (
+                <span key={i} style={{ width: 22, height: 22, borderRadius: 6, background: ok ? T.green : T.danger, display: "inline-block" }} />
+              ))}
             </div>
           </div>
           <div className="flex flex-col gap-3">
             <button onClick={onReplay}
               className="w-full py-3.5 rounded-xl font-bold transition-all active:scale-95"
-              style={{ background: "linear-gradient(135deg,#8B6CFF,#A78BFA)", color: "#fff" }}>
+              style={{ background: ACC, color: T.onAccent, fontFamily: FONT.display }}>
               Play Again
             </button>
             <button onClick={onBack}
               className="w-full py-3.5 rounded-xl font-bold transition-all active:scale-95"
-              style={{ background: "#2D1F52", border: "1px solid #8B6CFF33", color: "#B8A9E0" }}>
+              style={{ background: T.surface, border: `1px solid ${T.line}`, color: T.muted }}>
               ← Home
             </button>
           </div>
@@ -198,36 +211,31 @@ function OddOneOutScreenGame({ onBack , onReplay }: Props & { onReplay: () => vo
 
   return (
     <div className="min-h-screen flex flex-col"
-      style={{ background: "linear-gradient(135deg,var(--bg-from) 0%,var(--bg-to) 100%)" }}>
+      style={{ background: T.bg, color: T.text }}>
 
-      <header className="flex items-center justify-between px-5 pt-8 pb-4" style={{ zIndex: 1 }}>
-        <button onClick={onBack} className="w-9 h-9 flex items-center justify-center rounded-full text-xl"
-          style={{ background: "#2D1F52", color: "#B8A9E0" }}>&#8249;</button>
-        <div className="text-center">
-          <div className="text-xs font-semibold uppercase tracking-widest" style={{ color: "#B8A9E0" }}>Odd One Out</div>
-          <div className="text-sm font-bold" style={{ color: "#F5F3FF" }}>Round {idx + 1} / {TOTAL_ROUNDS}</div>
-        </div>
-        <div className="flex gap-1.5 items-center">
-          {Array.from({ length: TOTAL_ROUNDS }).map((_, i) => (
-            <div key={i} style={{
-              width: 8, height: 8, borderRadius: "50%",
-              background: i < scores.length ? (scores[i] ? "#34D399" : "#F43F5E") : "#8B6CFF33",
-            }} />
-          ))}
-        </div>
-      </header>
+      <ScreenHeader title="Odd One Out" subtitle={`Round ${idx + 1} / ${TOTAL_ROUNDS}`} onBack={onBack}
+        right={
+          <div className="flex gap-1.5 items-center">
+            {Array.from({ length: TOTAL_ROUNDS }).map((_, i) => (
+              <div key={i} style={{
+                width: 8, height: 8, borderRadius: "50%",
+                background: i < scores.length ? (scores[i] ? T.green : T.danger) : T.line,
+              }} />
+            ))}
+          </div>
+        } />
 
-      <div className="mx-5 h-1.5 rounded-full overflow-hidden" style={{ background: "#2D1F52", zIndex: 1 }}>
+      <div className="mx-5 h-1.5 rounded-full overflow-hidden" style={{ background: T.line, zIndex: 1 }}>
         <div className="h-full rounded-full transition-all duration-500"
-          style={{ width: `${(idx / TOTAL_ROUNDS) * 100}%`, background: "linear-gradient(90deg,#8B6CFF,#A78BFA)" }} />
+          style={{ width: `${(idx / TOTAL_ROUNDS) * 100}%`, background: ACC }} />
       </div>
 
       <div className="flex-1 flex flex-col items-center px-5 pt-5" style={{ zIndex: 1 }}>
 
         {/* Question */}
         <div className="w-full max-w-sm mb-4 px-4 py-3 rounded-xl"
-          style={{ background: "#2D1F52", border: "1px solid #8B6CFF44" }}>
-          <p className="text-sm font-semibold text-center" style={{ color: "#F5F3FF" }}>
+          style={{ background: T.surface, border: `1px solid ${tint(ACC, 0.3)}` }}>
+          <p className="text-sm font-semibold text-center" style={{ color: T.text, fontFamily: FONT.display }}>
             {round.question}
           </p>
         </div>
@@ -237,19 +245,19 @@ function OddOneOutScreenGame({ onBack , onReplay }: Props & { onReplay: () => vo
           {round.flags.map((flag, i) => {
             const isOdd    = i === round.oddIndex
             const isChosen = selected === i
-            let border  = "1.5px solid #8B6CFF33"
+            let border  = `1.5px solid ${T.line}`
             let overlay: string | null = null
             if (answered) {
-              if (isOdd)         { border = "2px solid #34D399"; overlay = "#34D39915" }
-              else if (isChosen) { border = "2px solid #F43F5E"; overlay = "#F43F5E15" }
+              if (isOdd)         { border = `2px solid ${T.green}`; overlay = tint(T.green, 0.1) }
+              else if (isChosen) { border = `2px solid ${T.danger}`; overlay = tint(T.danger, 0.1) }
             } else if (isChosen) {
-              border = "2px solid #8B6CFF"
+              border = `2px solid ${ACC}`
             }
             return (
               <button key={flag.code} onClick={() => handlePick(i)}
                 disabled={answered}
                 className="relative rounded-xl overflow-hidden transition-all active:scale-95"
-                style={{ border, background: "#1A1033", aspectRatio: "3/2" }}>
+                style={{ border, background: T.surface, aspectRatio: "3/2" }}>
                 <img src={flag.flagUrl} alt={flag.name} className="w-full h-full object-cover"
                   onError={e => {
                     const el = e.target as HTMLImageElement
@@ -258,15 +266,15 @@ function OddOneOutScreenGame({ onBack , onReplay }: Props & { onReplay: () => vo
                 {overlay && (
                   <div style={{ position: 'absolute', inset: 0, background: overlay,
                     display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                    <span style={{ fontSize: 26 }}>{isOdd ? '✓' : '✗'}</span>
+                    <span style={{ fontSize: 26, fontWeight: 800, color: isOdd ? T.green : T.danger, textShadow: `0 1px 4px ${tint(T.text, 0.4)}` }}>{isOdd ? '✓' : '✗'}</span>
                   </div>
                 )}
                 {answered && (
                   <div style={{
                     position: 'absolute', bottom: 0, left: 0, right: 0,
-                    background: '#12093066', padding: '2px 4px', textAlign: 'center',
+                    background: tint(T.text, 0.65), padding: '2px 4px', textAlign: 'center',
                   }}>
-                    <span style={{ fontSize: 10, color: '#F5F3FF', fontWeight: 600 }}>{flag.name}</span>
+                    <span style={{ fontSize: 10, color: T.bg, fontWeight: 600 }}>{flag.name}</span>
                   </div>
                 )}
               </button>
@@ -277,11 +285,11 @@ function OddOneOutScreenGame({ onBack , onReplay }: Props & { onReplay: () => vo
         {/* Feedback */}
         {answered && (
           <div className="w-full max-w-sm mt-3 px-4 py-3 rounded-xl"
-            style={{ background: '#2D1F52', border: `1px solid ${isRight ? '#34D39944' : '#F43F5E44'}` }}>
-            <p className="text-sm font-semibold" style={{ color: isRight ? '#34D399' : '#F43F5E' }}>
+            style={{ background: T.surface, border: `1px solid ${tint(isRight ? T.green : T.danger, 0.4)}` }}>
+            <p className="text-sm font-semibold" style={{ color: isRight ? T.green : T.danger }}>
               {isRight ? "✓ Correct!" : `✗ Wrong — ${round.flags[round.oddIndex].name} was the odd one out`}
             </p>
-            <p className="text-xs mt-1" style={{ color: '#B8A9E0' }}>
+            <p className="text-xs mt-1" style={{ color: T.muted }}>
               The other three are all {round.themeLabel}.
             </p>
           </div>
@@ -290,7 +298,7 @@ function OddOneOutScreenGame({ onBack , onReplay }: Props & { onReplay: () => vo
         {answered && (
           <button onClick={handleNext}
             className="w-full max-w-sm mt-3 py-3.5 rounded-xl font-bold transition-all active:scale-95"
-            style={{ background: "linear-gradient(135deg,#8B6CFF,#A78BFA)", color: "#fff" }}>
+            style={{ background: ACC, color: T.onAccent, fontFamily: FONT.display }}>
             {idx + 1 >= TOTAL_ROUNDS ? "See Results →" : "Next →"}
           </button>
         )}

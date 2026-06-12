@@ -1,7 +1,11 @@
-﻿import { useState } from "react"
+import { useState } from "react"
+import { Trophy, ThumbsUp, BookOpen } from "lucide-react"
 import { CAPITALS } from "../data/capitals"
 import type { CapitalRecord } from "../data/capitals"
 import { CITIES } from "../data/cities"
+import { T, ACCENT, FONT, tint } from "../ui/tokens"
+import { ScreenHeader } from "./ui"
+import { LineIcon } from "./icons"
 
 interface Props { onBack: () => void }
 
@@ -12,6 +16,8 @@ interface CapQ {
   choices: string[]
   correctIndex: number
 }
+
+const ACC = ACCENT.drill
 
 const shuffle = <X,>(a: X[]): X[] => [...a].sort(() => Math.random() - 0.5)
 
@@ -80,24 +86,24 @@ export default function CapitalQuizScreen({ onBack }: Props) {
   }
 
   const bgColor = (i: number) => {
-    if (!answered) return "#2D1F52"
-    if (i === q.correctIndex) return "#34D39922"
-    if (i === selected && i !== q.correctIndex) return "#F43F5E22"
-    return "#2D1F52"
+    if (!answered) return T.surface
+    if (i === q.correctIndex) return tint(T.green, 0.13)
+    if (i === selected && i !== q.correctIndex) return tint(T.danger, 0.13)
+    return T.surface
   }
 
   const borderColor = (i: number) => {
-    if (!answered) return "#8B6CFF33"
-    if (i === q.correctIndex) return "#34D399"
-    if (i === selected && i !== q.correctIndex) return "#F43F5E"
-    return "#8B6CFF22"
+    if (!answered) return T.line
+    if (i === q.correctIndex) return T.green
+    if (i === selected && i !== q.correctIndex) return T.danger
+    return T.line
   }
 
   const textColor = (i: number) => {
-    if (!answered) return "#F5F3FF"
-    if (i === q.correctIndex) return "#34D399"
-    if (i === selected && i !== q.correctIndex) return "#F43F5E"
-    return "#B8A9E0"
+    if (!answered) return T.text
+    if (i === q.correctIndex) return T.green
+    if (i === selected && i !== q.correctIndex) return T.danger
+    return T.muted
   }
 
   const animClass = (i: number) => {
@@ -109,27 +115,35 @@ export default function CapitalQuizScreen({ onBack }: Props) {
     const pct = Math.round((score / TOTAL) * 100)
     return (
       <div className="min-h-screen flex flex-col items-center justify-center px-5"
-        style={{ background: "linear-gradient(135deg,var(--bg-from) 0%,var(--bg-to) 100%)" }}>
+        style={{ background: T.bg, color: T.text }}>
         <div className="w-full max-w-sm" style={{ zIndex: 1, position: "relative" }}>
           <div className="rounded-2xl p-6 mb-4 text-center"
-            style={{ background: "#2D1F52", border: "1px solid #8B6CFF44", boxShadow: "0 0 32px #8B6CFF22" }}>
-            <div className="text-5xl mb-3">{pct >= 80 ? "🏆" : pct >= 50 ? "👍" : "📚"}</div>
-            <div className="text-6xl font-black mb-1" style={{ color: "#F5F3FF" }}>{score}/{TOTAL}</div>
-            <div className="text-sm mb-3" style={{ color: "#B8A9E0" }}>Capital Cities Quiz</div>
-            <div className="flex justify-center gap-1 mb-4">
-              {answers.map((a, i) => <span key={i}>{a === "correct" ? "🟩" : "🟥"}</span>)}
+            style={{ background: T.surface, border: `1px solid ${T.line}` }}>
+            <div className="mb-3 flex justify-center" style={{ color: pct >= 80 ? T.gold : ACC }}>
+              {pct >= 80
+                ? <Trophy size={44} strokeWidth={1.6} absoluteStrokeWidth />
+                : pct >= 50
+                  ? <ThumbsUp size={44} strokeWidth={1.6} absoluteStrokeWidth />
+                  : <BookOpen size={44} strokeWidth={1.6} absoluteStrokeWidth />}
             </div>
-            <div className="w-full h-2 rounded-full overflow-hidden" style={{ background: "#1A1033" }}>
-              <div className="h-full rounded-full" style={{ width: `${pct}%`, background: "linear-gradient(90deg,#8B6CFF,#A78BFA)" }} />
+            <div className="text-6xl mb-1" style={{ color: T.text, fontFamily: FONT.mono, fontWeight: 800, fontVariantNumeric: "tabular-nums" }}>{score}/{TOTAL}</div>
+            <div className="text-sm mb-3" style={{ color: T.muted }}>Capital Cities Quiz</div>
+            <div className="flex justify-center gap-1 mb-4">
+              {answers.map((a, i) => (
+                <span key={i} style={{ width: 14, height: 14, borderRadius: 3, background: a === "correct" ? T.green : T.danger, display: "inline-block" }} />
+              ))}
+            </div>
+            <div className="w-full h-2 rounded-full overflow-hidden" style={{ background: T.line }}>
+              <div className="h-full rounded-full" style={{ width: `${pct}%`, background: ACC }} />
             </div>
           </div>
           <div className="flex flex-col gap-3">
             <button onClick={startQuiz}
               className="w-full py-3.5 rounded-xl font-bold transition-all active:scale-95"
-              style={{ background: "linear-gradient(135deg,#8B6CFF,#A78BFA)", color: "#fff" }}>Play Again</button>
+              style={{ background: ACC, color: T.onAccent, fontFamily: FONT.display }}>Play Again</button>
             <button onClick={onBack}
               className="w-full py-3.5 rounded-xl font-bold transition-all active:scale-95"
-              style={{ background: "#2D1F52", border: "1px solid #8B6CFF22", color: "#B8A9E0" }}>&#8592; Home</button>
+              style={{ background: T.surface, border: `1px solid ${T.line}`, color: T.muted }}>&#8592; Home</button>
           </div>
         </div>
       </div>
@@ -139,30 +153,27 @@ export default function CapitalQuizScreen({ onBack }: Props) {
   if (!q) return null
 
   return (
-    <div className="min-h-screen flex flex-col" style={{ background: "linear-gradient(135deg,var(--bg-from) 0%,var(--bg-to) 100%)" }}>
-      <header className="flex items-center justify-between px-5 pt-8 pb-2" style={{ zIndex: 1 }}>
-        <button onClick={onBack} className="w-9 h-9 flex items-center justify-center rounded-full text-xl"
-          style={{ background: "#2D1F52", color: "#B8A9E0" }}>&#8249;</button>
-        <div className="text-center">
-          <div className="text-xs font-semibold uppercase tracking-widest" style={{ color: "#B8A9E0" }}>Capital Cities</div>
-          <div className="text-sm font-bold" style={{ color: "#F5F3FF" }}>{idx + 1} / {TOTAL}</div>
-        </div>
-        <div className="w-9" />
-      </header>
+    <div className="min-h-screen flex flex-col" style={{ background: T.bg, color: T.text }}>
+      <ScreenHeader title="Capital Cities" subtitle={`${score} correct so far`} onBack={onBack}
+        right={
+          <span style={{ fontFamily: FONT.mono, fontVariantNumeric: "tabular-nums", fontWeight: 700, fontSize: 14, color: ACC, padding: "5px 11px", borderRadius: 999, background: tint(ACC, 0.1), border: `1px solid ${tint(ACC, 0.3)}` }}>
+            {idx + 1} / {TOTAL}
+          </span>
+        } />
 
-      <div className="mx-5 mt-2 h-1.5 rounded-full overflow-hidden" style={{ background: "#2D1F52", zIndex: 1 }}>
+      <div className="mx-5 mt-2 h-1.5 rounded-full overflow-hidden" style={{ background: T.line, zIndex: 1 }}>
         <div className="h-full rounded-full transition-all duration-500"
-          style={{ width: `${(idx / TOTAL) * 100}%`, background: "linear-gradient(90deg,#8B6CFF,#A78BFA)" }} />
+          style={{ width: `${(idx / TOTAL) * 100}%`, background: ACC }} />
       </div>
 
       <div className="flex-1 flex flex-col items-center px-5 py-4" style={{ zIndex: 1 }}>
         <div className="w-full max-w-sm mb-5 rounded-2xl p-5 text-center"
-          style={{ background: "#2D1F52", border: "1px solid #8B6CFF44" }}>
-          <div className="text-xs font-semibold uppercase tracking-widest mb-2" style={{ color: "#A78BFA" }}>
-            🏛️ Capital of...
+          style={{ background: T.surface, border: `1px solid ${T.line}` }}>
+          <div className="text-xs font-semibold uppercase tracking-widest mb-2 flex items-center justify-center gap-1.5" style={{ color: ACC }}>
+            <LineIcon name="capitalquiz" size={13} color={ACC} /> Capital of...
           </div>
-          <div className="text-3xl font-black mb-1" style={{ color: "#F5F3FF" }}>{q.target.country}</div>
-          <div className="text-sm" style={{ color: "#B8A9E0" }}>{q.target.region}</div>
+          <div className="text-3xl mb-1" style={{ color: T.text, fontFamily: FONT.display, fontWeight: 800 }}>{q.target.country}</div>
+          <div className="text-sm" style={{ color: T.muted }}>{q.target.region}</div>
         </div>
 
         <div className="w-full max-w-sm grid grid-cols-2 gap-3 mb-4">
@@ -182,8 +193,8 @@ export default function CapitalQuizScreen({ onBack }: Props) {
 
         {answered && (
           <div className="w-full max-w-sm mb-3 px-4 py-3 rounded-xl animate-slide-up"
-            style={{ background: "#2D1F52", border: `1px solid ${selected === q.correctIndex ? "#34D39944" : "#F43F5E44"}` }}>
-            <div className="text-xs font-semibold" style={{ color: selected === q.correctIndex ? "#34D399" : "#F43F5E" }}>
+            style={{ background: T.surface, border: `1px solid ${tint(selected === q.correctIndex ? T.green : T.danger, 0.4)}` }}>
+            <div className="text-xs font-semibold" style={{ color: selected === q.correctIndex ? T.green : T.danger }}>
               {selected === q.correctIndex
                 ? `✓ Correct! ${q.target.capital} is the capital of ${q.target.country}.`
                 : `✗ The capital of ${q.target.country} is ${q.target.capital}.`}
@@ -194,7 +205,7 @@ export default function CapitalQuizScreen({ onBack }: Props) {
         {answered && (
           <button onClick={handleNext}
             className="w-full max-w-sm py-3.5 rounded-xl font-bold text-base transition-all active:scale-95 animate-slide-up"
-            style={{ background: "linear-gradient(135deg,#8B6CFF,#A78BFA)", color: "#fff" }}>
+            style={{ background: ACC, color: T.onAccent, fontFamily: FONT.display }}>
             {idx + 1 >= questions.length ? "See Results →" : "Next →"}
           </button>
         )}

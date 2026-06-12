@@ -2,8 +2,13 @@ import { useState, useRef, useMemo } from "react"
 import { FLAGS } from "../data/flags"
 import type { FlagRecord } from "../data/flags"
 import { FLAG_ATTRIBS, STRIPES_V } from "../data/flagAttribs"
+import { T, ACCENT, FONT, tint, IS_CARTO } from "../ui/tokens"
+import { ScreenHeader } from "./ui"
+import { LineIcon } from "./icons"
 
 interface Props { onBack: () => void }
+
+const ACC = ACCENT.play
 
 const ELIGIBLE = FLAGS.filter(f => FLAG_ATTRIBS[f.code])
 const MAX_GUESSES = 7
@@ -11,9 +16,11 @@ const MAX_GUESSES = 7
 const ALL_COLORS = ["red","blue","green","yellow","white","black","orange"] as const
 type Color = typeof ALL_COLORS[number]
 
+// Swatches for the colour chips. On the light Cartographer parchment a near-white
+// chip would vanish, so "white" gets a readable warm grey there.
 const COLOR_HEX: Record<Color, string> = {
   red: "#F43F5E", blue: "#60A5FA", green: "#34D399",
-  yellow: "#FBBF24", white: "#F5F3FF", black: "#6B7280", orange: "#FB923C",
+  yellow: "#FBBF24", white: IS_CARTO ? "#A89F8D" : "#F5F3FF", black: "#6B7280", orange: "#FB923C",
 }
 
 interface GuessResult {
@@ -84,11 +91,11 @@ function buildResult(guess: FlagRecord, target: FlagRecord): GuessResult {
 }
 
 function proximityLabel(pct: number): { emoji: string; label: string; color: string } {
-  if (pct >= 90) return { emoji: '🔥', label: 'Burning hot',  color: '#F43F5E' }
-  if (pct >= 75) return { emoji: '🌶️', label: 'Very warm',   color: '#FB923C' }
-  if (pct >= 60) return { emoji: '🌡️', label: 'Warm',        color: '#FBBF24' }
-  if (pct >= 45) return { emoji: '🌤️', label: 'Lukewarm',    color: '#A78BFA' }
-  return                { emoji: '❄️', label: 'Cold',         color: '#60A5FA' }
+  if (pct >= 90) return { emoji: '🔥', label: 'Burning hot',  color: T.danger }
+  if (pct >= 75) return { emoji: '🌶️', label: 'Very warm',   color: T.warm }
+  if (pct >= 60) return { emoji: '🌡️', label: 'Warm',        color: T.gold }
+  if (pct >= 45) return { emoji: '🌤️', label: 'Lukewarm',    color: ACC }
+  return                { emoji: '❄️', label: 'Cold',         color: T.cyan }
 }
 
 const FEAT_LABEL: Record<string, string> = {
@@ -145,40 +152,37 @@ function FlagDNAScreenGame({ onBack , onReplay }: Props & { onReplay: () => void
 
   return (
     <div className="min-h-screen flex flex-col"
-      style={{ background: "linear-gradient(135deg,var(--bg-from) 0%,var(--bg-to) 100%)" }}>
+      style={{ background: T.bg, color: T.text }}>
 
-      <header className="flex items-center justify-between px-5 pt-8 pb-4" style={{ zIndex: 1 }}>
-        <button onClick={onBack}
-          className="w-9 h-9 flex items-center justify-center rounded-full text-xl"
-          style={{ background: "#2D1F52", color: "#B8A9E0" }}>&#8249;</button>
-        <div className="text-center">
-          <div className="text-xs font-semibold uppercase tracking-widest" style={{ color: "#B8A9E0" }}>Flag DNA</div>
-          <div className="text-xs" style={{ color: "#8B6CFF" }}>
+      <ScreenHeader title="Flag DNA" onBack={onBack}
+        subtitle={
+          <span style={{ color: ACC }}>
             {finished
               ? (won ? "Solved!" : `It was ${target.name}`)
               : bestProx !== null
                 ? `Best match: ${bestProx}%`
                 : `${MAX_GUESSES} guesses`}
+          </span>
+        }
+        right={
+          <div className="flex gap-1 items-center">
+            {Array.from({ length: MAX_GUESSES }).map((_, i) => (
+              <div key={i} style={{
+                width: 6, height: 6, borderRadius: "50%",
+                background: i < guesses.length
+                  ? (guesses[i].flag.code === target.code ? T.green : T.danger)
+                  : T.line,
+              }} />
+            ))}
           </div>
-        </div>
-        <div className="flex gap-1 items-center">
-          {Array.from({ length: MAX_GUESSES }).map((_, i) => (
-            <div key={i} style={{
-              width: 6, height: 6, borderRadius: "50%",
-              background: i < guesses.length
-                ? (guesses[i].flag.code === target.code ? "#34D399" : "#F43F5E")
-                : "#8B6CFF33",
-            }} />
-          ))}
-        </div>
-      </header>
+        } />
 
       {finished && (
         <div className="flex flex-col items-center mb-3" style={{ zIndex: 1 }}>
-          <div style={{ borderRadius: 12, overflow: "hidden", border: `2px solid ${won ? "#34D399" : "#F43F5E"}` }}>
+          <div style={{ borderRadius: 12, overflow: "hidden", border: `2px solid ${won ? T.green : T.danger}`, boxShadow: `0 8px 24px -10px ${tint(T.text, 0.35)}` }}>
             <img src={target.flagUrl} alt={target.name} style={{ width: 180, height: 113, display: "block" }} />
           </div>
-          <div className="text-base font-bold mt-2" style={{ color: "#F5F3FF" }}>{target.name}</div>
+          <div className="text-base font-bold mt-2" style={{ color: T.text, fontFamily: FONT.display }}>{target.name}</div>
         </div>
       )}
 
@@ -193,19 +197,19 @@ function FlagDNAScreenGame({ onBack , onReplay }: Props & { onReplay: () => void
               onBlur={() => setTimeout(() => setShowDrop(false), 200)}
               placeholder="Type a country…"
               className="w-full px-4 py-3 rounded-xl text-sm font-medium"
-              style={{ background: "#2D1F52", border: "1.5px solid #8B6CFF44", color: "#F5F3FF", outline: "none" }}
+              style={{ background: T.surface, border: `1.5px solid ${T.line}`, color: T.text, outline: "none" }}
             />
             {showDrop && matches.length > 0 && (
               <div className="absolute left-0 right-0 top-full mt-1 rounded-xl overflow-hidden"
-                style={{ background: "#2D1F52", border: "1px solid #8B6CFF44", zIndex: 20, boxShadow: "0 8px 24px #00000066" }}>
+                style={{ background: T.surface, border: `1px solid ${T.line}`, zIndex: 20, boxShadow: `0 8px 24px ${tint(T.text, 0.2)}` }}>
                 {matches.map(f => (
                   <button key={f.code}
-                    className="w-full flex items-center gap-3 px-4 py-2.5 text-left text-sm transition-all hover:bg-[#3D2A6A]"
+                    className="w-full flex items-center gap-3 px-4 py-2.5 text-left text-sm transition-all hover:brightness-95"
                     onMouseDown={() => submitGuess(f)}
-                    style={{ color: "#F5F3FF" }}>
+                    style={{ color: T.text }}>
                     <img src={f.flagUrl} alt="" style={{ width: 28, height: 18, objectFit: "cover", borderRadius: 3 }} />
                     {f.name}
-                    <span style={{ marginLeft: 'auto', fontSize: 11, color: '#8B6CFF88' }}>{f.code}</span>
+                    <span style={{ marginLeft: 'auto', fontSize: 11, color: T.dim, fontFamily: FONT.mono }}>{f.code}</span>
                   </button>
                 ))}
               </div>
@@ -215,7 +219,7 @@ function FlagDNAScreenGame({ onBack , onReplay }: Props & { onReplay: () => void
           {guesses.length >= 3 && (
             <button onClick={handleGiveUp}
               className="mt-2 text-xs px-4 py-1.5 rounded-full font-semibold transition-all active:scale-95"
-              style={{ background: '#2D1F52', border: '1px solid #F43F5E33', color: '#F43F5E88' }}>
+              style={{ background: T.surface, border: `1px solid ${tint(T.danger, 0.3)}`, color: tint(T.danger, 0.75) }}>
               Give up
             </button>
           )}
@@ -228,18 +232,18 @@ function FlagDNAScreenGame({ onBack , onReplay }: Props & { onReplay: () => void
           const prox   = proximityLabel(g.proximity)
           return (
             <div key={gi} className="rounded-xl overflow-hidden"
-              style={{ border: `1px solid ${isSelf ? "#34D39944" : "#8B6CFF22"}`, background: "#1E1340" }}>
+              style={{ border: `1px solid ${isSelf ? tint(T.green, 0.4) : T.line}`, background: T.surface }}>
 
               {/* Flag row + proximity */}
               <div className="flex items-center gap-3 px-3 py-2.5"
-                style={{ background: isSelf ? "#34D39908" : "transparent" }}>
+                style={{ background: isSelf ? tint(T.green, 0.06) : "transparent" }}>
                 <img src={g.flag.flagUrl} alt={g.flag.name}
                   style={{ width: 48, height: 30, objectFit: "cover", borderRadius: 5, flexShrink: 0 }} />
                 <div className="flex-1 min-w-0">
-                  <div className="font-semibold text-sm truncate" style={{ color: "#F5F3FF" }}>{g.flag.name}</div>
+                  <div className="font-semibold text-sm truncate" style={{ color: T.text }}>{g.flag.name}</div>
                   <div className="flex items-center gap-1.5 mt-0.5">
                     <span style={{ fontSize: 12 }}>{REGION_EMOJI[g.flag.region]}</span>
-                    <span className="text-xs" style={{ color: g.regionMatch ? "#34D399" : "#F43F5E" }}>
+                    <span className="text-xs" style={{ color: g.regionMatch ? T.green : T.danger }}>
                       {g.flag.region} {g.regionMatch ? "✓" : "✗"}
                     </span>
                   </div>
@@ -248,7 +252,7 @@ function FlagDNAScreenGame({ onBack , onReplay }: Props & { onReplay: () => void
                 {!isSelf && (
                   <div className="flex flex-col items-center">
                     <span style={{ fontSize: 16 }}>{prox.emoji}</span>
-                    <span style={{ fontSize: 11, fontWeight: 700, color: prox.color }}>{g.proximity}%</span>
+                    <span style={{ fontSize: 11, fontWeight: 700, color: prox.color, fontFamily: FONT.mono, fontVariantNumeric: "tabular-nums" }}>{g.proximity}%</span>
                   </div>
                 )}
                 {isSelf && <span style={{ fontSize: 20 }}>🎯</span>}
@@ -259,9 +263,9 @@ function FlagDNAScreenGame({ onBack , onReplay }: Props & { onReplay: () => void
                 {g.colors.map(({ color, match }) => (
                   <span key={color} className="text-xs px-2 py-0.5 rounded-full font-semibold flex items-center gap-1"
                     style={{
-                      background: match ? `${COLOR_HEX[color]}22` : "#8B6CFF11",
-                      border: `1px solid ${match ? COLOR_HEX[color] : "#8B6CFF22"}`,
-                      color: match ? COLOR_HEX[color] : "#8B6CFF55",
+                      background: match ? tint(COLOR_HEX[color], 0.13) : "transparent",
+                      border: `1px solid ${match ? COLOR_HEX[color] : T.line}`,
+                      color: match ? COLOR_HEX[color] : T.dim,
                     }}>
                     <span style={{ width: 6, height: 6, borderRadius: "50%", background: COLOR_HEX[color], display: "inline-block" }} />
                     {color} {match ? "✓" : "✗"}
@@ -277,9 +281,9 @@ function FlagDNAScreenGame({ onBack , onReplay }: Props & { onReplay: () => void
                   return (
                     <span key={feat} className="text-xs px-2 py-0.5 rounded-full font-semibold"
                       style={{
-                        background: val ? "#34D39915" : "#F43F5E15",
-                        border: `1px solid ${val ? "#34D39955" : "#F43F5E55"}`,
-                        color: val ? "#34D399" : "#F43F5E",
+                        background: val ? tint(T.green, 0.1) : tint(T.danger, 0.1),
+                        border: `1px solid ${val ? tint(T.green, 0.4) : tint(T.danger, 0.4)}`,
+                        color: val ? T.green : T.danger,
                       }}>
                       {FEAT_LABEL[feat]} {val ? "✓" : "✗"}
                     </span>
@@ -291,10 +295,12 @@ function FlagDNAScreenGame({ onBack , onReplay }: Props & { onReplay: () => void
         })}
 
         {guesses.length === 0 && !finished && (
-          <div className="text-center py-8" style={{ color: "#8B6CFF55" }}>
-            <div style={{ fontSize: 40 }}>🧬</div>
-            <p className="text-sm mt-2">Type a country to start decoding the flag</p>
-            <p className="text-xs mt-1" style={{ color: "#8B6CFF33" }}>
+          <div className="text-center py-8" style={{ color: T.dim }}>
+            <div className="flex justify-center">
+              <LineIcon name="flagdna" size={40} color={T.dim} strokeWidth={1.3} />
+            </div>
+            <p className="text-sm mt-2" style={{ color: T.muted }}>Type a country to start decoding the flag</p>
+            <p className="text-xs mt-1" style={{ color: T.dim }}>
               Each guess shows attribute matches and a proximity %
             </p>
           </div>
@@ -304,12 +310,12 @@ function FlagDNAScreenGame({ onBack , onReplay }: Props & { onReplay: () => void
           <div className="flex flex-col gap-3 mt-2">
             <button onClick={onReplay}
               className="w-full py-3.5 rounded-xl font-bold transition-all active:scale-95"
-              style={{ background: "linear-gradient(135deg,#8B6CFF,#A78BFA)", color: "#fff" }}>
+              style={{ background: ACC, color: T.onAccent, fontFamily: FONT.display }}>
               New Flag
             </button>
             <button onClick={onBack}
               className="w-full py-3.5 rounded-xl font-bold transition-all active:scale-95"
-              style={{ background: "#2D1F52", border: "1px solid #8B6CFF33", color: "#B8A9E0" }}>
+              style={{ background: T.surface, border: `1px solid ${T.line}`, color: T.muted }}>
               ← Home
             </button>
           </div>
