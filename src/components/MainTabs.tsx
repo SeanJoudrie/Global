@@ -627,15 +627,23 @@ function TrendingDeck({ games, launch }: { games: Entry[]; launch: (e: Entry) =>
   return (
     <div>
       <div style={{ position: "relative", height: 300 }}>
-        {/* Depth cards peeking behind, for the "stack of postcards" feel */}
-        {[2, 1].filter(off => off < n).map(off => (
-          <div key={off} aria-hidden style={{
-            position: "absolute", inset: 0, borderRadius: 18,
-            background: T.surface, border: `1px solid ${T.line}`,
-            transform: `translateY(${off * 9}px) scale(${1 - off * 0.035})`,
-            opacity: 1 - off * 0.16, boxShadow: "0 8px 20px -16px rgba(31,58,60,0.4)",
-          }} />
-        ))}
+        {/* Depth cards peek the *next* flags — you can see what's coming, which
+            is the whole pull to keep swiping through the stack. */}
+        {[2, 1].filter(off => off < n).map(off => {
+          const g = games[(idx + off) % n]
+          return (
+            <div key={off} aria-hidden style={{
+              position: "absolute", inset: 0, borderRadius: 18, overflow: "hidden",
+              background: tint(ACCENT[g.accent], 0.12), border: `1px solid ${T.line}`,
+              transform: `translateY(${off * 12}px) scale(${1 - off * 0.04})`,
+              opacity: 1 - off * 0.12, boxShadow: "0 8px 20px -16px rgba(31,58,60,0.4)",
+            }}>
+              <FlagImage code={posterFlagFor(g.id)} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+              {/* light parchment veil so the front card still reads as the hero */}
+              <div style={{ position: "absolute", inset: 0, background: tint(T.surface, off === 1 ? 0.28 : 0.45) }} />
+            </div>
+          )
+        })}
 
         {/* Live top card — drag surface */}
         <div
