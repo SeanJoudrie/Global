@@ -1,0 +1,51 @@
+<!-- @dsCard group="Components" viewport="700x280" name="Navigation · TabBar, SectionHeader" -->
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8" />
+<link rel="stylesheet" href="../../styles.css" />
+<style>
+  body { margin: 0; padding: 22px; background: var(--surface-page); }
+  .lbl { font-family: var(--font-body); text-transform: uppercase; letter-spacing: 0.14em; font-size: 8px; font-weight: 600; color: var(--text-muted); margin: 0 0 10px; }
+  .group { margin-bottom: 22px; }
+  .phone { max-width: 380px; border: 1px solid var(--border-hairline); border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-card); }
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/lucide@0.544.0/dist/umd/lucide.min.js"></script>
+<script src="../../assets/line-icon.js"></script>
+<script src="../../_ds_bundle.js"></script>
+<script type="text/babel">
+const { TabBar, SectionHeader, Button } = window.GlobalioDesignSystem_019dee;
+const LineIcon = window.LineIcon;
+
+function Demo() {
+  const [tab, setTab] = React.useState('play');
+  return (
+    <div>
+      <div className="group">
+        <p className="lbl">SectionHeader</p>
+        <SectionHeader title="Daily Puzzles" accent="var(--accent-play)"
+          action={<a className="gl-micro" style={{ fontSize: 8, color: 'var(--text-muted)' }}>see all →</a>} />
+        <SectionHeader title="World Mastery" accent="var(--accent-learn)" />
+        <SectionHeader title="From the Archive" accent="var(--accent-codex)" />
+      </div>
+      <div className="group" style={{ marginBottom: 0 }}>
+        <p className="lbl">TabBar · tap to switch (inline)</p>
+        <div className="phone">
+          <div style={{ height: 96, background: 'var(--surface-page)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 18, color: 'var(--text-strong)', textTransform: 'capitalize' }}>{tab}</div>
+          <TabBar active={tab} onChange={setTab} fixed={false}
+            renderIcon={(g, on, c) => <LineIcon name={g} size={19} color={c} />} />
+        </div>
+      </div>
+    </div>
+  );
+}
+ReactDOM.createRoot(document.getElementById('root')).render(<Demo />);
+</script>
+</body>
+</html>

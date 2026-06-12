@@ -1,0 +1,66 @@
+/* ============================================================================
+   GLOBALIO · TYPOGRAPHY TOKENS
+   Display: Playfair Display (classic archive serif, the wordmark voice)
+   Text / UI / data: Inter (clean, modern, neutral)
+   Data readouts use Inter with tabular figures + tight tracking.
+   ============================================================================ */
+:root {
+  /* ── Families ─────────────────────────────────────────────────────────── */
+  --font-display: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  --font-body:    'Inter', system-ui, -apple-system, sans-serif;
+  --font-data:    'Inter', system-ui, sans-serif;   /* tabular-nums via .data */
+
+  /* ── Display scale (serif headings) ───────────────────────────────────── */
+  --display-xxl:  38px;   /* splash / wordmark hero   */
+  --display-xl:   24px;   /* screen titles            */
+  --display-lg:   22px;   /* card heroes              */
+  --display-md:   18px;   /* section heroes           */
+  --display-sm:   15px;   /* card titles              */
+
+  /* ── Body scale (Inter) ───────────────────────────────────────────────── */
+  --text-lg:      14px;
+  --text-md:      12px;
+  --text-sm:      11px;
+  --text-xs:      9.5px;
+
+  /* ── Micro label (uppercase, tracked) ─────────────────────────────────── */
+  --micro:        10px;
+
+  /* ── Weights ──────────────────────────────────────────────────────────── */
+  --weight-regular: 400;
+  --weight-medium:  500;
+  --weight-semi:    600;
+  --weight-bold:    700;
+  --weight-black:   900;
+
+  /* ── Tracking & leading ───────────────────────────────────────────────── */
+  --track-display: -0.01em;
+  --track-tight:   -0.02em;
+  --track-micro:   0.18em;   /* uppercase eyebrow */
+  --leading-body:  1.5;
+  --leading-tight: 1.1;
+}
+
+/* ── Type utility classes (shipped to consumers) ────────────────────────── */
+.gl-display {
+  font-family: var(--font-display);
+  letter-spacing: var(--track-display);
+  color: var(--text-strong);
+}
+.gl-body {
+  font-family: var(--font-body);
+  color: var(--text-body);
+  line-height: var(--leading-body);
+}
+.gl-data {
+  font-family: var(--font-data);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: var(--track-tight);
+}
+.gl-micro {
+  font-family: var(--font-body);
+  text-transform: uppercase;
+  letter-spacing: var(--track-micro);
+  font-weight: var(--weight-semi);
+  font-size: var(--micro);
+}

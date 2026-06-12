@@ -1,0 +1,23 @@
+<!-- @dsCard group="Colors" viewport="700x150" name="Ink & hairlines" subtitle="Midnight-teal text ramp and paper edges" -->
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8" />
+<link rel="stylesheet" href="../styles.css" />
+<style>
+  body { margin: 0; padding: 20px; background: var(--surface-card); display: flex; gap: 12px; }
+  .sw { flex: 1; border-radius: var(--radius-md); overflow: hidden; border: 1px solid var(--border-hairline); }
+  .chip { height: 52px; }
+  .meta { padding: 7px 10px; }
+  .name { font-family: var(--font-body); font-size: 11px; font-weight: 600; color: var(--text-strong); }
+  .hex { font-family: var(--font-data); font-size: 10px; color: var(--text-muted); letter-spacing: -0.02em; margin-top: 2px; }
+</style>
+</head>
+<body>
+  <div class="sw"><div class="chip" style="background:var(--ink-900)"></div><div class="meta"><div class="name">Text strong</div><div class="hex">--text-strong · #1F3A3C</div></div></div>
+  <div class="sw"><div class="chip" style="background:var(--ink-600)"></div><div class="meta"><div class="name">Text body</div><div class="hex">--text-body · #5F726D</div></div></div>
+  <div class="sw"><div class="chip" style="background:var(--ink-400)"></div><div class="meta"><div class="name">Text muted</div><div class="hex">--text-muted · #A09074</div></div></div>
+  <div class="sw"><div class="chip" style="background:var(--edge-soft)"></div><div class="meta"><div class="name">Hairline</div><div class="hex">--border-hairline · #DDCEAF</div></div></div>
+  <div class="sw"><div class="chip" style="background:var(--edge-strong)"></div><div class="meta"><div class="name">Strong edge</div><div class="hex">--border-strong · #C8B58C</div></div></div>
+</body>
+</html>

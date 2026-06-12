@@ -1,0 +1,27 @@
+<!-- @dsCard group="Colors" viewport="700x176" name="Watercolour accents" subtitle="The five map inks — used only for interaction & progress" -->
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8" />
+<link rel="stylesheet" href="../styles.css" />
+<style>
+  body { margin: 0; padding: 20px; background: var(--surface-page); }
+  .grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; }
+  .sw { border-radius: var(--radius-md); overflow: hidden; border: 1px solid var(--border-hairline); background: var(--surface-card); }
+  .chip { height: 60px; }
+  .meta { padding: 8px 10px; }
+  .name { font-family: var(--font-body); font-size: 11px; font-weight: 600; color: var(--text-strong); }
+  .role { font-family: var(--font-body); text-transform: uppercase; letter-spacing: 0.16em; font-size: 8px; font-weight: 600; color: var(--text-muted); margin-top: 3px; }
+  .hex { font-family: var(--font-data); font-size: 9.5px; color: var(--text-muted); letter-spacing: -0.02em; margin-top: 2px; }
+</style>
+</head>
+<body>
+  <div class="grid">
+    <div class="sw"><div class="chip" style="background:var(--terracotta)"></div><div class="meta"><div class="name">Terracotta</div><div class="role">Play</div><div class="hex">#C2735A</div></div></div>
+    <div class="sw"><div class="chip" style="background:var(--sky)"></div><div class="meta"><div class="name">Sky</div><div class="role">Learn</div><div class="hex">#5C8CA8</div></div></div>
+    <div class="sw"><div class="chip" style="background:var(--ochre)"></div><div class="meta"><div class="name">Ochre</div><div class="role">Codex · Today</div><div class="hex">#C0883A</div></div></div>
+    <div class="sw"><div class="chip" style="background:var(--clay)"></div><div class="meta"><div class="name">Clay</div><div class="role">Challenge</div><div class="hex">#A85440</div></div></div>
+    <div class="sw"><div class="chip" style="background:var(--sage)"></div><div class="meta"><div class="name">Sage</div><div class="role">Success</div><div class="hex">#5C8A6B</div></div></div>
+  </div>
+</body>
+</html>

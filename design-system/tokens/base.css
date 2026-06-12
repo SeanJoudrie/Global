@@ -1,0 +1,22 @@
+/* ============================================================================
+   GLOBALIO · BASE RESET
+   Minimal, calm defaults. Parchment page, ink text, Inter everywhere.
+   ============================================================================ */
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: var(--font-body);
+  color: var(--text-strong);
+  background: var(--surface-page);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  -webkit-tap-highlight-color: transparent;
+}
+
+button { font-family: inherit; cursor: pointer; }
+
+::selection { background: rgba(192, 136, 58, 0.25); }

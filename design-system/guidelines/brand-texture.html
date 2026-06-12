@@ -1,0 +1,28 @@
+<!-- @dsCard group="Brand" viewport="700x200" name="Paper & watercolour" subtitle="Parchment backdrop, dot grain, and accent washes" -->
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8" />
+<link rel="stylesheet" href="../styles.css" />
+<style>
+  body { margin: 0; padding: 0; }
+  .wrap { display: flex; }
+  .gl-paper { flex: 1; height: 200px; display: flex; align-items: flex-end; padding: 16px; }
+  .tag { font-family: var(--font-body); text-transform: uppercase; letter-spacing: 0.18em; font-size: 9px; font-weight: 600; color: var(--text-muted); }
+  .washes { width: 280px; height: 200px; display: grid; grid-template-columns: 1fr 1fr; }
+  .w { display: flex; align-items: flex-end; padding: 10px; }
+  .w span { font-family: var(--font-body); font-size: 9px; font-weight: 600; color: var(--text-on-accent); text-shadow: 0 1px 2px rgba(31,58,60,.3); }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="gl-paper"><span class="tag">.gl-paper · parchment + dot grain + ochre wash</span></div>
+    <div class="washes">
+      <div class="w" style="background:radial-gradient(120% 120% at 20% 10%, var(--terracotta), color-mix(in srgb,var(--terracotta) 30%, var(--surface-card)))"><span>terracotta wash</span></div>
+      <div class="w" style="background:radial-gradient(120% 120% at 20% 10%, var(--sky), color-mix(in srgb,var(--sky) 30%, var(--surface-card)))"><span>sky wash</span></div>
+      <div class="w" style="background:radial-gradient(120% 120% at 20% 10%, var(--ochre), color-mix(in srgb,var(--ochre) 30%, var(--surface-card)))"><span>ochre wash</span></div>
+      <div class="w" style="background:radial-gradient(120% 120% at 20% 10%, var(--sage), color-mix(in srgb,var(--sage) 30%, var(--surface-card)))"><span>sage wash</span></div>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!-- @dsCard group="Brand" viewport="700x220" name="Logo & wordmark" subtitle="The cream globe mark + Playfair wordmark lockup" -->
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8" />
+<link rel="stylesheet" href="../styles.css" />
+<style>
+  body { margin: 0; padding: 0; background: var(--surface-page); }
+  .gl-paper { min-height: 220px; display: flex; align-items: center; gap: 40px; padding: 0 40px; }
+  .lockup { display: flex; align-items: center; gap: 14px; }
+  .wordmark { font-family: var(--font-display); font-weight: 800; font-size: 40px; letter-spacing: -0.5px; color: var(--text-strong); }
+  .stack { display: flex; flex-direction: column; gap: 12px; align-items: center; }
+  .stack .wordmark { font-size: 26px; }
+  .divider { width: 1px; align-self: stretch; background: var(--border-hairline); margin: 36px 0; }
+  .note { font-family: var(--font-body); font-size: 11px; color: var(--text-body); max-width: 200px; line-height: 1.5; }
+</style>
+</head>
+<body>
+  <div class="gl-paper">
+    <div class="lockup">
+      <img src="../assets/earth-logo.svg" width="84" height="84" alt="Globalio" />
+      <span class="wordmark">Globalio</span>
+    </div>
+    <div class="divider"></div>
+    <div class="stack">
+      <img src="../assets/earth-logo.svg" width="56" height="56" alt="" />
+      <span class="wordmark">Globalio</span>
+    </div>
+    <div class="divider"></div>
+    <p class="note">Cream planet, golden-brown continents, warm-brown outline, two hand-drawn clouds. Pairs with the Playfair wordmark at −0.5px tracking.</p>
+  </div>
+</body>
+</html>

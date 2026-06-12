@@ -1,0 +1,20 @@
+<!-- @dsCard group="Spacing" viewport="700x190" name="Elevation & washes" subtitle="Soft ink-teal shadows — card, hover, pop — never neon" -->
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8" />
+<link rel="stylesheet" href="../styles.css" />
+<style>
+  body { margin: 0; padding: 26px 24px; background: var(--surface-page); display: flex; gap: 22px; align-items: center; }
+  .item { text-align: center; }
+  .box { width: 150px; height: 88px; background: var(--surface-card); border: 1px solid var(--border-hairline); border-radius: var(--radius-lg); display: flex; align-items: center; justify-content: center; font-family: var(--font-body); font-size: 11px; font-weight: 600; color: var(--text-body); }
+  .name { font-family: var(--font-body); font-size: 10px; font-weight: 600; color: var(--text-strong); margin-top: 12px; }
+  .val { font-family: var(--font-data); font-size: 9px; color: var(--text-muted); margin-top: 2px; }
+</style>
+</head>
+<body>
+  <div class="item"><div class="box" style="box-shadow:var(--shadow-card)">resting</div><div class="name">--shadow-card</div></div>
+  <div class="item"><div class="box" style="box-shadow:var(--shadow-card-hover);transform:translateY(-2px) rotate(-0.15deg);border-color:var(--border-strong)">hover lift</div><div class="name">--shadow-card-hover</div></div>
+  <div class="item"><div class="box" style="box-shadow:var(--shadow-pop)">pop / dialog</div><div class="name">--shadow-pop</div></div>
+</body>
+</html>

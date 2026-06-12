@@ -1,0 +1,42 @@
+/* ============================================================================
+   GLOBALIO · SPACING, RADII & SIZING TOKENS
+   A relaxed 2px-based rhythm. Cards breathe; nothing is cramped.
+   ============================================================================ */
+:root {
+  /* ── Spacing scale ────────────────────────────────────────────────────── */
+  --space-1:  2px;
+  --space-2:  4px;
+  --space-3:  6px;
+  --space-4:  8px;
+  --space-5:  10px;
+  --space-6:  12px;
+  --space-7:  14px;
+  --space-8:  16px;
+  --space-9:  18px;
+  --space-10: 20px;
+  --space-12: 24px;
+  --space-16: 32px;
+
+  /* component padding defaults */
+  --pad-card:  14px;
+  --pad-tile:  12px;
+  --pad-pill:  7px 14px;
+
+  /* gaps */
+  --gap-tight: 8px;
+  --gap-base:  12px;
+  --gap-loose: 18px;
+
+  /* ── Corner radii ─────────────────────────────────────────────────────── */
+  --radius-xs:   8px;   /* chips, small buttons   */
+  --radius-sm:   10px;  /* icon chips, inputs     */
+  --radius-md:   12px;  /* tiles, module cards    */
+  --radius-lg:   14px;  /* primary cards          */
+  --radius-xl:   16px;  /* hero cards             */
+  --radius-pill: 999px; /* pills, CTAs, tabs      */
+
+  /* ── Icon / control sizing ────────────────────────────────────────────── */
+  --icon-chip-sm: 34px;
+  --icon-chip-md: 42px;
+  --hit-min:      44px;   /* minimum touch target */
+}
