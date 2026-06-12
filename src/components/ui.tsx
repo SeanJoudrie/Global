@@ -186,7 +186,6 @@ export function HeroCard({ eyebrow, title, subtitle, accent, image, onClick, tal
 /* ── Bottom tab bar ─────────────────────────────────────────────────────── */
 const TAB_META: { key: TabKey; label: string; glyph: string; emoji: string; accent: string }[] = [
   { key: "today", label: "Today", glyph: "today", emoji: "🛰️", accent: T.amber },
-  { key: "learn", label: "Learn", glyph: "learn", emoji: "📡", accent: T.cyan },
   { key: "play",  label: "Play",  glyph: "play",  emoji: "🎮", accent: T.chartreuse },
   { key: "codex", label: "Codex", glyph: "codex", emoji: "🗂️", accent: T.amber },
   { key: "you",   label: "You",   glyph: "you",   emoji: "🪪", accent: T.cyan },
@@ -196,7 +195,7 @@ export function TabBar({ active, onChange }: { active: TabKey; onChange: (t: Tab
   return (
     <nav style={{
       position: "fixed", left: 0, right: 0, bottom: 0, zIndex: 60,
-      display: "grid", gridTemplateColumns: "repeat(5,1fr)",
+      display: "grid", gridTemplateColumns: "repeat(4,1fr)",
       background: IS_CARTO ? "rgba(251,244,228,0.94)" : "rgba(8,11,18,0.92)",
       backdropFilter: "blur(14px)",
       borderTop: `1px solid ${T.line}`, paddingBottom: "env(safe-area-inset-bottom)",

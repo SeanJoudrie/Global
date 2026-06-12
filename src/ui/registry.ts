@@ -3,7 +3,7 @@ import { FLAGS } from "../data/flags"
 import { SUB_FLAGS } from "../data/subdivisions"
 import type { AccentKey } from "./tokens"
 
-export type TabKey = "today" | "learn" | "play" | "codex" | "you"
+export type TabKey = "today" | "play" | "codex" | "you"
 export type Size = "module" | "tile"
 export type LaunchAction = "quickplay" | "daily" | "reverse"
 
@@ -29,35 +29,43 @@ const subProgress = (s: AppState) => ({ done: s.learnedSubs.length, total: SUB_F
 // Single source of truth. Adding a destination (or a whole new regional set)
 // is one entry here — tabs, sections, accents and progress all derive from it.
 export const REGISTRY: Entry[] = [
-  // ── LEARN ──────────────────────────────────────────────────────────────
-  { id: "flags", title: "Flag Sets", subtitle: "Country, historical & identity sets", icon: "🚩", tab: "learn", group: "Curriculum", size: "module", accent: "learn", progress: flagProgress },
-  { id: "flashcards", title: "Flashcards", subtitle: "Swipe & learn all 195", icon: "🃏", tab: "learn", group: "Curriculum", size: "module", accent: "learn", progress: flagProgress },
-  { id: "historical", title: "Historical Flags", subtitle: "Vanished empires & states", icon: "📜", tab: "learn", group: "Curriculum", size: "module", accent: "learn" },
-  { id: "identity", title: "Identity Flags", subtitle: "Pride · ethnic · signal flags", icon: "🏳️‍🌈", tab: "learn", group: "Curriculum", size: "module", accent: "learn" },
+  // ── PLAY — one merged tab: the Curriculum (the learning spine, with
+  // progress) up top, then the arcade shelves. Beta Sandbox stays as the
+  // niche-games drawer. Zero deletions — only resorted.
 
-  { id: "provinceroulette", title: "Province Roulette", subtitle: "Continent → country → region", icon: "🎰", tab: "learn", group: "Subdivisions", size: "module", accent: "learn", progress: subProgress },
-  { id: "substumper", title: "Subdivision Stumper", subtitle: "Province flag → country", icon: "📍", tab: "learn", group: "Subdivisions", size: "module", accent: "learn", progress: subProgress },
+  // Curriculum — the "advertised to learn" section
+  { id: "flags", title: "Flag Sets", subtitle: "Country, historical & identity sets", icon: "🚩", tab: "play", group: "Curriculum", size: "module", accent: "learn", progress: flagProgress },
+  { id: "flashcards", title: "Flashcards", subtitle: "Swipe & learn all 195", icon: "🃏", tab: "play", group: "Curriculum", size: "module", accent: "learn", progress: flagProgress },
+  { id: "historical", title: "Historical Flags", subtitle: "Vanished empires & states", icon: "📜", tab: "play", group: "Curriculum", size: "module", accent: "learn" },
+  { id: "identity", title: "Identity Flags", subtitle: "Pride · ethnic · signal flags", icon: "🏳️‍🌈", tab: "play", group: "Curriculum", size: "module", accent: "learn" },
+  { id: "provinceroulette", title: "Province Roulette", subtitle: "Continent → country → region", icon: "🎰", tab: "play", group: "Curriculum", size: "module", accent: "learn", progress: subProgress },
+  { id: "substumper", title: "Subdivision Stumper", subtitle: "Province flag → country", icon: "📍", tab: "play", group: "Curriculum", size: "module", accent: "learn", progress: subProgress },
 
-  // ── PLAY ───────────────────────────────────────────────────────────────
-  // Netflix-style swipeable rows (Chill Cartography redesign): Daily Puzzles ·
-  // Brain Benders · Geography · Quick Drills, then Challenge modules, then the
-  // niche games progressively disclosed in the Beta Sandbox. Zero deletions.
+  // Daily & Casual — rituals and toys
+  { id: "gacha", title: "Flag Gacha", subtitle: "Daily pull · collect them all", icon: "🎁", tab: "play", group: "Daily & Casual", size: "tile", accent: "today" },
+  { id: "funfact", title: "Fun Fact", subtitle: "Daily flag fact", icon: "💡", tab: "play", group: "Daily & Casual", size: "tile", accent: "today" },
+  { id: "flagbracket", title: "Flag Bracket", subtitle: "Vote your champion", icon: "🏆", tab: "play", group: "Daily & Casual", size: "tile", accent: "today" },
+  { id: "tierlist", title: "Tier List Maker", subtitle: "Rank flags S–F", icon: "🏆", tab: "play", group: "Daily & Casual", size: "tile", accent: "today" },
 
-  // Daily Puzzles — the once-a-day ritual games
-  { id: "flagle", title: "Flagle", subtitle: "Daily flag Wordle · 6 guesses", icon: "🟩", tab: "play", group: "Daily Puzzles", size: "tile", accent: "today" },
-  { id: "gacha", title: "Flag Gacha", subtitle: "Daily pull · collect them all", icon: "🎁", tab: "play", group: "Daily Puzzles", size: "tile", accent: "today" },
-  { id: "funfact", title: "Fun Fact", subtitle: "Daily flag fact", icon: "💡", tab: "play", group: "Daily Puzzles", size: "tile", accent: "today" },
-  { id: "timeline", title: "Flag Timeline", subtitle: "Order a country's flags in time", icon: "⏳", tab: "play", group: "Daily Puzzles", size: "tile", accent: "today" },
-
-  // Brain Benders — the standout puzzle games
+  // Brain Benders — thinking & deduction
   { id: "language", title: "Guess the Language", subtitle: "82 languages · easy → extreme", icon: "🗣️", tab: "play", group: "Brain Benders", size: "tile", accent: "play" },
   { id: "flagdna", title: "Flag DNA", subtitle: "Guess by attributes", icon: "🧬", tab: "play", group: "Brain Benders", size: "tile", accent: "play" },
-  { id: "buildflag", title: "Build the Flag", subtitle: "Assemble the bands", icon: "🧩", tab: "play", group: "Brain Benders", size: "tile", accent: "play" },
-  { id: "thepeel", title: "The Peel", subtitle: "Scratch to reveal", icon: "🖌️", tab: "play", group: "Brain Benders", size: "tile", accent: "play" },
   { id: "frankenflag", title: "Frankenflag", subtitle: "Name both halves", icon: "🧟", tab: "play", group: "Brain Benders", size: "tile", accent: "play" },
   { id: "realorbot", title: "Real or Bot", subtitle: "Swipe: real flag or AI fake?", icon: "🤖", tab: "play", group: "Brain Benders", size: "tile", accent: "play" },
   { id: "deadoralive", title: "Dead or Alive", subtitle: "Live or vanished?", icon: "💀", tab: "play", group: "Brain Benders", size: "tile", accent: "play" },
   { id: "lineage", title: "Lineage", subtitle: "Trace a flag's family tree", icon: "🌳", tab: "play", group: "Brain Benders", size: "tile", accent: "play" },
+  { id: "twotruths", title: "Two Truths", subtitle: "Spot the lie about a country", icon: "🕵️", tab: "play", group: "Brain Benders", size: "tile", accent: "play" },
+  { id: "describeit", title: "Describe-It", subtitle: "Guess from the clues", icon: "📝", tab: "play", group: "Brain Benders", size: "tile", accent: "play" },
+
+  // Puzzle Workshop — build, reveal & reassemble
+  { id: "buildflag", title: "Build the Flag", subtitle: "Assemble the bands", icon: "🧩", tab: "play", group: "Puzzle Workshop", size: "tile", accent: "challenge" },
+  { id: "thepeel", title: "The Peel", subtitle: "Scratch to reveal", icon: "🖌️", tab: "play", group: "Puzzle Workshop", size: "tile", accent: "challenge" },
+  { id: "composer", title: "The Composer", subtitle: "Reassemble the flag", icon: "🎴", tab: "play", group: "Puzzle Workshop", size: "tile", accent: "challenge" },
+  { id: "thecrop", title: "The Crop", subtitle: "Zoom out to guess", icon: "🔍", tab: "play", group: "Puzzle Workshop", size: "tile", accent: "challenge" },
+  { id: "silhouette", title: "Silhouette", subtitle: "Guess from the dark", icon: "🌑", tab: "play", group: "Puzzle Workshop", size: "tile", accent: "challenge" },
+  { id: "timeline", title: "Flag Timeline", subtitle: "Order a country's flags in time", icon: "⏳", tab: "play", group: "Puzzle Workshop", size: "tile", accent: "challenge" },
+  { id: "symbolhunt", title: "Symbol Hunt", subtitle: "Find every flag with a symbol", icon: "🔎", tab: "play", group: "Puzzle Workshop", size: "tile", accent: "challenge" },
+  { id: "flagfamilies", title: "Flag Families", subtitle: "Sort into families", icon: "👪", tab: "play", group: "Puzzle Workshop", size: "tile", accent: "challenge" },
 
   // Geography — maps, borders & shapes
   { id: "geo", title: "Geography", subtitle: "Identify countries by shape", icon: "🗺️", tab: "play", group: "Geography", size: "tile", accent: "learn" },
@@ -72,24 +80,16 @@ export const REGISTRY: Entry[] = [
   { id: "capitalmatch", title: "Capital Match", subtitle: "Match flags to capitals", icon: "🏛️", tab: "play", group: "Quick Drills", size: "tile", accent: "drill" },
   { id: "higherlower", title: "Higher / Lower", subtitle: "More red or blue?", icon: "📊", tab: "play", group: "Quick Drills", size: "tile", accent: "drill" },
   { id: "statclash", title: "Stat Clash", subtitle: "Bigger population or area?", icon: "⚖️", tab: "play", group: "Quick Drills", size: "tile", accent: "drill" },
-  { id: "twotruths", title: "Two Truths", subtitle: "Spot the lie about a country", icon: "🕵️", tab: "play", group: "Quick Drills", size: "tile", accent: "drill" },
+  { id: "oddoneout", title: "Odd One Out", subtitle: "Find the impostor", icon: "🕵️", tab: "play", group: "Quick Drills", size: "tile", accent: "drill" },
+  { id: "lookalikes", title: "Lookalikes", subtitle: "Spot the real one", icon: "👯", tab: "play", group: "Quick Drills", size: "tile", accent: "drill" },
+  { id: "prideroulette", title: "Pride Roulette", subtitle: "Name the pride flag · survival", icon: "🏳️‍🌈", tab: "play", group: "Quick Drills", size: "tile", accent: "drill" },
+  { id: "uscityflags", title: "US City Flags", subtitle: "Name the American city", icon: "🏙️", tab: "play", group: "Quick Drills", size: "tile", accent: "drill" },
 
   { id: "gauntlet", title: "Gauntlet", subtitle: "One life · every flag", icon: "⚔️", tab: "play", group: "Challenge", size: "module", accent: "challenge" },
   { id: "challenge", title: "Challenge Mode", subtitle: "States, provinces & regions", icon: "🎖️", tab: "play", group: "Challenge", size: "module", accent: "challenge" },
 
-  // Beta Sandbox — experimental & niche games, collapsed at the bottom of Play
-  { id: "oddoneout", title: "Odd One Out", subtitle: "Find the impostor", icon: "🕵️", tab: "play", group: "Beta Sandbox", size: "tile", accent: "play", sandbox: true },
-  { id: "thecrop", title: "The Crop", subtitle: "Zoom out to guess", icon: "🔍", tab: "play", group: "Beta Sandbox", size: "tile", accent: "play", sandbox: true },
-  { id: "silhouette", title: "Silhouette", subtitle: "Guess from the dark", icon: "🌑", tab: "play", group: "Beta Sandbox", size: "tile", accent: "play", sandbox: true },
-  { id: "lookalikes", title: "Lookalikes", subtitle: "Spot the real one", icon: "👯", tab: "play", group: "Beta Sandbox", size: "tile", accent: "play", sandbox: true },
-  { id: "composer", title: "The Composer", subtitle: "Reassemble the flag", icon: "🎴", tab: "play", group: "Beta Sandbox", size: "tile", accent: "play", sandbox: true },
-  { id: "flagfamilies", title: "Flag Families", subtitle: "Sort into families", icon: "👪", tab: "play", group: "Beta Sandbox", size: "tile", accent: "play", sandbox: true },
-  { id: "prideroulette", title: "Pride Roulette", subtitle: "Name the pride flag · survival", icon: "🏳️‍🌈", tab: "play", group: "Beta Sandbox", size: "tile", accent: "play", sandbox: true },
-  { id: "symbolhunt", title: "Symbol Hunt", subtitle: "Find every flag with a symbol", icon: "🔎", tab: "play", group: "Beta Sandbox", size: "tile", accent: "play", sandbox: true },
-  { id: "describeit", title: "Describe-It", subtitle: "Guess from the clues", icon: "📝", tab: "play", group: "Beta Sandbox", size: "tile", accent: "play", sandbox: true },
-  { id: "flagbracket", title: "Flag Bracket", subtitle: "Vote your champion", icon: "🏆", tab: "play", group: "Beta Sandbox", size: "tile", accent: "play", sandbox: true },
-  { id: "uscityflags", title: "US City Flags", subtitle: "Name the American city", icon: "🏙️", tab: "play", group: "Beta Sandbox", size: "tile", accent: "play", sandbox: true },
-  { id: "tierlist", title: "Tier List Maker", subtitle: "Rank flags S–F", icon: "🏆", tab: "play", group: "Beta Sandbox", size: "tile", accent: "play", sandbox: true },
+  // Beta Sandbox — games that need work live here until they're ready
+  { id: "flagle", title: "Flagle", subtitle: "Daily flag Wordle · 6 guesses", icon: "🟩", tab: "play", group: "Beta Sandbox", size: "tile", accent: "play", sandbox: true },
 
   // ── CODEX → the bottom tab now opens the Codex itself (no launcher page).
   // Its companion reference tools live on the YOU tab as the Collection.
