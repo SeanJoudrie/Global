@@ -168,6 +168,16 @@ function buildArt(id: string, accent: string, hero: boolean): { node: ReactNode;
           <MiniFlag code="ph" style={{ width: hero ? "30%" : "38%", transform: "rotate(5deg)" }} />
         </div>
       ) }
+    case "gacha":
+      // A flag sealed in a gacha capsule, waiting to be cracked open.
+      return { bleed: false, node: (
+        <div style={{ ...box, display: "flex", alignItems: "center", justifyContent: "center", background: wash }}>
+          <div style={{ width: hero ? "38%" : "54%", maxWidth: 76, aspectRatio: "1", borderRadius: "50%", overflow: "hidden", border: `2px solid ${tint(accent, 0.6)}`, boxShadow: `0 4px 12px -4px ${tint(T.text, 0.5)}`, background: T.surface }}>
+            <div style={{ width: "100%", height: "50%", background: tint(accent, 0.45) }} />
+            <div style={{ width: "100%", height: "50%", overflow: "hidden" }}>{flag("br")}</div>
+          </div>
+        </div>
+      ) }
     case "flagbracket":
       // A four-flag bracket: Kazakhstan & Iceland vs Canada & Brazil.
       return { bleed: false, node: (

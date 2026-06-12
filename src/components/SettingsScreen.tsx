@@ -189,7 +189,7 @@ export default function SettingsScreen({ onBack, onMegaCodex, onFlagCheck }: Pro
         <button onClick={onMegaCodex}
           className="w-full mt-8 py-2.5 rounded-xl text-xs font-semibold transition-all active:scale-95"
           style={{ background: 'transparent', border: `1px dashed ${T.line}`, color: T.dim }}>
-          <span className="inline-flex items-center justify-center gap-2"><LineIcon name="codex" size={14} color={T.dim} /> Mega Codex</span>
+          <span className="inline-flex items-center justify-center gap-2"><LineIcon name="codex" size={14} color={T.dim} /> Secret MegaCodex</span>
         </button>
 
         {/* temporary flag-QA list */}

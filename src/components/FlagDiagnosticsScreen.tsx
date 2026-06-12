@@ -70,8 +70,11 @@ function MissingRow({ f, sel, toggle }: { f: MissingFlag; sel: Set<string>; togg
   )
 }
 
+// Recently-added flags fold into Fixed — one list, every entry should load.
+const ALL_FIXED = [...RECENT_FLAGS, ...FIXED_FLAGS]
+
 export default function FlagDiagnosticsScreen({ onBack }: Props) {
-  const [tab, setTab] = useState<"missing" | "new" | "fixed">("new")
+  const [tab, setTab] = useState<"missing" | "fixed">("fixed")
   // selections: arg -> set of chosen candidate filenames
   const [picks, setPicks] = useState<Record<string, Set<string>>>({})
   const [submitText, setSubmitText] = useState<string | null>(null)
@@ -103,9 +106,9 @@ export default function FlagDiagnosticsScreen({ onBack }: Props) {
 
   return (
     <div style={{ position: "fixed", inset: 0, background: T.bg, color: T.text, zIndex: 1, display: "flex", flexDirection: "column" }}>
-      <ScreenHeader title="Flag Check" subtitle="Temporary flag QA tool" onBack={onBack} />
+      <ScreenHeader title="Flag Check" subtitle="Developer use only" onBack={onBack} />
       <div style={{ display: "flex", gap: 6, padding: "0 12px 10px" }}>
-        {([["new", `New (${RECENT_FLAGS.length})`], ["missing", `Missing (${MISSING_FLAGS.length})`], ["fixed", `Fixed (${FIXED_FLAGS.length})`]] as const).map(([id, label]) => (
+        {([["missing", `Missing (${MISSING_FLAGS.length})`], ["fixed", `Fixed (${ALL_FIXED.length})`]] as const).map(([id, label]) => (
           <button key={id} onClick={() => setTab(id)} style={{
             flex: 1, padding: "8px 0", borderRadius: 10, fontSize: 13, fontWeight: 600, cursor: "pointer",
             background: tab === id ? ACCENT.codex : T.surface, color: tab === id ? T.onAccent : T.muted,
@@ -116,15 +119,13 @@ export default function FlagDiagnosticsScreen({ onBack }: Props) {
       <div style={{ padding: "0 12px 8px", fontSize: 11, color: T.muted, lineHeight: 1.4 }}>
         {tab === "missing"
           ? "Tap the correct flag(s) for each entry (pick more than one if several are right). Then hit Submit at the bottom and send me the copied text."
-          : tab === "new"
-          ? "Recently added/recovered flags — every one should show “loads ✓”. Tell me if any is broken or looks wrong."
-          : "These were repaired. Every one should show “loads ✓”. Tell me if any looks wrong."}
+          : "Repaired & recently added flags. Every one should show “loads ✓”. Tell me if any looks wrong."}
       </div>
 
       <div style={{ flex: 1, overflowY: "auto", WebkitOverflowScrolling: "touch", paddingBottom: tab === "missing" ? 72 : 0 }}>
         {tab === "missing"
           ? MISSING_FLAGS.map((f, i) => <MissingRow key={"m" + i} f={f} sel={picks[f.arg] ?? new Set()} toggle={(file) => toggle(f.arg, file)} />)
-          : (tab === "new" ? RECENT_FLAGS : FIXED_FLAGS).map((f, i) => <FixedTile key={tab + i} f={f} />)}
+          : ALL_FIXED.map((f, i) => <FixedTile key={"f" + i} f={f} />)}
       </div>
 
       {tab === "missing" && (

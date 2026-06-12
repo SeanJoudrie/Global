@@ -27,10 +27,17 @@ function gatherFlagUrls(): string[] {
   return [...urls].filter(u => !EXCLUDE(u)).sort(() => Math.random() - 0.5)
 }
 
+// The wall renders thousands of ~60px tiles; full-size Wikimedia files (some
+// coat-of-arms SVGs are megabytes) flooded the network and stalled loading.
+// FilePath supports ?width= for a small raster render — same image, ~50x
+// lighter. Self-hosted /flags/ SVGs are already tiny and stay untouched.
+const thumb = (u: string) =>
+  u.includes("Special:FilePath") && !u.includes("?") ? `${u}?width=240` : u
+
 const GAP = 3
 const PAD = 6
 const MIN_TILE = 56
-const BUFFER_ROWS = 8
+const BUFFER_ROWS = 4
 
 export default function MegaCodexScreen({ onBack }: Props) {
   const [urls] = useState(gatherFlagUrls)
@@ -92,7 +99,7 @@ export default function MegaCodexScreen({ onBack }: Props) {
             {visible.map((u, k) => (
               <img
                 key={startIdx + k}
-                src={u}
+                src={thumb(u)}
                 alt=""
                 loading="lazy"
                 decoding="async"
@@ -103,7 +110,8 @@ export default function MegaCodexScreen({ onBack }: Props) {
                   if (t < 2) {
                     el.dataset.t = String(t + 1)
                     el.removeAttribute("src")
-                    window.setTimeout(() => { el.src = u }, 500 + t * 800 + Math.random() * 600)
+                    // first retry the thumb, then fall back to the original file
+                    window.setTimeout(() => { el.src = t === 0 ? thumb(u) : u }, 500 + t * 800 + Math.random() * 600)
                   } else {
                     el.style.visibility = "hidden"
                   }

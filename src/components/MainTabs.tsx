@@ -7,7 +7,7 @@ import { todayString } from "../utils/prng"
 import { T, ACCENT, FONT, tint, IS_CARTO } from "../ui/tokens"
 import { groupsFor, REGISTRY, recommendFor, discoverGames, trendingGames } from "../ui/registry"
 import type { Entry, TabKey } from "../ui/registry"
-import { TabBar, ModuleCard, GameTile, FlagTile, StatPill, SectionHeader, ProgressRing } from "./ui"
+import { TabBar, ModuleCard, FlagTile, StatPill, SectionHeader, ProgressRing } from "./ui"
 import { LineIcon, FlameIcon, ChevronDownIcon, FlaskIcon, SearchIcon, ShuffleIcon, CompassIcon, SparklesIcon, HistoryIcon, TrendingUpIcon, CrownIcon, PencilIcon } from "./icons"
 import FlagImage from "./FlagImage"
 import { GamePoster } from "./GamePoster"
@@ -103,13 +103,11 @@ export default function MainTabs({ state, tab, onTab, onNavigate, onQuickPlay, o
           </span>
         </div>
         <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-          {/* Today already opens on a big streak celebration — don't show it twice */}
-          {tab !== "today" && (
-            <div style={{ display: "flex", alignItems: "center", gap: 5, padding: "5px 10px", borderRadius: IS_CARTO ? 999 : 8, background: T.surface, border: `1px solid ${tint(T.amber, IS_CARTO ? 0.45 : 0.3)}` }}>
-              {IS_CARTO ? <FlameIcon size={13} color={T.amber} strokeWidth={1.7} /> : <span style={{ fontSize: 12 }}>🔥</span>}
-              <span style={{ fontFamily: FONT.mono, fontWeight: IS_CARTO ? 600 : 800, fontSize: 14, color: T.amber, letterSpacing: "-0.02em" }}>{state.currentStreak}</span>
-            </div>
-          )}
+          {/* The streak, small and always on top — Today's big celebration is gone */}
+          <div style={{ display: "flex", alignItems: "center", gap: 5, padding: "5px 10px", borderRadius: IS_CARTO ? 999 : 8, background: T.surface, border: `1px solid ${tint(T.amber, IS_CARTO ? 0.45 : 0.3)}` }}>
+            {IS_CARTO ? <FlameIcon size={13} color={T.amber} strokeWidth={1.7} /> : <span style={{ fontSize: 12 }}>🔥</span>}
+            <span style={{ fontFamily: FONT.mono, fontWeight: IS_CARTO ? 600 : 800, fontSize: 14, color: T.amber, letterSpacing: "-0.02em" }}>{state.currentStreak}</span>
+          </div>
           <button onClick={() => onNavigate("settings")} aria-label="Settings" className="geo-tap"
             style={{ width: 44, height: 44, borderRadius: IS_CARTO ? 999 : 8, background: T.surface, border: `1px solid ${T.line}`, color: T.muted, display: "flex", alignItems: "center", justifyContent: "center" }}>
             {IS_CARTO ? <LineIcon name="settings" size={18} color={T.muted} /> : "⚙"}
@@ -137,147 +135,113 @@ export default function MainTabs({ state, tab, onTab, onNavigate, onQuickPlay, o
   )
 }
 
-/* ── TODAY — the hook. Stripped to a streak celebration, one massive primary
-   action, a secondary Quick Play and a sleek Flag of the Day card. ────────── */
+/* ── TODAY — the launchpad. The streak lives small in the shared header; the
+   page opens straight onto a hero deck of four image-led slides (Expedition ·
+   Flag of the Day · the Arcade · a daily fact), then a charged-up Quick Play,
+   the two daily rituals as poster tiles, jump-back-in, and the learning
+   resume. Every road leads to Play — or the Codex. ───────────────────────── */
 function TodayTab({ state, dailyDone, launch, onNavigate, onGoCodex, onGoPlay, onQuickPlay, onStartDaily }: {
   state: AppState; dailyDone: boolean; launch: (e: Entry) => void
   onNavigate: (s: string) => void; onGoCodex: () => void; onGoPlay: () => void; onQuickPlay: () => void; onStartDaily: () => void
 }) {
   const fotd = FLAGS[dayIdx % FLAGS.length]
   const dyk = FLAGS[(dayIdx * 7 + 3) % FLAGS.length]
-  const gameCount = REGISTRY.filter(r => r.tab === "play").length
+  const gameCount = REGISTRY.filter(r => r.tab === "play" && !r.sandbox).length
   const todayResult = state.dailyHistory[todayString()]
   const recent = loadRecent().map(id => REGISTRY.find(r => r.id === id)).filter((e): e is Entry => !!e)
   const dailyRituals = ["gacha", "funfact"].map(id => REGISTRY.find(r => r.id === id)).filter((e): e is Entry => !!e)
+  const exped = dailyDone ? T.green : ACCENT.play
+  const dateLine = new Date().toLocaleDateString(undefined, { weekday: "long", month: "long", day: "numeric" })
+
+  // A small fan of flags — the arcade slide's poster art.
+  const flagFan = (
+    <div style={{ position: "relative", width: 88, height: 64, flexShrink: 0 }}>
+      {["jp", "br", "fr"].map((c, i) => (
+        <div key={c} style={{ position: "absolute", inset: 0, borderRadius: 6, overflow: "hidden", border: `1.5px solid ${T.surface}`,
+          transform: `translate(${(i - 1) * 9}px, ${(i - 1) * 5}px) rotate(${(i - 1) * 6}deg)`,
+          boxShadow: `0 3px 8px -4px ${tint(T.text, 0.6)}`, zIndex: i }}>
+          <FlagImage code={c} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+        </div>
+      ))}
+    </div>
+  )
+
   return (
     <div className={IS_CARTO ? "carto-slide-up" : undefined} style={{ display: "flex", flexDirection: "column", gap: 18 }}>
-      {/* Streak celebration */}
-      <div style={{ display: "flex", alignItems: "center", gap: 14, padding: "4px 2px" }}>
-        <div className={IS_CARTO ? "carto-pulse" : undefined} style={{
-          width: 54, height: 54, borderRadius: "50%", flexShrink: 0,
-          display: "flex", alignItems: "center", justifyContent: "center",
-          background: tint(ACCENT.today, 0.14), border: `1px solid ${tint(ACCENT.today, 0.34)}`,
-        }}>
-          {IS_CARTO ? <FlameIcon size={26} color={ACCENT.today} strokeWidth={1.6} /> : <span style={{ fontSize: 24 }}>🔥</span>}
-        </div>
-        <div>
-          <div style={{ display: "flex", alignItems: "baseline", gap: 7 }}>
-            <span style={{ fontFamily: FONT.mono, fontVariantNumeric: "tabular-nums", fontWeight: 800, fontSize: 34, letterSpacing: "-0.04em", color: ACCENT.today, lineHeight: 1 }}>{state.currentStreak}</span>
-            <span className="geo-display" style={{ fontWeight: 700, fontSize: 18, color: T.text }}>day streak</span>
-          </div>
-          <div style={{ color: T.muted, fontSize: 12, marginTop: 3 }}>Best run {state.longestStreak} · keep the map lit</div>
-        </div>
+      {/* Compact title — the streak chip sits in the header above */}
+      <div style={{ padding: "0 2px" }}>
+        <div className="geo-display" style={{ fontWeight: 800, fontSize: 26, letterSpacing: "-0.02em", color: T.text }}>Today</div>
+        <div style={{ color: T.muted, fontSize: 12.5, marginTop: 3 }}>{dateLine} · best run {state.longestStreak}</div>
       </div>
 
-      {/* Hero carousel — the Daily Expedition up front, old-style adverts behind
-          (the arcade, personalisation, a daily fact). Swipe to browse. */}
-      <HeroDeck accent={ACCENT.play}>
-      <button onClick={dailyDone ? undefined : onStartDaily} className={`${dailyDone ? "" : "geo-tap"} ${IS_CARTO ? "carto-card" : ""}`}
-        aria-disabled={dailyDone || undefined}
-        style={{
-          flex: 1, position: "relative", overflow: "hidden", padding: "22px 20px", borderRadius: 16, textAlign: "left",
-          border: `1px solid ${tint(dailyDone ? T.green : ACCENT.play, 0.36)}`,
-          background: `linear-gradient(150deg, ${tint(dailyDone ? T.green : ACCENT.play, 0.16)}, ${T.surface} 70%)`,
-          cursor: dailyDone ? "default" : "pointer",
-          ...(IS_CARTO ? { ["--wash" as string]: tint(dailyDone ? T.green : ACCENT.play, 0.42) } : {}),
-        }}>
-        <div style={{ position: "absolute", right: -18, bottom: -22, opacity: 0.12, color: dailyDone ? T.green : ACCENT.play, pointerEvents: "none" }}>
-          {IS_CARTO ? <LineIcon name="today" size={132} color={dailyDone ? T.green : ACCENT.play} strokeWidth={1.1} /> : <span style={{ fontSize: 110 }}>🧭</span>}
-        </div>
-        <div className="geo-micro" style={{ fontSize: 9, color: dailyDone ? T.green : ACCENT.play, marginBottom: 8 }}>◦ Today's expedition</div>
-        <div className="geo-display" style={{ fontWeight: 800, fontSize: 30, lineHeight: 1.02, letterSpacing: "-0.02em", color: T.text, maxWidth: 240 }}>
-          Daily Expedition
-        </div>
-        <div style={{ color: T.muted, fontSize: 12.5, marginTop: 6, maxWidth: 220 }}>
-          {dailyDone ? "Logged for today — a fresh expedition lands tomorrow." : "Ten flags from across the world. One run, once a day."}
-        </div>
-        <div style={{ marginTop: 16, display: "inline-flex", alignItems: "center", gap: 8, padding: "11px 20px", borderRadius: 999, background: dailyDone ? T.green : ACCENT.play, color: T.onAccent }}>
-          <span style={{ fontFamily: FONT.display, fontWeight: 700, fontSize: 15 }}>
-            {dailyDone ? (todayResult ? `✓ ${todayResult.score}/${todayResult.total} today` : "✓ Done today") : "Start"}
-          </span>
-          {!dailyDone && <span style={{ fontSize: 16 }}>→</span>}
-        </div>
-      </button>
-      <AdSlide accent={ACCENT.challenge} glyph="play" eyebrow="The Arcade"
-        title={`${gameCount} games, one arcade`}
-        body="Daily puzzles, brain benders, geography drills — every shelf swipes."
-        cta="Browse games" onClick={onGoPlay} />
-      <AdSlide accent={ACCENT.learn} glyph="settings" eyebrow="Make it yours"
-        title="Your map, your colours"
-        body="Parchment, tactical or classic purple — switch the whole look in Settings."
-        cta="Open settings" onClick={() => onNavigate("settings")} />
-      <AdSlide accent={ACCENT.codex} glyph="funfact" eyebrow="Did you know?"
-        title={dyk.name}
-        body={dyk.funFact}
-        cta="More fun facts" onClick={() => onNavigate("funfact")} />
+      {/* Hero deck — Expedition first, then Flag of the Day (→ Codex), the
+          Arcade (→ Play) and a daily fact. Swipe to browse. */}
+      <HeroDeck accent={exped}>
+        <DeckSlide accent={exped} watermark="today" eyebrow="Today's expedition" title="Daily Expedition"
+          body={dailyDone ? "Logged for today — a fresh expedition lands tomorrow." : "Ten flags from across the world. One run, once a day."}
+          cta={dailyDone ? (todayResult ? `✓ ${todayResult.score}/${todayResult.total} today` : "✓ Done today") : "Start"}
+          onClick={dailyDone ? undefined : onStartDaily} />
+        <DeckSlide accent={ACCENT.codex} eyebrow={`Flag of the Day · ${fotd.region}`} title={fotd.name}
+          body={fotd.funFact} cta="Read in the Codex" onClick={onGoCodex}
+          art={
+            <div style={{ width: 100, height: 67, borderRadius: 10, overflow: "hidden", flexShrink: 0, border: `1px solid ${T.line}`, boxShadow: `0 4px 12px -6px ${tint(T.text, 0.45)}` }}>
+              <FlagImage code={fotd.code} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+            </div>
+          } />
+        <DeckSlide accent={ACCENT.challenge} eyebrow="The Arcade" title={`${gameCount} games await`}
+          body="A swipeable trending deck, fresh picks daily, every shelf one tap from play."
+          cta="Open the Arcade" onClick={onGoPlay} art={flagFan} />
+        <DeckSlide accent={ACCENT.learn} eyebrow="Did you know?" title={dyk.name}
+          body={dyk.funFact} cta="More fun facts" onClick={() => onNavigate("funfact")}
+          art={
+            <div style={{ width: 76, height: 51, borderRadius: 8, overflow: "hidden", flexShrink: 0, border: `1px solid ${T.line}`, boxShadow: `0 3px 9px -5px ${tint(T.text, 0.45)}` }}>
+              <FlagImage code={dyk.code} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+            </div>
+          } />
       </HeroDeck>
 
-      {/* Secondary quick play */}
+      {/* Quick Play — instant fun, charged up */}
       <button onClick={onQuickPlay} className={`geo-tap ${IS_CARTO ? "carto-card" : ""}`}
-        style={{ display: "flex", alignItems: "center", gap: 13, padding: "13px 16px", borderRadius: 12, textAlign: "left",
-          ...(IS_CARTO ? { ["--wash" as string]: tint(ACCENT.today, 0.4) } : { background: T.surface, border: `1px solid ${T.line}` }) }}>
-        <span style={{ width: 40, height: 40, borderRadius: 10, flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center",
-          background: tint(ACCENT.today, 0.12), border: `1px solid ${tint(ACCENT.today, 0.28)}` }}>
-          {IS_CARTO ? <LineIcon name="quickplay" size={20} color={ACCENT.today} /> : <span style={{ fontSize: 18 }}>⚡</span>}
+        style={{ display: "flex", alignItems: "center", gap: 14, padding: "15px 16px", borderRadius: 16, textAlign: "left",
+          border: `1px solid ${tint(ACCENT.today, 0.4)}`,
+          background: `linear-gradient(150deg, ${tint(ACCENT.today, 0.16)}, ${T.surface} 72%)`,
+          ...(IS_CARTO ? { ["--wash" as string]: tint(ACCENT.today, 0.45) } : {}) }}>
+        <span style={{ width: 48, height: 48, borderRadius: "50%", flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center",
+          background: tint(ACCENT.today, 0.14), border: `1px solid ${tint(ACCENT.today, 0.34)}` }}>
+          {IS_CARTO ? <LineIcon name="quickplay" size={23} color={ACCENT.today} /> : <span style={{ fontSize: 20 }}>⚡</span>}
         </span>
-        <div style={{ flex: 1 }}>
-          <div className="geo-display" style={{ fontWeight: 600, fontSize: 15, color: T.text }}>Quick Play</div>
-          <div style={{ color: T.muted, fontSize: 11.5, marginTop: 1 }}>10 random flags · instant, no streak</div>
+        <div style={{ flex: 1, minWidth: 0 }}>
+          <div className="geo-display" style={{ fontWeight: 800, fontSize: 19, letterSpacing: "-0.01em", color: T.text }}>Quick Play</div>
+          <div style={{ color: T.muted, fontSize: 11.5, marginTop: 2 }}>10 random flags · zero stakes · right now</div>
         </div>
-        <span style={{ color: ACCENT.today, fontSize: 18, opacity: 0.7 }}>→</span>
+        <span style={{ display: "inline-flex", alignItems: "center", gap: 6, padding: "10px 18px", borderRadius: 999, flexShrink: 0, background: ACCENT.today, color: T.onAccent }}>
+          <span style={{ fontFamily: FONT.display, fontWeight: 700, fontSize: 14 }}>Go</span><span style={{ fontSize: 14 }}>→</span>
+        </span>
       </button>
 
-      {/* Daily rituals — Flag Gacha & Fun Fact, promoted from the arcade */}
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
-        {dailyRituals.map(e => (
-          <button key={e.id} onClick={() => launch(e)} className={`geo-tap ${IS_CARTO ? "carto-card" : ""}`}
-            style={{
-              textAlign: "left", padding: 14, borderRadius: 14, position: "relative", overflow: "hidden",
-              border: `1px solid ${tint(ACCENT[e.accent], 0.36)}`,
-              background: `linear-gradient(150deg, ${tint(ACCENT[e.accent], 0.14)}, ${T.surface} 75%)`,
-              ...(IS_CARTO ? { ["--wash" as string]: tint(ACCENT[e.accent], 0.4) } : {}),
-            }}>
-            <div style={{ marginBottom: 18, color: ACCENT[e.accent], display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-              <LineIcon name={e.id} size={22} color={ACCENT[e.accent]} />
-              <span style={{ width: 22, height: 22, borderRadius: 999, background: ACCENT[e.accent], color: T.onAccent, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 12, fontWeight: 800 }}>→</span>
-            </div>
-            <div className="geo-display" style={{ color: T.text, fontWeight: 700, fontSize: 15 }}>{e.title}</div>
-            <div style={{ color: T.muted, fontSize: 10.5, marginTop: 2 }}>{e.subtitle}</div>
-          </button>
-        ))}
+      {/* Daily rituals — Flag Gacha & Fun Fact, with their poster art */}
+      <div>
+        <SectionHeader title="Daily rituals" accent={ACCENT.today} />
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
+          {dailyRituals.map(e => (
+            <FlagTile key={e.id} id={e.id} title={e.title} subtitle={e.subtitle} accent={ACCENT[e.accent]} onClick={() => launch(e)} style={{ width: "100%" }} />
+          ))}
+        </div>
       </div>
 
-      {/* Jump back in — recently played, promoted from the arcade */}
+      {/* Jump back in — recently played, one tap away */}
       {recent.length > 0 && (
         <div>
           <SectionHeader title="Jump back in" accent={ACCENT.play} />
           <div className="carto-rail" style={{ display: "flex", gap: 10, overflowX: "auto", margin: "0 -16px", padding: "2px 16px 6px" }}>
             {recent.map(e => (
-              <GameTile key={e.id} icon={e.icon} glyph={e.id} title={e.title} subtitle={e.subtitle} accent={ACCENT[e.accent]} onClick={() => launch(e)} />
+              <FlagTile key={e.id} id={e.id} title={e.title} subtitle={e.subtitle} accent={ACCENT[e.accent]} onClick={() => launch(e)} />
             ))}
           </div>
         </div>
       )}
 
-      {/* Flag of the Day — sleek premium card */}
-      <div>
-        <SectionHeader title="Flag of the Day" accent={ACCENT.codex} />
-        <button onClick={onGoCodex} className={`geo-tap ${IS_CARTO ? "carto-card" : ""}`}
-          style={{ width: "100%", textAlign: "left", borderRadius: 16, padding: 16, display: "flex", gap: 14, alignItems: "center", position: "relative", overflow: "hidden",
-            ...(IS_CARTO ? { ["--wash" as string]: tint(ACCENT.codex, 0.4) } : { background: T.surface, border: `1px solid ${T.line}` }) }}>
-          <div style={{ flex: 1, minWidth: 0 }}>
-            <div className="geo-micro" style={{ fontSize: 9, color: ACCENT.codex, marginBottom: 5 }}>◦ {fotd.region}</div>
-            <div className="geo-display" style={{ color: T.text, fontWeight: 700, fontSize: 22, lineHeight: 1.05 }}>{fotd.name}</div>
-            <p style={{ color: T.muted, fontSize: 12, marginTop: 5, lineHeight: 1.45, display: "-webkit-box", WebkitLineClamp: 3, WebkitBoxOrient: "vertical", overflow: "hidden" }}>{fotd.funFact}</p>
-            <div className="geo-micro" style={{ fontSize: 8.5, color: ACCENT.codex, marginTop: 10 }}>Open in codex →</div>
-          </div>
-          <div style={{ flexShrink: 0, width: 104, height: 70, borderRadius: 10, overflow: "hidden", border: `1px solid ${T.line}`, boxShadow: `0 4px 12px -6px ${tint(T.text, 0.35)}` }}>
-            <FlagImage code={fotd.code} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
-          </div>
-        </button>
-      </div>
-
-      {/* Resume */}
+      {/* Resume the curriculum */}
       <div>
         <SectionHeader title="Pick up where you left off" accent={ACCENT.learn} />
         <ModuleCard icon="🚩" glyph="flags" title="Flag Sets" subtitle="Country, historical & identity sets" accent={ACCENT.learn}
@@ -317,33 +281,45 @@ function HeroDeck({ children, accent }: { children: ReactNode[]; accent: string 
   )
 }
 
-/* One advert slide — mirrors the Daily Expedition card's shape so the deck
-   reads as a single rotating hero. */
-function AdSlide({ accent, glyph, eyebrow, title, body, cta, onClick }: {
-  accent: string; glyph: string; eyebrow: string; title: string; body: string; cta: string; onClick: () => void
+/* One deck slide — text on the left, optional poster art on the right (or a
+   big etched watermark behind), so every slide in the rotating hero carries a
+   real image and the same silhouette. */
+function DeckSlide({ accent, eyebrow, title, body, cta, onClick, art, watermark }: {
+  accent: string; eyebrow: string; title: string; body: string; cta: string
+  onClick?: () => void; art?: ReactNode; watermark?: string
 }) {
+  const disabled = !onClick
   return (
-    <button onClick={onClick} className={`geo-tap ${IS_CARTO ? "carto-card" : ""}`}
+    <button onClick={onClick} aria-disabled={disabled || undefined}
+      className={`${disabled ? "" : "geo-tap"} ${IS_CARTO ? "carto-card" : ""}`}
       style={{
-        flex: 1, position: "relative", overflow: "hidden", padding: "22px 20px", borderRadius: 16, textAlign: "left",
+        flex: 1, position: "relative", overflow: "hidden", padding: "20px 18px", borderRadius: 16, textAlign: "left",
         border: `1px solid ${tint(accent, 0.36)}`,
         background: `linear-gradient(150deg, ${tint(accent, 0.16)}, ${T.surface} 70%)`,
+        cursor: disabled ? "default" : "pointer",
         ...(IS_CARTO ? { ["--wash" as string]: tint(accent, 0.42) } : {}),
       }}>
-      <div style={{ position: "absolute", right: -18, bottom: -22, opacity: 0.12, color: accent, pointerEvents: "none" }}>
-        <LineIcon name={glyph} size={132} color={accent} strokeWidth={1.1} />
-      </div>
-      <div className="geo-micro" style={{ fontSize: 9, color: accent, marginBottom: 8 }}>◦ {eyebrow}</div>
-      <div className="geo-display" style={{ fontWeight: 800, fontSize: 26, lineHeight: 1.05, letterSpacing: "-0.02em", color: T.text, maxWidth: 250 }}>
-        {title}
-      </div>
-      <div style={{
-        color: T.muted, fontSize: 12.5, marginTop: 6, maxWidth: 240, lineHeight: 1.5,
-        display: "-webkit-box", WebkitLineClamp: 3, WebkitBoxOrient: "vertical", overflow: "hidden",
-      }}>{body}</div>
-      <div style={{ marginTop: 16, display: "inline-flex", alignItems: "center", gap: 8, padding: "11px 20px", borderRadius: 999, background: accent, color: T.onAccent }}>
-        <span style={{ fontFamily: FONT.display, fontWeight: 700, fontSize: 15 }}>{cta}</span>
-        <span style={{ fontSize: 16 }}>→</span>
+      {watermark && (
+        <div style={{ position: "absolute", right: -18, bottom: -22, opacity: 0.12, color: accent, pointerEvents: "none" }}>
+          <LineIcon name={watermark} size={130} color={accent} strokeWidth={1.1} />
+        </div>
+      )}
+      <div style={{ position: "relative", display: "flex", alignItems: "center", gap: 14 }}>
+        <div style={{ flex: 1, minWidth: 0 }}>
+          <div className="geo-micro" style={{ fontSize: 9, color: accent, marginBottom: 7 }}>◦ {eyebrow}</div>
+          <div className="geo-display" style={{ fontWeight: 800, fontSize: 25, lineHeight: 1.04, letterSpacing: "-0.02em", color: T.text, display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>
+            {title}
+          </div>
+          <div style={{
+            color: T.muted, fontSize: 12.5, marginTop: 6, lineHeight: 1.5,
+            display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden",
+          }}>{body}</div>
+          <div style={{ marginTop: 14, display: "inline-flex", alignItems: "center", gap: 8, padding: "11px 20px", borderRadius: 999, background: accent, color: T.onAccent }}>
+            <span style={{ fontFamily: FONT.display, fontWeight: 700, fontSize: 14.5 }}>{cta}</span>
+            {!disabled && <span style={{ fontSize: 15 }}>→</span>}
+          </div>
+        </div>
+        {art}
       </div>
     </button>
   )
@@ -712,6 +688,18 @@ const CROWN_SETS = [
 ]
 const REGIONS = ["Europe", "Africa", "Asia", "Americas", "Middle East", "Oceania"] as const
 
+// Explorer titles — purely for funsies, earned by flags learned. Chill, not
+// gamified: no nags, no locks, just a nicer word under your name as you grow.
+const RANKS: { min: number; title: string }[] = [
+  { min: 195, title: "Atlas Incarnate" },
+  { min: 130, title: "Master Cartographer" },
+  { min: 80, title: "Seasoned Navigator" },
+  { min: 40, title: "Wayfinder" },
+  { min: 10, title: "Apprentice Cartographer" },
+  { min: 0, title: "Armchair Traveller" },
+]
+const rankFor = (learned: number) => RANKS.find(r => learned >= r.min)!.title
+
 function YouTab({ state, learned, onNavigate, onSetUsername }: {
   state: AppState; learned: number; onNavigate: (s: string) => void; onSetUsername: (name: string) => void
 }) {
@@ -757,7 +745,8 @@ function YouTab({ state, learned, onNavigate, onSetUsername }: {
             </button>
           )}
           <div style={{ color: T.muted, fontSize: 12, marginTop: 3 }}>
-            {learned} flags learned · {state.crowns.length} {state.crowns.length === 1 ? "crown" : "crowns"}
+            <span style={{ color: ACCENT.learn, fontWeight: 600 }}>{rankFor(learned)}</span>
+            {" "}· {learned} flags · {state.crowns.length} {state.crowns.length === 1 ? "crown" : "crowns"}
           </div>
         </div>
       </div>
@@ -858,6 +847,8 @@ function YouTab({ state, learned, onNavigate, onSetUsername }: {
             <ModuleCard key={e.id} icon={e.icon} glyph={e.id} title={e.title} subtitle={e.subtitle} accent={ACCENT[e.accent]}
               progress={e.progress?.(state)} onClick={() => onNavigate(e.id)} />
           ))}
+          <ModuleCard icon="🎁" glyph="gacha" title="Gacha Collection" subtitle="Browse your daily pulls" accent={ACCENT.today}
+            onClick={() => onNavigate("gacha")} />
         </div>
       </div>
     </div>
