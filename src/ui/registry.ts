@@ -91,10 +91,10 @@ export const REGISTRY: Entry[] = [
   { id: "uscityflags", title: "US City Flags", subtitle: "Name the American city", icon: "🏙️", tab: "play", group: "Beta Sandbox", size: "tile", accent: "play", sandbox: true },
   { id: "tierlist", title: "Tier List Maker", subtitle: "Rank flags S–F", icon: "🏆", tab: "play", group: "Beta Sandbox", size: "tile", accent: "play", sandbox: true },
 
-  // ── CODEX ──────────────────────────────────────────────────────────────
-  { id: "codex", title: "The Codex", subtitle: "Every country's flag history", icon: "📖", tab: "codex", group: "Reference", size: "module", accent: "codex", progress: flagProgress },
-  { id: "progressmap", title: "Progress Map", subtitle: "Light up the world", icon: "🗺️", tab: "codex", group: "Reference", size: "module", accent: "codex", progress: flagProgress },
-  { id: "substats", title: "Subdivision Stats", subtitle: "Mastery by continent", icon: "📊", tab: "codex", group: "Reference", size: "module", accent: "codex", progress: subProgress },
+  // ── CODEX → the bottom tab now opens the Codex itself (no launcher page).
+  // Its companion reference tools live on the YOU tab as the Collection.
+  { id: "progressmap", title: "Progress Map", subtitle: "Light up the world", icon: "🗺️", tab: "you", group: "Collection", size: "module", accent: "codex", progress: flagProgress },
+  { id: "substats", title: "Subdivision Stats", subtitle: "Mastery by continent", icon: "📊", tab: "you", group: "Collection", size: "module", accent: "codex", progress: subProgress },
 ]
 
 export function groupsFor(tab: TabKey): { group: string; entries: Entry[] }[] {

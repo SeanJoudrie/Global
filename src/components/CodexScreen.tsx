@@ -13,8 +13,11 @@ import { LineIcon, FlaskIcon } from './icons'
 import { Search, Anchor } from 'lucide-react'
 
 interface Props {
-  onBack: () => void
+  onBack?: () => void
   initialCode?: string | null
+  /** Rendered inside the dashboard's Codex tab: no back button on the list
+   *  view (the bottom tab bar is the navigation). */
+  embedded?: boolean
 }
 
 type Phase = 'list' | 'country'
@@ -30,7 +33,7 @@ function getSubRegions(code: string) {
   return []
 }
 
-export default function CodexScreen({ onBack, initialCode }: Props) {
+export default function CodexScreen({ onBack, initialCode, embedded = false }: Props) {
   const [phase, setPhase] = useState<Phase>(initialCode != null ? 'country' : 'list')
   const [selectedCode, setSelectedCode] = useState<string | null>(initialCode != null ? initialCode : null)
   const [search, setSearch] = useState('')
@@ -329,7 +332,14 @@ export default function CodexScreen({ onBack, initialCode }: Props) {
 
   return (
     <div className="min-h-screen flex flex-col" style={{ background: T.bg, color: T.text, position: 'relative', zIndex: 1 }}>
-      <ScreenHeader title="Codex" subtitle={`${FLAGS.length} countries · flag histories in beta`} onBack={onBack} />
+      {embedded || !onBack ? (
+        <header style={{ padding: '14px 16px 10px' }}>
+          <h1 className="geo-display" style={{ color: T.text, fontWeight: 700, fontSize: 20, letterSpacing: '-0.01em', lineHeight: 1.1, margin: 0 }}>Codex</h1>
+          <div style={{ color: T.muted, fontSize: 12, marginTop: 2 }}>{FLAGS.length} countries · flag histories in beta</div>
+        </header>
+      ) : (
+        <ScreenHeader title="Codex" subtitle={`${FLAGS.length} countries · flag histories in beta`} onBack={onBack} />
+      )}
 
       {/* Search */}
       <div className="px-5 mb-3">
