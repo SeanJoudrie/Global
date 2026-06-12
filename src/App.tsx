@@ -127,6 +127,8 @@ export default function App() {
   const [lastResult, setLastResult] = useState<{ score: number; total: number; answers: ("correct" | "wrong")[] } | null>(null)
   const [histRegion, setHistRegion] = useState<HistoricalRegion | undefined>(undefined)
   const [tab, setTab] = useState<TabKey>("today")
+  // Deep-link target for the full-screen Codex (e.g. from the World Cup explorer)
+  const [codexInitial, setCodexInitial] = useState<string | null>(null)
 
   useEffect(() => { saveState(appState) }, [appState])
 
@@ -292,7 +294,7 @@ export default function App() {
       {screen === "language" && <LanguageQuizScreen onBack={() => setScreen("home")} />}
       {screen === "capitalquiz" && <CapitalQuizScreen onBack={() => setScreen("home")} />}
       {screen === "challenge" && <ChallengeScreen onBack={() => setScreen("home")} />}
-      {screen === "codex" && <CodexScreen onBack={() => setScreen("home")} />}
+      {screen === "codex" && <CodexScreen onBack={() => { setCodexInitial(null); setScreen("home") }} initialCode={codexInitial} />}
       {screen === "geo" && <GeoQuizScreen onBack={() => setScreen("home")} />}
       {screen === "gauntlet" && <GauntletScreen onBack={() => setScreen("home")} />}
       {screen === "tierlist" && <TierListScreen onBack={() => setScreen("home")} />}
@@ -343,7 +345,7 @@ export default function App() {
       {screen === "continentsort"&& <ContinentSortScreen onBack={() => setScreen("home")} />}
       {screen === "statclash"    && <StatClashScreen    onBack={() => setScreen("home")} />}
       {screen === "uscityflags"  && <USCityFlagScreen   onBack={() => setScreen("home")} />}
-      {screen === "worldcup"     && <WorldCupScreen     onBack={() => setScreen("home")} />}
+      {screen === "worldcup"     && <WorldCupScreen     onBack={() => setScreen("home")} onOpenCodex={(code) => { setCodexInitial(code); setScreen("codex") }} />}
 
       {screen === "quiz" && activeQuiz && (
         <QuizScreen questions={activeQuiz.questions} title={activeQuiz.title}

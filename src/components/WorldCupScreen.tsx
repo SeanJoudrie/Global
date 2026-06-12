@@ -1,7 +1,7 @@
 import { useRef, useState } from "react"
 import { FLAGS } from "../data/flags"
 import { CODEX, CODEX_SUMMARIES } from "../data/codex"
-import { WORLD_CUP_2026, WC_NAME_OVERRIDE } from "../data/worldCup2026"
+import { WORLD_CUP_2026, WC_NAME_OVERRIDE, WC_BLURB } from "../data/worldCup2026"
 import { T, ACCENT, FONT, tint, IS_CARTO } from "../ui/tokens"
 import { ScreenHeader } from "./ui"
 import { ChevronLeftIcon, LineIcon } from "./icons"
@@ -11,10 +11,10 @@ import FlagImage from "./FlagImage"
 // 48-nation field. Each card pulls the flag, a real Codex description, and the
 // country's historical flags from data we already ship. Pure learning, in the
 // same parchment style as the rest of the app.
-interface Props { onBack: () => void }
+interface Props { onBack: () => void; onOpenCodex: (code: string) => void }
 const A = ACCENT.codex
 
-export default function WorldCupScreen({ onBack }: Props) {
+export default function WorldCupScreen({ onBack, onOpenCodex }: Props) {
   const teams = WORLD_CUP_2026
   const n = teams.length
   const [i, setI] = useState(0)
@@ -29,8 +29,9 @@ export default function WorldCupScreen({ onBack }: Props) {
   const code = team.code.toLowerCase()
   const rec = FLAGS.find(f => f.code === team.code)
   const name = WC_NAME_OVERRIDE[team.code] ?? rec?.name ?? team.code
-  const summary = CODEX_SUMMARIES[team.code] ?? rec?.funFact ?? ""
+  const summary = CODEX_SUMMARIES[team.code] ?? WC_BLURB[team.code] ?? rec?.funFact ?? ""
   const region = rec?.region ?? ""
+  const hasCodex = !!CODEX[team.code]
   // Skip the live flag (history[0] is usually current) — show only the past.
   const history = (CODEX[team.code]?.flagHistory ?? []).filter(h => h.toYear !== null)
 
@@ -102,35 +103,50 @@ export default function WorldCupScreen({ onBack }: Props) {
           <p style={{ color: T.muted, fontSize: 13.5, lineHeight: 1.6, marginTop: 16 }}>{summary}</p>
         )}
 
-        {/* Historical flags from the Codex */}
+        {/* Open the full Codex entry */}
+        {hasCodex && (
+          <button onClick={() => onOpenCodex(team.code)} className="geo-tap"
+            style={{ marginTop: 12, display: "inline-flex", alignItems: "center", gap: 7, padding: "10px 16px", borderRadius: 999, minHeight: 44,
+              background: tint(A, 0.12), border: `1px solid ${tint(A, 0.4)}`, color: A }}>
+            <LineIcon name="codex" size={15} color={A} />
+            <span style={{ fontFamily: FONT.display, fontWeight: 700, fontSize: 13 }}>Open {name} in the Codex</span>
+            <span style={{ fontSize: 14 }}>→</span>
+          </button>
+        )}
+
+        {/* Historical flags — tap any to jump to the full Codex entry */}
         {history.length > 0 && (
           <div style={{ marginTop: 18 }}>
             <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 10 }}>
               <span style={{ width: 12, height: 1.5, background: A, opacity: 0.7 }} />
-              <span className="geo-micro" style={{ fontSize: 10, color: A }}>Flags through history</span>
+              <span className="geo-micro" style={{ fontSize: 10, color: A }}>Flags through history · tap to explore</span>
             </div>
             <div className="carto-rail" style={{ display: "flex", gap: 10, overflowX: "auto", margin: "0 -16px", padding: "2px 16px 8px" }}>
               {history.map((h, k) => (
-                <div key={k} style={{ width: 132, flexShrink: 0 }}>
-                  <div style={{ width: "100%", height: 84, borderRadius: 10, overflow: "hidden", border: `1px solid ${T.line}`, background: T.surfaceHi }}>
+                <button key={k} onClick={() => onOpenCodex(team.code)} className={`geo-tap ${IS_CARTO ? "carto-card" : ""}`}
+                  style={{ width: 132, flexShrink: 0, padding: 0, textAlign: "left", borderRadius: 10, overflow: "hidden",
+                    ...(IS_CARTO ? {} : { background: T.surface, border: `1px solid ${T.line}` }) }}>
+                  <div style={{ width: "100%", height: 84, overflow: "hidden", background: T.surfaceHi }}>
                     <img src={h.flagUrl} alt={h.label} loading="lazy" decoding="async"
                       style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
-                      onError={e => { (e.currentTarget.parentElement as HTMLElement).style.display = "none" }} />
+                      onError={e => { (e.currentTarget.parentElement as HTMLElement).style.visibility = "hidden" }} />
                   </div>
-                  <div className="geo-display" style={{ fontSize: 11, fontWeight: 600, color: T.text, marginTop: 6, lineHeight: 1.2 }}>{h.label}</div>
-                  <div style={{ fontFamily: FONT.mono, fontSize: 9.5, color: T.muted, marginTop: 1 }}>
-                    {h.fromYear}{h.toYear ? `–${h.toYear}` : "–now"}
+                  <div style={{ padding: "7px 9px 9px" }}>
+                    <div className="geo-display" style={{ fontSize: 11, fontWeight: 600, color: T.text, lineHeight: 1.2, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{h.label}</div>
+                    <div style={{ fontFamily: FONT.mono, fontSize: 9.5, color: T.muted, marginTop: 1 }}>
+                      {h.fromYear}{h.toYear ? `–${h.toYear}` : "–now"}
+                    </div>
                   </div>
-                </div>
+                </button>
               ))}
             </div>
           </div>
         )}
 
-        {history.length === 0 && (
+        {!hasCodex && (
           <div style={{ marginTop: 16, display: "flex", alignItems: "center", gap: 8, color: T.dim, fontSize: 11.5 }}>
             <LineIcon name="historical" size={14} color={T.dim} />
-            Historical flags for {name} are coming to the Codex.
+            A full Codex entry for {name} is on the way.
           </div>
         )}
       </div>
