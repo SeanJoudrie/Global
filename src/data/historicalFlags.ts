@@ -13,28 +13,33 @@ export interface HistoricalEntity {
    *  Left undefined when the flag already appears in that country's flag-history
    *  timeline, to keep the Codex "related states" section purely additive. */
   relatedCode?: string
+  /** Additional modern countries this state is surfaced under — successor
+   *  states of multi-national empires/federations (e.g. Yugoslavia → Bosnia,
+   *  Croatia…). Same additive rule as relatedCode. */
+  relatedCodes?: string[]
 }
 
 export const HISTORICAL_FLAGS: HistoricalEntity[] = [
   // ── Europe & the Mediterranean ──────────────────────────────────────────────
   {
     id: "austria-hungary", name: "Austria-Hungary", era: "1867–1918", region: "Europe",
+    relatedCodes: ["BA", "HU", "CZ", "SK", "SI", "HR"],
     flagUrl: fp("Civil_ensign_of_Austria-Hungary_(1869-1918).svg"),
     note: "The civil ensign split 50/50, joining the Austrian red-white-red with Hungary's colors and both shields — the Dual Monarchy never agreed on a single flag for the whole empire.",
   },
   {
     id: "kingdom-yugoslavia", name: "Kingdom of Yugoslavia", era: "1918–1941", region: "Europe",
-    flagUrl: fp("Flag_of_Yugoslavia_(1918–1941).svg"), relatedCode: "RS",
+    flagUrl: fp("Flag_of_Yugoslavia_(1918–1941).svg"), relatedCode: "RS", relatedCodes: ["BA", "HR", "SI", "MK", "ME", "XK"],
     note: "The blue-white-red Pan-Slavic tricolor symbolized the union of Serbs, Croats, and Slovenes, flown by the Kingdom until the Axis invasion of 1941.",
   },
   {
     id: "sfr-yugoslavia", name: "Socialist Yugoslavia", era: "1945–1992", region: "Europe",
-    flagUrl: fp("Flag_of_Yugoslavia_(1946-1992).svg"), relatedCode: "RS",
+    flagUrl: fp("Flag_of_Yugoslavia_(1946-1992).svg"), relatedCode: "RS", relatedCodes: ["BA", "HR", "SI", "MK", "ME", "XK"],
     note: "Tito's Partisans added a red, gold-bordered star to the tricolor; it marked the country's communist character until the federation's violent breakup in the 1990s.",
   },
   {
     id: "czechoslovakia", name: "Czechoslovakia", era: "1920–1992", region: "Europe",
-    flagUrl: fp("Flag_of_the_Czech_Republic.svg"), relatedCode: "CZ",
+    flagUrl: fp("Flag_of_the_Czech_Republic.svg"), relatedCode: "CZ", relatedCodes: ["SK"],
     note: "Adopted in 1920 with a blue hoist wedge to tell it apart from Poland's flag. Czechia kept it after the 1993 split, despite a clause meant to bar successor states from reusing it.",
   },
   {
@@ -59,17 +64,19 @@ export const HISTORICAL_FLAGS: HistoricalEntity[] = [
   },
   {
     id: "russian-empire", name: "Russian Empire", era: "1858–1896", region: "Europe",
+    relatedCodes: ["FI", "UA", "BY"],
     flagUrl: fp("Flag_of_the_Russian_Empire_(black-yellow-white).svg"),
     note: "The black-yellow-white 'imperial colors' were drawn from the state coat of arms by Alexander II, before Nicholas II demoted them for the white-blue-red tricolor.",
   },
   {
     id: "soviet-union", name: "Soviet Union", era: "1922–1991", region: "Europe",
+    relatedCodes: ["UA", "BY", "MD", "GE", "AM", "AZ", "KZ", "KG", "TJ", "TM", "UZ", "LT", "LV", "EE"],
     flagUrl: fp("Flag_of_the_Soviet_Union.svg"),
     note: "The gold hammer and sickle beneath a red star stood for the worker-peasant alliance. The exact shade and proportions were fixed by Soviet law in 1955.",
   },
   {
     id: "byzantine", name: "Byzantine Empire", era: "1261–1453", region: "Europe",
-    flagUrl: fp("Byzantine_imperial_flag,_14th_century.svg"), relatedCode: "GR",
+    flagUrl: fp("Byzantine_imperial_flag,_14th_century.svg"), relatedCode: "GR", relatedCodes: ["TR"],
     note: "The four gold firesteels (often glossed 'King of Kings, Ruling over Kings') were the emblem of the Palaiologos dynasty, the last imperial house, which fell with Constantinople in 1453.",
   },
   {
@@ -198,12 +205,12 @@ export const HISTORICAL_FLAGS: HistoricalEntity[] = [
   // ── The Americas ────────────────────────────────────────────────────────────
   {
     id: "gran-colombia", name: "Gran Colombia", era: "1819–1831", region: "Americas",
-    flagUrl: fp("Flag_of_the_Gran_Colombia.svg"), relatedCode: "CO",
+    flagUrl: fp("Flag_of_the_Gran_Colombia.svg"), relatedCode: "CO", relatedCodes: ["VE", "EC", "PA"],
     note: "Bolívar's union of present-day Colombia, Venezuela, Ecuador, and Panama. Its yellow-blue-red tricolor is the direct ancestor of all three modern flags.",
   },
   {
     id: "central-america", name: "Federal Republic of Central America", era: "1823–1841", region: "Americas",
-    flagUrl: fp("Flag_of_the_Federal_Republic_of_Central_America.svg"), relatedCode: "GT",
+    flagUrl: fp("Flag_of_the_Federal_Republic_of_Central_America.svg"), relatedCode: "GT", relatedCodes: ["SV", "HN", "NI", "CR"],
     note: "Its blue-white-blue stripes survive almost unchanged in the flags of Honduras, Nicaragua, El Salvador, and Guatemala. White stood for the land between the two oceans.",
   },
   {
@@ -270,6 +277,7 @@ export const HISTORICAL_FLAGS: HistoricalEntity[] = [
   // ── Africa & the Middle East ────────────────────────────────────────────────
   {
     id: "ottoman", name: "Ottoman Empire", era: "1844–1922", region: "Africa & Middle East",
+    relatedCodes: ["BA", "AL", "MK", "BG"],
     flagUrl: fp("Flag_of_the_Ottoman_Empire_(1844–1922).svg"),
     note: "The red field with white crescent and star was standardized in 1844; older Ottoman banners varied widely and often carried multiple crescents.",
   },
@@ -300,6 +308,7 @@ export const HISTORICAL_FLAGS: HistoricalEntity[] = [
   },
   {
     id: "uar", name: "United Arab Republic", era: "1958–1971", region: "Africa & Middle East",
+    relatedCodes: ["SY"],
     flagUrl: fp("Flag_of_the_United_Arab_Republic_(1958–1971).svg"),
     note: "The two green stars stood for the two members of the brief Egypt–Syria union. Syria later readopted this exact flag, which is why it doubles as a Syrian flag.",
   },
@@ -465,7 +474,7 @@ export const HISTORICAL_FLAGS: HistoricalEntity[] = [
   },
   {
     id: "peru-bolivian", name: "Peru-Bolivian Confederation", era: "1836–1839", region: "Americas",
-    flagUrl: fp("Flag_of_the_Peru-Bolivian_Confederation.svg"), relatedCode: "PE",
+    flagUrl: fp("Flag_of_the_Peru-Bolivian_Confederation.svg"), relatedCode: "PE", relatedCodes: ["BO"],
     note: "A red field bearing the combined arms of North Peru, South Peru, and Bolivia, under the brief union led by Andrés de Santa Cruz.",
   },
   {
@@ -1213,5 +1222,5 @@ export const HISTORICAL_FLAGS: HistoricalEntity[] = [
 
 /** Historical entities tied to a given modern country code, for the Codex. */
 export function historicalFor(code: string): HistoricalEntity[] {
-  return HISTORICAL_FLAGS.filter(h => h.relatedCode === code)
+  return HISTORICAL_FLAGS.filter(h => h.relatedCode === code || h.relatedCodes?.includes(code))
 }
