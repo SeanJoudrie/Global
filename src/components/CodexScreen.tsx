@@ -9,11 +9,8 @@ import type { UKNation } from '../data/ukNations'
 import { TERRITORIES } from '../data/territories'
 import type { Territory } from '../data/territories'
 import { ETHNIC_FLAGS } from '../data/ethnicFlags'
-import type { EthnicRegion } from '../data/ethnicFlags'
 import { EXTINCT_STATES } from '../data/extinctStates'
-import type { ExtinctRegion } from '../data/extinctStates'
 import { ORG_FLAGS } from '../data/orgFlags'
-import type { OrgRegion } from '../data/orgFlags'
 import { historicalFor } from '../data/historicalFlags'
 import { IDENTITY_FLAGS, IDENTITY_CATEGORIES, SIGNAL_FLAGS } from '../data/identityFlags'
 import { US_CITY_FLAGS } from '../data/usCityFlags'
@@ -199,18 +196,19 @@ export default function CodexScreen({ onBack, initialCode, embedded = false }: P
           </div>
         )}
 
+        {/* Beyond-countries order: Identity, Ethnic, Extinct, Cities, Orgs, Signal */}
         {/* Identity & other flags — pride, ethnic, separatist, micronations… */}
         {!isSearching && <IdentityCodexSection />}
-        {/* American city flags — beta, lots of municipal flags */}
-        {!isSearching && <AmericanCitiesCodexSection />}
-        {/* Maritime / signal alphabet — its own section, separate from Identity */}
-        {!isSearching && <SignalCodexSection />}
         {/* Ethnic & cultural flags — the full Commons "Cultural flags" gallery */}
         {!isSearching && <EthnicCodexSection />}
         {/* Extinct states — the Commons "Flags of extinct states" gallery */}
         {!isSearching && <ExtinctStatesCodexSection />}
+        {/* American city flags — beta, lots of municipal flags */}
+        {!isSearching && <AmericanCitiesCodexSection />}
         {/* International organizations — UN, NATO, EU, AU, FIFA, IOC… */}
         {!isSearching && <OrgCodexSection />}
+        {/* Maritime / signal alphabet — last */}
+        {!isSearching && <SignalCodexSection />}
       </div>
     </div>
   )
@@ -819,214 +817,151 @@ function SignalCodexSection() {
   )
 }
 
-// ── Ethnic & cultural flags — the full Commons "Cultural flags" gallery ──
-// Hundreds of flags of peoples and cultures, grouped by region → linguistic /
-// ethnic family. Each region expands to labelled sub-groups of flag tiles.
-function EthnicFlagTile({ name, file }: { name: string; file: string }) {
+// ── Gallery sections (Ethnic & Cultural, Extinct States, Organizations) ──
+// Uniform with the Identity/Cities/Signal browsers: a vertical list of flag
+// rows you tap for a one-line description. Regions are sub-headers with a
+// continent icon (matching the codex's top-level icons), open by default.
+type IconType = typeof Castle
+interface GRow { file: string; title: string; detail: string }
+interface GRegion { label: string; icon: IconType; groups: { label: string; items: GRow[] }[] }
+
+// Match a region name to the codex's continent icons.
+function galleryIcon(name: string): IconType {
+  const n = name.toLowerCase()
+  if (n.includes('europe')) return Castle
+  if (n.includes('middle east')) return MoonStar
+  if (n.includes('africa')) return Sun
+  if (n.includes('america')) return Landmark
+  if (n.includes('oceania') || n.includes('australia')) return Sailboat
+  if (n.includes('asia') || n.includes('eurasia') || n.includes('indian')) return Mountain
+  if (n.includes('historic')) return Castle
+  return Users
+}
+const stripFlagOf = (s: string) => s.replace(/^Flag of (the )?/i, '')
+function splitParen(s: string): [string, string | null] {
+  const m = s.match(/^(.*?)\s*\(([\s\S]*)\)\s*$/)
+  return m ? [m[1].trim(), m[2].trim()] : [s.trim(), null]
+}
+const cap = (s: string) => (s ? s[0].toUpperCase() + s.slice(1) : s)
+
+// One tappable flag row — thumbnail, name, tap to reveal the description.
+function GalleryRow({ row, color }: { row: GRow; color: string }) {
+  const [open, setOpen] = useState(false)
   const [err, setErr] = useState(false)
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4 }}>
-      <div style={{ width: '100%', aspectRatio: '3/2', borderRadius: 4, overflow: 'hidden', background: T.surfaceHi, border: `1px solid ${T.line}`, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        {err
-          ? <span style={{ fontSize: 8, color: T.dim, textAlign: 'center', lineHeight: 1.1, padding: 2 }}>no image</span>
-          : <img src={fp(file)} alt={name} loading="lazy" onError={() => setErr(true)}
-              style={{ width: '100%', height: '100%', objectFit: 'contain' }} />}
+    <button onClick={() => setOpen(o => !o)}
+      className="geo-tap w-full px-1.5 py-2.5 rounded-lg transition-all active:scale-[0.99] text-left"
+      style={{ background: open ? tint(color, 0.07) : 'transparent', borderBottom: `1px solid ${tint(T.line, 0.55)}` }}>
+      <div className="flex items-center gap-3">
+        <div style={{ width: 46, height: 30, flexShrink: 0, borderRadius: 5, overflow: 'hidden', border: `1px solid ${T.line}`, background: T.surfaceHi, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          {err
+            ? <span style={{ fontSize: 7, color: T.dim }}>no img</span>
+            : <img src={fp(row.file)} alt={row.title} loading="lazy" onError={() => setErr(true)} style={{ width: '100%', height: '100%', objectFit: 'contain' }} />}
+        </div>
+        <div className="flex-1 min-w-0">
+          <div className="font-semibold text-sm truncate" style={{ color: T.text }}>{row.title}</div>
+        </div>
+        <span style={{ color, fontSize: 16, transition: 'transform 0.2s', transform: open ? 'rotate(90deg)' : 'rotate(0deg)', flexShrink: 0 }}>›</span>
       </div>
-      <span style={{ fontSize: 8.5, color: T.muted, textAlign: 'center', lineHeight: 1.2, wordBreak: 'break-word' }}>{name}</span>
-    </div>
+      {open && <p className="text-xs leading-relaxed mt-2.5" style={{ color: T.muted, lineHeight: 1.6 }}>{row.detail}</p>}
+    </button>
   )
 }
 
-function EthnicRegionBlock({ region }: { region: EthnicRegion }) {
-  const [open, setOpen] = useState(false)
+// A region sub-section (open by default) — icon header + its flag rows.
+function GalleryRegionBlock({ region, color }: { region: GRegion; color: string }) {
+  const [open, setOpen] = useState(true)
+  const Icon = region.icon
   const count = region.groups.reduce((n, g) => n + g.items.length, 0)
   return (
-    <div className="mb-2">
-      <button
-        onClick={() => setOpen(o => !o)}
-        aria-expanded={open}
-        className="geo-tap w-full flex items-center justify-between px-1 py-3 transition-all active:scale-[0.99]"
-        style={{ background: 'transparent', borderBottom: `1px solid ${open ? tint(T.gold, 0.45) : T.line}` }}>
-        <div className="flex items-center gap-2.5">
-          <Users size={15} color={T.gold} strokeWidth={1.6} absoluteStrokeWidth />
-          <h4 className="text-sm font-bold uppercase tracking-widest" style={{ color: T.gold }}>{region.region.replace(/^Peoples of /, '')}</h4>
-          <span className="text-xs" style={{ color: T.dim, fontFamily: FONT.mono, fontVariantNumeric: 'tabular-nums' }}>{count}</span>
+    <div className="mb-0.5">
+      <button onClick={() => setOpen(o => !o)} aria-expanded={open}
+        className="geo-tap w-full flex items-center justify-between px-1 py-2.5 transition-all active:scale-[0.99]"
+        style={{ background: 'transparent', borderBottom: `1px solid ${tint(T.line, 0.6)}` }}>
+        <div className="flex items-center gap-2 min-w-0">
+          <Icon size={13} color={color} strokeWidth={1.6} absoluteStrokeWidth style={{ flexShrink: 0 }} />
+          <span className="text-xs font-bold uppercase tracking-wider truncate" style={{ color }}>{region.label}</span>
+          <span className="text-xs" style={{ color: T.dim, fontFamily: FONT.mono, fontVariantNumeric: 'tabular-nums', flexShrink: 0 }}>{count}</span>
         </div>
-        <ChevronDown size={16} color={T.gold} strokeWidth={1.6} absoluteStrokeWidth
+        <ChevronDown size={15} color={color} strokeWidth={1.6} absoluteStrokeWidth
           style={{ transition: 'transform 0.2s', transform: open ? 'rotate(180deg)' : 'rotate(0deg)', flexShrink: 0 }} />
       </button>
       {open && (
-        <div className="mt-3" style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+        <div className="mt-1">
           {region.groups.map((g, gi) => (
             <div key={gi}>
-              <div style={{ fontSize: 9.5, fontWeight: 700, color: T.gold, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 8, paddingLeft: 2, opacity: 0.85 }}>
-                {g.label || '—'}
-              </div>
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '10px 8px' }}>
-                {g.items.map((it, ii) => <EthnicFlagTile key={ii} name={it.name} file={it.file} />)}
-              </div>
+              {g.label && <div style={{ fontSize: 8.5, fontWeight: 700, color: tint(color, 0.85), letterSpacing: '0.07em', textTransform: 'uppercase', margin: '9px 0 1px 4px' }}>{g.label}</div>}
+              {g.items.map((row, ii) => <GalleryRow key={ii} row={row} color={color} />)}
             </div>
           ))}
         </div>
       )}
+    </div>
+  )
+}
+
+// The collapsible top-level section (matches Identity/Cities/Signal).
+function GallerySection({ title, icon: Icon, color, blurb, regions }: { title: string; icon: IconType; color: string; blurb: string; regions: GRegion[] }) {
+  const [open, setOpen] = useState(false)
+  return (
+    <div className="mt-5">
+      <button onClick={() => setOpen(o => !o)}
+        className="geo-tap w-full flex items-center justify-between px-1 py-3 transition-all active:scale-[0.99]"
+        style={{ background: 'transparent', borderBottom: `1px solid ${open ? tint(color, 0.45) : T.line}` }}>
+        <div className="text-left">
+          <h3 className="text-sm font-bold uppercase tracking-widest flex items-center gap-2" style={{ color }}>
+            <Icon size={15} color={color} strokeWidth={1.6} absoluteStrokeWidth /> {title}
+          </h3>
+          <p className="text-xs" style={{ color: T.dim }}>{blurb}</p>
+        </div>
+        <ChevronDown size={17} color={color} strokeWidth={1.6} absoluteStrokeWidth
+          style={{ transition: 'transform 0.2s', transform: open ? 'rotate(180deg)' : 'rotate(0deg)', flexShrink: 0 }} />
+      </button>
+      {open && <div className="mt-2">{regions.map((r, i) => <GalleryRegionBlock key={i} region={r} color={color} />)}</div>}
     </div>
   )
 }
 
 function EthnicCodexSection() {
-  const [open, setOpen] = useState(false)
   const total = ETHNIC_FLAGS.reduce((n, r) => n + r.groups.reduce((m, g) => m + g.items.length, 0), 0)
-  return (
-    <div className="mt-5">
-      <button
-        onClick={() => setOpen(o => !o)}
-        className="geo-tap w-full flex items-center justify-between px-1 py-3 transition-all active:scale-[0.99]"
-        style={{ background: 'transparent', borderBottom: `1px solid ${open ? tint(T.gold, 0.45) : T.line}` }}>
-        <div className="text-left">
-          <h3 className="text-sm font-bold uppercase tracking-widest flex items-center gap-2" style={{ color: T.gold }}>
-            <Users size={15} color={T.gold} strokeWidth={1.6} absoluteStrokeWidth /> Ethnic &amp; Cultural Flags
-          </h3>
-          <p className="text-xs" style={{ color: T.dim }}>{total} flags of peoples &amp; cultures · by region</p>
-        </div>
-        <ChevronDown size={17} color={T.gold} strokeWidth={1.6} absoluteStrokeWidth
-          style={{ transition: 'transform 0.2s', transform: open ? 'rotate(180deg)' : 'rotate(0deg)', flexShrink: 0 }} />
-      </button>
-      {open && (
-        <div className="mt-3">
-          <p className="text-xs mb-2" style={{ color: T.dim, lineHeight: 1.4 }}>
-            The full Wikimedia Commons “Cultural flags” gallery — flags of ethnic groups, regions and peoples, grouped by language family. Tap a region to browse.
-          </p>
-          {ETHNIC_FLAGS.map((r, i) => <EthnicRegionBlock key={i} region={r} />)}
-        </div>
-      )}
-    </div>
-  )
-}
-
-// ── Extinct states — the Commons "Flags of extinct states" gallery ──
-// Flags of states that no longer exist, grouped by continent. Each tile keeps
-// the gallery's caption (name + the years it was independent).
-function ExtinctRegionBlock({ region }: { region: ExtinctRegion }) {
-  const [open, setOpen] = useState(false)
-  return (
-    <div className="mb-2">
-      <button
-        onClick={() => setOpen(o => !o)}
-        aria-expanded={open}
-        className="geo-tap w-full flex items-center justify-between px-1 py-3 transition-all active:scale-[0.99]"
-        style={{ background: 'transparent', borderBottom: `1px solid ${open ? tint(T.warm, 0.45) : T.line}` }}>
-        <div className="flex items-center gap-2.5">
-          <Landmark size={15} color={T.warm} strokeWidth={1.6} absoluteStrokeWidth />
-          <h4 className="text-sm font-bold uppercase tracking-widest" style={{ color: T.warm }}>{region.region}</h4>
-          <span className="text-xs" style={{ color: T.dim, fontFamily: FONT.mono, fontVariantNumeric: 'tabular-nums' }}>{region.items.length}</span>
-        </div>
-        <ChevronDown size={16} color={T.warm} strokeWidth={1.6} absoluteStrokeWidth
-          style={{ transition: 'transform 0.2s', transform: open ? 'rotate(180deg)' : 'rotate(0deg)', flexShrink: 0 }} />
-      </button>
-      {open && (
-        <div className="mt-3" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '12px 8px' }}>
-          {region.items.map((it, i) => <EthnicFlagTile key={i} name={it.name} file={it.file} />)}
-        </div>
-      )}
-    </div>
-  )
+  const regions: GRegion[] = ETHNIC_FLAGS.map(r => {
+    const short = r.region.replace(/^Peoples of /, '')
+    return {
+      label: short,
+      icon: galleryIcon(r.region),
+      groups: r.groups.map(g => ({
+        label: g.label,
+        items: g.items.map(it => ({ file: it.file, title: it.name, detail: g.label ? `${g.label} — ${short}` : short })),
+      })),
+    }
+  })
+  return <GallerySection title="Ethnic & Cultural Flags" icon={Users} color={T.gold} blurb={`${total} flags of peoples & cultures · by region`} regions={regions} />
 }
 
 function ExtinctStatesCodexSection() {
-  const [open, setOpen] = useState(false)
   const total = EXTINCT_STATES.reduce((n, r) => n + r.items.length, 0)
-  return (
-    <div className="mt-5">
-      <button
-        onClick={() => setOpen(o => !o)}
-        className="geo-tap w-full flex items-center justify-between px-1 py-3 transition-all active:scale-[0.99]"
-        style={{ background: 'transparent', borderBottom: `1px solid ${open ? tint(T.warm, 0.45) : T.line}` }}>
-        <div className="text-left">
-          <h3 className="text-sm font-bold uppercase tracking-widest flex items-center gap-2" style={{ color: T.warm }}>
-            <Landmark size={15} color={T.warm} strokeWidth={1.6} absoluteStrokeWidth /> Extinct States
-          </h3>
-          <p className="text-xs" style={{ color: T.dim }}>{total} flags of vanished states &amp; nations · by continent</p>
-        </div>
-        <ChevronDown size={17} color={T.warm} strokeWidth={1.6} absoluteStrokeWidth
-          style={{ transition: 'transform 0.2s', transform: open ? 'rotate(180deg)' : 'rotate(0deg)', flexShrink: 0 }} />
-      </button>
-      {open && (
-        <div className="mt-3">
-          <p className="text-xs mb-2" style={{ color: T.dim, lineHeight: 1.4 }}>
-            The Wikimedia Commons “Flags of extinct states” gallery — banners of states that no longer exist, with the years each was independent. Tap a continent to browse.
-          </p>
-          {EXTINCT_STATES.map((r, i) => <ExtinctRegionBlock key={i} region={r} />)}
-        </div>
-      )}
-    </div>
-  )
-}
-
-// ── International organizations — UN, NATO, EU, AU, FIFA, IOC, the lot ──
-function OrgRegionBlock({ region }: { region: OrgRegion }) {
-  const [open, setOpen] = useState(false)
-  const count = region.groups.reduce((n, g) => n + g.items.length, 0)
-  return (
-    <div className="mb-2">
-      <button
-        onClick={() => setOpen(o => !o)}
-        aria-expanded={open}
-        className="geo-tap w-full flex items-center justify-between px-1 py-3 transition-all active:scale-[0.99]"
-        style={{ background: 'transparent', borderBottom: `1px solid ${open ? tint(T.green, 0.45) : T.line}` }}>
-        <div className="flex items-center gap-2.5 min-w-0">
-          <Building2 size={15} color={T.green} strokeWidth={1.6} absoluteStrokeWidth style={{ flexShrink: 0 }} />
-          <h4 className="text-sm font-bold uppercase tracking-wide truncate" style={{ color: T.green }}>{region.region}</h4>
-          <span className="text-xs" style={{ color: T.dim, fontFamily: FONT.mono, fontVariantNumeric: 'tabular-nums', flexShrink: 0 }}>{count}</span>
-        </div>
-        <ChevronDown size={16} color={T.green} strokeWidth={1.6} absoluteStrokeWidth
-          style={{ transition: 'transform 0.2s', transform: open ? 'rotate(180deg)' : 'rotate(0deg)', flexShrink: 0 }} />
-      </button>
-      {open && (
-        <div className="mt-3" style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-          {region.groups.map((g, gi) => (
-            <div key={gi}>
-              {g.label && (
-                <div style={{ fontSize: 9.5, fontWeight: 700, color: T.green, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 8, paddingLeft: 2, opacity: 0.85 }}>{g.label}</div>
-              )}
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '12px 8px' }}>
-                {g.items.map((it, ii) => <EthnicFlagTile key={ii} name={it.name} file={it.file} />)}
-              </div>
-            </div>
-          ))}
-        </div>
-      )}
-    </div>
-  )
+  const regions: GRegion[] = EXTINCT_STATES.map(r => ({
+    label: r.region,
+    icon: galleryIcon(r.region),
+    groups: [{ label: '', items: r.items.map(it => {
+      const [pre, paren] = splitParen(it.name)
+      return { file: it.file, title: stripFlagOf(pre), detail: paren ? cap(paren) + '.' : 'A former state.' }
+    }) }],
+  }))
+  return <GallerySection title="Extinct States" icon={Landmark} color={T.warm} blurb={`${total} flags of vanished states · by continent`} regions={regions} />
 }
 
 function OrgCodexSection() {
-  const [open, setOpen] = useState(false)
   const total = ORG_FLAGS.reduce((n, r) => n + r.groups.reduce((m, g) => m + g.items.length, 0), 0)
-  return (
-    <div className="mt-5">
-      <button
-        onClick={() => setOpen(o => !o)}
-        className="geo-tap w-full flex items-center justify-between px-1 py-3 transition-all active:scale-[0.99]"
-        style={{ background: 'transparent', borderBottom: `1px solid ${open ? tint(T.green, 0.45) : T.line}` }}>
-        <div className="text-left">
-          <h3 className="text-sm font-bold uppercase tracking-widest flex items-center gap-2" style={{ color: T.green }}>
-            <Building2 size={15} color={T.green} strokeWidth={1.6} absoluteStrokeWidth /> International Organizations
-          </h3>
-          <p className="text-xs" style={{ color: T.dim }}>{total} flags · UN, NATO, EU, AU, FIFA, the Olympics…</p>
-        </div>
-        <ChevronDown size={17} color={T.green} strokeWidth={1.6} absoluteStrokeWidth
-          style={{ transition: 'transform 0.2s', transform: open ? 'rotate(180deg)' : 'rotate(0deg)', flexShrink: 0 }} />
-      </button>
-      {open && (
-        <div className="mt-3">
-          <p className="text-xs mb-2" style={{ color: T.dim, lineHeight: 1.4 }}>
-            Flags of international bodies — political, military, economic, cultural and sporting — plus former organisations. Tap a category to browse.
-          </p>
-          {ORG_FLAGS.map((r, i) => <OrgRegionBlock key={i} region={r} />)}
-        </div>
-      )}
-    </div>
-  )
+  const regions: GRegion[] = ORG_FLAGS.map(r => ({
+    label: r.region,
+    icon: Building2,
+    groups: r.groups.map(g => ({
+      label: g.label,
+      items: g.items.map(it => ({ file: it.file, title: stripFlagOf(it.name), detail: g.label ? `${g.label} — ${r.region}` : r.region })),
+    })),
+  }))
+  return <GallerySection title="International Organizations" icon={Building2} color={T.green} blurb={`${total} flags · UN, NATO, EU, AU, FIFA, the Olympics…`} regions={regions} />
 }
 
 // Shown when a subdivision is positively confirmed to have no flag.
