@@ -24,6 +24,7 @@ interface Palette {
   text: string; muted: string; dim: string
   onAccent: string // text colour to place on an accent-filled button
   amber: string; chartreuse: string; cyan: string; warm: string; gold: string; green: string
+  violet: string // reserved accent — e.g. the UK constituent-nations drill-down
   danger: string // wrong answers / destructive actions
 }
 
@@ -33,6 +34,7 @@ const TACTICAL: Palette = {
   line: "#1E2A3D", lineHi: "#2B3D58",
   text: "#E9EFF8", muted: "#7E8DA6", dim: "#4A5870", onAccent: "#06080D",
   amber: "#F5A524", chartreuse: "#BEF23A", cyan: "#27D3DE", warm: "#FF6A45", gold: "#FBBF24", green: "#34D399",
+  violet: "#A78BFA",
   danger: "#F43F5E",
 }
 
@@ -45,6 +47,7 @@ const CARTOGRAPHER: Palette = {
   text: "#1F3A3C", muted: "#5F726D", dim: "#A09074", onAccent: "#FFFCF4",
   amber: "#C0883A", chartreuse: "#C2735A" /* play=terracotta */, cyan: "#5C8CA8" /* learn=sky */,
   warm: "#A85440" /* challenge=clay */, gold: "#C0883A", green: "#5C8A6B",
+  violet: "#7A5C86" /* muted plum, fits parchment */,
   danger: "#B4452F" /* rust */,
 }
 
@@ -56,6 +59,7 @@ const ORIGINAL: Palette = {
   text: "#F5F3FF", muted: "#B8A9E0", dim: "#6E5FA0", onAccent: "#FFFFFF",
   amber: "#FBBF24", chartreuse: "#8B6CFF" /* play=violet */, cyan: "#A78BFA" /* learn=light violet */,
   warm: "#F43F5E" /* challenge=rose */, gold: "#FBBF24", green: "#34D399",
+  violet: "#C4B5FD" /* light violet on deep-space purple */,
   danger: "#F43F5E",
 }
 

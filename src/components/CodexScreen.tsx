@@ -4,6 +4,8 @@ import type { FlagRecord } from '../data/flags'
 import { CAPITALS } from '../data/capitals'
 import { CODEX } from '../data/codex'
 import type { HistoricalFlag } from '../data/codex'
+import { UK_NATIONS } from '../data/ukNations'
+import type { UKNation } from '../data/ukNations'
 import { historicalFor } from '../data/historicalFlags'
 import { IDENTITY_FLAGS, IDENTITY_CATEGORIES, SIGNAL_FLAGS } from '../data/identityFlags'
 import { US_CITY_FLAGS } from '../data/usCityFlags'
@@ -272,6 +274,10 @@ function CountryDetail({ flag }: { flag: FlagRecord }) {
         </div>
       )}
 
+      {/* United Kingdom — drill down into its four constituent nations. The one
+          country that gets this treatment. */}
+      {flag.code === 'GB' && <UKNationsSection />}
+
       {/* Flag History — collapsible */}
       <div className="mb-3">
         <button
@@ -440,6 +446,103 @@ function CountryDetail({ flag }: { flag: FlagRecord }) {
           )}
         </div>
       )}
+    </div>
+  )
+}
+
+// ── United Kingdom drill-down — England · Scotland · Wales · N. Ireland ──
+// The UK is effectively four nations; clicking it opens a purple-outlined
+// section where each constituent country expands into its own flag history
+// (Wessex, Mercia, the Lion Rampant, Glyndŵr's banner…).
+function UKNationsSection() {
+  const [open, setOpen] = useState(false)
+  const [openNation, setOpenNation] = useState<string | null>(null)
+  return (
+    <div className="mb-3">
+      <button
+        onClick={() => setOpen(v => !v)}
+        aria-expanded={open}
+        className="geo-tap w-full flex items-center justify-between px-4 py-3 rounded-xl transition-all active:scale-[0.98]"
+        style={{ background: tint(T.violet, 0.08), border: `1px solid ${tint(T.violet, 0.5)}` }}
+      >
+        <div className="flex items-center gap-2 text-left">
+          <Crown size={15} color={T.violet} strokeWidth={1.6} absoluteStrokeWidth />
+          <div>
+            <h2 className="text-xs font-bold uppercase tracking-widest" style={{ color: T.violet }}>Constituent Nations</h2>
+            <span className="text-xs" style={{ color: tint(T.violet, 0.75) }}>
+              {open ? 'England · Scotland · Wales · N. Ireland' : 'Click here to expand — 4 nations'}
+            </span>
+          </div>
+        </div>
+        <span style={{ color: T.violet, transition: 'transform 0.2s', transform: open ? 'rotate(90deg)' : 'rotate(0deg)' }}>›</span>
+      </button>
+
+      {open && (
+        <div className="mt-2.5 space-y-2">
+          {UK_NATIONS.map(nation => {
+            const isOpen = openNation === nation.key
+            const current = nation.flagHistory[0]
+            return (
+              <div key={nation.key} className="rounded-xl overflow-hidden" style={{ background: T.surface, border: `1px solid ${isOpen ? tint(T.violet, 0.45) : T.line}` }}>
+                <button
+                  onClick={() => setOpenNation(o => o === nation.key ? null : nation.key)}
+                  aria-expanded={isOpen}
+                  className="geo-tap w-full flex items-center gap-3 px-3 py-2.5 text-left transition-all active:scale-[0.99]"
+                  style={{ background: isOpen ? tint(T.violet, 0.06) : 'transparent' }}
+                >
+                  <img src={current.flagUrl} alt={nation.name}
+                    style={{ width: 46, height: 30, objectFit: 'contain', borderRadius: 5, border: `1px solid ${T.line}`, flexShrink: 0, background: T.surfaceHi }}
+                    onError={e => { (e.target as HTMLImageElement).style.opacity = '0.3' }} />
+                  <div className="flex-1 min-w-0">
+                    <div className="font-semibold text-sm truncate" style={{ color: T.text }}>{nation.name}</div>
+                    <div className="text-xs truncate" style={{ color: T.muted, marginTop: 1 }}>{nation.emblem}</div>
+                  </div>
+                  <span className="text-xs" style={{ color: tint(T.violet, 0.8), fontFamily: FONT.mono, fontVariantNumeric: 'tabular-nums', flexShrink: 0 }}>{nation.flagHistory.length} flags</span>
+                  <span style={{ color: T.violet, fontSize: 16, transition: 'transform 0.2s', transform: isOpen ? 'rotate(90deg)' : 'rotate(0deg)', flexShrink: 0 }}>›</span>
+                </button>
+                {isOpen && (
+                  <div className="px-3 pb-3 pt-1">
+                    <NationHistory nation={nation} />
+                  </div>
+                )}
+              </div>
+            )
+          })}
+        </div>
+      )}
+    </div>
+  )
+}
+
+// A compact flag-history browser for one UK nation — selected card + tappable
+// timeline strip, reusing the same FlagHistoryCard as the country view.
+function NationHistory({ nation }: { nation: UKNation }) {
+  const [idx, setIdx] = useState(0)
+  const history = nation.flagHistory
+  return (
+    <div>
+      <FlagHistoryCard hf={history[idx]} isFirst={idx === 0} />
+      <div className="mt-3">
+        <div style={{ display: 'flex', gap: 8, overflowX: 'auto', paddingBottom: 6 }}>
+          {history.map((hf, i) => (
+            <button key={i} onClick={() => setIdx(i)}
+              style={{
+                flexShrink: 0, borderRadius: 8, overflow: 'hidden',
+                border: `2px solid ${i === idx ? T.violet : T.line}`,
+                opacity: i === idx ? 1 : 0.55,
+                transition: 'opacity 0.2s, border-color 0.2s',
+                background: T.surfaceHi,
+              }}>
+              <img src={hf.flagUrl} alt={hf.label}
+                style={{ width: 72, height: 46, objectFit: 'contain', display: 'block', background: T.surfaceHi }}
+                onError={e => { (e.target as HTMLImageElement).style.opacity = '0.15' }} />
+              <div style={{ padding: '3px 5px', textAlign: 'center', background: T.surface }}>
+                <span style={{ fontSize: 9, fontFamily: FONT.mono, color: i === idx ? T.violet : T.dim, fontWeight: 600 }}>{hf.fromYear}</span>
+              </div>
+            </button>
+          ))}
+        </div>
+      </div>
     </div>
   )
 }
