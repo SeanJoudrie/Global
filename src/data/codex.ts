@@ -1675,6 +1675,12 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       label: 'San Martín\'s Original Design',
       note: 'When General José de San Martín landed in Peru in 1820 to liberate it from Spain, he designed the first Peruvian flag with diagonal red and white stripes radiating from the centre. The story goes that San Martín was inspired by watching flamingos fly at dawn over Paracas Bay — the red of their wings against white sky suggesting Peru\'s colours. The diagonal design was quickly changed to vertical stripes but the red-and-white palette remained.',
     },
+    {
+      fromYear: 1542, toYear: 1820,
+      flagUrl: fp('Flag_of_Cross_of_Burgundy.svg'),
+      label: 'Viceroyalty of Peru (Spanish)',
+      note: 'Peru was the jewel of Spanish South America — the Viceroyalty of Peru, ruled from Lima, the "City of Kings," which governed most of the continent and funnelled the silver of Potosí to Spain. For nearly three centuries it flew the Cross of Burgundy. It was also the last royalist stronghold, not finally liberated until the Battle of Ayacucho in 1824.',
+    },
   ],
 
   EC: [
@@ -1943,6 +1949,12 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       label: 'British Guiana (colonial era)',
       note: 'The Guiana coast was colonised by the Dutch in the 17th century before Britain took control during the Napoleonic Wars. British Guiana (as it was known) was the site of one of the deadliest incidents in American religious history — the 1978 Jonestown mass death of over 900 members of the Peoples Temple cult. Independence came in 1966 under Forbes Burnham\'s People\'s Progressive Party, and Guyana has since aligned more with South America than the Caribbean.',
     },
+    {
+      fromYear: 1667, toYear: 1814,
+      flagUrl: '/flags/nl.svg',
+      label: 'Dutch Guiana',
+      note: 'Like neighbouring Suriname, the colonies of Essequibo, Demerara and Berbice that became Guyana were Dutch — plantation economies worked by enslaved Africans under the flag of the Netherlands. Britain seized them during the Napoleonic Wars and formally took them in 1814, merging them into British Guiana in 1831. The Dutch legacy survives in place names and the sea-wall engineering that holds back the Atlantic from the coast.',
+    },
   ],
 
   SR: [
@@ -1994,6 +2006,12 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       label: 'British Jamaica (colonial era)',
       note: 'Britain captured Jamaica from Spain in 1655 and it became one of the most valuable plantation colonies in the Caribbean, dependent on enslaved African labour. Jamaica was a major centre of the transatlantic slave trade and the birthplace of maroon communities — formerly enslaved people who established autonomous settlements in the mountains. Independence in 1962 was achieved peacefully under Chief Minister Alexander Bustamante.',
     },
+    {
+      fromYear: 1494, toYear: 1655,
+      flagUrl: fp('Flag_of_Cross_of_Burgundy.svg'),
+      label: 'Spanish Jamaica',
+      note: 'Columbus landed on Jamaica in 1494, and Spain held the island for over 150 years under the Cross of Burgundy, calling it Santiago. Spanish rule devastated the indigenous Taíno through disease and forced labour and introduced the first enslaved Africans. An English expedition seized the lightly-defended island in 1655 — the retreating Spanish freed their slaves, whose descendants became Jamaica\'s first Maroons.',
+    },
   ],
 
   TT: [
@@ -2008,6 +2026,12 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       flagUrl: fp('Government_Ensign_of_the_United_Kingdom.svg'),
       label: 'British Trinidad & Tobago (colonial era)',
       note: 'Trinidad was a Spanish colony until captured by Britain in 1797; Tobago changed hands between European powers 22 times — more than any other territory in the world — before being ceded to Britain in 1814. The islands were merged into a single crown colony in 1889. Trinidad and Tobago became one of the wealthiest Caribbean nations through oil production, and its multicultural society (African, Indian, European, and Chinese heritage) shaped a unique culture including calypso, soca, and steelband music.',
+    },
+    {
+      fromYear: 1498, toYear: 1797,
+      flagUrl: fp('Flag_of_Cross_of_Burgundy.svg'),
+      label: 'Spanish Trinidad',
+      note: 'Columbus reached Trinidad in 1498, and Spain held it for nearly three centuries under the Cross of Burgundy — though it remained a neglected backwater that Spain eventually opened to French Catholic planters, who gave the island much of its Francophone-Creole character before a British fleet took it in 1797.',
     },
   ],
 

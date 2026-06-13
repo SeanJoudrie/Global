@@ -97,4 +97,8 @@ export const ADDED_FLAGS: AddedFlag[] = [
   { country: "Chile", era: "Captaincy General of Chile, Spanish (1542–1810)", file: "Flag_of_Cross_of_Burgundy.svg" },
   { country: "Bolivia", era: "Upper Peru, Spanish (1559–1825)", file: "Flag_of_Cross_of_Burgundy.svg" },
   { country: "Cuba", era: "US military government (1898–1902)", file: "/flags/us.svg" },
+  { country: "Peru", era: "Viceroyalty of Peru, Spanish (1542–1820)", file: "Flag_of_Cross_of_Burgundy.svg" },
+  { country: "Guyana", era: "Dutch Guiana (1667–1814)", file: "/flags/nl.svg" },
+  { country: "Jamaica", era: "Spanish Jamaica (1494–1655)", file: "Flag_of_Cross_of_Burgundy.svg" },
+  { country: "Trinidad & Tobago", era: "Spanish Trinidad (1498–1797)", file: "Flag_of_Cross_of_Burgundy.svg" },
 ]
