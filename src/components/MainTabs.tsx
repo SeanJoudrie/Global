@@ -179,27 +179,17 @@ function TodayTab({ state, dailyDone, launch, onNavigate, onGoCodex, onGoPlay, o
         <div style={{ color: T.muted, fontSize: 12.5, marginTop: 3 }}>{dateLine} · best run {state.longestStreak}</div>
       </div>
 
-      {/* Hero deck — Expedition first, then Flag of the Day (→ Codex), the
-          Arcade (→ Play) and a daily fact. Swipe to browse. */}
-      <HeroDeck accent={exped}>
-        <DeckSlide accent={exped} watermark="today" eyebrow="Today's expedition" title="Daily Expedition"
-          body={dailyDone ? "Logged for today — a fresh expedition lands tomorrow." : "Ten flags from across the world. One run, once a day."}
-          cta={dailyDone ? (todayResult ? `✓ ${todayResult.score}/${todayResult.total} today` : "✓ Done today") : "Start"}
-          onClick={dailyDone ? undefined : onStartDaily} />
-        <DeckSlide accent={ACCENT.codex} eyebrow={`Flag of the Day · ${fotd.region}`} title={fotd.name}
-          body={fotd.funFact} cta="Read in the Codex" onClick={() => onGoCodex(fotd.code)}
-          art={
-            <div style={{ width: 100, height: 67, borderRadius: 10, overflow: "hidden", flexShrink: 0, border: `1px solid ${T.line}`, boxShadow: `0 4px 12px -6px ${tint(T.text, 0.45)}` }}>
-              <FlagImage code={fotd.code} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
-            </div>
-          } />
-        <DeckSlide accent={ACCENT.challenge} eyebrow="The Arcade" title={`${gameCount} games await`}
-          body="A swipeable trending deck, fresh picks daily, every shelf one tap from play."
-          cta="Open the Arcade" onClick={onGoPlay} art={flagFan} />
-        <DeckSlide accent={ACCENT.today} eyebrow="World Cup 2026" title="48 nations, one summer"
-          body="Flip through every team's flag, story and historical flags before kickoff."
-          cta="Explore the field" onClick={() => onNavigate("worldcup")}
-          art={
+      {/* Hero deck — Expedition, then the timely World Cup, Flag of the Day
+          (→ Codex), the Arcade (→ Play) and a daily fact. Swipe; it loops. */}
+      <HeroDeck slides={[
+        { accent: exped, watermark: "today", eyebrow: "Today's expedition", title: "Daily Expedition",
+          body: dailyDone ? "Logged for today — a fresh expedition lands tomorrow." : "Ten flags from across the world. One run, once a day.",
+          cta: dailyDone ? (todayResult ? `✓ ${todayResult.score}/${todayResult.total} today` : "✓ Done today") : "Start",
+          onClick: dailyDone ? undefined : onStartDaily },
+        { accent: ACCENT.today, eyebrow: "World Cup 2026", title: "48 nations, one summer",
+          body: "Flip through every team's flag, story and historical flags before kickoff.",
+          cta: "Explore the field", onClick: () => onNavigate("worldcup"),
+          art: (
             <div style={{ position: "relative", width: 88, height: 64, flexShrink: 0 }}>
               {["us", "mx", "ca"].map((c, i) => (
                 <div key={c} style={{ position: "absolute", inset: 0, borderRadius: 6, overflow: "hidden", border: `1.5px solid ${T.surface}`,
@@ -209,15 +199,25 @@ function TodayTab({ state, dailyDone, launch, onNavigate, onGoCodex, onGoPlay, o
                 </div>
               ))}
             </div>
-          } />
-        <DeckSlide accent={ACCENT.learn} eyebrow="Did you know?" title={dyk.name}
-          body={dyk.funFact} cta="More fun facts" onClick={() => onNavigate("funfact")}
-          art={
+          ) },
+        { accent: ACCENT.codex, eyebrow: `Flag of the Day · ${fotd.region}`, title: fotd.name,
+          body: fotd.funFact, cta: "Read in the Codex", onClick: () => onGoCodex(fotd.code),
+          art: (
+            <div style={{ width: 100, height: 67, borderRadius: 10, overflow: "hidden", flexShrink: 0, border: `1px solid ${T.line}`, boxShadow: `0 4px 12px -6px ${tint(T.text, 0.45)}` }}>
+              <FlagImage code={fotd.code} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+            </div>
+          ) },
+        { accent: ACCENT.challenge, eyebrow: "The Arcade", title: `${gameCount} games await`,
+          body: "A swipeable trending deck, fresh picks daily, every shelf one tap from play.",
+          cta: "Open the Arcade", onClick: onGoPlay, art: flagFan },
+        { accent: ACCENT.learn, eyebrow: "Did you know?", title: dyk.name,
+          body: dyk.funFact, cta: "More fun facts", onClick: () => onNavigate("funfact"),
+          art: (
             <div style={{ width: 76, height: 51, borderRadius: 8, overflow: "hidden", flexShrink: 0, border: `1px solid ${T.line}`, boxShadow: `0 3px 9px -5px ${tint(T.text, 0.45)}` }}>
               <FlagImage code={dyk.code} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
             </div>
-          } />
-      </HeroDeck>
+          ) },
+      ]} />
 
       {/* Quick Play — instant fun, charged up */}
       <button onClick={onQuickPlay} className={`geo-tap ${IS_CARTO ? "carto-card" : ""}`}
@@ -270,52 +270,88 @@ function TodayTab({ state, dailyDone, launch, onNavigate, onGoCodex, onGoPlay, o
   )
 }
 
-/* ── Hero deck: full-width snap carousel with dot indicators ────────────── */
-function HeroDeck({ children, accent }: { children: ReactNode[]; accent: string }) {
+/* ── Hero deck: a looping, swipeable carousel of image-led slides. Pointer-drag
+   is axis-locked (vertical page scrolls pass straight through), wraps past
+   either end, and every slide shares one fixed height so the carousel never
+   jumps as you swipe. ──────────────────────────────────────────────────────── */
+interface SlideData {
+  accent: string; eyebrow: string; title: string; body: string; cta: string
+  onClick?: () => void; art?: ReactNode; watermark?: string
+}
+const HERO_H = 216
+
+function HeroDeck({ slides }: { slides: SlideData[] }) {
+  const n = slides.length
   const [idx, setIdx] = useState(0)
+  const [dx, setDx] = useState(0)
+  const startX = useRef(0)
+  const startY = useRef(0)
+  const axis = useRef<null | "h" | "v">(null)
+  const moved = useRef(false)
+  const dragging = useRef(false)
+  const [reduce] = useState(() =>
+    typeof window !== "undefined" && !!window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches)
+  if (!n) return null
+
+  const go = (d: number) => { setIdx(i => (i + d + n) % n); setDx(0) }
+  const commit = (dir: number) => {
+    if (reduce) { go(dir); return }
+    setDx(-dir * (typeof window !== "undefined" ? window.innerWidth : 400))
+    window.setTimeout(() => go(dir), 200)
+  }
+  const cur = slides[idx]
+
   return (
     <div>
-      <div className="carto-rail"
-        onScroll={e => {
-          const el = e.currentTarget
-          const first = el.firstElementChild as HTMLElement | null
-          const w = (first?.offsetWidth ?? el.clientWidth) + 12
-          setIdx(Math.max(0, Math.min(children.length - 1, Math.round(el.scrollLeft / w))))
+      <div style={{ position: "relative", height: HERO_H, touchAction: "pan-y" }}
+        onPointerDown={e => { dragging.current = true; axis.current = null; moved.current = false; startX.current = e.clientX; startY.current = e.clientY; try { (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId) } catch { /* ignore */ } }}
+        onPointerMove={e => {
+          if (!dragging.current) return
+          const ax = e.clientX - startX.current, ay = e.clientY - startY.current
+          if (axis.current === null) {
+            if (Math.abs(ax) < 8 && Math.abs(ay) < 8) return
+            axis.current = Math.abs(ax) > Math.abs(ay) ? "h" : "v"
+          }
+          if (axis.current === "v") { dragging.current = false; setDx(0); return }
+          moved.current = true; setDx(ax)
         }}
-        style={{ display: "flex", gap: 12, overflowX: "auto", scrollSnapType: "x mandatory", margin: "0 -16px", padding: "0 16px" }}>
-        {children.map((c, i) => (
-          <div key={i} style={{ flex: "0 0 100%", scrollSnapAlign: "center", display: "flex" }}>{c}</div>
-        ))}
+        onPointerUp={() => {
+          if (!dragging.current) { axis.current = null; return }
+          dragging.current = false
+          const horiz = axis.current === "h"; axis.current = null
+          if (horiz && Math.abs(dx) > 64) commit(dx < 0 ? 1 : -1)
+          else { if (!moved.current) cur.onClick?.(); setDx(0) }
+        }}
+        onPointerCancel={() => { dragging.current = false; axis.current = null; setDx(0) }}>
+        <div style={{
+          position: "absolute", inset: 0,
+          transform: `translateX(${dx}px)`,
+          transition: dragging.current ? "none" : "transform 0.22s cubic-bezier(0.2,0.7,0.2,1)",
+          opacity: Math.max(0, 1 - Math.abs(dx) / 520),
+        }}>
+          <DeckSlide {...cur} />
+        </div>
       </div>
-      <div style={{ display: "flex", justifyContent: "center", gap: 6, marginTop: 10 }} aria-hidden>
-        {children.map((_, i) => (
-          <span key={i} style={{
-            width: i === idx ? 18 : 6, height: 6, borderRadius: 3,
-            background: i === idx ? accent : T.line,
-            transition: "width 0.25s, background 0.2s",
-          }} />
+      <div style={{ display: "flex", justifyContent: "center", gap: 6, marginTop: 12 }} aria-hidden>
+        {slides.map((_, i) => (
+          <span key={i} style={{ width: i === idx ? 18 : 6, height: 6, borderRadius: 3, background: i === idx ? cur.accent : T.line, transition: "width 0.25s, background 0.2s" }} />
         ))}
       </div>
     </div>
   )
 }
 
-/* One deck slide — text on the left, optional poster art on the right (or a
-   big etched watermark behind), so every slide in the rotating hero carries a
-   real image and the same silhouette. */
-function DeckSlide({ accent, eyebrow, title, body, cta, onClick, art, watermark }: {
-  accent: string; eyebrow: string; title: string; body: string; cta: string
-  onClick?: () => void; art?: ReactNode; watermark?: string
-}) {
+/* One deck slide — fills the deck's fixed height, text on the left, optional
+   poster art on the right (or a big etched watermark behind). The whole card is
+   tappable (handled by HeroDeck); the CTA stays a real button for keyboard. */
+function DeckSlide({ accent, eyebrow, title, body, cta, onClick, art, watermark }: SlideData) {
   const disabled = !onClick
   return (
-    <button onClick={onClick} aria-disabled={disabled || undefined}
-      className={`${disabled ? "" : "geo-tap"} ${IS_CARTO ? "carto-card" : ""}`}
+    <div className={IS_CARTO ? "carto-card" : ""}
       style={{
-        flex: 1, position: "relative", overflow: "hidden", padding: "20px 18px", borderRadius: 16, textAlign: "left",
+        height: "100%", position: "relative", overflow: "hidden", padding: 18, borderRadius: 16, textAlign: "left",
         border: `1px solid ${tint(accent, 0.36)}`,
         background: `linear-gradient(150deg, ${tint(accent, 0.16)}, ${T.surface} 70%)`,
-        cursor: disabled ? "default" : "pointer",
         ...(IS_CARTO ? { ["--wash" as string]: tint(accent, 0.42) } : {}),
       }}>
       {watermark && (
@@ -323,24 +359,26 @@ function DeckSlide({ accent, eyebrow, title, body, cta, onClick, art, watermark 
           <LineIcon name={watermark} size={130} color={accent} strokeWidth={1.1} />
         </div>
       )}
-      <div style={{ position: "relative", display: "flex", alignItems: "center", gap: 14 }}>
-        <div style={{ flex: 1, minWidth: 0 }}>
+      <div style={{ position: "relative", height: "100%", display: "flex", alignItems: "center", gap: 14 }}>
+        <div style={{ flex: 1, minWidth: 0, display: "flex", flexDirection: "column", justifyContent: "center" }}>
           <div className="geo-micro" style={{ fontSize: 9, color: accent, marginBottom: 7 }}>◦ {eyebrow}</div>
-          <div className="geo-display" style={{ fontWeight: 800, fontSize: 25, lineHeight: 1.04, letterSpacing: "-0.02em", color: T.text, display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>
+          <div className="geo-display" style={{ fontWeight: 800, fontSize: 25, lineHeight: 1.06, letterSpacing: "-0.02em", color: T.text, display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>
             {title}
           </div>
           <div style={{
             color: T.muted, fontSize: 12.5, marginTop: 6, lineHeight: 1.5,
             display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden",
           }}>{body}</div>
-          <div style={{ marginTop: 14, display: "inline-flex", alignItems: "center", gap: 8, padding: "11px 20px", borderRadius: 999, background: accent, color: T.onAccent }}>
+          <button onClick={onClick} onPointerDown={e => e.stopPropagation()} disabled={disabled}
+            className={disabled ? "" : "geo-tap"}
+            style={{ alignSelf: "flex-start", marginTop: 14, display: "inline-flex", alignItems: "center", gap: 8, padding: "11px 20px", borderRadius: 999, minHeight: 44, background: accent, color: T.onAccent, cursor: disabled ? "default" : "pointer" }}>
             <span style={{ fontFamily: FONT.display, fontWeight: 700, fontSize: 14.5 }}>{cta}</span>
             {!disabled && <span style={{ fontSize: 15 }}>→</span>}
-          </div>
+          </button>
         </div>
         {art}
       </div>
-    </button>
+    </div>
   )
 }
 

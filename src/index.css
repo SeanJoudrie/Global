@@ -111,7 +111,7 @@ body {
 
 /* Monospaced, slightly condensed numerals for all data points / streaks */
 .geo-mono { font-family: var(--font-mono); font-variant-numeric: tabular-nums; letter-spacing: -0.02em; }
-.geo-display { font-family: var(--font-display); }
+.geo-display { font-family: var(--font-display); font-variant-numeric: lining-nums; font-feature-settings: "lnum" 1; }
 .geo-micro { font-family: var(--font-mono); text-transform: uppercase; letter-spacing: 0.22em; font-weight: 600; }
 
 /* Faint topographic grid + dot-matrix for shell backgrounds / empty states */

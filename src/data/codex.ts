@@ -1214,10 +1214,22 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       note: 'Switzerland officially standardised its federal flag in 1889 — a bold white cross on red, in a square format unique among sovereign nations (only Vatican City also uses a square flag). The equal-armed cross has represented the Swiss Confederation since at least the Battle of Laupen in 1339, when Swiss troops wore white crosses as field insignia. The Red Cross flag is its inverse — white field, red cross — created in 1863 by Swiss founder Henry Dunant as a deliberate tribute.',
     },
     {
-      fromYear: 1339, toYear: 1889,
+      fromYear: 1815, toYear: 1889,
+      flagUrl: fp('Flag_of_Switzerland_(Pantone).svg'),
+      label: 'Restored Confederation',
+      note: 'After the fall of Napoleon, the 1815 Federal Treaty restored the Swiss Confederation and revived the white cross on red as its emblem. The proportions and exact shade of red still varied between cantons for decades before the square national flag was formally standardised in 1889.',
+    },
+    {
+      fromYear: 1798, toYear: 1803,
+      flagUrl: fp('Flag_of_the_Helvetic_Republic.svg'),
+      label: 'Helvetic Republic',
+      note: 'When France invaded in 1798 and swept away the old confederation, the short-lived Helvetic Republic adopted a completely different flag — a horizontal green-red-yellow tricolor, the first ever single national flag for all of Switzerland. It abandoned the centuries-old cross entirely. The republic collapsed by 1803, and the cross returned with the restored confederation.',
+    },
+    {
+      fromYear: 1339, toYear: 1798,
       flagUrl: fp('Flag_of_Switzerland_(Pantone).svg'),
       label: 'Medieval Origins',
-      note: 'Swiss soldiers wore white crosses on red surcoats at the Battle of Laupen (1339) to identify themselves as a confederation. The cross appeared on cantonal battle flags long before Switzerland had a formal national banner. The proportions and exact shade of red varied for five centuries before 1889\'s standardisation made the current square flag official.',
+      note: 'Swiss soldiers wore white crosses on red surcoats at the Battle of Laupen (1339) to identify themselves as a confederation. The cross appeared on cantonal battle flags long before Switzerland had a formal national banner, flying over the loose alliance of cantons until the French invasion of 1798.',
     },
   ],
 
