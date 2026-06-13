@@ -300,6 +300,12 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       label: "Khoshut Khanate",
       note: "A Mongol khanate that ruled Tibet and installed the Fifth Dalai Lama's government before the Qing took control.",
     },
+    {
+      fromYear: 1661, toYear: 1683,
+      flagUrl: fp("Flag_of_Ming_Cheng.svg"),
+      label: "Kingdom of Tungning",
+      note: "The Ming-loyalist kingdom founded on Taiwan by the warlord Koxinga, who expelled the Dutch — the first Han Chinese state to rule the island, until the Qing took it.",
+    },
   ],
   JP: [
     {
@@ -547,6 +553,30 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       label: 'Free City of Frankfurt',
       note: 'Before unification, Frankfurt was a sovereign city-state and seat of the German Confederation\'s parliament, flying a white-and-red civic flag until Prussia annexed it in 1866 for siding with Austria. It was one of the historic Free Cities, alongside Hamburg and Bremen.',
     },
+    {
+      fromYear: 1814, toYear: 1866,
+      flagUrl: fp("Flag_of_Hanover_(1692).svg"),
+      label: "Kingdom of Hanover",
+      note: "A north German kingdom in personal union with the British crown until 1837, annexed by Prussia after backing the losing side in 1866.",
+    },
+    {
+      fromYear: 1807, toYear: 1813,
+      flagUrl: fp("Flag_of_Kingdom_of_Westphalia.svg"),
+      label: "Kingdom of Westphalia",
+      note: "A short-lived Napoleonic client kingdom in western Germany, ruled by Napoleon's brother Jérôme Bonaparte as a 'model state'.",
+    },
+    {
+      fromYear: 1806, toYear: 1918,
+      flagUrl: fp("Flag_of_Bavaria_(striped).svg"),
+      label: "Kingdom of Bavaria",
+      note: "The second-largest kingdom of the German Empire, ruled from Munich by the Wittelsbachs, whose white-and-blue lozenges are still Bavaria's emblem.",
+    },
+    {
+      fromYear: 1805, toYear: 1918,
+      flagUrl: fp("Wurttflag.png"),
+      label: "Kingdom of Württemberg",
+      note: "A south-western German kingdom centred on Stuttgart, a constituent state of the German Empire until the 1918 revolution.",
+    },
   ],
   AT: [
     {
@@ -635,6 +665,12 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       flagUrl: fp('Flag_of_the_Republic_of_Amalfi.svg'),
       label: 'Duchy of Amalfi',
       note: 'Amalfi was one of the first Italian maritime republics, a Mediterranean trading power from the 9th to 12th centuries that rivalled Venice, Pisa, and Genoa. Its banner bore a white cross on blue — later associated with the Order of Malta. Norman conquest in 1131 ended its independence.',
+    },
+    {
+      fromYear: 1816, toYear: 1861,
+      flagUrl: fp("Flag_of_the_Kingdom_of_the_Two_Sicilies_(1816).svg"),
+      label: "Kingdom of the Two Sicilies",
+      note: "The largest of the pre-unification Italian states — Naples and Sicily under the Bourbons — conquered by Garibaldi's Redshirts and folded into a united Italy.",
     },
   ],
   ES: [
@@ -1017,6 +1053,12 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       flagUrl: fp("Flag_of_the_Princely_State_of_Tehri_Garhwal.svg"),
       label: "Garhwal Kingdom",
       note: "An ancient Himalayan kingdom in Uttarakhand, home to the sources of the Ganges, that acceded to India at independence.",
+    },
+    {
+      fromYear: 1642, toYear: 1975,
+      flagUrl: fp("Flag_of_Sikkim_(1967-1975).svg"),
+      label: "Kingdom of Sikkim",
+      note: "A Himalayan Buddhist kingdom ruled by the Namgyal dynasty for over 300 years, which became the 22nd state of India in 1975.",
     },
   ],
   BR: [
@@ -4563,6 +4605,12 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       label: 'Autonomous Republic',
       note: 'As an autonomous republic within the French Community in 1958, Senegal used a green-yellow-red tricolour with a green star, close to its modern flag, before joining the Mali Federation.',
     },
+    {
+      fromYear: 1549, toYear: 1879,
+      flagUrl: fp("Flag_Of_Cayor2.png"),
+      label: "Cayor Kingdom",
+      note: "A powerful Wolof kingdom on the Senegalese coast that long resisted French expansion before falling in the 19th century.",
+    },
   ],
   ML: [
     {
@@ -5617,6 +5665,12 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       label: "Khanate of Kalat",
       note: "A Baloch khanate in what is now southwestern Pakistan, briefly independent in 1947–48 before acceding to Pakistan.",
     },
+    {
+      fromYear: 1783, toYear: 1843,
+      flagUrl: fp("Flag_of_Sindh_(1783–1843).svg"),
+      label: "Talpur Dynasty",
+      note: "The Baloch dynasty that ruled Sindh (in modern Pakistan), flying the flag of Sindh, until the British conquered it at the Battle of Miani.",
+    },
   ],
   BD: [
     {
@@ -5730,6 +5784,12 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       flagUrl: fp('King_of_Kandy.svg'),
       label: 'Lion Flag of the Kingdom of Kandy',
       note: 'The royal standard of Sri Vikrama Rajasinha, captured by the British at the 1815 Kandyan Convention and rediscovered in London in 1908 — it became the model for independent Ceylon\'s flag.',
+    },
+    {
+      fromYear: 1521, toYear: 1594,
+      flagUrl: fp("Flag_of_Sitawaka_Kingdom_(1521_-_1594).png"),
+      label: "Kingdom of Sitawaka",
+      note: "A kingdom of the Sri Lankan interior that mounted the fiercest resistance to Portuguese conquest of the island.",
     },
   ],
   KH: [
