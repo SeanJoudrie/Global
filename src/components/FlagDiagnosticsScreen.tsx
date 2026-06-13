@@ -160,7 +160,7 @@ export default function FlagDiagnosticsScreen({ onBack }: Props) {
         {tab === "added"
           ? "Historical predecessor flags added to the Codex in today's sweep. Each should show “loads ✓”. The colonial ones intentionally show the ruling country's own flag (France, Portugal, the Union Jack…)."
           : tab === "states"
-          ? "Former sovereign states from Wikipedia's master list that HAVE a flag but aren't in the Codex yet — its real lead image is shown so you can pick which to promote. (The other ~527 uncovered states are genuinely flag-less: ancient empires, etc.)"
+          ? "What's left after promoting 125 former states into their modern countries: these are either dedups of an existing entry (Ethiopian Empire, Ba'athist Iraq…) or present-day autonomous regions (Puntland, Jubaland), kept here for reference. The flag-having states have been folded into the relevant country's history."
           : tab === "missing"
           ? "Tap the correct flag(s) for each entry (pick more than one if several are right). Then hit Submit at the bottom and send me the copied text."
           : tab === "notes"

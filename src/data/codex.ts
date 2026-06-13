@@ -216,6 +216,24 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       label: 'Tsardom of Russia (Petrine tricolor)',
       note: 'Peter the Great introduced the white-blue-red tricolor in the 1690s for the merchant fleet, modeled on the Dutch flag. Restored again in 1896, it is the direct ancestor of the modern Russian flag.',
     },
+    {
+      fromYear: 1921, toYear: 1944,
+      flagUrl: fp("Flag_of_the_Tuvan_People's_Republic_(1943-1944).svg"),
+      label: "Tuvan People's Republic",
+      note: "A nominally independent Soviet-aligned state in southern Siberia that was quietly annexed into the USSR in 1944.",
+    },
+    {
+      fromYear: 1917, toYear: 1922,
+      flagUrl: fp("Flag_of_the_Confederated_Republic_of_Altai.svg"),
+      label: "Confederated Republic of Altai",
+      note: "A short-lived attempt at an autonomous Altai state in the Russian Civil War's Siberian chaos.",
+    },
+    {
+      fromYear: 1914, toYear: 1921,
+      flagUrl: fp("Tannu_Uriankhai_Recreated_Banner.png"),
+      label: "Uryankhay Krai",
+      note: "The Russian protectorate over Tuva, between Mongolia and Siberia, before the Tuvan People's Republic.",
+    },
   ],
   CN: [
     {
@@ -246,6 +264,42 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       label: 'Qing Dynasty (Yellow Dragon)',
       note: 'The Azure Dragon chasing a red flaming pearl on a yellow field — yellow being the imperial color of the ruling house. An earlier triangular version dated to 1862 before the rectangular flag was standardized.',
     },
+    {
+      fromYear: 1938, toYear: 1940,
+      flagUrl: fp("Flag_of_China_(1912–1928).svg"),
+      label: "Reformed Government of the Republic of China",
+      note: "A Japanese-sponsored collaborationist government in occupied central China.",
+    },
+    {
+      fromYear: 1935, toYear: 1938,
+      flagUrl: fp("Flag_of_the_East_Hebei_Autonomous_Government.svg"),
+      label: "East Hebei Autonomous Government",
+      note: "A Japanese puppet regime in northern China, a stepping stone to the wider invasion.",
+    },
+    {
+      fromYear: 1932, toYear: 1945,
+      flagUrl: fp("Flag_of_Manchukuo.svg"),
+      label: "Manchukuo",
+      note: "The Japanese puppet empire in Manchuria, fronted by Puyi, China's last emperor — dissolved when the USSR invaded in 1945.",
+    },
+    {
+      fromYear: 1931, toYear: 1934,
+      flagUrl: fp("Chinese_soviet_flag.svg"),
+      label: "Jiangxi–Fujian Soviet",
+      note: "The Chinese Soviet Republic, Mao Zedong's first base area, abandoned at the start of the Long March.",
+    },
+    {
+      fromYear: 1895, toYear: 1895,
+      flagUrl: fp("Flag_of_the_Republic_of_Formosa_(1895).svg"),
+      label: "Republic of Formosa",
+      note: "A short-lived republic declared on Taiwan to resist the island's cession to Japan; it lasted only months.",
+    },
+    {
+      fromYear: 1642, toYear: 1717,
+      flagUrl: fp("Standard_of_Gushri_khan.png"),
+      label: "Khoshut Khanate",
+      note: "A Mongol khanate that ruled Tibet and installed the Fifth Dalai Lama's government before the Qing took control.",
+    },
   ],
   JP: [
     {
@@ -271,6 +325,18 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
           note: 'The Navy\'s version offsets the sun toward the hoist. Controversially, the modern Japan Maritime Self-Defense Force readopted it in 1954, so it still flies at sea today.',
         },
       ],
+    },
+    {
+      fromYear: 1603, toYear: 1868,
+      flagUrl: fp("Flag_of_the_Tokugawa_Shogunate.svg"),
+      label: "Tokugawa shogunate",
+      note: "The Edo-period military government of the Tokugawa shoguns that unified Japan and sealed it off from the world for over two centuries.",
+    },
+    {
+      fromYear: 1429, toYear: 1879,
+      flagUrl: fp("Merchant_flag_of_the_Ryukyu_Kingdom.svg"),
+      label: "Ryukyu Kingdom",
+      note: "An independent island kingdom that traded across East Asia and paid tribute to China, annexed by Japan as Okinawa Prefecture.",
     },
   ],
   AU: [
@@ -378,6 +444,42 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       flagUrl: fp('Royal_Standard_of_the_King_of_France.svg'),
       label: 'Kingdom of France (Bourbon)',
       note: 'The white royal standard strewn with golden fleurs-de-lis was the emblem of the Ancien Régime monarchy. White was the dynastic color of the House of Bourbon until the Revolution.',
+    },
+    {
+      fromYear: 1794, toYear: 1796,
+      flagUrl: fp("Flag_of_the_Anglo-Corsican_Kingdom.svg"),
+      label: "Anglo-Corsican Kingdom",
+      note: "A brief Corsican kingdom under British protection during the French Revolutionary Wars.",
+    },
+    {
+      fromYear: 1755, toYear: 1769,
+      flagUrl: fp("Flag_of_Corsica.svg"),
+      label: "Corsican Republic",
+      note: "Pasquale Paoli's enlightened Corsican republic — with one of the first democratic constitutions — before France bought and conquered the island.",
+    },
+    {
+      fromYear: 959, toYear: 1766,
+      flagUrl: fp("Flag_of_Lorraine.svg"),
+      label: "Duchy of Lorraine",
+      note: "A long-independent duchy between France and the German lands, passed to France only in 1766.",
+    },
+    {
+      fromYear: 939, toYear: 1547,
+      flagUrl: fp("Drapeau_de_la_province_de_Bretagne_(1532).svg"),
+      label: "Duchy of Brittany",
+      note: "An independent Celtic duchy with its own language and parliament, joined to the French crown by royal marriage in the 16th century.",
+    },
+    {
+      fromYear: 1736, toYear: 1736,
+      flagUrl: fp("Flag_of_Corsica_(before_1755).svg"),
+      label: "Kingdom of Corsica",
+      note: "The improbable few-month kingdom of Theodor von Neuhoff, a German adventurer crowned king by Corsican rebels against Genoa.",
+    },
+    {
+      fromYear: 1050, toYear: 1620,
+      flagUrl: fp("Flag_of_Béarn.svg"),
+      label: "Viscounty of Béarn",
+      note: "An independent Pyrenean state — the homeland of King Henry IV — that kept its own laws and parliament until merged into France.",
     },
   ],
   DE: [
@@ -615,6 +717,72 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       label: 'Orange Free State',
       note: 'The other main Boer republic, the Orange Free State, flew an orange-and-white flag with the Dutch tricolour in the canton. Like the Transvaal it was independent for half a century before being annexed by Britain in the Boer War — both republics\' flags were later miniaturised onto the apartheid-era national flag.',
     },
+    {
+      fromYear: 1981, toYear: 1994,
+      flagUrl: fp("Flag_of_Ciskei.svg"),
+      label: "Ciskei",
+      note: "A small apartheid-era Bantustan for Xhosa people in the Eastern Cape, dissolved into democratic South Africa in 1994.",
+    },
+    {
+      fromYear: 1977, toYear: 1994,
+      flagUrl: fp("Flag_of_Bophuthatswana_(1972–1994).svg"),
+      label: "Bophuthatswana",
+      note: "A fragmented apartheid-era Bantustan for Tswana people, reabsorbed into South Africa at the end of apartheid.",
+    },
+    {
+      fromYear: 1976, toYear: 1994,
+      flagUrl: fp("Flag_of_Transkei.svg"),
+      label: "Transkei",
+      note: "The first of apartheid South Africa's nominally independent Black 'homelands' (Bantustans), recognised by no other country.",
+    },
+    {
+      fromYear: 1886, toYear: 1891,
+      flagUrl: fp("Flag_of_Klein_Vrystaat_-_2.svg"),
+      label: "Klein Vrystaat",
+      note: "A minuscule Boer 'Little Free State' that voluntarily joined the South African Republic after a few years.",
+    },
+    {
+      fromYear: 1884, toYear: 1888,
+      flagUrl: fp("Flag_of_Nieuwe_Republiek.svg"),
+      label: "Nieuwe Republiek",
+      note: "A Boer 'New Republic' carved out of Zululand around Vryheid, later joined to the Transvaal.",
+    },
+    {
+      fromYear: 1882, toYear: 1883,
+      flagUrl: fp("Flag_of_the_Republic_of_Goshen.svg"),
+      label: "State of Goshen",
+      note: "A tiny Boer freebooter republic on the Transvaal border, later folded into British Bechuanaland.",
+    },
+    {
+      fromYear: 1882, toYear: 1885,
+      flagUrl: fp("First_flag_of_Stellaland.svg"),
+      label: "Republic of Stellaland",
+      note: "A small Boer republic proclaimed by frontier farmers, named for a comet, annexed into British Bechuanaland.",
+    },
+    {
+      fromYear: 1870, toYear: 1880,
+      flagUrl: fp("FlagGriekwalandEast.svg"),
+      label: "Griqualand West",
+      note: "A Griqua state on the Cape frontier annexed by Britain after diamonds were found at Kimberley.",
+    },
+    {
+      fromYear: 1861, toYear: 1879,
+      flagUrl: fp("FlagGriekwalandEast.svg"),
+      label: "Griqualand East",
+      note: "A Griqua state in the eastern Cape settled after a great trek over the Drakensberg, later annexed by the Cape Colony.",
+    },
+    {
+      fromYear: 1839, toYear: 1843,
+      flagUrl: fp("Flag_of_Natalia_Republic.svg"),
+      label: "Natalia Republic",
+      note: "A short-lived Boer republic in Natal, founded by Voortrekkers after the defeat of the Zulu, soon annexed by Britain.",
+    },
+    {
+      fromYear: 1835, toYear: 1864,
+      flagUrl: fp("South_African_Burgers_Flag.svg"),
+      label: "Republic of Zoutpansberg",
+      note: "An isolated Boer republic in the far north of the Transvaal, eventually absorbed into the South African Republic.",
+    },
   ],
   PT: [
     {
@@ -820,6 +988,36 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       label: 'Kingdom of Mysore',
       note: 'The Kingdom of Mysore, and especially the rule of Hyder Ali and his son Tipu Sultan, mounted the fiercest southern Indian resistance to the British. Tipu — the "Tiger of Mysore" — flew flags rich with tiger-stripe (bubri) motifs and even deployed some of the world\'s first iron-cased war rockets against the Company before his death in 1799.',
     },
+    {
+      fromYear: 1729, toYear: 1949,
+      flagUrl: fp("Flag_of_Kingdom_of_Travancore.svg"),
+      label: "Travancore",
+      note: "A princely state in Kerala famed for high literacy and the gold-laden Padmanabhaswamy Temple, joined to India at independence.",
+    },
+    {
+      fromYear: 1724, toYear: 1948,
+      flagUrl: fp("Asafia_flag_of_Hyderabad_State.svg"),
+      label: "Hyderabad State",
+      note: "The largest and richest of British India's princely states, ruled by the Nizam, forcibly integrated into India in 1948.",
+    },
+    {
+      fromYear: 1518, toYear: 1687,
+      flagUrl: fp("Qutbshahi_Flag.svg"),
+      label: "Sultanate of Golconda",
+      note: "A Deccan sultanate whose mines produced the world's most famous diamonds (the Koh-i-Noor and Hope) before Aurangzeb annexed it.",
+    },
+    {
+      fromYear: 1102, toYear: 1949,
+      flagUrl: fp("Cochin_flag.svg"),
+      label: "Kingdom of Cochin",
+      note: "A princely state on the Kerala coast, an early partner of the Portuguese and Dutch in the spice trade.",
+    },
+    {
+      fromYear: 823, toYear: 1949,
+      flagUrl: fp("Flag_of_the_Princely_State_of_Tehri_Garhwal.svg"),
+      label: "Garhwal Kingdom",
+      note: "An ancient Himalayan kingdom in Uttarakhand, home to the sources of the Ganges, that acceded to India at independence.",
+    },
   ],
   BR: [
     {
@@ -962,6 +1160,30 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       flagUrl: fp('Flag_of_Ottoman_Empire_(1517-1793).svg'),
       label: 'Early Ottoman red flag',
       note: 'For centuries the Ottomans flew plain red banners and crescent flags with no fixed design; the star-and-crescent was not yet standardized before the 1793 naval decree.',
+    },
+    {
+      fromYear: 1927, toYear: 1930,
+      flagUrl: fp("Kurdish_flag_(Khoiboun).svg"),
+      label: "Republic of Ararat",
+      note: "A self-declared Kurdish republic in the mountains of eastern Turkey, crushed by the Turkish army.",
+    },
+    {
+      fromYear: 1918, toYear: 1919,
+      flagUrl: fp("Flag_of_the_South_West_Caucasian_Republic.svg"),
+      label: "Kars Republic",
+      note: "A short-lived Muslim provisional government around Kars after the Russian collapse, suppressed by the British and Armenians.",
+    },
+    {
+      fromYear: 1915, toYear: 1915,
+      flagUrl: fp("Flag_of_Administration_of_Western_Armenia.svg"),
+      label: "Republic of Van",
+      note: "A short-lived Armenian self-defence administration during WWI, amid the genocide, in eastern Anatolia.",
+    },
+    {
+      fromYear: 1204, toYear: 1461,
+      flagUrl: fp("Banner_of_the_Empire_of_Trebizond.svg"),
+      label: "Empire of Trebizond",
+      note: "A Byzantine Greek successor empire on the Black Sea coast, the last fragment of the Roman world to fall to the Ottomans.",
     },
   ],
   EG: [
@@ -1131,6 +1353,12 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       label: 'Royal standard of Joseon',
       note: 'Korea had no "national flag" in the modern sense before 1882 — but the kings of the Joseon dynasty (1392–1897), Korea\'s last and longest royal house, flew a royal standard bearing the taegeuk and trigrams. That same Confucian cosmology was carried directly into the 1882 Taegukgi, making the royal banner the conceptual ancestor of every Korean flag.',
     },
+    {
+      fromYear: 1961, toYear: 1963,
+      flagUrl: fp("Flag_of_South_Korea_(1949–1984).svg"),
+      label: "Supreme Council for National Reconstruction",
+      note: "The military junta that ruled South Korea after Park Chung-hee's 1961 coup, before his civilian-styled presidency.",
+    },
   ],
 
   VN: [
@@ -1160,6 +1388,18 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       flagUrl: fp('Long_tinh_flag_(variant).svg'),
       label: 'Nguyen Dynasty / French Indochina',
       note: 'The Nguyen emperors, who unified Vietnam in 1802, used a plain yellow flag. Under French colonial rule from the 1880s, a dragon motif was sometimes used on yellow for the protectorate of Annam. Yellow remained Vietnam\'s imperial colour for over a century — which is why South Vietnam\'s post-independence flag also used yellow as its field.',
+    },
+    {
+      fromYear: 1946, toYear: 1949,
+      flagUrl: fp("Flag_of_France.svg"),
+      label: "Republic of Cochinchina",
+      note: "A French-engineered puppet state in southern Vietnam, meant to split the south from Ho Chi Minh's republic.",
+    },
+    {
+      fromYear: 1948, toYear: 1954,
+      flagUrl: fp("Flag_of_the_Tai_Dam_People.svg"),
+      label: "Sip Song Chau Tai",
+      note: "A federation of Tai chiefdoms in the northwest highlands of Vietnam, set up as an autonomous zone under French protection.",
     },
   ],
 
@@ -1368,6 +1608,18 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       label: 'Kingdom of Iraq (Hashemite)',
       note: 'Britain installed the Hashemite prince Faisal as king of the new Kingdom of Iraq in 1921; from 1924 it flew an Arab Revolt–derived flag — black, white and green horizontal bands with a red trapezoid at the hoist bearing two white stars. Increasingly resented as a British client monarchy, it ruled until the violent revolution of 1958 swept the king and the flag away.',
     },
+    {
+      fromYear: 1958, toYear: 1958,
+      flagUrl: fp("Flag_of_the_Arab_Federation.svg"),
+      label: "Arab Federation",
+      note: "The brief union of Hashemite Iraq and Jordan, formed to counter Nasser's UAR and ended within months by the Iraqi revolution.",
+    },
+    {
+      fromYear: 1922, toYear: 1924,
+      flagUrl: fp("Flag_of_Kingdom_of_Kurdistan_(1922-1924).svg"),
+      label: "Kingdom of Kurdistan",
+      note: "A short-lived Kurdish kingdom proclaimed by Sheikh Mahmud Barzanji in northern Iraq against British control.",
+    },
   ],
 
   SY: [
@@ -1428,6 +1680,12 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       label: 'Kingdom of Libya (independence)',
       note: 'When Libya achieved independence from Italian and Allied administration on December 24, 1951 — becoming the first African country to gain independence via the United Nations — it adopted this flag under King Idris. The crescent and star are traditional Islamic symbols; the three horizontal bands represent the three historical regions: Cyrenaica (black), Fezzan (green), and Tripolitania (red). This flag was suppressed under Gaddafi and triumphantly restored in 2011.',
     },
+    {
+      fromYear: 1837, toYear: 1969,
+      flagUrl: fp("Flag_of_the_Senussi_Dynasty.svg"),
+      label: "Senussi Order",
+      note: "The Sufi religious order that led resistance to Italian colonisation and whose leader became the first and only king of independent Libya.",
+    },
   ],
 
   // ── Middle East ───────────────────────────────────────────────────────────
@@ -1462,6 +1720,24 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       flagUrl: fp('Flag_of_Hejaz_(1920).svg'),
       label: 'Kingdom of Hejaz (Hashemite)',
       note: 'Before the Saudis, the Hejaz — home to Mecca and Medina — was its own kingdom under Sharif Hussein bin Ali, who launched the Arab Revolt against the Ottomans in 1916 and flew its black-white-green flag with a red triangle (the ancestor of many Arab flags today). Ibn Saud conquered the Hejaz in 1925, ending Hashemite rule over the holy cities and folding it into what became Saudi Arabia.',
+    },
+    {
+      fromYear: 1906, toYear: 1934,
+      flagUrl: fp("Flag_of_the_Emirate_of_Asir.svg"),
+      label: "Emirate of Asir",
+      note: "An idrisid emirate on the Red Sea coast, annexed by Saudi Arabia after a short war with Yemen.",
+    },
+    {
+      fromYear: 1727, toYear: 1818,
+      flagUrl: fp("Flag_of_the_First_and_Second_Saudi_State_(1744-1891).svg"),
+      label: "Emirate of Diriyah",
+      note: "The First Saudi State, the original alliance of the House of Saud and the Wahhabi movement, destroyed by an Ottoman-Egyptian army.",
+    },
+    {
+      fromYear: 1906, toYear: 1934,
+      flagUrl: fp("Flag_of_Upper_Asir.svg"),
+      label: "Sheikdom of Upper Asir",
+      note: "A highland sheikhdom of the Asir region, annexed by Saudi Arabia after the Saudi–Yemeni war.",
     },
   ],
 
@@ -1511,6 +1787,42 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       label: 'Kathiri State of Seiyun',
       note: 'A Hadhrami sultanate in the eastern Aden Protectorate, the Kathiri State of Seiyun flew a green-yellow-red flag with three stars. It too was dissolved into South Yemen in 1967, ending centuries of dynastic rule in the Hadhramaut valley.',
     },
+    {
+      fromYear: 1700, toYear: 1967,
+      flagUrl: fp("Flag_of_Dhala.svg"),
+      label: "Emirate of Dhala",
+      note: "One of the many sultanates and emirates of the Aden Protectorate, absorbed into South Yemen at independence.",
+    },
+    {
+      fromYear: 1700, toYear: 1967,
+      flagUrl: fp("Flag_of_the_Sultanate_of_Fadhli.svg"),
+      label: "Fadhli Sultanate",
+      note: "A sultanate of the Aden Protectorate in southern Arabia, dissolved into independent South Yemen.",
+    },
+    {
+      fromYear: 1700, toYear: 1967,
+      flagUrl: fp("Flag_of_Wahidi_Balhaf.svg"),
+      label: "Wahidi Sultanate of Balhaf",
+      note: "One of the small Wahidi sultanates of the Aden Protectorate coast.",
+    },
+    {
+      fromYear: 1700, toYear: 1967,
+      flagUrl: fp("Flag_of_Beihan.svg"),
+      label: "Emirate of Beihan",
+      note: "An emirate of the Aden Protectorate on the edge of the Empty Quarter.",
+    },
+    {
+      fromYear: 1500, toYear: 1967,
+      flagUrl: fp("Flag_of_the_Mahra_Sultanate.svg"),
+      label: "Mahra State of Qishn and Socotra",
+      note: "A sultanate of the far east of South Arabia that included the remote island of Socotra.",
+    },
+    {
+      fromYear: 1700, toYear: 1967,
+      flagUrl: fp("Flag_of_Wahidi_Haban.svg"),
+      label: "Wahidi Sultanate of Haban",
+      note: "One of the small Wahidi sultanates of the Aden Protectorate, dissolved into independent South Yemen.",
+    },
   ],
 
   JO: [
@@ -1558,6 +1870,12 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       flagUrl: fp('Flag_of_the_Ottoman_Empire.svg'),
       label: 'Mount Lebanon (Ottoman era)',
       note: 'For four centuries Lebanon was part of the Ottoman Empire, flying the Ottoman red star-and-crescent. After a wave of sectarian massacres in 1860, European powers pressured the Ottomans into creating the autonomous Mount Lebanon Mutasarrifate in 1861 — a self-governing Christian-majority province that gave the Lebanese their first taste of distinct political identity. This autonomy planted the seeds of the modern Lebanese state, though the territory still flew the Ottoman flag until the empire\'s collapse in 1918.',
+    },
+    {
+      fromYear: 1979, toYear: 1984,
+      flagUrl: fp("Flag_of_Lebanon_(1943-1990).svg"),
+      label: "Free Lebanon State",
+      note: "A Christian-militia enclave in south Lebanon declared during the civil war, backed by Israel.",
     },
   ],
 
@@ -2967,6 +3285,12 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       label: 'Armorial flag (Grimaldi arms)',
       note: 'Before the modern bicolour, Monaco flew a white flag bearing the Grimaldi dynasty\'s red-and-white lozenge coat of arms with crown and supporters.',
     },
+    {
+      fromYear: 1848, toYear: 1861,
+      flagUrl: fp("Flag_of_the_Free_Cities_of_Menton_and_Roquebrune_(1848-1849).svg"),
+      label: "Free Cities of Menton and Roquebrune",
+      note: "Two Riviera towns that broke away from Monaco in 1848 and were eventually sold to France, shrinking the principality to its present tiny size.",
+    },
   ],
   SM: [
     {
@@ -3185,6 +3509,18 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       label: 'South West Africa (South African rule)',
       note: 'After seizing it from Germany in 1915, South Africa governed the territory as South West Africa, eventually flying the orange-white-blue "Oranje-Blanje-Blou." Pretoria refused to relinquish the mandate and extended apartheid into the territory, triggering a decades-long liberation war by SWAPO until independence in 1990 — the last country in mainland Africa to be freed from colonial-style rule.',
     },
+    {
+      fromYear: 1885, toYear: 1887,
+      flagUrl: fp("Flag_of_Germany_(1867–1918).svg"),
+      label: "Republic of Upingtonia",
+      note: "A short-lived Boer trekker republic in northern Namibia, abandoned amid conflict with the Ovambo.",
+    },
+    {
+      fromYear: 1872, toYear: 1885,
+      flagUrl: fp("Flag_of_Rehoboth-Basterland.svg"),
+      label: "Free Republic of Rehoboth",
+      note: "A self-governing state of the Baster people in central Namibia before German colonisation.",
+    },
   ],
   LS: [
     {
@@ -3308,6 +3644,12 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       flagUrl: fp('Flag_of_Liberia_(1827–1847).svg'),
       label: 'Colonial flag (with cross)',
       note: 'Used while Liberia was a colony of the American Colonization Society, it copied the US flag but placed a white Christian cross in the canton instead of stars.',
+    },
+    {
+      fromYear: 1834, toYear: 1857,
+      flagUrl: fp("Flag_of_the_Republic_of_Maryland.svg"),
+      label: "Republic of Maryland",
+      note: "A colony of freed African-Americans on the West African coast that governed itself before joining Liberia.",
     },
   ],
   GM: [
@@ -3490,6 +3832,12 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       label: 'Original tricolour',
       note: 'Adopted in 1959 before full independence, this green-yellow-red diagonal tricolour was abolished when the Marxist regime took power — then restored unchanged in 1991.',
     },
+    {
+      fromYear: 1550, toYear: 1883,
+      flagUrl: fp("Flag_of_the_Kingdom_of_Loango.svg"),
+      label: "Kingdom of Loango",
+      note: "A coastal Kongo-related kingdom north of the Congo River, a major exporter of copper, ivory and enslaved people.",
+    },
   ],
   CD: [
     {
@@ -3542,6 +3890,12 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
         },
       ],
     },
+    {
+      fromYear: 1964, toYear: 1965,
+      flagUrl: fp("Flag_of_the_Party_of_the_People's_Revolution.svg"),
+      label: "Maquis of Fizi",
+      note: "A Lumumbist rebel 'people's republic' in the eastern Congo's Simba rebellion, briefly aided by Che Guevara.",
+    },
   ],
   AO: [
     {
@@ -3564,6 +3918,36 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       flagUrl: fp('Flag_of_the_Kingdom_of_Kongo_according_to_Giovanni_Cavazzi_da_Montecuccolo.svg'),
       label: 'Kingdom of Kongo',
       note: 'Long before the Portuguese, northern Angola and the lower Congo were the heart of the Kingdom of Kongo, a sophisticated Central African state whose king converted to Christianity in 1491 and corresponded with European monarchs as an equal. The Atlantic slave trade slowly hollowed it out, and it survived as a shadow until the Portuguese abolished the monarchy in the 19th century.',
+    },
+    {
+      fromYear: 1975, toYear: 1975,
+      flagUrl: fp("Flag_of_Cabinda_(FLEC_propose).svg"),
+      label: "Republic of Cabinda",
+      note: "The separatist republic declared in the oil-rich Cabinda enclave when Portugal withdrew, before Angola annexed it.",
+    },
+    {
+      fromYear: 1600, toYear: 1885,
+      flagUrl: fp("Royal_Banner_of_the_Kingdom_of_Kakongo_(c._1883).svg"),
+      label: "Kingdom of Kakongo",
+      note: "A small Kongo kingdom of the Cabinda coast, north of the Congo River mouth.",
+    },
+    {
+      fromYear: 1600, toYear: 1900,
+      flagUrl: fp("Flag_of_Lunda_Tchokwe.svg"),
+      label: "Chokwe Kingdom",
+      note: "The states of the Chokwe people of northeastern Angola, celebrated for their sophisticated art and ivory carving.",
+    },
+    {
+      fromYear: 1515, toYear: 1671,
+      flagUrl: fp("Flag_of_the_Kingdom_of_Ndongo.svg"),
+      label: "Kingdom of Ndongo",
+      note: "An Mbundu kingdom of Angola whose Queen Njinga waged a decades-long war against Portuguese slavers.",
+    },
+    {
+      fromYear: 1500, toYear: 1900,
+      flagUrl: fp("Banner_of_the_Mbunda_Kingdom.svg"),
+      label: "Mbunda Kingdom",
+      note: "A kingdom of the Mbunda people in southeastern Angola, known for its woodcarving and the Makishi masquerade.",
     },
   ],
   RW: [
@@ -3633,6 +4017,36 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       label: 'Uganda Protectorate',
       note: 'Uganda became a British protectorate in 1894 and flew the Union Jack until independence in 1962. Because it was governed as a protectorate rather than a settler colony, the powerful kingdom of Buganda and other traditional monarchies survived the colonial period — a legacy that shaped, and complicated, the politics of the independent state.',
     },
+    {
+      fromYear: 1962, toYear: 1982,
+      flagUrl: fp("Flag_of_Rwenzururu.svg"),
+      label: "Kingdom of Rwenzururu",
+      note: "A secessionist mountain kingdom of the Bakonzo people in the Rwenzori range on the Uganda–Congo border.",
+    },
+    {
+      fromYear: 1830, toYear: 1967,
+      flagUrl: fp("Flag_of_the_Tooro_Kingdom.svg"),
+      label: "Tooro Kingdom",
+      note: "A western Ugandan kingdom that broke away from Bunyoro; restored as a cultural monarchy in 1993.",
+    },
+    {
+      fromYear: 1600, toYear: 1962,
+      flagUrl: fp("Flag_of_Busoga_(royal_standard).png"),
+      label: "Busoga",
+      note: "A confederation of chiefdoms in southeastern Uganda, between Lake Victoria and the Nile.",
+    },
+    {
+      fromYear: 1480, toYear: 1967,
+      flagUrl: fp("Flag_of_Ankole.svg"),
+      label: "Ankole",
+      note: "A cattle-herding kingdom of southwestern Uganda, its society famed for the long-horned Ankole cattle.",
+    },
+    {
+      fromYear: 1300, toYear: 1896,
+      flagUrl: fp("Bunyoro-Kitara_Kingdom_Flag.png"),
+      label: "Bunyoro",
+      note: "Once the most powerful of the Great Lakes kingdoms in western Uganda, gradually eclipsed by Buganda and the British.",
+    },
   ],
   KE: [
     {
@@ -3648,6 +4062,12 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       flagUrl: '/flags/gb.svg',
       label: 'British East Africa / Kenya Colony',
       note: 'Britain ran the territory as the East Africa Protectorate from 1895 and then Kenya Colony from 1920, flying the Union Jack. The fertile "White Highlands" were reserved for European settlers, fuelling the grievances behind the 1950s Mau Mau uprising, whose brutal suppression hastened the path to independence in 1963.',
+    },
+    {
+      fromYear: 1858, toYear: 1923,
+      flagUrl: fp("Flagge_Witu_1890_laut_Voeltzkow.svg"),
+      label: "Witu Sultanate",
+      note: "A small Swahili sultanate on the Kenyan coast that briefly sought German protection before falling to Britain.",
     },
   ],
   TZ: [
@@ -3679,6 +4099,12 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
           note: 'The January 1964 revolution overthrew the sultan and raised a blue-black-green flag. In April 1964 it merged with Tanganyika to form Tanzania — the "Tan" + "Zan" of the new name.',
         },
       ],
+    },
+    {
+      fromYear: 975, toYear: 1513,
+      flagUrl: fp("Flag_used_in_the_east_coast_of_Tanzania_according_to_a_Portuguese_1576_map.svg"),
+      label: "Kilwa Sultanate",
+      note: "A fabulously wealthy Swahili-coast sultanate on an island off Tanzania, controlling the medieval gold trade from Great Zimbabwe.",
     },
   ],
   KM: [
@@ -3747,6 +4173,12 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       label: 'Kingdom of Madagascar (Merina)',
       note: 'Before the French, almost the whole island was unified under the Merina monarchy — the Kingdom of Madagascar — which flew a white-and-red flag often bearing the royal initials. A sophisticated state that traded with Europe and adopted Christianity and a written script, it kept its independence until France invaded and abolished the monarchy in 1896. Its white-and-red endures at the hoist of the modern flag.',
     },
+    {
+      fromYear: 1690, toYear: 1840,
+      flagUrl: fp("Flag_of_the_Boina_Kingdom.svg"),
+      label: "Kingdom of Boina",
+      note: "A powerful Sakalava kingdom of northwest Madagascar, rich from the slave and cattle trade, before the Merina unification.",
+    },
   ],
   DZ: [
     {
@@ -3769,6 +4201,24 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       flagUrl: fp('Flag_of_France.svg'),
       label: 'French rule',
       note: 'Under French rule Algeria was administered as an integral part of France rather than a colony, so the French tricolour flew with no distinct Algerian national flag.',
+    },
+    {
+      fromYear: 1832, toYear: 1847,
+      flagUrl: fp("Flag_of_the_Emirate_of_Mascara.svg"),
+      label: "Emirate of Mascara",
+      note: "The state founded by Emir Abdelkader to wage Algeria's long resistance against the French conquest.",
+    },
+    {
+      fromYear: 1516, toYear: 1830,
+      flagUrl: fp("Flag_of_Regency_of_Algiers.svg"),
+      label: "Regency of Algiers",
+      note: "The Ottoman-aligned corsair state that ruled Algeria for three centuries, its fleets dominating the western Mediterranean until the French invasion.",
+    },
+    {
+      fromYear: 1235, toYear: 1556,
+      flagUrl: fp("Flag_of_the_Kingdom_of_Tlemcen_(Book_of_All_Kingdoms).svg"),
+      label: "Kingdom of Tlemcen",
+      note: "A Zayyanid Berber kingdom in western Algeria, a hub of trans-Saharan trade and scholarship before Ottoman annexation.",
     },
   ],
   TN: [
@@ -3810,6 +4260,12 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       flagUrl: fp('Flag_of_Morocco_(1666–1915).svg'),
       label: 'Plain red flag',
       note: 'When the Alaouite dynasty took power in 1666 it adopted a plain red field, used on land and by Moroccan ships for nearly 250 years.',
+    },
+    {
+      fromYear: 1624, toYear: 1668,
+      flagUrl: fp("Flag_of_the_Republic_of_Salé_(1624-1668).svg"),
+      label: "Republic of Salé",
+      note: "A Barbary corsair pirate republic on the Atlantic coast, run by Moriscos expelled from Spain who raided shipping across the seas.",
     },
   ],
   MR: [
@@ -3857,6 +4313,18 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       label: 'Mahdist State',
       note: 'In 1881 a Sudanese religious leader, Muhammad Ahmad, declared himself the Mahdi and led a holy war that swept away Egyptian rule — famously killing General Gordon at the fall of Khartoum in 1885. His Mahdist State, flying banners inscribed with the shahada, was the first independent Sudanese nation, until a British–Egyptian army destroyed it at Omdurman in 1898.',
     },
+    {
+      fromYear: 600, toYear: 1500,
+      flagUrl: fp("Possible_Flag_of_the_Kingdom_of_Alodia_(c._1350).svg"),
+      label: "Alodia",
+      note: "Alwa, the southern of the medieval Christian Nubian kingdoms, centred at Soba near modern Khartoum.",
+    },
+    {
+      fromYear: 340, toYear: 1518,
+      flagUrl: fp("The_flag_of_the_'Kingdom_of_Dongola'_(Makuria)_in_the_\"Book_of_all_kingdoms\"_(C._1350).svg"),
+      label: "Makuria",
+      note: "A Christian Nubian kingdom on the Nile whose archers held back the early Arab conquests for centuries.",
+    },
   ],
   SS: [
     {
@@ -3872,6 +4340,12 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       flagUrl: '/flags/sd.svg',
       label: 'Part of Sudan',
       note: 'The mostly Christian and animist south was governed as part of Arab-Muslim Sudan from its 1956 independence, flying the Sudanese flag. Two long civil wars over that domination — the second alone killing some two million people — ended in a 2005 peace deal that granted a referendum, and in 2011 the south voted almost unanimously to secede as South Sudan.',
+    },
+    {
+      fromYear: 1490, toYear: 1865,
+      flagUrl: fp("Flag_of_the_Shilluk.svg"),
+      label: "Shilluk Kingdom",
+      note: "A Nilotic kingdom along the White Nile, ruled by a divine king (the reth) — among the historic states of what is now South Sudan.",
     },
   ],
   ET: [
@@ -3965,6 +4439,42 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       label: 'Italian Somaliland',
       note: 'The south was Italian Somaliland from 1889, flying the Italian flag (and briefly part of Mussolini\'s Italian East Africa). After WWII it returned to Italy as a UN trust territory, where the modern star flag was born in 1954. At independence in 1960 it united with the separate British Somaliland in the north to form Somalia — the two colonial legacies the white five-pointed Star of Unity was meant to bind together.',
     },
+    {
+      fromYear: 1878, toYear: 1925,
+      flagUrl: fp("Majeerteen_sultanate_flag.jpg"),
+      label: "Sultanate of Hobyo",
+      note: "A central Somali sultanate carved out by Yusuf Ali Kenadid, later an Italian protectorate.",
+    },
+    {
+      fromYear: 1750, toYear: 1910,
+      flagUrl: fp("Geledi_Sultanante_Flag.png"),
+      label: "Sultanate of the Geledi",
+      note: "A southern Somali sultanate that dominated the trade of the Jubba and Shebelle river valleys.",
+    },
+    {
+      fromYear: 1750, toYear: 1884,
+      flagUrl: fp("Isaaq_Flag.svg"),
+      label: "Isaaq Sultanate",
+      note: "A Somali sultanate in the northwest (modern Somaliland) before the British protectorate.",
+    },
+    {
+      fromYear: 1600, toYear: 1927,
+      flagUrl: fp("Majeerteen_sultanate_flag.jpg"),
+      label: "Majeerteen Sultanate",
+      note: "A northeastern Somali sultanate (Migiurtinia) that controlled the Horn's coast until the Italians subdued it.",
+    },
+    {
+      fromYear: 1415, toYear: 1577,
+      flagUrl: fp("Flag_of_Adal_Sultanate.svg"),
+      label: "Adal Sultanate",
+      note: "A Muslim sultanate of the Horn that, under Ahmad ibn Ibrahim, nearly conquered Christian Ethiopia in the 16th century.",
+    },
+    {
+      fromYear: 1100, toYear: 1500,
+      flagUrl: fp("Flag_of_Mogadishu.png"),
+      label: "Sultanate of Mogadishu",
+      note: "A medieval Somali city-sultanate, one of the wealthiest trading ports on the Indian Ocean's Swahili coast.",
+    },
   ],
   NG: [
     {
@@ -3987,6 +4497,18 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       flagUrl: fp('Flag_of_the_Sokoto_Caliphate.svg'),
       label: 'Sokoto Caliphate',
       note: 'Across what is now northern Nigeria, the jihad of Usman dan Fodio founded the Sokoto Caliphate in 1804 — one of the largest and most populous states in 19th-century Africa, a federation of emirates flying green Islamic banners. Britain conquered it in 1903 but ruled through its emirs, so the caliphate\'s structures (and the north–south divide with the Christian-animist south) shaped Nigeria to this day.',
+    },
+    {
+      fromYear: 1967, toYear: 1970,
+      flagUrl: fp("Flag_of_Biafra.svg"),
+      label: "Biafra",
+      note: "The secessionist Igbo republic whose bid for independence triggered the Nigerian Civil War and a devastating famine.",
+    },
+    {
+      fromYear: 1690, toYear: 1902,
+      flagUrl: fp("Flag_of_the_Aro_Confederacy.svg"),
+      label: "Aro Confederacy",
+      note: "An Igbo trading and oracle confederacy that dominated southeastern Nigeria until the British 'Aro Expedition' broke it.",
     },
   ],
   GH: [
@@ -4063,6 +4585,18 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       flagUrl: '/flags/fr.svg',
       label: 'French Sudan',
       note: 'Modern Mali was the colony of French Sudan, the largest territory in French West Africa, flying the French flag. Its name deliberately recalled the medieval empires of Ghana, Mali and Songhai that once made this stretch of the Niger — and the fabled trading city of Timbuktu — a centre of gold, salt and Islamic scholarship under rulers like Mansa Musa.',
+    },
+    {
+      fromYear: 2012, toYear: 2012,
+      flagUrl: fp("MNLA_flag.svg"),
+      label: "Azawad",
+      note: "The northern Mali homeland declared by Tuareg separatists (the MNLA) in 2012 before Islamist militias and the French intervened.",
+    },
+    {
+      fromYear: 1878, toYear: 1898,
+      flagUrl: fp("Possible_Flag_of_the_Wassoulou_Empire.svg"),
+      label: "Wassoulou Empire",
+      note: "The empire of Samori Ture, which mounted one of the fiercest and longest armed resistances to French conquest in West Africa.",
     },
   ],
   BF: [
@@ -4474,6 +5008,96 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       label: 'Sultanate of Tidore',
       note: 'Tidore was a Moluccan spice kingdom and the great rival of neighbouring Ternate, controlling cloves and nutmeg coveted across the world. It long resisted European domination, allying variously with the Spanish and Portuguese against the Dutch, before being absorbed into the Dutch East Indies.',
     },
+    {
+      fromYear: 1948, toYear: 1950,
+      flagUrl: fp("Flag_of_Pasundan.svg"),
+      label: "State of Pasundan",
+      note: "A Dutch-created federal state in West Java (Sundanese lands), folded into the Republic of Indonesia.",
+    },
+    {
+      fromYear: 1947, toYear: 1950,
+      flagUrl: fp("Flag_of_East_Sumatra.svg"),
+      label: "State of East Sumatra",
+      note: "A Dutch-sponsored federal state created to weaken the Indonesian Republic, dissolved into the unitary republic.",
+    },
+    {
+      fromYear: 1777, toYear: 1884,
+      flagUrl: fp("Lanfang_Republic_Reconstructed_Flag.svg"),
+      label: "Lanfang Republic",
+      note: "A remarkable self-governing republic of Chinese gold miners in West Borneo, often called one of Asia's first republics.",
+    },
+    {
+      fromYear: 1771, toYear: 1950,
+      flagUrl: fp("Flag_of_Pontianak_Sultanate.svg"),
+      label: "Pontianak Sultanate",
+      note: "A sultanate at the mouth of the Kapuas in West Borneo, founded by an Arab sayyid dynasty.",
+    },
+    {
+      fromYear: 1659, toYear: 1823,
+      flagUrl: fp("Old_Flag_of_Sultanate_of_Palembang.png"),
+      label: "Palembang Sultanate",
+      note: "A wealthy Sumatran sultanate, heir to the ancient Srivijaya empire, abolished by the Dutch.",
+    },
+    {
+      fromYear: 1587, toYear: 1755,
+      flagUrl: fp("Flag_of_the_Mataram_Sultanate.svg"),
+      label: "Sultanate of Mataram",
+      note: "The last great independent Javanese kingdom, which the Dutch broke up into the courts of Yogyakarta and Surakarta.",
+    },
+    {
+      fromYear: 1526, toYear: 1860,
+      flagUrl: fp("Banjar_Sultanate_Flag.svg"),
+      label: "Sultanate of Banjar",
+      note: "A sultanate of southern Borneo (Kalimantan), rich in pepper and diamonds, abolished by the Dutch after a long war.",
+    },
+    {
+      fromYear: 1460, toYear: 1906,
+      flagUrl: fp("White_flag_3_to_2.svg"),
+      label: "Jambi Sultanate",
+      note: "A Sumatran sultanate on the Jambi River, a pepper-trading power before the Dutch deposed its sultan.",
+    },
+    {
+      fromYear: 1948, toYear: 1950,
+      flagUrl: fp("Flag_of_Various_Autonomous_Indonesian_States.svg"),
+      label: "State of East Java",
+      note: "A Dutch-engineered federal state, one of several meant to dilute the Indonesian Republic before they all merged into it.",
+    },
+    {
+      fromYear: 1948, toYear: 1950,
+      flagUrl: fp("Flag_of_Various_Autonomous_Indonesian_States.svg"),
+      label: "State of Madura",
+      note: "A short-lived Dutch-sponsored federal state on the island of Madura, absorbed into unitary Indonesia.",
+    },
+    {
+      fromYear: 1731, toYear: 1959,
+      flagUrl: fp("Flag_of_the_Bulungan_Sultanate.svg"),
+      label: "Sultanate of Bulungan",
+      note: "A sultanate of northeastern Borneo, dissolved into the Indonesian republic.",
+    },
+    {
+      fromYear: 1723, toYear: 1945,
+      flagUrl: fp("Flag_of_Sultanate_of_Siak_Sri_Indrapura.svg"),
+      label: "Sultanate of Siak Sri Indrapura",
+      note: "A Malay sultanate of eastern Sumatra whose sultan was among the first to back the new Indonesian Republic.",
+    },
+    {
+      fromYear: 1723, toYear: 1946,
+      flagUrl: fp("Sultanate_of_Serdang_Flag.jpg"),
+      label: "Sultanate of Serdang",
+      note: "A Malay sultanate of Sumatra's east coast, swept away in the 1946 social revolution.",
+    },
+    {
+      fromYear: 1631, toYear: 1950,
+      flagUrl: fp("Royal_Malay_Banner_(Yellow).svg"),
+      label: "Sambas Sultanate",
+      note: "A sultanate of West Borneo (Kalimantan), long a centre of gold mining and Malay culture.",
+    },
+    {
+      fromYear: 1568, toYear: 1948,
+      flagUrl: fp("Flag_of_Sultanate_of_Langkat.svg"),
+      label: "Sultanate of Langkat",
+      note: "A Malay sultanate of northeast Sumatra that grew rich on tobacco and then oil, abolished in Indonesia's social revolution.",
+    },
   ],
   MY: [
     {
@@ -4489,6 +5113,12 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       flagUrl: fp('Flag_of_Malaya_(1950–1963).svg'),
       label: 'Federation of Malaya',
       note: 'Designed by Mohamad Hamzah and approved in 1950, it had 11 red-and-white stripes and an 11-pointed star for the 11 members of the Federation of Malaya.',
+    },
+    {
+      fromYear: 1470, toYear: 1623,
+      flagUrl: fp("Flag_of_Pahang_(1853_-_1887).svg"),
+      label: "Pahang Kingdom",
+      note: "The old Pahang Sultanate of the Malay Peninsula, a vassal of Malacca and Johor, ancestor of the modern Malaysian state of Pahang.",
     },
   ],
   SG: [
@@ -4528,6 +5158,12 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       flagUrl: fp('Flag_of_Brunei_1906-1959.svg'),
       label: 'Yellow with diagonal stripes',
       note: 'The plain yellow flag (the Sultan\'s color) gained white and black diagonal stripes in 1906 to honor the two chief ministers, commemorating that year\'s treaty with Britain.',
+    },
+    {
+      fromYear: 1368, toYear: 1888,
+      flagUrl: fp("Old_Flag_of_Brunei.svg"),
+      label: "Bruneian Empire",
+      note: "The maritime empire of the Sultanate of Brunei, which at its height controlled the coasts of Borneo and the southern Philippines, before shrinking under European pressure to a British protectorate.",
     },
   ],
   PH: [
@@ -4582,6 +5218,24 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       flagUrl: fp('Flag_of_the_Philippines_(1898–1901).svg'),
       label: 'Original revolutionary flag',
       note: 'First unfurled in 1898, the golden sun bore a human-like mythical face echoing the Spanish-colonial "Sun of May" tradition. This was the flag of the First Philippine Republic.',
+    },
+    {
+      fromYear: 1902, toYear: 1906,
+      flagUrl: fp("Battle_Flag_of_Tagalog_Republic.svg"),
+      label: "Tagalog Republic",
+      note: "A peasant rebel republic that fought on against American rule after the official end of the Philippine–American War.",
+    },
+    {
+      fromYear: 1898, toYear: 1901,
+      flagUrl: fp("Flag_of_the_Negros_Republic.svg"),
+      label: "Republic of Negros",
+      note: "A short-lived republic on the sugar island of Negros that broke from Spain and was then absorbed by the United States.",
+    },
+    {
+      fromYear: 1520, toYear: 1888,
+      flagUrl: fp("Flag_of_Maguindanao.svg"),
+      label: "Sultanate of Maguindanao",
+      note: "A powerful Muslim sultanate in Mindanao that long resisted Spanish conquest of the southern Philippines.",
     },
   ],
   TL: [
@@ -4811,6 +5465,36 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       label: 'Emirate of Bukhara',
       note: 'Before the Soviets, the great oasis cities of Uzbekistan were ruled by the Emirate of Bukhara — heir to the empire of Timur (Tamerlane), whose capital Samarkand was one of the jewels of the Islamic world. The emirate flew a green flag and survived as a Russian protectorate until the Red Army stormed Bukhara in 1920, ending a line of Central Asian Muslim states stretching back centuries.',
     },
+    {
+      fromYear: 1920, toYear: 1925,
+      flagUrl: fp("Flag_of_the_Bukharan_People's_Soviet_Republic.svg"),
+      label: "Bukharan People's Soviet Republic",
+      note: "The Soviet client state that replaced the Emirate of Bukhara before being carved into the Central Asian SSRs.",
+    },
+    {
+      fromYear: 1920, toYear: 1925,
+      flagUrl: fp("Flag_of_Khiva_1920-1923.svg"),
+      label: "Khorezm People's Soviet Republic",
+      note: "The Soviet successor to the Khanate of Khiva, dissolved into the new Uzbek and Turkmen republics.",
+    },
+    {
+      fromYear: 1917, toYear: 1918,
+      flagUrl: fp("Flag_of_the_Turkestan_(Kokand)_Autonomy.svg"),
+      label: "Turkestan Autonomy",
+      note: "A short-lived Muslim autonomous government at Kokand, crushed by the Bolsheviks within months — a founding memory of Central Asian nationalism.",
+    },
+    {
+      fromYear: 1709, toYear: 1876,
+      flagUrl: fp("Banner_of_the_Kokand_Khans.svg"),
+      label: "Khanate of Kokand",
+      note: "A khanate of the fertile Fergana Valley, the last Central Asian state conquered by the Russian Empire.",
+    },
+    {
+      fromYear: 1511, toYear: 1920,
+      flagUrl: fp("Flag_of_the_Khanate_of_Khiva.svg"),
+      label: "Khanate of Khiva",
+      note: "A Central Asian khanate of the Khorezm oasis, a slave-trading power on the Amu Darya until the Red Army took it.",
+    },
   ],
   AF: [
     {
@@ -4893,6 +5577,24 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       label: 'Emirate of Afghanistan',
       note: 'A plain black field used during the reign of Habibullah Khan, characteristic of the early Emirate before national emblems were added.',
     },
+    {
+      fromYear: 1818, toYear: 1855,
+      flagUrl: fp("Flag_of_Kandahar_(1818–1856).svg"),
+      label: "Principality of Kandahar",
+      note: "A Barakzai principality in southern Afghanistan during the fragmentation before the Durrani lands were reunified.",
+    },
+    {
+      fromYear: 1747, toYear: 1823,
+      flagUrl: fp("Flag_of_the_Durrani_Kingdom.svg"),
+      label: "Durrani Empire",
+      note: "The empire of Ahmad Shah Durrani, regarded as the founder of modern Afghanistan, stretching from Persia to the Punjab.",
+    },
+    {
+      fromYear: 1709, toYear: 1738,
+      flagUrl: fp("Black_flag.svg"),
+      label: "Hotak dynasty",
+      note: "A Pashtun dynasty from Kandahar that briefly overthrew the Persian Safavids before being crushed by Nader Shah.",
+    },
   ],
   PK: [
     {
@@ -4908,6 +5610,12 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       flagUrl: fp('British_Raj_Red_Ensign.svg'),
       label: 'British India (the Raj)',
       note: 'Before Partition, the lands that became Pakistan were part of British India, governed under the Union Jack and the unofficial "Star of India" red ensign. The Muslim League\'s campaign for a separate Muslim homeland culminated in the 1947 Partition, which created Pakistan as two wings (West and East) flanking India — the basis of its green-and-white flag was the League\'s own banner.',
+    },
+    {
+      fromYear: 1666, toYear: 1955,
+      flagUrl: fp("FlagofKalat.svg"),
+      label: "Khanate of Kalat",
+      note: "A Baloch khanate in what is now southwestern Pakistan, briefly independent in 1947–48 before acceding to Pakistan.",
     },
   ],
   BD: [
@@ -5104,6 +5812,12 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       label: 'British Burma',
       note: 'A British Blue Ensign with a yellow disc bearing a green-and-blue peacock, the emblem of the Konbaung dynasty, used after Burma was separated from British India.',
     },
+    {
+      fromYear: 1287, toYear: 1552,
+      flagUrl: fp("Golden_Hintar_flag_of_Burma.svg"),
+      label: "Hanthawaddy kingdom",
+      note: "A Mon kingdom of lower Burma, a great centre of Theravada Buddhism and maritime trade.",
+    },
   ],
   TH: [
     {
@@ -5140,6 +5854,24 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       flagUrl: fp('Flag_of_Thailand_(Ayutthaya_period).svg'),
       label: 'Ayutthaya Kingdom',
       note: 'Before Bangkok, the Siamese capital was Ayutthaya — for four centuries one of the world\'s great cities, a cosmopolitan trading hub that astonished European visitors — which flew a plain red flag. Its destruction by a Burmese army in 1767 ended the kingdom, but the survivors regrouped and founded the Bangkok (Rattanakosin) state that became modern Thailand.',
+    },
+    {
+      fromYear: 1767, toYear: 1782,
+      flagUrl: fp("Flag_of_Thailand_(Ayutthaya_period).svg"),
+      label: "Thonburi Kingdom",
+      note: "The brief kingdom of King Taksin, who reunited Siam after the fall of Ayutthaya before Bangkok became the capital.",
+    },
+    {
+      fromYear: 1516, toYear: 1902,
+      flagUrl: fp("Flag_of_Patani_Kingdom_(until_1816).svg"),
+      label: "Pattani kingdom",
+      note: "A Malay-Muslim sultanate in what is now southern Thailand, annexed by Siam — the root of a still-simmering insurgency.",
+    },
+    {
+      fromYear: 1808, toYear: 1916,
+      flagUrl: fp("Flag_of_Kedah_(18th_century_-_1821).svg"),
+      label: "Kingdom of Setul Mambang Segara",
+      note: "A Malay state on the peninsula, ceded by Siam's vassal Kedah and absorbed into Thailand as Satun province.",
     },
   ],
   MN: [
@@ -5193,6 +5925,24 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       flagUrl: '/flags/fr.svg',
       label: 'French Laos (Indochina)',
       note: 'France absorbed the Lao kingdoms into French Indochina in 1893, reuniting the fragments of the old Lan Xang ("Land of a Million Elephants") under a protectorate flying the French flag. Apart from a Japanese-occupied interlude in WWII, French rule lasted until full independence in 1953 — and the three-headed elephant of the restored kingdom recalled the unity Lan Xang once had.',
+    },
+    {
+      fromYear: 1945, toYear: 1946,
+      flagUrl: fp("Flag_of_Laos.svg"),
+      label: "Lao Issara",
+      note: "The 'Free Lao' provisional government that briefly declared independence before the French returned.",
+    },
+    {
+      fromYear: 1713, toYear: 1904,
+      flagUrl: fp("Flag_of_the_Kingdom_of_Champasak.svg"),
+      label: "Kingdom of Champasak",
+      note: "The southernmost of the successor kingdoms of Lan Xang, later a principality under French Laos.",
+    },
+    {
+      fromYear: 1707, toYear: 1828,
+      flagUrl: fp("Flag_of_the_Kingdom_of_Vientiane_(1707–1828).svg"),
+      label: "Kingdom of Vientiane",
+      note: "One of the three Lao kingdoms that emerged from the breakup of Lan Xang, destroyed by Siam.",
     },
   ],
   KP: [
