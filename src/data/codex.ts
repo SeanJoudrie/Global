@@ -730,6 +730,13 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       label: 'Second Republic state flag',
       note: 'The interwar state ensign charged with the crowned white eagle of the reborn Polish Republic, before the coat of arms was redesigned in 1927–28.',
     },
+    {
+      fromYear: 1295,
+      toYear: 1795,
+      flagUrl: fp('Flag_of_the_Kingdom_of_Poland.svg'),
+      label: 'Kingdom of Poland (royal banner)',
+      note: 'Long before the modern white-and-red bicolor, the Kingdom of Poland — and the vast Polish-Lithuanian Commonwealth it formed in 1569 — was represented by the royal banner: the crowned white eagle on a red field, in use since the late 13th century. The white-and-red of the national colours is drawn directly from this eagle. The Commonwealth, once one of Europe\'s largest states, was carved up and erased by Russia, Prussia and Austria in the partitions ending in 1795.',
+    },
   ],
   IN: [
     {
@@ -994,6 +1001,13 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       flagUrl: fp('Flag_of_Norway_(1814-1821).svg'),
       label: 'First Norwegian Flag (Eidsvoll)',
       note: 'When Norway\'s constitution was signed at Eidsvoll in May 1814, the country briefly gained independence before entering a union with Sweden. This first flag — a red field with a simple white cross — was used during that brief window and inspired the later, more distinctive design.',
+    },
+    {
+      fromYear: 1524,
+      toYear: 1814,
+      flagUrl: '/flags/dk.svg',
+      label: 'Denmark–Norway',
+      note: 'For nearly three centuries Norway was the junior partner in the kingdom of Denmark–Norway, ruled from Copenhagen and flying the Danish Dannebrog. When Denmark backed Napoleon and lost, Norway was handed to Sweden in 1814 — but not before Norwegians seized the moment to write their own constitution, the seed of the independence finally won in 1905.',
     },
   ],
 
@@ -2231,6 +2245,13 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       label: 'Independence era',
       note: 'The yellow-green-red tricolour was adopted at independence in 1918, banned under Soviet rule, and restored identical in 1988.',
     },
+    {
+      fromYear: 1253,
+      toYear: 1795,
+      flagUrl: fp('Flag_of_Lithuania_(state).svg'),
+      label: 'Grand Duchy of Lithuania (Vytis)',
+      note: 'For centuries Lithuania was not a small Baltic state but one of medieval Europe\'s largest countries — the Grand Duchy of Lithuania, stretching from the Baltic nearly to the Black Sea. Its banner was the Vytis: a white armoured knight charging on horseback against a red field. After union with Poland it shared in the Polish-Lithuanian Commonwealth until the partitions erased both in 1795. The red Vytis flag survives today as Lithuania\'s official historical state flag.',
+    },
   ],
   UA: [
     {
@@ -2269,6 +2290,20 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       flagUrl: fp('Flag_of_the_Moldavian_Soviet_Socialist_Republic_(1952–1990).svg'),
       label: 'Moldavian SSR',
       note: 'A red field with a central green stripe and a gold hammer, sickle, and star. Its red-green-red layout closely resembles the flag of present-day breakaway Transnistria.',
+    },
+    {
+      fromYear: 1918,
+      toYear: 1940,
+      flagUrl: '/flags/ro.svg',
+      label: 'Part of Romania (Bessarabia)',
+      note: 'Most of present-day Moldova — historic Bessarabia — united with Romania in 1918 after a century under the Russian Empire, flying the Romanian flag. The 1939 Molotov–Ribbentrop Pact handed it to the USSR in 1940, which carved out the Moldavian SSR — the root of Moldova\'s lasting question of identity between Romania and the post-Soviet world.',
+    },
+    {
+      fromYear: 1346,
+      toYear: 1859,
+      flagUrl: fp('Flag_of_Moldavia.svg'),
+      label: 'Principality of Moldavia',
+      note: 'The medieval Principality of Moldavia — the realm of Stephen the Great, who held off Ottoman, Hungarian and Polish armies — flew a red banner bearing the head of an aurochs (a wild ox), the enduring symbol of the Moldavian lands. In 1859 Moldavia united with Wallachia to form modern Romania; the eastern half later became Moldova.',
     },
   ],
   BA: [
@@ -2448,6 +2483,13 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       flagUrl: fp('Flag_of_SR_Montenegro_(1946–1993).svg'),
       label: 'SR Montenegro',
       note: 'The Socialist Republic\'s red-blue-white tricolor with a centered gold-bordered red star was visually identical to SR Serbia\'s flag.',
+    },
+    {
+      fromYear: 1905,
+      toYear: 1918,
+      flagUrl: fp('Flag_of_Montenegro_(1905–1918).svg'),
+      label: 'Kingdom of Montenegro',
+      note: 'Montenegro was an independent principality and then, from 1910, a kingdom under Nicholas I — the last of the warrior prince-bishops\' line — flying a red-blue-white tricolor charged with the royal cypher and the double-headed eagle. Tiny but fiercely independent, the kingdom vanished in 1918 when it was absorbed into the new Yugoslavia, a loss that fuelled Montenegrin identity debates for a century.',
     },
   ],
   XK: [
@@ -2728,6 +2770,13 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       label: 'Red-white-blue tricolor',
       note: 'Fixed in 1845 and only legally formalized in 1993, Luxembourg\'s tricolor has been essentially unchanged for over 175 years. It is nearly identical to the Netherlands\' flag but is longer and uses a lighter blue.',
     },
+    {
+      fromYear: 1100,
+      toYear: 1845,
+      flagUrl: fp('Civil_Ensign_of_Luxembourg.svg'),
+      label: 'Roude Léiw (the Red Lion)',
+      note: 'Long before the tricolor, Luxembourg\'s emblem was the "Roude Léiw" — a red, double-tailed, crowned lion on a field of white and blue stripes, the arms of the medieval Counts (later Dukes) of Luxembourg dating to the 13th century. It still flies today as the country\'s civil ensign and is cherished as the older, more distinctly Luxembourgish banner.',
+    },
   ],
   MT: [
     {
@@ -2743,6 +2792,20 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       flagUrl: fp('Flag_of_Malta_(1943–1964).svg'),
       label: 'George Cross in a blue canton',
       note: 'The George Cross, awarded to the Maltese people by King George VI in 1942 for their WWII bravery during the Siege of Malta, was added to the flag in 1943 on a blue canton.',
+    },
+    {
+      fromYear: 1813,
+      toYear: 1943,
+      flagUrl: '/flags/gb.svg',
+      label: 'British Malta',
+      note: 'Malta became a British colony in 1813 and a vital naval fortress guarding the Mediterranean, flying the Union Jack (and a colonial blue ensign at sea) until the George Cross was added in 1943. Its strategic harbour made it one of the most heavily bombed places on earth during WWII\'s Siege of Malta.',
+    },
+    {
+      fromYear: 1530,
+      toYear: 1798,
+      flagUrl: fp('Flag_of_the_Order_of_St._John_(various).svg'),
+      label: 'Order of Saint John (Knights of Malta)',
+      note: 'For over 250 years Malta was ruled by the Knights Hospitaller — the Sovereign Military Order of Saint John — who flew a plain white cross on red. Granted the islands in 1530, the Knights famously withstood the Great Siege of 1565 by the Ottomans before Napoleon expelled them in 1798. Their eight-pointed white cross endures as the "Maltese cross."',
     },
   ],
   MC: [

@@ -63,4 +63,15 @@ export const ADDED_FLAGS: AddedFlag[] = [
   { country: "Finland", era: "Part of Sweden (1249–1809)", file: "/flags/se.svg" },
   { country: "Bosnia & Herzegovina", era: "Austro-Hungarian Bosnia (1878–1918)", file: "Flag_of_Bosnia_(1878–1908).svg" },
   { country: "Bosnia & Herzegovina", era: "Bosnian uprising, Gradaščević (1831–1832)", file: "Flag_of_Bosnia_(1831–1832).svg" },
+
+  // ── Deep re-audit (Europe L–S), Wikipedia-sourced ──
+  { country: "Lithuania", era: "Grand Duchy of Lithuania, Vytis (1253–1795)", file: "Flag_of_Lithuania_(state).svg" },
+  { country: "Luxembourg", era: "Roude Léiw, the Red Lion (1100–1845)", file: "Civil_Ensign_of_Luxembourg.svg" },
+  { country: "Malta", era: "British Malta (1813–1943)", file: "/flags/gb.svg" },
+  { country: "Malta", era: "Order of St John, Knights of Malta (1530–1798)", file: "Flag_of_the_Order_of_St._John_(various).svg" },
+  { country: "Moldova", era: "Part of Romania / Bessarabia (1918–1940)", file: "/flags/ro.svg" },
+  { country: "Moldova", era: "Principality of Moldavia (1346–1859)", file: "Flag_of_Moldavia.svg" },
+  { country: "Montenegro", era: "Kingdom of Montenegro (1905–1918)", file: "Flag_of_Montenegro_(1905–1918).svg" },
+  { country: "Norway", era: "Denmark–Norway (1524–1814)", file: "/flags/dk.svg" },
+  { country: "Poland", era: "Kingdom of Poland, royal banner (1295–1795)", file: "Flag_of_the_Kingdom_of_Poland.svg" },
 ]

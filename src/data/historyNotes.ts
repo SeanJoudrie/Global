@@ -13,9 +13,6 @@ export interface HistoryNote {
 }
 
 export const HISTORY_NOTES: HistoryNote[] = [
-  { country: "Luxembourg", era: "alt / historical", status: "ambiguous",
-    candidate: "Civil_Ensign_of_Luxembourg.svg",
-    detail: "LU history is a single flag (1845–now). The 'Roude Léiw' (Red Lion) — shown here as the civil ensign — is an alternate national flag with deep heraldic roots, but it's a current alternate rather than a past predecessor. Decide whether to add it as a parallel entry." },
   { country: "Kosovo", era: "pre-2008 (UNMIK)", status: "ambiguous",
     detail: "XK history starts at 2008. Under UN administration (1999–2008) Kosovo had no official flag of its own (the UN flag flew; the Albanian flag was used unofficially). Unclear whether to represent this period." },
   { country: "Portugal", era: "1816–1826", status: "to-verify",
