@@ -28,4 +28,10 @@ export const HISTORY_NOTES: HistoryNote[] = [
   { country: "France", era: "pre-1790 royal", status: "to-verify",
     candidate: "Pavillon_royal_de_la_France.svg",
     detail: "FR is well covered, but the plain white Bourbon royal banner (and the gold fleur-de-lis on blue) could enrich the pre-revolution era. Filename rate-limited — verify before adding." },
+  { country: "Nauru", era: "pre-1968 colonial", status: "ambiguous",
+    candidate: "Flag_of_German_New_Guinea.svg",
+    detail: "NR has a single flag (1968–now). German protectorate (1888–1914) then an Australian-administered League/UN mandate (1920–1968) — neither flew a flag clearly Nauru's own (the German New Guinea designs were largely never-official proposals). Decide whether the German colonial flag is honest to include." },
+  { country: "Papua New Guinea", era: "pre-1970 territories", status: "to-verify",
+    candidate: "Flag_of_the_Territory_of_Papua.svg",
+    detail: "PNG jumps to a 1970 interim tricolour. Its predecessors are split — German New Guinea (north), British/Australian Papua (south), then the joint Territory of Papua and New Guinea. The Territory of Papua flag candidate was rate-limited; verify and consider adding." },
 ]

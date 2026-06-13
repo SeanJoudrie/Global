@@ -3762,6 +3762,13 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       label: 'Flag of Kiribati',
       note: 'Adopted at independence in 1979, the golden frigatebird flying over a rising sun and three white waves is based directly on the colonial coat of arms granted to the Gilbert and Ellice Islands in 1937.',
     },
+    {
+      fromYear: 1937,
+      toYear: 1979,
+      flagUrl: fp('Flag_of_Gilbert_and_Ellice_Islands.svg'),
+      label: 'Gilbert and Ellice Islands Colony',
+      note: 'Before independence the Gilberts (now Kiribati) and the Ellice Islands (now Tuvalu) were one British colony, flying the Blue Ensign with the colonial badge — the frigatebird, rising sun and waves granted in 1937. That badge became the basis for Kiribati\'s national flag when the colony split and the Gilberts gained independence in 1979.',
+    },
   ],
   MH: [
     {
@@ -3841,6 +3848,13 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       flagUrl: fp('Flag_of_Tuvalu_(1978–1995).svg'),
       label: 'Independence flag',
       note: 'Adopted at independence in 1978, the original light-blue ensign with the Union Jack and nine stars — the same design restored in 1997.',
+    },
+    {
+      fromYear: 1937,
+      toYear: 1976,
+      flagUrl: fp('Flag_of_Gilbert_and_Ellice_Islands.svg'),
+      label: 'Gilbert and Ellice Islands Colony',
+      note: 'The Ellice Islands (now Tuvalu) were governed with the Gilberts (now Kiribati) as a single British colony, flying the Blue Ensign with the 1937 colonial badge of a frigatebird over a rising sun. The Ellice Islanders voted to separate in 1975, and Tuvalu became independent in 1978.',
     },
   ],
 
