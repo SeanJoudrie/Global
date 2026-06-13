@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useRef, useEffect } from 'react'
 import { FLAGS } from '../data/flags'
 import type { FlagRecord } from '../data/flags'
 import { CAPITALS } from '../data/capitals'
@@ -1011,48 +1011,112 @@ function gatherAllFlags(): { title: string; url: string }[] {
 }
 const ALL_FLAGS_AZ = gatherAllFlags()
 
-const MEGA_TILE: React.CSSProperties = {
-  contentVisibility: 'auto', containIntrinsicSize: '0 84px',
-  display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 3,
-} as React.CSSProperties
+// The overwhelmingly-massive full-page wall. Virtualised: only the rows on
+// screen are mounted, so thousands of flags scroll smoothly and actually load.
+const MEGA_PAD = 8
+const MEGA_GAP = 8
+const MEGA_MIN_TILE = 74
+const MEGA_LABEL_H = 22
+const MEGA_BAR_H = 58
+const MEGA_BUFFER = 4
 
-// The overwhelmingly-massive full-page wall, opened from the Codex.
 function MegaCodexWall({ onClose }: { onClose: () => void }) {
   const [sort, setSort] = useState<'az' | 'za' | 'rand'>('az')
+  const [shuffleKey, setShuffleKey] = useState(0)
+  const scrollRef = useRef<HTMLDivElement>(null)
+  const rafRef = useRef<number | null>(null)
+  const lastY = useRef(0)
+  const [vw, setVw] = useState(() => (typeof window !== 'undefined' ? window.innerWidth : 390))
+  const [vh, setVh] = useState(() => (typeof window !== 'undefined' ? window.innerHeight : 800))
+  const [scrollTop, setScrollTop] = useState(0)
+  const [barHidden, setBarHidden] = useState(false)
+
+  useEffect(() => {
+    const onResize = () => { setVw(window.innerWidth); setVh(window.innerHeight) }
+    window.addEventListener('resize', onResize)
+    return () => window.removeEventListener('resize', onResize)
+  }, [])
+
   const flags = useMemo(() => {
     const a = [...ALL_FLAGS_AZ]
     if (sort === 'az') a.sort((x, y) => x.title.localeCompare(y.title))
     else if (sort === 'za') a.sort((x, y) => y.title.localeCompare(x.title))
     else for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1));[a[i], a[j]] = [a[j], a[i]] }
     return a
-  }, [sort])
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [sort, shuffleKey])
+
+  const cols = Math.max(3, Math.floor((vw - MEGA_PAD * 2 + MEGA_GAP) / (MEGA_MIN_TILE + MEGA_GAP)))
+  const tileW = (vw - MEGA_PAD * 2 - MEGA_GAP * (cols - 1)) / cols
+  const rowH = tileW * (2 / 3) + MEGA_LABEL_H + MEGA_GAP
+  const totalRows = Math.ceil(flags.length / cols)
+  const totalHeight = MEGA_PAD * 2 + MEGA_BAR_H + totalRows * rowH
+
+  const startRow = Math.max(0, Math.floor((scrollTop - MEGA_BAR_H - MEGA_PAD) / rowH) - MEGA_BUFFER)
+  const endRow = Math.min(totalRows, Math.ceil((scrollTop + vh - MEGA_BAR_H) / rowH) + MEGA_BUFFER)
+  const startIdx = startRow * cols
+  const endIdx = Math.min(flags.length, endRow * cols)
+  const visible = flags.slice(startIdx, endIdx)
+  const gridTop = MEGA_PAD + MEGA_BAR_H + startRow * rowH
+
+  const onScroll = () => {
+    if (rafRef.current != null) return
+    rafRef.current = requestAnimationFrame(() => {
+      rafRef.current = null
+      const st = scrollRef.current ? scrollRef.current.scrollTop : 0
+      setScrollTop(st)
+      const dy = st - lastY.current
+      if (st > MEGA_BAR_H && dy > 6) setBarHidden(true)
+      else if (dy < -6 || st <= MEGA_BAR_H) setBarHidden(false)
+      lastY.current = st
+    })
+  }
+
   return (
-    <div style={{ position: 'fixed', inset: 0, zIndex: 2000, background: T.bg, color: T.text, display: 'flex', flexDirection: 'column' }}>
-      <div style={{ flexShrink: 0, padding: '12px 12px 10px', borderBottom: `1px solid ${T.line}`, display: 'flex', alignItems: 'center', gap: 10, background: T.bg }}>
+    <div style={{ position: 'fixed', inset: 0, zIndex: 2000, background: T.bg, color: T.text }}>
+      <div ref={scrollRef} onScroll={onScroll}
+        style={{ position: 'absolute', inset: 0, overflowY: 'auto', WebkitOverflowScrolling: 'touch' }}>
+        <div style={{ height: totalHeight, position: 'relative' }}>
+          <div style={{ position: 'absolute', left: MEGA_PAD, right: MEGA_PAD, top: gridTop, display: 'grid', gridTemplateColumns: `repeat(${cols}, 1fr)`, gap: MEGA_GAP }}>
+            {visible.map((f, k) => (
+              <div key={startIdx + k} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 3 }}>
+                <div style={{ width: '100%', aspectRatio: '3/2', borderRadius: 4, overflow: 'hidden', border: `1px solid ${T.line}`, background: T.surfaceHi, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <img src={galleryThumb(f.url)} alt={f.title} loading="lazy" decoding="async"
+                    style={{ width: '100%', height: '100%', objectFit: 'contain' }}
+                    onError={e => {
+                      const el = e.target as HTMLImageElement
+                      const t = Number(el.dataset.t || '0')
+                      if (t < 2) {
+                        el.dataset.t = String(t + 1)
+                        el.removeAttribute('src')
+                        window.setTimeout(() => { el.src = t === 0 ? galleryThumb(f.url) : f.url }, 500 + t * 800 + Math.random() * 700)
+                      } else { el.style.visibility = 'hidden' }
+                    }} />
+                </div>
+                <span style={{ fontSize: 8, color: T.muted, textAlign: 'center', lineHeight: 1.15, height: MEGA_LABEL_H - 4, overflow: 'hidden', wordBreak: 'break-word' }}>{f.title}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Top bar — slides away on fast downward scroll, returns on scroll up */}
+      <div style={{
+        position: 'absolute', top: 0, left: 0, right: 0, height: MEGA_BAR_H, zIndex: 5,
+        padding: '0 12px', display: 'flex', alignItems: 'center', gap: 10,
+        background: tint(T.bg, 0.92), backdropFilter: 'blur(10px)', borderBottom: `1px solid ${T.line}`,
+        transform: barHidden ? 'translateY(-100%)' : 'translateY(0)', transition: 'transform 0.25s ease',
+      }}>
         <button onClick={onClose} aria-label="Close" className="geo-tap"
           style={{ width: 38, height: 38, flexShrink: 0, borderRadius: 999, background: T.surface, border: `1px solid ${T.line}`, color: T.muted, fontSize: 22, lineHeight: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>‹</button>
         <div style={{ flex: 1, minWidth: 0 }}>
-          <div className="geo-display" style={{ fontWeight: 800, fontSize: 18, color: T.text, lineHeight: 1.1 }}>Mega Codex</div>
-          <div style={{ fontSize: 11, color: T.muted }}>Every flag in the app · {ALL_FLAGS_AZ.length}</div>
+          <div className="geo-display" style={{ fontWeight: 800, fontSize: 17, color: T.text, lineHeight: 1.1 }}>Mega Codex</div>
+          <div style={{ fontSize: 11, color: T.muted }}>Every flag · {ALL_FLAGS_AZ.length}</div>
         </div>
         <div style={{ display: 'flex', gap: 3, background: T.surface, borderRadius: 999, padding: 3, border: `1px solid ${T.line}`, flexShrink: 0 }}>
           {([['az', 'A–Z'], ['za', 'Z–A'], ['rand', 'Shuffle']] as const).map(([k, label]) => (
-            <button key={k} onClick={() => setSort(k)}
+            <button key={k} onClick={() => { setSort(k); if (k === 'rand') setShuffleKey(v => v + 1); scrollRef.current?.scrollTo({ top: 0 }) }}
               style={{ fontSize: 10.5, fontWeight: 700, padding: '5px 9px', borderRadius: 999, border: 'none', cursor: 'pointer', background: sort === k ? ACCENT.codex : 'transparent', color: sort === k ? T.onAccent : T.muted }}>{label}</button>
-          ))}
-        </div>
-      </div>
-      <div style={{ flex: 1, overflowY: 'auto', WebkitOverflowScrolling: 'touch', padding: 8 }}>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(70px, 1fr))', gap: 8 }}>
-          {flags.map((f, i) => (
-            <div key={i} style={MEGA_TILE}>
-              <div style={{ width: '100%', aspectRatio: '3/2', borderRadius: 4, overflow: 'hidden', border: `1px solid ${T.line}`, background: T.surfaceHi, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <img src={galleryThumb(f.url)} alt={f.title} loading="lazy" decoding="async"
-                  style={{ width: '100%', height: '100%', objectFit: 'contain' }}
-                  onError={e => { (e.target as HTMLImageElement).style.visibility = 'hidden' }} />
-              </div>
-              <span style={{ fontSize: 8, color: T.muted, textAlign: 'center', lineHeight: 1.15, maxHeight: 19, overflow: 'hidden', wordBreak: 'break-word' }}>{f.title}</span>
-            </div>
           ))}
         </div>
       </div>
