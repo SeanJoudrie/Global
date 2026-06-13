@@ -10,6 +10,8 @@ import { TERRITORIES } from '../data/territories'
 import type { Territory } from '../data/territories'
 import { ETHNIC_FLAGS } from '../data/ethnicFlags'
 import type { EthnicRegion } from '../data/ethnicFlags'
+import { EXTINCT_STATES } from '../data/extinctStates'
+import type { ExtinctRegion } from '../data/extinctStates'
 import { historicalFor } from '../data/historicalFlags'
 import { IDENTITY_FLAGS, IDENTITY_CATEGORIES, SIGNAL_FLAGS } from '../data/identityFlags'
 import { US_CITY_FLAGS } from '../data/usCityFlags'
@@ -203,6 +205,8 @@ export default function CodexScreen({ onBack, initialCode, embedded = false }: P
         {!isSearching && <SignalCodexSection />}
         {/* Ethnic & cultural flags — the full Commons "Cultural flags" gallery */}
         {!isSearching && <EthnicCodexSection />}
+        {/* Extinct states — the Commons "Flags of extinct states" gallery */}
+        {!isSearching && <ExtinctStatesCodexSection />}
       </div>
     </div>
   )
@@ -889,6 +893,65 @@ function EthnicCodexSection() {
             The full Wikimedia Commons “Cultural flags” gallery — flags of ethnic groups, regions and peoples, grouped by language family. Tap a region to browse.
           </p>
           {ETHNIC_FLAGS.map((r, i) => <EthnicRegionBlock key={i} region={r} />)}
+        </div>
+      )}
+    </div>
+  )
+}
+
+// ── Extinct states — the Commons "Flags of extinct states" gallery ──
+// Flags of states that no longer exist, grouped by continent. Each tile keeps
+// the gallery's caption (name + the years it was independent).
+function ExtinctRegionBlock({ region }: { region: ExtinctRegion }) {
+  const [open, setOpen] = useState(false)
+  return (
+    <div className="mb-2">
+      <button
+        onClick={() => setOpen(o => !o)}
+        aria-expanded={open}
+        className="geo-tap w-full flex items-center justify-between px-1 py-3 transition-all active:scale-[0.99]"
+        style={{ background: 'transparent', borderBottom: `1px solid ${open ? tint(T.warm, 0.45) : T.line}` }}>
+        <div className="flex items-center gap-2.5">
+          <Landmark size={15} color={T.warm} strokeWidth={1.6} absoluteStrokeWidth />
+          <h4 className="text-sm font-bold uppercase tracking-widest" style={{ color: T.warm }}>{region.region}</h4>
+          <span className="text-xs" style={{ color: T.dim, fontFamily: FONT.mono, fontVariantNumeric: 'tabular-nums' }}>{region.items.length}</span>
+        </div>
+        <ChevronDown size={16} color={T.warm} strokeWidth={1.6} absoluteStrokeWidth
+          style={{ transition: 'transform 0.2s', transform: open ? 'rotate(180deg)' : 'rotate(0deg)', flexShrink: 0 }} />
+      </button>
+      {open && (
+        <div className="mt-3" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '12px 8px' }}>
+          {region.items.map((it, i) => <EthnicFlagTile key={i} name={it.name} file={it.file} />)}
+        </div>
+      )}
+    </div>
+  )
+}
+
+function ExtinctStatesCodexSection() {
+  const [open, setOpen] = useState(false)
+  const total = EXTINCT_STATES.reduce((n, r) => n + r.items.length, 0)
+  return (
+    <div className="mt-5">
+      <button
+        onClick={() => setOpen(o => !o)}
+        className="geo-tap w-full flex items-center justify-between px-1 py-3 transition-all active:scale-[0.99]"
+        style={{ background: 'transparent', borderBottom: `1px solid ${open ? tint(T.warm, 0.45) : T.line}` }}>
+        <div className="text-left">
+          <h3 className="text-sm font-bold uppercase tracking-widest flex items-center gap-2" style={{ color: T.warm }}>
+            <Landmark size={15} color={T.warm} strokeWidth={1.6} absoluteStrokeWidth /> Extinct States
+          </h3>
+          <p className="text-xs" style={{ color: T.dim }}>{total} flags of vanished states &amp; nations · by continent</p>
+        </div>
+        <ChevronDown size={17} color={T.warm} strokeWidth={1.6} absoluteStrokeWidth
+          style={{ transition: 'transform 0.2s', transform: open ? 'rotate(180deg)' : 'rotate(0deg)', flexShrink: 0 }} />
+      </button>
+      {open && (
+        <div className="mt-3">
+          <p className="text-xs mb-2" style={{ color: T.dim, lineHeight: 1.4 }}>
+            The Wikimedia Commons “Flags of extinct states” gallery — banners of states that no longer exist, with the years each was independent. Tap a continent to browse.
+          </p>
+          {EXTINCT_STATES.map((r, i) => <ExtinctRegionBlock key={i} region={r} />)}
         </div>
       )}
     </div>
