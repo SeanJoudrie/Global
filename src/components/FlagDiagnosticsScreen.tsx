@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { FIXED_FLAGS, MISSING_FLAGS, RECENT_FLAGS } from "../data/flagDiagnostics"
 import type { DiagFlag, MissingFlag } from "../data/flagDiagnostics"
+import { HISTORY_NOTES } from "../data/historyNotes"
 import { T, ACCENT, FONT, tint } from "../ui/tokens"
 import { ScreenHeader } from "./ui"
 
@@ -74,7 +75,7 @@ function MissingRow({ f, sel, toggle }: { f: MissingFlag; sel: Set<string>; togg
 const ALL_FIXED = [...RECENT_FLAGS, ...FIXED_FLAGS]
 
 export default function FlagDiagnosticsScreen({ onBack }: Props) {
-  const [tab, setTab] = useState<"missing" | "fixed">("fixed")
+  const [tab, setTab] = useState<"missing" | "fixed" | "notes">("fixed")
   // selections: arg -> set of chosen candidate filenames
   const [picks, setPicks] = useState<Record<string, Set<string>>>({})
   const [submitText, setSubmitText] = useState<string | null>(null)
@@ -108,7 +109,7 @@ export default function FlagDiagnosticsScreen({ onBack }: Props) {
     <div style={{ position: "fixed", inset: 0, background: T.bg, color: T.text, zIndex: 1, display: "flex", flexDirection: "column" }}>
       <ScreenHeader title="Flag Check" subtitle="Developer use only" onBack={onBack} />
       <div style={{ display: "flex", gap: 6, padding: "0 12px 10px" }}>
-        {([["missing", `Missing (${MISSING_FLAGS.length})`], ["fixed", `Fixed (${ALL_FIXED.length})`]] as const).map(([id, label]) => (
+        {([["missing", `Missing (${MISSING_FLAGS.length})`], ["fixed", `Fixed (${ALL_FIXED.length})`], ["notes", `Notes (${HISTORY_NOTES.length})`]] as const).map(([id, label]) => (
           <button key={id} onClick={() => setTab(id)} style={{
             flex: 1, padding: "8px 0", borderRadius: 10, fontSize: 13, fontWeight: 600, cursor: "pointer",
             background: tab === id ? ACCENT.codex : T.surface, color: tab === id ? T.onAccent : T.muted,
@@ -119,12 +120,28 @@ export default function FlagDiagnosticsScreen({ onBack }: Props) {
       <div style={{ padding: "0 12px 8px", fontSize: 11, color: T.muted, lineHeight: 1.4 }}>
         {tab === "missing"
           ? "Tap the correct flag(s) for each entry (pick more than one if several are right). Then hit Submit at the bottom and send me the copied text."
+          : tab === "notes"
+          ? "Historical-flag candidates from the Codex sweep that weren't added yet — couldn't verify the filename, or it's ambiguous whether it belongs. A running to-do, not bugs."
           : "Repaired & recently added flags. Every one should show “loads ✓”. Tell me if any looks wrong."}
       </div>
 
       <div style={{ flex: 1, overflowY: "auto", WebkitOverflowScrolling: "touch", paddingBottom: tab === "missing" ? 72 : 0 }}>
         {tab === "missing"
           ? MISSING_FLAGS.map((f, i) => <MissingRow key={"m" + i} f={f} sel={picks[f.arg] ?? new Set()} toggle={(file) => toggle(f.arg, file)} />)
+          : tab === "notes"
+          ? HISTORY_NOTES.map((n, i) => (
+              <div key={"n" + i} style={{ padding: "10px 12px", borderBottom: `1px solid ${T.line}` }}>
+                <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 3 }}>
+                  <span style={{ fontSize: 13, color: T.text, fontWeight: 700 }}>{n.country}</span>
+                  <span style={{ fontSize: 10.5, color: T.muted }}>{n.era}</span>
+                  <span style={{ marginLeft: "auto", fontSize: 9, fontWeight: 700, color: n.status === "to-verify" ? T.amber : T.dim, border: `1px solid ${tint(n.status === "to-verify" ? T.amber : T.dim, 0.4)}`, borderRadius: 999, padding: "2px 7px" }}>
+                    {n.status}
+                  </span>
+                </div>
+                <div style={{ fontSize: 11.5, color: T.muted, lineHeight: 1.45 }}>{n.detail}</div>
+                {n.candidate && <div style={{ fontFamily: FONT.mono, fontSize: 10, color: ACCENT.codex, marginTop: 4, wordBreak: "break-all" }}>{n.candidate}</div>}
+              </div>
+            ))
           : ALL_FIXED.map((f, i) => <FixedTile key={"f" + i} f={f} />)}
       </div>
 

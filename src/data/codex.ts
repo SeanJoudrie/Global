@@ -150,6 +150,13 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       label: 'Flag of Great Britain (1707–1800)',
       note: 'Created by the Acts of Union 1707 joining England and Scotland. Combined only St George\'s Cross and St Andrew\'s Cross. Ireland had not yet joined, so there is no red diagonal of St Patrick.',
     },
+    {
+      fromYear: 1606,
+      toYear: 1707,
+      flagUrl: fp('Union_flag_1606_(Kings_Colors).svg'),
+      label: "King's Colours (Union of the Crowns)",
+      note: 'When James VI of Scotland also became James I of England in 1603, the two crowns were united under one king though the kingdoms stayed separate. In 1606 he ordered this first Union Flag — St George over St Andrew — flown at sea. It served as a royal and maritime banner for a century before the 1707 union made it the flag of the new Kingdom of Great Britain.',
+    },
   ],
   RU: [
     {
@@ -2295,6 +2302,13 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       flagUrl: fp('Flag_of_the_Socialist_Republic_of_Serbia.svg'),
       label: 'SR Serbia',
       note: 'The Socialist Republic flew a red-blue-white tricolor with a centered gold-bordered red star — visually identical to the flag of SR Montenegro.',
+    },
+    {
+      fromYear: 1882,
+      toYear: 1918,
+      flagUrl: fp('Flag_of_Serbia_(1882–1918).svg'),
+      label: 'Kingdom of Serbia',
+      note: 'When Serbia became a kingdom in 1882, its state flag was the red-blue-white tricolor charged with the royal coat of arms — the double-headed eagle beneath a crown. This is the direct ancestor of the modern flag; the kingdom dissolved into Yugoslavia in 1918.',
     },
   ],
   SI: [
