@@ -119,4 +119,15 @@ export const ADDED_FLAGS: AddedFlag[] = [
   { country: "Thailand", era: "Ayutthaya Kingdom (1350–1767)", file: "Flag_of_Thailand_(Ayutthaya_period).svg" },
   { country: "South Korea", era: "Royal standard of Joseon (1392–1882)", file: "Flag_of_the_king_of_Joseon.svg" },
   { country: "Cambodia", era: "French Cambodia / Indochina (1863–1948)", file: "/flags/fr.svg" },
+
+  // ── Africa deep pass — pre-colonial kingdoms & Boer republics ──
+  { country: "Seychelles", era: "NEW entry — full history (British colony → today)", file: "Flag_of_Seychelles_(1961–1976).svg" },
+  { country: "Sudan", era: "Mahdist State (1885–1898)", file: "Flag_of_the_Mahdi_movement_in_Sudan.svg" },
+  { country: "Sudan", era: "Anglo-Egyptian Sudan (1899–1956)", file: "/flags/gb.svg" },
+  { country: "Ghana", era: "British Gold Coast (1877–1957)", file: "Flag_of_the_Gold_Coast_(1877–1957).svg" },
+  { country: "Benin", era: "Kingdom of Dahomey (1600–1894)", file: "Flag_of_Ghezo_of_Dahomey.svg" },
+  { country: "South Africa", era: "South African Republic / Transvaal (1857–1902)", file: "Flag_of_Transvaal.svg" },
+  { country: "South Africa", era: "Orange Free State (1854–1902)", file: "Flag_of_the_Orange_Free_State.svg" },
+  { country: "Egypt", era: "Khedivate of Egypt (1844–1922)", file: "Flag_of_Muhammad_Ali.svg" },
+  { country: "Madagascar", era: "Kingdom of Madagascar, Merina (1787–1896)", file: "Flag_of_the_Merina_Kingdom.svg" },
 ]

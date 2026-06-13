@@ -601,6 +601,20 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       label: 'South African Red Ensign',
       note: 'After the Union of South Africa formed in 1910, the British Red Ensign defaced with the Union coat of arms served as the de facto flag, while the Union Jack remained the only flag with full official status.',
     },
+    {
+      fromYear: 1857,
+      toYear: 1902,
+      flagUrl: fp('Flag_of_Transvaal.svg'),
+      label: 'South African Republic (Transvaal)',
+      note: 'In the interior, Dutch-descended Boer settlers fleeing British rule founded their own republics — the South African Republic (Transvaal), whose green-banded "Vierkleur" flew over the gold-rich Witwatersrand. The discovery of that gold drew the British in, and the two sides fought the bitter Second Boer War (1899–1902); the republic\'s defeat paved the way for the Union of South Africa.',
+    },
+    {
+      fromYear: 1854,
+      toYear: 1902,
+      flagUrl: fp('Flag_of_the_Orange_Free_State.svg'),
+      label: 'Orange Free State',
+      note: 'The other main Boer republic, the Orange Free State, flew an orange-and-white flag with the Dutch tricolour in the canton. Like the Transvaal it was independent for half a century before being annexed by Britain in the Boer War — both republics\' flags were later miniaturised onto the apartheid-era national flag.',
+    },
   ],
   PT: [
     {
@@ -985,6 +999,13 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       flagUrl: fp('Flag_of_Egypt_(1922-1958).svg'),
       label: 'Kingdom of Egypt',
       note: 'When Britain recognized Egyptian independence in 1922, King Fuad I adopted a green field with a white crescent enclosing three white stars — usually said to represent Egypt, Nubia, and Sudan.',
+    },
+    {
+      fromYear: 1844,
+      toYear: 1922,
+      flagUrl: fp('Flag_of_Muhammad_Ali.svg'),
+      label: 'Khedivate of Egypt',
+      note: 'Founded by Muhammad Ali Pasha — the Albanian commander regarded as the father of modern Egypt — the ruling dynasty governed a nominally Ottoman but effectively independent Egypt, flying a red flag with white crescents and stars. As the Khedivate it built the Suez Canal, then sank into debt and fell under British occupation in 1882, ruling on as a British puppet until the 1922 kingdom.',
     },
   ],
 
@@ -3220,6 +3241,36 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       note: 'Uninhabited until settlers arrived, Mauritius was held in turn by the Dutch (who hunted the dodo to extinction) and the French before Britain captured it in 1810. It flew the Union Jack as a British colony for over 150 years, its sugar plantations worked first by enslaved Africans and then by indentured labourers from India — the origin of the island\'s Indo-Mauritian majority — until independence in 1968.',
     },
   ],
+  SC: [
+    {
+      fromYear: 1996,
+      toYear: null,
+      flagUrl: '/flags/sc.svg',
+      label: 'Flag of Seychelles',
+      note: 'Adopted in 1996, the flag radiates five bands — blue, yellow, red, white and green — fanning out from the lower hoist like rays of a rising sun, symbolising a dynamic young country moving into the future. It is one of the few national flags using all the colours of its two main political parties together.',
+    },
+    {
+      fromYear: 1977,
+      toYear: 1996,
+      flagUrl: fp('Flag_of_Seychelles_(1977–1996).svg'),
+      label: 'One-party era',
+      note: 'After a 1977 coup ushered in a socialist one-party state, Seychelles flew a red-white-green design with wavy lines. It was replaced by the multi-coloured rays flag in 1996 when the country returned to multi-party democracy.',
+    },
+    {
+      fromYear: 1976,
+      toYear: 1977,
+      flagUrl: fp('Flag_of_Seychelles_(1976–1977).svg'),
+      label: 'Independence flag',
+      note: 'At independence from Britain in 1976, Seychelles adopted a flag diagonally divided into blue, red, white and green quarters — the colours of the two parties that formed the first coalition government, which lasted barely a year before the coup.',
+    },
+    {
+      fromYear: 1903,
+      toYear: 1976,
+      flagUrl: fp('Flag_of_Seychelles_(1961–1976).svg'),
+      label: 'British colony',
+      note: 'Settled by the French in the 18th century and captured by Britain in 1814, the Seychelles became a separate British Crown Colony in 1903, flying a Blue Ensign defaced with a colonial badge of a giant tortoise and palm. The islands\' isolation in the Indian Ocean made them a place of exile for troublesome rulers from across the Empire.',
+    },
+  ],
   SL: [
     {
       fromYear: 1961,
@@ -3682,6 +3733,13 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       label: 'French Madagascar',
       note: 'France conquered the independent Kingdom of Madagascar in 1895–96, abolished the monarchy, and ruled the island as a colony under the French tricolor. A 1947 nationalist revolt was crushed with tens of thousands of deaths, but the island\'s own white-and-red royal colours survived to be woven into the flag adopted as autonomy returned in 1958.',
     },
+    {
+      fromYear: 1787,
+      toYear: 1896,
+      flagUrl: fp('Flag_of_the_Merina_Kingdom.svg'),
+      label: 'Kingdom of Madagascar (Merina)',
+      note: 'Before the French, almost the whole island was unified under the Merina monarchy — the Kingdom of Madagascar — which flew a white-and-red flag often bearing the royal initials. A sophisticated state that traded with Europe and adopted Christianity and a written script, it kept its independence until France invaded and abolished the monarchy in 1896. Its white-and-red endures at the hoist of the modern flag.',
+    },
   ],
   DZ: [
     {
@@ -3777,6 +3835,20 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       flagUrl: fp('Flag_of_Sudan_(1956–1970).svg'),
       label: 'Independence tricolour',
       note: 'Adopted at independence in 1956, with blue for the Nile, yellow for the Sahara, and green for farmland.',
+    },
+    {
+      fromYear: 1899,
+      toYear: 1956,
+      flagUrl: '/flags/gb.svg',
+      label: 'Anglo-Egyptian Sudan',
+      note: 'After Britain crushed the Mahdist State, Sudan was governed from 1899 to 1956 as the Anglo-Egyptian Sudan — nominally a joint British–Egyptian condominium, in practice run by Britain under the Union Jack and Egyptian flags. Its administration deliberately developed the Arab-Muslim north and the African-Christian south separately, planting the seeds of the civil wars that eventually split off South Sudan.',
+    },
+    {
+      fromYear: 1885,
+      toYear: 1898,
+      flagUrl: fp('Flag_of_the_Mahdi_movement_in_Sudan.svg'),
+      label: 'Mahdist State',
+      note: 'In 1881 a Sudanese religious leader, Muhammad Ahmad, declared himself the Mahdi and led a holy war that swept away Egyptian rule — famously killing General Gordon at the fall of Khartoum in 1885. His Mahdist State, flying banners inscribed with the shahada, was the first independent Sudanese nation, until a British–Egyptian army destroyed it at Omdurman in 1898.',
     },
   ],
   SS: [
@@ -3925,6 +3997,13 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       label: 'Independence flag',
       note: 'Adopted at independence in 1957 — the first national flag to use the black star and the pan-African red-gold-green, borrowed from Marcus Garvey\'s Black Star Line as a symbol of African emancipation.',
     },
+    {
+      fromYear: 1877,
+      toYear: 1957,
+      flagUrl: fp('Flag_of_the_Gold_Coast_(1877–1957).svg'),
+      label: 'British Gold Coast',
+      note: 'Britain ruled the territory as the Gold Coast — named for the gold its forts had traded alongside enslaved people for centuries — flying a Blue Ensign with an elephant-and-palm badge. To win it, Britain had to fight a series of wars against the powerful Ashanti Empire of the interior, whose Golden Stool symbolised the Asante nation. The Gold Coast became, in 1957, the first sub-Saharan African colony to win independence, as Ghana.',
+    },
   ],
   SN: [
     {
@@ -4018,6 +4097,13 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       flagUrl: fp('Flag_of_Benin.svg'),
       label: 'Republic of Dahomey',
       note: 'Adopted in 1959 by the autonomous Republic of Dahomey, with a green hoist band and yellow and red bands in the pan-African colors — identical to the flag restored in 1990.',
+    },
+    {
+      fromYear: 1600,
+      toYear: 1894,
+      flagUrl: fp('Flag_of_Ghezo_of_Dahomey.svg'),
+      label: 'Kingdom of Dahomey',
+      note: 'Benin takes the modern shape of the Kingdom of Dahomey, one of West Africa\'s most formidable powers — famed for its all-female warrior regiment, the "Dahomey Amazons," and for selling captives into the Atlantic slave trade from its coast, the "Slave Coast." Its kings flew banners bearing royal emblems until France conquered the kingdom in 1894 and made it the colony of French Dahomey.',
     },
   ],
   TG: [
