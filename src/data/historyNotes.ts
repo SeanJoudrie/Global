@@ -24,9 +24,6 @@ export const HISTORY_NOTES: HistoryNote[] = [
   { country: "France", era: "pre-1790 royal", status: "to-verify",
     candidate: "Pavillon_royal_de_la_France.svg",
     detail: "FR is well covered, but this white Bourbon royal banner (fleur-de-lis) could enrich the pre-revolution era. File confirmed to load — just deciding whether it adds enough over the existing 1589–1790 Kingdom entry." },
-  { country: "Nauru", era: "pre-1968 colonial", status: "ambiguous",
-    candidate: "Flag_of_German_New_Guinea.svg",
-    detail: "NR has a single flag (1968–now). German protectorate (1888–1914) then an Australian-administered League/UN mandate (1920–1968) — neither flew a flag clearly Nauru's own (the German New Guinea designs were largely never-official proposals). Decide whether the German colonial flag is honest to include." },
   { country: "Haiti", era: "1811–1820 Kingdom (Christophe)", status: "to-verify",
     detail: "In Haiti's split early years, Henri Christophe ruled a northern Kingdom of Haiti (1811–1820) with its own royal flag/standard, distinct from Pétion's southern republic. Couldn't find a Commons file under the obvious names — needs a correct filename before adding alongside the Second Empire entry." },
 ]

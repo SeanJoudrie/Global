@@ -83,4 +83,11 @@ export const ADDED_FLAGS: AddedFlag[] = [
   // ── Deep re-audit (Middle East), Wikipedia-sourced ──
   { country: "Saudi Arabia", era: "Kingdom of Hejaz, Hashemite (1916–1925)", file: "Flag_of_Hejaz_(1920).svg" },
   { country: "Syria", era: "Arab Kingdom of Syria (1920)", file: "Flag_of_Kingdom_of_Syria_(1920-03-08_to_1920-07-24).svg" },
+
+  // ── Deep re-audit (Oceania), Wikipedia-sourced ──
+  { country: "Fiji", era: "Kingdom of Fiji, Cakobau (1871–1874)", file: "Flag_of_the_Kingdom_of_Fiji_(1871-1874).svg" },
+  { country: "Marshall Islands", era: "Japanese South Seas Mandate (1914–1944)", file: "/flags/jp.svg" },
+  { country: "Micronesia", era: "Japanese South Seas Mandate (1914–1944)", file: "/flags/jp.svg" },
+  { country: "Palau", era: "Japanese South Seas Mandate (1914–1944)", file: "/flags/jp.svg" },
+  { country: "Nauru", era: "Australian-administered mandate (1920–1968)", file: "/flags/au.svg" },
 ]

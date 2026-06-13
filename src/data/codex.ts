@@ -4009,6 +4009,13 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       label: 'Colonial Blue Ensign (with disc)',
       note: 'A British Blue Ensign defaced with Fiji\'s colonial coat of arms, granted in 1908, set on a white disc.',
     },
+    {
+      fromYear: 1871,
+      toYear: 1874,
+      flagUrl: fp('Flag_of_the_Kingdom_of_Fiji_(1871-1874).svg'),
+      label: 'Kingdom of Fiji',
+      note: 'Before Britain took over, the warrior chief Seru Epenisa Cakobau united much of the islands as the Kingdom of Fiji in 1871, flying a pale blue flag with a shield, a crown and a white dove of peace. Crippled by debt and unrest, Cakobau ceded Fiji to Britain in 1874 — the dove-and-shield motif lived on in the colonial and modern arms.',
+    },
   ],
   PG: [
     {
@@ -4142,6 +4149,13 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       label: 'Trust Territory of the Pacific Islands',
       note: 'A light-blue flag with six white stars in a circle, one for each district of the US-administered Trust Territory, flown until the Marshalls adopted their own flag.',
     },
+    {
+      fromYear: 1914,
+      toYear: 1944,
+      flagUrl: '/flags/jp.svg',
+      label: 'Japanese South Seas Mandate',
+      note: 'Germany claimed the Marshalls in 1885, but in 1914 Japan seized them and governed Micronesia as the South Seas Mandate (Nan\'yō) under the Japanese flag for three decades — settling colonists, building infrastructure, and fortifying the atolls. American forces took them in fierce WWII battles like Kwajalein, after which they passed to US trusteeship.',
+    },
   ],
   FM: [
     {
@@ -4158,6 +4172,13 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       label: 'Trust Territory of the Pacific Islands',
       note: 'The light-blue flag bearing six white stars for the six districts of the US-administered Trust Territory, from which the current FSM flag was directly derived.',
     },
+    {
+      fromYear: 1914,
+      toYear: 1944,
+      flagUrl: '/flags/jp.svg',
+      label: 'Japanese South Seas Mandate',
+      note: 'After German rule (1885–1914), Japan administered these Caroline Islands as part of the South Seas Mandate under its own flag for thirty years, making them among the most heavily settled and developed parts of Japanese Micronesia. They became a US trust territory after the Pacific War.',
+    },
   ],
   NR: [
     {
@@ -4166,6 +4187,13 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       flagUrl: '/flags/nr.svg',
       label: 'Flag of Nauru',
       note: 'Adopted on independence day in 1968: a blue field with a gold stripe for the equator and a white 12-pointed star below it, depicting Nauru\'s position just south of the equator. The twelve points represent the island\'s original tribes.',
+    },
+    {
+      fromYear: 1920,
+      toYear: 1968,
+      flagUrl: '/flags/au.svg',
+      label: 'Australian-administered mandate',
+      note: 'A German protectorate from 1888 and then briefly under Japanese wartime occupation, Nauru was for most of the 20th century a League of Nations (later UN) mandate administered by Australia, which flew its own flag while strip-mining the island\'s rich phosphate. Nauru never had a flag of its own until independence in 1968, won partly to gain control of that phosphate wealth.',
     },
   ],
   PW: [
@@ -4182,6 +4210,13 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       flagUrl: fp('Flag_of_the_Trust_Territory_of_the_Pacific_Islands.svg'),
       label: 'Trust Territory of the Pacific Islands',
       note: 'The six-star light-blue flag of the US-administered Trust Territory, which flew over Palau before it adopted its own moon flag.',
+    },
+    {
+      fromYear: 1914,
+      toYear: 1944,
+      flagUrl: '/flags/jp.svg',
+      label: 'Japanese South Seas Mandate',
+      note: 'Koror in Palau was the capital of Japan\'s entire South Seas Mandate, the administrative heart of Japanese Micronesia from 1914 to 1944, flying the Japanese flag. Japanese settlers came to outnumber Palauans, and the islands saw one of the Pacific War\'s bloodiest battles at Peleliu before passing to US trusteeship.',
     },
   ],
   TV: [
