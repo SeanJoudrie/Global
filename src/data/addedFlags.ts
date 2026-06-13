@@ -90,4 +90,11 @@ export const ADDED_FLAGS: AddedFlag[] = [
   { country: "Micronesia", era: "Japanese South Seas Mandate (1914–1944)", file: "/flags/jp.svg" },
   { country: "Palau", era: "Japanese South Seas Mandate (1914–1944)", file: "/flags/jp.svg" },
   { country: "Nauru", era: "Australian-administered mandate (1920–1968)", file: "/flags/au.svg" },
+
+  // ── Deep re-audit (Americas A–G), Wikipedia-sourced ──
+  { country: "Canada", era: "New France (1534–1763)", file: "Pavillon_royal_de_la_France.svg" },
+  { country: "Argentina", era: "Viceroyalty of the Río de la Plata (1776–1812)", file: "Flag_of_Cross_of_Burgundy.svg" },
+  { country: "Chile", era: "Captaincy General of Chile, Spanish (1542–1810)", file: "Flag_of_Cross_of_Burgundy.svg" },
+  { country: "Bolivia", era: "Upper Peru, Spanish (1559–1825)", file: "Flag_of_Cross_of_Burgundy.svg" },
+  { country: "Cuba", era: "US military government (1898–1902)", file: "/flags/us.svg" },
 ]

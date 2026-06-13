@@ -66,6 +66,12 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       label: 'Patriote Movement (Lower Canada)',
       note: 'During the 1837–38 rebellions, French-Canadian Patriotes in Lower Canada (Quebec) flew a green-white-red horizontal tricolor against British colonial rule. The uprising was crushed, but the flag endures as a Québécois nationalist symbol.',
     },
+    {
+      fromYear: 1534, toYear: 1763,
+      flagUrl: fp('Pavillon_royal_de_la_France.svg'),
+      label: 'New France',
+      note: 'For over two centuries before British rule, the St Lawrence valley and a vast arc of the continent from Acadia to Louisiana were New France — the French colonial empire of fur traders, missionaries and habitants, flying the royal banner of the French crown (gold fleurs-de-lis on blue). France ceded it to Britain in 1763 after the Seven Years\' War, but its language, faith and place names endure across Quebec and beyond.',
+    },
   ],
   US: [
     {
@@ -1156,6 +1162,12 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       label: 'Belgrano\'s Original Flag (1812)',
       note: 'Manuel Belgrano improvised the first Argentine flag in 1812 to rally troops at the Battle of Rosario, using the blue and white colours of the Buenos Aires revolutionary cockade. He raised it on February 27, 1812 — a date now celebrated as Flag Day in Argentina. Belgrano had to seek permission from the revolutionary government to use it officially, permission that came only gradually.',
     },
+    {
+      fromYear: 1776, toYear: 1812,
+      flagUrl: fp('Flag_of_Cross_of_Burgundy.svg'),
+      label: 'Viceroyalty of the Río de la Plata',
+      note: 'Before Belgrano\'s blue-and-white, the lands of Argentina were the Spanish Viceroyalty of the Río de la Plata, governed from Buenos Aires and flying the red Cross of Burgundy of the Spanish Empire. The May Revolution of 1810 began the break from Spain, replacing the saltire with the revolutionary cockade colours that became the national flag.',
+    },
   ],
 
   CO: [
@@ -1636,6 +1648,12 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       label: 'La Patria Vieja (Old Fatherland)',
       note: 'During the first period of Chilean self-government (1810–1814, before the Spanish reconquest), Chile\'s early revolutionary flags used horizontal blue-white-yellow stripes — very different from today\'s design. After the Reconquista restored Spanish rule, patriots went into exile in Argentina, trained with San Martín\'s Army of the Andes, and returned in 1817 to liberate Chile and adopt an entirely new flag.',
     },
+    {
+      fromYear: 1542, toYear: 1810,
+      flagUrl: fp('Flag_of_Cross_of_Burgundy.svg'),
+      label: 'Captaincy General of Chile (Spanish)',
+      note: 'For nearly three centuries Chile was a Spanish colony — the Captaincy General of Chile, a frontier territory fighting a long war with the unconquered Mapuche in the south — flying the Cross of Burgundy of the Spanish Empire, until the independence movement began in 1810.',
+    },
   ],
 
   PE: [
@@ -1693,6 +1711,12 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       label: 'Early Republic of Bolivia',
       note: 'Bolivia declared independence on August 6, 1825, named after its liberator Simón Bolívar. The earliest flags used different colour arrangements — some sources show green-red-yellow and other combinations — as the new republic experimented before settling on the current order. Bolivia\'s independence came partly through the campaigns of both Bolívar (from the north) and San Martín (from the south), making it a meeting point of two great liberation movements.',
     },
+    {
+      fromYear: 1559, toYear: 1825,
+      flagUrl: fp('Flag_of_Cross_of_Burgundy.svg'),
+      label: 'Upper Peru (Spanish)',
+      note: 'For nearly 300 years Bolivia was "Upper Peru" — the Audiencia de Charcas within the Spanish Empire, flying the Cross of Burgundy. Its silver mountain at Potosí was the richest mine on earth, bankrolling the Spanish crown and the global silver trade. That wealth, built on brutal forced indigenous labour, makes the green stripe\'s "mineral wealth" a double-edged symbol in independent Bolivia.',
+    },
   ],
 
   UY: [
@@ -1731,6 +1755,12 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       flagUrl: '/flags/cu.svg',
       label: 'Republic of Cuba',
       note: 'Cuba\'s flag — designed by exile Narciso López in 1849 — pre-dates Cuban independence by 50 years. López wanted to annex Cuba to the United States; later Cuban independence leaders adopted the same flag but stripped it of that meaning. The three blue stripes represent the three colonial provinces; the two white stripes represent peace; the red triangle stands for liberty, equality, and fraternity; the white star is the Lone Star of an independent Cuba. This design has flown without any change since 1902.',
+    },
+    {
+      fromYear: 1898, toYear: 1902,
+      flagUrl: '/flags/us.svg',
+      label: 'US military government',
+      note: 'After the Spanish-American War of 1898 ended four centuries of Spanish rule, Cuba spent four years under a US military government flying the American flag, until the Republic was inaugurated in 1902. Independence came with strings attached — the Platt Amendment gave Washington the right to intervene and the lease on Guantánamo Bay — shaping a fraught US–Cuba relationship that endures.',
     },
     {
       fromYear: 1869, toYear: 1898,
