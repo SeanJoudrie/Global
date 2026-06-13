@@ -79,4 +79,8 @@ export const ADDED_FLAGS: AddedFlag[] = [
   { country: "Ukraine", era: "Cossack Hetmanate (1649–1764)", file: "Flag_of_the_Cossack_Hetmanate.svg" },
   { country: "Vatican City", era: "Papal States, yellow-white (1808–1870)", file: "Flag_of_the_Papal_States_(1808-1870).svg" },
   { country: "Vatican City", era: "Papal States, yellow-red (1750–1808)", file: "Flag_of_the_Papal_States_(pre_1808).svg" },
+
+  // ── Deep re-audit (Middle East), Wikipedia-sourced ──
+  { country: "Saudi Arabia", era: "Kingdom of Hejaz, Hashemite (1916–1925)", file: "Flag_of_Hejaz_(1920).svg" },
+  { country: "Syria", era: "Arab Kingdom of Syria (1920)", file: "Flag_of_Kingdom_of_Syria_(1920-03-08_to_1920-07-24).svg" },
 ]

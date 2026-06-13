@@ -1326,6 +1326,12 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       label: 'Syrian Republic (independence era)',
       note: 'When France\'s League of Nations mandate ended and Syria gained full independence in 1946, it flew this green-white-black tricolor with three red stars representing the three territories united as Syria: Damascus, Aleppo, and Deir ez-Zor (the Jabal al-Druze). This was Syria\'s flag at the time of independence and remained so until the ill-fated union with Egypt.',
     },
+    {
+      fromYear: 1920, toYear: 1920,
+      flagUrl: fp('Flag_of_Kingdom_of_Syria_(1920-03-08_to_1920-07-24).svg'),
+      label: 'Arab Kingdom of Syria',
+      note: 'For four months in 1920, Emir Faisal — a leader of the Arab Revolt — ruled an independent Arab Kingdom of Syria from Damascus, flying the Arab Revolt flag (black-white-green bands with a red triangle and a white star). It was the first modern Arab nation-state, but France, awarded the mandate at the San Remo conference, crushed it at the Battle of Maysalun in July 1920 and began over two decades of mandate rule.',
+    },
   ],
 
   LY: [
@@ -1381,6 +1387,12 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       flagUrl: fp('Flag_of_Nejd_(1926).svg'),
       label: 'Sultanate/Kingdom of Nejd',
       note: 'Ibn Saud\'s early flags as he united the Arabian Peninsula were variants of a green field with the Shahada — the same core identity but without a standardised sword. When Ibn Saud captured Riyadh in 1902, beginning his 30-year campaign to unite Arabia, his banners were simpler religious standards. The sword emblem was formalised as the kingdom consolidated, symbolising both the founding wars and the Wahhabi religious authority underpinning the state.',
+    },
+    {
+      fromYear: 1916, toYear: 1925,
+      flagUrl: fp('Flag_of_Hejaz_(1920).svg'),
+      label: 'Kingdom of Hejaz (Hashemite)',
+      note: 'Before the Saudis, the Hejaz — home to Mecca and Medina — was its own kingdom under Sharif Hussein bin Ali, who launched the Arab Revolt against the Ottomans in 1916 and flew its black-white-green flag with a red triangle (the ancestor of many Arab flags today). Ibn Saud conquered the Hejaz in 1925, ending Hashemite rule over the holy cities and folding it into what became Saudi Arabia.',
     },
   ],
 
