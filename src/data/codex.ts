@@ -1249,6 +1249,12 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       note: 'The 2008 revision updated the Kufic script "Allahu Akbar" to a standardised typeface (removing Saddam Hussein\'s handwriting) and removed the three green stars that had symbolised Ba\'athist pan-Arab unity. The basic red-white-black horizontal tricolor with green text remains, connecting the flag to the broader pan-Arab colour tradition shared with Egypt, Syria, and Yemen.',
     },
     {
+      fromYear: 2004, toYear: 2008,
+      flagUrl: fp('Flag_of_Iraq_(2004–2008).svg'),
+      label: 'Coalition-era interim flag',
+      note: 'After the 2003 invasion toppled Saddam, the tricolor was kept but in 2004 his handwritten "Allahu Akbar" was replaced with the phrase in a neutral green Kufic script — an interim compromise while a permanent flag was debated (an earlier proposed blue-and-white design had been rejected for resembling Israel\'s flag). It flew until the 2008 standardisation produced the current flag.',
+    },
+    {
       fromYear: 1991, toYear: 2004,
       flagUrl: fp('Flag_of_Iraq_(1991-2004).svg'),
       label: 'Saddam\'s "Allahu Akbar" Flag',
@@ -1265,6 +1271,12 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       flagUrl: fp('Flag_of_Iraq_(1959-1963).svg'),
       label: 'First Republic (after revolution)',
       note: 'The Iraqi monarchy was overthrown in the bloody revolution of July 14, 1958. The new republic adopted a black-white-green horizontal tricolor with a yellow sun (the Kurdish sun symbol) and a red star, replacing the Hashemite-era flag. This flag lasted only until the Ba\'ath Party\'s 1963 coup, which replaced it with the pan-Arab design.',
+    },
+    {
+      fromYear: 1921, toYear: 1958,
+      flagUrl: fp('Flag_of_Iraq_(1924–1959).svg'),
+      label: 'Kingdom of Iraq (Hashemite)',
+      note: 'Britain installed the Hashemite prince Faisal as king of the new Kingdom of Iraq in 1921; from 1924 it flew an Arab Revolt–derived flag — black, white and green horizontal bands with a red trapezoid at the hoist bearing two white stars. Increasingly resented as a British client monarchy, it ruled until the violent revolution of 1958 swept the king and the flag away.',
     },
   ],
 
@@ -3827,6 +3839,13 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       flagUrl: fp('Flag_of_Papua_New_Guinea_(1970–1971).svg'),
       label: 'Territory tricolour',
       note: 'A blue-white-green vertical design with stars and a bird of paradise, used briefly for the Territory of Papua and New Guinea before being rejected as too "colonial".',
+    },
+    {
+      fromYear: 1906,
+      toYear: 1949,
+      flagUrl: fp('Flag_of_the_Territory_of_Papua.svg'),
+      label: 'Australian Territory of Papua',
+      note: 'Australia took over the southern half — the Territory of Papua — in 1906, flying a British blue ensign defaced with a bird-of-paradise badge, while the German-then-Australian north was administered separately. The two halves were merged into a single Territory of Papua and New Guinea in 1949 (thereafter under the Australian flag) on the road to the unified independence of 1975.',
     },
   ],
   SB: [
