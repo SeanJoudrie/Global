@@ -2293,6 +2293,20 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       label: 'SR Bosnia and Herzegovina',
       note: 'As a constituent Socialist Republic of Yugoslavia, Bosnia flew the plain Yugoslav red-white-blue tricolor with a gold-bordered red star — identical to the federal Yugoslav flag.',
     },
+    {
+      fromYear: 1878,
+      toYear: 1918,
+      flagUrl: fp('Flag_of_Bosnia_(1878–1908).svg'),
+      label: 'Austro-Hungarian Bosnia',
+      note: 'After centuries under the Ottomans, Bosnia was occupied by Austria-Hungary in 1878 and formally annexed in 1908, flying a red-and-yellow flag with the provincial arms. Vienna\'s rule industrialised the province but stoked the Slav nationalism that, in Sarajevo in 1914, lit the fuse of the First World War.',
+    },
+    {
+      fromYear: 1831,
+      toYear: 1832,
+      flagUrl: fp('Flag_of_Bosnia_(1831–1832).svg'),
+      label: 'Bosnian uprising (Husein Gradaščević)',
+      note: 'In 1831 the Bosnian captain Husein Gradaščević led a revolt against Ottoman centralising reforms, briefly winning autonomy for Bosnia under a green flag with a gold crescent and star. The uprising was crushed in 1832, but "the Dragon of Bosnia" became an enduring folk hero of Bosnian self-rule.',
+    },
   ],
   HR: [
     {

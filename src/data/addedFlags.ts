@@ -61,4 +61,6 @@ export const ADDED_FLAGS: AddedFlag[] = [
   { country: "Croatia", era: "Banovina of Croatia (1939–1941)", file: "Flag_of_Banate_of_Croatia_(1939-1941).svg" },
   { country: "Croatia", era: "Kingdom of Croatia, Austria-Hungary (1868–1918)", file: "Flag_of_the_Kingdom_of_Croatia_(Habsburg).svg" },
   { country: "Finland", era: "Part of Sweden (1249–1809)", file: "/flags/se.svg" },
+  { country: "Bosnia & Herzegovina", era: "Austro-Hungarian Bosnia (1878–1918)", file: "Flag_of_Bosnia_(1878–1908).svg" },
+  { country: "Bosnia & Herzegovina", era: "Bosnian uprising, Gradaščević (1831–1832)", file: "Flag_of_Bosnia_(1831–1832).svg" },
 ]
