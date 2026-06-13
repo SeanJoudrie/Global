@@ -4022,11 +4022,25 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       note: 'Re-adopted in 2002 at the restoration of independence, identical to the 1975 design. Yellow symbolizes the colonial past, black the obscurantism to be overcome, red the liberation struggle, and the white star peace.',
     },
     {
+      fromYear: 1976,
+      toYear: 1999,
+      flagUrl: '/flags/id.svg',
+      label: 'Indonesian occupation (Timor Timur)',
+      note: 'Nine days after FRETILIN declared independence, Indonesia invaded and in 1976 annexed the territory as its 27th province, Timor Timur, flying the Indonesian red-and-white flag. The brutal 24-year occupation cost an estimated 100,000–180,000 lives before a 1999 UN-supervised referendum voted overwhelmingly for independence.',
+    },
+    {
       fromYear: 1975,
       toYear: 1975,
       flagUrl: fp('Flag_of_East_Timor.svg'),
       label: 'FRETILIN independence flag',
       note: 'Raised in November 1975 when FRETILIN declared independence from Portugal, it flew only days before the Indonesian invasion. The Indonesian flag was then used until 1999, and the UN flag during the transition to restored independence.',
+    },
+    {
+      fromYear: 1702,
+      toYear: 1975,
+      flagUrl: '/flags/pt.svg',
+      label: 'Portuguese Timor',
+      note: 'The eastern half of Timor was a Portuguese colony for nearly three centuries, flying the flag of Portugal — the only part of Southeast Asia colonised by Portugal rather than the Dutch, British, French or Spanish. It was this long Lusophone heritage (and the Catholic faith) that set East Timor apart from Indonesia when Portugal abruptly withdrew in 1975.',
     },
   ],
   AM: [
@@ -4288,6 +4302,13 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       flagUrl: '/flags/pk.svg',
       label: 'Flag of Pakistan',
       note: 'Adopted days before independence in 1947. The white hoist stripe represents religious minorities, while the green field and white crescent-and-star represent the Muslim majority. It has been stable ever since.',
+    },
+    {
+      fromYear: 1858,
+      toYear: 1947,
+      flagUrl: fp('British_Raj_Red_Ensign.svg'),
+      label: 'British India (the Raj)',
+      note: 'Before Partition, the lands that became Pakistan were part of British India, governed under the Union Jack and the unofficial "Star of India" red ensign. The Muslim League\'s campaign for a separate Muslim homeland culminated in the 1947 Partition, which created Pakistan as two wings (West and East) flanking India — the basis of its green-and-white flag was the League\'s own banner.',
     },
   ],
   BD: [
