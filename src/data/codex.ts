@@ -1104,6 +1104,12 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       label: 'First Taegukgi (Joseon dynasty)',
       note: 'Korea\'s first national flag was created in 1882 by diplomat Pak Yeong-hyo during a diplomatic mission to Japan, based on instructions from King Gojong. The taegeuk (yin-yang) symbol and trigrams draw on Confucian cosmology. This first version had eight trigrams; later versions reduced them to four.',
     },
+    {
+      fromYear: 1392, toYear: 1882,
+      flagUrl: fp('Flag_of_the_king_of_Joseon.svg'),
+      label: 'Royal standard of Joseon',
+      note: 'Korea had no "national flag" in the modern sense before 1882 — but the kings of the Joseon dynasty (1392–1897), Korea\'s last and longest royal house, flew a royal standard bearing the taegeuk and trigrams. That same Confucian cosmology was carried directly into the 1882 Taegukgi, making the royal banner the conceptual ancestor of every Korean flag.',
+    },
   ],
 
   VN: [
@@ -4954,6 +4960,13 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       label: 'Kingdom of Cambodia (independence)',
       note: 'A blue-red-blue tricolour with a white Angkor Wat on the central band, adopted on independence from France — the original of the design used today.',
     },
+    {
+      fromYear: 1863,
+      toYear: 1948,
+      flagUrl: '/flags/fr.svg',
+      label: 'French Cambodia (Indochina)',
+      note: 'Heir to the mighty Khmer Empire that built Angkor, Cambodia had shrunk and was being squeezed between Siam and Vietnam when it accepted a French protectorate in 1863 — flying the French flag as part of French Indochina until independence in 1953. French rule almost certainly saved Cambodia from being partitioned out of existence by its neighbours.',
+    },
   ],
   MM: [
     {
@@ -5013,6 +5026,13 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       flagUrl: fp('Flag_of_Thailand_(1782).svg'),
       label: 'Plain red flag',
       note: 'A plain red field was Siam\'s earliest national and merchant flag, its origins tracing back to the 17th century under King Narai.',
+    },
+    {
+      fromYear: 1350,
+      toYear: 1767,
+      flagUrl: fp('Flag_of_Thailand_(Ayutthaya_period).svg'),
+      label: 'Ayutthaya Kingdom',
+      note: 'Before Bangkok, the Siamese capital was Ayutthaya — for four centuries one of the world\'s great cities, a cosmopolitan trading hub that astonished European visitors — which flew a plain red flag. Its destruction by a Burmese army in 1767 ended the kingdom, but the survivors regrouped and founded the Bangkok (Rattanakosin) state that became modern Thailand.',
     },
   ],
   MN: [

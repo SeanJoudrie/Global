@@ -116,4 +116,7 @@ export const ADDED_FLAGS: AddedFlag[] = [
   { country: "India", era: "Maratha Empire (1674–1818)", file: "Flag_of_the_Maratha_Empire.svg" },
   { country: "India", era: "Mughal Empire (1526–1857)", file: "Flag_of_the_Mughal_Empire_(triangular).svg" },
   { country: "India", era: "Kingdom of Mysore (1399–1799)", file: "Flag_of_Kingdom_of_Mysore.svg" },
+  { country: "Thailand", era: "Ayutthaya Kingdom (1350–1767)", file: "Flag_of_Thailand_(Ayutthaya_period).svg" },
+  { country: "South Korea", era: "Royal standard of Joseon (1392–1882)", file: "Flag_of_the_king_of_Joseon.svg" },
+  { country: "Cambodia", era: "French Cambodia / Indochina (1863–1948)", file: "/flags/fr.svg" },
 ]
