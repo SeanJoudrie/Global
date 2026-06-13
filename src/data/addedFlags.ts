@@ -130,4 +130,7 @@ export const ADDED_FLAGS: AddedFlag[] = [
   { country: "South Africa", era: "Orange Free State (1854–1902)", file: "Flag_of_the_Orange_Free_State.svg" },
   { country: "Egypt", era: "Khedivate of Egypt (1844–1922)", file: "Flag_of_Muhammad_Ali.svg" },
   { country: "Madagascar", era: "Kingdom of Madagascar, Merina (1787–1896)", file: "Flag_of_the_Merina_Kingdom.svg" },
+  { country: "Angola", era: "Kingdom of Kongo (1390–1857)", file: "Flag_of_the_Kingdom_of_Kongo_according_to_Giovanni_Cavazzi_da_Montecuccolo.svg" },
+  { country: "Nigeria", era: "Sokoto Caliphate (1804–1903)", file: "Flag_of_the_Sokoto_Caliphate.svg" },
+  { country: "Mali", era: "French Sudan (1880–1959)", file: "/flags/fr.svg" },
 ]

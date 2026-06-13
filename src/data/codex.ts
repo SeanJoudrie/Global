@@ -3558,6 +3558,13 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       label: 'Portuguese Angola',
       note: 'Angola was a Portuguese possession for some four centuries — first a source of enslaved people for Brazil, later a settler colony — flying the flag of Portugal. Portugal\'s refusal to decolonise triggered a 14-year war of independence from 1961; when the 1974 Carnation Revolution toppled the regime in Lisbon, Angola finally won independence in 1975, only to fall straight into a long civil war.',
     },
+    {
+      fromYear: 1390,
+      toYear: 1857,
+      flagUrl: fp('Flag_of_the_Kingdom_of_Kongo_according_to_Giovanni_Cavazzi_da_Montecuccolo.svg'),
+      label: 'Kingdom of Kongo',
+      note: 'Long before the Portuguese, northern Angola and the lower Congo were the heart of the Kingdom of Kongo, a sophisticated Central African state whose king converted to Christianity in 1491 and corresponded with European monarchs as an equal. The Atlantic slave trade slowly hollowed it out, and it survived as a shadow until the Portuguese abolished the monarchy in the 19th century.',
+    },
   ],
   RW: [
     {
@@ -3974,6 +3981,13 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       label: 'Colonial Nigeria',
       note: 'The British Colony and Protectorate of Nigeria flew a Blue Ensign defaced with a green six-pointed "Seal of Solomon" star around a red disc and crown, used as the government ensign until independence.',
     },
+    {
+      fromYear: 1804,
+      toYear: 1903,
+      flagUrl: fp('Flag_of_the_Sokoto_Caliphate.svg'),
+      label: 'Sokoto Caliphate',
+      note: 'Across what is now northern Nigeria, the jihad of Usman dan Fodio founded the Sokoto Caliphate in 1804 — one of the largest and most populous states in 19th-century Africa, a federation of emirates flying green Islamic banners. Britain conquered it in 1903 but ruled through its emirs, so the caliphate\'s structures (and the north–south divide with the Christian-animist south) shaped Nigeria to this day.',
+    },
   ],
   GH: [
     {
@@ -4042,6 +4056,13 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       flagUrl: fp('Flag_of_Mali_(1959–1961).svg'),
       label: 'Mali Federation',
       note: 'Mali (as French Sudan) joined the Mali Federation in 1959 under a tricolour charged with a black kanaga, a stylized human figure with arms raised to the sky, kept briefly after independence.',
+    },
+    {
+      fromYear: 1880,
+      toYear: 1959,
+      flagUrl: '/flags/fr.svg',
+      label: 'French Sudan',
+      note: 'Modern Mali was the colony of French Sudan, the largest territory in French West Africa, flying the French flag. Its name deliberately recalled the medieval empires of Ghana, Mali and Songhai that once made this stretch of the Niger — and the fabled trading city of Timbuktu — a centre of gold, salt and Islamic scholarship under rulers like Mansa Musa.',
     },
   ],
   BF: [

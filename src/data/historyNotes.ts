@@ -40,4 +40,12 @@ export const HISTORY_NOTES: HistoryNote[] = [
     detail: "MY jumps from the 1950 Federation of Malaya. Could add British Malaya / the Straits Settlements, and further back the Malacca Sultanate (a major 15th-c. Malay empire) — but the Sultanate's flag is uncertain/attributed; verify before adding." },
   { country: "Vietnam", era: "pre-Nguyen dynasties", status: "ambiguous",
     detail: "VN history bottoms out at the Nguyen Dynasty (1802). Earlier Vietnamese dynasties (Lê, Trần, Lý) had no national flag in the modern sense and no reliable flag images — the 1802 Long-tinh-kỳ is genuinely the earliest documented Vietnamese flag." },
+
+  // ── Africa deep pass: pre-colonial states with no clean / agreed flag ──
+  { country: "Morocco", era: "Almohad / Marinid / Saadi dynasties", status: "to-verify",
+    candidate: "Banner_of_the_Moors_(1212).svg",
+    detail: "MA history reaches the 1666 Alaouite plain-red flag. The earlier Almohad, Marinid and Saadi dynasties flew banners (the white/checkered Almohad banner, the gold Marinid), but the Commons files are attributed/uncertain — verify 'Banner_of_the_Moors_(1212).svg' before adding a pre-1666 dynastic entry." },
+  { country: "Nigeria / Chad", era: "Bornu Empire & Hausa city-states", status: "to-verify",
+    candidate: "Flag_of_the_Bornu_Empire.svg",
+    detail: "Beyond Sokoto (added), the Kanem-Bornu Empire ran for a millennium around Lake Chad and the Hausa city-states predate it. Commons has a Bornu flag image — verify and consider adding to Nigeria and/or Chad." },
 ]
