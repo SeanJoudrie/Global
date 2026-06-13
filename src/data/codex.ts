@@ -1019,6 +1019,13 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       label: 'Grand Duchy of Finland (Russian era)',
       note: 'After Sweden ceded Finland to Russia in 1809, Finland became an autonomous Grand Duchy of the Russian Empire. The duchy used a red flag bearing the Finnish lion coat of arms. During this period Finnish national identity grew steadily — the Kalevala epic was compiled, the Finnish language was promoted, and the eventual push for independence gathered strength.',
     },
+    {
+      fromYear: 1249,
+      toYear: 1809,
+      flagUrl: '/flags/se.svg',
+      label: 'Part of Sweden',
+      note: 'For roughly 600 years — from the medieval Northern Crusades until 1809 — Finland was an integral eastern part of the Kingdom of Sweden, not a colony but Swedish soil, flying the blue-and-yellow Swedish flag. That long union left Finland its Lutheran faith, its legal traditions, and the Swedish-speaking minority that endures today, before Russia took it as war booty in 1809.',
+    },
   ],
 
   // ── East Asia ──────────────────────────────────────────────────────────────
@@ -2310,10 +2317,24 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       note: 'The WWII fascist puppet state kept the tricolor and checkerboard but added the Ustaše "U" emblem. It remains a taboo symbol because of the regime\'s genocidal crimes.',
     },
     {
+      fromYear: 1939,
+      toYear: 1941,
+      flagUrl: fp('Flag_of_Banate_of_Croatia_(1939-1941).svg'),
+      label: 'Banovina of Croatia',
+      note: 'On the eve of WWII, Croatia won a measure of autonomy within the Kingdom of Yugoslavia as the Banovina (Banate) of Croatia in 1939, flying the plain red-white-blue tricolor with the checkerboard. This brief self-government was swept away in 1941 when the Axis invaded and dismembered Yugoslavia.',
+    },
+    {
       fromYear: 1921, toYear: 1921,
       flagUrl: fp('Flag_of_Albona_Republic.svg'),
       label: 'Labin Republic (Albona)',
       note: 'The Labin Republic was a short-lived 1921 workers\' state in Istria, when coal miners seized the mines and declared self-rule against rising Italian Fascism. Its red flag bore a miner\'s hammer and pick. Italian troops crushed it within five weeks — one of Europe\'s earliest organized anti-fascist uprisings.',
+    },
+    {
+      fromYear: 1868,
+      toYear: 1918,
+      flagUrl: fp('Flag_of_the_Kingdom_of_Croatia_(Habsburg).svg'),
+      label: 'Kingdom of Croatia (Austria-Hungary)',
+      note: 'Within Austria-Hungary, Croatia-Slavonia was an autonomous kingdom flying a red-white-blue tricolor with the historic checkerboard shield. The pan-Slavic red-white-blue arrangement, chosen in the 19th-century national revival, is the direct ancestor of the modern Croatian flag.',
     },
   ],
   RS: [
@@ -2499,6 +2520,20 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       label: 'Pre-communist tricolor',
       note: 'The plain red-white-green tricolor flew over the interwar Kingdom of Hungary — a kingdom with no king, ruled by Regent Horthy.',
     },
+    {
+      fromYear: 1896,
+      toYear: 1915,
+      flagUrl: fp('Flag_of_Hungary_(1896-1915).svg'),
+      label: 'Kingdom of Hungary (Austria-Hungary)',
+      note: 'Within the Austro-Hungarian Empire, the Kingdom of Hungary flew the red-white-green tricolor charged with the crowned middle coat of arms, often flanked by angels. It was the flag of the Hungarian half of the Dual Monarchy, at the height of Budapest\'s belle-époque grandeur, until the empire collapsed in 1918.',
+    },
+    {
+      fromYear: 1000,
+      toYear: 1301,
+      flagUrl: fp('Flag_of_Hungary_(11th_c._-_1301).svg'),
+      label: 'Árpád stripes (medieval kingdom)',
+      note: 'The red-and-white horizontal stripes (the "Árpád stripes") were the banner of the House of Árpád, Hungary\'s founding dynasty, from around the 11th century. One of the oldest heraldic devices in Europe, they still occupy the left half of Hungary\'s coat of arms and remain a powerful — and politically contested — national symbol.',
+    },
   ],
   RO: [
     {
@@ -2597,6 +2632,13 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       note: 'Enver Hoxha\'s People\'s (later Socialist) Republic topped the eagle with a gold-edged red star, which flew through nearly five decades of hardline Stalinist isolation.',
     },
     {
+      fromYear: 1943,
+      toYear: 1944,
+      flagUrl: fp('Flag_of_Albania_(1943–1944).svg'),
+      label: 'German occupation',
+      note: 'After Italy capitulated in 1943, Nazi Germany occupied Albania and installed a puppet regime that flew the plain black eagle on red — stripped of the fascist fasces — while presenting itself as "independent." Communist-led partisans controlled much of the country and drove the Germans out by late 1944.',
+    },
+    {
       fromYear: 1939,
       toYear: 1943,
       flagUrl: fp('Flag_of_Albania_(1939–1943).svg'),
@@ -2609,6 +2651,13 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       flagUrl: fp('Flag_of_Albania_(1928–1934).svg'),
       label: 'Kingdom of Zog',
       note: 'When Ahmet Zogu proclaimed himself King Zog I, a royal crown was placed above the double-headed eagle and the monarchy styled itself the Kingdom of Albania.',
+    },
+    {
+      fromYear: 1925,
+      toYear: 1928,
+      flagUrl: fp('Flag_of_the_Albanian_Republic_(1925–1928).svg'),
+      label: 'Albanian Republic',
+      note: 'Between the principality and the monarchy, Ahmet Zogu first ruled as president of a short-lived Albanian Republic, whose flag placed the black double-headed eagle on red beneath a helmet — the helmet of Skanderbeg, the 15th-century national hero. Zogu dissolved the republic in 1928 to crown himself king.',
     },
     {
       fromYear: 1914,

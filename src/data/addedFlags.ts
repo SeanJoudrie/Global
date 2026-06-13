@@ -52,4 +52,13 @@ export const ADDED_FLAGS: AddedFlag[] = [
   { country: "South Sudan", era: "Part of Sudan (1956–2011)", file: "/flags/sd.svg" },
   { country: "Uganda", era: "Uganda Protectorate (1894–1962)", file: "/flags/gb.svg" },
   { country: "São Tomé & Príncipe", era: "Portuguese rule (1753–1975)", file: "/flags/pt.svg" },
+
+  // ── Deep re-audit (Europe A–K), Wikipedia-sourced ──
+  { country: "Albania", era: "Albanian Republic (1925–1928)", file: "Flag_of_the_Albanian_Republic_(1925–1928).svg" },
+  { country: "Albania", era: "German occupation (1943–1944)", file: "Flag_of_Albania_(1943–1944).svg" },
+  { country: "Hungary", era: "Kingdom of Hungary, Austria-Hungary (1896–1915)", file: "Flag_of_Hungary_(1896-1915).svg" },
+  { country: "Hungary", era: "Árpád stripes, medieval kingdom (1000–1301)", file: "Flag_of_Hungary_(11th_c._-_1301).svg" },
+  { country: "Croatia", era: "Banovina of Croatia (1939–1941)", file: "Flag_of_Banate_of_Croatia_(1939-1941).svg" },
+  { country: "Croatia", era: "Kingdom of Croatia, Austria-Hungary (1868–1918)", file: "Flag_of_the_Kingdom_of_Croatia_(Habsburg).svg" },
+  { country: "Finland", era: "Part of Sweden (1249–1809)", file: "/flags/se.svg" },
 ]
