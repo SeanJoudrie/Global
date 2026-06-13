@@ -2377,6 +2377,13 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       note: 'Adopted by Czechoslovakia in 1920, adding a blue hoist triangle to distinguish it from Poland\'s. Czechia kept this exact flag after the peaceful 1993 split, despite a law barring successor states from using the federal flag.',
     },
     {
+      fromYear: 1939,
+      toYear: 1945,
+      flagUrl: fp('Flag_of_the_Protectorate_of_Bohemia_and_Moravia.svg'),
+      label: 'Protectorate of Bohemia and Moravia',
+      note: 'Under Nazi occupation (1939–1945) the Czech lands became the Protectorate of Bohemia and Moravia, flying a white-red-blue horizontal tricolor. The familiar blue-triangle national flag was suppressed for the duration and restored when Czechoslovakia was liberated in 1945.',
+    },
+    {
       fromYear: 1918,
       toYear: 1920,
       flagUrl: fp('Flag_of_Bohemia.svg'),
@@ -2682,6 +2689,13 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       label: 'Sovereign era (Danish crown)',
       note: 'A red cross was added inside the white cross by royal decree in 1915, and this became Iceland\'s flag when it gained sovereignty under the Danish crown in 1918 — the same design as today.',
     },
+    {
+      fromYear: 1897,
+      toYear: 1915,
+      flagUrl: fp('Hvítbláinn.svg'),
+      label: 'Hvítbláinn (white-blue)',
+      note: 'Before the modern flag, Icelandic nationalists rallied behind the Hvítbláinn — a white cross on a sky-blue field, designed in 1897. Denmark refused to recognise it because it resembled the flag of Greece, and the dispute pushed Iceland to add the red cross, producing the blue-white-red design adopted in 1915.',
+    },
   ],
   CY: [
     {
@@ -2697,6 +2711,13 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       flagUrl: fp('Flag_of_Cyprus_(1960–2006).svg'),
       label: 'Independence flag (1960)',
       note: 'Adopted at independence from Britain in 1960, the flag deliberately avoided any cross or crescent and the blue/red of the two motherlands, aiming for neutrality between Greek and Turkish Cypriots.',
+    },
+    {
+      fromYear: 1922,
+      toYear: 1960,
+      flagUrl: fp('Flag_of_Cyprus_(1922-1960).svg'),
+      label: 'British Crown Colony',
+      note: 'A British protectorate from 1878 and a Crown Colony from 1925, Cyprus flew the British Blue Ensign defaced with the colonial badge — two red lions on a white shield, drawn from the arms of the Crusader Lusignan kings who once ruled the island. Cyprus had no flag of its own until independence in 1960.',
     },
   ],
 
