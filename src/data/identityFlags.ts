@@ -2062,7 +2062,7 @@ const effectiveTier = (f: IdentityFlag) =>
 // Wikimedia links with no self-hostable replacement — drop them so quizzes and
 // browse never show a broken/blank tile.
 export const IDENTITY_FLAGS: IdentityFlag[] = [...RAW_IDENTITY_FLAGS]
-  .filter(f => f.flagUrl)
+  .filter(f => f.flagUrl || f.noFlag)
   .sort(
     (a, b) => effectiveTier(a) - effectiveTier(b) || a.name.localeCompare(b.name)
   )

@@ -91,7 +91,7 @@ export default function CodexScreen({ onBack, initialCode, embedded = false }: P
   const isSearching = search.trim().length > 0
 
   return (
-    <div className="min-h-screen flex flex-col" style={{ background: T.bg, color: T.text, position: 'relative', zIndex: 1 }}>
+    <div className={embedded ? '' : 'min-h-screen flex flex-col'} style={{ background: T.bg, color: T.text, position: 'relative', zIndex: 1 }}>
       {embedded || !onBack ? (
         <header style={{ padding: '14px 16px 10px' }}>
           <h1 className="geo-display" style={{ color: T.text, fontWeight: 700, fontSize: 20, letterSpacing: '-0.01em', lineHeight: 1.1, margin: 0 }}>Codex</h1>
@@ -119,7 +119,7 @@ export default function CodexScreen({ onBack, initialCode, embedded = false }: P
         </div>
       </div>
 
-      <div className="flex-1 overflow-y-auto px-5 pb-12">
+      <div className={embedded ? 'px-5 pb-12' : 'flex-1 overflow-y-auto px-5 pb-12'}>
         {grouped.length === 0 ? (
           <div className="text-center py-12" style={{ color: T.muted }}>No countries match "{search}"</div>
         ) : (
@@ -207,8 +207,10 @@ export default function CodexScreen({ onBack, initialCode, embedded = false }: P
         {!isSearching && <AmericanCitiesCodexSection />}
         {/* International organizations — UN, NATO, EU, AU, FIFA, IOC… */}
         {!isSearching && <OrgCodexSection />}
-        {/* Maritime / signal alphabet — last */}
+        {/* Maritime / signal alphabet — last of the themed sections */}
         {!isSearching && <SignalCodexSection />}
+        {/* Mega Codex A–Z — every flag in the app, alphabetical, at the very bottom */}
+        {!isSearching && <MegaCodexSection />}
       </div>
     </div>
   )
@@ -823,7 +825,7 @@ function SignalCodexSection() {
 // continent icon (matching the codex's top-level icons), open by default.
 type IconType = typeof Castle
 interface GRow { file: string; title: string; detail: string }
-interface GRegion { label: string; icon: IconType; groups: { label: string; items: GRow[] }[] }
+interface GRegion { label: string; icon?: IconType; groups: { label: string; items: GRow[] }[] }
 
 // Match a region name to the codex's continent icons.
 function galleryIcon(name: string): IconType {
@@ -837,6 +839,9 @@ function galleryIcon(name: string): IconType {
   if (n.includes('historic')) return Castle
   return Users
 }
+// Commons full-size SVGs can be megabytes; FilePath ?width= renders a light
+// raster. row.file is always a ready URL (resolved by each section via fp()).
+const galleryThumb = (u: string) => (u.includes('Special:FilePath') && !u.includes('?') ? `${u}?width=240` : u)
 const stripFlagOf = (s: string) => s.replace(/^Flag of (the )?/i, '')
 function splitParen(s: string): [string, string | null] {
   const m = s.match(/^(.*?)\s*\(([\s\S]*)\)\s*$/)
@@ -844,42 +849,42 @@ function splitParen(s: string): [string, string | null] {
 }
 const cap = (s: string) => (s ? s[0].toUpperCase() + s.slice(1) : s)
 
-// One tappable flag row — thumbnail, name, tap to reveal the description.
+// One flag row — thumbnail, name; tap to reveal a description if it has one.
 function GalleryRow({ row, color }: { row: GRow; color: string }) {
   const [open, setOpen] = useState(false)
   const [err, setErr] = useState(false)
+  const hasDetail = !!row.detail
   return (
-    <button onClick={() => setOpen(o => !o)}
+    <button onClick={() => hasDetail && setOpen(o => !o)}
       className="geo-tap w-full px-1.5 py-2.5 rounded-lg transition-all active:scale-[0.99] text-left"
-      style={{ background: open ? tint(color, 0.07) : 'transparent', borderBottom: `1px solid ${tint(T.line, 0.55)}` }}>
+      style={{ background: open ? tint(color, 0.07) : 'transparent', borderBottom: `1px solid ${tint(T.line, 0.55)}`, cursor: hasDetail ? 'pointer' : 'default' }}>
       <div className="flex items-center gap-3">
         <div style={{ width: 46, height: 30, flexShrink: 0, borderRadius: 5, overflow: 'hidden', border: `1px solid ${T.line}`, background: T.surfaceHi, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
           {err
             ? <span style={{ fontSize: 7, color: T.dim }}>no img</span>
-            : <img src={fp(row.file)} alt={row.title} loading="lazy" onError={() => setErr(true)} style={{ width: '100%', height: '100%', objectFit: 'contain' }} />}
+            : <img src={galleryThumb(row.file)} alt={row.title} loading="lazy" onError={() => setErr(true)} style={{ width: '100%', height: '100%', objectFit: 'contain' }} />}
         </div>
         <div className="flex-1 min-w-0">
           <div className="font-semibold text-sm truncate" style={{ color: T.text }}>{row.title}</div>
         </div>
-        <span style={{ color, fontSize: 16, transition: 'transform 0.2s', transform: open ? 'rotate(90deg)' : 'rotate(0deg)', flexShrink: 0 }}>›</span>
+        {hasDetail && <span style={{ color, fontSize: 16, transition: 'transform 0.2s', transform: open ? 'rotate(90deg)' : 'rotate(0deg)', flexShrink: 0 }}>›</span>}
       </div>
-      {open && <p className="text-xs leading-relaxed mt-2.5" style={{ color: T.muted, lineHeight: 1.6 }}>{row.detail}</p>}
+      {open && hasDetail && <p className="text-xs leading-relaxed mt-2.5" style={{ color: T.muted, lineHeight: 1.6 }}>{row.detail}</p>}
     </button>
   )
 }
 
-// A region sub-section (open by default) — icon header + its flag rows.
-function GalleryRegionBlock({ region, color }: { region: GRegion; color: string }) {
-  const [open, setOpen] = useState(true)
+// A region sub-section — controlled open state so a section's "All" can drive it.
+function GalleryRegionBlock({ region, color, open, onToggle }: { region: GRegion; color: string; open: boolean; onToggle: () => void }) {
   const Icon = region.icon
   const count = region.groups.reduce((n, g) => n + g.items.length, 0)
   return (
     <div className="mb-0.5">
-      <button onClick={() => setOpen(o => !o)} aria-expanded={open}
+      <button onClick={onToggle} aria-expanded={open}
         className="geo-tap w-full flex items-center justify-between px-1 py-2.5 transition-all active:scale-[0.99]"
         style={{ background: 'transparent', borderBottom: `1px solid ${tint(T.line, 0.6)}` }}>
         <div className="flex items-center gap-2 min-w-0">
-          <Icon size={13} color={color} strokeWidth={1.6} absoluteStrokeWidth style={{ flexShrink: 0 }} />
+          {Icon && <Icon size={13} color={color} strokeWidth={1.6} absoluteStrokeWidth style={{ flexShrink: 0 }} />}
           <span className="text-xs font-bold uppercase tracking-wider truncate" style={{ color }}>{region.label}</span>
           <span className="text-xs" style={{ color: T.dim, fontFamily: FONT.mono, fontVariantNumeric: 'tabular-nums', flexShrink: 0 }}>{count}</span>
         </div>
@@ -900,9 +905,16 @@ function GalleryRegionBlock({ region, color }: { region: GRegion; color: string 
   )
 }
 
-// The collapsible top-level section (matches Identity/Cities/Signal).
+// The collapsible top-level section (matches Identity/Cities/Signal). Regions
+// start closed; an "Open all" toggle expands every one at once.
 function GallerySection({ title, icon: Icon, color, blurb, regions }: { title: string; icon: IconType; color: string; blurb: string; regions: GRegion[] }) {
   const [open, setOpen] = useState(false)
+  const [openRegions, setOpenRegions] = useState<Set<number>>(new Set())
+  const allOpen = openRegions.size === regions.length
+  const toggleAll = () => setOpenRegions(allOpen ? new Set() : new Set(regions.map((_, i) => i)))
+  const toggleRegion = (i: number) => setOpenRegions(prev => {
+    const n = new Set(prev); n.has(i) ? n.delete(i) : n.add(i); return n
+  })
   return (
     <div className="mt-5">
       <button onClick={() => setOpen(o => !o)}
@@ -917,7 +929,18 @@ function GallerySection({ title, icon: Icon, color, blurb, regions }: { title: s
         <ChevronDown size={17} color={color} strokeWidth={1.6} absoluteStrokeWidth
           style={{ transition: 'transform 0.2s', transform: open ? 'rotate(180deg)' : 'rotate(0deg)', flexShrink: 0 }} />
       </button>
-      {open && <div className="mt-2">{regions.map((r, i) => <GalleryRegionBlock key={i} region={r} color={color} />)}</div>}
+      {open && (
+        <div className="mt-2">
+          <div className="flex justify-end mb-1.5">
+            <button onClick={toggleAll}
+              className="geo-tap active:scale-95"
+              style={{ fontSize: 10.5, fontWeight: 700, letterSpacing: '0.04em', textTransform: 'uppercase', color, background: tint(color, 0.1), border: `1px solid ${tint(color, 0.4)}`, borderRadius: 999, padding: '4px 12px', cursor: 'pointer' }}>
+              {allOpen ? 'Collapse all' : 'Open all'}
+            </button>
+          </div>
+          {regions.map((r, i) => <GalleryRegionBlock key={i} region={r} color={color} open={openRegions.has(i)} onToggle={() => toggleRegion(i)} />)}
+        </div>
+      )}
     </div>
   )
 }
@@ -931,7 +954,7 @@ function EthnicCodexSection() {
       icon: galleryIcon(r.region),
       groups: r.groups.map(g => ({
         label: g.label,
-        items: g.items.map(it => ({ file: it.file, title: it.name, detail: g.label ? `${g.label} — ${short}` : short })),
+        items: g.items.map(it => ({ file: fp(it.file), title: it.name, detail: g.label ? `${g.label} — ${short}` : short })),
       })),
     }
   })
@@ -945,7 +968,7 @@ function ExtinctStatesCodexSection() {
     icon: galleryIcon(r.region),
     groups: [{ label: '', items: r.items.map(it => {
       const [pre, paren] = splitParen(it.name)
-      return { file: it.file, title: stripFlagOf(pre), detail: paren ? cap(paren) + '.' : 'A former state.' }
+      return { file: fp(it.file), title: stripFlagOf(pre), detail: paren ? cap(paren) + '.' : 'A former state.' }
     }) }],
   }))
   return <GallerySection title="Extinct States" icon={Landmark} color={T.warm} blurb={`${total} flags of vanished states · by continent`} regions={regions} />
@@ -958,10 +981,43 @@ function OrgCodexSection() {
     icon: Building2,
     groups: r.groups.map(g => ({
       label: g.label,
-      items: g.items.map(it => ({ file: it.file, title: stripFlagOf(it.name), detail: g.label ? `${g.label} — ${r.region}` : r.region })),
+      items: g.items.map(it => ({ file: fp(it.file), title: stripFlagOf(it.name), detail: g.label ? `${g.label} — ${r.region}` : r.region })),
     })),
   }))
   return <GallerySection title="International Organizations" icon={Building2} color={T.green} blurb={`${total} flags · UN, NATO, EU, AU, FIFA, the Olympics…`} regions={regions} />
+}
+
+// ── Mega Codex A–Z — every flag in the app, alphabetical, grouped by letter ──
+function MegaCodexSection() {
+  const regions: GRegion[] = useMemo(() => {
+    const seen = new Set<string>()
+    const all: { title: string; file: string }[] = []
+    const push = (title: string, url: string) => {
+      const t = (title || '').trim()
+      if (!t || !url) return
+      const key = t.toLowerCase()
+      if (seen.has(key)) return
+      seen.add(key); all.push({ title: t, file: url })
+    }
+    FLAGS.forEach(f => push(f.name, f.flagUrl))
+    IDENTITY_FLAGS.forEach(f => push(f.name, f.flagUrl))
+    US_CITY_FLAGS.forEach(f => push(f.name, f.flagUrl))
+    ETHNIC_FLAGS.forEach(r => r.groups.forEach(g => g.items.forEach(it => push(it.name, fp(it.file)))))
+    EXTINCT_STATES.forEach(r => r.items.forEach(it => push(stripFlagOf(splitParen(it.name)[0]), fp(it.file))))
+    ORG_FLAGS.forEach(r => r.groups.forEach(g => g.items.forEach(it => push(stripFlagOf(it.name), fp(it.file)))))
+    Object.values(CODEX).forEach(e => e.flagHistory.forEach(h => { push(h.label, h.flagUrl); h.parallel?.forEach(p => push(p.label, p.flagUrl)) }))
+    all.sort((a, b) => a.title.localeCompare(b.title))
+    const groups = new Map<string, GRow[]>()
+    for (const f of all) {
+      const c = f.title[0].toUpperCase()
+      const L = /[A-Z]/.test(c) ? c : '#'
+      if (!groups.has(L)) groups.set(L, [])
+      groups.get(L)!.push({ file: f.file, title: f.title, detail: '' })
+    }
+    return [...groups.keys()].sort().map(L => ({ label: L, groups: [{ label: '', items: groups.get(L)! }] }))
+  }, [])
+  const total = regions.reduce((n, r) => n + r.groups[0].items.length, 0)
+  return <GallerySection title="Mega Codex A–Z" icon={Search} color={ACCENT.codex} blurb={`Every flag in the app · ${total} total, alphabetical`} regions={regions} />
 }
 
 // Shown when a subdivision is positively confirmed to have no flag.
