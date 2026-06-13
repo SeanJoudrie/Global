@@ -110,4 +110,10 @@ export const ADDED_FLAGS: AddedFlag[] = [
   { country: "Laos", era: "French Laos / Indochina (1893–1953)", file: "/flags/fr.svg" },
   { country: "North Korea", era: "Japanese occupation (1910–1945)", file: "/flags/jp.svg" },
   { country: "South Korea", era: "Japanese occupation (1910–1945)", file: "/flags/jp.svg" },
+
+  // ── Asia deep pass — pre-modern empires & dynasties ──
+  { country: "India", era: "Sikh Empire (1799–1849)", file: "Flag_of_the_Sikh_Empire.png" },
+  { country: "India", era: "Maratha Empire (1674–1818)", file: "Flag_of_the_Maratha_Empire.svg" },
+  { country: "India", era: "Mughal Empire (1526–1857)", file: "Flag_of_the_Mughal_Empire_(triangular).svg" },
+  { country: "India", era: "Kingdom of Mysore (1399–1799)", file: "Flag_of_Kingdom_of_Mysore.svg" },
 ]

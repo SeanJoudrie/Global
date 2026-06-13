@@ -782,6 +782,30 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
         },
       ],
     },
+    {
+      fromYear: 1799, toYear: 1849,
+      flagUrl: fp('Flag_of_the_Sikh_Empire.png'),
+      label: 'Sikh Empire',
+      note: 'Ranjit Singh forged a powerful Sikh Empire across Punjab and the northwest (1799–1849), flying the saffron Nishan Sahib of the Khalsa. The last major Indian power to fall to the British, it was annexed only after two hard-fought Anglo-Sikh Wars — the same conquest that delivered the Koh-i-Noor diamond to the British crown.',
+    },
+    {
+      fromYear: 1674, toYear: 1818,
+      flagUrl: fp('Flag_of_the_Maratha_Empire.svg'),
+      label: 'Maratha Empire',
+      note: 'Founded by Chhatrapati Shivaji in 1674, the Maratha Empire grew to dominate most of the subcontinent in the 18th century, flying the saffron Bhagwa Dhwaj. It was the principal Indian power the British East India Company had to defeat — in three Anglo-Maratha Wars — to win control of India.',
+    },
+    {
+      fromYear: 1526, toYear: 1857,
+      flagUrl: fp('Flag_of_the_Mughal_Empire_(triangular).svg'),
+      label: 'Mughal Empire',
+      note: 'For over three centuries the Mughal Empire ruled much of India — the age of the Taj Mahal, of emperors Akbar and Aurangzeb — under the green Alam bearing a lion and rising sun. Its slow decline left the vacuum that regional powers and the British filled; the last emperor was deposed after the 1857 rebellion, formally ending Mughal rule.',
+    },
+    {
+      fromYear: 1399, toYear: 1799,
+      flagUrl: fp('Flag_of_Kingdom_of_Mysore.svg'),
+      label: 'Kingdom of Mysore',
+      note: 'The Kingdom of Mysore, and especially the rule of Hyder Ali and his son Tipu Sultan, mounted the fiercest southern Indian resistance to the British. Tipu — the "Tiger of Mysore" — flew flags rich with tiger-stripe (bubri) motifs and even deployed some of the world\'s first iron-cased war rockets against the Company before his death in 1799.',
+    },
   ],
   BR: [
     {
