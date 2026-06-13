@@ -1497,6 +1497,113 @@ const RAW_IDENTITY_FLAGS: IdentityFlag[] = [
     note: "An Italian village left off a 1440 border treaty by mistake, becoming an accidental tax-free republic for 386 years until it was absorbed in 1826.",
   },
 
+  // ── Micronations (batch 3, deep sweep of the Wikipedia list) ──────────────
+  {
+    id: "flandrensis", name: "Grand Duchy of Flandrensis", category: "Micronations",
+    flagUrl: fp("Flag_of_Flandrensis.svg"),
+    note: "Claims five uninhabited Antarctic islands and campaigns on climate change — uniquely, it wants NO one to live on its melting territory.",
+  },
+  {
+    id: "elleore", name: "Kingdom of Elleore", category: "Micronations",
+    flagUrl: fp("Flag_of_Elleore.svg"),
+    note: "Danish schoolteachers bought a tiny island for a summer camp in 1944 and proclaimed a kingdom, with playful laws — Robinson Crusoe is a banned book.",
+  },
+  {
+    id: "saugeais", name: "Republic of Saugeais", category: "Micronations",
+    flagUrl: fp("Flag_of_Saugeais.svg"),
+    note: "A French valley that became a joke republic in 1947 when a hotelier improvised it for a visiting prefect, who appointed him president. It spans 11 communes.",
+  },
+  {
+    id: "holy-reunion", name: "Holy Empire of Reunion", category: "Micronations",
+    flagUrl: fp("Flag_of_the_Holy_Empire_of_Reunion.svg"),
+    note: "Created in 1997 by Brazilian law students as a parody of the French overseas department of Réunion.",
+  },
+  {
+    id: "aigues-mortes", name: "Principality of Aigues-Mortes", category: "Micronations",
+    flagUrl: fp("Flag_of_Principality_of_Aigues-Mortes.svg"),
+    note: "The walled French city declared itself a principality in 2010 as a publicity stunt, citing a local legend of Louis IX ennobling a squire.",
+  },
+  {
+    id: "snake-hill", name: "Principality of Snake Hill", category: "Micronations",
+    flagUrl: fp("Flag_of_the_Principality_of_Snake_Hill.svg"),
+    note: "A New South Wales family unable to afford their taxes seceded from Australia in 2003.",
+  },
+  {
+    id: "jamtland", name: "Republic of Jämtland", category: "Micronations",
+    flagUrl: fp("Unofficial_Flag_of_Jamtland.svg"),
+    note: "A Swedish cultural micronation basing its claim on Jämtland's autonomy before 1178, celebrated with an annual festival.",
+  },
+  {
+    id: "llanrwst", name: "Free Borough of Llanrwst", category: "Micronations",
+    flagUrl: fp("Flag_of_the_Free_Borough_of_Llanrwst.svg"),
+    note: "A Welsh town declared a 'free borough' by Prince Llywelyn ap Gruffudd in 1276; it long claimed to lie outside the Diocese of St Asaph.",
+  },
+  {
+    id: "vevcani", name: "Republic of Vevčani", category: "Micronations",
+    flagUrl: fp("Flag_of_Vevčani_Municipality,_North_Macedonia.svg"),
+    note: "Days after Macedonia left Yugoslavia in 1991, this village voted for its own independence — and eventually won its own municipality.",
+  },
+  {
+    id: "frestonia", name: "Frestonia", category: "Micronations",
+    flagUrl: fp("Flag_of_Frestonia.svg"),
+    note: "A community of Notting Hill squatters facing eviction in 1977 voted to secede, naming writers and musicians among their ministers.",
+  },
+  {
+    id: "austenasia", name: "Empire of Austenasia", category: "Micronations",
+    flagUrl: fp("Flag_of_Austenasia.svg"),
+    note: "Founded in a Sutton house in 2008, it styles itself a successor to the Roman Empire and grows by annexing members' properties worldwide.",
+  },
+  {
+    id: "islands-refreshment", name: "Islands of Refreshment", category: "Micronations",
+    flagUrl: fp("Flag_of_the_Islands_of_Refreshment.svg"),
+    note: "Jonathan Lambert proclaimed himself ruler of remote Tristan da Cunha in 1811, before drowning months later. Britain annexed the islands soon after.",
+  },
+  {
+    id: "elgaland-vargaland", name: "Elgaland-Vargaland", category: "Micronations",
+    flagUrl: fp("Elgaland-Vargaland_flag.png"),
+    note: "A conceptual art-project nation claiming all border zones and 'interstitial' spaces — and counting every dead person as a citizen.",
+  },
+  {
+    id: "nova-roma", name: "Nova Roma", category: "Micronations",
+    flagUrl: fp("Nova_Roma_Flag.svg"),
+    note: "An organisation reviving classical Roman religion, culture and coinage, often counted among the world's micronations.",
+  },
+  {
+    id: "vikesland", name: "Kingdom of Vikesland", category: "Micronations",
+    flagUrl: fp("Flag_Of_Vikesland.svg"),
+    note: "A Manitoba news cameraman founded Vikesland in 2005 to make a documentary about micronations.",
+  },
+  {
+    id: "zaqistan", name: "Zaqistan", category: "Micronations",
+    flagUrl: fp("Zaqistan_flag.png"),
+    note: "An artist's micronation on a barren two-acre plot in the Utah desert, complete with border guards, monuments and passports.",
+  },
+  {
+    id: "aramoana", name: "Independent State of Aramoana", category: "Micronations",
+    flagUrl: fp("Flag_of_Aramoana.svg"),
+    note: "A small New Zealand community that declared independence in 1980 to protest a planned aluminium smelter on nearby land.",
+  },
+  {
+    id: "new-atlantis", name: "New Atlantis", category: "Micronations",
+    flagUrl: fp("Flag_of_New_Atlantis_(1964–1966).svg"),
+    note: "Ernest Hemingway's brother Leicester anchored a bamboo raft off Jamaica in 1964 and declared it a nation for marine research, until a storm destroyed it.",
+  },
+  {
+    id: "msimbati", name: "Sultanate of M'Simbati", category: "Micronations",
+    flagUrl: fp("Sultanate_of_M'Simbati_flag.svg"),
+    note: "A Briton declared his coastal property in what was then Tanganyika a sultanate in 1959, proclaiming himself sultan.",
+  },
+  {
+    id: "morac-songhrati", name: "Republic of Morac-Songhrati-Meads", category: "Micronations",
+    flagUrl: fp("Flag_of_Morac-Songhrati-Meads.svg"),
+    note: "A long-running claim over the disputed Spratly Islands, also known as the Kingdom of Humanity, dating back to a 19th-century British captain.",
+  },
+  {
+    id: "sunda-empire", name: "Sunda Empire", category: "Micronations",
+    flagUrl: fp("Sunda_Empire_Flag_Vector.svg"),
+    note: "An Indonesian micronation whose founder claimed to succeed Alexander the Great and rule from Australia to Korea; its leaders were jailed for spreading false information.",
+  },
+
   // ── Civic & Ideological (batch 2) ─────────────────────────────────────────
   {
     id: "disability-pride", name: "Disability Pride Flag", category: "Civic & Ideological",
