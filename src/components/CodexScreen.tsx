@@ -1080,12 +1080,11 @@ function MegaCodexWall({ onClose }: { onClose: () => void }) {
         style={{ position: 'absolute', inset: 0, overflowY: 'auto', WebkitOverflowScrolling: 'touch' }}>
         <div style={{ height: totalHeight, position: 'relative' }}>
           <div style={{ position: 'absolute', left: MEGA_PAD, right: MEGA_PAD, top: gridTop, display: 'grid', gridTemplateColumns: `repeat(${cols}, 1fr)`, gap: MEGA_GAP }}>
-            {visible.map((f, k) => (
-              <div key={startIdx + k} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 3 }}>
+            {visible.map((f) => (
+              <div key={f.title} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 3 }}>
                 <div style={{ width: '100%', aspectRatio: '3/2', borderRadius: 4, overflow: 'hidden', border: `1px solid ${T.line}`, background: T.surfaceHi, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                   <img src={galleryThumb(f.url)} alt={f.title} loading="eager" decoding="async"
-                    style={{ width: '100%', height: '100%', objectFit: 'contain', opacity: 0, transition: 'opacity 0.25s ease' }}
-                    onLoad={e => { (e.target as HTMLImageElement).style.opacity = '1' }}
+                    style={{ width: '100%', height: '100%', objectFit: 'contain' }}
                     onError={e => {
                       const el = e.target as HTMLImageElement
                       const t = Number(el.dataset.t || '0')
