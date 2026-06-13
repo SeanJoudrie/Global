@@ -1569,10 +1569,22 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       note: 'Oman\'s horizontal red-white-green flag with the national emblem (crossed khanjar daggers over a belt, and two crossed swords) was adopted when Sultan Qaboos overthrew his father in 1970 and opened Oman to the modern world. Red is the traditional colour of Omani rulers; white represents peace; green represents the Jebel Akhdar ("Green Mountain") region. The khanjar dagger on the emblem is also depicted on Omani currency and is a potent symbol of Omani cultural identity.',
     },
     {
-      fromYear: 1868, toYear: 1970,
-      flagUrl: fp('Flag_of_Oman_(1970–1995).svg'),
-      label: 'Sultanate of Oman (plain red)',
-      note: 'For most of its history as a recognised sultanate, Oman\'s flag was simply a plain red banner — red being the traditional colour of Gulf and Omani rulers, associated with the Kharijite branch of Islam historically dominant in Oman. Sultan Said bin Taimur, who ruled from 1932 to 1970, kept the country in extreme isolation, banning sunglasses, radios, and even bicycles. His son Qaboos\'s coup transformed both the country and its flag overnight.',
+      fromYear: 1856, toYear: 1970,
+      flagUrl: fp('Flag_of_Muscat.svg'),
+      label: 'Sultanate of Muscat and Oman',
+      note: 'When the Omani Empire split in 1856, the homeland became the Sultanate of Muscat and Oman, flying the plain red banner of the Al Bu Said dynasty — red being the traditional colour of Omani and Gulf rulers. Sultan Said bin Taimur (1932–1970) kept the country in extreme isolation, banning sunglasses, radios and even bicycles, until his son Qaboos\'s 1970 coup transformed both the country and its flag and renamed it simply Oman.',
+    },
+    {
+      fromYear: 1696, toYear: 1856,
+      flagUrl: fp('Flag_of_Muscat.svg'),
+      label: 'Omani Empire',
+      note: 'At its height the Omani Empire was a major Indian Ocean power, ruling Zanzibar and a stretch of the East African (Swahili) coast and competing with Portugal and Britain for the spice and ivory trade — all under a plain red flag. In 1856 it divided between two of the ruler\'s sons into the Sultanate of Zanzibar in Africa and the Sultanate of Muscat and Oman in Arabia.',
+    },
+    {
+      fromYear: 1913, toYear: 1959,
+      flagUrl: fp('Flag_of_the_Imamate_of_Oman_(1954–1959).svg'),
+      label: 'Imamate of Oman (interior)',
+      note: 'For centuries Oman\'s mountainous interior was governed separately by an elected Imam under the Ibadi tradition, distinct from the coastal sultanate at Muscat. The 20th-century Imamate flew a red flag bearing the Islamic profession of faith in white calligraphy. After oil was found, the Sultanate — backed by Britain — crushed the Imamate in the 1950s Jebel Akhdar War, ending Oman\'s long internal division by 1959.',
     },
   ],
 

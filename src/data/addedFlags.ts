@@ -24,6 +24,9 @@ export const ADDED_FLAGS: AddedFlag[] = [
   // Middle East
   { country: "Iraq", era: "Kingdom of Iraq, Hashemite (1921–1958)", file: "Flag_of_Iraq_(1924–1959).svg" },
   { country: "Iraq", era: "Coalition-era interim (2004–2008)", file: "Flag_of_Iraq_(2004–2008).svg" },
+  { country: "Oman", era: "Imamate of Oman, interior (1913–1959)", file: "Flag_of_the_Imamate_of_Oman_(1954–1959).svg" },
+  { country: "Oman", era: "Sultanate of Muscat and Oman (1856–1970)", file: "Flag_of_Muscat.svg" },
+  { country: "Oman", era: "Omani Empire (1696–1856)", file: "Flag_of_Muscat.svg" },
   // Asia
   { country: "Indonesia", era: "Dutch East Indies (1816–1945)", file: "/flags/nl.svg" },
   { country: "Bangladesh", era: "East Pakistan (1947–1971)", file: "/flags/pk.svg" },
