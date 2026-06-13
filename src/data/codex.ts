@@ -2854,6 +2854,13 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       label: 'Flag of Botswana',
       note: 'First hoisted at independence in 1966. The light blue stands for water and rain (the national motto "Pula" means "let there be rain"); the black band with white edges symbolizes racial harmony. It has never been changed.',
     },
+    {
+      fromYear: 1885,
+      toYear: 1966,
+      flagUrl: '/flags/gb.svg',
+      label: 'Bechuanaland Protectorate',
+      note: 'Botswana was the British Bechuanaland Protectorate from 1885 until independence in 1966, flying the Union Jack. Unusually, Britain never settled or heavily developed the territory — it was administered from Mafeking, a town actually outside its borders in South Africa — which left Botswana to chart its own course at independence.',
+    },
   ],
   NA: [
     {
@@ -2894,6 +2901,13 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       flagUrl: '/flags/sz.svg',
       label: 'Flag of Eswatini',
       note: 'Adopted at independence in 1968, based on a military banner King Sobhuza II gave the Swazi Pioneer Corps in 1941, featuring a black-and-white Nguni shield with two spears and a fighting staff. The country renamed itself Eswatini in 2018, but the flag was unchanged.',
+    },
+    {
+      fromYear: 1903,
+      toYear: 1968,
+      flagUrl: '/flags/gb.svg',
+      label: 'Swaziland Protectorate',
+      note: 'Swaziland was a British protectorate from 1903 until independence in 1968, under the Union Jack. The Swazi monarchy survived the colonial era intact, and King Sobhuza II — who reigned for nearly 83 years, one of the longest in recorded history — led the nation to independence with its traditional kingship fully restored.',
     },
   ],
   MU: [
@@ -3055,6 +3069,13 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       label: 'Flag of the Central African Republic',
       note: 'Designed by founding father Barthélemy Boganda in 1958, it uniquely fuses the French blue-white-red with the pan-African red-green-yellow, crossed by a vertical red "blood of unity" stripe. It was even kept unchanged during Bokassa\'s 1976–1979 "Central African Empire."',
     },
+    {
+      fromYear: 1903,
+      toYear: 1958,
+      flagUrl: '/flags/fr.svg',
+      label: 'French Ubangi-Shari',
+      note: 'The territory was the French colony of Ubangi-Shari, part of French Equatorial Africa, flying the French tricolor. It was one of the most neglected and harshly exploited colonies in the French empire — run largely through brutal concession companies — until Barthélemy Boganda led it to autonomy and gave it both its name and its flag in 1958.',
+    },
   ],
   TD: [
     {
@@ -3063,6 +3084,29 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       flagUrl: '/flags/td.svg',
       label: 'Flag of Chad',
       note: 'Adopted in 1959: a blue-yellow-red tricolour. Chad switched from pan-African green to blue to avoid clashing with Mali — coincidentally producing a flag nearly identical to Romania\'s, a resemblance Chad raised at the UN in 2004.',
+    },
+    {
+      fromYear: 1900,
+      toYear: 1959,
+      flagUrl: '/flags/fr.svg',
+      label: 'French Chad',
+      note: 'Conquered piecemeal around 1900 and folded into French Equatorial Africa, Chad flew the French tricolor as a colony. Remote and lightly governed, it was the last part of the federation to be brought fully under French control, and gained its own flag only on the eve of independence in 1959–60.',
+    },
+  ],
+  CI: [
+    {
+      fromYear: 1959,
+      toYear: null,
+      flagUrl: '/flags/ci.svg',
+      label: "Flag of Côte d'Ivoire",
+      note: 'Adopted in 1959 on the eve of independence: vertical orange, white and green. Orange stands for the savanna and the land\'s fertility, white for peace, green for the forests and hope. It is a mirror image of Ireland\'s flag and very close to Niger\'s — a similarity that is pure coincidence of pan-national colour choices.',
+    },
+    {
+      fromYear: 1893,
+      toYear: 1959,
+      flagUrl: '/flags/fr.svg',
+      label: "French Côte d'Ivoire",
+      note: 'Declared a French colony in 1893 and later part of French West Africa, Côte d\'Ivoire flew the French tricolor. It became the wealthiest and most productive colony in the federation through cocoa and coffee, a prosperity that continued after Félix Houphouët-Boigny led it to independence in 1960 under its own orange-white-green flag.',
     },
   ],
   CG: [
@@ -3147,6 +3191,13 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       flagUrl: '/flags/ao.svg',
       label: 'Flag of Angola',
       note: 'Adopted at independence from Portugal in 1975, red over black with a yellow machete, half-cogwheel, and star from the ruling MPLA\'s emblem. The design deliberately echoes the Soviet hammer-and-sickle.',
+    },
+    {
+      fromYear: 1655,
+      toYear: 1975,
+      flagUrl: '/flags/pt.svg',
+      label: 'Portuguese Angola',
+      note: 'Angola was a Portuguese possession for some four centuries — first a source of enslaved people for Brazil, later a settler colony — flying the flag of Portugal. Portugal\'s refusal to decolonise triggered a 14-year war of independence from 1961; when the 1974 Carnation Revolution toppled the regime in Lisbon, Angola finally won independence in 1975, only to fall straight into a long civil war.',
     },
   ],
   RW: [
@@ -3475,6 +3526,13 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       flagUrl: '/flags/dj.svg',
       label: 'Flag of Djibouti',
       note: 'Adopted at independence from France in 1977: light blue and green bands with a white triangle and red star. The colors are associated with the Issa and Afar communities, the star representing unity.',
+    },
+    {
+      fromYear: 1888,
+      toYear: 1977,
+      flagUrl: '/flags/fr.svg',
+      label: 'French Somaliland / Afars and Issas',
+      note: 'Djibouti was French Somaliland from 1888, renamed the French Territory of the Afars and Issas in 1967 — a strategically vital colony guarding the Red Sea entrance to the Suez route, flying the French tricolor. France held it longer than almost any other African territory, granting independence only in 1977.',
     },
   ],
   SO: [
