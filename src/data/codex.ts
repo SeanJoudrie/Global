@@ -1779,6 +1779,12 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       note: 'El Salvador\'s blue-white-blue horizontal tricolor and its coat of arms (five volcanoes between two oceans, a rainbow, and the motto "God, Union, Liberty") were standardised in 1912. Like all Central American nations, the design descends from the Federal Republic flag. The blue represents the Pacific and Atlantic; the white represents peace. El Salvador is the smallest and most densely populated country in Central America.',
     },
     {
+      fromYear: 1875, toYear: 1912,
+      flagUrl: fp('Flag_of_El_Salvador_(1875–1912).svg'),
+      label: 'Stars-and-stripes era',
+      note: 'For nearly four decades El Salvador flew a flag modelled directly on the United States — alternating blue and white horizontal stripes with a red canton bearing white stars. It was a striking departure from the Central American blue-white-blue, and was abandoned in 1912 when the country returned to the federation-style tricolor it still uses today.',
+    },
+    {
       fromYear: 1823, toYear: 1839,
       flagUrl: fp('Flag_of_the_Federal_Republic_of_Central_America.svg'),
       label: 'Federal Republic of Central America',
