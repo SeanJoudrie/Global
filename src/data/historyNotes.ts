@@ -36,6 +36,8 @@ export const HISTORY_NOTES: HistoryNote[] = [
   { country: "Iraq", era: "2004–2008 interim", status: "to-verify",
     candidate: "Flag_of_Iraq_(2004–2008).svg",
     detail: "Small gap between Saddam's 1991–2004 flag and the current 2008 flag: the 2004–2008 interim used a different green Takbir script/placement. Verify the preview, then add." },
+  { country: "Haiti", era: "1811–1820 Kingdom (Christophe)", status: "to-verify",
+    detail: "In Haiti's split early years, Henri Christophe ruled a northern Kingdom of Haiti (1811–1820) with its own royal flag/standard, distinct from Pétion's southern republic. Couldn't find a Commons file under the obvious names — needs a correct filename before adding alongside the Second Empire entry." },
   { country: "Papua New Guinea", era: "pre-1970 territories", status: "to-verify",
     candidate: "Flag_of_the_Territory_of_Papua.svg",
     detail: "PNG jumps to a 1970 interim tricolour. Its predecessors are split — German New Guinea (north), British/Australian Papua (south), then the joint Territory of Papua and New Guinea. The Territory of Papua flag candidate was rate-limited; verify and consider adding." },

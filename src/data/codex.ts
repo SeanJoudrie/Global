@@ -1703,6 +1703,12 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       note: 'In 1964, "Papa Doc" Duvalier changed the flag\'s horizontal blue-and-red to vertical black-and-red, claiming to revive the pre-independence flag used by some revolutionary leaders who favoured black over blue. The black stripe represented the Black population; red represented the mixed-race (mulatto) population. After Duvalier\'s son "Baby Doc" was overthrown in 1986, the blue-and-red was immediately restored.',
     },
     {
+      fromYear: 1849, toYear: 1859,
+      flagUrl: fp('Flag_of_Haiti_(1849–1859).svg'),
+      label: 'Second Empire of Haiti',
+      note: 'In 1849 President Faustin Soulouque crowned himself Emperor Faustin I, ruling a decade-long Second Empire of Haiti. He kept the blue-and-red bicolor but replaced the republican arms with an elaborate imperial coat of arms beneath a crown. The empire collapsed in 1859 and Haiti returned to a republic.',
+    },
+    {
       fromYear: 1806, toYear: 1820,
       flagUrl: fp('Flag_of_Haiti_(1806-1811).svg'),
       label: 'Early Haitian Republic',
@@ -1860,7 +1866,13 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       note: 'Suriname\'s flag — five horizontal stripes of green, white, red, white, and green, with a large yellow star at the centre — was adopted when the country gained independence from the Netherlands in 1975. Green represents the forests and agriculture; white represents justice and freedom; red represents progress and love; the yellow star represents the unity of all the ethnic groups in Suriname\'s famously diverse population (Hindustanis, Creoles, Maroons, Javanese, Amerindians, and others).',
     },
     {
-      fromYear: 1667, toYear: 1975,
+      fromYear: 1959, toYear: 1975,
+      flagUrl: fp('Flag_of_Suriname_(1959–1975).svg'),
+      label: 'Autonomous Suriname',
+      note: 'When Suriname became an autonomous country within the Kingdom of the Netherlands in 1954, it adopted its own flag in 1959: a white field with five stars — black, brown, yellow, red and white — linked by an ellipse, each colour standing for one of the territory\'s major ethnic groups. It flew until the green-white-red star flag of full independence replaced it in 1975.',
+    },
+    {
+      fromYear: 1667, toYear: 1959,
       flagUrl: fp('Flag_of_the_Netherlands.svg'),
       label: 'Dutch Suriname (colonial era)',
       note: 'Suriname was a Dutch colony from 1667 (when England traded it to the Netherlands in exchange for New Amsterdam — the future New York). The Dutch plantation economy relied on enslaved Africans and later indentured labourers from Asia, creating Suriname\'s extraordinary ethnic diversity. Suriname was one of the last countries in the Americas to gain independence, doing so in 1975 — though a significant portion of the population emigrated to the Netherlands before and after.',
