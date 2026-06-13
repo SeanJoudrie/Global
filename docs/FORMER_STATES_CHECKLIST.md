@@ -1,5 +1,8 @@
 # Former Sovereign States — Codex coverage checklist
 
+> Note: 135 of the unchecked states have a flag image and are listed in-app under Settings → Flag Check → States (with previews) for promotion. The rest are genuinely flag-less (ancient empires predate flags).
+
+
 Source: Wikipedia "List of former sovereign states" (Modern states by geography + by type). Auto-matched against src/data/codex.ts: [x] = a state of this name is referenced in our flag history; [ ] = not found, a candidate to add. Fuzzy match — spot-check before trusting.
 
 ## Morocco (Maghreb al-Aqsa) (1/11 covered)
@@ -9,7 +12,7 @@ Source: Wikipedia "List of former sovereign states" (Modern states by geography 
 - [ ] Saadi Sultanate
 - [ ] Naqsid Principality of Tetouan
 - [ ] Kingdom of Tazeroualt
-- [ ] Republic of Salé
+- [ ] Republic of Salé  — 🏴 flag found (Flag Check → States)
 - [ ] 'Alawi dynasty
 - [ ] Zawiya Dila'iya
 - [ ] Sharifian Sultanate
@@ -18,19 +21,19 @@ Source: Wikipedia "List of former sovereign states" (Modern states by geography 
 
 ## Egypt, Sudan and Libya (8/22 covered)
 
-- [ ] Makuria
-- [ ] Alodia
+- [ ] Makuria  — 🏴 flag found (Flag Check → States)
+- [ ] Alodia  — 🏴 flag found (Flag Check → States)
 - [ ] Kingdom of al-Abwab
 - [ ] Emirate of Banu Talis
 - [ ] Mamluk Sultanate
-- [ ] Shilluk Kingdom
+- [ ] Shilluk Kingdom  — 🏴 flag found (Flag Check → States)
 - [ ] Kingdom of Fazughli
 - [ ] Sultanate of Sennar
 - [x] Egypt Eyalet
 - [x] Fezzan Sultanate
 - [ ] Sultanate of Darfur
 - [ ] Taqali
-- [ ] Senussi Order
+- [ ] Senussi Order  — 🏴 flag found (Flag Check → States)
 - [x] Mahdist State
 - [ ] Tripolitanian Republic
 - [ ] Sultanate of Mit Ghamr
@@ -44,16 +47,16 @@ Source: Wikipedia "List of former sovereign states" (Modern states by geography 
 ## Algeria and Tunisia (Central Maghreb) (2/11 covered)
 
 - [ ] Hafsid dynasty
-- [ ] Kingdom of Tlemcen
+- [ ] Kingdom of Tlemcen  — 🏴 flag found (Flag Check → States)
 - [ ] Hafsid Emirate of Béjaïa
 - [ ] Sultanate of Tuggurt
 - [ ] Kingdom of Beni Abbas
 - [ ] Kingdom of Kuku
-- [ ] Regency of Algiers
+- [ ] Regency of Algiers  — 🏴 flag found (Flag Check → States)
 - [x] Beylik of Constantine
 - [x] Beylik of Tunis
 - [ ] Kel Ahaggar
-- [ ] Emirate of Mascara
+- [ ] Emirate of Mascara  — 🏴 flag found (Flag Check → States)
 
 ## Comoro Islands (2/5 covered)
 
@@ -65,10 +68,10 @@ Source: Wikipedia "List of former sovereign states" (Modern states by geography 
 
 ## Madagascar (0/7 covered)
 
-- [ ] Kingdom of Imerina
+- [ ] Kingdom of Imerina  — 🏴 flag found (Flag Check → States)
 - [ ] Kingdom of Antankarana
 - [ ] Kingdom of Menabe
-- [ ] Kingdom of Boina
+- [ ] Kingdom of Boina  — 🏴 flag found (Flag Check → States)
 - [ ] Kingdom of Tamatave
 - [ ] Kingdom of Antongil
 - [ ] Kingdom of Tanibe
@@ -81,36 +84,36 @@ Source: Wikipedia "List of former sovereign states" (Modern states by geography 
 
 ## Horn of Africa (5/33 covered)
 
-- [ ] Sultanate of Mogadishu
+- [ ] Sultanate of Mogadishu  — 🏴 flag found (Flag Check → States)
 - [ ] Medri Bahri
 - [ ] Hadiya Sultanate
 - [ ] Ajuran Sultanate
 - [ ] Welayta Kingdom
-- [ ] Ethiopian Empire
+- [ ] Ethiopian Empire  — 🏴 flag found (Flag Check → States)
 - [ ] Ennarea
 - [ ] Kingdom of Kaffa
 - [ ] Kingdom of Janjero
-- [ ] Majeerteen Sultanate
-- [ ] Adal Sultanate
+- [ ] Majeerteen Sultanate  — 🏴 flag found (Flag Check → States)
+- [ ] Adal Sultanate  — 🏴 flag found (Flag Check → States)
 - [x] Imamate of Aussa
 - [ ] Warsangali Sultanate
 - [ ] Emirate of Harar
-- [ ] Sultanate of the Geledi
+- [ ] Sultanate of the Geledi  — 🏴 flag found (Flag Check → States)
 - [ ] Aussa Sultanate
-- [ ] Isaaq Sultanate
+- [ ] Isaaq Sultanate  — 🏴 flag found (Flag Check → States)
 - [ ] Habr Yunis Sultanate
 - [ ] Kingdom of Gumma
 - [ ] Kingdom of Gomma
 - [ ] Kingdom of Jimma
 - [ ] Kingdom of Limmu-Ennarea
 - [ ] Kingdom of Gera
-- [ ] Sultanate of Hobyo
+- [ ] Sultanate of Hobyo  — 🏴 flag found (Flag Check → States)
 - [ ] The Dervish State
 - [x] Western Galla Confederation
-- [ ] Jubaland
-- [ ] Puntland
+- [ ] Jubaland  — 🏴 flag found (Flag Check → States)
+- [ ] Puntland  — 🏴 flag found (Flag Check → States)
 - [x] Islamic Courts Union
-- [ ] Maakhir
+- [ ] Maakhir  — 🏴 flag found (Flag Check → States)
 - [ ] Republic of Azania
 - [x] North East State
 - [x] South West State
@@ -162,7 +165,7 @@ Source: Wikipedia "List of former sovereign states" (Modern states by geography 
 - [x] Kingdom of Dahomey
 - [ ] Emirate of Trarza
 - [x] Asante Empire
-- [ ] Aro Confederacy
+- [ ] Aro Confederacy  — 🏴 flag found (Flag Check → States)
 - [ ] Bundu
 - [ ] Kong Empire
 - [ ] Bamana Empire
@@ -170,43 +173,43 @@ Source: Wikipedia "List of former sovereign states" (Modern states by geography 
 - [x] Imamate of Futa Toro
 - [ ] Sultanate of Damagaram
 - [x] Sokoto Caliphate
-- [ ] Republic of Maryland
+- [ ] Republic of Maryland  — 🏴 flag found (Flag Check → States)
 - [ ] Zabarma Emirate
 - [ ] Toucouleur Empire
-- [ ] Wassoulou Empire
+- [ ] Wassoulou Empire  — 🏴 flag found (Flag Check → States)
 - [x] Republic of Dahomey
 - [x] Republic of Upper Volta
 - [x] Federal Republic of Cameroon
 - [x] Union of African States
 - [x] Niger Delta Republic
-- [ ] Biafra
+- [ ] Biafra  — 🏴 flag found (Flag Check → States)
 - [x] People's Republic of Benin
 - [x] Democratic Republic of Bakassi
 - [ ] Republic of Toumoujagha
-- [ ] Azawad
+- [ ] Azawad  — 🏴 flag found (Flag Check → States)
 
 ## African Great Lakes (3/10 covered)
 
-- [ ] Busoga
+- [ ] Busoga  — 🏴 flag found (Flag Check → States)
 - [x] Kingdom of Rwanda
-- [ ] Bunyoro
+- [ ] Bunyoro  — 🏴 flag found (Flag Check → States)
 - [x] Buganda
 - [ ] Kingdom of Karagwe
-- [ ] Ankole
+- [ ] Ankole  — 🏴 flag found (Flag Check → States)
 - [x] Kingdom of Burundi
-- [ ] Tooro Kingdom
-- [ ] Kingdom of Rwenzururu
+- [ ] Tooro Kingdom  — 🏴 flag found (Flag Check → States)
+- [ ] Kingdom of Rwenzururu  — 🏴 flag found (Flag Check → States)
 - [ ] Republic of Martyazo
 
 ## Eastern Africa (2/9 covered)
 
 - [ ] Malindi Kingdom
-- [ ] Kilwa Sultanate
+- [ ] Kilwa Sultanate  — 🏴 flag found (Flag Check → States)
 - [ ] Pate Sultanate
 - [ ] Kingdom of Maravi
 - [ ] Mombasa Sultanate
 - [x] Sultanate of Zanzibar
-- [ ] Witu Sultanate
+- [ ] Witu Sultanate  — 🏴 flag found (Flag Check → States)
 - [ ] Sultanate of M'Simbati
 - [x] Tanganyika
 
@@ -214,30 +217,30 @@ Source: Wikipedia "List of former sovereign states" (Modern states by geography 
 
 - [ ] Anziku Kingdom
 - [x] Kingdom of Kongo
-- [ ] Kingdom of Kakongo
-- [ ] Kingdom of Ndongo
-- [ ] Kingdom of Loango
+- [ ] Kingdom of Kakongo  — 🏴 flag found (Flag Check → States)
+- [ ] Kingdom of Ndongo  — 🏴 flag found (Flag Check → States)
+- [ ] Kingdom of Loango  — 🏴 flag found (Flag Check → States)
 - [ ] Kingdom of Luba
 - [ ] Yaka Kingdom
 - [ ] Kingdom of Lunda
 - [ ] Kasanje Kingdom
 - [ ] Kuba Kingdom
 - [ ] Kingdom of Matamba
-- [ ] Mbunda Kingdom
+- [ ] Mbunda Kingdom  — 🏴 flag found (Flag Check → States)
 - [ ] Kazembe Kingdom
-- [ ] Chokwe Kingdom
+- [ ] Chokwe Kingdom  — 🏴 flag found (Flag Check → States)
 - [ ] Yeke Kingdom
 - [x] International Association of the Congo
 - [ ] Sultanate of Utetera
 - [x] Congo Free State
 - [x] State of Katanga
 - [x] South Kasai
-- [ ] Maquis of Fizi
+- [ ] Maquis of Fizi  — 🏴 flag found (Flag Check → States)
 - [x] People's Republic of the Congo
 - [x] Republic of Zaire
-- [ ] Republic of Cabinda
+- [ ] Republic of Cabinda  — 🏴 flag found (Flag Check → States)
 - [x] Central African Empire
-- [ ] Republic of Logone
+- [ ] Republic of Logone  — 🏴 flag found (Flag Check → States)
 
 ## Southern Africa (4/37 covered)
 
@@ -249,7 +252,7 @@ Source: Wikipedia "List of former sovereign states" (Modern states by geography 
 - [ ] Mthethwa Empire
 - [ ] Graaff-Reinet
 - [ ] Swellendam
-- [ ] Griqualand West
+- [ ] Griqualand West  — 🏴 flag found (Flag Check → States)
 - [ ] Zulu Kingdom
 - [ ] Kingdom of Mthwakazi
 - [ ] Gaza Empire
@@ -257,27 +260,27 @@ Source: Wikipedia "List of former sovereign states" (Modern states by geography 
 - [ ] Winburg Republic
 - [ ] Ndebele Kingdom
 - [ ] Republic of Winburg-Potchefstroom
-- [ ] Natalia Republic
+- [ ] Natalia Republic  — 🏴 flag found (Flag Check → States)
 - [ ] Andries-Ohringstad Republic
-- [ ] Republic of Zoutpansberg
+- [ ] Republic of Zoutpansberg  — 🏴 flag found (Flag Check → States)
 - [x] South African Republic
 - [x] Orange Free State
 - [ ] Utrecht Republic
 - [ ] Lydenburg Republic
-- [ ] Griqualand East
+- [ ] Griqualand East  — 🏴 flag found (Flag Check → States)
 - [ ] Klipdrift Republic
-- [ ] Free Republic of Rehoboth
-- [ ] State of Goshen
-- [ ] Republic of Stellaland
-- [ ] Nieuwe Republiek
-- [ ] Republic of Upingtonia
-- [ ] Klein Vrystaat
+- [ ] Free Republic of Rehoboth  — 🏴 flag found (Flag Check → States)
+- [ ] State of Goshen  — 🏴 flag found (Flag Check → States)
+- [ ] Republic of Stellaland  — 🏴 flag found (Flag Check → States)
+- [ ] Nieuwe Republiek  — 🏴 flag found (Flag Check → States)
+- [ ] Republic of Upingtonia  — 🏴 flag found (Flag Check → States)
+- [ ] Klein Vrystaat  — 🏴 flag found (Flag Check → States)
 - [x] Union of South Africa
 - [x] Rhodesia
-- [ ] Transkei
-- [ ] Bophuthatswana
+- [ ] Transkei  — 🏴 flag found (Flag Check → States)
+- [ ] Bophuthatswana  — 🏴 flag found (Flag Check → States)
 - [ ] Venda
-- [ ] Ciskei
+- [ ] Ciskei  — 🏴 flag found (Flag Check → States)
 
 ## Central Asia (7/20 covered)
 
@@ -287,18 +290,18 @@ Source: Wikipedia "List of former sovereign states" (Modern states by geography 
 - [ ] Nogai Horde
 - [x] Kazakh Khanate
 - [x] Khanate of Bukhara
-- [ ] Khanate of Khiva
+- [ ] Khanate of Khiva  — 🏴 flag found (Flag Check → States)
 - [ ] Yarkent Khanate
 - [ ] Dzungar Khanate
-- [ ] Khanate of Kokand
+- [ ] Khanate of Kokand  — 🏴 flag found (Flag Check → States)
 - [x] Emirate of Bukhara
 - [ ] Bukey Horde
 - [ ] Kashgar Emirate
 - [x] Alash Autonomy
-- [ ] Turkestan Autonomy
-- [ ] Confederated Republic of Altai
-- [ ] Bukharan People's Soviet Republic
-- [ ] Khorezm People's Soviet Republic
+- [ ] Turkestan Autonomy  — 🏴 flag found (Flag Check → States)
+- [ ] Confederated Republic of Altai  — 🏴 flag found (Flag Check → States)
+- [ ] Bukharan People's Soviet Republic  — 🏴 flag found (Flag Check → States)
+- [ ] Khorezm People's Soviet Republic  — 🏴 flag found (Flag Check → States)
 - [x] First East Turkestan Republic
 - [x] Second East Turkestan Republic
 
@@ -316,36 +319,36 @@ Source: Wikipedia "List of former sovereign states" (Modern states by geography 
 - [ ] Guangzhou Commune
 - [ ] Hunan Soviet
 - [x] Soviet Zone of China
-- [ ] Jiangxi–Fujian Soviet
+- [ ] Jiangxi–Fujian Soviet  — 🏴 flag found (Flag Check → States)
 - [ ] Jiangxi Soviet
 - [x] People's Revolutionary Government of the Republic of China
-- [ ] East Hebei Autonomous Government
+- [ ] East Hebei Autonomous Government  — 🏴 flag found (Flag Check → States)
 - [x] Provisional Government of the Republic of China
-- [ ] Reformed Government of the Republic of China
+- [ ] Reformed Government of the Republic of China  — 🏴 flag found (Flag Check → States)
 - [ ] Shanghai Great Way Government
 - [ ] Reorganized National Government of the Republic of China (Wang Jingwei Regime)
 - [x] Tibet
 - [x] Tibetan states
-- [ ] Khoshut Khanate
+- [ ] Khoshut Khanate  — 🏴 flag found (Flag Check → States)
 - [x] Tibet under Ganden Phodrang government
 - [x] Tibetan People's Republic
 - [ ] Manchuria
 - [x] Korean People's Association in Manchuria
-- [ ] Manchukuo
+- [ ] Manchukuo  — 🏴 flag found (Flag Check → States)
 - [ ] Outer Mongolia
 - [x] Bogd Khanate of Mongolia
 - [x] Inner Mongolia
 - [x] Inner Mongolian People's Republic
 - [x] Mongolian Republic of Alxa
 - [x] Taiwan
-- [ ] Republic of Formosa
+- [ ] Republic of Formosa  — 🏴 flag found (Flag Check → States)
 - [x] Tuva
-- [ ] Uryankhay Krai
-- [ ] Tuvan People's Republic
+- [ ] Uryankhay Krai  — 🏴 flag found (Flag Check → States)
+- [ ] Tuvan People's Republic  — 🏴 flag found (Flag Check → States)
 - [ ] Ashikaga shogunate
-- [ ] Ryukyu Kingdom
+- [ ] Ryukyu Kingdom  — 🏴 flag found (Flag Check → States)
 - [ ] Azuchi–Momoyama
-- [ ] Tokugawa shogunate
+- [ ] Tokugawa shogunate  — 🏴 flag found (Flag Check → States)
 - [x] Empire of Japan
 - [ ] Republic of Ezo
 - [x] Allied Occupied Japan
@@ -357,17 +360,17 @@ Source: Wikipedia "List of former sovereign states" (Modern states by geography 
 - [x] People's Committee of North Korea
 - [x] First Republic of Korea
 - [x] Second Republic of Korea
-- [ ] Supreme Council for National Reconstruction
+- [ ] Supreme Council for National Reconstruction  — 🏴 flag found (Flag Check → States)
 - [x] Third Republic of Korea
 - [x] Fourth Republic of Korea
 - [x] Fifth Republic of Korea
 
 ## West Asia (47/88 covered)
 
-- [ ] Hotak dynasty
-- [ ] Durrani Empire
+- [ ] Hotak dynasty  — 🏴 flag found (Flag Check → States)
+- [ ] Durrani Empire  — 🏴 flag found (Flag Check → States)
 - [ ] Herat
-- [ ] Principality of Kandahar
+- [ ] Principality of Kandahar  — 🏴 flag found (Flag Check → States)
 - [x] Principality of Kabul
 - [x] Emirate of Afghanistan
 - [x] Kingdom of Afghanistan
@@ -379,8 +382,8 @@ Source: Wikipedia "List of former sovereign states" (Modern states by geography 
 - [x] Islamic Emirate of Badakhshan
 - [x] Transitional Islamic State of Afghanistan
 - [x] Islamic Republic of Afghanistan
-- [ ] Khanate of Kalat
-- [ ] Empire of Trebizond
+- [ ] Khanate of Kalat  — 🏴 flag found (Flag Check → States)
+- [ ] Empire of Trebizond  — 🏴 flag found (Flag Check → States)
 - [ ] Emirate of Hasankeyf
 - [x] Beylik of Karaman
 - [x] Beylik of Candar
@@ -391,16 +394,16 @@ Source: Wikipedia "List of former sovereign states" (Modern states by geography 
 - [ ] Ramadanid Emirate
 - [ ] Kara Koyunlu
 - [ ] Aq Qoyunlu
-- [ ] Republic of Van
-- [ ] Kars Republic
-- [ ] Republic of Ararat
+- [ ] Republic of Van  — 🏴 flag found (Flag Check → States)
+- [ ] Kars Republic  — 🏴 flag found (Flag Check → States)
+- [ ] Republic of Ararat  — 🏴 flag found (Flag Check → States)
 - [x] Kingdom of Cyprus
 - [x] Turkish Federated State of Cyprus
-- [ ] Kingdom of Kurdistan
+- [ ] Kingdom of Kurdistan  — 🏴 flag found (Flag Check → States)
 - [x] Hashemite Kingdom of Iraq
-- [ ] Arab Federation
+- [ ] Arab Federation  — 🏴 flag found (Flag Check → States)
 - [x] First Iraqi Republic
-- [ ] Ba'athist Iraq
+- [ ] Ba'athist Iraq  — 🏴 flag found (Flag Check → States)
 - [ ] Baduspanids
 - [ ] Mihrabanid dynasty
 - [ ] Afrasiyab dynasty
@@ -419,21 +422,21 @@ Source: Wikipedia "List of former sovereign states" (Modern states by geography 
 - [x] Emirate of Mount Lebanon
 - [x] Arab Kingdom of Syria
 - [ ] All-Palestine Government
-- [ ] Free Lebanon State
+- [ ] Free Lebanon State  — 🏴 flag found (Flag Check → States)
 - [x] Islamic State
 - [x] Imamate of Oman
 - [x] Kathiri Sultanate in Hadhramaut
-- [ ] Emirate of Dhala
-- [ ] Fadhli Sultanate
-- [ ] Mahra State of Qishn and Socotra
-- [ ] Sheikhdom of Kuwait
-- [ ] Wahidi Sultanate of Balhaf
-- [ ] Wahidi Sultanate of Haban
+- [ ] Emirate of Dhala  — 🏴 flag found (Flag Check → States)
+- [ ] Fadhli Sultanate  — 🏴 flag found (Flag Check → States)
+- [ ] Mahra State of Qishn and Socotra  — 🏴 flag found (Flag Check → States)
+- [ ] Sheikhdom of Kuwait  — 🏴 flag found (Flag Check → States)
+- [ ] Wahidi Sultanate of Balhaf  — 🏴 flag found (Flag Check → States)
+- [ ] Wahidi Sultanate of Haban  — 🏴 flag found (Flag Check → States)
 - [ ] Bani Khalid Emirate
-- [ ] Emirate of Beihan
+- [ ] Emirate of Beihan  — 🏴 flag found (Flag Check → States)
 - [x] Omani Empire
 - [x] Sultanate of Lahej
-- [ ] Emirate of Diriyah
+- [ ] Emirate of Diriyah  — 🏴 flag found (Flag Check → States)
 - [x] Sultanate of Upper Yafa
 - [x] Sultanate of Lower Yafa
 - [x] Emirate of Nejd
@@ -441,9 +444,9 @@ Source: Wikipedia "List of former sovereign states" (Modern states by geography 
 - [x] Emirate of Jabal Shammar
 - [ ] Qu'aiti Sultanate in Hadhramaut
 - [x] Emirate of Riyadh
-- [ ] Emirate of Asir
-- [ ] Emirate of Nejd and Hasa
-- [ ] Sheikdom of Upper Asir
+- [ ] Emirate of Asir  — 🏴 flag found (Flag Check → States)
+- [ ] Emirate of Nejd and Hasa  — 🏴 flag found (Flag Check → States)
+- [ ] Sheikdom of Upper Asir  — 🏴 flag found (Flag Check → States)
 - [x] Kingdom of Hejaz
 - [x] Mutawakkilite Kingdom of Yemen
 - [x] Sultanate of Nejd
@@ -458,8 +461,8 @@ Source: Wikipedia "List of former sovereign states" (Modern states by geography 
 - [ ] Jaintia Kingdom
 - [ ] Laur Kingdom
 - [ ] Udaipur State
-- [ ] Garhwal Kingdom
-- [ ] Kingdom of Cochin
+- [ ] Garhwal Kingdom  — 🏴 flag found (Flag Check → States)
+- [ ] Kingdom of Cochin  — 🏴 flag found (Flag Check → States)
 - [x] Sultanate of Maldives
 - [ ] Delhi Sultanate
 - [x] Bengal Sultanate
@@ -468,14 +471,14 @@ Source: Wikipedia "List of former sovereign states" (Modern states by geography 
 - [ ] Manikya dynasty
 - [ ] Pratapgarh Kingdom
 - [ ] Bijapur Sultanate
-- [ ] Sultanate of Golconda
+- [ ] Sultanate of Golconda  — 🏴 flag found (Flag Check → States)
 - [x] Mughal Empire
 - [ ] Sur Empire
 - [ ] Sikkim
 - [x] Maratha Confederacy
 - [x] Bengal Subah
-- [ ] Hyderabad State
-- [ ] Travancore
+- [ ] Hyderabad State  — 🏴 flag found (Flag Check → States)
+- [ ] Travancore  — 🏴 flag found (Flag Check → States)
 - [x] Sikh Empire
 - [x] Provisional Government of Free India
 - [x] United Suvadive Republic
@@ -488,24 +491,24 @@ Source: Wikipedia "List of former sovereign states" (Modern states by geography 
 - [x] Democratic Kampuchea
 - [x] People's Republic of Kampuchea
 - [x] Laos
-- [ ] Kingdom of Vientiane
-- [ ] Kingdom of Champasak
+- [ ] Kingdom of Vientiane  — 🏴 flag found (Flag Check → States)
+- [ ] Kingdom of Champasak  — 🏴 flag found (Flag Check → States)
 - [x] Kingdom of Luang Phrabang
-- [ ] Lao Issara
+- [ ] Lao Issara  — 🏴 flag found (Flag Check → States)
 - [x] Kingdom of Laos
 - [x] Vietnam
 - [ ] Đại Việt
 - [ ] Nghệ-Tĩnh Soviet
 - [x] Empire of Vietnam
 - [x] Democratic Republic of Vietnam
-- [ ] Republic of Cochinchina
-- [ ] Sip Song Chau Tai
+- [ ] Republic of Cochinchina  — 🏴 flag found (Flag Check → States)
+- [ ] Sip Song Chau Tai  — 🏴 flag found (Flag Check → States)
 - [x] Provisional Central Government of Vietnam
 - [x] State of Vietnam
 - [x] Republic of Vietnam
 - [x] Republic of South Vietnam
 - [x] Myanmar
-- [ ] Hanthawaddy kingdom
+- [ ] Hanthawaddy kingdom  — 🏴 flag found (Flag Check → States)
 - [ ] Pegu
 - [ ] Shan States
 - [ ] Arakan
@@ -519,34 +522,34 @@ Source: Wikipedia "List of former sovereign states" (Modern states by geography 
 - [ ] Nakhon Si Thammarat Kingdom
 - [ ] Lan Na
 - [x] Ayutthaya Kingdom
-- [ ] Pattani kingdom
+- [ ] Pattani kingdom  — 🏴 flag found (Flag Check → States)
 - [ ] Sultanate of Singora
-- [ ] Thonburi Kingdom
+- [ ] Thonburi Kingdom  — 🏴 flag found (Flag Check → States)
 - [x] Kingdom of Siam
 - [ ] Kingdom of Chiang Mai
-- [ ] Kingdom of Setul Mambang Segara
+- [ ] Kingdom of Setul Mambang Segara  — 🏴 flag found (Flag Check → States)
 - [x] Indonesia
 - [x] United States of Indonesia
 - [ ] West Kalimantan
 - [x] Great Dayak
-- [ ] State of East Sumatra
-- [ ] State of East Java
-- [ ] State of Madura
-- [ ] State of Pasundan
+- [ ] State of East Sumatra  — 🏴 flag found (Flag Check → States)
+- [ ] State of East Java  — 🏴 flag found (Flag Check → States)
+- [ ] State of Madura  — 🏴 flag found (Flag Check → States)
+- [ ] State of Pasundan  — 🏴 flag found (Flag Check → States)
 - [x] State of South Sumatra
 - [x] Sumatra
-- [ ] Sultanate of Langkat
+- [ ] Sultanate of Langkat  — 🏴 flag found (Flag Check → States)
 - [x] Sultanate of Deli
-- [ ] Jambi Sultanate
-- [ ] Palembang Sultanate
-- [ ] Sultanate of Siak Sri Indrapura
-- [ ] Sultanate of Serdang
+- [ ] Jambi Sultanate  — 🏴 flag found (Flag Check → States)
+- [ ] Palembang Sultanate  — 🏴 flag found (Flag Check → States)
+- [ ] Sultanate of Siak Sri Indrapura  — 🏴 flag found (Flag Check → States)
+- [ ] Sultanate of Serdang  — 🏴 flag found (Flag Check → States)
 - [x] Java
 - [ ] Sultanate of Cirebon
 - [ ] Sultanate of Demak
 - [ ] Sultanate of Banten
 - [ ] Kingdom of Pajang
-- [ ] Sultanate of Mataram
+- [ ] Sultanate of Mataram  — 🏴 flag found (Flag Check → States)
 - [x] Lesser Sunda Islands
 - [ ] Kingdom of Larantuka
 - [ ] Bima Sultanate
@@ -560,29 +563,29 @@ Source: Wikipedia "List of former sovereign states" (Modern states by geography 
 - [x] Borneo
 - [ ] Berau Sultanate
 - [ ] Kutai
-- [ ] Bruneian Empire
-- [ ] Sultanate of Banjar
-- [ ] Sambas Sultanate
-- [ ] Sultanate of Bulungan
-- [ ] Pontianak Sultanate
-- [ ] Lanfang Republic
+- [ ] Bruneian Empire  — 🏴 flag found (Flag Check → States)
+- [ ] Sultanate of Banjar  — 🏴 flag found (Flag Check → States)
+- [ ] Sambas Sultanate  — 🏴 flag found (Flag Check → States)
+- [ ] Sultanate of Bulungan  — 🏴 flag found (Flag Check → States)
+- [ ] Pontianak Sultanate  — 🏴 flag found (Flag Check → States)
+- [ ] Lanfang Republic  — 🏴 flag found (Flag Check → States)
 - [x] Kingdom of Sarawak
 - [ ] Riau Islands
 - [x] Malaysia
 - [ ] Sultanate of Malacca
 - [ ] Pahang Sultanate
 - [ ] Johor Sultanate
-- [ ] Pahang Kingdom
+- [ ] Pahang Kingdom  — 🏴 flag found (Flag Check → States)
 - [x] Malayan Union
 - [x] Federation of Malaya
 - [x] Philippines
-- [ ] Sultanate of Maguindanao
+- [ ] Sultanate of Maguindanao  — 🏴 flag found (Flag Check → States)
 - [x] Sovereign Tagalog Nation
 - [ ] Tejeros Revolutionary Government
-- [ ] Republic of Negros
+- [ ] Republic of Negros  — 🏴 flag found (Flag Check → States)
 - [x] Cantonal Government of Negros
 - [x] First Philippine Republic
-- [ ] Tagalog Republic
+- [ ] Tagalog Republic  — 🏴 flag found (Flag Check → States)
 - [x] Second Philippine Republic
 
 ## Europe (1/1 covered)
@@ -599,20 +602,20 @@ Source: Wikipedia "List of former sovereign states" (Modern states by geography 
 
 ## Modern France (9/19 covered)
 
-- [ ] Viscounty of Béarn
+- [ ] Viscounty of Béarn  — 🏴 flag found (Flag Check → States)
 - [x] Kingdom of France
-- [ ] Duchy of Brittany
-- [ ] Duchy of Lorraine
+- [ ] Duchy of Brittany  — 🏴 flag found (Flag Check → States)
+- [ ] Duchy of Lorraine  — 🏴 flag found (Flag Check → States)
 - [x] County of Foix
-- [ ] Kingdom of Corsica
-- [ ] Corsican Republic
-- [ ] Anglo-Corsican Kingdom
+- [ ] Kingdom of Corsica  — 🏴 flag found (Flag Check → States)
+- [ ] Corsican Republic  — 🏴 flag found (Flag Check → States)
+- [ ] Anglo-Corsican Kingdom  — 🏴 flag found (Flag Check → States)
 - [x] First French Empire
 - [x] Second French Empire
 - [x] Bourbon Restoration
-- [ ] July Monarchy
+- [ ] July Monarchy  — 🏴 flag found (Flag Check → States)
 - [x] French Second Republic
-- [ ] Free Cities of Menton and Roquebrune
+- [ ] Free Cities of Menton and Roquebrune  — 🏴 flag found (Flag Check → States)
 - [x] Paris Commune
 - [x] Third French Republic
 - [ ] Alsace-Lorraine Soviet Republic

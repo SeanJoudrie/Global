@@ -4,6 +4,7 @@ import type { DiagFlag, MissingFlag } from "../data/flagDiagnostics"
 import { HISTORY_NOTES } from "../data/historyNotes"
 import type { HistoryNote } from "../data/historyNotes"
 import { ADDED_FLAGS } from "../data/addedFlags"
+import { STATE_CANDIDATES } from "../data/formerStatesCandidates"
 import { fp } from "../data/codex"
 import { T, ACCENT, FONT, tint } from "../ui/tokens"
 import { ScreenHeader } from "./ui"
@@ -113,7 +114,7 @@ const ALL_FIXED = [...RECENT_FLAGS, ...FIXED_FLAGS]
 const addedUrl = (file: string) => file.startsWith("/") || file.startsWith("http") ? file : fp(file)
 
 export default function FlagDiagnosticsScreen({ onBack }: Props) {
-  const [tab, setTab] = useState<"added" | "missing" | "fixed" | "notes">("added")
+  const [tab, setTab] = useState<"added" | "states" | "missing" | "fixed" | "notes">("added")
   // selections: arg -> set of chosen candidate filenames
   const [picks, setPicks] = useState<Record<string, Set<string>>>({})
   const [submitText, setSubmitText] = useState<string | null>(null)
@@ -147,7 +148,7 @@ export default function FlagDiagnosticsScreen({ onBack }: Props) {
     <div style={{ position: "fixed", inset: 0, background: T.bg, color: T.text, zIndex: 1, display: "flex", flexDirection: "column" }}>
       <ScreenHeader title="Flag Check" subtitle="Developer use only" onBack={onBack} />
       <div style={{ display: "flex", gap: 6, padding: "0 12px 10px" }}>
-        {([["added", `Added (${ADDED_FLAGS.length})`], ["missing", `Missing (${MISSING_FLAGS.length})`], ["fixed", `Fixed (${ALL_FIXED.length})`], ["notes", `Notes (${HISTORY_NOTES.length})`]] as const).map(([id, label]) => (
+        {([["added", `Added (${ADDED_FLAGS.length})`], ["states", `States (${STATE_CANDIDATES.length})`], ["missing", `Missing (${MISSING_FLAGS.length})`], ["fixed", `Fixed (${ALL_FIXED.length})`], ["notes", `Notes (${HISTORY_NOTES.length})`]] as const).map(([id, label]) => (
           <button key={id} onClick={() => setTab(id)} style={{
             flex: 1, padding: "8px 0", borderRadius: 10, fontSize: 11.5, fontWeight: 600, cursor: "pointer",
             background: tab === id ? ACCENT.codex : T.surface, color: tab === id ? T.onAccent : T.muted,
@@ -158,6 +159,8 @@ export default function FlagDiagnosticsScreen({ onBack }: Props) {
       <div style={{ padding: "0 12px 8px", fontSize: 11, color: T.muted, lineHeight: 1.4 }}>
         {tab === "added"
           ? "Historical predecessor flags added to the Codex in today's sweep. Each should show “loads ✓”. The colonial ones intentionally show the ruling country's own flag (France, Portugal, the Union Jack…)."
+          : tab === "states"
+          ? "Former sovereign states from Wikipedia's master list that HAVE a flag but aren't in the Codex yet — its real lead image is shown so you can pick which to promote. (The other ~527 uncovered states are genuinely flag-less: ancient empires, etc.)"
           : tab === "missing"
           ? "Tap the correct flag(s) for each entry (pick more than one if several are right). Then hit Submit at the bottom and send me the copied text."
           : tab === "notes"
@@ -168,6 +171,8 @@ export default function FlagDiagnosticsScreen({ onBack }: Props) {
       <div style={{ flex: 1, overflowY: "auto", WebkitOverflowScrolling: "touch", paddingBottom: tab === "missing" ? 72 : 0 }}>
         {tab === "added"
           ? ADDED_FLAGS.map((a, i) => <FixedTile key={"a" + i} f={{ label: `${a.country} · ${a.era}`, url: addedUrl(a.file) }} />)
+          : tab === "states"
+          ? STATE_CANDIDATES.map((s, i) => <FixedTile key={"s" + i} f={{ label: `${s.name} · ${s.region}`, url: addedUrl(s.file) }} />)
           : tab === "missing"
           ? MISSING_FLAGS.map((f, i) => <MissingRow key={"m" + i} f={f} sel={picks[f.arg] ?? new Set()} toggle={(file) => toggle(f.arg, file)} />)
           : tab === "notes"
