@@ -2870,6 +2870,13 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       label: 'Flag of Namibia',
       note: 'Adopted at independence from South African rule in 1990, assembled from three finalist designs. Its diagonal red band, blue and green triangles, and golden sun reflect the colors of SWAPO.',
     },
+    {
+      fromYear: 1915,
+      toYear: 1990,
+      flagUrl: fp('Flag_of_South_Africa_(1928–1994).svg'),
+      label: 'South West Africa (South African rule)',
+      note: 'After seizing it from Germany in 1915, South Africa governed the territory as South West Africa, eventually flying the orange-white-blue "Oranje-Blanje-Blou." Pretoria refused to relinquish the mandate and extended apartheid into the territory, triggering a decades-long liberation war by SWAPO until independence in 1990 — the last country in mainland Africa to be freed from colonial-style rule.',
+    },
   ],
   LS: [
     {
@@ -2917,6 +2924,13 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       flagUrl: '/flags/mu.svg',
       label: 'The Four Bands',
       note: 'Adopted at independence in 1968 and known as "Les Quatre Bandes," it has four equal horizontal bands of red, blue, yellow, and green — one of very few national flags with four horizontal stripes.',
+    },
+    {
+      fromYear: 1810,
+      toYear: 1968,
+      flagUrl: '/flags/gb.svg',
+      label: 'British Mauritius',
+      note: 'Uninhabited until settlers arrived, Mauritius was held in turn by the Dutch (who hunted the dodo to extinction) and the French before Britain captured it in 1810. It flew the Union Jack as a British colony for over 150 years, its sugar plantations worked first by enslaved Africans and then by indentured labourers from India — the origin of the island\'s Indo-Mauritian majority — until independence in 1968.',
     },
   ],
   SL: [
@@ -2997,6 +3011,13 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       flagUrl: '/flags/st.svg',
       label: 'Flag of São Tomé and Príncipe',
       note: 'Adopted at independence from Portugal in 1975, based on the flag of the MLSTP liberation movement. The two black stars on the yellow band represent the two islands, in pan-African colors.',
+    },
+    {
+      fromYear: 1753,
+      toYear: 1975,
+      flagUrl: '/flags/pt.svg',
+      label: 'Portuguese São Tomé and Príncipe',
+      note: 'These uninhabited equatorial islands were settled by Portugal in the late 1400s and became one of the world\'s first plantation economies — sugar, then coffee and cocoa — worked by enslaved Africans under the Portuguese flag. The islands flew Portugal\'s flag until the 1974 Carnation Revolution opened the door to independence in 1975.',
     },
   ],
   GQ: [
@@ -3260,6 +3281,13 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       label: 'Flag of Uganda',
       note: 'Adopted at independence from Britain in 1962, with six black-yellow-red stripes and a central white disc bearing the grey crowned crane — the national bird, facing the hoist.',
     },
+    {
+      fromYear: 1894,
+      toYear: 1962,
+      flagUrl: '/flags/gb.svg',
+      label: 'Uganda Protectorate',
+      note: 'Uganda became a British protectorate in 1894 and flew the Union Jack until independence in 1962. Because it was governed as a protectorate rather than a settler colony, the powerful kingdom of Buganda and other traditional monarchies survived the colonial period — a legacy that shaped, and complicated, the politics of the independent state.',
+    },
   ],
   KE: [
     {
@@ -3268,6 +3296,13 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       flagUrl: '/flags/ke.svg',
       label: 'Flag of Kenya',
       note: 'Adopted at independence in 1963: black, red, and green bands separated by white fimbriations, with a central Maasai shield and crossed spears symbolizing the defence of freedom.',
+    },
+    {
+      fromYear: 1895,
+      toYear: 1963,
+      flagUrl: '/flags/gb.svg',
+      label: 'British East Africa / Kenya Colony',
+      note: 'Britain ran the territory as the East Africa Protectorate from 1895 and then Kenya Colony from 1920, flying the Union Jack. The fertile "White Highlands" were reserved for European settlers, fuelling the grievances behind the 1950s Mau Mau uprising, whose brutal suppression hastened the path to independence in 1963.',
     },
   ],
   TZ: [
@@ -3352,6 +3387,13 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       flagUrl: '/flags/mg.svg',
       label: 'Flag of Madagascar',
       note: 'Adopted in 1958 as the Malagasy Republic gained autonomy within the French Community. White and red recall the historic Merina kingdom, while green honors the Hova commoners.',
+    },
+    {
+      fromYear: 1897,
+      toYear: 1958,
+      flagUrl: '/flags/fr.svg',
+      label: 'French Madagascar',
+      note: 'France conquered the independent Kingdom of Madagascar in 1895–96, abolished the monarchy, and ruled the island as a colony under the French tricolor. A 1947 nationalist revolt was crushed with tens of thousands of deaths, but the island\'s own white-and-red royal colours survived to be woven into the flag adopted as autonomy returned in 1958.',
     },
   ],
   DZ: [
@@ -3458,6 +3500,13 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       label: 'Flag of South Sudan',
       note: 'Based on the SPLM liberation banner and first adopted in 2005 under the peace agreement, it carried over unchanged when South Sudan became the world\'s newest country in 2011.',
     },
+    {
+      fromYear: 1956,
+      toYear: 2011,
+      flagUrl: '/flags/sd.svg',
+      label: 'Part of Sudan',
+      note: 'The mostly Christian and animist south was governed as part of Arab-Muslim Sudan from its 1956 independence, flying the Sudanese flag. Two long civil wars over that domination — the second alone killing some two million people — ended in a 2005 peace deal that granted a referendum, and in 2011 the south voted almost unanimously to secede as South Sudan.',
+    },
   ],
   ET: [
     {
@@ -3542,6 +3591,13 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       flagUrl: '/flags/so.svg',
       label: 'Flag of Somalia',
       note: 'Designed by Mohammed Awale Liban and adopted in 1954 during the UN trusteeship, with a light-blue field honoring the UN and a white Star of Unity for the five regions inhabited by ethnic Somalis.',
+    },
+    {
+      fromYear: 1889,
+      toYear: 1960,
+      flagUrl: '/flags/it.svg',
+      label: 'Italian Somaliland',
+      note: 'The south was Italian Somaliland from 1889, flying the Italian flag (and briefly part of Mussolini\'s Italian East Africa). After WWII it returned to Italy as a UN trust territory, where the modern star flag was born in 1954. At independence in 1960 it united with the separate British Somaliland in the north to form Somalia — the two colonial legacies the white five-pointed Star of Unity was meant to bind together.',
     },
   ],
   NG: [
@@ -3646,6 +3702,13 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       label: 'Flag of Niger',
       note: 'Adopted in 1959 shortly before independence, with a central orange disc for the sun. Green stands for hope and the river south, white for purity, and orange for the Sahara. It has never changed.',
     },
+    {
+      fromYear: 1922,
+      toYear: 1959,
+      flagUrl: '/flags/fr.svg',
+      label: 'French Niger',
+      note: 'A vast, mostly Saharan colony within French West Africa, Niger flew the French tricolor. Conquest met fierce resistance well into the 20th century, and France invested little in the territory — leaving one of the world\'s poorest nations at the independence it reached in 1960 with its own sun-disc flag.',
+    },
   ],
   BJ: [
     {
@@ -3701,6 +3764,13 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       label: 'Flag of Guinea',
       note: 'Adopted in 1958 after Guinea alone rejected the French Community and chose immediate independence under Sékou Touré. The red-yellow-green tricolour mirrors Ghana\'s pan-African colors and has never changed.',
     },
+    {
+      fromYear: 1891,
+      toYear: 1958,
+      flagUrl: '/flags/fr.svg',
+      label: 'French Guinea',
+      note: 'A colony within French West Africa, French Guinea flew the French tricolor. In the 1958 referendum it became the only territory to vote "Non" to de Gaulle\'s French Community and chose immediate independence — to which an enraged France responded by stripping the country of everything it could, even ripping out telephone wires as it withdrew.',
+    },
   ],
   GW: [
     {
@@ -3709,6 +3779,13 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       flagUrl: '/flags/gw.svg',
       label: 'Flag of Guinea-Bissau',
       note: 'Adopted at the 1973 declaration of independence from Portugal, nearly identical to the PAIGC liberation party\'s flag, with a red hoist band bearing a black star for African unity. It has never been changed.',
+    },
+    {
+      fromYear: 1474,
+      toYear: 1974,
+      flagUrl: '/flags/pt.svg',
+      label: 'Portuguese Guinea',
+      note: 'Held by Portugal for five centuries as Portuguese Guinea — long a hub of the transatlantic slave trade — under the Portuguese flag. Amílcar Cabral\'s PAIGC fought one of Africa\'s most effective liberation wars here, controlling much of the countryside and declaring independence in 1973, which Portugal recognised in 1974 after the Carnation Revolution.',
     },
   ],
 
