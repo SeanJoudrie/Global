@@ -987,37 +987,98 @@ function OrgCodexSection() {
   return <GallerySection title="International Organizations" icon={Building2} color={T.green} blurb={`${total} flags · UN, NATO, EU, AU, FIFA, the Olympics…`} regions={regions} />
 }
 
-// ── Mega Codex A–Z — every flag in the app, alphabetical, grouped by letter ──
+// ── Mega Codex — a full-screen wall of every flag in the app ──
+// Aggregated once at module load: countries, identity, cities, ethnic, extinct,
+// org and historical flags, deduped by display name.
+function gatherAllFlags(): { title: string; url: string }[] {
+  const seen = new Set<string>()
+  const all: { title: string; url: string }[] = []
+  const push = (title: string, url: string) => {
+    const t = (title || '').trim()
+    if (!t || !url) return
+    const key = t.toLowerCase()
+    if (seen.has(key)) return
+    seen.add(key); all.push({ title: t, url })
+  }
+  FLAGS.forEach(f => push(f.name, f.flagUrl))
+  IDENTITY_FLAGS.forEach(f => push(f.name, f.flagUrl))
+  US_CITY_FLAGS.forEach(f => push(f.name, f.flagUrl))
+  ETHNIC_FLAGS.forEach(r => r.groups.forEach(g => g.items.forEach(it => push(it.name, fp(it.file)))))
+  EXTINCT_STATES.forEach(r => r.items.forEach(it => push(stripFlagOf(splitParen(it.name)[0]), fp(it.file))))
+  ORG_FLAGS.forEach(r => r.groups.forEach(g => g.items.forEach(it => push(stripFlagOf(it.name), fp(it.file)))))
+  Object.values(CODEX).forEach(e => e.flagHistory.forEach(h => { push(h.label, h.flagUrl); h.parallel?.forEach(p => push(p.label, p.flagUrl)) }))
+  return all
+}
+const ALL_FLAGS_AZ = gatherAllFlags()
+
+const MEGA_TILE: React.CSSProperties = {
+  contentVisibility: 'auto', containIntrinsicSize: '0 84px',
+  display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 3,
+} as React.CSSProperties
+
+// The overwhelmingly-massive full-page wall, opened from the Codex.
+function MegaCodexWall({ onClose }: { onClose: () => void }) {
+  const [sort, setSort] = useState<'az' | 'za' | 'rand'>('az')
+  const flags = useMemo(() => {
+    const a = [...ALL_FLAGS_AZ]
+    if (sort === 'az') a.sort((x, y) => x.title.localeCompare(y.title))
+    else if (sort === 'za') a.sort((x, y) => y.title.localeCompare(x.title))
+    else for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1));[a[i], a[j]] = [a[j], a[i]] }
+    return a
+  }, [sort])
+  return (
+    <div style={{ position: 'fixed', inset: 0, zIndex: 2000, background: T.bg, color: T.text, display: 'flex', flexDirection: 'column' }}>
+      <div style={{ flexShrink: 0, padding: '12px 12px 10px', borderBottom: `1px solid ${T.line}`, display: 'flex', alignItems: 'center', gap: 10, background: T.bg }}>
+        <button onClick={onClose} aria-label="Close" className="geo-tap"
+          style={{ width: 38, height: 38, flexShrink: 0, borderRadius: 999, background: T.surface, border: `1px solid ${T.line}`, color: T.muted, fontSize: 22, lineHeight: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>‹</button>
+        <div style={{ flex: 1, minWidth: 0 }}>
+          <div className="geo-display" style={{ fontWeight: 800, fontSize: 18, color: T.text, lineHeight: 1.1 }}>Mega Codex</div>
+          <div style={{ fontSize: 11, color: T.muted }}>Every flag in the app · {ALL_FLAGS_AZ.length}</div>
+        </div>
+        <div style={{ display: 'flex', gap: 3, background: T.surface, borderRadius: 999, padding: 3, border: `1px solid ${T.line}`, flexShrink: 0 }}>
+          {([['az', 'A–Z'], ['za', 'Z–A'], ['rand', 'Shuffle']] as const).map(([k, label]) => (
+            <button key={k} onClick={() => setSort(k)}
+              style={{ fontSize: 10.5, fontWeight: 700, padding: '5px 9px', borderRadius: 999, border: 'none', cursor: 'pointer', background: sort === k ? ACCENT.codex : 'transparent', color: sort === k ? T.onAccent : T.muted }}>{label}</button>
+          ))}
+        </div>
+      </div>
+      <div style={{ flex: 1, overflowY: 'auto', WebkitOverflowScrolling: 'touch', padding: 8 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(70px, 1fr))', gap: 8 }}>
+          {flags.map((f, i) => (
+            <div key={i} style={MEGA_TILE}>
+              <div style={{ width: '100%', aspectRatio: '3/2', borderRadius: 4, overflow: 'hidden', border: `1px solid ${T.line}`, background: T.surfaceHi, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <img src={galleryThumb(f.url)} alt={f.title} loading="lazy" decoding="async"
+                  style={{ width: '100%', height: '100%', objectFit: 'contain' }}
+                  onError={e => { (e.target as HTMLImageElement).style.visibility = 'hidden' }} />
+              </div>
+              <span style={{ fontSize: 8, color: T.muted, textAlign: 'center', lineHeight: 1.15, maxHeight: 19, overflow: 'hidden', wordBreak: 'break-word' }}>{f.title}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  )
+}
+
+// Codex entry that opens the Mega Codex wall as a full page.
 function MegaCodexSection() {
-  const regions: GRegion[] = useMemo(() => {
-    const seen = new Set<string>()
-    const all: { title: string; file: string }[] = []
-    const push = (title: string, url: string) => {
-      const t = (title || '').trim()
-      if (!t || !url) return
-      const key = t.toLowerCase()
-      if (seen.has(key)) return
-      seen.add(key); all.push({ title: t, file: url })
-    }
-    FLAGS.forEach(f => push(f.name, f.flagUrl))
-    IDENTITY_FLAGS.forEach(f => push(f.name, f.flagUrl))
-    US_CITY_FLAGS.forEach(f => push(f.name, f.flagUrl))
-    ETHNIC_FLAGS.forEach(r => r.groups.forEach(g => g.items.forEach(it => push(it.name, fp(it.file)))))
-    EXTINCT_STATES.forEach(r => r.items.forEach(it => push(stripFlagOf(splitParen(it.name)[0]), fp(it.file))))
-    ORG_FLAGS.forEach(r => r.groups.forEach(g => g.items.forEach(it => push(stripFlagOf(it.name), fp(it.file)))))
-    Object.values(CODEX).forEach(e => e.flagHistory.forEach(h => { push(h.label, h.flagUrl); h.parallel?.forEach(p => push(p.label, p.flagUrl)) }))
-    all.sort((a, b) => a.title.localeCompare(b.title))
-    const groups = new Map<string, GRow[]>()
-    for (const f of all) {
-      const c = f.title[0].toUpperCase()
-      const L = /[A-Z]/.test(c) ? c : '#'
-      if (!groups.has(L)) groups.set(L, [])
-      groups.get(L)!.push({ file: f.file, title: f.title, detail: '' })
-    }
-    return [...groups.keys()].sort().map(L => ({ label: L, groups: [{ label: '', items: groups.get(L)! }] }))
-  }, [])
-  const total = regions.reduce((n, r) => n + r.groups[0].items.length, 0)
-  return <GallerySection title="Mega Codex A–Z" icon={Search} color={ACCENT.codex} blurb={`Every flag in the app · ${total} total, alphabetical`} regions={regions} />
+  const [open, setOpen] = useState(false)
+  return (
+    <div className="mt-5">
+      <button onClick={() => setOpen(true)}
+        className="geo-tap w-full flex items-center justify-between px-1 py-3 transition-all active:scale-[0.99]"
+        style={{ background: 'transparent', borderBottom: `1px solid ${T.line}` }}>
+        <div className="text-left">
+          <h3 className="text-sm font-bold uppercase tracking-widest flex items-center gap-2" style={{ color: ACCENT.codex }}>
+            <Search size={15} color={ACCENT.codex} strokeWidth={1.6} absoluteStrokeWidth /> Mega Codex A–Z
+          </h3>
+          <p className="text-xs" style={{ color: T.dim }}>Every flag in the app · {ALL_FLAGS_AZ.length} · tap to open the wall</p>
+        </div>
+        <span style={{ color: ACCENT.codex, fontSize: 18, flexShrink: 0 }}>›</span>
+      </button>
+      {open && <MegaCodexWall onClose={() => setOpen(false)} />}
+    </div>
+  )
 }
 
 // Shown when a subdivision is positively confirmed to have no flag.

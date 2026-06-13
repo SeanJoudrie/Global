@@ -219,7 +219,7 @@ const TAB_META: { key: TabKey; label: string; glyph: string; emoji: string; acce
 export function TabBar({ active, onChange }: { active: TabKey; onChange: (t: TabKey) => void }) {
   return (
     <nav style={{
-      position: "fixed", left: 0, right: 0, bottom: 0, zIndex: 60,
+      position: "relative", zIndex: 60, flexShrink: 0,
       display: "grid", gridTemplateColumns: "repeat(4,1fr)",
       background: IS_CARTO ? "rgba(251,244,228,0.94)" : "rgba(8,11,18,0.92)",
       backdropFilter: "blur(14px)",

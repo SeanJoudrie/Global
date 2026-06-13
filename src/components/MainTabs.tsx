@@ -96,11 +96,11 @@ export default function MainTabs({ state, tab, onTab, onNavigate, onQuickPlay, o
   const learned = state.learnedFlags.length
 
   return (
-    <div className={IS_CARTO ? "carto-paper" : "geo-grid"} style={{ minHeight: "100vh", position: "relative", zIndex: 1, background: IS_CARTO ? T.bg : undefined }}>
+    <div className={IS_CARTO ? "carto-paper" : "geo-grid"} style={{ position: "fixed", inset: 0, display: "flex", flexDirection: "column", zIndex: 1, background: IS_CARTO ? T.bg : undefined }}>
       {IS_CARTO ? <MapBackdrop /> : <div className="geo-vignette" style={{ position: "absolute", inset: 0, pointerEvents: "none" }} />}
 
       {/* ── Shared header: wordmark · live streak · system actions ── */}
-      <header style={{ position: "relative", display: "flex", alignItems: "center", justifyContent: "space-between", padding: "16px 18px 6px" }}>
+      <header style={{ position: "relative", flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "space-between", padding: "16px 18px 6px" }}>
         <div style={{ display: "flex", alignItems: "center", gap: 9 }}>
           <span style={{ width: 9, height: 9, borderRadius: IS_CARTO ? "50%" : 2, background: ACCENT.today, boxShadow: IS_CARTO ? "none" : `0 0 8px ${ACCENT.today}`, display: "inline-block" }} />
           <span className="geo-display" style={{ color: T.text, fontWeight: 700, fontSize: IS_CARTO ? 22 : 18, letterSpacing: IS_CARTO ? "0.01em" : "0.02em" }}>
@@ -120,7 +120,7 @@ export default function MainTabs({ state, tab, onTab, onNavigate, onQuickPlay, o
         </div>
       </header>
 
-      <main style={{ position: "relative", padding: tab === "codex" ? "0 0 96px" : "8px 16px 96px" }}>
+      <main style={{ position: "relative", flex: 1, minHeight: 0, overflowY: "auto", WebkitOverflowScrolling: "touch", padding: tab === "codex" ? "0 0 24px" : "8px 16px 24px" }}>
         {tab === "today" && (
           <TodayTab state={state} dailyDone={dailyDone} launch={launch}
             onNavigate={onNavigate} onGoCodex={goCodex} onGoPlay={() => onTab("play")}
