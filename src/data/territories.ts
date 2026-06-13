@@ -7,10 +7,10 @@ import { fp } from "./codex"
 // states in the historical "Predecessor & Related States" section), surfaced in
 // the Codex under "Territories & Dependencies".
 //
-// Rule: only territories with their OWN distinct flag are listed. A territory
-// that merely flies the metropole's national flag (most French DOMs, the UK's
-// base areas) is omitted — showing the same national flag over and over is
-// useless. Every flagUrl here is region-specific.
+// Rule: never show a stand-in flag. A territory either has its OWN distinct flag
+// (region-specific, never the metropole's national flag) or it is marked
+// noFlag — most French DOMs and the UK's base areas just fly the national flag,
+// so they read "No flag" rather than repeating the tricolor / Union Jack.
 export interface Territory {
   name: string
   flagUrl: string
@@ -19,6 +19,8 @@ export interface Territory {
   note: string
   /** Optional sub-grouping header within a country's list. */
   group?: string
+  /** No distinct flag of its own — flies the metropole's national flag. */
+  noFlag?: boolean
 }
 
 export const TERRITORIES: Record<string, Territory[]> = {
@@ -73,6 +75,9 @@ export const TERRITORIES: Record<string, Territory[]> = {
     { group: "British Overseas Territories", name: "British Antarctic Territory", status: "British Overseas Territory",
       flagUrl: fp("Flag_of_the_British_Antarctic_Territory.svg"),
       note: "The UK's slice of Antarctica below South America, with only research-station staff. Its claim overlaps those of Argentina and Chile and is held in abeyance under the Antarctic Treaty." },
+    { group: "British Overseas Territories", name: "Akrotiri & Dhekelia", status: "British Overseas Territory",
+      flagUrl: "", noFlag: true,
+      note: "Two Sovereign Base Areas retained on Cyprus when the island became independent in 1960. As military bases they have no flag of their own and fly the Union Jack." },
   ],
 
   // ── Netherlands (Kingdom of the Netherlands) ────────────────────────────
@@ -115,6 +120,21 @@ export const TERRITORIES: Record<string, Territory[]> = {
     { name: "Saint Martin", status: "Overseas collectivity",
       flagUrl: fp("Local_flag_of_the_Collectivity_of_Saint_Martin.svg"),
       note: "The French northern half of the island shared with Dutch Sint Maarten. Its local flag depicts the island's coastline and landmarks." },
+    { name: "Guadeloupe", status: "Overseas department & region",
+      flagUrl: "", noFlag: true,
+      note: "A Caribbean department of France. It officially flies only the French tricolor; the local sun-and-fleur-de-lis designs are unofficial." },
+    { name: "Réunion", status: "Overseas department & region",
+      flagUrl: "", noFlag: true,
+      note: "An Indian Ocean department east of Madagascar, fully part of France and the EU. It officially flies only the French tricolor." },
+    { name: "Mayotte", status: "Overseas department & region",
+      flagUrl: "", noFlag: true,
+      note: "An Indian Ocean department that chose to stay French when the rest of the Comoros became independent. It officially flies only the tricolor." },
+    { name: "French Guiana", status: "Overseas department & region",
+      flagUrl: "", noFlag: true,
+      note: "France's only mainland territory in South America, home to the Guiana Space Centre. It officially flies only the tricolor (a regional flag exists but is unofficial)." },
+    { name: "Saint Barthélemy", status: "Overseas collectivity",
+      flagUrl: "", noFlag: true,
+      note: "A small, affluent Caribbean collectivity once owned by Sweden (1784–1878). It officially flies only the French tricolor." },
   ],
 
   // ── United States (insular areas) ───────────────────────────────────────

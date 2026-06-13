@@ -598,9 +598,13 @@ function TerritoriesSection({ territories }: { territories: Territory[] }) {
                     <div key={i} className="rounded-2xl overflow-hidden" style={{ background: T.surface, border: `1px solid ${tint(T.cyan, 0.2)}` }}>
                       <div className="flex items-stretch gap-0">
                         <div style={{ width: 96, flexShrink: 0, background: T.surfaceHi, borderRight: `1px solid ${T.line}`, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 8 }}>
-                          <img src={t.flagUrl} alt={t.name}
-                            style={{ width: '100%', maxHeight: 56, objectFit: 'contain', borderRadius: 3 }}
-                            onError={e => { (e.target as HTMLImageElement).style.opacity = '0.25' }} />
+                          {t.noFlag ? (
+                            <span style={{ fontSize: 9, fontWeight: 700, color: T.dim, textAlign: 'center', lineHeight: 1.2, textTransform: 'uppercase', letterSpacing: '0.04em' }}>No flag</span>
+                          ) : (
+                            <img src={t.flagUrl} alt={t.name}
+                              style={{ width: '100%', maxHeight: 56, objectFit: 'contain', borderRadius: 3 }}
+                              onError={e => { (e.target as HTMLImageElement).style.opacity = '0.25' }} />
+                          )}
                         </div>
                         <div className="p-3 min-w-0 flex-1">
                           <div className="flex items-start justify-between gap-2 mb-1">
@@ -675,9 +679,15 @@ function IdentityCodexSection() {
                       className="geo-tap w-full px-1.5 py-2.5 rounded-lg transition-all active:scale-[0.99] text-left"
                       style={{ background: showNote ? tint(T.warm, 0.07) : 'transparent', borderBottom: `1px solid ${tint(T.line, 0.55)}` }}>
                       <div className="flex items-center gap-3">
-                        <img src={f.flagUrl} alt={f.name}
-                          style={{ width: 46, height: 30, objectFit: 'contain', borderRadius: 5, border: `1px solid ${T.line}`, flexShrink: 0, background: T.surfaceHi }}
-                          onError={e => { (e.target as HTMLImageElement).style.opacity = '0.3' }} />
+                        {f.noFlag ? (
+                          <div style={{ width: 46, height: 30, borderRadius: 5, border: `1px dashed ${T.line}`, flexShrink: 0, background: T.surfaceHi, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                            <span style={{ fontSize: 7.5, fontWeight: 700, color: T.dim, textAlign: 'center', lineHeight: 1.1, textTransform: 'uppercase', letterSpacing: '0.03em' }}>No flag</span>
+                          </div>
+                        ) : (
+                          <img src={f.flagUrl} alt={f.name}
+                            style={{ width: 46, height: 30, objectFit: 'contain', borderRadius: 5, border: `1px solid ${T.line}`, flexShrink: 0, background: T.surfaceHi }}
+                            onError={e => { (e.target as HTMLImageElement).style.opacity = '0.3' }} />
+                        )}
                         <div className="flex-1 min-w-0">
                           <div className="font-semibold text-sm truncate" style={{ color: T.text }}>{f.name}</div>
                         </div>

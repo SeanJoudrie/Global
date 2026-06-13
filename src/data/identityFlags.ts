@@ -15,6 +15,9 @@ export interface IdentityFlag {
   category: IdentityCategory
   flagUrl: string
   note: string
+  /** This entry has no flag of its own — render a "No flag" placeholder, never
+   *  a stand-in. (e.g. micronations that never adopted a distinct flag.) */
+  noFlag?: boolean
   /**
    * Relevance tier, 1 (most influential / widely recognised) … 4 (very obscure).
    * Hidden from players — it only controls ordering: within each category we show
@@ -1602,6 +1605,49 @@ const RAW_IDENTITY_FLAGS: IdentityFlag[] = [
     id: "sunda-empire", name: "Sunda Empire", category: "Micronations",
     flagUrl: fp("Sunda_Empire_Flag_Vector.svg"),
     note: "An Indonesian micronation whose founder claimed to succeed Alexander the Great and rule from Australia to Korea; its leaders were jailed for spreading false information.",
+  },
+
+  // ── Micronations with no distinct flag of their own — listed for completeness,
+  //    marked "No flag" rather than borrowing a stand-in. ─────────────────────
+  {
+    id: "melchizedek", name: "Dominion of Melchizedek", category: "Micronations",
+    flagUrl: "", noFlag: true, tier: 4,
+    note: "A notorious vehicle for financial fraud that claims several Pacific islands and a slice of Antarctica's Marie Byrd Land.",
+  },
+  {
+    id: "bumbunga", name: "Province of Bumbunga", category: "Micronations",
+    flagUrl: "", noFlag: true, tier: 4,
+    note: "A South Australian monarchist declared his farm an independent province loyal to the Crown (1976–c.2000), alarmed by talk of Australia becoming a republic.",
+  },
+  {
+    id: "wendland", name: "Free Republic of Wendland", category: "Micronations",
+    flagUrl: "", noFlag: true, tier: 4,
+    note: "Some 5,000 activists built a protest camp and declared a micronation in 1980 at a proposed nuclear-waste site in Germany, before being evicted 32 days later.",
+  },
+  {
+    id: "wallachia", name: "Kingdom of Wallachia", category: "Micronations",
+    flagUrl: "", noFlag: true, tier: 4,
+    note: "Founded as a joke in Moravian Wallachia (Czech Republic) in 1997; a leadership dispute later ended up in a Czech court.",
+  },
+  {
+    id: "freedonia", name: "Principality of Freedonia", category: "Micronations",
+    flagUrl: "", noFlag: true, tier: 4,
+    note: "College students envisioned a libertarian state (1997–2004) but never acquired territory beyond the founder's home in Boston.",
+  },
+  {
+    id: "avram", name: "Grand Duchy of Avram", category: "Micronations",
+    flagUrl: "", noFlag: true, tier: 4,
+    note: "An Australian micronation that exists mainly as a micronational bank; its founder was cleared of wrongdoing after several lawsuits.",
+  },
+  {
+    id: "keraton-agung-sejagat", name: "Keraton Agung Sejagat", category: "Micronations",
+    flagUrl: "", noFlag: true, tier: 4,
+    note: "An Indonesian micronation (2018–2020) whose founder claimed a 500-year-old pact gave him dominion over the Earth — later admitting it was a fraud.",
+  },
+  {
+    id: "yidindji", name: "Sovereign Yidindji Government", category: "Micronations",
+    flagUrl: "", noFlag: true, tier: 4,
+    note: "Formed in Queensland by the Yidiny people as part of the Australian Indigenous Sovereignty movement.",
   },
 
   // ── Civic & Ideological (batch 2) ─────────────────────────────────────────
