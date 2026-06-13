@@ -13,9 +13,9 @@ export interface HistoryNote {
 }
 
 export const HISTORY_NOTES: HistoryNote[] = [
-  { country: "Luxembourg", era: "alt / historical", status: "to-verify",
-    candidate: "Flag_of_Luxembourg_(Roude_Léiw).svg",
-    detail: "LU history is a single flag (1845–now). The 'Roude Léiw' (Red Lion) banner is an alternate national flag with historical roots — verify the file and decide whether to add it as a parallel/historical entry." },
+  { country: "Luxembourg", era: "alt / historical", status: "ambiguous",
+    candidate: "Civil_Ensign_of_Luxembourg.svg",
+    detail: "LU history is a single flag (1845–now). The 'Roude Léiw' (Red Lion) — shown here as the civil ensign — is an alternate national flag with deep heraldic roots, but it's a current alternate rather than a past predecessor. Decide whether to add it as a parallel entry." },
   { country: "Kosovo", era: "pre-2008 (UNMIK)", status: "ambiguous",
     detail: "XK history starts at 2008. Under UN administration (1999–2008) Kosovo had no official flag of its own (the UN flag flew; the Albanian flag was used unofficially). Unclear whether to represent this period." },
   { country: "Portugal", era: "1816–1826", status: "to-verify",
@@ -23,11 +23,10 @@ export const HISTORY_NOTES: HistoryNote[] = [
   { country: "Slovakia", era: "1848 / 1918 Pan-Slavic", status: "ambiguous",
     detail: "SK jumps from the 1939–45 wartime tricolor to 1992. A plain white-blue-red Pan-Slavic tricolor was used by Slovaks during the 1848 uprising and into the Czechoslovak era — visually similar to the modern flag minus the arms; decide if it's distinct enough." },
   { country: "Bosnia & Herzegovina", era: "medieval Kingdom", status: "to-verify",
-    candidate: "Flag_of_the_Kingdom_of_Bosnia.svg",
-    detail: "Could add the medieval Kingdom of Bosnia / Kotromanić banner before the 1946 SR entry. Filename unconfirmed (rate-limited)." },
+    detail: "Could add the medieval Kingdom of Bosnia / Kotromanić banner before the 1946 SR entry. No Commons file found under the obvious names — needs a correct filename before it can be added." },
   { country: "France", era: "pre-1790 royal", status: "to-verify",
     candidate: "Pavillon_royal_de_la_France.svg",
-    detail: "FR is well covered, but the plain white Bourbon royal banner (and the gold fleur-de-lis on blue) could enrich the pre-revolution era. Filename rate-limited — verify before adding." },
+    detail: "FR is well covered, but this white Bourbon royal banner (fleur-de-lis) could enrich the pre-revolution era. File confirmed to load — just deciding whether it adds enough over the existing 1589–1790 Kingdom entry." },
   { country: "Nauru", era: "pre-1968 colonial", status: "ambiguous",
     candidate: "Flag_of_German_New_Guinea.svg",
     detail: "NR has a single flag (1968–now). German protectorate (1888–1914) then an Australian-administered League/UN mandate (1920–1968) — neither flew a flag clearly Nauru's own (the German New Guinea designs were largely never-official proposals). Decide whether the German colonial flag is honest to include." },

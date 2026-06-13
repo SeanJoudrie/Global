@@ -2,6 +2,8 @@ import { useState } from "react"
 import { FIXED_FLAGS, MISSING_FLAGS, RECENT_FLAGS } from "../data/flagDiagnostics"
 import type { DiagFlag, MissingFlag } from "../data/flagDiagnostics"
 import { HISTORY_NOTES } from "../data/historyNotes"
+import type { HistoryNote } from "../data/historyNotes"
+import { fp } from "../data/codex"
 import { T, ACCENT, FONT, tint } from "../ui/tokens"
 import { ScreenHeader } from "./ui"
 
@@ -52,6 +54,38 @@ function CandidateTile({ url, file, selected, onTap }: { url: string; file: stri
       </div>
       <div style={{ fontSize: 9, color: selected ? T.green : T.muted, marginTop: 2, lineHeight: 1.2, wordBreak: "break-word" }}>{file}</div>
     </button>
+  )
+}
+
+// ── Notes tab: history-flag candidate with a live preview ───────────────────
+function NoteRow({ n }: { n: HistoryNote }) {
+  const [state, setState] = useState<"loading" | "ok" | "err">(n.candidate ? "loading" : "err")
+  const url = n.candidate ? fp(n.candidate) : null
+  return (
+    <div style={{ display: "flex", gap: 11, padding: "10px 12px", borderBottom: `1px solid ${T.line}` }}>
+      <div style={{ width: 66, height: 44, flexShrink: 0, borderRadius: 5, overflow: "hidden", background: T.surfaceHi, border: `1px solid ${state === "err" ? tint(T.danger, 0.5) : T.line}`, display: "flex", alignItems: "center", justifyContent: "center" }}>
+        {url && state !== "err" && (
+          <img src={url} alt="" loading="lazy" onLoad={() => setState("ok")} onError={() => setState("err")}
+            style={{ width: "100%", height: "100%", objectFit: "contain", display: state === "ok" ? "block" : "none" }} />
+        )}
+        {state !== "ok" && (
+          <span style={{ fontSize: 8.5, color: T.dim, textAlign: "center", lineHeight: 1.25, padding: 2 }}>
+            {state === "loading" ? "…" : n.candidate ? "won't\nload" : "no file\nyet"}
+          </span>
+        )}
+      </div>
+      <div style={{ minWidth: 0, flex: 1 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 3 }}>
+          <span style={{ fontSize: 13, color: T.text, fontWeight: 700 }}>{n.country}</span>
+          <span style={{ fontSize: 10.5, color: T.muted }}>{n.era}</span>
+          <span style={{ marginLeft: "auto", fontSize: 9, fontWeight: 700, color: n.status === "to-verify" ? T.amber : T.dim, border: `1px solid ${tint(n.status === "to-verify" ? T.amber : T.dim, 0.4)}`, borderRadius: 999, padding: "2px 7px", whiteSpace: "nowrap" }}>
+            {n.status}
+          </span>
+        </div>
+        <div style={{ fontSize: 11.5, color: T.muted, lineHeight: 1.45 }}>{n.detail}</div>
+        {n.candidate && <div style={{ fontFamily: FONT.mono, fontSize: 10, color: state === "ok" ? T.green : ACCENT.codex, marginTop: 4, wordBreak: "break-all" }}>{state === "ok" ? "✓ " : ""}{n.candidate}</div>}
+      </div>
+    </div>
   )
 }
 
@@ -129,19 +163,7 @@ export default function FlagDiagnosticsScreen({ onBack }: Props) {
         {tab === "missing"
           ? MISSING_FLAGS.map((f, i) => <MissingRow key={"m" + i} f={f} sel={picks[f.arg] ?? new Set()} toggle={(file) => toggle(f.arg, file)} />)
           : tab === "notes"
-          ? HISTORY_NOTES.map((n, i) => (
-              <div key={"n" + i} style={{ padding: "10px 12px", borderBottom: `1px solid ${T.line}` }}>
-                <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 3 }}>
-                  <span style={{ fontSize: 13, color: T.text, fontWeight: 700 }}>{n.country}</span>
-                  <span style={{ fontSize: 10.5, color: T.muted }}>{n.era}</span>
-                  <span style={{ marginLeft: "auto", fontSize: 9, fontWeight: 700, color: n.status === "to-verify" ? T.amber : T.dim, border: `1px solid ${tint(n.status === "to-verify" ? T.amber : T.dim, 0.4)}`, borderRadius: 999, padding: "2px 7px" }}>
-                    {n.status}
-                  </span>
-                </div>
-                <div style={{ fontSize: 11.5, color: T.muted, lineHeight: 1.45 }}>{n.detail}</div>
-                {n.candidate && <div style={{ fontFamily: FONT.mono, fontSize: 10, color: ACCENT.codex, marginTop: 4, wordBreak: "break-all" }}>{n.candidate}</div>}
-              </div>
-            ))
+          ? HISTORY_NOTES.map((n, i) => <NoteRow key={"n" + i} n={n} />)
           : ALL_FIXED.map((f, i) => <FixedTile key={"f" + i} f={f} />)}
       </div>
 
