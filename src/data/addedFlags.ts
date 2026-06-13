@@ -7,7 +7,7 @@ export interface AddedFlag { country: string; era: string; file: string }
 
 export const ADDED_FLAGS: AddedFlag[] = [
   // Europe
-  { country: "Switzerland", era: "Helvetic Republic (1798–1803)", file: "Flag_of_the_Helvetic_Republic.svg" },
+  { country: "Switzerland", era: "Helvetic Republic (1798–1803)", file: "Flag_of_the_Helvetic_Republic_(French).svg" },
   { country: "Cyprus", era: "British Crown Colony (1922–1960)", file: "Flag_of_Cyprus_(1922-1960).svg" },
   { country: "Czech Republic", era: "Protectorate of Bohemia & Moravia (1939–45)", file: "Flag_of_the_Protectorate_of_Bohemia_and_Moravia.svg" },
   { country: "Iceland", era: "Hvítbláinn (1897–1915)", file: "Hvítbláinn.svg" },

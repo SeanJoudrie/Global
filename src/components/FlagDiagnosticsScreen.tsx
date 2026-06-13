@@ -107,14 +107,20 @@ function MissingRow({ f, sel, toggle }: { f: MissingFlag; sel: Set<string>; togg
   )
 }
 
-// Recently-added flags fold into Fixed — one list, every entry should load.
-const ALL_FIXED = [...RECENT_FLAGS, ...FIXED_FLAGS]
-
 // Resolve an addedFlags `file` (self-hosted path or Wikimedia name) to a URL.
 const addedUrl = (file: string) => file.startsWith("/") || file.startsWith("http") ? file : fp(file)
 
+// One combined list: today's predecessor adds, the former-state references, and
+// every repaired/recently-fixed link — all things that should simply load.
+const ALL_FLAGS: DiagFlag[] = [
+  ...ADDED_FLAGS.map((a) => ({ label: `${a.country} · ${a.era}`, url: addedUrl(a.file) })),
+  ...STATE_CANDIDATES.map((s) => ({ label: `${s.name} · ${s.region}`, url: addedUrl(s.file) })),
+  ...RECENT_FLAGS,
+  ...FIXED_FLAGS,
+]
+
 export default function FlagDiagnosticsScreen({ onBack }: Props) {
-  const [tab, setTab] = useState<"added" | "states" | "missing" | "fixed" | "notes">("added")
+  const [tab, setTab] = useState<"flags" | "missing" | "notes">("flags")
   // selections: arg -> set of chosen candidate filenames
   const [picks, setPicks] = useState<Record<string, Set<string>>>({})
   const [submitText, setSubmitText] = useState<string | null>(null)
@@ -146,9 +152,9 @@ export default function FlagDiagnosticsScreen({ onBack }: Props) {
 
   return (
     <div style={{ position: "fixed", inset: 0, background: T.bg, color: T.text, zIndex: 1, display: "flex", flexDirection: "column" }}>
-      <ScreenHeader title="Flag Check" subtitle="Developer use only" onBack={onBack} />
+      <ScreenHeader title="Dev test list" subtitle="Developer use only" onBack={onBack} />
       <div style={{ display: "flex", gap: 6, padding: "0 12px 10px" }}>
-        {([["added", `Added (${ADDED_FLAGS.length})`], ["states", `States (${STATE_CANDIDATES.length})`], ["missing", `Missing (${MISSING_FLAGS.length})`], ["fixed", `Fixed (${ALL_FIXED.length})`], ["notes", `Notes (${HISTORY_NOTES.length})`]] as const).map(([id, label]) => (
+        {([["flags", `Flags (${ALL_FLAGS.length})`], ["missing", `Missing (${MISSING_FLAGS.length})`], ["notes", `Notes (${HISTORY_NOTES.length})`]] as const).map(([id, label]) => (
           <button key={id} onClick={() => setTab(id)} style={{
             flex: 1, padding: "8px 0", borderRadius: 10, fontSize: 11.5, fontWeight: 600, cursor: "pointer",
             background: tab === id ? ACCENT.codex : T.surface, color: tab === id ? T.onAccent : T.muted,
@@ -157,27 +163,19 @@ export default function FlagDiagnosticsScreen({ onBack }: Props) {
         ))}
       </div>
       <div style={{ padding: "0 12px 8px", fontSize: 11, color: T.muted, lineHeight: 1.4 }}>
-        {tab === "added"
-          ? "Historical predecessor flags added to the Codex in today's sweep. Each should show “loads ✓”. The colonial ones intentionally show the ruling country's own flag (France, Portugal, the Union Jack…)."
-          : tab === "states"
-          ? "What's left after promoting 125 former states into their modern countries: these are either dedups of an existing entry (Ethiopian Empire, Ba'athist Iraq…) or present-day autonomous regions (Puntland, Jubaland), kept here for reference. The flag-having states have been folded into the relevant country's history."
+        {tab === "flags"
+          ? "Every flag wired into the Codex this round — predecessor adds, former-state references, and repaired links — in one list. Each should show “loads ✓”. Colonial entries intentionally show the ruling country's own flag (France, Portugal, the Union Jack…). Tell me if any looks wrong."
           : tab === "missing"
           ? "Tap the correct flag(s) for each entry (pick more than one if several are right). Then hit Submit at the bottom and send me the copied text."
-          : tab === "notes"
-          ? "Historical-flag candidates from the Codex sweep that weren't added yet — couldn't verify the filename, or it's ambiguous whether it belongs. A running to-do, not bugs."
-          : "Repaired & recently added flags. Every one should show “loads ✓”. Tell me if any looks wrong."}
+          : "Historical-flag candidates from the Codex sweep that weren't added yet — couldn't verify the filename, or it's ambiguous whether it belongs. A running to-do, not bugs."}
       </div>
 
       <div style={{ flex: 1, overflowY: "auto", WebkitOverflowScrolling: "touch", paddingBottom: tab === "missing" ? 72 : 0 }}>
-        {tab === "added"
-          ? ADDED_FLAGS.map((a, i) => <FixedTile key={"a" + i} f={{ label: `${a.country} · ${a.era}`, url: addedUrl(a.file) }} />)
-          : tab === "states"
-          ? STATE_CANDIDATES.map((s, i) => <FixedTile key={"s" + i} f={{ label: `${s.name} · ${s.region}`, url: addedUrl(s.file) }} />)
+        {tab === "flags"
+          ? ALL_FLAGS.map((f, i) => <FixedTile key={"f" + i} f={f} />)
           : tab === "missing"
           ? MISSING_FLAGS.map((f, i) => <MissingRow key={"m" + i} f={f} sel={picks[f.arg] ?? new Set()} toggle={(file) => toggle(f.arg, file)} />)
-          : tab === "notes"
-          ? HISTORY_NOTES.map((n, i) => <NoteRow key={"n" + i} n={n} />)
-          : ALL_FIXED.map((f, i) => <FixedTile key={"f" + i} f={f} />)}
+          : HISTORY_NOTES.map((n, i) => <NoteRow key={"n" + i} n={n} />)}
       </div>
 
       {tab === "missing" && (

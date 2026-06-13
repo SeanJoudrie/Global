@@ -1600,7 +1600,7 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
     },
     {
       fromYear: 1798, toYear: 1803,
-      flagUrl: fp('Flag_of_the_Helvetic_Republic.svg'),
+      flagUrl: fp('Flag_of_the_Helvetic_Republic_(French).svg'),
       label: 'Helvetic Republic',
       note: 'When France invaded in 1798 and swept away the old confederation, the short-lived Helvetic Republic adopted a completely different flag — a horizontal green-red-yellow tricolor, the first ever single national flag for all of Switzerland. It abandoned the centuries-old cross entirely. The republic collapsed by 1803, and the cross returned with the restored confederation.',
     },
