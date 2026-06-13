@@ -1063,6 +1063,12 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       note: 'When the Republic of Korea was proclaimed in 1948, the trigrams were initially placed in a slightly different orientation. The 1949 official specification corrected this, but minor inconsistencies in which trigrams appeared in which corners persisted in practice until the 1984 standardisation finally resolved the ambiguity.',
     },
     {
+      fromYear: 1910, toYear: 1945,
+      flagUrl: '/flags/jp.svg',
+      label: 'Japanese occupation',
+      note: 'From 1910 to 1945 Korea was a colony of Imperial Japan, which flew its own flag and banned the Taegukgi, forcing Korean assimilation — Japanese names, Japanese language in schools, the suppression of Korean culture. The Taegukgi survived as the banner of the independence movement and the Korean Provisional Government in exile, raised again at liberation in 1945.',
+    },
+    {
       fromYear: 1897, toYear: 1910,
       flagUrl: fp('Flag_of_Korea_(1899).svg'),
       label: 'Korean Empire (Taegeukgi)',
@@ -4493,6 +4499,13 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       label: 'First Republic of Armenia',
       note: 'The short-lived First Republic adopted this tricolour in 1918 — the exact design restored as the modern flag, making it the direct ancestor of today\'s banner.',
     },
+    {
+      fromYear: 1198,
+      toYear: 1375,
+      flagUrl: fp('Flag_of_the_Rubenid_Dynasty.svg'),
+      label: 'Armenian Kingdom of Cilicia',
+      note: 'After the Seljuk conquest of the Armenian heartland, Armenians who had fled to the Mediterranean coast founded the Armenian Kingdom of Cilicia (1198–1375), flying the red lion banner of the ruling Rubenid dynasty. A close ally of the Crusader states, it was the last independent Armenian kingdom for six centuries — until the 1918 republic — and a cherished symbol of Armenian statehood.',
+    },
   ],
   AZ: [
     {
@@ -4554,6 +4567,13 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       flagUrl: fp('Flag_of_the_Kazakh_Soviet_Socialist_Republic.svg'),
       label: 'Kazakh SSR',
       note: 'A red flag with a light-blue band along the bottom, which continued in use until the new national flag was adopted after independence.',
+    },
+    {
+      fromYear: 1917,
+      toYear: 1920,
+      flagUrl: fp('Flag_of_Alash_Autonomy.svg'),
+      label: 'Alash Autonomy',
+      note: 'In the chaos of the Russian Revolution, Kazakh intellectuals proclaimed the Alash Autonomy (1917–1920) — the first modern Kazakh state — under a red flag with a yellow crescent and star. The Bolsheviks crushed it and later executed most of its leaders, but the Alash movement is now honoured as the founding moment of modern Kazakh nationhood.',
     },
   ],
   KG: [
@@ -4639,6 +4659,13 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       flagUrl: fp('Flag_of_the_Uzbek_Soviet_Socialist_Republic_(1952–1991).svg'),
       label: 'Uzbek SSR',
       note: 'The final Soviet-era design: a red flag with a central light-blue band edged by thin white stripes, plus the hammer, sickle, and star in the canton.',
+    },
+    {
+      fromYear: 1785,
+      toYear: 1920,
+      flagUrl: fp("Flag_of_Emirate_of_Bukhara-Buxoro_Amirligi_Bayrog'i.svg"),
+      label: 'Emirate of Bukhara',
+      note: 'Before the Soviets, the great oasis cities of Uzbekistan were ruled by the Emirate of Bukhara — heir to the empire of Timur (Tamerlane), whose capital Samarkand was one of the jewels of the Islamic world. The emirate flew a green flag and survived as a Russian protectorate until the Red Army stormed Bukhara in 1920, ending a line of Central Asian Muslim states stretching back centuries.',
     },
   ],
   AF: [
@@ -5002,6 +5029,13 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       label: 'Kingdom of Laos',
       note: 'A red field with a white three-headed elephant on a pedestal beneath a parasol — the three heads for the former kingdoms of the "Land of a Million Elephants."',
     },
+    {
+      fromYear: 1893,
+      toYear: 1953,
+      flagUrl: '/flags/fr.svg',
+      label: 'French Laos (Indochina)',
+      note: 'France absorbed the Lao kingdoms into French Indochina in 1893, reuniting the fragments of the old Lan Xang ("Land of a Million Elephants") under a protectorate flying the French flag. Apart from a Japanese-occupied interlude in WWII, French rule lasted until full independence in 1953 — and the three-headed elephant of the restored kingdom recalled the unity Lan Xang once had.',
+    },
   ],
   KP: [
     {
@@ -5012,11 +5046,18 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       note: 'Adopted in 1948, replacing the Taegukgi: a broad red band edged with white and blue stripes, with a red star in a white disc near the hoist.',
     },
     {
-      fromYear: 1882,
+      fromYear: 1945,
       toYear: 1948,
       flagUrl: fp('Flag_of_Korea_(1882–1910).svg'),
       label: 'Taegukgi (shared Korean flag)',
-      note: 'Before partition, the whole peninsula used the Taegukgi — white field, red-and-blue taegeuk, four black trigrams. The North flew a version of it until 1948, when it broke from the South\'s design.',
+      note: 'Before partition, the whole peninsula used the Taegukgi — white field, red-and-blue taegeuk, four black trigrams. The North flew it again after liberation in 1945 until 1948, when it broke from the South\'s design and adopted the red-star flag.',
+    },
+    {
+      fromYear: 1910,
+      toYear: 1945,
+      flagUrl: '/flags/jp.svg',
+      label: 'Japanese occupation',
+      note: 'Japan annexed Korea in 1910 and ruled the whole peninsula for 35 years under its own flag, banning the Taegukgi and suppressing Korean language and identity in a harsh colonial regime. Liberation came in 1945 with Japan\'s WWII defeat — immediately followed by the Soviet-American division of the peninsula that hardened into North and South.',
     },
   ],
 }

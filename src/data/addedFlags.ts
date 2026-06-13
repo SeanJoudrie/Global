@@ -101,4 +101,12 @@ export const ADDED_FLAGS: AddedFlag[] = [
   { country: "Guyana", era: "Dutch Guiana (1667–1814)", file: "/flags/nl.svg" },
   { country: "Jamaica", era: "Spanish Jamaica (1494–1655)", file: "Flag_of_Cross_of_Burgundy.svg" },
   { country: "Trinidad & Tobago", era: "Spanish Trinidad (1498–1797)", file: "Flag_of_Cross_of_Burgundy.svg" },
+
+  // ── Deep re-audit (Asia), Wikipedia-sourced ──
+  { country: "Armenia", era: "Kingdom of Cilicia, Rubenid (1198–1375)", file: "Flag_of_the_Rubenid_Dynasty.svg" },
+  { country: "Kazakhstan", era: "Alash Autonomy (1917–1920)", file: "Flag_of_Alash_Autonomy.svg" },
+  { country: "Uzbekistan", era: "Emirate of Bukhara (1785–1920)", file: "Flag_of_Emirate_of_Bukhara-Buxoro_Amirligi_Bayrog'i.svg" },
+  { country: "Laos", era: "French Laos / Indochina (1893–1953)", file: "/flags/fr.svg" },
+  { country: "North Korea", era: "Japanese occupation (1910–1945)", file: "/flags/jp.svg" },
+  { country: "South Korea", era: "Japanese occupation (1910–1945)", file: "/flags/jp.svg" },
 ]
