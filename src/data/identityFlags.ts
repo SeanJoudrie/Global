@@ -1460,6 +1460,43 @@ const RAW_IDENTITY_FLAGS: IdentityFlag[] = [
     note: "A tiny Shetland island declared a Crown dependency by Stuart Hill in 2008.",
   },
 
+  // ── Micronations (batch 2, from the Wikipedia List of micronations) ───────
+  {
+    id: "wy", name: "Principality of Wy", category: "Micronations",
+    flagUrl: fp("Flag_of_the_Principality_of_Wy.svg"),
+    note: "A Sydney household that declared itself a principality in 2004 after a 10-year dispute with the council over a driveway — its 'prince' was a sculptor.",
+  },
+  {
+    id: "redonda", name: "Kingdom of Redonda", category: "Micronations",
+    flagUrl: fp("Flag_of_the_Kingdom_of_Redonda.svg"),
+    note: "A tiny uninhabited Caribbean island whose whimsical 'kingship' has been passed down through a line of writers and poets since the 1860s.",
+  },
+  {
+    id: "celestia", name: "Nation of Celestial Space (Celestia)", category: "Micronations",
+    flagUrl: fp("Flag_of_Celestia.svg"),
+    note: "Founded in 1949 by James Mangan, who claimed all of outer space and formally 'forbade' the nuclear powers from testing weapons there.",
+  },
+  {
+    id: "murrawarri", name: "Murrawarri Republic", category: "Micronations",
+    flagUrl: fp("Flag_of_Murrawarri_Republic.svg"),
+    note: "Declared in 2013 by the Murrawarri Aboriginal people on the New South Wales–Queensland border, asserting they never ceded sovereignty to the Crown.",
+  },
+  {
+    id: "outer-baldonia", name: "Principality of Outer Baldonia", category: "Micronations",
+    flagUrl: fp("Flag_of_Outer_Baldonia.svg"),
+    note: "A rocky Nova Scotian island bought by a tuna fisherman in 1948, who proclaimed a 'principality' where citizens had the right to lie about their catches.",
+  },
+  {
+    id: "trinidad-hickey", name: "Principality of Trinidad", category: "Micronations",
+    flagUrl: fp("Flag_of_the_Principality_of_Trinidad.svg"),
+    note: "An uninhabited South Atlantic island claimed in 1893 by adventurer James Harden-Hickey, who styled himself 'James I' before the scheme collapsed.",
+  },
+  {
+    id: "cospaia", name: "Republic of Cospaia", category: "Micronations",
+    flagUrl: fp("Flag_of_Cospaia.svg"),
+    note: "An Italian village left off a 1440 border treaty by mistake, becoming an accidental tax-free republic for 386 years until it was absorbed in 1826.",
+  },
+
   // ── Civic & Ideological (batch 2) ─────────────────────────────────────────
   {
     id: "disability-pride", name: "Disability Pride Flag", category: "Civic & Ideological",

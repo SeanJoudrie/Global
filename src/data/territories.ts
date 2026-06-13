@@ -7,9 +7,10 @@ import { fp } from "./codex"
 // states in the historical "Predecessor & Related States" section), surfaced in
 // the Codex under "Territories & Dependencies".
 //
-// Where a territory has no distinct official flag of its own it shows the
-// metropole's flag, and the note says so — France's overseas départements, for
-// instance, officially fly the tricolor.
+// Rule: only territories with their OWN distinct flag are listed. A territory
+// that merely flies the metropole's national flag (most French DOMs, the UK's
+// base areas) is omitted — showing the same national flag over and over is
+// useless. Every flagUrl here is region-specific.
 export interface Territory {
   name: string
   flagUrl: string
@@ -72,9 +73,6 @@ export const TERRITORIES: Record<string, Territory[]> = {
     { group: "British Overseas Territories", name: "British Antarctic Territory", status: "British Overseas Territory",
       flagUrl: fp("Flag_of_the_British_Antarctic_Territory.svg"),
       note: "The UK's slice of Antarctica below South America, with only research-station staff. Its claim overlaps those of Argentina and Chile and is held in abeyance under the Antarctic Treaty." },
-    { group: "British Overseas Territories", name: "Akrotiri & Dhekelia", status: "British Overseas Territory",
-      flagUrl: "/flags/gb.svg",
-      note: "Two Sovereign Base Areas retained on Cyprus when the island became independent in 1960. As military bases they have no flag of their own and fly the Union Jack." },
   ],
 
   // ── Netherlands (Kingdom of the Netherlands) ────────────────────────────
@@ -106,32 +104,17 @@ export const TERRITORIES: Record<string, Territory[]> = {
       flagUrl: fp("Flag_of_French_Polynesia.svg"),
       note: "An autonomous collectivity of 121 Pacific islands including Tahiti. It has its own official territorial flag — a red-white-red design with an outrigger canoe and sun." },
     { name: "New Caledonia", status: "Sui generis collectivity",
-      flagUrl: "/flags/fr.svg",
-      note: "A Pacific territory voting on independence in three referendums (2018–2021), all narrowly rejecting it. It officially flies the French tricolor alongside the indigenous Kanak (FLNKS) flag." },
+      flagUrl: fp("Flag_of_FLNKS.svg"),
+      note: "A Pacific territory voting on independence in three referendums (2018–2021), all narrowly rejecting it. The indigenous Kanak (FLNKS) flag is flown alongside the French tricolor — the only French territory with such a recognised co-flag." },
     { name: "Saint Pierre and Miquelon", status: "Overseas collectivity",
       flagUrl: fp("Flag_of_Saint-Pierre_and_Miquelon.svg"),
-      note: "A tiny archipelago off Newfoundland, the last remnant of French North America. Its widely flown local flag bears a ship and three regional emblems (the tricolor is the official flag)." },
+      note: "A tiny archipelago off Newfoundland, the last remnant of French North America. Its widely flown local flag bears a ship and three regional emblems." },
     { name: "Martinique", status: "Overseas department & region",
       flagUrl: fp("Flag-of-Martinique.svg"),
       note: "A Caribbean island and full department of France. In 2023 it adopted an official red-green-black flag with a hummingbird, replacing the colonial snake banner." },
     { name: "Saint Martin", status: "Overseas collectivity",
       flagUrl: fp("Local_flag_of_the_Collectivity_of_Saint_Martin.svg"),
-      note: "The French northern half of the island shared with Dutch Sint Maarten. It uses a local flag, though the French tricolor remains official." },
-    { name: "Guadeloupe", status: "Overseas department & region",
-      flagUrl: "/flags/fr.svg",
-      note: "A Caribbean department of France. Like the other DOMs it officially flies the tricolor; local sun-and-fleur-de-lis flags are unofficial." },
-    { name: "Réunion", status: "Overseas department & region",
-      flagUrl: "/flags/fr.svg",
-      note: "An Indian Ocean department east of Madagascar, fully part of France and the EU. It officially flies the French tricolor." },
-    { name: "Mayotte", status: "Overseas department & region",
-      flagUrl: "/flags/fr.svg",
-      note: "An Indian Ocean department that chose to stay French when the rest of the Comoros became independent. It officially flies the tricolor." },
-    { name: "French Guiana", status: "Overseas department & region",
-      flagUrl: "/flags/fr.svg",
-      note: "France's only mainland territory in South America, home to the Guiana Space Centre. It officially flies the tricolor." },
-    { name: "Saint Barthélemy", status: "Overseas collectivity",
-      flagUrl: "/flags/fr.svg",
-      note: "A small, affluent Caribbean collectivity once owned by Sweden (1784–1878). It officially flies the French tricolor." },
+      note: "The French northern half of the island shared with Dutch Sint Maarten. Its local flag depicts the island's coastline and landmarks." },
   ],
 
   // ── United States (insular areas) ───────────────────────────────────────
