@@ -13,6 +13,8 @@ export interface HistoryNote {
 }
 
 export const HISTORY_NOTES: HistoryNote[] = [
+  { country: "Ethnic & Cultural Flags", era: "Commons import", status: "to-verify",
+    detail: "Imported the FULL Wikimedia Commons 'Cultural flags' gallery into Codex → Ethnic & Cultural Flags: 1,103 flags across 12 regions (Europe, Middle East, Africa, Indian subcontinent, Eurasia, Oceania ×2, Americas ×2, Creole, multiethnic states, historic peoples), grouped by language/ethnic family. Nothing was skipped — every gallery entry was added. Files come straight from the live gallery so they exist on Commons; they were NOT each curl-verified (too many to rate-limit-check). Any tile whose file fails to load shows a 'no image' placeholder — if you spot those, tell me and I'll chase the correct filename." },
   { country: "Kosovo", era: "pre-2008 (UNMIK)", status: "ambiguous",
     detail: "XK history starts at 2008. Under UN administration (1999–2008) Kosovo had no official flag of its own (the UN flag flew; the Albanian flag was used unofficially). Unclear whether to represent this period." },
   { country: "Portugal", era: "1816–1826", status: "to-verify",

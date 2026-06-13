@@ -2,12 +2,14 @@ import { useState, useMemo } from 'react'
 import { FLAGS } from '../data/flags'
 import type { FlagRecord } from '../data/flags'
 import { CAPITALS } from '../data/capitals'
-import { CODEX } from '../data/codex'
+import { CODEX, fp } from '../data/codex'
 import type { HistoricalFlag } from '../data/codex'
 import { UK_NATIONS } from '../data/ukNations'
 import type { UKNation } from '../data/ukNations'
 import { TERRITORIES } from '../data/territories'
 import type { Territory } from '../data/territories'
+import { ETHNIC_FLAGS } from '../data/ethnicFlags'
+import type { EthnicRegion } from '../data/ethnicFlags'
 import { historicalFor } from '../data/historicalFlags'
 import { IDENTITY_FLAGS, IDENTITY_CATEGORIES, SIGNAL_FLAGS } from '../data/identityFlags'
 import { US_CITY_FLAGS } from '../data/usCityFlags'
@@ -199,6 +201,8 @@ export default function CodexScreen({ onBack, initialCode, embedded = false }: P
         {!isSearching && <AmericanCitiesCodexSection />}
         {/* Maritime / signal alphabet — its own section, separate from Identity */}
         {!isSearching && <SignalCodexSection />}
+        {/* Ethnic & cultural flags — the full Commons "Cultural flags" gallery */}
+        {!isSearching && <EthnicCodexSection />}
       </div>
     </div>
   )
@@ -801,6 +805,90 @@ function SignalCodexSection() {
               </button>
             )
           })}
+        </div>
+      )}
+    </div>
+  )
+}
+
+// ── Ethnic & cultural flags — the full Commons "Cultural flags" gallery ──
+// Hundreds of flags of peoples and cultures, grouped by region → linguistic /
+// ethnic family. Each region expands to labelled sub-groups of flag tiles.
+function EthnicFlagTile({ name, file }: { name: string; file: string }) {
+  const [err, setErr] = useState(false)
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4 }}>
+      <div style={{ width: '100%', aspectRatio: '3/2', borderRadius: 4, overflow: 'hidden', background: T.surfaceHi, border: `1px solid ${T.line}`, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        {err
+          ? <span style={{ fontSize: 8, color: T.dim, textAlign: 'center', lineHeight: 1.1, padding: 2 }}>no image</span>
+          : <img src={fp(file)} alt={name} loading="lazy" onError={() => setErr(true)}
+              style={{ width: '100%', height: '100%', objectFit: 'contain' }} />}
+      </div>
+      <span style={{ fontSize: 8.5, color: T.muted, textAlign: 'center', lineHeight: 1.2, wordBreak: 'break-word' }}>{name}</span>
+    </div>
+  )
+}
+
+function EthnicRegionBlock({ region }: { region: EthnicRegion }) {
+  const [open, setOpen] = useState(false)
+  const count = region.groups.reduce((n, g) => n + g.items.length, 0)
+  return (
+    <div className="mb-2">
+      <button
+        onClick={() => setOpen(o => !o)}
+        aria-expanded={open}
+        className="geo-tap w-full flex items-center justify-between px-1 py-3 transition-all active:scale-[0.99]"
+        style={{ background: 'transparent', borderBottom: `1px solid ${open ? tint(T.gold, 0.45) : T.line}` }}>
+        <div className="flex items-center gap-2.5">
+          <Users size={15} color={T.gold} strokeWidth={1.6} absoluteStrokeWidth />
+          <h4 className="text-sm font-bold uppercase tracking-widest" style={{ color: T.gold }}>{region.region.replace(/^Peoples of /, '')}</h4>
+          <span className="text-xs" style={{ color: T.dim, fontFamily: FONT.mono, fontVariantNumeric: 'tabular-nums' }}>{count}</span>
+        </div>
+        <ChevronDown size={16} color={T.gold} strokeWidth={1.6} absoluteStrokeWidth
+          style={{ transition: 'transform 0.2s', transform: open ? 'rotate(180deg)' : 'rotate(0deg)', flexShrink: 0 }} />
+      </button>
+      {open && (
+        <div className="mt-3" style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+          {region.groups.map((g, gi) => (
+            <div key={gi}>
+              <div style={{ fontSize: 9.5, fontWeight: 700, color: T.gold, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 8, paddingLeft: 2, opacity: 0.85 }}>
+                {g.label || '—'}
+              </div>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '10px 8px' }}>
+                {g.items.map((it, ii) => <EthnicFlagTile key={ii} name={it.name} file={it.file} />)}
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  )
+}
+
+function EthnicCodexSection() {
+  const [open, setOpen] = useState(false)
+  const total = ETHNIC_FLAGS.reduce((n, r) => n + r.groups.reduce((m, g) => m + g.items.length, 0), 0)
+  return (
+    <div className="mt-5">
+      <button
+        onClick={() => setOpen(o => !o)}
+        className="geo-tap w-full flex items-center justify-between px-1 py-3 transition-all active:scale-[0.99]"
+        style={{ background: 'transparent', borderBottom: `1px solid ${open ? tint(T.gold, 0.45) : T.line}` }}>
+        <div className="text-left">
+          <h3 className="text-sm font-bold uppercase tracking-widest flex items-center gap-2" style={{ color: T.gold }}>
+            <Users size={15} color={T.gold} strokeWidth={1.6} absoluteStrokeWidth /> Ethnic &amp; Cultural Flags
+          </h3>
+          <p className="text-xs" style={{ color: T.dim }}>{total} flags of peoples &amp; cultures · by region</p>
+        </div>
+        <ChevronDown size={17} color={T.gold} strokeWidth={1.6} absoluteStrokeWidth
+          style={{ transition: 'transform 0.2s', transform: open ? 'rotate(180deg)' : 'rotate(0deg)', flexShrink: 0 }} />
+      </button>
+      {open && (
+        <div className="mt-3">
+          <p className="text-xs mb-2" style={{ color: T.dim, lineHeight: 1.4 }}>
+            The full Wikimedia Commons “Cultural flags” gallery — flags of ethnic groups, regions and peoples, grouped by language family. Tap a region to browse.
+          </p>
+          {ETHNIC_FLAGS.map((r, i) => <EthnicRegionBlock key={i} region={r} />)}
         </div>
       )}
     </div>
