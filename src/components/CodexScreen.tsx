@@ -6,6 +6,8 @@ import { CODEX } from '../data/codex'
 import type { HistoricalFlag } from '../data/codex'
 import { UK_NATIONS } from '../data/ukNations'
 import type { UKNation } from '../data/ukNations'
+import { TERRITORIES } from '../data/territories'
+import type { Territory } from '../data/territories'
 import { historicalFor } from '../data/historicalFlags'
 import { IDENTITY_FLAGS, IDENTITY_CATEGORIES, SIGNAL_FLAGS } from '../data/identityFlags'
 import { US_CITY_FLAGS } from '../data/usCityFlags'
@@ -376,6 +378,9 @@ function CountryDetail({ flag }: { flag: FlagRecord }) {
         )}
       </div>
 
+      {/* Territories & dependencies — present-day dependent territories */}
+      {TERRITORIES[flag.code]?.length > 0 && <TerritoriesSection territories={TERRITORIES[flag.code]} />}
+
       {/* Predecessor & related states — collapsible */}
       {predecessors.length > 0 && (
         <div className="mb-3">
@@ -543,6 +548,79 @@ function NationHistory({ nation }: { nation: UKNation }) {
           ))}
         </div>
       </div>
+    </div>
+  )
+}
+
+// ── Territories & dependencies — present-day dependent territories ──
+// Crown Dependencies & British Overseas Territories under the UK, the Caribbean
+// constituent countries under the Netherlands, French overseas collectivities,
+// US insular areas, etc. Grouped where the data carries a `group` label.
+function TerritoriesSection({ territories }: { territories: Territory[] }) {
+  const [open, setOpen] = useState(false)
+  // Preserve insertion order while collecting groups.
+  const groups: { label: string | undefined; items: Territory[] }[] = []
+  for (const t of territories) {
+    let g = groups.find(g => g.label === t.group)
+    if (!g) { g = { label: t.group, items: [] }; groups.push(g) }
+    g.items.push(t)
+  }
+  return (
+    <div className="mb-3">
+      <button
+        onClick={() => setOpen(v => !v)}
+        aria-expanded={open}
+        className="geo-tap w-full flex items-center justify-between px-4 py-3 rounded-xl transition-all active:scale-[0.98]"
+        style={{ background: T.surface, border: `1px solid ${tint(T.cyan, 0.35)}` }}
+      >
+        <div className="flex items-center gap-2">
+          <h2 className="text-xs font-bold uppercase tracking-widest" style={{ color: T.cyan }}>Territories &amp; Dependencies</h2>
+          <span className="text-xs" style={{ color: T.muted }}>{territories.length}</span>
+        </div>
+        <span style={{ color: T.cyan, transition: 'transform 0.2s', transform: open ? 'rotate(90deg)' : 'rotate(0deg)' }}>›</span>
+      </button>
+
+      {open && (
+        <div className="mt-3">
+          <p className="text-xs mb-3" style={{ color: tint(T.cyan, 0.75) }}>
+            Present-day territories and dependencies — self-governing or administered, but not sovereign countries of their own.
+          </p>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+            {groups.map((g, gi) => (
+              <div key={gi}>
+                {g.label && (
+                  <div style={{ fontSize: 10, fontWeight: 700, color: T.cyan, letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 8, paddingLeft: 2 }}>
+                    {g.label}
+                  </div>
+                )}
+                <div className="space-y-2.5">
+                  {g.items.map((t, i) => (
+                    <div key={i} className="rounded-2xl overflow-hidden" style={{ background: T.surface, border: `1px solid ${tint(T.cyan, 0.2)}` }}>
+                      <div className="flex items-stretch gap-0">
+                        <div style={{ width: 96, flexShrink: 0, background: T.surfaceHi, borderRight: `1px solid ${T.line}`, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 8 }}>
+                          <img src={t.flagUrl} alt={t.name}
+                            style={{ width: '100%', maxHeight: 56, objectFit: 'contain', borderRadius: 3 }}
+                            onError={e => { (e.target as HTMLImageElement).style.opacity = '0.25' }} />
+                        </div>
+                        <div className="p-3 min-w-0 flex-1">
+                          <div className="flex items-start justify-between gap-2 mb-1">
+                            <div className="geo-display font-bold text-sm" style={{ color: T.text }}>{t.name}</div>
+                          </div>
+                          <span className="text-xs px-2 py-0.5 rounded-full inline-block mb-1.5"
+                            style={{ background: tint(T.cyan, 0.12), color: T.cyan, border: `1px solid ${tint(T.cyan, 0.25)}`, whiteSpace: 'nowrap' }}>
+                            {t.status}
+                          </span>
+                          <p className="text-xs leading-relaxed" style={{ color: T.muted, lineHeight: 1.6 }}>{t.note}</p>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   )
 }
