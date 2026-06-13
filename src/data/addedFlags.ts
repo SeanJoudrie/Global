@@ -74,4 +74,9 @@ export const ADDED_FLAGS: AddedFlag[] = [
   { country: "Montenegro", era: "Kingdom of Montenegro (1905–1918)", file: "Flag_of_Montenegro_(1905–1918).svg" },
   { country: "Norway", era: "Denmark–Norway (1524–1814)", file: "/flags/dk.svg" },
   { country: "Poland", era: "Kingdom of Poland, royal banner (1295–1795)", file: "Flag_of_the_Kingdom_of_Poland.svg" },
+  { country: "Slovakia", era: "Part of Czechoslovakia (1918–1992)", file: "/flags/cz.svg" },
+  { country: "Slovenia", era: "Carniola / Slovene lands (1836–1918)", file: "Flag_of_Krain.svg" },
+  { country: "Ukraine", era: "Cossack Hetmanate (1649–1764)", file: "Flag_of_the_Cossack_Hetmanate.svg" },
+  { country: "Vatican City", era: "Papal States, yellow-white (1808–1870)", file: "Flag_of_the_Papal_States_(1808-1870).svg" },
+  { country: "Vatican City", era: "Papal States, yellow-red (1750–1808)", file: "Flag_of_the_Papal_States_(pre_1808).svg" },
 ]

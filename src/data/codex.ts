@@ -2275,6 +2275,13 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       label: "Ukrainian People's Republic",
       note: 'The blue-over-yellow bicolour served the short-lived Ukrainian People\'s Republic during the revolutionary period, drawing on Ukrainian heraldic tradition.',
     },
+    {
+      fromYear: 1649,
+      toYear: 1764,
+      flagUrl: fp('Flag_of_the_Cossack_Hetmanate.svg'),
+      label: 'Cossack Hetmanate',
+      note: 'The Cossack Hetmanate, founded by Bohdan Khmelnytsky in 1649, was a self-governing Cossack state that is widely regarded as a forerunner of Ukrainian statehood. Its banners were typically crimson with a cross and Cossack devices. Squeezed between Poland, the Ottomans and Muscovy, it was gradually absorbed by the Russian Empire, which abolished it in 1764.',
+    },
   ],
   MD: [
     {
@@ -2438,6 +2445,13 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       label: 'SR Slovenia',
       note: 'The Socialist Republic used a white-blue-red tricolor with a gold-bordered red star centered on it.',
     },
+    {
+      fromYear: 1836,
+      toYear: 1918,
+      flagUrl: fp('Flag_of_Krain.svg'),
+      label: 'Carniola (Slovene lands)',
+      note: 'The Slovene white-blue-red tricolor was born in 1848, when Slovene nationalists adopted the colours of the Duchy of Carniola (Krain) — the historic Slovene heartland within the Habsburg Empire. It was the first distinctly Slovene flag, raised in defiance of Austrian-German rule, and is the direct ancestor of every Slovenian flag since.',
+    },
   ],
   MK: [
     {
@@ -2538,6 +2552,13 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       flagUrl: fp('Flag_of_Slovakia_(1939–1945).svg'),
       label: 'Plain Pan-Slavic tricolor',
       note: 'The WWII First Slovak Republic flew a plain white-blue-red tricolor identical to several other Slavic flags. The same plain design was briefly readopted in 1990–1992 before arms were added.',
+    },
+    {
+      fromYear: 1918,
+      toYear: 1992,
+      flagUrl: '/flags/cz.svg',
+      label: 'Part of Czechoslovakia',
+      note: 'Apart from the WWII puppet state, Slovakia spent most of the 20th century as the eastern half of Czechoslovakia (1918–1939 and 1945–1992), flying the Czechoslovak flag with its blue hoist triangle. Slovak frustration at being the junior partner drove the "Velvet Divorce" of 1993 — the peaceful split that gave Slovakia its own arms-bearing flag.',
     },
   ],
   HU: [
@@ -2854,6 +2875,20 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       flagUrl: fp('Flag_of_Vatican_City_(1929–2001).svg'),
       label: 'Original Vatican flag (1929)',
       note: 'Adopted with the 1929 Lateran Treaty that created Vatican City, the square yellow-and-white bicolor bears the crossed keys of St. Peter and the papal tiara, derived from the flag of the Papal States.',
+    },
+    {
+      fromYear: 1808,
+      toYear: 1870,
+      flagUrl: fp('Flag_of_the_Papal_States_(1808-1870).svg'),
+      label: 'Papal States (yellow-white)',
+      note: 'For over a thousand years the popes ruled a sovereign state across central Italy. In 1808 its flag changed from yellow-and-red to the gold-and-white that still flies over the Vatican — the gold and silver of the keys of Saint Peter. The Papal States were swallowed by a unifying Italy in 1870, leaving the popes stateless until the 1929 Lateran Treaty created tiny Vatican City.',
+    },
+    {
+      fromYear: 1750,
+      toYear: 1808,
+      flagUrl: fp('Flag_of_the_Papal_States_(pre_1808).svg'),
+      label: 'Papal States (yellow-red)',
+      note: 'Before 1808 the Papal States flew yellow-and-red — the traditional colours of the senate and people of Rome, inherited from antiquity. Napoleon\'s occupation prompted the switch to the gold-and-white that became the modern papal colours.',
     },
   ],
   IS: [
