@@ -12,6 +12,8 @@ import { ETHNIC_FLAGS } from '../data/ethnicFlags'
 import type { EthnicRegion } from '../data/ethnicFlags'
 import { EXTINCT_STATES } from '../data/extinctStates'
 import type { ExtinctRegion } from '../data/extinctStates'
+import { ORG_FLAGS } from '../data/orgFlags'
+import type { OrgRegion } from '../data/orgFlags'
 import { historicalFor } from '../data/historicalFlags'
 import { IDENTITY_FLAGS, IDENTITY_CATEGORIES, SIGNAL_FLAGS } from '../data/identityFlags'
 import { US_CITY_FLAGS } from '../data/usCityFlags'
@@ -207,6 +209,8 @@ export default function CodexScreen({ onBack, initialCode, embedded = false }: P
         {!isSearching && <EthnicCodexSection />}
         {/* Extinct states — the Commons "Flags of extinct states" gallery */}
         {!isSearching && <ExtinctStatesCodexSection />}
+        {/* International organizations — UN, NATO, EU, AU, FIFA, IOC… */}
+        {!isSearching && <OrgCodexSection />}
       </div>
     </div>
   )
@@ -952,6 +956,73 @@ function ExtinctStatesCodexSection() {
             The Wikimedia Commons “Flags of extinct states” gallery — banners of states that no longer exist, with the years each was independent. Tap a continent to browse.
           </p>
           {EXTINCT_STATES.map((r, i) => <ExtinctRegionBlock key={i} region={r} />)}
+        </div>
+      )}
+    </div>
+  )
+}
+
+// ── International organizations — UN, NATO, EU, AU, FIFA, IOC, the lot ──
+function OrgRegionBlock({ region }: { region: OrgRegion }) {
+  const [open, setOpen] = useState(false)
+  const count = region.groups.reduce((n, g) => n + g.items.length, 0)
+  return (
+    <div className="mb-2">
+      <button
+        onClick={() => setOpen(o => !o)}
+        aria-expanded={open}
+        className="geo-tap w-full flex items-center justify-between px-1 py-3 transition-all active:scale-[0.99]"
+        style={{ background: 'transparent', borderBottom: `1px solid ${open ? tint(T.green, 0.45) : T.line}` }}>
+        <div className="flex items-center gap-2.5 min-w-0">
+          <Building2 size={15} color={T.green} strokeWidth={1.6} absoluteStrokeWidth style={{ flexShrink: 0 }} />
+          <h4 className="text-sm font-bold uppercase tracking-wide truncate" style={{ color: T.green }}>{region.region}</h4>
+          <span className="text-xs" style={{ color: T.dim, fontFamily: FONT.mono, fontVariantNumeric: 'tabular-nums', flexShrink: 0 }}>{count}</span>
+        </div>
+        <ChevronDown size={16} color={T.green} strokeWidth={1.6} absoluteStrokeWidth
+          style={{ transition: 'transform 0.2s', transform: open ? 'rotate(180deg)' : 'rotate(0deg)', flexShrink: 0 }} />
+      </button>
+      {open && (
+        <div className="mt-3" style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+          {region.groups.map((g, gi) => (
+            <div key={gi}>
+              {g.label && (
+                <div style={{ fontSize: 9.5, fontWeight: 700, color: T.green, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 8, paddingLeft: 2, opacity: 0.85 }}>{g.label}</div>
+              )}
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '12px 8px' }}>
+                {g.items.map((it, ii) => <EthnicFlagTile key={ii} name={it.name} file={it.file} />)}
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  )
+}
+
+function OrgCodexSection() {
+  const [open, setOpen] = useState(false)
+  const total = ORG_FLAGS.reduce((n, r) => n + r.groups.reduce((m, g) => m + g.items.length, 0), 0)
+  return (
+    <div className="mt-5">
+      <button
+        onClick={() => setOpen(o => !o)}
+        className="geo-tap w-full flex items-center justify-between px-1 py-3 transition-all active:scale-[0.99]"
+        style={{ background: 'transparent', borderBottom: `1px solid ${open ? tint(T.green, 0.45) : T.line}` }}>
+        <div className="text-left">
+          <h3 className="text-sm font-bold uppercase tracking-widest flex items-center gap-2" style={{ color: T.green }}>
+            <Building2 size={15} color={T.green} strokeWidth={1.6} absoluteStrokeWidth /> International Organizations
+          </h3>
+          <p className="text-xs" style={{ color: T.dim }}>{total} flags · UN, NATO, EU, AU, FIFA, the Olympics…</p>
+        </div>
+        <ChevronDown size={17} color={T.green} strokeWidth={1.6} absoluteStrokeWidth
+          style={{ transition: 'transform 0.2s', transform: open ? 'rotate(180deg)' : 'rotate(0deg)', flexShrink: 0 }} />
+      </button>
+      {open && (
+        <div className="mt-3">
+          <p className="text-xs mb-2" style={{ color: T.dim, lineHeight: 1.4 }}>
+            Flags of international bodies — political, military, economic, cultural and sporting — plus former organisations. Tap a category to browse.
+          </p>
+          {ORG_FLAGS.map((r, i) => <OrgRegionBlock key={i} region={r} />)}
         </div>
       )}
     </div>
