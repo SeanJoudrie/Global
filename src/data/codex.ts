@@ -3886,6 +3886,12 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       note: 'A simple red-over-white bicolour whose colors trace back to the 13th-century Majapahit Empire. Banned by the Dutch, it was raised on independence day in 1945. It is nearly identical to Monaco\'s flag but with a 2:3 ratio.',
     },
     {
+      fromYear: 1816, toYear: 1945,
+      flagUrl: '/flags/nl.svg',
+      label: 'Dutch East Indies',
+      note: 'For over a century the islands were governed as the Dutch East Indies under the red-white-blue flag of the Netherlands — the colonial empire built on spices, sugar, coffee and rubber. The red-and-white nationalist flag was banned throughout this period; raising it was an act of defiance, which is exactly what the independence leaders did in 1945 as Dutch rule collapsed after the Japanese occupation.',
+    },
+    {
       fromYear: 1605, toYear: 1669,
       flagUrl: fp('Flag_of_the_Sultanate_of_Gowa.svg'),
       label: 'Sultanate of Gowa',
@@ -4298,6 +4304,12 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       flagUrl: fp('Flag_of_Bangladesh_(1971).svg'),
       label: 'Liberation War flag (with map)',
       note: 'Used during the 1971 Liberation War: a red disc on green bearing a gold silhouette map of the country, dropped partly because it was hard to render correctly on both sides.',
+    },
+    {
+      fromYear: 1947, toYear: 1971,
+      flagUrl: '/flags/pk.svg',
+      label: 'East Pakistan',
+      note: 'At the 1947 Partition of British India, the Bengali-speaking east became East Pakistan — one wing of a country split by 1,600 km of Indian territory — and flew the green-and-white flag of Pakistan. Resentment over political and economic domination by West Pakistan, and the suppression of the Bengali language, fuelled the independence movement that erupted into the 1971 Liberation War.',
     },
   ],
   NP: [
