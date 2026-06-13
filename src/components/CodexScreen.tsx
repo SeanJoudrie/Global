@@ -1018,7 +1018,6 @@ const MEGA_GAP = 8
 const MEGA_MIN_TILE = 74
 const MEGA_LABEL_H = 22
 const MEGA_BAR_H = 58
-const MEGA_BUFFER = 4
 
 function MegaCodexWall({ onClose }: { onClose: () => void }) {
   const [sort, setSort] = useState<'az' | 'za' | 'rand'>('az')
@@ -1052,8 +1051,11 @@ function MegaCodexWall({ onClose }: { onClose: () => void }) {
   const totalRows = Math.ceil(flags.length / cols)
   const totalHeight = MEGA_PAD * 2 + MEGA_BAR_H + totalRows * rowH
 
-  const startRow = Math.max(0, Math.floor((scrollTop - MEGA_BAR_H - MEGA_PAD) / rowH) - MEGA_BUFFER)
-  const endRow = Math.min(totalRows, Math.ceil((scrollTop + vh - MEGA_BAR_H) / rowH) + MEGA_BUFFER)
+  // Overscan a full screen of rows in each direction so images preload and
+  // are already decoded before they scroll into view — no visible pop-in.
+  const overscan = Math.ceil(vh / rowH) + 2
+  const startRow = Math.max(0, Math.floor((scrollTop - MEGA_BAR_H - MEGA_PAD) / rowH) - overscan)
+  const endRow = Math.min(totalRows, Math.ceil((scrollTop + vh - MEGA_BAR_H) / rowH) + overscan)
   const startIdx = startRow * cols
   const endIdx = Math.min(flags.length, endRow * cols)
   const visible = flags.slice(startIdx, endIdx)
@@ -1081,8 +1083,9 @@ function MegaCodexWall({ onClose }: { onClose: () => void }) {
             {visible.map((f, k) => (
               <div key={startIdx + k} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 3 }}>
                 <div style={{ width: '100%', aspectRatio: '3/2', borderRadius: 4, overflow: 'hidden', border: `1px solid ${T.line}`, background: T.surfaceHi, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  <img src={galleryThumb(f.url)} alt={f.title} loading="lazy" decoding="async"
-                    style={{ width: '100%', height: '100%', objectFit: 'contain' }}
+                  <img src={galleryThumb(f.url)} alt={f.title} loading="eager" decoding="async"
+                    style={{ width: '100%', height: '100%', objectFit: 'contain', opacity: 0, transition: 'opacity 0.25s ease' }}
+                    onLoad={e => { (e.target as HTMLImageElement).style.opacity = '1' }}
                     onError={e => {
                       const el = e.target as HTMLImageElement
                       const t = Number(el.dataset.t || '0')
