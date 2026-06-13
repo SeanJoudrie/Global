@@ -4614,6 +4614,13 @@ const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
       label: 'Tajik SSR',
       note: 'A red flag with central white and green horizontal stripes, which remained in use after the 1991 independence declaration until the new flag of 1992.',
     },
+    {
+      fromYear: 1785,
+      toYear: 1920,
+      flagUrl: fp("Flag_of_Emirate_of_Bukhara-Buxoro_Amirligi_Bayrog'i.svg"),
+      label: 'Emirate of Bukhara',
+      note: 'The Tajik lands were the eastern half of the Emirate of Bukhara, the last great Persian-speaking Muslim state of Central Asia. Tajiks look back further still to the Samanid Empire (9th–10th centuries), centred on Bukhara and Samarkand — the golden age of Persian-Tajik culture, honoured today in the name of Tajikistan\'s currency, the somoni.',
+    },
   ],
   TM: [
     {
