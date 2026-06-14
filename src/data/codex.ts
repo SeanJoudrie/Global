@@ -1,4 +1,5 @@
 import { LOCAL_FLAGS } from "./localFlags"
+import { HOSTED_FLAGS } from "./hostedFlags"
 
 export interface HistoricalFlag {
   fromYear: number
@@ -24,10 +25,14 @@ export interface CodexEntry {
  *  LOCAL_FLAGS) are served locally; an empty string marks a dead link with no
  *  replacement; anything unmapped falls back to the live Commons redirect. */
 export const fp = (file: string): string => {
-  const local = LOCAL_FLAGS[file.replace(/ /g, "_")]
-  return local !== undefined
-    ? local
-    : `https://commons.wikimedia.org/wiki/Special:FilePath/${file}`
+  const key = file.replace(/ /g, "_")
+  // LOCAL_FLAGS wins (it encodes repairs and "no flag" empties); then our
+  // self-hosted copies; finally the live Commons hotlink as a safe fallback.
+  const local = LOCAL_FLAGS[key]
+  if (local !== undefined) return local
+  const hosted = HOSTED_FLAGS[key]
+  if (hosted !== undefined) return hosted
+  return `https://commons.wikimedia.org/wiki/Special:FilePath/${file}`
 }
 
 const FLAG_HISTORY: Record<string, HistoricalFlag[]> = {
