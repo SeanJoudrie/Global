@@ -1064,11 +1064,16 @@ function gatherAllFlags(): MegaFlag[] {
   FLAGS.forEach(f => push(f.name, f.flagUrl, f.funFact))
   IDENTITY_FLAGS.forEach(f => push(f.name, f.flagUrl, f.note))
   US_CITY_FLAGS.forEach(f => push(f.name, f.flagUrl, f.note))
-  ETHNIC_FLAGS.forEach(r => {
-    const region = r.region.replace(/^Peoples of /, '')
-    r.groups.forEach(g => g.items.forEach(it =>
-      push(it.name, fp(it.file), curatedFact(it.name) ?? `The flag of the ${it.name}${g.label ? ` — a people of the ${g.label} family` : ''}, from the ${region} world.`)))
-  })
+  ETHNIC_FLAGS.forEach(r => r.groups.forEach(g => g.items.forEach(it => {
+    // Use the most specific classification (deepest group segment), but never
+    // when it just repeats the people's own name.
+    const seg = (g.label || "").split(" · ").pop() || ""
+    const overlaps = !!seg && (seg.toLowerCase().includes(it.name.toLowerCase()) || it.name.toLowerCase().includes(seg.toLowerCase()))
+    const tmpl = seg && !overlaps
+      ? `The ${it.name} are an ethnic group of the ${seg}.`
+      : `The flag of the ${it.name}, an ethnic and cultural group.`
+    push(it.name, fp(it.file), curatedFact(it.name) ?? tmpl)
+  })))
   EXTINCT_STATES.forEach(r => r.items.forEach(it => {
     const title = stripFlagOf(splitParen(it.name)[0])
     const [, paren] = splitParen(it.name)
@@ -1076,7 +1081,10 @@ function gatherAllFlags(): MegaFlag[] {
   }))
   ORG_FLAGS.forEach(r => r.groups.forEach(g => g.items.forEach(it => {
     const title = stripFlagOf(it.name)
-    push(title, fp(it.file), curatedFact(title) ?? `${title} — an international ${g.label ? g.label.toLowerCase() + " body" : "organisation"}.`)
+    const sports = /sport/i.test(r.region), former = /former/i.test(r.region)
+    const scope = ["Africa", "Americas", "Asia", "Europe", "Oceania"].includes(g.label) ? ` operating across ${g.label}` : ""
+    const tmpl = former ? `A now-defunct international organisation.` : sports ? `An international sports federation.` : `An international organisation${scope}.`
+    push(title, fp(it.file), curatedFact(title) ?? tmpl)
   })))
   Object.values(CODEX).forEach(e => e.flagHistory.forEach(h => { push(h.label, h.flagUrl, h.note); h.parallel?.forEach(p => push(p.label, p.flagUrl, p.note)) }))
   return all
@@ -1162,8 +1170,8 @@ function MegaCodexWall({ onClose }: { onClose: () => void }) {
               const factStyle: React.CSSProperties = {
                 position: 'absolute', top: 'calc(100% + 2px)', zIndex: 40,
                 width: 210, maxWidth: '66vw',
-                background: T.surface, border: `2.5px solid ${ACCENT.codex}`, borderRadius: 12,
-                padding: '9px 11px', boxShadow: `0 14px 34px -10px ${tint(T.text, 0.65)}`,
+                background: T.surface, border: `3.5px solid ${ACCENT.codex}`, borderRadius: 12,
+                padding: '10px 12px', boxShadow: `0 14px 34px -10px ${tint(T.text, 0.65)}`,
               }
               if (anchorRight) factStyle.right = 0; else factStyle.left = 0
               return (
