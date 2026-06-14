@@ -166,16 +166,17 @@ function ThePeelScreenGame({ onBack , onReplay }: Props & { onReplay: () => void
                 </button>
               ))}
             </div>
-            <div className="flex gap-2 flex-wrap">
+            <div className="grid grid-cols-4 gap-1.5">
               {[
                 { label: '<5%', pts: '1000', color: T.green },
                 { label: '5–22%', pts: '750–900', color: ACC },
                 { label: '22–50%', pts: '400–600', color: T.gold },
                 { label: '50%+', pts: '100–200', color: T.danger },
               ].map(({ label, pts, color }) => (
-                <div key={label} className="text-xs px-2 py-1 rounded-lg"
-                  style={{ background: T.surface, border: `1px solid ${tint(color, 0.35)}`, color }}>
-                  {label} → {pts}
+                <div key={label} className="rounded-lg text-center"
+                  style={{ background: T.surface, border: `1px solid ${tint(color, 0.35)}`, color, padding: '5px 3px', lineHeight: 1.25 }}>
+                  <div style={{ fontSize: 10, fontWeight: 700 }}>{label}</div>
+                  <div style={{ fontSize: 9.5, opacity: 0.85, fontFamily: FONT.mono }}>{pts}</div>
                 </div>
               ))}
             </div>

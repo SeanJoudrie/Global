@@ -79,7 +79,7 @@ function ProvinceRouletteScreenGame({ onBack, onSubLearned , onReplay }: Props &
         style={{ background: T.bg, color: T.text }}>
         <div className="w-full max-w-sm">
           <div className="rounded-2xl overflow-hidden mb-4" style={{ border: `2px solid ${tint(T.green, 0.3)}` }}>
-            <img src={target.flagUrl} alt={target.name} style={{ width: "100%", height: 150, objectFit: "cover", display: "block" }}
+            <img src={target.flagUrl} alt={target.name} style={{ width: "100%", height: 150, objectFit: "contain", display: "block", background: T.surfaceHi, padding: 6 }}
               onError={e => { (e.target as HTMLImageElement).style.opacity = "0.3" }} />
           </div>
           <div className="rounded-2xl p-6 text-center mb-4" style={{ background: T.surface, border: `1px solid ${tint(A, 0.3)}` }}>
@@ -120,7 +120,7 @@ function ProvinceRouletteScreenGame({ onBack, onSubLearned , onReplay }: Props &
       <div className="flex flex-col items-center px-5 gap-4">
         <div style={{ width: 280, height: 186, borderRadius: 14, overflow: "hidden", border: `2px solid ${tint(A, 0.3)}`, boxShadow: `0 6px 18px -10px ${tint(T.text, 0.5)}`, background: T.surfaceHi }}>
           <img src={target.flagUrl} alt="subdivision flag"
-            style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+            style={{ width: "100%", height: "100%", objectFit: "contain", display: "block", padding: 8 }}
             onError={e => { (e.target as HTMLImageElement).style.opacity = "0.3" }} />
         </div>
         <div className="text-sm font-semibold" style={{ color: A }}>{step.label}</div>

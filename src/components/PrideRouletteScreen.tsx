@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useMemo } from "react"
 import { LGBTQ_FLAGS } from "../data/identityFlags"
 import type { IdentityFlag } from "../data/identityFlags"
 import { T, ACCENT, FONT, tint } from "../ui/tokens"
@@ -13,46 +13,61 @@ const loadBest = () => { try { return Number(localStorage.getItem(BEST_KEY)) || 
 const saveBest = (n: number) => { try { localStorage.setItem(BEST_KEY, String(n)) } catch { /* ignore */ } }
 
 const PRIDE_GRADIENT = "linear-gradient(90deg,#FF5E5E,#FFD93D,#6BCB77,#4D96FF,#B66DFF)"
+const DEFAULT_LEN = 10
 
 interface Round { target: IdentityFlag; choices: IdentityFlag[] }
 
-function buildRound(): Round {
-  const target = LGBTQ_FLAGS[Math.floor(Math.random() * LGBTQ_FLAGS.length)]
-  const distractors = LGBTQ_FLAGS
-    .filter(f => f.id !== target.id)
-    .sort(() => Math.random() - 0.5)
-    .slice(0, 3)
-  const choices = [target, ...distractors].sort(() => Math.random() - 0.5)
-  return { target, choices }
+// A fixed-length deck: `len` distinct targets, each with three distractors.
+// Wrong answers no longer end the run — you play all the way through and get a
+// score out of `len`. "All" runs the entire pride set.
+function buildDeck(len: number): Round[] {
+  const pool = [...LGBTQ_FLAGS].sort(() => Math.random() - 0.5)
+  const targets = pool.slice(0, Math.min(len, pool.length))
+  return targets.map(target => {
+    const distractors = LGBTQ_FLAGS
+      .filter(f => f.id !== target.id)
+      .sort(() => Math.random() - 0.5)
+      .slice(0, 3)
+    return { target, choices: [target, ...distractors].sort(() => Math.random() - 0.5) }
+  })
 }
 
 export default function PrideRouletteScreen({ onBack }: Props) {
-  const [round, setRound] = useState<Round>(buildRound)
-  const [streak, setStreak] = useState(0)
-  const [best, setBest] = useState(loadBest)
+  const [len, setLen] = useState(DEFAULT_LEN)
+  const total = Math.min(len, LGBTQ_FLAGS.length)
+  const [seed, setSeed] = useState(0)
+  const deck = useMemo(() => buildDeck(len), [len, seed])
+  const [idx, setIdx] = useState(0)
+  const [score, setScore] = useState(0)
   const [picked, setPicked] = useState<string | null>(null)
-  const [over, setOver] = useState(false)
+  const [best, setBest] = useState(loadBest)
+  const [done, setDone] = useState(false)
 
+  const round = deck[idx]
   const answered = picked !== null
+  const isLast = idx === total - 1
+
+  const restart = (newLen?: number) => {
+    if (newLen !== undefined) setLen(newLen)
+    setSeed(s => s + 1); setIdx(0); setScore(0); setPicked(null); setDone(false)
+  }
 
   const pick = (id: string) => {
     if (answered) return
     setPicked(id)
-    if (id === round.target.id) {
-      const ns = streak + 1
-      setStreak(ns)
-      if (ns > best) { setBest(ns); saveBest(ns) }
-    } else {
-      if (streak > best) { setBest(streak); saveBest(streak) }
-      setTimeout(() => setOver(true), 900)
-    }
+    if (id === round.target.id) setScore(s => s + 1)
   }
 
-  const next = () => { setRound(buildRound()); setPicked(null) }
-  const restart = () => { setStreak(0); setRound(buildRound()); setPicked(null); setOver(false) }
+  const next = () => {
+    if (isLast) {
+      const finalRight = score
+      if (finalRight > best) { setBest(finalRight); saveBest(finalRight) }
+      setDone(true)
+    } else { setIdx(i => i + 1); setPicked(null) }
+  }
 
-  // ── Game over ───────────────────────────────────────────────────────────────
-  if (over) {
+  // ── Results ──────────────────────────────────────────────────────────────
+  if (done) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center px-5"
         style={{ background: T.bg, minHeight: "100vh", color: T.text }}>
@@ -62,17 +77,14 @@ export default function PrideRouletteScreen({ onBack }: Props) {
             <div className="mb-2 flex justify-center" style={{ color: ACCENT.play }}>
               <LineIcon name="identity" size={44} color={ACCENT.play} />
             </div>
-            <div className="text-6xl font-black mb-1" style={{ color: T.text, fontFamily: FONT.mono, fontVariantNumeric: "tabular-nums" }}>{streak}</div>
-            <div className="text-sm" style={{ color: T.muted }}>flags in a row · best {best}</div>
-            <div className="text-xs mt-3" style={{ color: T.muted }}>
-              It was <span style={{ color: T.text, fontWeight: 700 }}>{round.target.name}</span>
-            </div>
+            <div className="text-6xl font-black mb-1" style={{ color: T.text, fontFamily: FONT.mono, fontVariantNumeric: "tabular-nums" }}>{score}<span style={{ fontSize: 28, color: T.dim }}>/{total}</span></div>
+            <div className="text-sm" style={{ color: T.muted }}>pride flags · best {best}</div>
           </div>
           <div className="flex flex-col gap-3">
-            <button onClick={restart}
+            <button onClick={() => restart()}
               className="w-full py-3.5 rounded-xl font-bold transition-all active:scale-95"
               style={{ background: PRIDE_GRADIENT, color: "#fff", textShadow: "0 1px 2px #0006" }}>
-              Spin Again
+              Play Again
             </button>
             <button onClick={onBack}
               className="w-full py-3.5 rounded-xl font-bold transition-all active:scale-95"
@@ -88,7 +100,7 @@ export default function PrideRouletteScreen({ onBack }: Props) {
   return (
     <div className="min-h-screen flex flex-col"
       style={{ background: T.bg, minHeight: "100vh", color: T.text }}>
-      <ScreenHeader title="Pride Roulette" subtitle={`Streak ${streak}`} onBack={onBack}
+      <ScreenHeader title="Pride Roulette" subtitle={`${idx + 1} / ${total} · ${score} correct`} onBack={onBack}
         right={
           <div style={{ display: "flex", alignItems: "center", gap: 5, padding: "5px 10px", borderRadius: 999, background: T.surface, border: `1px solid ${tint(T.gold, 0.4)}` }}>
             <Trophy size={13} color={T.gold} strokeWidth={1.6} absoluteStrokeWidth />
@@ -96,8 +108,21 @@ export default function PrideRouletteScreen({ onBack }: Props) {
           </div>
         } />
 
+      {/* Length toggle — 10 (default) or the whole set */}
+      <div className="flex justify-center mt-1 mb-2">
+        <div style={{ display: "flex", gap: 3, background: T.surface, borderRadius: 999, padding: 3, border: `1px solid ${T.line}` }}>
+          {[["10", DEFAULT_LEN], ["All", LGBTQ_FLAGS.length]].map(([label, n]) => {
+            const on = len === n
+            return (
+              <button key={label} onClick={() => restart(n as number)}
+                style={{ fontSize: 11.5, fontWeight: 700, padding: "5px 14px", borderRadius: 999, border: "none", cursor: "pointer", background: on ? ACCENT.play : "transparent", color: on ? T.onAccent : T.muted }}>{label}</button>
+            )
+          })}
+        </div>
+      </div>
+
       <div className="flex-1 flex flex-col items-center px-5 gap-4">
-        <p className="text-sm" style={{ color: T.muted }}>Name that pride flag — one wrong ends the run.</p>
+        <p className="text-sm" style={{ color: T.muted }}>Name that pride flag.</p>
 
         {/* Flag */}
         <div style={{
@@ -133,11 +158,11 @@ export default function PrideRouletteScreen({ onBack }: Props) {
           })}
         </div>
 
-        {answered && picked === round.target.id && (
+        {answered && (
           <button onClick={next}
             className="w-full max-w-sm py-3.5 rounded-xl font-bold transition-all active:scale-95"
             style={{ background: PRIDE_GRADIENT, color: "#fff", textShadow: "0 1px 2px #0006" }}>
-            Next →
+            {isLast ? "See score →" : "Next →"}
           </button>
         )}
       </div>

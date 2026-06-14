@@ -175,7 +175,7 @@ export function FlagTile({ id, title, subtitle, accent, onClick, style }:
         ...(IS_CARTO ? { ["--wash" as string]: tint(accent, 0.4) } : { background: T.surface, border: `1px solid ${T.line}` }),
         ...style,
       }}>
-      <div style={{ position: "relative", width: "100%", height: 72, borderRadius: 9, overflow: "hidden", border: `1px solid ${T.line}`, background: tint(accent, 0.08) }}>
+      <div style={{ position: "relative", width: "100%", aspectRatio: "140 / 72", borderRadius: 9, overflow: "hidden", border: `1px solid ${T.line}`, background: tint(accent, 0.08) }}>
         <GamePoster id={id} accent={accent} />
       </div>
       <div style={{ padding: "0 3px 3px" }}>

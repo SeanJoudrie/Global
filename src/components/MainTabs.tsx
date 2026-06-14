@@ -581,7 +581,7 @@ function PlayTab({ launch, state }: { launch: (e: Entry) => void; state: AppStat
           </button>
 
           {sandboxOpen && (
-            <div className={IS_CARTO ? "carto-slide-up" : undefined} style={{ marginTop: 10, display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
+            <div className={IS_CARTO ? "carto-slide-up" : undefined} style={{ marginTop: 10, display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(150px, 1fr))", gap: 10 }}>
               {sandbox.map(e => (
                 <FlagTile key={e.id} id={e.id} title={e.title} subtitle={e.subtitle} accent={ACCENT[e.accent]} onClick={() => launch(e)} style={{ width: "100%" }} />
               ))}

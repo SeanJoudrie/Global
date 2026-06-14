@@ -143,7 +143,7 @@ export default function TheComposerScreen({ onBack }: Props) {
     <div className="min-h-screen flex flex-col"
       style={{ background: T.bg, minHeight: "100vh", color: T.text }}>
 
-      <ScreenHeader title="The Composer" onBack={onBack}
+      <ScreenHeader title="Tile Flipper" onBack={onBack}
         subtitle={
           <span style={{ color: ACC }}>
             {done

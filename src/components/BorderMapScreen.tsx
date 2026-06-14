@@ -86,12 +86,12 @@ function BorderMapGame({ onBack, onReplay }: Props & { onReplay: () => void }) {
       <header style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "16px 18px 4px" }}>
         <button onClick={onBack} className="geo-tap" style={{ width: 34, height: 34, borderRadius: 9, background: T.surface, border: `1px solid ${T.line}`, color: T.muted }}>‹</button>
         <div style={{ textAlign: "center" }}>
-          <div className="geo-micro" style={{ fontSize: 9, color: T.muted }}>Name the neighbours of</div>
-          <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 8 }}>
-            <div style={{ width: 28, height: 19, borderRadius: 3, overflow: "hidden", border: `1px solid ${T.line}`, flexShrink: 0 }}>
+          <div className="geo-micro" style={{ fontSize: 9.5, color: T.muted }}>Name the neighbours of</div>
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 10, marginTop: 2 }}>
+            <div style={{ width: 38, height: 26, borderRadius: 4, overflow: "hidden", border: `1px solid ${T.line}`, flexShrink: 0 }}>
               <FlagImage code={primary} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
             </div>
-            <div className="geo-display" style={{ fontWeight: 700, fontSize: 20, color: T.text }}>{NAME(primary)}</div>
+            <div className="geo-display" style={{ fontWeight: 800, fontSize: 28, letterSpacing: "-0.01em", color: T.text }}>{NAME(primary)}</div>
           </div>
         </div>
         <div style={{ fontFamily: FONT.mono, fontSize: 14, color: ACCENT.codex, fontWeight: 700 }}>{found.size}<span style={{ color: T.dim }}>/{targets.length}</span></div>
