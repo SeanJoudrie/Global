@@ -83,7 +83,7 @@ export default function FlagleScreen({ onBack }: Props) {
   const shareText = () => {
     const head = `Flagle ${today} ${won ? guesses.length : "X"}/${MAX_GUESSES}`
     const grid = guesses.map(g => COLS.map(c => TILE_EMOJI[g.tiles[c.key]]).join("")).join("\n")
-    return head + "\n" + grid + "\nglobalio.netlify.app"
+    return head + "\n" + grid + "\nglobalio.app"
   }
   const copyShare = () => {
     navigator.clipboard?.writeText(shareText()).then(() => { setCopied(true); setTimeout(() => setCopied(false), 1800) })

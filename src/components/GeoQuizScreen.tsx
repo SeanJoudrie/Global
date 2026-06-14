@@ -80,7 +80,7 @@ export default function GeoQuizScreen({ onBack }: Props) {
   const handleShare = async () => {
     const grid = answers.map(a => a === 'correct' ? '🟩' : '🟥').join('')
     const phrase = scorePhrase(score, questions.length)
-    const text = `Globalio Geography ${todayString()}\n${score}/${questions.length} 🌍${phrase ? ` ${phrase}` : ''}\n${grid}\nPlay at globalio.netlify.app`
+    const text = `Globalio Geography ${todayString()}\n${score}/${questions.length} 🌍${phrase ? ` ${phrase}` : ''}\n${grid}\nPlay at globalio.app`
     try { await navigator.clipboard.writeText(text); alert('Copied to clipboard!') }
     catch { alert(text) }
   }

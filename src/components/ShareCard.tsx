@@ -34,7 +34,7 @@ export function shareText(result: ShareResult): string {
     `Score: ${result.score}`,
     result.streak ? `🔥 ${result.streak} day streak` : '',
     '',
-    'globalio.netlify.app',
+    'globalio.app',
   ].filter(l => l !== undefined)
   return lines.join('\n').replace(/\n\n\n/g, '\n\n')
 }
@@ -157,7 +157,7 @@ export default function ShareCard({ result, showCopyButton = true }: Props) {
 
         {/* Footer */}
         <div style={{ fontSize: 11, color: IS_CARTO ? T.muted : '#8B6CFF88', fontWeight: 600, letterSpacing: '0.05em', position: 'relative' }}>
-          globalio.netlify.app
+          globalio.app
         </div>
       </div>
 

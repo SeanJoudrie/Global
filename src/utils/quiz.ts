@@ -81,5 +81,5 @@ export function generateShareText(result: { score: number; total: number; answer
   const emojiRow = result.answers.map(a => a === 'correct' ? '🟩' : '🟥').join('')
   const phrase = scorePhrase(result.score, result.total)
   const scoreLine = `${result.score}/${result.total} 🌍${phrase ? ` ${phrase}` : ""}`
-  return `Globalio ${result.date}\n${scoreLine}\n${emojiRow}\nPlay at globalio.netlify.app`
+  return `Globalio ${result.date}\n${scoreLine}\n${emojiRow}\nPlay at globalio.app`
 }
