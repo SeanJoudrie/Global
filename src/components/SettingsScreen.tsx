@@ -2,6 +2,7 @@ import { AESTHETIC, saveAesthetic, T, ACCENT, tint } from "../ui/tokens"
 import type { Aesthetic } from "../ui/tokens"
 import { ScreenHeader } from "./ui"
 import { LineIcon } from "./icons"
+import { openSupporter } from "../utils/supporterNav"
 
 interface Props { onBack: () => void; onMegaCodex: () => void; onFlagCheck: () => void }
 
@@ -185,9 +186,16 @@ export default function SettingsScreen({ onBack, onMegaCodex, onFlagCheck }: Pro
           </div>
         )}
 
-        {/* Feedback — opens the user's mail app, pre-addressed to the dev */}
-        <a href={"mailto:keganbergeron@gmail.com?subject=" + encodeURIComponent("Globalio feedback") + "&body=" + encodeURIComponent("What I love / what I'd change / an idea:\n\n")}
+        {/* Support Globalio — opens the Supporter screen (reachable even ad-free) */}
+        <button onClick={openSupporter}
           className="w-full mt-8 py-3 rounded-xl text-sm font-semibold transition-all active:scale-95 block text-center"
+          style={{ background: tint(T.gold, 0.12), border: `1px solid ${tint(T.gold, 0.4)}`, color: T.gold }}>
+          <span className="inline-flex items-center justify-center gap-2">💛 Support Globalio</span>
+        </button>
+
+        {/* Feedback — opens the user's mail app, pre-addressed to the dev */}
+        <a href={"mailto:sjoudrie@gmail.com?subject=" + encodeURIComponent("Globalio feedback") + "&body=" + encodeURIComponent("What I love / what I'd change / an idea:\n\n")}
+          className="w-full mt-3 py-3 rounded-xl text-sm font-semibold transition-all active:scale-95 block text-center"
           style={{ textDecoration: 'none', background: tint(ACCENT.learn, 0.12), border: `1px solid ${tint(ACCENT.learn, 0.4)}`, color: ACCENT.learn }}>
           <span className="inline-flex items-center justify-center gap-2"><LineIcon name="historical" size={15} color={ACCENT.learn} /> Send feedback or ideas</span>
         </a>

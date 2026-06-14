@@ -11,6 +11,8 @@ import { TabBar, ModuleCard, FlagTile, StatPill, SectionHeader, ProgressRing } f
 import { LineIcon, FlameIcon, ChevronDownIcon, FlaskIcon, SearchIcon, ShuffleIcon, CompassIcon, SparklesIcon, HistoryIcon, TrendingUpIcon, CrownIcon, PencilIcon, MailIcon } from "./icons"
 import FlagImage from "./FlagImage"
 import { GamePoster } from "./GamePoster"
+import AdBox from "./AdBox"
+import { AD_SLOTS } from "../ads"
 
 // Faint antique world-map backdrop (Cartographer skin only). Fixed to the
 // viewport so it stays put while the page scrolls; heavily blurred, very low
@@ -266,6 +268,9 @@ function TodayTab({ state, dailyDone, launch, onNavigate, onGoCodex, onGoPlay, o
         <ModuleCard icon="🚩" glyph="flags" title="Flag Sets" subtitle="Country, historical & identity sets" accent={ACCENT.learn}
           progress={{ done: state.learnedFlags.length, total: FLAGS.length }} onClick={() => onNavigate("flags")} />
       </div>
+
+      {/* Scroll-to-see ad at the very bottom of Today (never on first view) */}
+      <AdBox slot={AD_SLOTS.todayFooter} />
     </div>
   )
 }
@@ -588,6 +593,9 @@ function PlayTab({ launch, state }: { launch: (e: Entry) => void; state: AppStat
             </div>
           )}
         </div>
+
+        {/* Scroll-to-see ad under Beta Sandbox */}
+        <AdBox slot={AD_SLOTS.playFooter} />
       </>
       )}
     </div>
@@ -932,6 +940,9 @@ function YouTab({ state, learned, onNavigate, onSetUsername }: {
 
       {/* Feedback — a one-man operation that reads every message */}
       <FeedbackCard />
+
+      {/* Scroll-to-see ad at the very bottom of the You tab */}
+      <AdBox slot={AD_SLOTS.youFooter} />
     </div>
   )
 }
@@ -939,7 +950,7 @@ function YouTab({ state, learned, onNavigate, onSetUsername }: {
 // Pre-addressed mail to the dev. A static-site-friendly way to collect feedback
 // with zero backend — opens the user's mail app with subject + body filled.
 const FEEDBACK_HREF =
-  "mailto:keganbergeron@gmail.com" +
+  "mailto:sjoudrie@gmail.com" +
   "?subject=" + encodeURIComponent("Globalio feedback") +
   "&body=" + encodeURIComponent("What I love / what I'd change / an idea:\n\n")
 

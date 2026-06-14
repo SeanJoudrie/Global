@@ -19,6 +19,10 @@ export interface AppState {
   funFactStreak: number
   lastFunFactDate: string | null
   lastShareResult: ShareResult | null
+  /** Supporter (one-time $1.99) — true hides every ad across the app. */
+  premium: boolean
+  /** Count of completed main games — drives the "every 4th game" ad break. */
+  gamesPlayed: number
 }
 
 export interface ShareResult {
@@ -41,6 +45,8 @@ const DEFAULT_STATE: AppState = {
   funFactStreak: 0,
   lastFunFactDate: null,
   lastShareResult: null,
+  premium: false,
+  gamesPlayed: 0,
 }
 
 export function loadState(): AppState {
@@ -103,6 +109,26 @@ export function saveShareResult(state: AppState, result: ShareResult): AppState 
 export function awardCrown(state: AppState, setId: string): AppState {
   if (state.crowns.includes(setId)) return state
   return { ...state, crowns: [...state.crowns, setId] }
+}
+
+export function setPremium(state: AppState, on: boolean): AppState {
+  return { ...state, premium: on }
+}
+
+export function recordGamePlayed(state: AppState): AppState {
+  return { ...state, gamesPlayed: (state.gamesPlayed ?? 0) + 1 }
+}
+
+// Read the Supporter flag straight from storage so ad components can gate
+// themselves without threading AppState through every screen. Components
+// re-evaluate this on the re-render that follows an owner unlock.
+export function isSupporter(): boolean {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY)
+    return raw ? !!JSON.parse(raw).premium : false
+  } catch {
+    return false
+  }
 }
 
 function getPreviousDay(dateStr: string): string {

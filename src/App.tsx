@@ -65,16 +65,20 @@ const ContinentSortScreen = lazy(() => import("./components/ContinentSortScreen"
 const StatClashScreen = lazy(() => import("./components/StatClashScreen"))
 const USCityFlagScreen = lazy(() => import("./components/USCityFlagScreen"))
 const WorldCupScreen = lazy(() => import("./components/WorldCupScreen"))
+const SupporterScreen = lazy(() => import("./components/SupporterScreen"))
+import AdBreakModal from "./components/AdBreakModal"
+import { setSupporterHandler } from "./utils/supporterNav"
+import { ADS_ENABLED } from "./ads"
 import { FLAGS } from "./data/flags"
 import type { FlagRecord } from "./data/flags"
-import { loadState, saveState, markFlagLearned, markSubLearned, recordDailyResult, awardCrown, saveShareResult } from "./utils/storage"
+import { loadState, saveState, markFlagLearned, markSubLearned, recordDailyResult, awardCrown, saveShareResult, setPremium, recordGamePlayed } from "./utils/storage"
 import type { AppState, ShareResult } from "./utils/storage"
 import { buildDailyQuiz, buildSetQuiz } from "./utils/quiz"
 import type { Question } from "./utils/quiz"
 import { todayString } from "./utils/prng"
 import { loadTheme } from "./components/SettingsScreen"
 
-type Screen = "splash" | "home" | "flags" | "quiz" | "reversequiz" | "result" | "achievements" | "profile" | "flashcards" | "language" | "capitalquiz" | "challenge" | "codex" | "geo" | "gauntlet" | "tierlist" | "settings" | "oddoneout" | "thecrop" | "flagdna" | "buildflag" | "thepeel" | "lookalikes" | "composer" | "silhouette" | "flagfamilies" | "funfact" | "progressmap" | "historical" | "identity" | "provinceroulette" | "substumper" | "lineage" | "substats" | "megacodex" | "flagle" | "higherlower" | "deadoralive" | "frankenflag" | "describeit" | "flagbracket" | "realorbot" | "timeline" | "bordermap" | "borderchain" | "gacha" | "symbolhunt" | "twotruths" | "capitalmatch" | "oddborder" | "continentsort" | "statclash" | "uscityflags" | "prideroulette" | "flagdiag" | "worldcup"
+type Screen = "splash" | "home" | "flags" | "quiz" | "reversequiz" | "result" | "achievements" | "profile" | "flashcards" | "language" | "capitalquiz" | "challenge" | "codex" | "geo" | "gauntlet" | "tierlist" | "settings" | "oddoneout" | "thecrop" | "flagdna" | "buildflag" | "thepeel" | "lookalikes" | "composer" | "silhouette" | "flagfamilies" | "funfact" | "progressmap" | "historical" | "identity" | "provinceroulette" | "substumper" | "lineage" | "substats" | "megacodex" | "flagle" | "higherlower" | "deadoralive" | "frankenflag" | "describeit" | "flagbracket" | "realorbot" | "timeline" | "bordermap" | "borderchain" | "gacha" | "symbolhunt" | "twotruths" | "capitalmatch" | "oddborder" | "continentsort" | "statclash" | "uscityflags" | "prideroulette" | "flagdiag" | "worldcup" | "supporter"
 
 interface ActiveQuiz {
   questions: Question[]
@@ -129,8 +133,16 @@ export default function App() {
   const [tab, setTab] = useState<TabKey>("today")
   // Deep-link target for the full-screen Codex (e.g. from the World Cup explorer)
   const [codexInitial, setCodexInitial] = useState<string | null>(null)
+  // The boxed "every 4th game" ad break, shown over the result screen.
+  const [adBreak, setAdBreak] = useState(false)
 
   useEffect(() => { saveState(appState) }, [appState])
+
+  // Let any ad component open the Supporter screen without prop-drilling.
+  useEffect(() => {
+    setSupporterHandler(() => setScreen("supporter"))
+    return () => setSupporterHandler(null)
+  }, [])
 
   const startDaily = useCallback(() => {
     const questions = buildDailyQuiz(todayString(), 10)
@@ -173,8 +185,13 @@ export default function App() {
     }
     const allLearned = activeQuiz.setFlags.every(f => newState.learnedFlags.includes(f.code))
     if (allLearned && !activeQuiz.isDaily) newState = awardCrown(newState, activeQuiz.setId)
+    newState = recordGamePlayed(newState)
+    // Boxed ad break on game 1, then every 4th — only when ads are live and the
+    // player isn't a Supporter.
+    const showBreak = ADS_ENABLED && !newState.premium && newState.gamesPlayed % 4 === 1
     setAppState(newState)
     setLastResult({ score, total, answers })
+    setAdBreak(showBreak)
     setScreen("result")
   }, [activeQuiz, appState])
 
@@ -346,6 +363,11 @@ export default function App() {
       {screen === "statclash"    && <StatClashScreen    onBack={() => setScreen("home")} />}
       {screen === "uscityflags"  && <USCityFlagScreen   onBack={() => setScreen("home")} />}
       {screen === "worldcup"     && <WorldCupScreen     onBack={() => setScreen("home")} onOpenCodex={(code) => { setCodexInitial(code); setScreen("codex") }} />}
+      {screen === "supporter"    && (
+        <SupporterScreen onBack={() => setScreen("home")}
+          premium={appState.premium}
+          onSetPremium={(on) => setAppState(s => setPremium(s, on))} />
+      )}
 
       {screen === "quiz" && activeQuiz && (
         <QuizScreen questions={activeQuiz.questions} title={activeQuiz.title}
@@ -372,6 +394,9 @@ export default function App() {
       )}
       </Suspense>
       </ScreenErrorBoundary>
+
+      {/* Boxed ad break over the result screen (dormant until ads are live) */}
+      {adBreak && <AdBreakModal onContinue={() => setAdBreak(false)} />}
     </div>
   )
 }
