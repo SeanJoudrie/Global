@@ -990,6 +990,63 @@ function OrgCodexSection() {
 // ── Mega Codex — a full-screen wall of every flag in the app ──
 // Aggregated once at module load: countries, identity, cities, ethnic, extinct,
 // org and historical flags, deduped by display name.
+// Hand-written facts for the well-known gallery entries (organisations, extinct
+// states, peoples) that otherwise only get a generic descriptor. Matched by a
+// keyword appearing in the title, most-specific first.
+const CURATED_FACTS: [string, string][] = [
+  // Organisations
+  ["United Nations", "Founded in 1945 after WWII, the UN now unites 193 member states — nearly every country on Earth — under its pale-blue flag wrapped in olive branches of peace."],
+  ["NATO", "A military alliance born in 1949: under Article 5, an armed attack on one member is treated as an attack on all of them."],
+  ["European Union", "Its ring of twelve gold stars stands for unity and completeness — the count has never changed, even as the EU grew far past twelve members."],
+  ["African Union", "Successor to the Organisation of African Unity, it represents all 55 African states; its gold stars ring a map of the whole continent."],
+  ["Arab League", "Founded in 1945, the oldest pan-Arab body; the chain on its flag symbolises the unity of its member states."],
+  ["FIFA", "World football's governing body since 1904 — its World Cup is the single most-watched sporting event on the planet."],
+  ["International Olympic Committee", "The five interlocking rings represent the five inhabited continents; together their colours appear on every national flag on Earth."],
+  ["Commonwealth of Nations", "A voluntary club of 56 mostly ex-British-Empire countries, spanning roughly a third of all humanity."],
+  ["Islamic Cooperation", "With 57 member states, it is the largest inter-governmental organisation in the world after the UN itself."],
+  ["League of Nations", "The UN's ill-fated forerunner (1920–46) — it couldn't stop WWII, but it invented modern international cooperation."],
+  ["World Trade Organization", "Referee of global commerce: it sets the trade rules between 160-plus economies and settles their disputes."],
+  ["Comecon", "The Soviet bloc's economic alliance — the communist East's answer to the Western common market."],
+  // Extinct states
+  ["Biafra", "A breakaway Igbo state in southeast Nigeria (1967–70); its rising-sun flag became a symbol of secession — and of a catastrophic famine."],
+  ["Manchukuo", "A puppet state Japan carved out of Manchuria (1932–45), fronted by Puyi, China's last emperor."],
+  ["Republic of Texas", "An independent nation for nearly a decade (1836–45) before joining the US — the root of Texas's 'Lone Star State' nickname."],
+  ["Vermont", "Vermont governed itself as an independent republic for 14 years (1777–91) before becoming the 14th US state."],
+  ["Two Sicilies", "The largest Italian state before unification, ruling the south and Sicily until Garibaldi's redshirts toppled it in 1861."],
+  ["Byzantine", "The eastern Roman Empire outlived Rome itself by a thousand years, until Constantinople fell to the Ottomans in 1453."],
+  ["Holy Roman", "A patchwork of hundreds of German states that, as Voltaire joked, was 'neither holy, nor Roman, nor an empire.'"],
+  ["Republic of Venice", "A maritime superpower for a millennium (697–1797), ruled by elected doges, until Napoleon swept it away."],
+  ["Ragusa", "Tiny Dubrovnik thrived as a merchant republic rivalling Venice — and abolished slavery in 1418, centuries ahead of its time."],
+  ["Sikh Empire", "Ranjit Singh's mighty Punjab state (1799–1849) was the last major Indian power to fall to the British."],
+  ["Tannu Tuva", "A near-forgotten state (1921–44) famous mainly for its triangular stamps, before the USSR quietly absorbed it."],
+  ["Hawai", "A sovereign Polynesian monarchy until US-backed planters overthrew Queen Liliʻuokalani in 1893."],
+  ["Orange Free State", "A Boer republic on the South African veld (1854–1902), until Britain annexed it after the Second Boer War."],
+  ["Formosa", "Asia's first republic: Taiwan declared independence for five months in 1895 to resist a Japanese takeover."],
+  ["Czechoslovakia", "United Czechs and Slovaks from 1918 until the amicable 'Velvet Divorce' peacefully split it in two in 1993."],
+  ["East Germany", "The communist German state (1949–90), sealed off behind the Berlin Wall until reunification."],
+  ["South Vietnam", "The US-backed republic that fell to the North in 1975 — the fall of Saigon ended the Vietnam War."],
+  ["Rhodesia", "White-minority-ruled Zimbabwe, which broke from Britain in 1965 rather than accept Black majority rule."],
+  ["Confederate", "The eleven secessionist Southern US states (1861–65) whose defeat in the Civil War ended American slavery."],
+  ["U.S.S.R", "The communist superpower (1922–91) — its hammer-and-sickle flew over 15 republics across a sixth of the planet's land."],
+  // Peoples
+  ["Kurds", "The world's largest stateless nation — some 30 million people split across Turkey, Iraq, Iran and Syria, with no country of their own."],
+  ["Basque", "A people of the western Pyrenees whose language, Euskara, is unrelated to any other tongue on Earth."],
+  ["Sami", "The indigenous reindeer-herding people of Lapland, across northern Norway, Sweden, Finland and Russia."],
+  ["Catalan", "The people of Catalonia in northeast Spain; their red-and-gold Senyera is among the oldest flags in Europe."],
+  ["Breton", "A Celtic people of Brittany in northwest France, with a language closely related to Welsh and Cornish."],
+  ["Cornish", "The Celtic people of Cornwall; St Piran's white-on-black cross is their banner."],
+  ["Māori", "The indigenous Polynesian people of New Zealand; the Tino Rangatiratanga flag asserts Māori sovereignty."],
+  ["Aboriginal Australian", "Carriers of the world's oldest continuous culture, over 60,000 years old; their flag's bands mean earth, people and sun."],
+  ["Romani", "Europe's largest ethnic minority, with roots in northern India — the wheel on their flag echoes the Indian chakra."],
+  ["Uyghur", "A Turkic Muslim people of China's far-western Xinjiang region."],
+  ["Tamil", "A Dravidian people of southern India and Sri Lanka, with one of the world's oldest living literary traditions."],
+]
+const curatedFact = (title: string): string | undefined => {
+  const t = title.toLowerCase()
+  for (const [kw, fact] of CURATED_FACTS) if (t.includes(kw.toLowerCase())) return fact
+  return undefined
+}
+
 interface MegaFlag { title: string; url: string; fact: string }
 function gatherAllFlags(): MegaFlag[] {
   const seen = new Set<string>()
@@ -1009,13 +1066,18 @@ function gatherAllFlags(): MegaFlag[] {
   US_CITY_FLAGS.forEach(f => push(f.name, f.flagUrl, f.note))
   ETHNIC_FLAGS.forEach(r => {
     const region = r.region.replace(/^Peoples of /, '')
-    r.groups.forEach(g => g.items.forEach(it => push(it.name, fp(it.file), `An ethnic & cultural flag${g.label ? ` — ${g.label}` : ''} (${region}).`)))
+    r.groups.forEach(g => g.items.forEach(it =>
+      push(it.name, fp(it.file), curatedFact(it.name) ?? `The flag of the ${it.name}${g.label ? ` — a people of the ${g.label} family` : ''}, from the ${region} world.`)))
   })
   EXTINCT_STATES.forEach(r => r.items.forEach(it => {
+    const title = stripFlagOf(splitParen(it.name)[0])
     const [, paren] = splitParen(it.name)
-    push(stripFlagOf(splitParen(it.name)[0]), fp(it.file), paren ? `A flag of a state that no longer exists — ${cap(paren)}.` : `The flag of a former state (${r.region}).`)
+    push(title, fp(it.file), curatedFact(title) ?? `A state that no longer exists${paren ? `, ${paren.replace(/^(de facto |nominally )/i, "")}` : ` in ${r.region}`}.`)
   }))
-  ORG_FLAGS.forEach(r => r.groups.forEach(g => g.items.forEach(it => push(stripFlagOf(it.name), fp(it.file), `The flag of an international organisation${g.label ? ` — ${g.label}` : ''}.`))))
+  ORG_FLAGS.forEach(r => r.groups.forEach(g => g.items.forEach(it => {
+    const title = stripFlagOf(it.name)
+    push(title, fp(it.file), curatedFact(title) ?? `${title} — an international ${g.label ? g.label.toLowerCase() + " body" : "organisation"}.`)
+  })))
   Object.values(CODEX).forEach(e => e.flagHistory.forEach(h => { push(h.label, h.flagUrl, h.note); h.parallel?.forEach(p => push(p.label, p.flagUrl, p.note)) }))
   return all
 }
@@ -1098,10 +1160,10 @@ function MegaCodexWall({ onClose }: { onClose: () => void }) {
               const open = openKey === f.title
               const anchorRight = (startIdx + k) % cols >= cols / 2
               const factStyle: React.CSSProperties = {
-                position: 'absolute', top: 'calc(100% - 1px)', zIndex: 40,
-                width: 200, maxWidth: '64vw',
-                background: T.surface, border: `1px solid ${tint(ACCENT.codex, 0.55)}`, borderRadius: 10,
-                padding: '8px 10px', boxShadow: `0 12px 30px -10px ${tint(T.text, 0.6)}`,
+                position: 'absolute', top: 'calc(100% + 2px)', zIndex: 40,
+                width: 210, maxWidth: '66vw',
+                background: T.surface, border: `2.5px solid ${ACCENT.codex}`, borderRadius: 12,
+                padding: '9px 11px', boxShadow: `0 14px 34px -10px ${tint(T.text, 0.65)}`,
               }
               if (anchorRight) factStyle.right = 0; else factStyle.left = 0
               return (
