@@ -191,4 +191,14 @@ export const TERRITORIES: Record<string, Territory[]> = {
       flagUrl: fp("Flag_of_the_Cocos_(Keeling)_Islands.svg"),
       note: "A remote Indian Ocean atoll group with a largely Cocos Malay, Muslim population. Its flag bears a palm tree, a crescent and the Southern Cross." },
   ],
+
+  // ── China (Special Administrative Regions) ──────────────────────────────
+  CN: [
+    { name: "Hong Kong", status: "Special Administrative Region",
+      flagUrl: fp("Flag_of_Hong_Kong.svg"),
+      note: "A former British colony returned to China in 1997, governed under 'one country, two systems' with its own legal system and currency. Its red flag bears a white five-petalled bauhinia flower." },
+    { name: "Macau", status: "Special Administrative Region",
+      flagUrl: fp("Flag_of_Macau.svg"),
+      note: "A former Portuguese territory returned to China in 1999, also under 'one country, two systems'. The world's biggest gambling hub, its green flag shows a lotus over the Governor Nobre de Carvalho Bridge." },
+  ],
 }
