@@ -77,7 +77,7 @@ export const REGISTRY: Entry[] = [
   { id: "geo", title: "Geography", subtitle: "Identify countries by shape", icon: "🗺️", tab: "play", group: "Cartographer", size: "tile", accent: "learn" },
   { id: "bordermap", title: "Border Map", subtitle: "Fill in a country's neighbours", icon: "🗺️", tab: "play", group: "Cartographer", size: "tile", accent: "learn" },
   { id: "borderchain", title: "Border Path", subtitle: "Connect two countries by land", icon: "🔗", tab: "play", group: "Cartographer", size: "tile", accent: "learn" },
-  { id: "continentsort", title: "Continent Sort", subtitle: "Sort flags by region", icon: "🌍", tab: "play", group: "Cartographer", size: "tile", accent: "learn", featured: true },
+  { id: "continentsort", title: "Continent Sort", subtitle: "1-minute region sprint", icon: "🌍", tab: "play", group: "Cartographer", size: "tile", accent: "learn", featured: true },
 
   // Sharp Recall — fast reps, reflex quizzes
   { id: "reversequiz", action: "reverse", title: "Flag ID Challenge", subtitle: "See the name, pick the flag", icon: "🎯", tab: "play", group: "Sharp Recall", size: "tile", accent: "drill" },

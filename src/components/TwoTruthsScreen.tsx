@@ -33,22 +33,51 @@ function trueStmt(type: string, f: FlagRecord): Stmt {
   return { text: `It shares a land border with ${NAME(rand(ns))}.`, type }
 }
 
+// Regions that are easy to mix up with each other — used to make a region lie
+// tempting rather than absurd (a Middle East country "in Asia", not "in Oceania").
+const REGION_NEAR: Record<string, string[]> = {
+  "Middle East": ["Asia", "Africa", "Europe"],
+  "Europe": ["Asia", "Middle East", "Africa"],
+  "Asia": ["Middle East", "Europe", "Oceania"],
+  "Africa": ["Middle East", "Europe", "Asia"],
+  "Americas": ["Oceania", "Europe"],
+  "Oceania": ["Asia", "Americas"],
+}
+
+// Countries adjacent to our neighbours but NOT to us — the "near-miss" that a
+// knowledgeable player actually confuses (Denmark doesn't border Finland, but
+// its neighbour Sweden does).
+function nearButNotNeighbour(code: string): string[] {
+  const direct = new Set(neighborsOf(code))
+  const near = new Set<string>()
+  for (const n of direct) for (const nn of neighborsOf(n)) if (nn !== code && !direct.has(nn)) near.add(nn)
+  return [...near]
+}
+
 function falseStmt(type: string, f: FlagRecord): Stmt {
   const cap = CAP.get(f.code)!
   if (type === "capital") {
-    const other = rand(CAPITALS.filter(c => c.capital !== cap.capital))
-    return { text: `Its capital is ${other.capital}.`, type }
+    // Tempting: the capital of a *nearby* country — a neighbour first, then a
+    // neighbour-of-a-neighbour — the kind of mix-up someone who knows the region
+    // might make, not a random far-flung capital.
+    const direct = neighborsOf(f.code).filter(c => CAP.has(c))
+    const near = nearButNotNeighbour(f.code).filter(c => CAP.has(c))
+    const sameRegion = FLAGS.filter(x => x.region === f.region && CAP.has(x.code) && x.code !== f.code).map(x => x.code)
+    const pool = (direct.length ? direct : near.length ? near : sameRegion).filter(c => CAP.get(c)!.capital !== cap.capital)
+    const otherCap = pool.length ? CAP.get(rand(pool))!.capital : rand(CAPITALS.filter(c => c.capital !== cap.capital)).capital
+    return { text: `Its capital is ${otherCap}.`, type }
   }
   if (type === "region") {
-    const other = rand(ALL_REGIONS.filter(r => r !== f.region))
-    return { text: `It lies in ${other}.`, type }
+    const near = (REGION_NEAR[f.region] ?? ALL_REGIONS).filter(r => r !== f.region)
+    return { text: `It lies in ${rand(near.length ? near : ALL_REGIONS.filter(r => r !== f.region))}.`, type }
   }
-  // border (false): a *plausible* same-region country that is NOT actually a
-  // neighbour, so the player has to think (e.g. "Kazakhstan borders Iran?").
-  const ns = new Set([f.code, ...neighborsOf(f.code)])
-  const sameRegion = FLAGS.filter(x => x.region === f.region && !ns.has(x.code))
-  const pool = sameRegion.length ? sameRegion : FLAGS.filter(x => !ns.has(x.code))
-  return { text: `It shares a land border with ${rand(pool).name}.`, type }
+  // border (false): prefer a near-miss (adjacent to a neighbour but not to us),
+  // then any same-region non-neighbour, so the lie is genuinely confusable.
+  const direct = new Set([f.code, ...neighborsOf(f.code)])
+  const near = nearButNotNeighbour(f.code)
+  const sameRegion = FLAGS.filter(x => x.region === f.region && !direct.has(x.code)).map(x => x.code)
+  const pool = near.length ? near : sameRegion.length ? sameRegion : FLAGS.filter(x => !direct.has(x.code)).map(x => x.code)
+  return { text: `It shares a land border with ${NAME(rand(pool))}.`, type }
 }
 
 interface Round { flag: FlagRecord; stmts: Stmt[]; falseIdx: number }

@@ -24,6 +24,11 @@ const FAMILY_DEFS: Family[] = [
   { id: 'pan-arab',   label: 'Pan-Arab Colors',      emoji: '🟥', codes: ['EG','IQ','SY','YE','JO','KW','AE','LY','PS'] },
   { id: 'disc',       label: 'Disc / Sun Center',    emoji: '🔴', codes: ['JP','BD','LA','PW'] },
   { id: 'hoist-tri',  label: 'Hoist Triangle',       emoji: '◢',  codes: ['CZ','PH','ER','DJ','BS','GY','MZ','ZA'] },
+  // Harder "look closely at the emblem" families — two-headed vs single eagle is
+  // a deliberate near-pair, and a centered cross contrasts with the Nordic cross.
+  { id: 'eagle2',     label: 'Double-Headed Eagle',  emoji: '🦅', codes: ['AL','ME','RS'] },
+  { id: 'eagle1',     label: 'Single Eagle',         emoji: '🦅', codes: ['EG','MX','ZM','KZ','MD'] },
+  { id: 'cross-mid',  label: 'Centered Cross',       emoji: '✝️', codes: ['CH','GE','TO','DO','GR'] },
 ]
 
 interface Round {

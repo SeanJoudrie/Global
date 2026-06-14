@@ -95,7 +95,7 @@ export default function ReverseQuizScreen({ questions, title, onFinish, onBack }
                 boxShadow: answerState !== "idle" && i === q.correctIndex ? `0 0 16px ${tint(T.green, 0.27)}` : "none",
               }}>
               <img src={choice.flagUrl} alt={choice.name}
-                style={{ width: "100%", height: 90, objectFit: "cover", display: "block" }}
+                style={{ width: "100%", height: 90, objectFit: "contain", display: "block", background: T.surfaceHi }}
                 onError={e => { (e.target as HTMLImageElement).style.opacity = "0.3" }} />
               <div style={{
                 position: "absolute", inset: 0,
