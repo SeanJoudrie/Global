@@ -20,22 +20,28 @@ function getChoices(target: LanguageRecord, all: LanguageRecord[], seed: string)
   const targetScript = detectScript(target.sample)
   const pool = all.filter(l => l.code !== target.code)
   const picks: LanguageRecord[] = []
+  const add = (l?: LanguageRecord) => { if (l && !picks.find(p => p.code === l.code)) picks.push(l) }
+  const shuffled = (arr: LanguageRecord[]) => arr.sort(() => rng() - 0.5)
 
-  // 1. Curated confusables first
-  for (const c of target.confusableWith) {
-    const l = pool.find(p => p.code === c)
-    if (l && !picks.find(p => p.code === l.code)) picks.push(l)
+  if (target.difficulty === 'extreme') {
+    // Extreme = a dead / ancient language. If the distractors are living
+    // languages, "it's the only dead one" becomes the shortcut — so we keep the
+    // distractors DEAD too, forcing actual recognition. Same script first (so
+    // the alphabet isn't a giveaway either), then any other dead language.
+    const dead = pool.filter(l => l.difficulty === 'extreme')
+    for (const c of target.confusableWith) { const l = dead.find(p => p.code === c); add(l) }
+    shuffled(dead.filter(l => detectScript(l.sample) === targetScript)).forEach(add)
+    shuffled(dead).forEach(add)
+    // Last resort only if there still aren't 3 dead options: same-script living.
+    shuffled(pool.filter(l => detectScript(l.sample) === targetScript)).forEach(add)
+  } else {
+    // 1. Curated confusables first
+    for (const c of target.confusableWith) add(pool.find(p => p.code === c))
+    // 2. Same-script languages (the key anti-giveaway step)
+    shuffled(pool.filter(l => detectScript(l.sample) === targetScript)).forEach(add)
   }
-  // 2. Same-script languages (the key anti-giveaway step)
-  const sameScript = pool
-    .filter(l => detectScript(l.sample) === targetScript && !picks.find(p => p.code === l.code))
-    .sort(() => rng() - 0.5)
-  picks.push(...sameScript)
-  // 3. Anything else as a last resort
-  const rest = pool
-    .filter(l => !picks.find(p => p.code === l.code))
-    .sort(() => rng() - 0.5)
-  picks.push(...rest)
+  // Final fallback so there are always 4 choices.
+  shuffled(pool).forEach(add)
 
   return [target, ...picks.slice(0, 3)].sort(() => rng() - 0.5)
 }

@@ -169,18 +169,20 @@ export default function TheComposerScreen({ onBack }: Props) {
             const col = i % 3
             const revealed = flipped.has(i)
             return (
-              <div key={i} style={{ width: TILE_W, height: TILE_H, position: 'relative', overflow: 'hidden' }}>
+              <div key={i} style={{ width: TILE_W, height: TILE_H, position: 'relative', overflow: 'hidden', perspective: 620 }}>
                 {/* the correct flag slice for this tile (always mounted) */}
                 <FlagSlice code={target.code} col={col} row={row} w={TILE_W} h={TILE_H} />
-                {/* face-down cover that fades away when the tile is revealed */}
+                {/* face-down cover that flips away when the tile is revealed */}
                 <div style={{
                   position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center',
                   // Face-down cover is game content: it must stay opaque so the slice
                   // underneath is hidden — ink-dark fill instead of the old purple.
                   background: T.text,
+                  transformOrigin: 'left center',
+                  backfaceVisibility: 'hidden',
+                  transform: revealed ? 'rotateY(-92deg)' : 'rotateY(0deg)',
                   opacity: revealed ? 0 : 1,
-                  transform: revealed ? 'scale(1.08)' : 'scale(1)',
-                  transition: `opacity 0.45s ${(row + col) * 40}ms ease, transform 0.45s ease`,
+                  transition: `transform 0.5s ${(row + col) * 45}ms cubic-bezier(0.2,0.7,0.2,1), opacity 0.2s ${(row + col) * 45 + 280}ms ease`,
                   pointerEvents: 'none',
                 }}>
                   <span style={{ display: 'flex', opacity: 0.4 }}><LineIcon name="composer" size={18} color={T.bg} /></span>

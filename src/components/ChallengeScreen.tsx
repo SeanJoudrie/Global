@@ -1,7 +1,8 @@
 import { useState } from "react"
-import { Trophy, ThumbsUp, BookOpen, Lock } from "lucide-react"
+import { Trophy, ThumbsUp, BookOpen, Lock, Landmark, TreePalm, Castle, Sun, Mountain, Sailboat, Globe } from "lucide-react"
 import { CHALLENGE_CONTINENTS } from "../data/challenges"
 import type { ChallengeContinent, ChallengeCountry, SubRegion } from "../data/challenges"
+import { FLAGS } from "../data/flags"
 import { T, ACCENT, FONT, tint } from "../ui/tokens"
 import { ScreenHeader } from "./ui"
 
@@ -10,6 +11,26 @@ interface Props { onBack: () => void }
 type Phase = "continents" | "countries" | "quiz" | "result"
 
 const ACC = ACCENT.challenge
+
+// Distinct region icon per continent (no more identical 🌎 globes everywhere).
+const CONTINENT_ICON: Record<string, typeof Castle> = {
+  "north-america": Landmark, "south-america": TreePalm, "europe": Castle,
+  "africa": Sun, "asia": Mountain, "oceania": Sailboat,
+}
+const continentIcon = (id: string) => CONTINENT_ICON[id] ?? Globe
+const flagOf = (code: string) => FLAGS.find(f => f.code === code)?.flagUrl ?? `/flags/${code.toLowerCase()}.svg`
+
+// A country's real flag thumbnail — replaces flag emojis that some devices
+// render as bare 2-letter codes.
+function CountryFlag({ code, name }: { code: string; name: string }) {
+  return (
+    <div style={{ width: 34, height: 23, borderRadius: 4, overflow: "hidden", border: `1px solid ${T.line}`, flexShrink: 0, background: T.surfaceHi }}>
+      <img src={flagOf(code)} alt={name} loading="lazy"
+        style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+        onError={e => { (e.target as HTMLImageElement).style.opacity = "0.3" }} />
+    </div>
+  )
+}
 
 interface ChallengeQ {
   target: SubRegion
@@ -113,7 +134,7 @@ export default function ChallengeScreen({ onBack }: Props) {
               className={`w-full flex items-center justify-between px-5 py-4 rounded-2xl transition-all ${c.locked ? "opacity-40 cursor-not-allowed" : "active:scale-[0.98] hover:brightness-95"}`}
               style={{ background: T.surface, border: `1px solid ${c.locked ? T.line : tint(ACC, 0.35)}` }}>
               <div className="flex items-center gap-3">
-                <span className="text-2xl">{c.emoji}</span>
+                {(() => { const Icon = continentIcon(c.id); return <Icon size={22} color={c.locked ? T.dim : ACC} strokeWidth={1.6} absoluteStrokeWidth /> })()}
                 <div className="text-left">
                   <div className="font-bold" style={{ color: T.text, fontFamily: FONT.display }}>{c.name}</div>
                   {c.locked
@@ -137,7 +158,7 @@ export default function ChallengeScreen({ onBack }: Props) {
   if (phase === "countries" && activeContinent) {
     return (
       <div className="min-h-screen flex flex-col" style={{ background: T.bg, color: T.text }}>
-        <ScreenHeader title={`${activeContinent.emoji} ${activeContinent.name}`} subtitle="Select a country"
+        <ScreenHeader title={activeContinent.name} subtitle="Select a country"
           onBack={() => setPhase("continents")} />
         <div className="px-5 pb-10 space-y-3" style={{ zIndex: 1, position: "relative" }}>
           {activeContinent.countries.map(country => (
@@ -146,7 +167,7 @@ export default function ChallengeScreen({ onBack }: Props) {
               className={`w-full flex items-center justify-between px-5 py-4 rounded-2xl transition-all ${(country.locked || country.subRegions.length < 4) ? "opacity-40 cursor-not-allowed" : "active:scale-[0.98] hover:brightness-95"}`}
               style={{ background: T.surface, border: `1px solid ${(country.locked || country.subRegions.length < 4) ? T.line : tint(ACC, 0.35)}` }}>
               <div className="flex items-center gap-3">
-                <span className="text-2xl">{country.emoji}</span>
+                <CountryFlag code={country.code} name={country.name} />
                 <div className="text-left">
                   <div className="font-bold" style={{ color: T.text, fontFamily: FONT.display }}>{country.name}</div>
                   <div className="text-xs" style={{ color: T.muted }}>{country.subTitle}</div>
@@ -178,7 +199,7 @@ export default function ChallengeScreen({ onBack }: Props) {
                   : <BookOpen size={44} strokeWidth={1.6} absoluteStrokeWidth />}
             </div>
             <div className="text-6xl mb-1" style={{ color: T.text, fontFamily: FONT.mono, fontWeight: 800, fontVariantNumeric: "tabular-nums" }}>{score}/{total}</div>
-            <div className="text-sm mb-3" style={{ color: T.muted }}>{activeCountry.emoji} {activeCountry.name} · {activeCountry.subTitle}</div>
+            <div className="text-sm mb-3" style={{ color: T.muted }}>{activeCountry.name} · {activeCountry.subTitle}</div>
             <div className="flex justify-center gap-1 mb-4">
               {answers.map((a, i) => (
                 <span key={i} style={{ width: 14, height: 14, borderRadius: 3, background: a === "correct" ? T.green : T.danger, display: "inline-block" }} />
@@ -207,7 +228,7 @@ export default function ChallengeScreen({ onBack }: Props) {
   if (phase === "quiz" && q) {
     return (
       <div className="min-h-screen flex flex-col" style={{ background: T.bg, color: T.text }}>
-        <ScreenHeader title={`${activeCountry?.emoji ?? ""} ${activeCountry?.name ?? ""}`} subtitle={`${score} correct so far`}
+        <ScreenHeader title={activeCountry?.name ?? ""} subtitle={`${score} correct so far`}
           onBack={() => setPhase("countries")}
           right={
             <span style={{ fontFamily: FONT.mono, fontVariantNumeric: "tabular-nums", fontWeight: 700, fontSize: 14, color: ACC, padding: "5px 11px", borderRadius: 999, background: tint(ACC, 0.1), border: `1px solid ${tint(ACC, 0.3)}` }}>
