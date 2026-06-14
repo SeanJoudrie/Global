@@ -990,23 +990,33 @@ function OrgCodexSection() {
 // ── Mega Codex — a full-screen wall of every flag in the app ──
 // Aggregated once at module load: countries, identity, cities, ethnic, extinct,
 // org and historical flags, deduped by display name.
-function gatherAllFlags(): { title: string; url: string }[] {
+interface MegaFlag { title: string; url: string; fact: string }
+function gatherAllFlags(): MegaFlag[] {
   const seen = new Set<string>()
-  const all: { title: string; url: string }[] = []
-  const push = (title: string, url: string) => {
+  const all: MegaFlag[] = []
+  // Reuse the rich facts we already have (country fun facts, identity-flag and
+  // city notes, historical-flag notes); generate a brief descriptor for the
+  // gallery imports that ship without one, so every tile says something.
+  const push = (title: string, url: string, fact: string) => {
     const t = (title || '').trim()
     if (!t || !url) return
     const key = t.toLowerCase()
     if (seen.has(key)) return
-    seen.add(key); all.push({ title: t, url })
+    seen.add(key); all.push({ title: t, url, fact: (fact || '').trim() || `A flag in the Globalio Codex.` })
   }
-  FLAGS.forEach(f => push(f.name, f.flagUrl))
-  IDENTITY_FLAGS.forEach(f => push(f.name, f.flagUrl))
-  US_CITY_FLAGS.forEach(f => push(f.name, f.flagUrl))
-  ETHNIC_FLAGS.forEach(r => r.groups.forEach(g => g.items.forEach(it => push(it.name, fp(it.file)))))
-  EXTINCT_STATES.forEach(r => r.items.forEach(it => push(stripFlagOf(splitParen(it.name)[0]), fp(it.file))))
-  ORG_FLAGS.forEach(r => r.groups.forEach(g => g.items.forEach(it => push(stripFlagOf(it.name), fp(it.file)))))
-  Object.values(CODEX).forEach(e => e.flagHistory.forEach(h => { push(h.label, h.flagUrl); h.parallel?.forEach(p => push(p.label, p.flagUrl)) }))
+  FLAGS.forEach(f => push(f.name, f.flagUrl, f.funFact))
+  IDENTITY_FLAGS.forEach(f => push(f.name, f.flagUrl, f.note))
+  US_CITY_FLAGS.forEach(f => push(f.name, f.flagUrl, f.note))
+  ETHNIC_FLAGS.forEach(r => {
+    const region = r.region.replace(/^Peoples of /, '')
+    r.groups.forEach(g => g.items.forEach(it => push(it.name, fp(it.file), `An ethnic & cultural flag${g.label ? ` — ${g.label}` : ''} (${region}).`)))
+  })
+  EXTINCT_STATES.forEach(r => r.items.forEach(it => {
+    const [, paren] = splitParen(it.name)
+    push(stripFlagOf(splitParen(it.name)[0]), fp(it.file), paren ? `A flag of a state that no longer exists — ${cap(paren)}.` : `The flag of a former state (${r.region}).`)
+  }))
+  ORG_FLAGS.forEach(r => r.groups.forEach(g => g.items.forEach(it => push(stripFlagOf(it.name), fp(it.file), `The flag of an international organisation${g.label ? ` — ${g.label}` : ''}.`))))
+  Object.values(CODEX).forEach(e => e.flagHistory.forEach(h => { push(h.label, h.flagUrl, h.note); h.parallel?.forEach(p => push(p.label, p.flagUrl, p.note)) }))
   return all
 }
 const ALL_FLAGS_AZ = gatherAllFlags()
@@ -1029,6 +1039,9 @@ function MegaCodexWall({ onClose }: { onClose: () => void }) {
   const [vh, setVh] = useState(() => (typeof window !== 'undefined' ? window.innerHeight : 800))
   const [scrollTop, setScrollTop] = useState(0)
   const [barHidden, setBarHidden] = useState(false)
+  // Which tile's fun-fact overlay is open (keyed by title). Floats below the
+  // tile without shifting the grid; scrolling dismisses it.
+  const [openKey, setOpenKey] = useState<string | null>(null)
 
   useEffect(() => {
     const onResize = () => { setVw(window.innerWidth); setVh(window.innerHeight) }
@@ -1068,6 +1081,7 @@ function MegaCodexWall({ onClose }: { onClose: () => void }) {
       const st = scrollRef.current ? scrollRef.current.scrollTop : 0
       setScrollTop(st)
       const dy = st - lastY.current
+      if (Math.abs(dy) > 4) setOpenKey(null)  // scrolling dismisses the fact overlay
       if (st > MEGA_BAR_H && dy > 6) setBarHidden(true)
       else if (dy < -6 || st <= MEGA_BAR_H) setBarHidden(false)
       lastY.current = st
@@ -1080,24 +1094,44 @@ function MegaCodexWall({ onClose }: { onClose: () => void }) {
         style={{ position: 'absolute', inset: 0, overflowY: 'auto', WebkitOverflowScrolling: 'touch' }}>
         <div style={{ height: totalHeight, position: 'relative' }}>
           <div style={{ position: 'absolute', left: MEGA_PAD, right: MEGA_PAD, top: gridTop, display: 'grid', gridTemplateColumns: `repeat(${cols}, 1fr)`, gap: MEGA_GAP }}>
-            {visible.map((f) => (
-              <div key={f.title} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 3 }}>
-                <div style={{ width: '100%', aspectRatio: '3/2', borderRadius: 4, overflow: 'hidden', border: `1px solid ${T.line}`, background: T.surfaceHi, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  <img src={galleryThumb(f.url)} alt={f.title} loading="eager" decoding="async"
-                    style={{ width: '100%', height: '100%', objectFit: 'contain' }}
-                    onError={e => {
-                      const el = e.target as HTMLImageElement
-                      const t = Number(el.dataset.t || '0')
-                      if (t < 2) {
-                        el.dataset.t = String(t + 1)
-                        el.removeAttribute('src')
-                        window.setTimeout(() => { el.src = t === 0 ? galleryThumb(f.url) : f.url }, 500 + t * 800 + Math.random() * 700)
-                      } else { el.style.visibility = 'hidden' }
-                    }} />
+            {visible.map((f, k) => {
+              const open = openKey === f.title
+              const anchorRight = (startIdx + k) % cols >= cols / 2
+              const factStyle: React.CSSProperties = {
+                position: 'absolute', top: 'calc(100% - 1px)', zIndex: 40,
+                width: 200, maxWidth: '64vw',
+                background: T.surface, border: `1px solid ${tint(ACCENT.codex, 0.55)}`, borderRadius: 10,
+                padding: '8px 10px', boxShadow: `0 12px 30px -10px ${tint(T.text, 0.6)}`,
+              }
+              if (anchorRight) factStyle.right = 0; else factStyle.left = 0
+              return (
+                <div key={f.title} style={{ position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 3 }}>
+                  <button onClick={() => setOpenKey(open ? null : f.title)}
+                    style={{ background: 'transparent', border: 'none', padding: 0, margin: 0, font: 'inherit', cursor: 'pointer', width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 3 }}>
+                    <div style={{ width: '100%', aspectRatio: '3/2', borderRadius: 4, overflow: 'hidden', border: `${open ? 2 : 1}px solid ${open ? ACCENT.codex : T.line}`, background: T.surfaceHi, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                      <img src={galleryThumb(f.url)} alt={f.title} loading="eager" decoding="async"
+                        style={{ width: '100%', height: '100%', objectFit: 'contain' }}
+                        onError={e => {
+                          const el = e.target as HTMLImageElement
+                          const t = Number(el.dataset.t || '0')
+                          if (t < 2) {
+                            el.dataset.t = String(t + 1)
+                            el.removeAttribute('src')
+                            window.setTimeout(() => { el.src = t === 0 ? galleryThumb(f.url) : f.url }, 500 + t * 800 + Math.random() * 700)
+                          } else { el.style.visibility = 'hidden' }
+                        }} />
+                    </div>
+                    <span style={{ fontSize: 8, color: open ? ACCENT.codex : T.muted, fontWeight: open ? 700 : 400, textAlign: 'center', lineHeight: 1.15, height: MEGA_LABEL_H - 4, overflow: 'hidden', wordBreak: 'break-word' }}>{f.title}</span>
+                  </button>
+                  {open && (
+                    <div style={factStyle} onClick={() => setOpenKey(null)}>
+                      <div className="geo-display" style={{ fontSize: 12, fontWeight: 700, color: T.text, marginBottom: 3, lineHeight: 1.2 }}>{f.title}</div>
+                      <div style={{ fontSize: 10.5, color: T.muted, lineHeight: 1.45 }}>{f.fact}</div>
+                    </div>
+                  )}
                 </div>
-                <span style={{ fontSize: 8, color: T.muted, textAlign: 'center', lineHeight: 1.15, height: MEGA_LABEL_H - 4, overflow: 'hidden', wordBreak: 'break-word' }}>{f.title}</span>
-              </div>
-            ))}
+              )
+            })}
           </div>
         </div>
       </div>
