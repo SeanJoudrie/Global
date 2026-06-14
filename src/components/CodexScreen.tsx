@@ -18,6 +18,8 @@ import { CHALLENGE_CONTINENTS } from '../data/challenges'
 import type { SubRegion } from '../data/challenges'
 import { T, ACCENT, FONT, tint } from '../ui/tokens'
 import { ScreenHeader } from './ui'
+import AdSlot from './AdSlot'
+import { AD_SLOTS } from '../ads'
 import { LineIcon } from './icons'
 import { Search, Anchor, ChevronDown, Castle, Sun, Mountain, Landmark, MoonStar, Sailboat, Rainbow, Users, Feather, MapPin, Crown, Vote, Building2, HeartHandshake } from 'lucide-react'
 
@@ -211,6 +213,8 @@ export default function CodexScreen({ onBack, initialCode, embedded = false }: P
         {!isSearching && <SignalCodexSection />}
         {/* Mega Codex A–Z — every flag in the app, alphabetical, at the very bottom */}
         {!isSearching && <MegaCodexSection />}
+        {/* Ad slot — dormant until a publisher ID is set in src/ads.ts */}
+        {!isSearching && <AdSlot slot={AD_SLOTS.codexFooter} style={{ marginTop: 24 }} />}
       </div>
     </div>
   )

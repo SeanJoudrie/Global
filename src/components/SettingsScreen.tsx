@@ -195,6 +195,13 @@ export default function SettingsScreen({ onBack, onMegaCodex, onFlagCheck }: Pro
           A one-man operation — I read every message. Thank you for playing.
         </div>
 
+        {/* Legal — required for ad networks & app stores */}
+        <div className="text-xs mt-5 text-center" style={{ color: T.dim }}>
+          <a href="/privacy.html" target="_blank" rel="noopener" style={{ color: T.muted, textDecoration: 'underline' }}>Privacy Policy</a>
+          <span style={{ margin: '0 8px' }}>·</span>
+          <a href="/terms.html" target="_blank" rel="noopener" style={{ color: T.muted, textDecoration: 'underline' }}>Terms of Use</a>
+        </div>
+
         {/* secret */}
         <button onClick={onMegaCodex}
           className="w-full mt-8 py-2.5 rounded-xl text-xs font-semibold transition-all active:scale-95"
