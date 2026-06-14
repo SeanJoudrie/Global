@@ -1617,6 +1617,7 @@ export const HOSTED_FLAGS: Record<string, string> = {
   "US_Sons_OfLiberty_9Stripes_Flag.svg": "/cf/8d939dbe2bdb2d5a.svg",
   "Unification_flag_of_Korea.svg": "/cf/0b49e71723d2350b.svg",
   "Unofficial_Flag_of_Jamtland.svg": "/cf/b212deda35006da2.svg",
+  "Unofficial_flag_of_Cham_Albanians.svg": "/cf/0ccb32d0b0c767a1.svg",
   "Unofficial_flag_of_Guadeloupe_(local).svg": "/cf/bba12ef9df47b317.svg",
   "Unofficial_flag_of_Nagaland.svg": "/cf/f2101ff0cda5d694.svg",
   "Urker_vlag_met_schelvis_25-12-2016.svg": "/cf/3ccd638974e05aba.svg",
