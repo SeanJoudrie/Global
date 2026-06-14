@@ -3,6 +3,7 @@ import { FLAGS } from "../data/flags"
 import type { FlagRecord } from "../data/flags"
 import { CAPITALS } from "../data/capitals"
 import { neighborsOf } from "../data/borders"
+import { STATS } from "../data/countryStats"
 import { T, ACCENT, FONT, tint, IS_CARTO } from "../ui/tokens"
 import FlagImage from "./FlagImage"
 
@@ -23,10 +24,41 @@ const POOL = FLAGS.filter(f => CAP.has(f.code))
 
 interface Stmt { text: string; type: string }
 
+// A comparison country with stats and a CLEAR gap on `metric` — preferring a
+// neighbour (most relatable), then a near-miss, then anyone in the region — so
+// size/population statements are never a near-tie.
+function comparatorFor(f: FlagRecord, metric: "area" | "pop"): string | null {
+  if (!STATS[f.code]) return null
+  const clear = (c: string) => {
+    if (!STATS[c] || c === f.code) return false
+    const a = STATS[f.code][metric], b = STATS[c][metric]
+    const hi = Math.max(a, b), lo = Math.min(a, b)
+    return lo > 0 && hi / lo >= 1.25
+  }
+  const direct = neighborsOf(f.code).filter(clear)
+  if (direct.length) return rand(direct)
+  const near = nearButNotNeighbour(f.code).filter(clear)
+  if (near.length) return rand(near)
+  const region = FLAGS.filter(x => x.region === f.region && clear(x.code)).map(x => x.code)
+  return region.length ? rand(region) : null
+}
+
 function trueStmt(type: string, f: FlagRecord): Stmt {
   const cap = CAP.get(f.code)!
   if (type === "capital") return { text: `Its capital is ${cap.capital}.`, type }
   if (type === "region") return { text: `It lies in ${f.region}.`, type }
+  if (type === "borderCount") {
+    const n = neighborsOf(f.code).length
+    return { text: n === 0 ? `It has no land borders.` : `It has ${n} land neighbour${n === 1 ? "" : "s"}.`, type }
+  }
+  if (type === "areaCmp") {
+    const c = comparatorFor(f, "area")!
+    return { text: `It is ${STATS[f.code].area >= STATS[c].area ? "larger" : "smaller"} in area than ${NAME(c)}.`, type }
+  }
+  if (type === "popCmp") {
+    const c = comparatorFor(f, "pop")!
+    return { text: `It has ${STATS[f.code].pop >= STATS[c].pop ? "more" : "fewer"} people than ${NAME(c)}.`, type }
+  }
   // border (true)
   const ns = neighborsOf(f.code)
   if (!ns.length) return { text: `It has no land borders.`, type }
@@ -71,6 +103,21 @@ function falseStmt(type: string, f: FlagRecord): Stmt {
     const near = (REGION_NEAR[f.region] ?? ALL_REGIONS).filter(r => r !== f.region)
     return { text: `It lies in ${rand(near.length ? near : ALL_REGIONS.filter(r => r !== f.region))}.`, type }
   }
+  if (type === "borderCount") {
+    // Off by one or two — close enough that you have to actually know the count.
+    const n = neighborsOf(f.code).length
+    const opts = [n - 2, n - 1, n + 1, n + 2].filter(x => x >= 0 && x !== n)
+    const fake = opts.length ? rand(opts) : n + 2
+    return { text: fake === 0 ? `It has no land borders.` : `It has ${fake} land neighbour${fake === 1 ? "" : "s"}.`, type }
+  }
+  if (type === "areaCmp") {
+    const c = comparatorFor(f, "area")!  // wrong relation
+    return { text: `It is ${STATS[f.code].area >= STATS[c].area ? "smaller" : "larger"} in area than ${NAME(c)}.`, type }
+  }
+  if (type === "popCmp") {
+    const c = comparatorFor(f, "pop")!  // wrong relation
+    return { text: `It has ${STATS[f.code].pop >= STATS[c].pop ? "fewer" : "more"} people than ${NAME(c)}.`, type }
+  }
   // border (false): prefer a near-miss (adjacent to a neighbour but not to us),
   // then any same-region non-neighbour, so the lie is genuinely confusable.
   const direct = new Set([f.code, ...neighborsOf(f.code)])
@@ -82,8 +129,22 @@ function falseStmt(type: string, f: FlagRecord): Stmt {
 
 interface Round { flag: FlagRecord; stmts: Stmt[]; falseIdx: number }
 
+// The fact types we can build for this country, given the data we have. region
+// + borderCount always work; capital needs a capital; border needs a neighbour;
+// the size/population comparisons need a stat comparator with a clear gap.
+function availableTypes(f: FlagRecord): string[] {
+  const t = ["region", "borderCount"]
+  if (CAP.has(f.code)) t.push("capital")
+  if (neighborsOf(f.code).length) t.push("border")
+  if (comparatorFor(f, "area")) t.push("areaCmp")
+  if (comparatorFor(f, "pop")) t.push("popCmp")
+  return t
+}
+
 function makeRound(f: FlagRecord): Round {
-  const chosen = ["capital", "region", "border"]
+  // Three DIFFERENT fact types per round, drawn from whatever's available — so
+  // it's not always capital / region / border.
+  const chosen = shuffle(availableTypes(f)).slice(0, 3)
   const falseType = rand(chosen)
   const built = chosen.map(t => ({ stmt: t === falseType ? falseStmt(t, f) : trueStmt(t, f), isFalse: t === falseType }))
   const ordered = shuffle(built)

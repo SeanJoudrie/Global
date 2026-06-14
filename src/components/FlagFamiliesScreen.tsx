@@ -15,20 +15,36 @@ interface Family {
 }
 
 const FAMILY_DEFS: Family[] = [
+  // ── Structure / layout ───────────────────────────────────────────────────
   { id: 'nordic',     label: 'Nordic Cross',        emoji: '✚',  codes: ['DK','NO','SE','FI','IS'] },
-  { id: 'crescent',   label: 'Crescent & Star',      emoji: '☪️', codes: ['TR','PK','MY','TN','DZ','AZ','TM','MV','UZ'] },
-  { id: 'v-tricolor', label: 'Vertical Tricolor',    emoji: '🎨', codes: ['FR','IT','IE','BE','RO','NG','ML','SN','CI','GN','CM'] },
-  { id: 'h-tricolor', label: 'Horizontal Tricolor',  emoji: '═',  codes: ['DE','NL','RU','HU','AT','BG','LT','EE','LV','AM'] },
-  { id: 'pan-african',label: 'Pan-African Colors',   emoji: '🌍', codes: ['ET','GH','SN','ML','GN','CI','KE','ZM','TZ'] },
-  { id: 'uk-ensign',  label: 'Union Jack Family',    emoji: '🇬🇧', codes: ['AU','NZ','FJ','NR','CK','TV'] },
-  { id: 'pan-arab',   label: 'Pan-Arab Colors',      emoji: '🟥', codes: ['EG','IQ','SY','YE','JO','KW','AE','LY','PS'] },
-  { id: 'disc',       label: 'Disc / Sun Center',    emoji: '🔴', codes: ['JP','BD','LA','PW'] },
-  { id: 'hoist-tri',  label: 'Hoist Triangle',       emoji: '◢',  codes: ['CZ','PH','ER','DJ','BS','GY','MZ','ZA'] },
-  // Harder "look closely at the emblem" families — two-headed vs single eagle is
-  // a deliberate near-pair, and a centered cross contrasts with the Nordic cross.
-  { id: 'eagle2',     label: 'Double-Headed Eagle',  emoji: '🦅', codes: ['AL','ME','RS'] },
-  { id: 'eagle1',     label: 'Single Eagle',         emoji: '🦅', codes: ['EG','MX','ZM','KZ','MD'] },
-  { id: 'cross-mid',  label: 'Centered Cross',       emoji: '✝️', codes: ['CH','GE','TO','DO','GR'] },
+  { id: 'cross-mid',  label: 'Centered Cross',      emoji: '✝️', codes: ['CH','GE','DO','TO'] },
+  { id: 'v-tricolor', label: 'Vertical Tricolor',   emoji: '┃',  codes: ['FR','IT','IE','BE','RO','NG','ML','SN','CI','GN','CM','TD'] },
+  { id: 'h-tricolor', label: 'Horizontal Tricolor', emoji: '═',  codes: ['DE','NL','RU','HU','BG','LT','EE','AM','GA','SL'] },
+  { id: 'bicolor',    label: 'Two-Band Bicolor',    emoji: '▭',  codes: ['ID','MC','PL','UA','SM'] },
+  { id: 'hoist-tri',  label: 'Hoist Triangle',      emoji: '◢',  codes: ['CZ','PH','ER','DJ','BS','GY','MZ','ZA','SS','JO','PS','SD','KW','VU'] },
+  { id: 'diagonal',   label: 'Diagonal Band',       emoji: '╱',  codes: ['CD','CG','TZ','NA','TT','BN','SC','SB'] },
+  { id: 'white-mid',  label: 'White Center Band',   emoji: '⬜', codes: ['NG','PE','CA','AT','LV','LB','IR','TJ','MX'] },
+  { id: 'uk-ensign',  label: 'Union Jack Canton',   emoji: '🇬🇧', codes: ['AU','NZ','FJ','TV','CK'] },
+  // ── Colour palette ───────────────────────────────────────────────────────
+  { id: 'rwb',        label: 'Red, White & Blue',   emoji: '🔵', codes: ['US','GB','FR','NL','RU','NO','IS','CZ','LU','TH','PY','CL','CU','CR','PA'] },
+  { id: 'red-white',  label: 'Red & White Only',    emoji: '🔴', codes: ['AT','PL','MC','ID','BH','QA','CA','PE','MT','SG'] },
+  { id: 'blue-white', label: 'Blue & White Only',   emoji: '🔷', codes: ['AR','GR','FI','IL','NI','SV','HN','SO','UY','GT'] },
+  { id: 'pan-african',label: 'Pan-African Colours', emoji: '🌍', codes: ['ET','GH','ML','GN','KE','ZM','TZ','BJ','BF','CG','CM','GW','TG','ZW'] },
+  { id: 'pan-arab',   label: 'Pan-Arab Colours',    emoji: '🟥', codes: ['EG','IQ','SY','YE','JO','KW','AE','PS','SD'] },
+  { id: 'green-dom',  label: 'Green-Dominant',      emoji: '🟢', codes: ['SA','PK','NG','BD','TM','MR','ZM'] },
+  { id: 'yellow-dom', label: 'Yellow-Dominant',     emoji: '🟡', codes: ['BN','CO','EC','VE','BT'] },
+  { id: 'has-black',  label: 'Contains Black',      emoji: '⬛', codes: ['DE','EG','SY','YE','KE','AF','SS','BE','AO','BW','JM','PG','MW','UG','TZ','ZW','VU','TT','EE'] },
+  // ── Emblems ──────────────────────────────────────────────────────────────
+  { id: 'crescent',   label: 'Crescent & Star',     emoji: '☪️', codes: ['TR','PK','MY','TN','DZ','AZ','TM','MV','MR','LY','KM','SG'] },
+  { id: 'disc',       label: 'Disc / Circle',       emoji: '⭕', codes: ['JP','BD','LA','PW','NE','KR'] },
+  { id: 'sun',        label: 'Sun Emblem',          emoji: '☀️', codes: ['AR','UY','MK','TW','PH','KI','AG','RW','NP'] },
+  { id: 'one-star',   label: 'Single Star',         emoji: '⭐', codes: ['VN','MA','SO','GH','SN','BF','CM','LR','TG'] },
+  { id: 'south-cross',label: 'Southern Cross',      emoji: '✦',  codes: ['AU','NZ','PG','WS','SB'] },
+  { id: 'arms',       label: 'Coat of Arms',        emoji: '🛡️', codes: ['ES','PT','ME','MX','EC','BO','HR','AD','MD','GT','FJ','SZ','LS','BZ','DM'] },
+  { id: 'eagle2',     label: 'Double-Headed Eagle', emoji: '🦅', codes: ['AL','ME','RS'] },
+  { id: 'eagle1',     label: 'Single Eagle',        emoji: '🦅', codes: ['EG','MX','ZM','KZ','MD'] },
+  { id: 'bird',       label: 'Bird (not eagle)',    emoji: '🕊️', codes: ['UG','PG','ZW','KI','DM'] },
+  { id: 'map',        label: 'Map of the Country',  emoji: '🗺️', codes: ['CY','XK'] },
 ]
 
 interface Round {
@@ -37,28 +53,38 @@ interface Round {
   flags: { flag: FlagRecord; family: 'A' | 'B' }[]
 }
 
-function buildRounds(count: number): Round[] {
-  const rounds: Round[] = []
-  const shuffledDefs = [...FAMILY_DEFS].sort(() => Math.random() - 0.5)
+// Build a single round from two families, excluding any flag that belongs to
+// BOTH (so a flag is never ambiguous within a round). Returns null if either
+// side can't field at least two unambiguous flags.
+function tryPair(famA: Family, famB: Family): Round | null {
+  const flagsA = FLAGS.filter(f => famA.codes.includes(f.code) && !famB.codes.includes(f.code)).sort(() => Math.random() - 0.5).slice(0, 3)
+  const flagsB = FLAGS.filter(f => famB.codes.includes(f.code) && !famA.codes.includes(f.code)).sort(() => Math.random() - 0.5).slice(0, 3)
+  if (flagsA.length < 2 || flagsB.length < 2) return null
+  const combined = [
+    ...flagsA.map(flag => ({ flag, family: 'A' as const })),
+    ...flagsB.map(flag => ({ flag, family: 'B' as const })),
+  ].sort(() => Math.random() - 0.5)
+  return { familyA: famA, familyB: famB, flags: combined }
+}
 
-  for (let i = 0; i < shuffledDefs.length - 1 && rounds.length < count; i += 2) {
-    const famA = shuffledDefs[i]
-    const famB = shuffledDefs[i + 1]
-    // Exclude any code that belongs to BOTH families, so a flag is never
-    // ambiguous within a round.
-    const flagsA = FLAGS.filter(f => famA.codes.includes(f.code) && !famB.codes.includes(f.code)).sort(() => Math.random() - 0.5).slice(0, 3)
-    const flagsB = FLAGS.filter(f => famB.codes.includes(f.code) && !famA.codes.includes(f.code)).sort(() => Math.random() - 0.5).slice(0, 3)
-    if (flagsA.length < 2 || flagsB.length < 2) continue
-    const combined = [
-      ...flagsA.map(flag => ({ flag, family: 'A' as const })),
-      ...flagsB.map(flag => ({ flag, family: 'B' as const })),
-    ].sort(() => Math.random() - 0.5)
-    rounds.push({ familyA: famA, familyB: famB, flags: combined })
+function buildRounds(count: number): Round[] {
+  const defs = [...FAMILY_DEFS].sort(() => Math.random() - 0.5)
+  const used = new Set<string>()
+  const rounds: Round[] = []
+  // Greedily pair each unused family with the first partner that yields a valid
+  // round — robust even when families overlap heavily.
+  for (let i = 0; i < defs.length && rounds.length < count; i++) {
+    if (used.has(defs[i].id)) continue
+    for (let j = i + 1; j < defs.length; j++) {
+      if (used.has(defs[j].id)) continue
+      const r = tryPair(defs[i], defs[j])
+      if (r) { rounds.push(r); used.add(defs[i].id); used.add(defs[j].id); break }
+    }
   }
   return rounds
 }
 
-const TOTAL_ROUNDS = 3
+const TOTAL_ROUNDS = 5
 const ACCENT_A = ACCENT.play
 const ACCENT_B = T.green
 
