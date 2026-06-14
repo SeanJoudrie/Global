@@ -16,7 +16,8 @@ export const ADSENSE_CLIENT = "" // e.g. "ca-pub-XXXXXXXXXXXXXXXX"
 
 // One entry per placement. Leave a value empty to keep that slot off.
 export const AD_SLOTS = {
-  codexFooter: "", // a responsive banner at the bottom of the Codex
+  codexFooter: "",  // a responsive banner at the bottom of the Codex
+  resultFooter: "", // a banner on the post-game result screen
 }
 
 export const ADS_ENABLED = ADSENSE_CLIENT.startsWith("ca-pub-")

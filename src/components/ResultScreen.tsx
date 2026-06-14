@@ -1,6 +1,8 @@
 import { Trophy, Star, ThumbsUp, BookOpen, RotateCcw } from 'lucide-react'
 import { todayString } from '../utils/prng'
 import ShareCard from './ShareCard'
+import AdSlot from './AdSlot'
+import { AD_SLOTS } from '../ads'
 import type { ShareResult } from '../utils/storage'
 import { T, ACCENT, FONT, tint, IS_CARTO } from '../ui/tokens'
 
@@ -76,6 +78,10 @@ export default function ResultScreen({ score, total, answers, setLabel, streak, 
 
         {/* Shareable card */}
         <ShareCard result={shareResult} showCopyButton />
+
+        {/* Ad — a natural break shown after each game (renders only once
+            AdSense is configured in ads.ts; otherwise nothing appears). */}
+        <AdSlot slot={AD_SLOTS.resultFooter} />
 
         {/* Buttons */}
         <div className="flex flex-col gap-3">
