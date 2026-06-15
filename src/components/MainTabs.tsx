@@ -180,19 +180,48 @@ function TodayTab({ state, dailyDone, launch, onNavigate, onGoCodex, onGoPlay, o
         <div style={{ color: T.muted, fontSize: 12.5, marginTop: 3 }}>{dateLine} · best run {state.longestStreak}</div>
       </div>
 
-      {/* Hero deck — Expedition, then the timely World Cup, Flag of the Day
-          (→ Codex), the Arcade (→ Play) and a daily fact. Swipe; it loops. */}
+      {/* Hero deck — ordered to funnel into Play first, then the daily ritual,
+          World Cup, the Codex promo, Flag of the Day, an advertise slot and a
+          daily fact. Swipe; it loops. */}
       <HeroDeck slides={[
+        { accent: ACCENT.challenge, eyebrow: "The Arcade", title: `${gameCount} games await`,
+          body: "A swipeable trending deck, fresh picks daily, every shelf one tap from play.",
+          cta: "Open the Arcade", onClick: onGoPlay, art: flagFan },
         { accent: exped, watermark: "today", eyebrow: "Today's expedition", title: "Daily Expedition",
           body: dailyDone ? "Logged for today — a fresh expedition lands tomorrow." : "Ten flags from across the world. One run, once a day.",
           cta: dailyDone ? (todayResult ? `✓ ${todayResult.score}/${todayResult.total} today` : "✓ Done today") : "Start",
-          onClick: dailyDone ? undefined : onStartDaily },
+          onClick: dailyDone ? undefined : onStartDaily,
+          art: (
+            <div style={{ position: "relative", width: 88, height: 64, flexShrink: 0 }}>
+              {["ke", "in", "br"].map((c, i) => (
+                <div key={c} style={{ position: "absolute", inset: 0, borderRadius: 6, overflow: "hidden", border: `1.5px solid ${T.surface}`,
+                  transform: `translate(${(i - 1) * 9}px, ${(i - 1) * 5}px) rotate(${(i - 1) * 6}deg)`,
+                  boxShadow: `0 3px 8px -4px ${tint(T.text, 0.6)}`, zIndex: i }}>
+                  <FlagImage code={c} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+                </div>
+              ))}
+            </div>
+          ) },
         { accent: ACCENT.today, eyebrow: "World Cup 2026", title: "48 nations, one summer",
           body: "Flip through every team's flag, story and historical flags before kickoff.",
           cta: "Explore the field", onClick: () => onNavigate("worldcup"),
           art: (
             <div style={{ position: "relative", width: 88, height: 64, flexShrink: 0 }}>
               {["us", "mx", "ca"].map((c, i) => (
+                <div key={c} style={{ position: "absolute", inset: 0, borderRadius: 6, overflow: "hidden", border: `1.5px solid ${T.surface}`,
+                  transform: `translate(${(i - 1) * 9}px, ${(i - 1) * 5}px) rotate(${(i - 1) * 6}deg)`,
+                  boxShadow: `0 3px 8px -4px ${tint(T.text, 0.6)}`, zIndex: i }}>
+                  <FlagImage code={c} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+                </div>
+              ))}
+            </div>
+          ) },
+        { accent: T.cyan, eyebrow: "The Codex", title: "Explore 4,000+ flags",
+          body: "Every country, region, historical and identity flag — tap any one to dig into its story.",
+          cta: "Open the Codex", onClick: () => onGoCodex(),
+          art: (
+            <div style={{ position: "relative", width: 88, height: 64, flexShrink: 0 }}>
+              {["za", "jp", "ch"].map((c, i) => (
                 <div key={c} style={{ position: "absolute", inset: 0, borderRadius: 6, overflow: "hidden", border: `1.5px solid ${T.surface}`,
                   transform: `translate(${(i - 1) * 9}px, ${(i - 1) * 5}px) rotate(${(i - 1) * 6}deg)`,
                   boxShadow: `0 3px 8px -4px ${tint(T.text, 0.6)}`, zIndex: i }}>
@@ -208,9 +237,9 @@ function TodayTab({ state, dailyDone, launch, onNavigate, onGoCodex, onGoPlay, o
               <FlagImage code={fotd.code} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
             </div>
           ) },
-        { accent: ACCENT.challenge, eyebrow: "The Arcade", title: `${gameCount} games await`,
-          body: "A swipeable trending deck, fresh picks daily, every shelf one tap from play.",
-          cta: "Open the Arcade", onClick: onGoPlay, art: flagFan },
+        { accent: T.gold, watermark: "today", eyebrow: "Advertise", title: "Your ad could be here",
+          body: "Reach flag fans around the world — and help keep Globalio free for everyone. Tap to get in touch.",
+          cta: "Get in touch", onClick: () => { window.location.href = "mailto:sjoudrie@gmail.com?subject=" + encodeURIComponent("Advertising on Globalio") } },
         { accent: ACCENT.learn, eyebrow: "Did you know?", title: dyk.name,
           body: dyk.funFact, cta: "More fun facts", onClick: () => onNavigate("funfact"),
           art: (
@@ -920,8 +949,7 @@ function YouTab({ state, learned, onNavigate, onSetUsername }: {
             <ModuleCard key={e.id} icon={e.icon} glyph={e.id} title={e.title} subtitle={e.subtitle} accent={ACCENT[e.accent]}
               progress={e.progress?.(state)} onClick={() => onNavigate(e.id)} />
           ))}
-          <ModuleCard icon="🎁" glyph="gacha" title="Gacha Collection" subtitle="Browse your daily pulls" accent={ACCENT.today}
-            onClick={() => onNavigate("gacha")} />
+          <GachaInline onOpen={() => onNavigate("gacha")} />
         </div>
       </div>
 
@@ -960,5 +988,42 @@ function FeedbackCard() {
         <span style={{ color: ACCENT.learn, fontSize: 18, opacity: 0.7 }}>→</span>
       </div>
     </a>
+  )
+}
+
+// Inline Gacha collection for the You tab — reads the gacha save directly so
+// players see what they've pulled without hopping to another screen.
+function GachaInline({ onOpen }: { onOpen: () => void }) {
+  let collected: string[] = []
+  try { const raw = localStorage.getItem("globalio_gacha"); collected = raw ? (JSON.parse(raw).collected ?? []) : [] } catch { /* ignore */ }
+  const flags = collected
+    .map(c => FLAGS.find(f => f.code === c))
+    .filter((f): f is typeof FLAGS[number] => !!f)
+  return (
+    <div className={IS_CARTO ? "carto-card" : undefined}
+      style={{ padding: 14, borderRadius: 16, ...(IS_CARTO ? {} : { background: T.surface, border: `1px solid ${T.line}` }) }}>
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 10 }}>
+        <div className="geo-display" style={{ fontWeight: 700, fontSize: 15, color: T.text }}>🎁 Gacha Collection</div>
+        <button onClick={onOpen} className="geo-tap"
+          style={{ fontSize: 12, fontWeight: 700, color: ACCENT.today, background: "none", border: "none", cursor: "pointer", fontFamily: FONT.display }}>
+          {flags.length ? "Open to pull →" : "Get your daily pull →"}
+        </button>
+      </div>
+      {flags.length === 0 ? (
+        <div style={{ color: T.muted, fontSize: 12.5 }}>No pulls yet — grab your free daily pull and start your collection.</div>
+      ) : (
+        <>
+          <div style={{ color: T.muted, fontSize: 11.5, marginBottom: 8 }}>{flags.length} of {FLAGS.length} collected</div>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(38px, 1fr))", gap: 6 }}>
+            {flags.map(f => (
+              <div key={f.code} title={f.name}
+                style={{ aspectRatio: "3 / 2", borderRadius: 4, overflow: "hidden", border: `1px solid ${T.line}` }}>
+                <FlagImage code={f.code} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+              </div>
+            ))}
+          </div>
+        </>
+      )}
+    </div>
   )
 }
