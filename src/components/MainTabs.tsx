@@ -669,11 +669,13 @@ function TrendingDeck({ games, launch }: { games: Entry[]; launch: (e: Entry) =>
 
   if (!games.length) return null
   const n = games.length
-  const advance = () => { setIdx(i => (i + 1) % n); setDx(0) }
+  // Direction-aware: swiping right (dir > 0) goes to the PREVIOUS card, swiping
+  // left (dir < 0) advances to the NEXT — so the deck scrolls both ways.
+  const go = (delta: number) => { setIdx(i => (i + delta + n) % n); setDx(0) }
   const commit = (dir: number) => {
-    if (reduce) { advance(); return }
+    if (reduce) { go(-dir); return }
     setDx(dir * 540)
-    window.setTimeout(advance, 230)
+    window.setTimeout(() => go(-dir), 230)
   }
 
   const top = games[idx]
@@ -728,6 +730,9 @@ function TrendingDeck({ games, launch }: { games: Entry[]; launch: (e: Entry) =>
             if (axis.current === null) {
               if (Math.abs(ax) < 8 && Math.abs(ay) < 8) return
               axis.current = Math.abs(ax) > Math.abs(ay) ? "h" : "v"
+              // Hand a vertical gesture back to the page so it scrolls smoothly
+              // instead of stuttering under the card's pointer capture.
+              if (axis.current === "v") { try { (e.currentTarget as HTMLElement).releasePointerCapture(e.pointerId) } catch { /* ignore */ } }
             }
             if (axis.current === "v") { dragging.current = false; setDx(0); return }
             setDx(ax)
