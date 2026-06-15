@@ -1424,6 +1424,282 @@ export const HISTORICAL_FLAGS: HistoricalEntity[] = [
     flagUrl: fp("Flag_of_the_Cherokee_Nation.svg"), relatedCode: "US",
     note: "The seven-pointed star and ring of stars honour the seven clans and the Trail of Tears; one black star commemorates those who died on the forced removal to Indian Territory.",
   },
+  // ── Asia & Oceania: former states (List of former sovereign states) ──
+  {
+    id: "kingdom-tahiti", name: "Kingdom of Tahiti", era: "1788–1880", region: "Asia & Oceania",
+    flagUrl: fp("Flag_of_the_Kingdom_of_Tahiti.svg"), relatedCode: "PF",
+    note: "The Pōmare dynasty's red-white-red flag flew over the Society Islands kingdom until France annexed Tahiti in 1880, ending nearly a century of independent Polynesian rule.",
+  },
+  {
+    id: "kingdom-tonga-1862", name: "Kingdom of Tonga (1862)", era: "1862–1866", region: "Asia & Oceania",
+    flagUrl: fp("Flag_of_Tonga_(1862-1866).svg"), relatedCode: "TO",
+    note: "Tonga's first national flag was a plain white field with a red cross, but it proved too close to the new Red Cross emblem, so King George Tupou I added the red canton still used today.",
+  },
+  {
+    id: "qing-triangular", name: "Qing Dynasty (Triangular Dragon)", era: "1862–1889", region: "Asia & Oceania",
+    flagUrl: fp("Flag_of_China_(1862–1889).svg"), relatedCode: "CN",
+    note: "China's first national ensign was a triangular 'Yellow Dragon Flag' adopted for the imperial navy in 1862, before the familiar rectangular version replaced it in 1889.",
+  },
+  {
+    id: "empire-china-1915", name: "Empire of China (1915–1916)", era: "1915–1916", region: "Asia & Oceania",
+    flagUrl: fp("Flag_of_the_Empire_of_China_(1915–1916).svg"), relatedCode: "CN",
+    note: "When president Yuan Shikai declared himself emperor in 1915, he revived a cross-and-stripes flag for his short-lived monarchy, which collapsed amid revolts within 83 days.",
+  },
+  {
+    id: "roc-twelve-symbols", name: "Republic of China (Twelve Symbols)", era: "1913–1928", region: "Asia & Oceania",
+    flagUrl: fp("Twelve_Symbols_national_emblem_of_China.svg"), relatedCode: "CN",
+    note: "The early Republic's ornate state emblem, designed with input from the writer Lu Xun, combined the ancient Twelve Ornaments of imperial robes into a single republican coat of arms.",
+  },
+  {
+    id: "mengjiang", name: "Mengjiang (Mengkukuo)", era: "1939–1945", region: "Asia & Oceania",
+    flagUrl: fp("Flag_of_the_Mengjiang.svg"), relatedCode: "CN",
+    note: "The Japanese-backed Mongol puppet state in Inner Mongolia flew a striped flag whose bands stood for the Mongol, Han, Japanese, Manchu, and Hui peoples it claimed to unite.",
+  },
+  {
+    id: "first-east-turkestan", name: "First East Turkestan Republic", era: "1933–1934", region: "Asia & Oceania",
+    flagUrl: fp("Flag_of_the_First_East_Turkestan_Republic.svg"), relatedCode: "CN",
+    note: "A short-lived Islamic republic proclaimed at Kashgar in Xinjiang, flying the sky-blue Kökbayraq with a white crescent and star, crushed within months by Chinese and Soviet-backed forces.",
+  },
+  {
+    id: "second-east-turkestan", name: "Second East Turkestan Republic", era: "1944–1949", region: "Asia & Oceania",
+    flagUrl: fp("Flag_of_the_Second_East_Turkestan_Republic.svg"), relatedCode: "CN",
+    note: "A Soviet-supported Uyghur and Kazakh republic in northern Xinjiang, absorbed into the People's Republic of China in 1949 after its leaders died in a mysterious plane crash.",
+  },
+  {
+    id: "bogd-khanate", name: "Bogd Khanate of Mongolia", era: "1921–1924", region: "Asia & Oceania",
+    flagUrl: fp("Flag_of_Mongolia_(1921–1924).svg"), relatedCode: "MN",
+    note: "After breaking from China, Mongolia was ruled by the Bogd Khan, a Buddhist theocrat, whose soyombo flag preceded the communist People's Republic proclaimed on his death in 1924.",
+  },
+  {
+    id: "mongolian-pr-1924", name: "Mongolian People's Republic (1924)", era: "1924–1940", region: "Asia & Oceania",
+    flagUrl: fp("Flag_of_Mongolia_(1924–1940).svg"), relatedCode: "MN",
+    note: "Asia's first communist state after the USSR flew a red flag bearing the national soyombo symbol, a fire-and-yin-yang emblem that still anchors the modern Mongolian flag.",
+  },
+  {
+    id: "tannu-tuva", name: "Tuvan People's Republic", era: "1921–1944", region: "Asia & Oceania",
+    flagUrl: fp("Flag_of_Tannu_Tuva_(1921-1926).svg"), relatedCode: "RU",
+    note: "A tiny Soviet-aligned republic in southern Siberia, recognized only by the USSR and Mongolia; its famous triangular stamps were prized by collectors before the USSR annexed it in 1944.",
+  },
+  {
+    id: "empire-japan-naval", name: "Empire of Japan (Naval Ensign)", era: "1889–1945", region: "Asia & Oceania",
+    flagUrl: fp("Naval_ensign_of_Japan_(1889–1945).svg"), relatedCode: "JP",
+    note: "The 16-rayed Rising Sun naval ensign, with the disc offset toward the hoist, flew over the Imperial Japanese Navy and is still used by the Maritime Self-Defense Force today.",
+  },
+  {
+    id: "korean-provisional-gov", name: "Provisional Government of Korea", era: "1919–1948", region: "Asia & Oceania",
+    flagUrl: fp("Flag_of_the_Provisional_Government_of_the_Republic_of_Korea.svg"), relatedCode: "KR",
+    note: "Exiled in Shanghai after Japan's annexation, Korea's provisional government flew an early Taegukgi as it lobbied for independence; its legacy is claimed by the modern Republic of Korea.",
+  },
+  {
+    id: "safavid", name: "Safavid Empire", era: "1501–1736", region: "Asia & Oceania",
+    flagUrl: fp("Safavid_Flag.svg"), relatedCode: "IR",
+    note: "The Persian empire that made Twelver Shia Islam the state religion flew a green banner bearing a golden lion and sun, the Lion and Sun motif that would symbolize Iran for centuries.",
+  },
+  {
+    id: "afsharid", name: "Afsharid Dynasty", era: "1736–1796", region: "Asia & Oceania",
+    flagUrl: fp("Afsharid_Imperial_Standard.svg"), relatedCode: "IR",
+    note: "The empire of the conqueror Nader Shah, who sacked Delhi and seized the Peacock Throne; his imperial standard carried the lion and sun on a red and yellow field.",
+  },
+  {
+    id: "qajar-persia", name: "Qajar Persia", era: "1846–1925", region: "Asia & Oceania",
+    flagUrl: fp("State_flag_of_Persia_(1907–1933).svg"), relatedCode: "IR",
+    note: "The Lion and Sun on a tricolor of green, white, and red became Persia's flag under the Qajar shahs and endured through the empire until the 1979 revolution removed the emblem.",
+  },
+  {
+    id: "pahlavi-iran", name: "Imperial State of Iran (Pahlavi)", era: "1964–1979", region: "Asia & Oceania",
+    flagUrl: fp("State_flag_of_Iran_(1964–1980).svg"), relatedCode: "IR",
+    note: "Under the Pahlavi shahs the green-white-red flag bore a crowned Lion and Sun; the crowned emblem was stripped away after the 1979 Islamic Revolution overthrew the monarchy.",
+  },
+  {
+    id: "afghanistan-1880", name: "Emirate of Afghanistan (1880)", era: "1880–1901", region: "Asia & Oceania",
+    flagUrl: fp("Flag_of_Afghanistan_(1880–1901).svg"), relatedCode: "AF",
+    note: "A plain black banner flown under Emir Abdur Rahman Khan, the 'Iron Amir', who consolidated the modern borders of Afghanistan as a buffer between the British and Russian empires.",
+  },
+  {
+    id: "afghanistan-1919", name: "Emirate of Afghanistan (1919)", era: "1919–1921", region: "Asia & Oceania",
+    flagUrl: fp("Flag_of_Afghanistan_(1919–1921).svg"), relatedCode: "AF",
+    note: "The black flag with a central mosque-and-mihrab emblem flew when Afghanistan won full independence from Britain in 1919 under the reformist King Amanullah Khan.",
+  },
+  {
+    id: "afghanistan-1929", name: "Kingdom of Afghanistan (1929)", era: "1929", region: "Asia & Oceania",
+    flagUrl: fp("Flag_of_Afghanistan_(1929).svg"), relatedCode: "AF",
+    note: "The brief flag of the Tajik rebel Habibullah Kalakani, who seized Kabul for nine months in 1929 during the civil war that toppled King Amanullah's modernizing reforms.",
+  },
+  {
+    id: "kingdom-afghanistan", name: "Kingdom of Afghanistan", era: "1931–1973", region: "Asia & Oceania",
+    flagUrl: fp("Flag_of_Afghanistan_(1931–1973).svg"), relatedCode: "AF",
+    note: "The black-red-green triband with a mosque emblem flew over the long reign of King Zahir Shah, until his cousin Daoud Khan abolished the monarchy in a 1973 coup.",
+  },
+  {
+    id: "herat", name: "Principality of Herat", era: "1793–1863", region: "Asia & Oceania",
+    flagUrl: fp("Flag_of_Herat_until_1842.svg"), relatedCode: "AF",
+    note: "A semi-independent Afghan principality fought over by Persia and Britain in the 'Great Game', whose siege in 1837–38 helped trigger the First Anglo-Afghan War.",
+  },
+  {
+    id: "trebizond", name: "Empire of Trebizond", era: "1204–1461", region: "Asia & Oceania",
+    flagUrl: fp("Banner_of_the_Empire_of_Trebizond.svg"), relatedCode: "TR",
+    note: "A Byzantine Greek successor state on the Black Sea coast of Anatolia, the last fragment of the Roman world, which outlasted Constantinople by eight years before falling to the Ottomans.",
+  },
+  {
+    id: "asir-emirate", name: "Idrisid Emirate of Asir", era: "1906–1934", region: "Asia & Oceania",
+    flagUrl: fp("Flag_of_the_Emirate_of_Asir.svg"), relatedCode: "SA",
+    note: "A small emirate in the mountains of southwestern Arabia between the Hejaz and Yemen, independent for a generation before Saudi Arabia absorbed it after the 1934 Saudi-Yemeni war.",
+  },
+  {
+    id: "state-of-aden", name: "State of Aden", era: "1963–1967", region: "Asia & Oceania",
+    flagUrl: fp("Flag_of_the_State_of_Aden.svg"), relatedCode: "YE",
+    note: "The British colony of Aden joined the Federation of South Arabia as a constituent state, flying a green-and-blue flag, just before independence as South Yemen in 1967.",
+  },
+  {
+    id: "federation-south-arabia", name: "Federation of South Arabia", era: "1962–1967", region: "Asia & Oceania",
+    flagUrl: fp("Flag_of_the_Federation_of_South_Arabia.svg"), relatedCode: "YE",
+    note: "A British-sponsored union of Aden and surrounding sultanates and emirates; its green-yellow-blue flag flew until the federation collapsed into independent South Yemen in 1967.",
+  },
+  {
+    id: "south-yemen", name: "South Yemen (PDRY)", era: "1967–1990", region: "Asia & Oceania",
+    flagUrl: fp("Flag_of_South_Yemen.svg"), relatedCode: "YE",
+    note: "The Arab world's only Marxist state added a sky-blue triangle with a red star to the pan-Arab tricolor, until it merged with North Yemen to form the Republic of Yemen in 1990.",
+  },
+  {
+    id: "lahej", name: "Sultanate of Lahej", era: "1728–1967", region: "Asia & Oceania",
+    flagUrl: fp("Flag_of_the_Sultanate_of_Lahej.svg"), relatedCode: "YE",
+    note: "An Abdali sultanate north of Aden, one of the many South Arabian princely states, flying a green flag with a white border before being absorbed into independent South Yemen.",
+  },
+  {
+    id: "mahra", name: "Mahra Sultanate", era: "1432–1967", region: "Asia & Oceania",
+    flagUrl: fp("Flag_of_the_Mahra_Sultanate.svg"), relatedCode: "YE",
+    note: "A long-lived sultanate of the Mahra people in far eastern South Arabia, which also ruled the island of Socotra, abolished when South Yemen became independent in 1967.",
+  },
+  {
+    id: "muscat", name: "Sultanate of Muscat", era: "1820–1970", region: "Asia & Oceania",
+    flagUrl: fp("Flag_of_Muscat.svg"), relatedCode: "OM",
+    note: "A plain red banner flew over the coastal Sultanate of Muscat, distinct from the inland Imamate of Oman, until Sultan Qaboos united the country and modernized its flag in 1970.",
+  },
+  {
+    id: "trucial-states", name: "Trucial States", era: "1968–1971", region: "Asia & Oceania",
+    flagUrl: fp("Flag_of_the_Trucial_States_(1968–1971).svg"), relatedCode: "AE",
+    note: "The collective flag of the British-protected sheikhdoms of the lower Gulf, a red field with a green-bordered white stripe, flown briefly before they federated as the United Arab Emirates.",
+  },
+  {
+    id: "arab-federation", name: "Arab Federation", era: "1958", region: "Asia & Oceania",
+    flagUrl: fp("Flag_of_the_Arab_Federation.svg"), relatedCode: "IQ", relatedCodes: ["JO"],
+    note: "A short-lived union of the Hashemite kingdoms of Iraq and Jordan, formed as a counterweight to the Egypt-Syria union and dissolved within months when a coup overthrew Iraq's monarchy.",
+  },
+  {
+    id: "kingdom-iraq", name: "Kingdom of Iraq", era: "1924–1959", region: "Asia & Oceania",
+    flagUrl: fp("Flag_of_Iraq_(1924–1959).svg"), relatedCode: "IQ",
+    note: "The Hashemite kingdom's black-green-white flag with a red trapezoid and two white stars derived from the Arab Revolt, flying until the 1958 coup that ended the monarchy.",
+  },
+  {
+    id: "hatay", name: "Hatay State", era: "1938–1939", region: "Asia & Oceania",
+    flagUrl: fp("Flag_of_Hatay.svg"), relatedCode: "TR",
+    note: "A short-lived republic around Alexandretta, carved from French-mandate Syria with a flag nearly identical to Turkey's, before it voted to join Turkey in 1939.",
+  },
+  {
+    id: "kingdom-mysore", name: "Kingdom of Mysore", era: "1399–1947", region: "Asia & Oceania",
+    flagUrl: fp("Flag_of_Mysore.svg"), relatedCode: "IN",
+    note: "Ruled by the Wadiyar dynasty, the south Indian kingdom flew a flag bearing the mythical Gandaberunda, a two-headed eagle still used as the state emblem of Karnataka.",
+  },
+  {
+    id: "cochin", name: "Kingdom of Cochin", era: "1102–1949", region: "Asia & Oceania",
+    flagUrl: fp("Flag_of_the_Kingdom_of_Cochin.svg"), relatedCode: "IN",
+    note: "An ancient kingdom on India's Malabar coast, an early ally of the Portuguese and Dutch, whose spice ports made it one of the wealthiest of the southern Indian states.",
+  },
+  {
+    id: "sikkim", name: "Kingdom of Sikkim", era: "1642–1975", region: "Asia & Oceania",
+    flagUrl: fp("Flag_of_Sikkim_(1967-1975).svg"), relatedCode: "IN",
+    note: "The Himalayan kingdom of the Namgyal dynasty flew a flag bearing a Buddhist gankyil and prayer wheel, until a 1975 referendum made it India's 22nd state.",
+  },
+  {
+    id: "kingdom-nepal", name: "Kingdom of Nepal", era: "1743–2008", region: "Asia & Oceania",
+    flagUrl: fp("Flag_of_Nepal_(1743–1962).svg"), relatedCode: "NP",
+    note: "The world's only non-rectangular national flag, a double pennon of two stacked triangles bearing a moon and sun, flew over the Shah dynasty's kingdom until Nepal became a republic in 2008.",
+  },
+  {
+    id: "bahawalpur", name: "Princely State of Bahawalpur", era: "1802–1955", region: "Asia & Oceania",
+    flagUrl: fp("Flag_of_Bahawalpur.svg"), relatedCode: "PK",
+    note: "A wealthy princely state in the Punjab desert ruled by the Abbasi Nawabs, whose ruler was among the first to accede to the new nation of Pakistan in 1947.",
+  },
+  {
+    id: "khiva", name: "Khanate of Khiva", era: "1511–1920", region: "Asia & Oceania",
+    flagUrl: fp("Flag_of_the_Khanate_of_Khiva.svg"), relatedCode: "UZ",
+    note: "A Central Asian khanate on the oasis of Khwarezm, a major Silk Road and slave-trade center, which became a Russian protectorate before the Bolsheviks toppled its khan in 1920.",
+  },
+  {
+    id: "kokand", name: "Khanate of Kokand", era: "1709–1876", region: "Asia & Oceania",
+    flagUrl: fp("Flag_of_the_Khanate_of_Kokand.svg"), relatedCode: "UZ",
+    note: "A khanate in the fertile Fergana Valley, one of the three great Uzbek states, conquered and annexed by the Russian Empire in 1876 during its advance across Central Asia.",
+  },
+  {
+    id: "bukhara-emirate", name: "Emirate of Bukhara", era: "1785–1920", region: "Asia & Oceania",
+    flagUrl: fp("Flag_of_the_Emirate_of_Bukhara.svg"), relatedCode: "UZ",
+    note: "The last emir of this ancient Central Asian state, a Russian protectorate, fled when the Red Army stormed Bukhara in 1920, ending centuries of Uzbek dynastic rule.",
+  },
+  {
+    id: "bukharan-psr", name: "Bukharan People's Soviet Republic", era: "1920–1925", region: "Asia & Oceania",
+    flagUrl: fp("Flag_of_the_Bukharan_People's_Soviet_Republic.svg"), relatedCode: "UZ",
+    note: "The Soviet-aligned republic that replaced the Emirate of Bukhara, flying a red flag with Arabic-script and a crescent, before being partitioned into the Uzbek and Turkmen SSRs.",
+  },
+  {
+    id: "alash-autonomy", name: "Alash Autonomy", era: "1917–1920", region: "Asia & Oceania",
+    flagUrl: fp("Flag_of_the_Alash_Autonomy.svg"), relatedCode: "KZ",
+    note: "A short-lived Kazakh national government formed amid the Russian Civil War by the Alash Orda intelligentsia, suppressed by the Bolsheviks who then built the Kazakh SSR.",
+  },
+  {
+    id: "deli", name: "Sultanate of Deli", era: "1632–1946", region: "Asia & Oceania",
+    flagUrl: fp("Flag_of_the_Sultanate_of_Deli.svg"), relatedCode: "ID",
+    note: "A Malay sultanate on Sumatra's east coast that grew immensely rich from Dutch tobacco plantations around Medan, before the 1946 social revolution swept away the Sumatran sultanates.",
+  },
+  {
+    id: "johor", name: "Sultanate of Johor", era: "1528–1948", region: "Asia & Oceania",
+    flagUrl: fp("Flag_of_Johor_(1855–1865).svg"), relatedCode: "MY",
+    note: "Successor to the Malacca sultanate, Johor was a major Malay power on the peninsula's tip; its colors survive in the modern Malaysian state of Johor.",
+  },
+  {
+    id: "riau-lingga", name: "Sultanate of Riau-Lingga", era: "1824–1911", region: "Asia & Oceania",
+    flagUrl: fp("Flag_of_Riau-Lingga_Sultanate.svg"), relatedCode: "ID",
+    note: "A Malay maritime sultanate of the islands between Sumatra and Borneo, formed when the British and Dutch split the old Johor realm, dissolved by the Dutch in 1911.",
+  },
+  {
+    id: "north-borneo", name: "North Borneo (Chartered Company)", era: "1882–1946", region: "Asia & Oceania",
+    flagUrl: fp("Flag_of_North_Borneo_(1882–1902).svg"), relatedCode: "MY",
+    note: "Modern Sabah was ruled for over sixty years by the British North Borneo Chartered Company, one of the last territories administered by a private trading company.",
+  },
+  {
+    id: "first-philippine-republic", name: "First Philippine Republic", era: "1899–1901", region: "Asia & Oceania",
+    flagUrl: fp("Flag_of_the_Philippines_(1898–1901).svg"), relatedCode: "PH",
+    note: "Asia's first constitutional republic, declared under Emilio Aguinaldo; its sun-and-stars flag — still the modern Philippine flag — flew in war against Spain and then the United States.",
+  },
+  {
+    id: "republic-zamboanga", name: "Republic of Zamboanga", era: "1899–1903", region: "Asia & Oceania",
+    flagUrl: fp("Purported_flag_of_the_Republic_of_Zamboanga.svg"), relatedCode: "PH",
+    note: "A short-lived republic on the Zamboanga Peninsula of Mindanao that declared independence amid the collapse of Spanish rule, before American forces incorporated it into the Philippines.",
+  },
+  {
+    id: "democratic-kampuchea", name: "Democratic Kampuchea", era: "1975–1979", region: "Asia & Oceania",
+    flagUrl: fp("Flag_of_Democratic_Kampuchea.svg"), relatedCode: "KH",
+    note: "The Khmer Rouge state flew a red flag with a yellow three-towered Angkor Wat; its brutal four-year rule under Pol Pot killed an estimated quarter of Cambodia's population.",
+  },
+  {
+    id: "kingdom-laos", name: "Kingdom of Laos", era: "1947–1975", region: "Asia & Oceania",
+    flagUrl: fp("Flag_of_Laos_(1952–1975).svg"), relatedCode: "LA",
+    note: "The royal kingdom flew a red flag with a white three-headed elephant beneath a parasol, the sacred Erawan, until the communist Pathet Lao abolished the monarchy in 1975.",
+  },
+  {
+    id: "state-east-indonesia", name: "State of East Indonesia", era: "1946–1950", region: "Asia & Oceania",
+    flagUrl: fp("Flag_of_the_State_of_East_Indonesia.svg"), relatedCode: "ID",
+    note: "A Dutch-sponsored federal state covering Sulawesi and the eastern islands during the Indonesian National Revolution, dissolved into the unitary Republic of Indonesia in 1950.",
+  },
+  {
+    id: "pasundan", name: "State of Pasundan", era: "1948–1950", region: "Asia & Oceania",
+    flagUrl: fp("Flag_of_Pasundan.svg"), relatedCode: "ID",
+    note: "A Dutch-backed Sundanese federal state in West Java set up during the revolution, one of several puppet states that were quickly absorbed into the unitary Indonesian republic.",
+  },
+  {
+    id: "south-maluku", name: "Republic of South Maluku", era: "1950", region: "Asia & Oceania",
+    flagUrl: fp("Flag_of_Maluku.svg"), relatedCode: "ID",
+    note: "Largely Christian Ambonese proclaimed an independent republic in the Moluccas in 1950; its blue-white-green-red flag is still flown by an exiled government-in-exile in the Netherlands.",
+  },
 ]
 
 /** Historical entities tied to a given modern country code, for the Codex. */
