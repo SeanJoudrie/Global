@@ -2,12 +2,14 @@ import { useEffect } from "react"
 import { ADSENSE_CLIENT, ADS_ENABLED } from "../ads"
 import { isSupporter } from "../utils/storage"
 
-// Loads the AdSense library exactly once, and only after a real publisher ID is
-// configured — so the network request never fires on an un-monetised build.
+// The AdSense library is loaded globally from index.html's <head>. If for some
+// reason it isn't present (e.g. a page without that tag), inject it once — and
+// never add a duplicate if it's already there.
 let scriptRequested = false
 function ensureAdScript() {
   if (scriptRequested || typeof document === "undefined") return
   scriptRequested = true
+  if (document.querySelector('script[src*="adsbygoogle.js"]')) return
   const s = document.createElement("script")
   s.async = true
   s.src = `https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${ADSENSE_CLIENT}`

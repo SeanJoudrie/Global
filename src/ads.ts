@@ -12,7 +12,7 @@
 // AdSense also requires the site to be added & approved in your dashboard, and
 // a public privacy policy (we ship one at /privacy.html).
 
-export const ADSENSE_CLIENT = "" // e.g. "ca-pub-XXXXXXXXXXXXXXXX"
+export const ADSENSE_CLIENT = "ca-pub-2216954143093824"
 
 // One entry per placement. Leave a value empty to keep that slot off.
 // Every placement is a scroll-to-see bottom banner — never sticky, never
