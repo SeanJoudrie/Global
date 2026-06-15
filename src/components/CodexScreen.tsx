@@ -2273,8 +2273,8 @@ const MEGA_MIN_TILE = 74
 const MEGA_LABEL_H = 22
 const MEGA_BAR_H = 58
 
-function MegaCodexWall({ onClose }: { onClose: () => void }) {
-  const [sort, setSort] = useState<'az' | 'za' | 'rand'>('az')
+function MegaCodexWall({ onClose, initialSort = 'az' }: { onClose: () => void; initialSort?: 'az' | 'za' | 'rand' }) {
+  const [sort, setSort] = useState<'az' | 'za' | 'rand'>(initialSort)
   const [shuffleKey, setShuffleKey] = useState(0)
   const scrollRef = useRef<HTMLDivElement>(null)
   const rafRef = useRef<number | null>(null)
@@ -2402,10 +2402,20 @@ function MegaCodexWall({ onClose }: { onClose: () => void }) {
 
 // Codex entry that opens the Mega Codex wall as a full page.
 function MegaCodexSection() {
-  const [open, setOpen] = useState(false)
+  // Which sort to open the wall in (null = closed). Surfacing the modes here
+  // means you can jump straight into A–Z / Z–A / Shuffle without opening the
+  // wall first and hunting for the toggle.
+  const [openSort, setOpenSort] = useState<'az' | 'za' | 'rand' | null>(null)
+  const chip = (mode: 'az' | 'za' | 'rand', label: string) => (
+    <button key={mode} onClick={() => setOpenSort(mode)} className="geo-tap"
+      style={{ fontSize: 11.5, fontWeight: 700, padding: '6px 13px', borderRadius: 999, cursor: 'pointer',
+        border: `1px solid ${tint(ACCENT.codex, 0.35)}`, background: tint(ACCENT.codex, 0.1), color: ACCENT.codex }}>
+      {label}
+    </button>
+  )
   return (
     <div className="mt-5">
-      <button onClick={() => setOpen(true)}
+      <button onClick={() => setOpenSort('az')}
         className="geo-tap w-full flex items-center justify-between px-1 py-3 transition-all active:scale-[0.99]"
         style={{ background: 'transparent', borderBottom: `1px solid ${T.line}` }}>
         <div className="text-left">
@@ -2416,7 +2426,12 @@ function MegaCodexSection() {
         </div>
         <span style={{ color: ACCENT.codex, fontSize: 18, flexShrink: 0 }}>›</span>
       </button>
-      {open && <MegaCodexWall onClose={() => setOpen(false)} />}
+      <div className="flex gap-2 mt-3 px-1">
+        {chip('az', 'A–Z')}
+        {chip('za', 'Z–A')}
+        {chip('rand', '🔀 Shuffle')}
+      </div>
+      {openSort && <MegaCodexWall initialSort={openSort} onClose={() => setOpenSort(null)} />}
     </div>
   )
 }
