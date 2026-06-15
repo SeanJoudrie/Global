@@ -2282,7 +2282,6 @@ function MegaCodexWall({ onClose }: { onClose: () => void }) {
   const [vw, setVw] = useState(() => (typeof window !== 'undefined' ? window.innerWidth : 390))
   const [vh, setVh] = useState(() => (typeof window !== 'undefined' ? window.innerHeight : 800))
   const [scrollTop, setScrollTop] = useState(0)
-  const [barHidden, setBarHidden] = useState(false)
   // Which tile's fun-fact overlay is open (keyed by title). Floats below the
   // tile without shifting the grid; scrolling dismisses it.
   const [openKey, setOpenKey] = useState<string | null>(null)
@@ -2326,8 +2325,6 @@ function MegaCodexWall({ onClose }: { onClose: () => void }) {
       setScrollTop(st)
       const dy = st - lastY.current
       if (Math.abs(dy) > 4) setOpenKey(null)  // scrolling dismisses the fact overlay
-      if (st > MEGA_BAR_H && dy > 6) setBarHidden(true)
-      else if (dy < -6 || st <= MEGA_BAR_H) setBarHidden(false)
       lastY.current = st
     })
   }
@@ -2385,7 +2382,6 @@ function MegaCodexWall({ onClose }: { onClose: () => void }) {
         position: 'absolute', top: 0, left: 0, right: 0, height: MEGA_BAR_H, zIndex: 5,
         padding: '0 12px', display: 'flex', alignItems: 'center', gap: 10,
         background: tint(T.bg, 0.92), backdropFilter: 'blur(10px)', borderBottom: `1px solid ${T.line}`,
-        transform: barHidden ? 'translateY(-100%)' : 'translateY(0)', transition: 'transform 0.25s ease',
       }}>
         <button onClick={onClose} aria-label="Close" className="geo-tap"
           style={{ width: 38, height: 38, flexShrink: 0, borderRadius: 999, background: T.surface, border: `1px solid ${T.line}`, color: T.muted, fontSize: 22, lineHeight: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>‹</button>
