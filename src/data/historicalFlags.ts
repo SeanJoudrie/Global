@@ -1700,6 +1700,207 @@ export const HISTORICAL_FLAGS: HistoricalEntity[] = [
     flagUrl: fp("Flag_of_Maluku.svg"), relatedCode: "ID",
     note: "Largely Christian Ambonese proclaimed an independent republic in the Moluccas in 1950; its blue-white-green-red flag is still flown by an exiled government-in-exile in the Netherlands.",
   },
+  // ── Africa & Middle East: former states (List of former sovereign states) ──
+  {
+    id: "union-south-africa", name: "Union of South Africa (1910–1912 ensign)", era: "1910–1928", region: "Africa & Middle East",
+    flagUrl: fp("Red_Ensign_of_South_Africa_(1910–1912).svg"), relatedCode: "ZA",
+    note: "Before the 1928 'oranje-blanje-blou' was designed, the new Union flew the British Red Ensign defaced with a South African shield — a stopgap that lingered as a de facto national flag for years.",
+  },
+  {
+    id: "transkei", name: "Transkei", era: "1976–1994", region: "Africa & Middle East",
+    flagUrl: fp("Flag_of_Transkei.svg"), relatedCode: "ZA",
+    note: "The first of the nominally independent apartheid 'homelands', its ochre-white-green flag was recognized by no country but South Africa. Its Xhosa-majority population were stripped of South African citizenship.",
+  },
+  {
+    id: "bophuthatswana", name: "Bophuthatswana", era: "1977–1994", region: "Africa & Middle East",
+    flagUrl: fp("Flag_of_Bophuthatswana_(1972–1994).svg"), relatedCode: "ZA",
+    note: "A Tswana bantustan scattered across seven non-contiguous enclaves, its orange flag bore a leopard's head. Its casino resort of Sun City became a way for foreigners to sidestep the cultural boycott of South Africa.",
+  },
+  {
+    id: "venda", name: "Venda", era: "1979–1994", region: "Africa & Middle East",
+    flagUrl: fp("Flag_of_Venda_(1973–1994).svg"), relatedCode: "ZA",
+    note: "A small Venda-speaking homeland in the far north, one of the four bantustans that accepted nominal 'independence' from apartheid South Africa before all were reabsorbed in 1994.",
+  },
+  {
+    id: "ciskei", name: "Ciskei", era: "1981–1994", region: "Africa & Middle East",
+    flagUrl: fp("Flag_of_Ciskei.svg"), relatedCode: "ZA",
+    note: "A Xhosa homeland on the west bank of the Great Kei River; its flag's diagonal stripe and rising sun did little to disguise a state propped up entirely by Pretoria, the scene of the 1992 Bisho massacre.",
+  },
+  {
+    id: "kwazulu", name: "KwaZulu", era: "1981–1994", region: "Africa & Middle East",
+    flagUrl: fp("Flag_of_KwaZulu_(1985–1994).svg"), relatedCode: "ZA",
+    note: "The Zulu homeland under Chief Mangosuthu Buthelezi never took the 'independence' offered by apartheid, but flew its own lion-and-shield flag as a self-governing territory until 1994.",
+  },
+  {
+    id: "gazankulu", name: "Gazankulu", era: "1971–1994", region: "Africa & Middle East",
+    flagUrl: fp("Flag_of_Gazankulu.svg"), relatedCode: "ZA",
+    note: "A Tsonga-Shangaan self-governing homeland in the northeast Transvaal; its green flag carried a yellow elephant tusk, and unlike the TBVC states it declined nominal independence.",
+  },
+  {
+    id: "lebowa", name: "Lebowa", era: "1972–1994", region: "Africa & Middle East",
+    flagUrl: fp("Flag_of_Lebowa.svg"), relatedCode: "ZA",
+    note: "A self-governing homeland for the Northern Sotho (Pedi) people, its green-and-white flag bearing a stylized head of cattle, before South Africa's homelands were dissolved in 1994.",
+  },
+  {
+    id: "qwaqwa", name: "QwaQwa", era: "1974–1994", region: "Africa & Middle East",
+    flagUrl: fp("Flag_of_QwaQwa_(1975–1994).svg"), relatedCode: "ZA",
+    note: "The smallest of the homelands, a tiny mountainous enclave for Southern Sotho speakers wedged against Lesotho; its name means 'whiter than white' for the sandstone cliffs above it.",
+  },
+  {
+    id: "libyan-arab-republic", name: "Libyan Arab Republic", era: "1969–1972", region: "Africa & Middle East",
+    flagUrl: fp("Flag_of_Libya_(1969–1972).svg"), relatedCode: "LY",
+    note: "After Gaddafi's 1969 coup toppled the monarchy, Libya flew the plain red-white-black Arab Liberation tricolour, before joining Egypt and Syria's Federation of Arab Republics flag in 1972.",
+  },
+  {
+    id: "cabinda", name: "Republic of Cabinda", era: "1975–present", region: "Africa & Middle East",
+    flagUrl: fp("Flag_of_the_Republic_of_Cabinda.svg"), relatedCode: "AO",
+    note: "An oil-rich exclave separated from the rest of Angola by a strip of DR Congo; its separatist movement FLEC has flown this blue-yellow-red flag with a star in a long, low-level independence struggle.",
+  },
+  {
+    id: "jubaland", name: "Jubaland", era: "1998–present", region: "Africa & Middle East",
+    flagUrl: fp("Flag_of_Jubaland.svg"), relatedCode: "SO",
+    note: "A self-declared then federal region of southern Somalia around the Jubba River, its blue flag with a white star and green-and-gold canton flown amid years of conflict over the port of Kismayo.",
+  },
+  {
+    id: "puntland", name: "Puntland", era: "1998–present", region: "Africa & Middle East",
+    flagUrl: fp("Flag_of_Puntland.svg"), relatedCode: "SO",
+    note: "Named for the ancient 'Land of Punt', this northeastern Somali state declared autonomy in 1998 — seeking a federal Somalia rather than full independence like neighbouring Somaliland.",
+  },
+  {
+    id: "galmudug", name: "Galmudug", era: "2006–present", region: "Africa & Middle East",
+    flagUrl: fp("Flag_of_Galmudug.svg"), relatedCode: "SO",
+    note: "A central Somali state whose name blends the Galguduud and Mudug regions it straddles, formed during the fragmentation of Somalia's central government in the mid-2000s.",
+  },
+  {
+    id: "somaliland", name: "Somaliland", era: "1991–present", region: "Africa & Middle East",
+    flagUrl: fp("Flag_of_Somaliland.svg"), relatedCode: "SO",
+    note: "The former British Somaliland reasserted independence in 1991 with a green-white-red flag bearing the Islamic shahada. Though stable and democratic, it remains unrecognized by any UN member state.",
+  },
+  {
+    id: "british-somaliland", name: "British Somaliland", era: "1903–1950", region: "Africa & Middle East",
+    flagUrl: fp("Flag_of_British_Somaliland_(1903–1950).svg"), relatedCode: "SO",
+    note: "The British protectorate on the Gulf of Aden flew a blue ensign with a kudu antelope badge. It briefly became independent in 1960 before uniting with Italian Somalia to form Somalia.",
+  },
+  {
+    id: "witu", name: "Sultanate of Witu", era: "1858–1923", region: "Africa & Middle East",
+    flagUrl: fp("Flag_of_the_Witu_Protectorate_(1893-1920).svg"), relatedCode: "KE",
+    note: "A small Swahili sultanate on the Kenyan coast that played Germany against Britain — it was a German protectorate in the 1880s before passing to Britain, flying a red flag with a white crescent and stars.",
+  },
+  {
+    id: "maryland-liberia", name: "Republic of Maryland", era: "1854–1857", region: "Africa & Middle East",
+    flagUrl: fp("Flag_of_the_Republic_of_Maryland.svg"), relatedCode: "LR",
+    note: "An independent state of freed American slaves founded by the Maryland State Colonization Society at Cape Palmas, with a US-style flag, before it merged into neighbouring Liberia.",
+  },
+  {
+    id: "wassoulou", name: "Wassoulou Empire", era: "1878–1898", region: "Africa & Middle East",
+    flagUrl: fp("Flag_of_the_Wassoulou_Empire_(Improved).svg"), relatedCode: "ML", relatedCodes: ["GN"],
+    note: "The West African empire built by Samori Ture, a brilliant military strategist who resisted French conquest for nearly two decades before his capture, flying a blue-white-red horizontal triband.",
+  },
+  {
+    id: "mali-federation", name: "Mali Federation", era: "1959–1960", region: "Africa & Middle East",
+    flagUrl: fp("Flag_of_Mali_(1959–1961).svg"), relatedCode: "ML", relatedCodes: ["SN"],
+    note: "A brief union of Senegal and French Sudan, its green-yellow-red flag bore a black 'kanaga' human figure. After Senegal withdrew in months, French Sudan kept the name Mali and dropped the figure.",
+  },
+  {
+    id: "bornu-empire", name: "Bornu Empire", era: "1380s–1893", region: "Africa & Middle East",
+    flagUrl: fp("Flag_of_the_Bornu_Empire.svg"), relatedCode: "NG",
+    note: "The long-lived successor to the Kanem Empire around Lake Chad, a centre of Islamic scholarship and trans-Saharan trade for centuries, until the warlord Rabih az-Zubayr overran it in the 1890s.",
+  },
+  {
+    id: "morocco-alaouite", name: "Morocco (Alaouite Sultanate)", era: "1666–1915", region: "Africa & Middle East",
+    flagUrl: fp("Flag_of_Morocco_(1666–1915).svg"), relatedCode: "MA",
+    note: "For two and a half centuries the Sharifian sultanate flew a plain red banner; the green Seal of Solomon was added in 1915 under the French protectorate, producing the modern Moroccan flag.",
+  },
+  {
+    id: "kingdom-burundi", name: "Kingdom of Burundi", era: "1962–1966", region: "Africa & Middle East",
+    flagUrl: fp("Flag_of_Burundi_(1962–1966).svg"), relatedCode: "BI",
+    note: "At independence Burundi was a kingdom under the mwami (king); its flag added a royal drum and a sorghum plant to the saltire design, until a 1966 coup abolished the monarchy.",
+  },
+  {
+    id: "comoros-1963", name: "Comoros (autonomous)", era: "1963–1975", region: "Africa & Middle East",
+    flagUrl: fp("Flag_of_the_Comoros_(1963–1975).svg"), relatedCode: "KM",
+    note: "The green flag with a white crescent and four stars for the four islands was flown while the Comoros was an autonomous French territory, before its unilateral declaration of independence in 1975.",
+  },
+  {
+    id: "pr-congo", name: "People's Republic of the Congo", era: "1970–1991", region: "Africa & Middle East",
+    flagUrl: fp("Flag_of_the_People's_Republic_of_the_Congo.svg"), relatedCode: "CG",
+    note: "Congo-Brazzaville's Marxist–Leninist state flew a red flag with a crossed hoe and hammer beneath a star — the only avowedly communist state in Africa for much of the Cold War.",
+  },
+  {
+    id: "congo-leopoldville", name: "Republic of the Congo (Léopoldville)", era: "1960–1963", region: "Africa & Middle East",
+    flagUrl: fp("Flag_of_the_Republic_of_the_Congo_(Léopoldville)_(1960–1963).svg"), relatedCode: "CD",
+    note: "The newly independent Congo flew a blue flag with a large yellow star and six small stars for its provinces, through the chaotic Congo Crisis that followed Belgian withdrawal in 1960.",
+  },
+  {
+    id: "zaire", name: "Zaire", era: "1971–1997", region: "Africa & Middle East",
+    flagUrl: fp("Flag_of_Zaire_(1971–1997).svg"), relatedCode: "CD",
+    note: "Under Mobutu Sese Seko's 'authenticity' campaign, the country was renamed Zaire and flew a green flag with a hand bearing a flaming torch, until his overthrow restored the name Congo.",
+  },
+  {
+    id: "pr-benin", name: "People's Republic of Benin", era: "1975–1990", region: "Africa & Middle East",
+    flagUrl: fp("Flag_of_Benin_(1975–1990).svg"), relatedCode: "BJ",
+    note: "After Mathieu Kérékou's Marxist coup, Dahomey was renamed Benin and flew a plain green flag with a red star, until multi-party reform in 1990 restored the older yellow-green-red colours.",
+  },
+  {
+    id: "ghana-1964", name: "Ghana (1964–1966)", era: "1964–1966", region: "Africa & Middle East",
+    flagUrl: fp("Flag_of_Ghana_(1964–1966).svg"), relatedCode: "GH",
+    note: "Under Kwame Nkrumah's one-party state the gold stripe of the national flag was changed to white, before the 1966 coup that ousted him restored the original red-gold-green with the black star.",
+  },
+  {
+    id: "tanganyika", name: "Tanganyika", era: "1961–1964", region: "Africa & Middle East",
+    flagUrl: fp("Flag_of_Tanganyika_(1961–1964).svg"), relatedCode: "TZ",
+    note: "Newly independent Tanganyika flew a green-black-green flag before merging with Zanzibar in 1964; the union's name, Tanzania, fused 'Tan-' from Tanganyika with 'Zan-' from Zanzibar.",
+  },
+  {
+    id: "mombasa", name: "Sultanate of Mombasa", era: "1837–1895", region: "Africa & Middle East",
+    flagUrl: fp("Flag_of_Mombasa.svg"), relatedCode: "KE",
+    note: "Long ruled by the Mazrui dynasty as a rival to Omani Zanzibar, the Swahili port city flew a plain red banner before being absorbed into the British East Africa Protectorate.",
+  },
+  {
+    id: "egypt-republic-1953", name: "Republic of Egypt (1953–1958)", era: "1953–1958", region: "Africa & Middle East",
+    flagUrl: fp("Flag_of_Egypt_(1953-1958).svg"), relatedCode: "EG",
+    note: "After the Free Officers abolished the monarchy, Egypt flew a red-white-black 'Liberation' flag with a golden Eagle of Saladin, until the 1958 union with Syria as the United Arab Republic.",
+  },
+  {
+    id: "khedivate-egypt", name: "Khedivate of Egypt", era: "1882–1922", region: "Africa & Middle East",
+    flagUrl: fp("Flag_of_Egypt_(1882–1922).svg"), relatedCode: "EG",
+    note: "A red field with a white crescent and three stars, flown while Egypt was nominally an Ottoman khedivate but in practice under British occupation, until it became the Kingdom of Egypt in 1922.",
+  },
+  {
+    id: "anglo-egyptian-sudan", name: "Anglo-Egyptian Sudan", era: "1899–1956", region: "Africa & Middle East",
+    flagUrl: fp("Flag_of_Anglo-Egyptian_Sudan.svg"), relatedCode: "SD",
+    note: "Sudan was jointly ruled as a condominium of Britain and Egypt, flying the British and Egyptian flags together, until full independence in 1956.",
+  },
+  {
+    id: "azawad", name: "Azawad", era: "2012", region: "Africa & Middle East",
+    flagUrl: fp("MNLA_flag.svg"), relatedCode: "ML",
+    note: "Tuareg rebels of the MNLA declared an independent state of Azawad across northern Mali in 2012, flying this green-red-black flag with a yellow triangle, before Islamist allies pushed them aside.",
+  },
+  {
+    id: "kingdom-rwanda", name: "Kingdom of Rwanda", era: "1961", region: "Africa & Middle East",
+    flagUrl: fp("Flag_of_Rwanda_(January_–_September_1961).svg"), relatedCode: "RW",
+    note: "On the eve of independence Rwanda was briefly a monarchy under the mwami; this red-yellow-green tricolour flew for months in 1961 before a referendum abolished the monarchy.",
+  },
+  {
+    id: "beylik-tunis", name: "Beylik of Tunis", era: "1705–1881", region: "Africa & Middle East",
+    flagUrl: fp("Flag_of_the_Bey_of_Tunis.svg"), relatedCode: "TN",
+    note: "The Husainid beys ruled Tunis as an autonomous Ottoman province, flying an early ensign with horizontal bands and a crescent, before the French protectorate of 1881.",
+  },
+  {
+    id: "hafsid", name: "Hafsid Dynasty", era: "1229–1574", region: "Africa & Middle East",
+    flagUrl: fp("Flag_of_Hafsid_Dynasty_(1229_-_1574).svg"), relatedCode: "TN",
+    note: "The Berber dynasty that ruled Ifriqiya (modern Tunisia) from Tunis for over three centuries, a major Mediterranean trading power, until it fell to the Ottomans.",
+  },
+  {
+    id: "ayyubid", name: "Ayyubid Dynasty", era: "1171–1260", region: "Africa & Middle East",
+    flagUrl: fp("Flag_of_Ayyubid_Dynasty.svg"), relatedCode: "EG",
+    note: "Founded by Saladin, the Kurdish-origin dynasty ruled Egypt and Syria and recaptured Jerusalem from the Crusaders, flying a plain yellow banner — the colour the modern Eagle of Saladin recalls.",
+  },
+  {
+    id: "mamluk", name: "Mamluk Sultanate", era: "1250–1517", region: "Africa & Middle East",
+    flagUrl: fp("Flag_of_the_Mamluk_Sultanate_(Alexandria).svg"), relatedCode: "EG",
+    note: "A state ruled by a self-perpetuating caste of slave-soldiers from Cairo, which halted the Mongols at Ain Jalut and dominated Egypt and the Levant until the Ottoman conquest.",
+  },
 ]
 
 /** Historical entities tied to a given modern country code, for the Codex. */
