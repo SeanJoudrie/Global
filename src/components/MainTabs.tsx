@@ -155,7 +155,6 @@ function TodayTab({ state, dailyDone, launch, onNavigate, onGoCodex, onGoPlay, o
   const dyk = FLAGS[(dayIdx * 7 + 3) % FLAGS.length]
   const gameCount = REGISTRY.filter(r => r.tab === "play" && !r.sandbox).length
   const todayResult = state.dailyHistory[todayString()]
-  const recent = loadRecent().map(id => REGISTRY.find(r => r.id === id)).filter((e): e is Entry => !!e)
   const dailyRituals = ["gacha", "funfact"].map(id => REGISTRY.find(r => r.id === id)).filter((e): e is Entry => !!e)
   const exped = dailyDone ? T.green : ACCENT.play
   const dateLine = new Date().toLocaleDateString(undefined, { weekday: "long", month: "long", day: "numeric" })
@@ -232,8 +231,8 @@ function TodayTab({ state, dailyDone, launch, onNavigate, onGoCodex, onGoPlay, o
           {IS_CARTO ? <LineIcon name="quickplay" size={23} color={ACCENT.today} /> : <span style={{ fontSize: 20 }}>⚡</span>}
         </span>
         <div style={{ flex: 1, minWidth: 0 }}>
-          <div className="geo-display" style={{ fontWeight: 800, fontSize: 19, letterSpacing: "-0.01em", color: T.text }}>Quick Play</div>
-          <div style={{ color: T.muted, fontSize: 11.5, marginTop: 2 }}>10 random flags · zero stakes · right now</div>
+          <div className="geo-display" style={{ fontWeight: 800, fontSize: 19, letterSpacing: "-0.01em", color: T.text }}>Daily Expedition</div>
+          <div style={{ color: T.muted, fontSize: 11.5, marginTop: 2 }}>Quick Play · 10 random flags, zero stakes</div>
         </div>
         <span style={{ display: "inline-flex", alignItems: "center", gap: 6, padding: "10px 18px", borderRadius: 999, flexShrink: 0, background: ACCENT.today, color: T.onAccent }}>
           <span style={{ fontFamily: FONT.display, fontWeight: 700, fontSize: 14 }}>Go</span><span style={{ fontSize: 14 }}>→</span>
@@ -249,18 +248,6 @@ function TodayTab({ state, dailyDone, launch, onNavigate, onGoCodex, onGoPlay, o
           ))}
         </div>
       </div>
-
-      {/* Jump back in — recently played, one tap away */}
-      {recent.length > 0 && (
-        <div>
-          <SectionHeader title="Jump back in" accent={ACCENT.play} />
-          <div className="carto-rail" style={{ display: "flex", gap: 10, overflowX: "auto", margin: "0 -16px", padding: "2px 16px 6px" }}>
-            {recent.map(e => (
-              <FlagTile key={e.id} id={e.id} title={e.title} subtitle={e.subtitle} accent={ACCENT[e.accent]} onClick={() => launch(e)} />
-            ))}
-          </div>
-        </div>
-      )}
 
       {/* Resume the curriculum */}
       <div>
@@ -283,7 +270,7 @@ interface SlideData {
   accent: string; eyebrow: string; title: string; body: string; cta: string
   onClick?: () => void; art?: ReactNode; watermark?: string
 }
-const HERO_H = 216
+const HERO_H = 238
 
 function HeroDeck({ slides }: { slides: SlideData[] }) {
   const n = slides.length
@@ -372,7 +359,7 @@ function DeckSlide({ accent, eyebrow, title, body, cta, onClick, art, watermark 
           </div>
           <div style={{
             color: T.muted, fontSize: 12.5, marginTop: 6, lineHeight: 1.5,
-            display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden",
+            display: "-webkit-box", WebkitLineClamp: 3, WebkitBoxOrient: "vertical", overflow: "hidden",
           }}>{body}</div>
           <button onClick={onClick} onPointerDown={e => e.stopPropagation()} disabled={disabled}
             className={disabled ? "" : "geo-tap"}
@@ -968,7 +955,7 @@ function FeedbackCard() {
         </span>
         <div style={{ flex: 1, minWidth: 0 }}>
           <div className="geo-display" style={{ fontWeight: 700, fontSize: 16, color: T.text }}>Send feedback or ideas</div>
-          <div style={{ color: T.muted, fontSize: 11.5, marginTop: 2, lineHeight: 1.4 }}>One-man operation — I read every message and would love to make this better for you.</div>
+          <div style={{ color: T.muted, fontSize: 11.5, marginTop: 2, lineHeight: 1.4 }}>i'm a one-man operation, so i genuinely read every message — thanks for playing, and i'll do my best to make it happen 💛</div>
         </div>
         <span style={{ color: ACCENT.learn, fontSize: 18, opacity: 0.7 }}>→</span>
       </div>

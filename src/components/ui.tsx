@@ -210,8 +210,8 @@ export function HeroCard({ eyebrow, title, subtitle, accent, image, onClick, tal
 
 /* ── Bottom tab bar ─────────────────────────────────────────────────────── */
 const TAB_META: { key: TabKey; label: string; glyph: string; emoji: string; accent: string }[] = [
-  { key: "today", label: "Today", glyph: "today", emoji: "🛰️", accent: T.amber },
-  { key: "play",  label: "Play",  glyph: "play",  emoji: "🎮", accent: T.chartreuse },
+  { key: "today", label: "Today", glyph: "today", emoji: "🛰️", accent: T.warm },
+  { key: "play",  label: "Play",  glyph: "play",  emoji: "🎮", accent: T.violet },
   { key: "codex", label: "Codex", glyph: "codex", emoji: "🗂️", accent: T.amber },
   { key: "you",   label: "You",   glyph: "you",   emoji: "🪪", accent: T.cyan },
 ]

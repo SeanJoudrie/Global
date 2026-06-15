@@ -1,10 +1,46 @@
+import { useState } from "react"
 import { AESTHETIC, saveAesthetic, T, ACCENT, tint } from "../ui/tokens"
 import type { Aesthetic } from "../ui/tokens"
 import { ScreenHeader } from "./ui"
 import { LineIcon } from "./icons"
 import { openSupporter } from "../utils/supporterNav"
+import { loadState, saveState, setPremium, isSupporter } from "../utils/storage"
 
 interface Props { onBack: () => void; onMegaCodex: () => void; onFlagCheck: () => void }
+
+// Creator unlock — typing the passcode flips on the Supporter flag locally,
+// which hides every ad on this device. Reloads so ad components re-read it.
+function CreatorUnlock() {
+  const [code, setCode] = useState("")
+  const [done, setDone] = useState(() => isSupporter())
+  const submit = () => {
+    if (code.trim().toLowerCase() === "zip") {
+      saveState(setPremium(loadState(), true))
+      setDone(true)
+      location.reload()
+    } else {
+      setCode("")
+    }
+  }
+  if (done) return (
+    <div className="text-xs mt-3 text-center" style={{ color: T.gold }}>✓ ads are off on this device</div>
+  )
+  return (
+    <div className="mt-3 flex gap-2">
+      <input
+        value={code}
+        onChange={e => setCode(e.target.value)}
+        onKeyDown={e => { if (e.key === "Enter") submit() }}
+        placeholder="creator unlock code"
+        style={{ flex: 1, minWidth: 0, padding: "9px 12px", borderRadius: 10, fontSize: 13, background: T.surfaceHi, border: `1px solid ${T.line}`, color: T.text, outline: "none" }}
+      />
+      <button onClick={submit} className="active:scale-95"
+        style={{ flexShrink: 0, padding: "9px 16px", borderRadius: 10, fontSize: 13, fontWeight: 700, background: tint(T.gold, 0.14), border: `1px solid ${tint(T.gold, 0.4)}`, color: T.gold }}>
+        Unlock
+      </button>
+    </div>
+  )
+}
 
 export interface Theme {
   id: string
@@ -193,6 +229,9 @@ export default function SettingsScreen({ onBack, onMegaCodex, onFlagCheck }: Pro
           <span className="inline-flex items-center justify-center gap-2">💛 Support Globalio</span>
         </button>
 
+        {/* Creator unlock — enter the passcode to turn ads off on this device */}
+        <CreatorUnlock />
+
         {/* Feedback — opens the user's mail app, pre-addressed to the dev */}
         <a href={"mailto:sjoudrie@gmail.com?subject=" + encodeURIComponent("Globalio feedback") + "&body=" + encodeURIComponent("What I love / what I'd change / an idea:\n\n")}
           className="w-full mt-3 py-3 rounded-xl text-sm font-semibold transition-all active:scale-95 block text-center"
@@ -200,7 +239,7 @@ export default function SettingsScreen({ onBack, onMegaCodex, onFlagCheck }: Pro
           <span className="inline-flex items-center justify-center gap-2"><LineIcon name="historical" size={15} color={ACCENT.learn} /> Send feedback or ideas</span>
         </a>
         <div className="text-xs mt-2 text-center" style={{ color: T.muted }}>
-          A one-man operation — I read every message. Thank you for playing.
+          i'm a one-man operation, so i genuinely read every message — thanks for playing, and i'll do my best to make it happen 💛
         </div>
 
         {/* Legal — required for ad networks & app stores */}
