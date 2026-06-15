@@ -1,4 +1,5 @@
 import { useState, useMemo, useRef, useEffect } from 'react'
+import { createPortal } from 'react-dom'
 import { FLAGS } from '../data/flags'
 import type { FlagRecord } from '../data/flags'
 import { CAPITALS } from '../data/capitals'
@@ -2329,7 +2330,11 @@ function MegaCodexWall({ onClose, initialSort = 'az' }: { onClose: () => void; i
     })
   }
 
-  return (
+  // Portal to <body>: the Codex lives inside the swipeable tab wrapper (which
+  // has a translateX transform), and a CSS transform makes `position: fixed`
+  // resolve against that ancestor instead of the viewport — so without the
+  // portal the wall (and its top sort bar) wouldn't actually cover the screen.
+  return createPortal(
     <div style={{ position: 'fixed', inset: 0, zIndex: 2000, background: T.bg, color: T.text }}>
       <div ref={scrollRef} onScroll={onScroll}
         style={{ position: 'absolute', inset: 0, overflowY: 'auto', WebkitOverflowScrolling: 'touch' }}>
@@ -2396,26 +2401,19 @@ function MegaCodexWall({ onClose, initialSort = 'az' }: { onClose: () => void; i
           ))}
         </div>
       </div>
-    </div>
+    </div>,
+    document.body
   )
 }
 
-// Codex entry that opens the Mega Codex wall as a full page.
+// Codex entry that opens the Mega Codex wall as a full page. Sorting lives in
+// the wall's pinned top bar (A–Z / Z–A / Shuffle), always reachable above the
+// flag grid.
 function MegaCodexSection() {
-  // Which sort to open the wall in (null = closed). Surfacing the modes here
-  // means you can jump straight into A–Z / Z–A / Shuffle without opening the
-  // wall first and hunting for the toggle.
-  const [openSort, setOpenSort] = useState<'az' | 'za' | 'rand' | null>(null)
-  const chip = (mode: 'az' | 'za' | 'rand', label: string) => (
-    <button key={mode} onClick={() => setOpenSort(mode)} className="geo-tap"
-      style={{ fontSize: 11.5, fontWeight: 700, padding: '6px 13px', borderRadius: 999, cursor: 'pointer',
-        border: `1px solid ${tint(ACCENT.codex, 0.35)}`, background: tint(ACCENT.codex, 0.1), color: ACCENT.codex }}>
-      {label}
-    </button>
-  )
+  const [open, setOpen] = useState(false)
   return (
     <div className="mt-5">
-      <button onClick={() => setOpenSort('az')}
+      <button onClick={() => setOpen(true)}
         className="geo-tap w-full flex items-center justify-between px-1 py-3 transition-all active:scale-[0.99]"
         style={{ background: 'transparent', borderBottom: `1px solid ${T.line}` }}>
         <div className="text-left">
@@ -2426,12 +2424,7 @@ function MegaCodexSection() {
         </div>
         <span style={{ color: ACCENT.codex, fontSize: 18, flexShrink: 0 }}>›</span>
       </button>
-      <div className="flex gap-2 mt-3 px-1">
-        {chip('az', 'A–Z')}
-        {chip('za', 'Z–A')}
-        {chip('rand', '🔀 Shuffle')}
-      </div>
-      {openSort && <MegaCodexWall initialSort={openSort} onClose={() => setOpenSort(null)} />}
+      {open && <MegaCodexWall onClose={() => setOpen(false)} />}
     </div>
   )
 }
