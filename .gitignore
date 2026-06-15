@@ -34,3 +34,7 @@ scripts/flags/repairs.backup.json
 scripts/flags/xwiki-cache.json
 scripts/flags/candidates-extra.json
 scripts/flags/cf/fails.txt
+# transient research scratch (verification scripts + region staging files)
+scripts/flags/verify*.mjs
+scripts/flags/verify*.cjs
+scripts/flags/staging-*.txt
