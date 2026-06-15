@@ -11,7 +11,7 @@ import type { Territory } from '../data/territories'
 import { ETHNIC_FLAGS } from '../data/ethnicFlags'
 import { EXTINCT_STATES } from '../data/extinctStates'
 import { ORG_FLAGS } from '../data/orgFlags'
-import { historicalFor } from '../data/historicalFlags'
+import { historicalFor, HISTORICAL_FLAGS } from '../data/historicalFlags'
 import { IDENTITY_FLAGS, IDENTITY_CATEGORIES, SIGNAL_FLAGS } from '../data/identityFlags'
 import { US_CITY_FLAGS } from '../data/usCityFlags'
 import { SUB_FLAGS } from '../data/subdivisions'
@@ -2255,6 +2255,12 @@ function gatherAllFlags(): MegaFlag[] {
     push(title, fp(it.file), curatedFact(title) ?? tmpl)
   })))
   Object.values(CODEX).forEach(e => e.flagHistory.forEach(h => { push(h.label, h.flagUrl, h.note); h.parallel?.forEach(p => push(p.label, p.flagUrl, p.note)) }))
+  // Standalone historical states (dedup-safe against the CODEX timelines above).
+  HISTORICAL_FLAGS.forEach(h => push(h.name, h.flagUrl, h.note))
+  // Present-day dependent territories (skip ones with no distinct flag).
+  Object.values(TERRITORIES).forEach(list => list.forEach(t => { if (t.flagUrl && !t.noFlag) push(t.name, t.flagUrl, t.note) }))
+  // UK constituent nations + their flag histories (England, Scotland, …).
+  UK_NATIONS.forEach(n => { const first = n.flagHistory[0]; if (first) push(n.name, first.flagUrl, first.note); n.flagHistory.forEach(h => push(h.label, h.flagUrl, h.note)) })
   return all
 }
 const ALL_FLAGS_AZ = gatherAllFlags()
