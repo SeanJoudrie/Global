@@ -736,14 +736,14 @@ function AmericanCitiesCodexSection() {
       <button
         onClick={() => setOpen(o => !o)}
         className="geo-tap w-full flex items-center justify-between px-1 py-3 transition-all active:scale-[0.99]"
-        style={{ background: 'transparent', borderBottom: `1px solid ${open ? tint(T.cyan, 0.45) : T.line}` }}>
+        style={{ background: 'transparent', borderBottom: `1px solid ${open ? tint(T.chartreuse, 0.45) : T.line}` }}>
         <div className="text-left">
-          <h3 className="text-sm font-bold uppercase tracking-widest flex items-center gap-2" style={{ color: T.cyan }}>
-            <Building2 size={15} color={T.cyan} strokeWidth={1.6} absoluteStrokeWidth /> American Cities <span style={{ color: tint(T.cyan, 0.6), fontSize: 10 }}>(Beta)</span>
+          <h3 className="text-sm font-bold uppercase tracking-widest flex items-center gap-2" style={{ color: T.chartreuse }}>
+            <Building2 size={15} color={T.chartreuse} strokeWidth={1.6} absoluteStrokeWidth /> American Cities <span style={{ color: tint(T.chartreuse, 0.6), fontSize: 10 }}>(Beta)</span>
           </h3>
           <p className="text-xs" style={{ color: T.dim }}>{cities.length} U.S. municipal flags</p>
         </div>
-        <ChevronDown size={17} color={T.cyan} strokeWidth={1.6} absoluteStrokeWidth
+        <ChevronDown size={17} color={T.chartreuse} strokeWidth={1.6} absoluteStrokeWidth
         style={{ transition: 'transform 0.2s', transform: open ? 'rotate(180deg)' : 'rotate(0deg)', flexShrink: 0 }} />
       </button>
       {open && (
@@ -753,7 +753,7 @@ function AmericanCitiesCodexSection() {
             return (
               <button key={f.id} onClick={() => setOpenFlag(o => o === f.id ? null : f.id)}
                 className="geo-tap w-full px-1.5 py-2.5 rounded-lg transition-all active:scale-[0.99] text-left"
-                style={{ background: showNote ? tint(T.cyan, 0.07) : 'transparent', borderBottom: `1px solid ${tint(T.line, 0.55)}` }}>
+                style={{ background: showNote ? tint(T.chartreuse, 0.07) : 'transparent', borderBottom: `1px solid ${tint(T.line, 0.55)}` }}>
                 <div className="flex items-center gap-3">
                   <img src={f.flagUrl} alt={f.name}
                     style={{ width: 46, height: 30, objectFit: 'contain', borderRadius: 5, border: `1px solid ${T.line}`, flexShrink: 0, background: T.surfaceHi }}
@@ -762,7 +762,7 @@ function AmericanCitiesCodexSection() {
                     <div className="font-semibold text-sm truncate" style={{ color: T.text }}>{f.name}</div>
                     <div className="text-xs" style={{ color: T.dim }}>{f.state}</div>
                   </div>
-                  <span style={{ color: T.cyan, fontSize: 16, transition: 'transform 0.2s', transform: showNote ? 'rotate(90deg)' : 'rotate(0deg)' }}>›</span>
+                  <span style={{ color: T.chartreuse, fontSize: 16, transition: 'transform 0.2s', transform: showNote ? 'rotate(90deg)' : 'rotate(0deg)' }}>›</span>
                 </div>
                 {showNote && (
                   <p className="text-xs leading-relaxed mt-2.5" style={{ color: T.muted, lineHeight: 1.65 }}>{f.note}</p>
@@ -977,7 +977,7 @@ function ExtinctStatesCodexSection() {
       return { file: fp(it.file), title: stripFlagOf(pre), detail: paren ? cap(paren) + '.' : 'A former state.' }
     }) }],
   }))
-  return <GallerySection title="Extinct States" icon={Landmark} color={T.warm} blurb={`${total} flags of vanished states · by continent`} regions={regions} />
+  return <GallerySection title="Extinct States" icon={Landmark} color={T.violet} blurb={`${total} flags of vanished states · by continent`} regions={regions} />
 }
 
 function OrgCodexSection() {
