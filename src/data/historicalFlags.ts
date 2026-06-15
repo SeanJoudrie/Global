@@ -1308,6 +1308,122 @@ export const HISTORICAL_FLAGS: HistoricalEntity[] = [
     flagUrl: fp("Flag_of_Abu_Dhabi.svg"), relatedCode: "AE",
     note: "The largest of the Trucial emirates flew a red flag with a white canton before joining the United Arab Emirates in 1971.",
   },
+  // ── Americas: former states (List of former sovereign states) ──
+  {
+    id: "confederate-stainless", name: "Confederate States (Stainless Banner)", era: "1863–1865", region: "Americas",
+    flagUrl: fp("Flag_of_the_Confederate_States_(1863–1865).svg"), relatedCode: "US",
+    note: "The Confederacy's second national flag placed the square Battle Flag canton on a white field. Critics warned that when hanging limp it could be mistaken for a flag of surrender.",
+  },
+  {
+    id: "confederate-bloodstained", name: "Confederate States (Blood-Stained Banner)", era: "1865", region: "Americas",
+    flagUrl: fp("Flag_of_the_Confederate_States_(1865).svg"), relatedCode: "US",
+    note: "The third and final Confederate national flag added a vertical red bar to the white 'Stainless Banner' to fix its surrender-flag problem — adopted barely a month before the war ended.",
+  },
+  {
+    id: "confederate-battle", name: "Confederate Battle Flag", era: "1861–1865", region: "Americas",
+    flagUrl: fp("Battle_flag_of_the_Confederate_States_of_America_(1-1).svg"), relatedCode: "US",
+    note: "The square blue Saint Andrew's cross with thirteen stars was carried by the Army of Northern Virginia. Never an official national flag, it later became the basis of the rectangular 'rebel flag'.",
+  },
+  {
+    id: "second-mexican-empire", name: "Second Mexican Empire", era: "1864–1867", region: "Americas",
+    flagUrl: fp("Flag_of_the_Second_Mexican_Empire.svg"), relatedCode: "MX",
+    note: "The empire of the Habsburg archduke Maximilian I, installed by Napoleon III. Its green-white-red tricolour bore a crowned eagle and four more eagles in the corners before he was executed in 1867.",
+  },
+  {
+    id: "maximilian-standard", name: "Imperial Standard of Mexico (Maximilian)", era: "1864–1867", region: "Americas",
+    flagUrl: fp("Imperial_Standard_of_Mexico_(1864-1867).svg"), relatedCode: "MX",
+    note: "The personal standard of Emperor Maximilian I framed the imperial eagle with the motto 'Equidad en la Justicia' and golden corner eagles, used until the empire collapsed in 1867.",
+  },
+  {
+    id: "first-mexican-republic", name: "First Mexican Republic", era: "1823–1864", region: "Americas",
+    flagUrl: fp("Flag_of_Mexico_(1823-1864,_1867-1893).svg"), relatedCode: "MX",
+    note: "After the First Empire fell, the federal republic stripped the crown from the eagle and added a snake, oak, and laurel — the design that, restored in 1867, defined the Mexican flag for decades.",
+  },
+  {
+    id: "united-provinces-central-america", name: "United Provinces of Central America", era: "1823–1824", region: "Americas",
+    flagUrl: fp("Flag_of_the_United_Provinces_of_Central_America.svg"), relatedCode: "GT", relatedCodes: ["SV", "HN", "NI", "CR"],
+    note: "The first union of the Central American provinces after independence from Mexico, flying the blue-white-blue bands that preceded the Federal Republic and survive in five modern flags.",
+  },
+  {
+    id: "greater-republic-central-america", name: "Greater Republic of Central America", era: "1896–1898", region: "Americas",
+    flagUrl: fp("Flag_of_the_Greater_Republic_of_Central_America_(1898).svg"), relatedCode: "NI", relatedCodes: ["HN", "SV"],
+    note: "A short-lived attempt to reunify Nicaragua, Honduras, and El Salvador; its blue-white-blue flag carried five volcanoes and stars before the union dissolved within two years.",
+  },
+  {
+    id: "first-empire-haiti", name: "First Empire of Haiti", era: "1804–1806", region: "Americas",
+    flagUrl: fp("Flag_of_the_First_Empire_of_Haiti.svg"), relatedCode: "HT",
+    note: "Jean-Jacques Dessalines, who declared Haiti's independence, crowned himself Emperor Jacques I. His black-and-red vertical bicolour symbolized the union of black and mixed-race Haitians against France.",
+  },
+  {
+    id: "state-of-haiti", name: "State of Haiti", era: "1806–1811", region: "Americas",
+    flagUrl: fp("Flag_of_Haiti_(1806–1811).svg"), relatedCode: "HT",
+    note: "Henri Christophe's northern republic before he proclaimed himself king, flying the blue-and-red bicolour that became the basis of the modern Haitian flag.",
+  },
+  {
+    id: "first-dominican-republic", name: "First Dominican Republic", era: "1844", region: "Americas",
+    flagUrl: fp("Flag_of_the_Dominican_Republic_(1844).svg"), relatedCode: "DO",
+    note: "The flag raised when the Dominican Republic won independence from Haiti in 1844, a white cross dividing blue and red quarters — the design, with arms added, that endures today.",
+  },
+  {
+    id: "state-of-cartagena", name: "State of Cartagena", era: "1811–1815", region: "Americas",
+    flagUrl: fp("Flag_of_Cartagena.svg"), relatedCode: "CO",
+    note: "Cartagena was the first province of New Granada to declare absolute independence from Spain in 1811; its red-yellow-green flag with a blue star is still flown by the Colombian city today.",
+  },
+  {
+    id: "state-of-bolivar", name: "Sovereign State of Bolívar", era: "1857–1886", region: "Americas",
+    flagUrl: fp("Flag_of_Bolívar_(Colombia).svg"), relatedCode: "CO",
+    note: "One of the sovereign states of the federal United States of Colombia, centred on Cartagena, flying a yellow-blue-red flag before the 1886 constitution abolished the states.",
+  },
+  {
+    id: "united-provinces-rio-plata", name: "United Provinces of the Río de la Plata", era: "1816–1820s", region: "Americas",
+    flagUrl: fp("Flag_of_Argentina_(1818).svg"), relatedCode: "AR", relatedCodes: ["UY", "BO"],
+    note: "The state that declared independence at Tucumán in 1816 and is the direct forerunner of Argentina; its sky-blue-white flag gained the golden Sun of May in 1818.",
+  },
+  {
+    id: "republic-tucuman", name: "Republic of Tucumán", era: "1820–1821", region: "Americas",
+    flagUrl: fp("Flag_of_the_Republic_of_Tucuman.svg"), relatedCode: "AR",
+    note: "A short-lived independent province-state during the anarchy that followed the collapse of central authority in the Río de la Plata, before rejoining the Argentine confederation.",
+  },
+  {
+    id: "treinta-y-tres", name: "Thirty-Three Orientals", era: "1825", region: "Americas",
+    flagUrl: fp("Flag_of_the_Treinta_y_Tres.svg"), relatedCode: "UY",
+    note: "The blue-white-red banner of the '33 Orientals' led by Lavalleja, whose 1825 landing began Uruguay's war of independence; its motto 'Libertad o Muerte' means 'Liberty or Death'.",
+  },
+  {
+    id: "cisplatina", name: "Cisplatine Province", era: "1821–1828", region: "Americas",
+    flagUrl: fp("Flag_of_the_Provincia_Cisplatina.svg"), relatedCode: "UY", relatedCodes: ["BR"],
+    note: "The name given to present-day Uruguay while it was annexed first to Portugal and then to the Empire of Brazil, until the 1828 war secured its independence.",
+  },
+  {
+    id: "protectorate-peru", name: "Protectorate of Peru", era: "1822–1825", region: "Americas",
+    flagUrl: fp("Flag_of_Peru_(1822–1825).svg"), relatedCode: "PE",
+    note: "An early Peruvian flag of the independence era, when San Martín and then Bolívar fought to expel Spanish royalists; the red-and-white colours were soon fixed in the modern arrangement.",
+  },
+  {
+    id: "free-province-guayaquil", name: "Free Province of Guayaquil", era: "1820–1822", region: "Americas",
+    flagUrl: fp("Bandera_de_la_Provincia_Libre_de_Guayaquil.svg"), relatedCode: "EC",
+    note: "The Pacific port declared itself an independent province in 1820, flying a white flag with light-blue stripes and three stars, before Bolívar incorporated it into Gran Colombia.",
+  },
+  {
+    id: "bolivia-1825", name: "Bolivia (first flag, 1825)", era: "1825–1826", region: "Americas",
+    flagUrl: fp("Civil_flag_of_Bolivia_(1825-1826).svg"), relatedCode: "BO",
+    note: "The very first flag of newly independent Bolivia: a green field bordered in red with golden stars, used briefly before the red-yellow-green tricolour took its place.",
+  },
+  {
+    id: "patria-vieja-chile", name: "Chile (Patria Vieja transition)", era: "1817–1818", region: "Americas",
+    flagUrl: fp("Flag_of_Chile_of_the_transition_(1817).svg"), relatedCode: "CL",
+    note: "A transitional blue-white-red tricolour flown between the Patria Vieja and the definitive 1818 flag, during the years San Martín's army crossed the Andes to liberate Chile.",
+  },
+  {
+    id: "patriotes-lower-canada", name: "Patriote Movement (Lower Canada)", era: "1837–1838", region: "Americas",
+    flagUrl: fp("Drapeau_des_Patriotes_(avec_Patriote).svg"), relatedCode: "CA",
+    note: "The green-white-red flag of the Patriotes who rose against British rule in the 1837–38 Lower Canada Rebellion; it remains a symbol of Quebec nationalism today.",
+  },
+  {
+    id: "cherokee-nation", name: "Cherokee Nation", era: "1839–present", region: "Americas",
+    flagUrl: fp("Flag_of_the_Cherokee_Nation.svg"), relatedCode: "US",
+    note: "The seven-pointed star and ring of stars honour the seven clans and the Trail of Tears; one black star commemorates those who died on the forced removal to Indian Territory.",
+  },
 ]
 
 /** Historical entities tied to a given modern country code, for the Codex. */
