@@ -1901,6 +1901,472 @@ export const HISTORICAL_FLAGS: HistoricalEntity[] = [
     flagUrl: fp("Flag_of_the_Mamluk_Sultanate_(Alexandria).svg"), relatedCode: "EG",
     note: "A state ruled by a self-perpetuating caste of slave-soldiers from Cairo, which halted the Mongols at Ain Jalut and dominated Egypt and the Levant until the Ottoman conquest.",
   },
+  // ── Europe: former states (List of former sovereign states) ──
+  {
+    id: "kingdom-saxony", name: "Kingdom of Saxony", era: "1806–1918", region: "Europe",
+    flagUrl: fp("Flag_of_Saxony.svg"), relatedCode: "DE",
+    note: "The white-over-green bicolor of the Wettin kings, who ruled from Dresden and joined the German Empire in 1871 while keeping their own monarch until 1918.",
+  },
+  {
+    id: "kingdom-wurttemberg", name: "Kingdom of Württemberg", era: "1806–1918", region: "Europe",
+    flagUrl: fp("Flagge_Königreich_Württemberg.svg"), relatedCode: "DE",
+    note: "Napoleon elevated the duchy of Württemberg to a kingdom in 1806; its black-over-red bicolor flew over Stuttgart until the monarchy fell at the end of World War I.",
+  },
+  {
+    id: "grand-duchy-hesse", name: "Grand Duchy of Hesse", era: "1806–1918", region: "Europe",
+    flagUrl: fp("Flag_of_Hesse.svg"), relatedCode: "DE",
+    note: "A red-over-white bicolor for the Hesse-Darmstadt grand dukes, whose dynasty married into Europe's thrones — the last Tsarina of Russia was a Hessian princess.",
+  },
+  {
+    id: "electorate-hesse", name: "Electorate of Hesse", era: "1803–1866", region: "Europe",
+    flagUrl: fp("Flagge_Großherzogtum_Hessen_ohne_Wappen.svg"), relatedCode: "DE",
+    note: "The Hesse-Kassel state, the only German principality to keep the title 'Elector' after the Holy Roman Empire dissolved, until Prussia annexed it in 1866.",
+  },
+  {
+    id: "grand-duchy-mecklenburg", name: "Grand Duchies of Mecklenburg", era: "1815–1918", region: "Europe",
+    flagUrl: fp("Flagge_Großherzogtümer_Mecklenburg.svg"), relatedCode: "DE",
+    note: "The blue-yellow-red tricolor shared by the two Mecklenburg grand duchies (Schwerin and Strelitz) on the Baltic coast, ruled by branches of the same Obotrite dynasty.",
+  },
+  {
+    id: "duchy-oldenburg", name: "Grand Duchy of Oldenburg", era: "1815–1918", region: "Europe",
+    flagUrl: fp("Flagge_Herzogtum_Oldenburg.svg"), relatedCode: "DE",
+    note: "A blue-red bicolor for the northwest German grand duchy whose ruling house also briefly held the thrones of Denmark, Greece, and Russia through dynastic marriage.",
+  },
+  {
+    id: "duchy-brunswick", name: "Duchy of Brunswick", era: "1815–1918", region: "Europe",
+    flagUrl: fp("Flagge_Herzogtum_Braunschweig.svg"), relatedCode: "DE",
+    note: "The blue-over-yellow bicolor of the Welf dukes; its 'Black Duke' Frederick William raised a famous corps of black-clad hussars to fight Napoleon and died at Quatre Bras.",
+  },
+  {
+    id: "duchy-nassau", name: "Duchy of Nassau", era: "1806–1866", region: "Europe",
+    flagUrl: fp("Flagge_Herzogtum_Nassau_(1806-1866).svg"), relatedCode: "DE",
+    note: "An orange-blue bicolor for the duchy on the Rhine and Lahn; its ruling house gave the Netherlands its royal dynasty, the House of Orange-Nassau.",
+  },
+  {
+    id: "duchy-saxe-weimar-eisenach", name: "Grand Duchy of Saxe-Weimar-Eisenach", era: "1809–1918", region: "Europe",
+    flagUrl: fp("Flagge_Großherzogtum_Sachsen-Weimar-Eisenach_(1813-1897).svg"), relatedCode: "DE",
+    note: "The black-yellow-green flag of the Thuringian grand duchy whose Weimar court, under Goethe and Schiller, became the cultural heart of German classicism.",
+  },
+  {
+    id: "duchy-saxe-coburg-gotha", name: "Duchy of Saxe-Coburg and Gotha", era: "1826–1918", region: "Europe",
+    flagUrl: fp("Flagge_Herzogtum_Sachsen-Coburg-Gotha_(1826-1911).svg"), relatedCode: "DE",
+    note: "A green-white bicolor for the small Thuringian duchy that became the 'stud farm of Europe' — its princes married into the British, Belgian, Portuguese, and Bulgarian thrones.",
+  },
+  {
+    id: "principality-reuss", name: "Principalities of Reuss", era: "1778–1918", region: "Europe",
+    flagUrl: fp("Flagge_Fürstentum_Reuß_ältere_Linie.svg"), relatedCode: "DE",
+    note: "The tiny Thuringian principalities famous for naming every male ruler Heinrich and numbering them in sequence — the elder line ran the count up to Heinrich LXVII.",
+  },
+  {
+    id: "principality-schwarzburg", name: "Principalities of Schwarzburg", era: "1816–1918", region: "Europe",
+    flagUrl: fp("Flagge_Fürstentümer_Schwarzburg.svg"), relatedCode: "DE",
+    note: "A blue-white bicolor for the two small Thuringian principalities of Rudolstadt and Sondershausen, ruled by one of Germany's oldest comital dynasties.",
+  },
+  {
+    id: "principality-lippe", name: "Principality of Lippe", era: "1815–1918", region: "Europe",
+    flagUrl: fp("Flagge_Fürstentum_Lippe.svg"), relatedCode: "DE",
+    note: "A yellow-red bicolor for the small principality around Detmold, near the Teutoburg Forest where Germanic tribes annihilated three Roman legions in AD 9.",
+  },
+  {
+    id: "principality-schaumburg-lippe", name: "Principality of Schaumburg-Lippe", era: "1807–1918", region: "Europe",
+    flagUrl: fp("Flagge_Fürstentum_Schaumburg-Lippe.svg"), relatedCode: "DE",
+    note: "One of the smallest German states, a blue-red-white tricolor principality of barely 50,000 people that nonetheless survived as a sovereign state until 1918.",
+  },
+  {
+    id: "duchy-anhalt", name: "Duchy of Anhalt", era: "1863–1918", region: "Europe",
+    flagUrl: fp("Flagge_Herzogtum_Anhalt.svg"), relatedCode: "DE",
+    note: "A green-white bicolor for the central German duchy, ancestral home of the Ascanian dynasty and birthplace of Catherine the Great of Russia.",
+  },
+  {
+    id: "free-city-hamburg", name: "Free City of Hamburg", era: "1819–1919", region: "Europe",
+    flagUrl: fp("Flag_of_Hamburg.svg"), relatedCode: "DE",
+    note: "The white castle on red is the Hanseatic city-state's medieval emblem; its three towers and the cross-topped gate symbolize the free port's civic independence.",
+  },
+  {
+    id: "free-city-bremen", name: "Free City of Bremen", era: "1813–1919", region: "Europe",
+    flagUrl: fp("Flag_of_Bremen.svg"), relatedCode: "DE",
+    note: "The red-and-white 'Speckflagge' (bacon flag) of checkered stripes flew over the Hanseatic port-republic, one of the founding member states of the German Empire.",
+  },
+  {
+    id: "free-city-lubeck", name: "Free City of Lübeck", era: "1226–1937", region: "Europe",
+    flagUrl: fp("Flagge_der_Hansestadt_Lübeck.svg"), relatedCode: "DE",
+    note: "The white-over-red bicolor of the 'Queen of the Hanseatic League', the city that led the medieval Baltic trade network before the Nazis stripped its statehood in 1937.",
+  },
+  {
+    id: "free-city-frankfurt", name: "Free City of Frankfurt", era: "1815–1866", region: "Europe",
+    flagUrl: fp("Flag_of_Frankfurt_am_Main.svg"), relatedCode: "DE",
+    note: "The white-over-red city republic that hosted the German Confederation's parliament, until Prussia annexed it for siding against it in the 1866 war.",
+  },
+  {
+    id: "german-confederation", name: "German Confederation", era: "1815–1866", region: "Europe",
+    flagUrl: fp("Flag_of_the_German_Confederation_(war).svg"), relatedCode: "DE",
+    note: "The loose league of German states formed after Napoleon's defeat flew a black-red-gold war flag — the same liberal colors later adopted by unified Germany.",
+  },
+  {
+    id: "saar-protectorate", name: "Saar Protectorate", era: "1947–1956", region: "Europe",
+    flagUrl: fp("Flag_of_Saar_(1947–1956).svg"), relatedCode: "DE",
+    note: "A French-administered, semi-autonomous state after WWII, its flag a Nordic cross in French blue and red. A 1955 referendum returned the coal-rich Saar to West Germany.",
+  },
+  {
+    id: "grand-duchy-berg", name: "Grand Duchy of Berg", era: "1806–1813", region: "Europe",
+    flagUrl: fp("Flag_of_the_Grand_Duchy_of_Berg_(1806-1808).svg"), relatedCode: "DE",
+    note: "A Napoleonic client state on the Rhine, first ruled by Marshal Murat; its white flag bore a red lion before it was dissolved after Napoleon's defeat.",
+  },
+  {
+    id: "duchy-burgundy", name: "Duchy of Burgundy", era: "1032–1477", region: "Europe",
+    flagUrl: fp("Flag_of_Burgundy.svg"), relatedCode: "FR",
+    note: "The Valois dukes of Burgundy built one of the richest states in late-medieval Europe, rivaling the French crown, until Duke Charles the Bold fell at the Battle of Nancy in 1477.",
+  },
+  {
+    id: "duchy-brittany", name: "Duchy of Brittany", era: "939–1547", region: "Europe",
+    flagUrl: fp("Flag_of_Brittany.svg"), relatedCode: "FR",
+    note: "The independent Breton duchy on France's Atlantic peninsula; its modern black-and-white 'Gwenn ha du' flag recalls the duchy absorbed into France through royal marriage in 1532.",
+  },
+  {
+    id: "duchy-lorraine", name: "Duchy of Lorraine", era: "959–1766", region: "Europe",
+    flagUrl: fp("Flag_of_Lorraine.svg"), relatedCode: "FR",
+    note: "A gold flag with a red diagonal band and three white eaglets; the duchy on the German frontier passed to France only after its last duke became Holy Roman Emperor.",
+  },
+  {
+    id: "comtat-venaissin", name: "Comtat Venaissin", era: "1274–1791", region: "Europe",
+    flagUrl: fp("Flag_of_Comtat_Venaissin.svg"), relatedCode: "FR",
+    note: "A papal enclave around Avignon ruled directly by the Popes for over five centuries — even surrounding the Avignon papacy — until France annexed it during the Revolution.",
+  },
+  {
+    id: "county-provence", name: "County of Provence", era: "972–1481", region: "Europe",
+    flagUrl: fp("Flag_of_Provence.svg"), relatedCode: "FR",
+    note: "The gold-and-red striped banner of the medieval county, ruled by the House of Barcelona and then Anjou, before it was bequeathed to the French crown in 1481.",
+  },
+  {
+    id: "county-foix", name: "County of Foix", era: "1011–1607", region: "Europe",
+    flagUrl: fp("Arms_of_Foix-Béarn.svg"), relatedCode: "FR",
+    note: "A Pyrenean county whose arms joined the gold-and-red pales of Foix with the cows of Béarn; its counts became kings of Navarre, and one, Henry, became King of France.",
+  },
+  {
+    id: "kingdom-galicia", name: "Kingdom of Galicia", era: "910–1833", region: "Europe",
+    flagUrl: fp("Flag_of_Galicia.svg"), relatedCode: "ES",
+    note: "One of medieval Europe's oldest kingdoms, in Spain's far northwest; its modern white flag with a blue diagonal recalls the realm home to the pilgrim shrine of Santiago de Compostela.",
+  },
+  {
+    id: "kingdom-navarre", name: "Kingdom of Navarre", era: "824–1620", region: "Europe",
+    flagUrl: fp("Flag_of_Navarre.svg"), relatedCode: "ES",
+    note: "The Basque Pyrenean kingdom whose red flag bears golden chains, said to commemorate Navarrese knights breaking the chains around the Almohad caliph's tent in 1212.",
+  },
+  {
+    id: "crown-aragon", name: "Crown of Aragon", era: "1162–1716", region: "Europe",
+    flagUrl: fp("Flag_of_Aragon.svg"), relatedCode: "ES",
+    note: "The four red bars on gold — the Senyera — flew over a Mediterranean empire that ruled Catalonia, Valencia, the Balearics, Sardinia, Sicily, and at times Naples and Athens.",
+  },
+  {
+    id: "principality-catalonia", name: "Principality of Catalonia", era: "1162–1714", region: "Europe",
+    flagUrl: fp("Flag_of_Catalonia.svg"), relatedCode: "ES",
+    note: "The Senyera of four red bars on gold flew over the Catalan lands within the Crown of Aragon; Barcelona's fall in 1714 ended its self-government, an event still marked each September 11.",
+  },
+  {
+    id: "kingdom-leon", name: "Kingdom of León", era: "910–1230", region: "Europe",
+    flagUrl: fp("Bandera_de_León.svg"), relatedCode: "ES",
+    note: "The purple lion on white of the early medieval Christian kingdom that drove the Reconquista; its parliament of 1188 is often called the oldest in Europe.",
+  },
+  {
+    id: "kingdom-asturias", name: "Kingdom of Asturias", era: "718–924", region: "Europe",
+    flagUrl: fp("Flag_of_Asturias.svg"), relatedCode: "ES",
+    note: "The blue flag with the gold Victory Cross marks the first Christian kingdom of the Reconquista, founded by Pelagius after his victory at Covadonga against the Moors.",
+  },
+  {
+    id: "kingdom-majorca", name: "Kingdom of Majorca", era: "1231–1715", region: "Europe",
+    flagUrl: fp("Flag_of_Mallorca.svg"), relatedCode: "ES",
+    note: "A short-lived independent Balearic kingdom carved out by James I of Aragon for a younger son, ruling the islands plus Roussillon and Montpellier on the mainland.",
+  },
+  {
+    id: "kingdom-valencia", name: "Kingdom of Valencia", era: "1238–1707", region: "Europe",
+    flagUrl: fp("Senyera_valenciana.svg"), relatedCode: "ES",
+    note: "A realm of the Crown of Aragon whose Senyera added a crowned blue stripe at the hoist; it was abolished by the Bourbons after backing the losing side in the War of Spanish Succession.",
+  },
+  {
+    id: "kingdom-portugal", name: "Kingdom of Portugal", era: "1139–1910", region: "Europe",
+    flagUrl: fp("Flag_of_Portugal_(1750).svg"), relatedCode: "PT",
+    note: "The white-and-blue royal banner with the shield of five 'quinas' flew over the seafaring kingdom that launched the Age of Discovery, until the 1910 republican revolution.",
+  },
+  {
+    id: "iberian-union", name: "Iberian Union", era: "1580–1640", region: "Europe",
+    flagUrl: fp("Cross_of_Burgundy.svg"), relatedCodes: ["ES", "PT"],
+    note: "For sixty years the Spanish and Portuguese crowns were joined under one Habsburg king, briefly creating a single empire spanning the globe, until Portugal revolted in 1640.",
+  },
+  {
+    id: "duchy-warsaw", name: "Duchy of Warsaw", era: "1807–1815", region: "Europe",
+    flagUrl: fp("Flag_of_the_Duchy_of_Warsaw.svg"), relatedCode: "PL",
+    note: "Napoleon's Polish client state, a brief restoration of statehood after the Partitions; its white-and-crimson flag preceded the modern Polish flag by a century.",
+  },
+  {
+    id: "polish-lithuanian-commonwealth", name: "Polish–Lithuanian Commonwealth", era: "1569–1795", region: "Europe",
+    flagUrl: fp("Chorągiew_królewska_króla_Zygmunta_III_Wazy.svg"), relatedCodes: ["PL", "LT"],
+    note: "One of the largest states in Europe, an elective monarchy with an early constitution and a 'noble democracy', partitioned out of existence by Russia, Prussia, and Austria.",
+  },
+  {
+    id: "free-city-krakow", name: "Free City of Kraków", era: "1815–1846", region: "Europe",
+    flagUrl: fp("Flag_of_Kraków.svg"), relatedCode: "PL",
+    note: "A tiny independent city-republic created at the Congress of Vienna, the last fragment of sovereign Poland, until Austria annexed it after a failed 1846 uprising.",
+  },
+  {
+    id: "polish-peoples-republic", name: "Polish People's Republic", era: "1947–1989", region: "Europe",
+    flagUrl: fp("Flag_of_Poland_(1928–1980).svg"), relatedCode: "PL",
+    note: "The Soviet-aligned communist state flew the same white-and-red bicolor as the republic before and after it, the eagle on its arms shorn of its royal crown until 1989.",
+  },
+  {
+    id: "ukrainian-ssr", name: "Ukrainian SSR", era: "1949–1991", region: "Europe",
+    flagUrl: fp("Flag_of_the_Ukrainian_Soviet_Socialist_Republic_(1949–1991).svg"), relatedCode: "UA",
+    note: "A red flag with a lower azure band and a gold hammer, sickle and star, flown by Soviet Ukraine — which, unusually, held its own seat at the United Nations.",
+  },
+  {
+    id: "byelorussian-ssr", name: "Byelorussian SSR", era: "1951–1991", region: "Europe",
+    flagUrl: fp("Flag_of_the_Byelorussian_Soviet_Socialist_Republic_(1951–1991).svg"), relatedCode: "BY",
+    note: "Red over a green band with a white folk-ornament stripe at the hoist; modern Belarus readopted a near-identical design in 1995, dropping only the hammer and sickle.",
+  },
+  {
+    id: "lithuanian-ssr", name: "Lithuanian SSR", era: "1953–1990", region: "Europe",
+    flagUrl: fp("Flag_of_the_Lithuanian_Soviet_Socialist_Republic_(1953–1988).svg"), relatedCode: "LT",
+    note: "A red flag with white and green lower bands, flown over Soviet Lithuania until the republic became the first to declare independence from the USSR in 1990.",
+  },
+  {
+    id: "latvian-ssr", name: "Latvian SSR", era: "1953–1990", region: "Europe",
+    flagUrl: fp("Flag_of_the_Latvian_Soviet_Socialist_Republic_(1953–1990).svg"), relatedCode: "LV",
+    note: "A red flag whose lower edge bore stylized white waves of the Baltic Sea beneath the hammer, sickle and star, used until Latvia restored its independence.",
+  },
+  {
+    id: "estonian-ssr", name: "Estonian SSR", era: "1953–1990", region: "Europe",
+    flagUrl: fp("Flag_of_the_Estonian_Soviet_Socialist_Republic_(1953–1990).svg"), relatedCode: "EE",
+    note: "A red flag with a wavy blue-and-white Baltic band at the base, the Soviet flag of Estonia, replaced when the blue-black-white national tricolor was restored in 1990.",
+  },
+  {
+    id: "moldavian-ssr", name: "Moldavian SSR", era: "1952–1990", region: "Europe",
+    flagUrl: fp("Flag_of_the_Moldavian_Soviet_Socialist_Republic_(1952–1990).svg"), relatedCode: "MD",
+    note: "A red flag with a central green stripe and the hammer, sickle and star, flown by Soviet Moldova before the country adopted a Romanian-style tricolor in 1990.",
+  },
+  {
+    id: "belarusian-pr", name: "Belarusian People's Republic", era: "1918–1919", region: "Europe",
+    flagUrl: fp("Flag_of_Belarus.svg"), relatedCode: "BY",
+    note: "The white-red-white flag of the short-lived republic declared during WWI; suppressed by the Bolsheviks, it returned as independent Belarus's flag from 1991 to 1995.",
+  },
+  {
+    id: "grand-duchy-lithuania", name: "Grand Duchy of Lithuania", era: "1236–1795", region: "Europe",
+    flagUrl: fp("Flag_of_Lithuania_(state).svg"), relatedCode: "LT",
+    note: "The red banner with the white Vytis — an armored knight on a charging horse — flew over a realm that at its height stretched from the Baltic to the Black Sea.",
+  },
+  {
+    id: "crimean-khanate", name: "Crimean Khanate", era: "1441–1783", region: "Europe",
+    flagUrl: fp("Flag_of_the_Crimean_Khanate.svg"), relatedCode: "UA",
+    note: "A blue flag with the golden Giray-dynasty tamga; the last remnant of the Golden Horde, it dominated the northern Black Sea steppe until Catherine the Great annexed it.",
+  },
+  {
+    id: "khanate-sibir", name: "Khanate of Sibir", era: "1490–1598", region: "Europe",
+    flagUrl: fp("Flag_of_the_Khanate_of_Sibir.svg"), relatedCode: "RU",
+    note: "The Turco-Mongol khanate beyond the Urals that gave Siberia its name; its conquest by the Cossack Yermak opened Russia's vast eastward expansion across Asia.",
+  },
+  {
+    id: "khanate-kazan", name: "Khanate of Kazan", era: "1438–1552", region: "Europe",
+    flagUrl: fp("Flag_of_Tatarstan.svg"), relatedCode: "RU",
+    note: "A Tatar successor state of the Golden Horde on the Volga; Ivan the Terrible's bloody siege and capture of Kazan in 1552 is commemorated by Moscow's St Basil's Cathedral.",
+  },
+  {
+    id: "khanate-astrakhan", name: "Khanate of Astrakhan", era: "1466–1556", region: "Europe",
+    flagUrl: fp("Astrakhan_Khanate.svg"), relatedCode: "RU",
+    note: "A small Tatar khanate guarding the Volga delta and the Caspian trade, the last of the Golden Horde's successors, annexed by Ivan the Terrible four years after Kazan.",
+  },
+  {
+    id: "golden-horde", name: "Golden Horde", era: "1242–1502", region: "Europe",
+    flagUrl: fp("Golden_Horde_flag_1339.svg"), relatedCode: "RU",
+    note: "The Mongol khanate that held the Russian principalities under the 'Tatar Yoke' for over two centuries; this white banner with a crescent appears on a 1339 Genoese map.",
+  },
+  {
+    id: "idel-ural", name: "Idel-Ural State", era: "1918", region: "Europe",
+    flagUrl: fp("Flag_of_Idel-Ural_State.svg"), relatedCode: "RU",
+    note: "A short-lived Tatar-Bashkir republic on the Volga proclaimed amid the Russian Revolution, crushed by the Bolsheviks within weeks of its declaration.",
+  },
+  {
+    id: "green-ukraine", name: "Green Ukraine", era: "1918–1922", region: "Europe",
+    flagUrl: fp("Flag_of_Green_Ukraine.svg"), relatedCode: "RU",
+    note: "An attempt by Ukrainian settlers in the Russian Far East to form an autonomous state around the Amur and Pacific coast, suppressed by the Bolsheviks.",
+  },
+  {
+    id: "hungarian-soviet-republic", name: "Hungarian Soviet Republic", era: "1919", region: "Europe",
+    flagUrl: fp("Flag_of_Hungary_(1919).svg"), relatedCode: "HU",
+    note: "Béla Kun's plain red communist state, the second Soviet republic in the world after Russia, which lasted just 133 days before Romanian troops toppled it.",
+  },
+  {
+    id: "hungarian-peoples-republic", name: "Hungarian People's Republic", era: "1949–1989", region: "Europe",
+    flagUrl: fp("Flag_of_Hungary_(1949-1956).svg"), relatedCode: "HU",
+    note: "The communist 'Rákosi coat of arms' on the tricolor was so hated that 1956 revolutionaries cut it out, leaving a hole-in-the-flag that became the uprising's emblem.",
+  },
+  {
+    id: "principality-transylvania", name: "Principality of Transylvania", era: "1570–1711", region: "Europe",
+    flagUrl: fp("Flag_of_Transylvania_before_1918.svg"), relatedCode: "RO",
+    note: "A largely autonomous Ottoman vassal principality and Protestant stronghold; its blue-and-gold flag joined the symbols of its Hungarian, Székely, and Saxon 'nations'.",
+  },
+  {
+    id: "kingdom-bohemia", name: "Kingdom of Bohemia", era: "1198–1918", region: "Europe",
+    flagUrl: fp("Flag_of_Bohemia.svg"), relatedCode: "CZ",
+    note: "The white-over-red bicolor of the Czech lands ruled from Prague; its kings were prince-electors of the Holy Roman Empire, and one, Charles IV, became Emperor himself.",
+  },
+  {
+    id: "margraviate-moravia", name: "Margraviate of Moravia", era: "1182–1918", region: "Europe",
+    flagUrl: fp("Flag_of_Moravia.svg"), relatedCode: "CZ",
+    note: "The eastern Czech land, a margraviate within the Bohemian crown; its yellow-and-red checkered eagle gives the modern Moravian flag its distinctive look.",
+  },
+  {
+    id: "first-slovak-republic", name: "First Slovak Republic", era: "1939–1945", region: "Europe",
+    flagUrl: fp("Flag_of_Slovakia_(1939–1945).svg"), relatedCode: "SK",
+    note: "A clerical-nationalist client state of Nazi Germany under Jozef Tiso, the first time Slovakia existed as a separate state; it flew a plain white-blue-red tricolor.",
+  },
+  {
+    id: "kingdom-serbia", name: "Kingdom of Serbia", era: "1882–1918", region: "Europe",
+    flagUrl: fp("Flag_of_Serbia_(1882–1918).svg"), relatedCode: "RS",
+    note: "The red-blue-white tricolor with the royal arms flew over the independent Serbian kingdom whose alliances and crisis with Austria-Hungary helped ignite World War I.",
+  },
+  {
+    id: "principality-serbia", name: "Principality of Serbia", era: "1835–1882", region: "Europe",
+    flagUrl: fp("Flag_of_Serbia_(1835).svg"), relatedCode: "RS",
+    note: "An autonomous principality that won self-rule from the Ottomans under the rival Obrenović and Karađorđević dynasties before being raised to a kingdom in 1882.",
+  },
+  {
+    id: "kingdom-montenegro", name: "Kingdom of Montenegro", era: "1905–1918", region: "Europe",
+    flagUrl: fp("Flag_of_Montenegro_(1905–1918).svg"), relatedCode: "ME",
+    note: "The red flag bearing the crowned cypher of King Nikola I, ruler of the small Balkan mountain kingdom that merged into Yugoslavia after World War I.",
+  },
+  {
+    id: "kingdom-bulgaria", name: "Kingdom of Bulgaria", era: "1908–1946", region: "Europe",
+    flagUrl: fp("Flag_of_Bulgaria.svg"), relatedCode: "BG",
+    note: "The white-green-red tricolor of the 'Third Bulgarian State', a kingdom under the Saxe-Coburg-Gotha tsars, abolished by referendum in favor of a communist republic in 1946.",
+  },
+  {
+    id: "kingdom-romania", name: "Kingdom of Romania", era: "1881–1947", region: "Europe",
+    flagUrl: fp("Flag_of_Romania.svg"), relatedCode: "RO",
+    note: "The blue-yellow-red tricolor of the Hohenzollern-Sigmaringen kings, who doubled the country's size after World War I before the communists forced King Michael to abdicate.",
+  },
+  {
+    id: "principality-wallachia", name: "Principality of Wallachia", era: "1330–1859", region: "Europe",
+    flagUrl: fp("Flag_of_Wallachia.svg"), relatedCode: "RO",
+    note: "A Danubian principality long under Ottoman suzerainty, ruled by voivodes including Vlad the Impaler; it united with Moldavia in 1859 to form modern Romania.",
+  },
+  {
+    id: "principality-moldavia", name: "Principality of Moldavia", era: "1346–1859", region: "Europe",
+    flagUrl: fp("Flag_of_Moldavia.svg"), relatedCode: "RO",
+    note: "The eastern Romanian principality of Stephen the Great, who held off the Ottomans for decades; its union with Wallachia created the United Principalities of Romania.",
+  },
+  {
+    id: "serbian-despotate", name: "Serbian Despotate", era: "1402–1459", region: "Europe",
+    flagUrl: fp("Flag_of_the_Serbian_Despotate.svg"), relatedCode: "RS",
+    note: "The last independent medieval Serbian state, a despotate that briefly flourished at Smederevo before the Ottomans conquered it, ending Serbian statehood for centuries.",
+  },
+  {
+    id: "kingdom-dalmatia", name: "Kingdom of Dalmatia", era: "1815–1918", region: "Europe",
+    flagUrl: fp("Flag_of_the_Kingdom_of_Dalmatia.svg"), relatedCode: "HR",
+    note: "A blue-and-yellow flag for the Habsburg crown land along the Adriatic coast, governed from Zadar, whose territory is now part of Croatia.",
+  },
+  {
+    id: "eastern-rumelia", name: "Eastern Rumelia", era: "1878–1885", region: "Europe",
+    flagUrl: fp("Flag_of_Eastern_Rumelia.svg"), relatedCode: "BG",
+    note: "An autonomous Ottoman province created by the Congress of Berlin, with a white flag and green canton; it unilaterally united with Bulgaria after a bloodless 1885 coup.",
+  },
+  {
+    id: "independent-state-croatia", name: "Independent State of Croatia", era: "1941–1945", region: "Europe",
+    flagUrl: fp("Flag_of_Croatia_(1941–1945).svg"), relatedCode: "HR",
+    note: "The Axis puppet state run by the fascist Ustaše, responsible for atrocities against Serbs, Jews, and Roma; its flag added the Ustaše's 'U' badge to the Croatian checkerboard.",
+  },
+  {
+    id: "first-republic-armenia", name: "First Republic of Armenia", era: "1918–1920", region: "Europe",
+    flagUrl: fp("Flag_of_Armenia.svg"), relatedCode: "AM",
+    note: "The brief independent republic born from the collapse of the Russian and Ottoman empires; its red-blue-orange tricolor was readopted when Armenia regained independence in 1991.",
+  },
+  {
+    id: "azerbaijan-democratic-republic", name: "Azerbaijan Democratic Republic", era: "1918–1920", region: "Europe",
+    flagUrl: fp("Flag_of_Azerbaijan.svg"), relatedCode: "AZ",
+    note: "The first secular democratic republic in the Muslim world, which gave women the vote before many Western states; its blue-red-green flag flies over independent Azerbaijan again today.",
+  },
+  {
+    id: "georgian-ssr", name: "Georgian SSR", era: "1951–1990", region: "Europe",
+    flagUrl: fp("Flag_of_the_Georgian_Soviet_Socialist_Republic_(1951–1990).svg"), relatedCode: "GE",
+    note: "A red flag with a sunburst-and-hammer roundel in a blue canton; Soviet Georgia was the birthplace of Joseph Stalin, in the town of Gori.",
+  },
+  {
+    id: "armenian-ssr", name: "Armenian SSR", era: "1952–1990", region: "Europe",
+    flagUrl: fp("Flag_of_the_Armenian_Soviet_Socialist_Republic_(1952–1990).svg"), relatedCode: "AM",
+    note: "A red flag with a horizontal blue stripe and the hammer, sickle and star, flown over Soviet Armenia until the national tricolor was restored in 1990.",
+  },
+  {
+    id: "transcaucasian-sfsr", name: "Transcaucasian SFSR", era: "1922–1936", region: "Europe",
+    flagUrl: fp("Flag_of_the_Transcaucasian_SFSR.svg"), relatedCodes: ["GE", "AM", "AZ"],
+    note: "For 14 years Georgia, Armenia, and Azerbaijan were fused into a single Soviet republic — one of the four founding members of the USSR — before Stalin split them apart.",
+  },
+  {
+    id: "democratic-republic-georgia", name: "Democratic Republic of Georgia", era: "1918–1921", region: "Europe",
+    flagUrl: fp("Flag_of_Georgia_(1990–2004).svg"), relatedCode: "GE",
+    note: "A Menshevik-led social-democratic republic with a wine-red flag, conquered by the Red Army in 1921; its flag flew again over independent Georgia from 1990 to 2004.",
+  },
+  {
+    id: "kingdom-georgia", name: "Kingdom of Georgia", era: "1008–1490", region: "Europe",
+    flagUrl: fp("Flag_of_the_Kingdom_of_Georgia.svg"), relatedCode: "GE",
+    note: "The medieval Christian kingdom that reached its 'Golden Age' under Queen Tamar, ruling much of the Caucasus before Mongol invasions fractured it into rival realms.",
+  },
+  {
+    id: "kalmar-union", name: "Kalmar Union", era: "1397–1523", region: "Europe",
+    flagUrl: fp("Flag_of_the_Kalmar_Union.svg"), relatedCodes: ["DK", "SE", "NO"],
+    note: "The dynastic union that joined Denmark, Sweden, and Norway under a single monarch for over a century, until Gustav Vasa led Sweden to break away in 1523.",
+  },
+  {
+    id: "scania", name: "Scanian Lands", era: "medieval–1658", region: "Europe",
+    flagUrl: fp("Flag_of_Skåne.svg"), relatedCode: "SE",
+    note: "A red-and-yellow Nordic-cross flag for the southern provinces that were Danish for centuries before Sweden conquered them in 1658 — a frontier fought over for generations.",
+  },
+  {
+    id: "kingdom-england", name: "Kingdom of England", era: "927–1707", region: "Europe",
+    flagUrl: fp("Flag_of_England.svg"), relatedCode: "GB",
+    note: "The red St George's Cross on white became England's flag in the late Middle Ages; the kingdom merged with Scotland in 1707 to form Great Britain.",
+  },
+  {
+    id: "kingdom-scotland", name: "Kingdom of Scotland", era: "843–1707", region: "Europe",
+    flagUrl: fp("Flag_of_Scotland.svg"), relatedCode: "GB",
+    note: "The white Saltire of St Andrew on blue, one of the oldest national flags in the world, flew over independent Scotland until the union with England in 1707.",
+  },
+  {
+    id: "kingdom-great-britain", name: "Kingdom of Great Britain", era: "1707–1800", region: "Europe",
+    flagUrl: fp("Flag_of_Great_Britain_(1707–1800).svg"), relatedCode: "GB",
+    note: "The first Union Flag, combining the crosses of St George and St Andrew, flew over the merged kingdom until Ireland's 1801 union added St Patrick's saltire to make the modern flag.",
+  },
+  {
+    id: "commonwealth-england", name: "Commonwealth of England", era: "1649–1660", region: "Europe",
+    flagUrl: fp("Flag_of_the_Commonwealth_(1658–1660).svg"), relatedCode: "GB",
+    note: "England's brief republic after the execution of Charles I, ruled by Oliver Cromwell as Lord Protector; its flag combined the crosses of England, Scotland, and Ireland with his arms.",
+  },
+  {
+    id: "kingdom-ireland", name: "Kingdom of Ireland", era: "1542–1801", region: "Europe",
+    flagUrl: fp("Saint_Patrick's_Saltire.svg"), relatedCode: "IE",
+    note: "The red saltire of St Patrick on white represented the kingdom under the English (later British) crown; it survives as the Irish element of the modern Union Flag.",
+  },
+  {
+    id: "dutch-republic", name: "Dutch Republic", era: "1581–1795", region: "Europe",
+    flagUrl: fp("Statenvlag.svg"), relatedCode: "NL",
+    note: "The red-white-blue 'Statenvlag' of the Seven United Provinces, a merchant republic that became a 17th-century global trading and naval superpower in its Golden Age.",
+  },
+  {
+    id: "united-belgian-states", name: "United Belgian States", era: "1790", region: "Europe",
+    flagUrl: fp("Flag_of_the_United_States_of_Belgium.svg"), relatedCode: "BE",
+    note: "A short-lived confederation born of the Brabant Revolution against Austrian rule; its black-yellow-red colors were the direct forerunner of the modern Belgian flag.",
+  },
+  {
+    id: "republic-geneva", name: "Republic of Geneva", era: "1541–1798", region: "Europe",
+    flagUrl: fp("Flag_of_Canton_of_Geneva.svg"), relatedCode: "CH",
+    note: "An independent Calvinist city-republic — the 'Protestant Rome' — until France annexed it; it later joined the Swiss Confederation as a canton in 1815.",
+  },
+  {
+    id: "old-swiss-confederacy", name: "Old Swiss Confederacy", era: "1300–1798", region: "Europe",
+    flagUrl: fp("Flag_of_Switzerland_(Pantone).svg"), relatedCode: "CH",
+    note: "The loose alliance of cantons that grew from the legendary 1291 oath; the white cross on red it fought under at Morgarten and Sempach became the modern Swiss flag.",
+  },
+  {
+    id: "memel-territory", name: "Memel Territory", era: "1920–1939", region: "Europe",
+    flagUrl: fp("Flag_of_the_Klaipėda_Region.svg"), relatedCode: "LT",
+    note: "A League of Nations territory around the Baltic port of Klaipėda, seized by Lithuania in 1923; Nazi Germany forced its cession in 1939, one of the last crises before WWII.",
+  },
 ]
 
 /** Historical entities tied to a given modern country code, for the Codex. */
