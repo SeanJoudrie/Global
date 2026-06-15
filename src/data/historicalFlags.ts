@@ -125,6 +125,91 @@ export const HISTORICAL_FLAGS: HistoricalEntity[] = [
     note: "This Napoleonic sister republic in northern Italy flew a vertical green-white-red tricolor modeled on revolutionary France — a direct forerunner of the modern Italian flag.",
   },
   {
+    id: "florence", name: "Republic of Florence", era: "1115–1532", region: "Europe",
+    flagUrl: fp("Flag_of_Florence.svg"), relatedCode: "IT",
+    note: "The red giglio — a stylized lily — on white was the emblem of the medieval commune. Florence reversed the earlier white-on-red Ghibelline lily to mark its Guelph allegiance.",
+  },
+  {
+    id: "siena", name: "Republic of Siena", era: "1125–1555", region: "Europe",
+    flagUrl: fp("Flag_of_Siena.svg"), relatedCode: "IT",
+    note: "The black-and-white Balzana is said to recall the white and black smoke that rose when Siena's legendary founders Senius and Aschius made sacrifices on the city's hills.",
+  },
+  {
+    id: "noli", name: "Republic of Noli", era: "1192–1797", region: "Europe",
+    flagUrl: fp("Flag_of_the_Republic_of_Noli.svg"), relatedCode: "IT",
+    note: "One of the smallest and least-known Italian maritime republics, this tiny Ligurian town governed itself for six centuries under the protection of allied Genoa.",
+  },
+  {
+    id: "duchy-of-savoy", name: "Duchy of Savoy", era: "1416–1860", region: "Europe",
+    flagUrl: fp("Flag_of_Savoie.svg"), relatedCode: "IT",
+    note: "The white cross on red of the House of Savoy, the dynasty that ruled an Alpine state straddling France and Italy and eventually became the royal house of a united Italy.",
+  },
+  {
+    id: "duchy-of-modena", name: "Duchy of Modena and Reggio", era: "1452–1859", region: "Europe",
+    flagUrl: fp("State_Flag_of_the_Duchy_of_Modena_and_Reggio_(1830-1859).svg"), relatedCode: "IT",
+    note: "Ruled by the Este dynasty and later the Austrian Habsburg-Este line, the duchy flew a tricolour charged with the Este eagle until it was absorbed into unified Italy.",
+  },
+  {
+    id: "duchy-of-mantua", name: "Duchy of Mantua", era: "1530–1708", region: "Europe",
+    flagUrl: fp("Flag_of_the_Duchy_of_Mantua_(1575–1707).svg"), relatedCode: "IT",
+    note: "The Gonzaga dynasty's duchy in the Po plain, a great Renaissance art and music centre, flew a flag quartered with their eagles and lions before passing to Austria.",
+  },
+  {
+    id: "duchy-of-ferrara", name: "Duchy of Ferrara", era: "1471–1598", region: "Europe",
+    flagUrl: fp("Flag_of_Ferrara.svg"), relatedCode: "IT",
+    note: "The Este capital and a brilliant Renaissance court; when the last legitimate Este duke died without heirs in 1597, the Pope reclaimed Ferrara for the Papal States.",
+  },
+  {
+    id: "duchy-of-urbino", name: "Duchy of Urbino", era: "1443–1631", region: "Europe",
+    flagUrl: fp("Flag_of_Duchy_of_Urbino.svg"), relatedCode: "IT",
+    note: "The Montefeltro and later Della Rovere dukes made Urbino one of the foremost humanist courts of the Renaissance, birthplace of the painter Raphael.",
+  },
+  {
+    id: "montferrat", name: "Marquisate of Montferrat", era: "961–1574", region: "Europe",
+    flagUrl: fp("Flag_of_Montferrat.svg"), relatedCode: "IT",
+    note: "A long-lived northern Italian march whose Aleramici marquises led crusades and even briefly held the throne of the Kingdom of Thessalonica.",
+  },
+  {
+    id: "kingdom-naples", name: "Kingdom of Naples", era: "1442–1816", region: "Europe",
+    flagUrl: fp("Flag_of_the_Kingdom_of_Naples.svg"), relatedCode: "IT",
+    note: "The independent southern kingdom before its 1816 merger with Sicily; its white flag bore the arms of the successive Aragonese, Spanish, and Bourbon dynasties that ruled it.",
+  },
+  {
+    id: "kingdom-naples-1811", name: "Kingdom of Naples (Napoleonic)", era: "1808–1815", region: "Europe",
+    flagUrl: fp("Flag_of_the_Kingdom_of_Naples_(1811).svg"), relatedCode: "IT",
+    note: "Under Napoleon's marshal Joachim Murat, Naples flew a white field with a red border and a central emblem, before Murat was deposed and executed in 1815.",
+  },
+  {
+    id: "transpadane", name: "Transpadane Republic", era: "1796–1797", region: "Europe",
+    flagUrl: fp("Flag_of_the_Repubblica_Transpadana.svg"), relatedCode: "IT",
+    note: "A short-lived Napoleonic sister republic around Milan that flew a vertical green-white-red tricolour, soon merged with the Cispadane Republic to form the Cisalpine Republic.",
+  },
+  {
+    id: "roman-republic-1798", name: "Roman Republic (1798)", era: "1798–1799", region: "Europe",
+    flagUrl: fp("Flag_of_the_Repubblica_Romana_(1798).svg"), relatedCode: "IT",
+    note: "A Napoleonic republic proclaimed after French troops seized Rome and deposed Pope Pius VI; its black-white-red tricolour flew until Neapolitan and Austrian forces restored papal rule.",
+  },
+  {
+    id: "regency-carnaro", name: "Italian Regency of Carnaro", era: "1919–1920", region: "Europe",
+    flagUrl: fp("Ensign_of_the_Regency_of_Carnaro_(1920).svg"), relatedCode: "HR",
+    note: "Poet Gabriele D'Annunzio's quasi-anarchic statelet at Fiume, whose flag bore the constellation of Ursa Major and the motto 'Quis contra nos?' — 'Who is against us?'.",
+  },
+  {
+    id: "ossola", name: "Partisan Republic of Ossola", era: "1944", region: "Europe",
+    flagUrl: fp("Flag_of_the_Italian_Partisan_Republic_of_Ossola.svg"), relatedCode: "IT",
+    note: "A free zone liberated by anti-Fascist partisans in the Alps near the Swiss border, self-governing for forty days in 1944 before German and Fascist forces retook it.",
+  },
+  {
+    id: "alba", name: "Partisan Republic of Alba", era: "1944", region: "Europe",
+    flagUrl: fp("Flag_of_the_Republic_of_Alba.svg"), relatedCode: "IT",
+    note: "A Piedmontese town held free by partisans for 23 days in 1944, immortalized in Beppe Fenoglio's novel 'I ventitré giorni della città di Alba'.",
+  },
+  {
+    id: "italian-social-republic", name: "Italian Social Republic", era: "1943–1945", region: "Europe",
+    flagUrl: fp("War_flag_of_the_Italian_Social_Republic.svg"), relatedCode: "IT",
+    note: "Mussolini's German-backed rump state in northern Italy, often called the Republic of Salò; its war flag added a fasces-clutching eagle to the tricolour.",
+  },
+  {
     id: "smom", name: "Sovereign Military Order of Malta", era: "1113–present", region: "Europe",
     flagUrl: fp("Flag_of_the_Sovereign_Military_Order_of_Malta.svg"), relatedCode: "MT",
     note: "The white eight-pointed Maltese cross on red is the Knights Hospitaller's 'works' flag; the eight points are traditionally said to represent the eight Beatitudes.",
