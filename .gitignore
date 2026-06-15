@@ -33,3 +33,4 @@ scripts/flags/search-cache.json
 scripts/flags/repairs.backup.json
 scripts/flags/xwiki-cache.json
 scripts/flags/candidates-extra.json
+scripts/flags/cf/fails.txt
