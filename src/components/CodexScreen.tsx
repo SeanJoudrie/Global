@@ -14,6 +14,7 @@ import { ORG_FLAGS } from '../data/orgFlags'
 import { historicalFor } from '../data/historicalFlags'
 import { IDENTITY_FLAGS, IDENTITY_CATEGORIES, SIGNAL_FLAGS } from '../data/identityFlags'
 import { US_CITY_FLAGS } from '../data/usCityFlags'
+import { SUB_FLAGS } from '../data/subdivisions'
 import { CHALLENGE_CONTINENTS } from '../data/challenges'
 import type { SubRegion } from '../data/challenges'
 import { T, ACCENT, FONT, tint } from '../ui/tokens'
@@ -2228,6 +2229,7 @@ function gatherAllFlags(): MegaFlag[] {
     seen.add(key); all.push({ title: t, url, fact: (fact || '').trim() || `A flag in the Globalio Codex.` })
   }
   FLAGS.forEach(f => push(f.name, f.flagUrl, f.funFact))
+  SUB_FLAGS.forEach(s => push(s.name, s.flagUrl, curatedFact(s.name) ?? `The flag of ${s.name}, a subdivision of ${s.countryName}.`))
   IDENTITY_FLAGS.forEach(f => push(f.name, f.flagUrl, f.note))
   US_CITY_FLAGS.forEach(f => push(f.name, f.flagUrl, f.note))
   ETHNIC_FLAGS.forEach(r => r.groups.forEach(g => g.items.forEach(it => {
