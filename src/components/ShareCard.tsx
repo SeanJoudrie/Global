@@ -1,4 +1,6 @@
-import { Globe2, Flame, Copy } from 'lucide-react'
+import { useState } from 'react'
+import { Globe2, Flame, Share2 } from 'lucide-react'
+import { toPng } from 'html-to-image'
 import type { ShareResult } from "../utils/storage"
 import { T, FONT, tint, IS_CARTO } from "../ui/tokens"
 
@@ -45,12 +47,46 @@ export default function ShareCard({ result, showCopyButton = true }: Props) {
   // keeps its score-graded deep-space accent.
   const accent = IS_CARTO ? T.amber : pctColor(emojiGrid)
 
-  const handleCopy = async () => {
+  const [busy, setBusy] = useState(false)
+  const [copied, setCopied] = useState(false)
+
+  // Smart share cascade, best → simplest:
+  //   1. Native share sheet WITH the rendered card as a PNG (Instagram, X,
+  //      Messages…) — the real viral path on mobile.
+  //   2. Native share sheet, text only.
+  //   3. Clipboard copy (desktop / unsupported browsers).
+  const handleShare = async () => {
+    if (busy) return
     const text = shareText(result)
+    setBusy(true)
     try {
+      const node = document.getElementById('share-card')
+      const canShareFiles = typeof navigator !== 'undefined' && !!navigator.canShare
+      if (node && canShareFiles) {
+        try {
+          const dataUrl = await toPng(node, { pixelRatio: 2, cacheBust: true })
+          const blob = await (await fetch(dataUrl)).blob()
+          const file = new File([blob], `globalio-${date}.png`, { type: 'image/png' })
+          if (navigator.canShare({ files: [file] })) {
+            await navigator.share({ files: [file], text })
+            return
+          }
+        } catch (e) {
+          if ((e as Error)?.name === 'AbortError') return // user cancelled
+          // otherwise fall through to text/clipboard
+        }
+      }
+      if (typeof navigator !== 'undefined' && navigator.share) {
+        try { await navigator.share({ text }); return }
+        catch (e) { if ((e as Error)?.name === 'AbortError') return }
+      }
       await navigator.clipboard.writeText(text)
+      setCopied(true)
+      setTimeout(() => setCopied(false), 1800)
     } catch {
       alert(text)
+    } finally {
+      setBusy(false)
     }
   }
 
@@ -163,19 +199,20 @@ export default function ShareCard({ result, showCopyButton = true }: Props) {
 
       {showCopyButton && (
         <button
-          onClick={handleCopy}
+          onClick={handleShare}
+          disabled={busy}
           className="w-full max-w-xs py-3 rounded-xl font-bold text-sm transition-all active:scale-95 flex items-center justify-center gap-2"
           style={{
             background: IS_CARTO ? T.amber : 'linear-gradient(135deg,#8B6CFF,#A78BFA)',
-            color: T.onAccent,
+            color: T.onAccent, opacity: busy ? 0.7 : 1,
           }}
         >
-          <Copy size={15} color={T.onAccent} strokeWidth={1.6} absoluteStrokeWidth />
-          Copy Result
+          <Share2 size={15} color={T.onAccent} strokeWidth={1.6} absoluteStrokeWidth />
+          {busy ? 'Sharing…' : copied ? 'Copied! ✓' : 'Share result'}
         </button>
       )}
       <p style={{ fontSize: 11, color: T.dim, textAlign: 'center' }}>
-        Screenshot to share
+        Shares the card image — or screenshot it
       </p>
     </div>
   )
