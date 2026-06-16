@@ -1,6 +1,7 @@
 ﻿import { useState, useCallback, useEffect, lazy, Suspense, Component } from "react"
 import type { ReactNode } from "react"
 import SplashScreen from "./components/SplashScreen"
+import Onboarding, { hasOnboarded } from "./components/Onboarding"
 import MainTabs from "./components/MainTabs"
 import HomeScreen from "./components/HomeScreen"
 import type { TabKey } from "./ui/registry"
@@ -127,6 +128,7 @@ function ScreenFallback() {
 export default function App() {
   const [screen, setScreen] = useState<Screen>("splash")
   const [appState, setAppState] = useState<AppState>(() => loadState())
+  const [showIntro, setShowIntro] = useState<boolean>(() => !hasOnboarded())
   const [activeQuiz, setActiveQuiz] = useState<ActiveQuiz | null>(null)
   const [lastResult, setLastResult] = useState<{ score: number; total: number; answers: ("correct" | "wrong")[] } | null>(null)
   const [histRegion, setHistRegion] = useState<HistoricalRegion | undefined>(undefined)
@@ -223,6 +225,9 @@ export default function App() {
       {/* Space embers belong to the original deep-space skin only — on
           parchment/tactical they rendered as a faint purple haze. */}
       {screen !== "splash" && AESTHETIC === "original" && <StarField />}
+
+      {/* First-run intro — shows once after the splash, skippable */}
+      {screen !== "splash" && showIntro && <Onboarding onDone={() => setShowIntro(false)} />}
 
       {/* Persistent home logo — fixed top-left on every screen except splash/home.
           Tapping it always jumps back to the home page. */}

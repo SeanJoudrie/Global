@@ -278,6 +278,13 @@ export default function SettingsScreen({ onBack, onMegaCodex, onFlagCheck }: Pro
         {/* Creator unlock — enter the passcode to turn ads off on this device */}
         <CreatorUnlock />
 
+        {/* Replay the first-run intro (clears the flag and reloads) */}
+        <button onClick={() => { try { localStorage.removeItem("globalio_onboarded") } catch { /* ignore */ } window.location.reload() }}
+          className="w-full mt-3 py-2.5 rounded-xl text-xs font-semibold transition-all active:scale-95"
+          style={{ background: 'transparent', border: `1px dashed ${T.line}`, color: T.dim }}>
+          <span className="inline-flex items-center justify-center gap-2">🌍 Replay intro</span>
+        </button>
+
         {/* Feedback — opens the user's mail app, pre-addressed to the dev */}
         <a href={"mailto:sjoudrie@gmail.com?subject=" + encodeURIComponent("Globalio feedback") + "&body=" + encodeURIComponent("What I love / what I'd change / an idea:\n\n")}
           className="w-full mt-3 py-3 rounded-xl text-sm font-semibold transition-all active:scale-95 block text-center"
