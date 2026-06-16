@@ -3,6 +3,7 @@ import { FLAGS } from "../data/flags"
 import type { FlagRecord } from "../data/flags"
 import { FLAG_ATTRIBS, STRIPES_V } from "../data/flagAttribs"
 import { todayString, shuffleWithSeed } from "../utils/prng"
+import { shareOrCopy } from "../utils/share"
 import { T, ACCENT, FONT, tint } from "../ui/tokens"
 import { ScreenHeader } from "./ui"
 import { Share2 } from "lucide-react"
@@ -85,8 +86,9 @@ export default function FlagleScreen({ onBack }: Props) {
     const grid = guesses.map(g => COLS.map(c => TILE_EMOJI[g.tiles[c.key]]).join("")).join("\n")
     return head + "\n" + grid + "\nglobalio.app"
   }
-  const copyShare = () => {
-    navigator.clipboard?.writeText(shareText()).then(() => { setCopied(true); setTimeout(() => setCopied(false), 1800) })
+  const copyShare = async () => {
+    await shareOrCopy(shareText())
+    setCopied(true); setTimeout(() => setCopied(false), 1800)
   }
 
   return (

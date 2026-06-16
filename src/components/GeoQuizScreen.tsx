@@ -4,6 +4,7 @@ import { FLAGS } from '../data/flags'
 import type { FlagRecord } from '../data/flags'
 import { shuffleWithSeed, seededRandom, todayString } from '../utils/prng'
 import { scorePhrase } from '../utils/quiz'
+import { shareOrCopy } from '../utils/share'
 import CountryOutline from './CountryOutline'
 import { T, ACCENT, FONT, tint } from '../ui/tokens'
 import { ScreenHeader } from './ui'
@@ -81,8 +82,7 @@ export default function GeoQuizScreen({ onBack }: Props) {
     const grid = answers.map(a => a === 'correct' ? '🟩' : '🟥').join('')
     const phrase = scorePhrase(score, questions.length)
     const text = `Globalio Geography ${todayString()}\n${score}/${questions.length} 🌍${phrase ? ` ${phrase}` : ''}\n${grid}\nPlay at globalio.app`
-    try { await navigator.clipboard.writeText(text); alert('Copied to clipboard!') }
-    catch { alert(text) }
+    await shareOrCopy(text)
   }
 
   const advance = (correct: boolean) => {
