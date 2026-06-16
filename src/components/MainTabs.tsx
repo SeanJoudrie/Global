@@ -4,6 +4,7 @@ import worldMap from "@svg-maps/world"
 import { FLAGS } from "../data/flags"
 import type { AppState } from "../utils/storage"
 import { todayString } from "../utils/prng"
+import { openSupporter } from "../utils/supporterNav"
 import { T, ACCENT, FONT, tint, IS_CARTO } from "../ui/tokens"
 import { groupsFor, REGISTRY, recommendFor, discoverGames, trendingGames } from "../ui/registry"
 import type { Entry, TabKey } from "../ui/registry"
@@ -957,6 +958,23 @@ function YouTab({ state, learned, onNavigate, onSetUsername }: {
           <GachaInline onOpen={() => onNavigate("gacha")} />
         </div>
       </div>
+
+      {/* Support Globalio — a gentle, non-naggy CTA shown only to non-supporters */}
+      {!state.premium && (
+        <button onClick={openSupporter}
+          style={{ display: "block", width: "100%", textAlign: "left", cursor: "pointer", borderRadius: 18, padding: 16,
+            border: `1px solid ${tint(T.gold, 0.45)}`,
+            background: `linear-gradient(150deg, ${tint(T.gold, 0.16)}, ${T.surface} 78%)` }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+            <span style={{ fontSize: 26, lineHeight: 1 }}>💛</span>
+            <div style={{ flex: 1 }}>
+              <div style={{ color: T.gold, fontWeight: 800, fontSize: 15 }}>Support Globalio</div>
+              <div style={{ color: T.muted, fontSize: 12, marginTop: 2 }}>One-time $1.99 — remove ads & back a one-person project.</div>
+            </div>
+            <span style={{ color: T.gold, fontSize: 18, flexShrink: 0 }}>›</span>
+          </div>
+        </button>
+      )}
 
       {/* Feedback — a one-man operation that reads every message */}
       <FeedbackCard />
