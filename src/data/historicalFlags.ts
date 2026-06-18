@@ -2283,6 +2283,21 @@ export const HISTORICAL_FLAGS: HistoricalEntity[] = [
     note: "A north German grand duchy flying a blue-and-red bicolor, which joined the German Empire in 1871 and lasted until the monarchy fell in 1918.",
   },
   {
+    id: "bornu-empire", name: "Bornu Empire", era: "c. 1380–1893", region: "Africa & Middle East",
+    flagUrl: fp("Flag_of_the_Bornu_Empire.svg"), relatedCodes: ["NG", "TD", "NE"],
+    note: "The Kanem-Bornu Empire ruled the Lake Chad basin for roughly a thousand years — one of Africa's longest-lasting states — across parts of modern Nigeria, Chad and Niger until the colonial era.",
+  },
+  {
+    id: "new-hebrides", name: "New Hebrides Condominium", era: "1906–1980", region: "Asia & Oceania",
+    flagUrl: fp("Flag_of_New_Hebrides.svg"), relatedCode: "VU",
+    note: "The Anglo-French condominium that jointly governed the islands of modern Vanuatu from 1906 until independence in 1980 — famously run by two parallel colonial administrations at once.",
+  },
+  {
+    id: "ttpi", name: "Trust Territory of the Pacific Islands", era: "1947–1994", region: "Asia & Oceania",
+    flagUrl: fp("Flag_of_the_Trust_Territory_of_the_Pacific_Islands.svg"), relatedCodes: ["FM", "MH", "PW"],
+    note: "A US-administered UN trust territory across Micronesia after the Second World War, which split into the modern Federated States of Micronesia, Marshall Islands, Palau and the Northern Marianas.",
+  },
+  {
     id: "belarusian-pr", name: "Belarusian People's Republic", era: "1918–1919", region: "Europe",
     flagUrl: fp("Flag_of_Belarus.svg"), relatedCode: "BY",
     note: "The white-red-white flag of the short-lived republic declared during WWI; suppressed by the Bolsheviks, it returned as independent Belarus's flag from 1991 to 1995.",
