@@ -95,7 +95,7 @@ export default function CodexScreen({ onBack, initialCode, embedded = false }: P
   const isSearching = search.trim().length > 0
 
   return (
-    <div className={embedded ? '' : 'min-h-screen flex flex-col'} style={{ background: T.bg, color: T.text, position: 'relative', zIndex: 1 }}>
+    <div className={embedded ? 'carto-rise' : 'min-h-screen flex flex-col'} style={{ background: T.bg, color: T.text, position: 'relative', zIndex: 1 }}>
       {embedded || !onBack ? (
         <header style={{ padding: '14px 16px 10px' }}>
           <h1 className="geo-display" style={{ color: T.text, fontWeight: 700, fontSize: 20, letterSpacing: '-0.01em', lineHeight: 1.1, margin: 0 }}>Codex</h1>

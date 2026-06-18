@@ -211,21 +211,13 @@ function TodayTab({ state, dailyDone, launch, onNavigate, onGoCodex, onGoPlay, o
           ) },
         { accent: ACCENT.codex, eyebrow: `Flag of the Day · ${fotd.region}`, title: fotd.name,
           body: fotd.funFact, cta: "Read in the Codex", onClick: () => onGoCodex(fotd.code),
-          art: (
-            <div style={{ width: 100, height: 67, borderRadius: 10, overflow: "hidden", flexShrink: 0, border: `1px solid ${T.line}`, boxShadow: `0 4px 12px -6px ${tint(T.text, 0.45)}` }}>
-              <FlagImage code={fotd.code} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
-            </div>
-          ) },
+          cover: fotd.code },
         { accent: T.gold, watermark: "today", eyebrow: "Advertise", title: "Your ad could be here",
           body: "Reach flag fans around the world — and help keep Globalio free for everyone. Tap to get in touch.",
           cta: "Get in touch", onClick: () => { window.location.href = "mailto:sjoudrie@gmail.com?subject=" + encodeURIComponent("Advertising on Globalio") } },
         { accent: ACCENT.learn, eyebrow: "Did you know?", title: dyk.name,
           body: dyk.funFact, cta: "More fun facts", onClick: () => onNavigate("funfact"),
-          art: (
-            <div style={{ width: 76, height: 51, borderRadius: 8, overflow: "hidden", flexShrink: 0, border: `1px solid ${T.line}`, boxShadow: `0 3px 9px -5px ${tint(T.text, 0.45)}` }}>
-              <FlagImage code={dyk.code} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
-            </div>
-          ) },
+          cover: dyk.code },
       ]} />
 
       {/* Quick Play — instant fun, charged up */}
@@ -299,6 +291,9 @@ function TodayTab({ state, dailyDone, launch, onNavigate, onGoCodex, onGoPlay, o
 interface SlideData {
   accent: string; eyebrow: string; title: string; body: string; cta: string
   onClick?: () => void; art?: ReactNode; watermark?: string
+  /** A flag code — renders the slide as a full-bleed flag poster instead of the
+   *  paper-card layout, so the deck mixes two visual formats as you swipe. */
+  cover?: string
 }
 const HERO_H = 238
 
@@ -366,8 +361,33 @@ function HeroDeck({ slides }: { slides: SlideData[] }) {
 /* One deck slide — fills the deck's fixed height, text on the left, optional
    poster art on the right (or a big etched watermark behind). The whole card is
    tappable (handled by HeroDeck); the CTA stays a real button for keyboard. */
-function DeckSlide({ accent, eyebrow, title, body, cta, onClick, art, watermark }: SlideData) {
+function DeckSlide({ accent, eyebrow, title, body, cta, onClick, art, watermark, cover }: SlideData) {
   const disabled = !onClick
+  if (cover) {
+    // Full-bleed flag poster — light text over a dark scrim, a distinct second
+    // format from the paper-card slides so the deck never looks monotonous.
+    return (
+      <div className={IS_CARTO ? "carto-card" : ""}
+        style={{ height: "100%", position: "relative", overflow: "hidden", borderRadius: 16, border: `1px solid ${tint(accent, 0.4)}` }}>
+        <FlagImage code={cover} style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+        <div style={{ position: "absolute", inset: 0, background: "linear-gradient(90deg, rgba(12,16,20,0.82), rgba(12,16,20,0.34) 60%, rgba(12,16,20,0.08))" }} />
+        <div style={{ position: "relative", height: "100%", padding: 18, display: "flex", flexDirection: "column", justifyContent: "center", maxWidth: "80%" }}>
+          <div className="geo-micro" style={{ fontSize: 9, color: "rgba(255,255,255,0.82)", marginBottom: 7 }}>◦ {eyebrow}</div>
+          <div className="geo-display" style={{ fontWeight: 800, fontSize: 25, lineHeight: 1.06, letterSpacing: "-0.02em", color: "#fff", textShadow: "0 1px 10px rgba(0,0,0,0.55)", display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>
+            {title}
+          </div>
+          <div style={{ color: "rgba(255,255,255,0.92)", fontSize: 12.5, marginTop: 6, lineHeight: 1.5, textShadow: "0 1px 8px rgba(0,0,0,0.55)", display: "-webkit-box", WebkitLineClamp: 3, WebkitBoxOrient: "vertical", overflow: "hidden" }}>
+            {body}
+          </div>
+          <button onClick={onClick} onPointerDown={e => e.stopPropagation()} disabled={disabled} className={disabled ? "" : "geo-tap"}
+            style={{ alignSelf: "flex-start", marginTop: 14, display: "inline-flex", alignItems: "center", gap: 8, padding: "11px 20px", borderRadius: 999, minHeight: 44, background: "#fff", color: "#16202a", cursor: disabled ? "default" : "pointer" }}>
+            <span style={{ fontFamily: FONT.display, fontWeight: 700, fontSize: 14.5 }}>{cta}</span>
+            {!disabled && <span style={{ fontSize: 15 }}>→</span>}
+          </button>
+        </div>
+      </div>
+    )
+  }
   return (
     <div className={IS_CARTO ? "carto-card" : ""}
       style={{
