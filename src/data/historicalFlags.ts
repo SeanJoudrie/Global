@@ -2233,6 +2233,36 @@ export const HISTORICAL_FLAGS: HistoricalEntity[] = [
     note: "A short-lived federation of Caucasian peoples that declared independence as the Russian Empire collapsed, before being absorbed by the Russian SFSR.",
   },
   {
+    id: "septinsular-republic", name: "Septinsular Republic", era: "1800–1815", region: "Europe",
+    flagUrl: fp("Flag_of_the_Septinsular_Republic.svg"), relatedCode: "GR",
+    note: "An early self-governing Greek state in the Ionian Islands under nominal Ottoman-Russian protection, flying a winged Lion of St Mark with seven spears for its seven islands.",
+  },
+  {
+    id: "us-ionian-islands", name: "United States of the Ionian Islands", era: "1815–1864", region: "Europe",
+    flagUrl: fp("Flag_of_the_United_States_of_the_Ionian_Islands.svg"), relatedCode: "GR",
+    note: "A British protectorate over the Ionian Islands, flying the Lion of St Mark on a Union-Jack-cantoned flag, until the islands were ceded to Greece in 1864.",
+  },
+  {
+    id: "free-city-danzig", name: "Free City of Danzig", era: "1920–1939", region: "Europe",
+    flagUrl: fp("Flag_of_the_Free_City_of_Danzig.svg"), relatedCode: "PL",
+    note: "The League of Nations free city (now Gdańsk, Poland), flying a red flag with two white crosses beneath a crown; its status was a flashpoint at the outbreak of the Second World War.",
+  },
+  {
+    id: "republic-san-marco", name: "Republic of San Marco", era: "1848–1849", region: "Europe",
+    flagUrl: fp("Flag_of_the_Republic_of_San_Marco.svg"), relatedCode: "IT",
+    note: "The revolutionary Venetian republic that briefly threw off Austrian rule during the 1848 revolutions, reviving the Lion of St Mark over the lagoon.",
+  },
+  {
+    id: "kuban-peoples-republic", name: "Kuban People's Republic", era: "1918–1920", region: "Europe",
+    flagUrl: fp("Flag_of_Kuban_People's_Republic.svg"), relatedCode: "RU",
+    note: "A short-lived Cossack republic on the Kuban steppe during the Russian Civil War, flying a green-blue-red tricolor, before it was absorbed by the Russian SFSR.",
+  },
+  {
+    id: "free-state-fiume", name: "Free State of Fiume", era: "1920–1924", region: "Europe",
+    flagUrl: fp("Flag_of_the_Free_State_of_Fiume.svg"), relatedCode: "HR",
+    note: "A tiny independent city-state at modern Rijeka, Croatia, created after the First World War before being partitioned between Italy and Yugoslavia.",
+  },
+  {
     id: "belarusian-pr", name: "Belarusian People's Republic", era: "1918–1919", region: "Europe",
     flagUrl: fp("Flag_of_Belarus.svg"), relatedCode: "BY",
     note: "The white-red-white flag of the short-lived republic declared during WWI; suppressed by the Bolsheviks, it returned as independent Belarus's flag from 1991 to 1995.",
