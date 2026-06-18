@@ -2178,6 +2178,26 @@ export const HISTORICAL_FLAGS: HistoricalEntity[] = [
     note: "The red Soviet flag of Azerbaijan with a blue lower band and the hammer, sickle and star, used until the republic restored its independence in 1991.",
   },
   {
+    id: "crimean-khanate", name: "Crimean Khanate", era: "1441–1783", region: "Europe",
+    flagUrl: fp("Flag_of_the_Crimean_Khanate.svg"), relatedCode: "UA",
+    note: "A long-lived Tatar state on the Black Sea and a powerful vassal of the Ottoman Empire, whose steppe cavalry dominated the region until Russia annexed Crimea in 1783.",
+  },
+  {
+    id: "khiva-khanate", name: "Khanate of Khiva", era: "1511–1920", region: "Asia & Oceania",
+    flagUrl: fp("Flag_of_the_Khanate_of_Khiva.svg"), relatedCodes: ["UZ", "TM"],
+    note: "A Central Asian khanate centred on the oasis city of Khiva in modern Uzbekistan; it became a Russian protectorate in 1873 and was abolished in 1920.",
+  },
+  {
+    id: "kokand-khanate", name: "Khanate of Kokand", era: "1709–1876", region: "Asia & Oceania",
+    flagUrl: fp("Banner_of_the_Kokand_Khans.svg"), relatedCodes: ["UZ", "KG", "TJ"],
+    note: "A khanate of the fertile Fergana Valley straddling modern Uzbekistan, Kyrgyzstan and Tajikistan, conquered and absorbed by the Russian Empire in 1876.",
+  },
+  {
+    id: "kazan-khanate", name: "Kazan Khanate", era: "1438–1552", region: "Europe",
+    flagUrl: fp("Banner_of_Kazan.svg"), relatedCode: "RU",
+    note: "A Tatar successor state of the Golden Horde on the Volga, conquered by Ivan the Terrible in 1552 — a turning point in Russia's eastward expansion.",
+  },
+  {
     id: "belarusian-pr", name: "Belarusian People's Republic", era: "1918–1919", region: "Europe",
     flagUrl: fp("Flag_of_Belarus.svg"), relatedCode: "BY",
     note: "The white-red-white flag of the short-lived republic declared during WWI; suppressed by the Bolsheviks, it returned as independent Belarus's flag from 1991 to 1995.",
