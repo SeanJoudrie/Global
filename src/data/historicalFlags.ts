@@ -2198,6 +2198,26 @@ export const HISTORICAL_FLAGS: HistoricalEntity[] = [
     note: "A Tatar successor state of the Golden Horde on the Volga, conquered by Ivan the Terrible in 1552 — a turning point in Russia's eastward expansion.",
   },
   {
+    id: "ternate-sultanate", name: "Sultanate of Ternate", era: "1257–1914", region: "Asia & Oceania",
+    flagUrl: fp("Flag_of_the_Ternate_Sultanate.png"), relatedCode: "ID",
+    note: "One of the oldest Muslim sultanates in the Indonesian archipelago and a Maluku spice-trade power, whose rivalry with neighbouring Tidore shaped the global clove and nutmeg trade.",
+  },
+  {
+    id: "sultanate-of-rum", name: "Sultanate of Rum", era: "1077–1308", region: "Africa & Middle East",
+    flagUrl: fp("Double-headed_eagle_of_the_Sultanate_of_Rum.svg"), relatedCode: "TR",
+    note: "The Seljuk Turkish sultanate that ruled much of Anatolia after the Battle of Manzikert, flying a double-headed eagle; its collapse opened the way for the rise of the Ottomans.",
+  },
+  {
+    id: "bogd-khanate", name: "Bogd Khanate of Mongolia", era: "1911–1924", region: "Asia & Oceania",
+    flagUrl: fp("Flag_of_Bogd_Khaanate_Mongolia.svg"), relatedCode: "MN",
+    note: "Theocratic Mongolia under the Bogd Khan, declared independent from Qing China in 1911; its flag bore the soyombo emblem that still anchors Mongolia's national flag today.",
+  },
+  {
+    id: "jabal-shammar", name: "Emirate of Jabal Shammar", era: "1836–1921", region: "Africa & Middle East",
+    flagUrl: fp("Flag_of_the_Emirate_of_Ha'il.svg"), relatedCode: "SA",
+    note: "The Rashidi emirate centred on Ha'il in northern Arabia, the great rival of the House of Saud until Ibn Saud conquered it in 1921 and folded it into what became Saudi Arabia.",
+  },
+  {
     id: "belarusian-pr", name: "Belarusian People's Republic", era: "1918–1919", region: "Europe",
     flagUrl: fp("Flag_of_Belarus.svg"), relatedCode: "BY",
     note: "The white-red-white flag of the short-lived republic declared during WWI; suppressed by the Bolsheviks, it returned as independent Belarus's flag from 1991 to 1995.",
