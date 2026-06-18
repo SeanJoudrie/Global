@@ -2263,6 +2263,26 @@ export const HISTORICAL_FLAGS: HistoricalEntity[] = [
     note: "A tiny independent city-state at modern Rijeka, Croatia, created after the First World War before being partitioned between Italy and Yugoslavia.",
   },
   {
+    id: "duchy-of-nassau", name: "Duchy of Nassau", era: "1806–1866", region: "Europe",
+    flagUrl: fp("Flagge_Herzogtum_Nassau_(1806-1866).svg"), relatedCode: "DE",
+    note: "A duchy in western Germany flying an orange-and-blue bicolor, annexed by Prussia in 1866; the House of Nassau still reigns in Luxembourg and the Netherlands.",
+  },
+  {
+    id: "duchy-of-brunswick", name: "Duchy of Brunswick", era: "1815–1918", region: "Europe",
+    flagUrl: fp("Flagge_Herzogtum_Braunschweig.svg"), relatedCode: "DE",
+    note: "A north German duchy flying a blue-and-yellow bicolor, ruled by the Welf dynasty until the German Revolution of 1918 turned it into a free state.",
+  },
+  {
+    id: "duchy-of-anhalt", name: "Duchy of Anhalt", era: "1863–1918", region: "Europe",
+    flagUrl: fp("Flagge_Herzogtum_Anhalt.svg"), relatedCode: "DE",
+    note: "A small central German duchy of the ancient Ascanian dynasty, flying a green-and-white bicolor, until it became a free state in 1918.",
+  },
+  {
+    id: "grand-duchy-oldenburg", name: "Grand Duchy of Oldenburg", era: "1815–1918", region: "Europe",
+    flagUrl: fp("Flagge_Herzogtum_Oldenburg.svg"), relatedCode: "DE",
+    note: "A north German grand duchy flying a blue-and-red bicolor, which joined the German Empire in 1871 and lasted until the monarchy fell in 1918.",
+  },
+  {
     id: "belarusian-pr", name: "Belarusian People's Republic", era: "1918–1919", region: "Europe",
     flagUrl: fp("Flag_of_Belarus.svg"), relatedCode: "BY",
     note: "The white-red-white flag of the short-lived republic declared during WWI; suppressed by the Bolsheviks, it returned as independent Belarus's flag from 1991 to 1995.",
