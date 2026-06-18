@@ -200,7 +200,21 @@ export default function CodexScreen({ onBack, initialCode, embedded = false }: P
           </div>
         )}
 
-        {/* Beyond-countries order: Identity, Ethnic, Extinct, Cities, Orgs, Signal */}
+        {/* Accuracy disclaimer — these collections lean on Wikipedia / Wikimedia
+            Commons, so we set expectations and invite corrections. */}
+        {!isSearching && (
+          <div style={{ margin: '4px 2px 10px', padding: '10px 12px', borderRadius: 10, background: tint(T.amber, 0.07), border: `1px solid ${tint(T.amber, 0.28)}` }}>
+            <p className="text-xs" style={{ color: T.muted, lineHeight: 1.6, margin: 0 }}>
+              <strong style={{ color: T.text }}>A note on accuracy.</strong> Flags, names and dates below are sourced from Wikipedia and Wikimedia Commons. We do our best to get them right, but we're not an authoritative reference and small mistakes may slip through. Spot something off?{' '}
+              <a href="mailto:sjoudrie@gmail.com?subject=Globalio%20flag%20correction" style={{ color: T.amber, fontWeight: 600 }}>Tell us</a>{' '}and we'll fix it fast.
+            </p>
+          </div>
+        )}
+
+        {/* Beyond-countries order: Mega Codex first (the "pick a random one"
+            entry point), then the themed collections, signal flags last. */}
+        {/* Mega Codex A–Z — every flag in the app, alphabetical, up top */}
+        {!isSearching && <MegaCodexSection />}
         {/* Identity & other flags — pride, ethnic, separatist, micronations… */}
         {!isSearching && <IdentityCodexSection />}
         {/* Ethnic & cultural flags — the full Commons "Cultural flags" gallery */}
@@ -213,8 +227,6 @@ export default function CodexScreen({ onBack, initialCode, embedded = false }: P
         {!isSearching && <OrgCodexSection />}
         {/* Maritime / signal alphabet — last of the themed sections */}
         {!isSearching && <SignalCodexSection />}
-        {/* Mega Codex A–Z — every flag in the app, alphabetical, at the very bottom */}
-        {!isSearching && <MegaCodexSection />}
         {/* Ad box — dormant until a publisher ID is set in src/ads.ts */}
         {!isSearching && <AdBox slot={AD_SLOTS.codexFooter} style={{ marginTop: 24 }} />}
       </div>
@@ -647,6 +659,19 @@ function TerritoriesSection({ territories }: { territories: Territory[] }) {
   )
 }
 
+// Per-category accent so each Identity subsection reads as its own colour —
+// pride red, pan-ethnic clay, indigenous ochre, separatist blue, micronations
+// green, civic plum. Palette tokens keep it legible across all three aesthetics
+// (raw red/yellow would vanish on the light parchment skin).
+const CAT_COLORS: Record<string, string> = {
+  'Pride & LGBTQ+': T.danger,
+  'Pan-National & Ethnic': T.warm,
+  'Indigenous Peoples': T.amber,
+  'Separatist & Autonomous': T.cyan,
+  Micronations: T.green,
+  'Civic & Ideological': T.violet,
+}
+
 // ── Identity flags browser (pride, ethnic, separatist, micronations, signal) ──
 function IdentityCodexSection() {
   const [sectionOpen, setSectionOpen] = useState(false)
@@ -673,19 +698,20 @@ function IdentityCodexSection() {
       {sectionOpen && IDENTITY_CATEGORIES.map(cat => {
         const flags = IDENTITY_FLAGS.filter(f => f.category === cat)
         const isOpen = openCat === cat
+        const catColor = CAT_COLORS[cat] ?? T.warm
         return (
           <div key={cat} className="mb-3">
             <button
               onClick={() => setOpenCat(o => o === cat ? null : cat)}
               aria-expanded={isOpen}
               className="geo-tap w-full flex items-center justify-between px-1 py-3 transition-all active:scale-[0.99]"
-              style={{ background: 'transparent', borderBottom: `1px solid ${isOpen ? tint(T.warm, 0.45) : T.line}` }}>
+              style={{ background: 'transparent', borderBottom: `1px solid ${isOpen ? tint(catColor, 0.45) : T.line}` }}>
               <div className="flex items-center gap-2.5">
-                {(() => { const Icon = CAT_ICONS[cat] ?? Users; return <Icon size={15} color={T.warm} strokeWidth={1.6} absoluteStrokeWidth /> })()}
-                <h3 className="text-sm font-bold uppercase tracking-widest" style={{ color: T.warm }}>{cat}</h3>
+                {(() => { const Icon = CAT_ICONS[cat] ?? Users; return <Icon size={15} color={catColor} strokeWidth={1.6} absoluteStrokeWidth /> })()}
+                <h3 className="text-sm font-bold uppercase tracking-widest" style={{ color: catColor }}>{cat}</h3>
                 <span className="text-xs" style={{ color: T.dim, fontFamily: FONT.mono, fontVariantNumeric: 'tabular-nums' }}>{flags.length}</span>
               </div>
-              <ChevronDown size={16} color={T.warm} strokeWidth={1.6} absoluteStrokeWidth
+              <ChevronDown size={16} color={catColor} strokeWidth={1.6} absoluteStrokeWidth
                 style={{ transition: 'transform 0.2s', transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)', flexShrink: 0 }} />
             </button>
             {isOpen && (
@@ -695,7 +721,7 @@ function IdentityCodexSection() {
                   return (
                     <button key={f.id} onClick={() => setOpenFlag(o => o === f.id ? null : f.id)}
                       className="geo-tap w-full px-1.5 py-2.5 rounded-lg transition-all active:scale-[0.99] text-left"
-                      style={{ background: showNote ? tint(T.warm, 0.07) : 'transparent', borderBottom: `1px solid ${tint(T.line, 0.55)}` }}>
+                      style={{ background: showNote ? tint(catColor, 0.07) : 'transparent', borderBottom: `1px solid ${tint(T.line, 0.55)}` }}>
                       <div className="flex items-center gap-3">
                         {f.noFlag ? (
                           <div style={{ width: 46, height: 30, borderRadius: 5, border: `1px dashed ${T.line}`, flexShrink: 0, background: T.surfaceHi, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
@@ -709,7 +735,7 @@ function IdentityCodexSection() {
                         <div className="flex-1 min-w-0">
                           <div className="font-semibold text-sm truncate" style={{ color: T.text }}>{f.name}</div>
                         </div>
-                        <span style={{ color: T.warm, fontSize: 16, transition: 'transform 0.2s', transform: showNote ? 'rotate(90deg)' : 'rotate(0deg)' }}>›</span>
+                        <span style={{ color: catColor, fontSize: 16, transition: 'transform 0.2s', transform: showNote ? 'rotate(90deg)' : 'rotate(0deg)' }}>›</span>
                       </div>
                       {showNote && (
                         <p className="text-xs leading-relaxed mt-2.5" style={{ color: T.muted, lineHeight: 1.65 }}>{f.note}</p>
