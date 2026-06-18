@@ -2397,6 +2397,15 @@ const curatedFact = (title: string): string | undefined => {
   return undefined
 }
 
+// Deterministic phrasing picker: a given title always maps to the same variant
+// (stable across renders), but neighbouring tiles land on different phrasings so
+// the gallery reads naturally instead of one filled-in formula repeated en masse.
+const pickPhrase = (key: string, variants: string[]): string => {
+  let h = 0
+  for (let i = 0; i < key.length; i++) h = (h * 31 + key.charCodeAt(i)) >>> 0
+  return variants[h % variants.length]
+}
+
 interface MegaFlag { title: string; url: string; fact: string }
 function gatherAllFlags(): MegaFlag[] {
   const seen = new Set<string>()
@@ -2412,7 +2421,13 @@ function gatherAllFlags(): MegaFlag[] {
     seen.add(key); all.push({ title: t, url, fact: (fact || '').trim() || `A flag in the Globalio Codex.` })
   }
   FLAGS.forEach(f => push(f.name, f.flagUrl, f.funFact))
-  SUB_FLAGS.forEach(s => push(s.name, s.flagUrl, curatedFact(s.name) ?? `The flag of ${s.name}, a subdivision of ${s.countryName}.`))
+  SUB_FLAGS.forEach(s => push(s.name, s.flagUrl, curatedFact(s.name) ?? pickPhrase(s.name, [
+    `The flag of ${s.name}, a subdivision of ${s.countryName}.`,
+    `${s.name}, one of the administrative divisions of ${s.countryName}.`,
+    `A regional flag from ${s.countryName} — that of ${s.name}.`,
+    `The banner of ${s.name}, a region of ${s.countryName}.`,
+    `Flag of ${s.name}, part of ${s.countryName}.`,
+  ])))
   IDENTITY_FLAGS.forEach(f => push(f.name, f.flagUrl, f.note))
   US_CITY_FLAGS.forEach(f => push(f.name, f.flagUrl, f.note))
   ETHNIC_FLAGS.forEach(r => r.groups.forEach(g => g.items.forEach(it => {
@@ -2420,21 +2435,63 @@ function gatherAllFlags(): MegaFlag[] {
     // when it just repeats the people's own name.
     const seg = (g.label || "").split(" · ").pop() || ""
     const overlaps = !!seg && (seg.toLowerCase().includes(it.name.toLowerCase()) || it.name.toLowerCase().includes(seg.toLowerCase()))
+    const n = it.name
     const tmpl = seg && !overlaps
-      ? `The ${it.name} are an ethnic group of the ${seg}.`
-      : `The flag of the ${it.name}, an ethnic and cultural group.`
+      ? pickPhrase(n, [
+          `The ${n} are a people of the ${seg}.`,
+          `A flag of the ${n}, an ethnic group of the ${seg}.`,
+          `The ${n} — one of the peoples of the ${seg}.`,
+          `Flag of the ${n}, an ethnic and cultural group of the ${seg}.`,
+          `The ${n}, a people of the ${seg}.`,
+        ])
+      : pickPhrase(n, [
+          `The flag of the ${n}, an ethnic and cultural group.`,
+          `A banner of the ${n} people.`,
+          `The ${n}, a distinct ethnic and cultural community.`,
+          `Colours of the ${n}, an ethnic and cultural group.`,
+        ])
     push(it.name, fp(it.file), curatedFact(it.name) ?? tmpl)
   })))
   EXTINCT_STATES.forEach(r => r.items.forEach(it => {
     const title = stripFlagOf(splitParen(it.name)[0])
     const [, paren] = splitParen(it.name)
-    push(title, fp(it.file), curatedFact(title) ?? `A state that no longer exists${paren ? `, ${paren.replace(/^(de facto |nominally )/i, "")}` : ` in ${r.region}`}.`)
+    const p = paren ? paren.replace(/^(de facto |nominally )/i, "") : ""
+    const tmpl = p
+      ? pickPhrase(title, [
+          `A state that no longer exists, ${p}.`,
+          `A former state — ${p}.`,
+          `Once a state in its own right, ${p}; now vanished.`,
+          `A bygone state, ${p}.`,
+        ])
+      : pickPhrase(title, [
+          `A vanished state of ${r.region}.`,
+          `A former state of ${r.region}, now consigned to history.`,
+          `A state of ${r.region} that no longer exists.`,
+          `Once a sovereign entity in ${r.region}.`,
+        ])
+    push(title, fp(it.file), curatedFact(title) ?? tmpl)
   }))
   ORG_FLAGS.forEach(r => r.groups.forEach(g => g.items.forEach(it => {
     const title = stripFlagOf(it.name)
     const sports = /sport/i.test(r.region), former = /former/i.test(r.region)
     const scope = ["Africa", "Americas", "Asia", "Europe", "Oceania"].includes(g.label) ? ` operating across ${g.label}` : ""
-    const tmpl = former ? `A now-defunct international organisation.` : sports ? `An international sports federation.` : `An international organisation${scope}.`
+    const tmpl = former
+      ? pickPhrase(title, [
+          `A now-defunct international organisation.`,
+          `A former international body, since dissolved.`,
+          `An international organisation that no longer operates.`,
+        ])
+      : sports
+      ? pickPhrase(title, [
+          `An international sports federation.`,
+          `A governing body of international sport.`,
+          `An international sporting organisation.`,
+        ])
+      : pickPhrase(title, [
+          `An international organisation${scope}.`,
+          `An international body${scope}.`,
+          `A multinational organisation${scope}.`,
+        ])
     push(title, fp(it.file), curatedFact(title) ?? tmpl)
   })))
   Object.values(CODEX).forEach(e => e.flagHistory.forEach(h => { push(h.label, h.flagUrl, h.note); h.parallel?.forEach(p => push(p.label, p.flagUrl, p.note)) }))
