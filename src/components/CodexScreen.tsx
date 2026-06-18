@@ -1127,16 +1127,39 @@ function EthnicCodexSection() {
 }
 
 function ExtinctStatesCodexSection() {
-  const total = EXTINCT_STATES.reduce((n, r) => n + r.items.length, 0)
+  // The curated extinct-states gallery, merged with every predecessor/historical
+  // flag — deduped against the gallery by name so a state that lives in both
+  // datasets (Two Sicilies, Ottoman, USSR, Yugoslavia, Ashanti, Tibet…) shows
+  // only once. Date-parentheses are stripped only when MATCHING the curated
+  // names, so distinct historical variants (e.g. two Qing flags) are preserved.
+  const norm = (s: string) => stripFlagOf(splitParen(s)[0]).toLowerCase().replace(/[^a-z0-9]+/g, '')
+  const curatedNames = new Set<string>()
+  const histBucket: Record<string, string> = {
+    Europe: 'Europe', Americas: 'Americas',
+    'Africa & Middle East': 'Africa', 'Asia & Oceania': 'Asia',
+  }
   const regions: GRegion[] = EXTINCT_STATES.map(r => ({
     label: r.region,
     icon: galleryIcon(r.region),
     groups: [{ label: '', items: r.items.map(it => {
       const [pre, paren] = splitParen(it.name)
+      curatedNames.add(norm(it.name))
       return { file: fp(it.file), title: stripFlagOf(pre), detail: paren ? cap(paren) + '.' : 'A former state.' }
     }) }],
   }))
-  return <GallerySection title="Extinct States" icon={Landmark} color={T.violet} blurb={`${total} flags of vanished states · by continent`} regions={regions} />
+  const byBucket: Record<string, GRow[]> = {}
+  HISTORICAL_FLAGS.forEach(h => {
+    if (curatedNames.has(norm(h.name))) return // already in the curated gallery — skip
+    const bucket = histBucket[h.region] ?? 'Europe'
+    const arr = byBucket[bucket] || (byBucket[bucket] = [])
+    arr.push({ file: h.flagUrl, title: h.name, detail: `${h.era} — ${h.note}` })
+  })
+  regions.forEach(rg => {
+    const extra = byBucket[rg.label]
+    if (extra && extra.length) rg.groups.push({ label: 'Predecessor & former states', items: extra })
+  })
+  const total = regions.reduce((n, rg) => n + rg.groups.reduce((m, g) => m + g.items.length, 0), 0)
+  return <GallerySection title="Extinct &amp; Former States" icon={Landmark} color={T.violet} blurb={`${total} flags of vanished & predecessor states · by continent`} regions={regions} />
 }
 
 function OrgCodexSection() {

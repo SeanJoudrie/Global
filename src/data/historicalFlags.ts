@@ -2178,29 +2178,9 @@ export const HISTORICAL_FLAGS: HistoricalEntity[] = [
     note: "The red Soviet flag of Azerbaijan with a blue lower band and the hammer, sickle and star, used until the republic restored its independence in 1991.",
   },
   {
-    id: "crimean-khanate", name: "Crimean Khanate", era: "1441–1783", region: "Europe",
-    flagUrl: fp("Flag_of_the_Crimean_Khanate.svg"), relatedCode: "UA",
-    note: "A long-lived Tatar state on the Black Sea and a powerful vassal of the Ottoman Empire, whose steppe cavalry dominated the region until Russia annexed Crimea in 1783.",
-  },
-  {
-    id: "khiva-khanate", name: "Khanate of Khiva", era: "1511–1920", region: "Asia & Oceania",
-    flagUrl: fp("Flag_of_the_Khanate_of_Khiva.svg"), relatedCodes: ["UZ", "TM"],
-    note: "A Central Asian khanate centred on the oasis city of Khiva in modern Uzbekistan; it became a Russian protectorate in 1873 and was abolished in 1920.",
-  },
-  {
-    id: "kokand-khanate", name: "Khanate of Kokand", era: "1709–1876", region: "Asia & Oceania",
-    flagUrl: fp("Banner_of_the_Kokand_Khans.svg"), relatedCodes: ["UZ", "KG", "TJ"],
-    note: "A khanate of the fertile Fergana Valley straddling modern Uzbekistan, Kyrgyzstan and Tajikistan, conquered and absorbed by the Russian Empire in 1876.",
-  },
-  {
     id: "kazan-khanate", name: "Kazan Khanate", era: "1438–1552", region: "Europe",
     flagUrl: fp("Banner_of_Kazan.svg"), relatedCode: "RU",
     note: "A Tatar successor state of the Golden Horde on the Volga, conquered by Ivan the Terrible in 1552 — a turning point in Russia's eastward expansion.",
-  },
-  {
-    id: "ternate-sultanate", name: "Sultanate of Ternate", era: "1257–1914", region: "Asia & Oceania",
-    flagUrl: fp("Flag_of_the_Ternate_Sultanate.png"), relatedCode: "ID",
-    note: "One of the oldest Muslim sultanates in the Indonesian archipelago and a Maluku spice-trade power, whose rivalry with neighbouring Tidore shaped the global clove and nutmeg trade.",
   },
   {
     id: "sultanate-of-rum", name: "Sultanate of Rum", era: "1077–1308", region: "Africa & Middle East",
@@ -2208,84 +2188,14 @@ export const HISTORICAL_FLAGS: HistoricalEntity[] = [
     note: "The Seljuk Turkish sultanate that ruled much of Anatolia after the Battle of Manzikert, flying a double-headed eagle; its collapse opened the way for the rise of the Ottomans.",
   },
   {
-    id: "bogd-khanate", name: "Bogd Khanate of Mongolia", era: "1911–1924", region: "Asia & Oceania",
-    flagUrl: fp("Flag_of_Bogd_Khaanate_Mongolia.svg"), relatedCode: "MN",
-    note: "Theocratic Mongolia under the Bogd Khan, declared independent from Qing China in 1911; its flag bore the soyombo emblem that still anchors Mongolia's national flag today.",
-  },
-  {
     id: "jabal-shammar", name: "Emirate of Jabal Shammar", era: "1836–1921", region: "Africa & Middle East",
     flagUrl: fp("Flag_of_the_Emirate_of_Ha'il.svg"), relatedCode: "SA",
     note: "The Rashidi emirate centred on Ha'il in northern Arabia, the great rival of the House of Saud until Ibn Saud conquered it in 1921 and folded it into what became Saudi Arabia.",
   },
   {
-    id: "duchy-of-warsaw", name: "Duchy of Warsaw", era: "1807–1815", region: "Europe",
-    flagUrl: fp("Flag_of_the_Duchy_of_Warsaw.svg"), relatedCode: "PL",
-    note: "Napoleon's short-lived Polish client state, a partial restoration of Poland between the partitions; it kept Polish statehood alive until the Congress of Vienna dissolved it.",
-  },
-  {
-    id: "cretan-state", name: "Cretan State", era: "1898–1913", region: "Europe",
-    flagUrl: fp("Flag_of_Cretan_State.svg"), relatedCode: "GR",
-    note: "An autonomous state on Crete under nominal Ottoman suzerainty but Great-Power protection, flying a white-and-blue flag with a red canton, until the island united with Greece in 1913.",
-  },
-  {
-    id: "mountainous-republic-caucasus", name: "Mountainous Republic of the Northern Caucasus", era: "1917–1920", region: "Europe",
-    flagUrl: fp("Flag_of_the_Mountainous_Republic_of_the_Northern_Caucasus.svg"), relatedCode: "RU",
-    note: "A short-lived federation of Caucasian peoples that declared independence as the Russian Empire collapsed, before being absorbed by the Russian SFSR.",
-  },
-  {
-    id: "septinsular-republic", name: "Septinsular Republic", era: "1800–1815", region: "Europe",
-    flagUrl: fp("Flag_of_the_Septinsular_Republic.svg"), relatedCode: "GR",
-    note: "An early self-governing Greek state in the Ionian Islands under nominal Ottoman-Russian protection, flying a winged Lion of St Mark with seven spears for its seven islands.",
-  },
-  {
     id: "us-ionian-islands", name: "United States of the Ionian Islands", era: "1815–1864", region: "Europe",
     flagUrl: fp("Flag_of_the_United_States_of_the_Ionian_Islands.svg"), relatedCode: "GR",
     note: "A British protectorate over the Ionian Islands, flying the Lion of St Mark on a Union-Jack-cantoned flag, until the islands were ceded to Greece in 1864.",
-  },
-  {
-    id: "free-city-danzig", name: "Free City of Danzig", era: "1920–1939", region: "Europe",
-    flagUrl: fp("Flag_of_the_Free_City_of_Danzig.svg"), relatedCode: "PL",
-    note: "The League of Nations free city (now Gdańsk, Poland), flying a red flag with two white crosses beneath a crown; its status was a flashpoint at the outbreak of the Second World War.",
-  },
-  {
-    id: "republic-san-marco", name: "Republic of San Marco", era: "1848–1849", region: "Europe",
-    flagUrl: fp("Flag_of_the_Republic_of_San_Marco.svg"), relatedCode: "IT",
-    note: "The revolutionary Venetian republic that briefly threw off Austrian rule during the 1848 revolutions, reviving the Lion of St Mark over the lagoon.",
-  },
-  {
-    id: "kuban-peoples-republic", name: "Kuban People's Republic", era: "1918–1920", region: "Europe",
-    flagUrl: fp("Flag_of_Kuban_People's_Republic.svg"), relatedCode: "RU",
-    note: "A short-lived Cossack republic on the Kuban steppe during the Russian Civil War, flying a green-blue-red tricolor, before it was absorbed by the Russian SFSR.",
-  },
-  {
-    id: "free-state-fiume", name: "Free State of Fiume", era: "1920–1924", region: "Europe",
-    flagUrl: fp("Flag_of_the_Free_State_of_Fiume.svg"), relatedCode: "HR",
-    note: "A tiny independent city-state at modern Rijeka, Croatia, created after the First World War before being partitioned between Italy and Yugoslavia.",
-  },
-  {
-    id: "duchy-of-nassau", name: "Duchy of Nassau", era: "1806–1866", region: "Europe",
-    flagUrl: fp("Flagge_Herzogtum_Nassau_(1806-1866).svg"), relatedCode: "DE",
-    note: "A duchy in western Germany flying an orange-and-blue bicolor, annexed by Prussia in 1866; the House of Nassau still reigns in Luxembourg and the Netherlands.",
-  },
-  {
-    id: "duchy-of-brunswick", name: "Duchy of Brunswick", era: "1815–1918", region: "Europe",
-    flagUrl: fp("Flagge_Herzogtum_Braunschweig.svg"), relatedCode: "DE",
-    note: "A north German duchy flying a blue-and-yellow bicolor, ruled by the Welf dynasty until the German Revolution of 1918 turned it into a free state.",
-  },
-  {
-    id: "duchy-of-anhalt", name: "Duchy of Anhalt", era: "1863–1918", region: "Europe",
-    flagUrl: fp("Flagge_Herzogtum_Anhalt.svg"), relatedCode: "DE",
-    note: "A small central German duchy of the ancient Ascanian dynasty, flying a green-and-white bicolor, until it became a free state in 1918.",
-  },
-  {
-    id: "grand-duchy-oldenburg", name: "Grand Duchy of Oldenburg", era: "1815–1918", region: "Europe",
-    flagUrl: fp("Flagge_Herzogtum_Oldenburg.svg"), relatedCode: "DE",
-    note: "A north German grand duchy flying a blue-and-red bicolor, which joined the German Empire in 1871 and lasted until the monarchy fell in 1918.",
-  },
-  {
-    id: "bornu-empire", name: "Bornu Empire", era: "c. 1380–1893", region: "Africa & Middle East",
-    flagUrl: fp("Flag_of_the_Bornu_Empire.svg"), relatedCodes: ["NG", "TD", "NE"],
-    note: "The Kanem-Bornu Empire ruled the Lake Chad basin for roughly a thousand years — one of Africa's longest-lasting states — across parts of modern Nigeria, Chad and Niger until the colonial era.",
   },
   {
     id: "new-hebrides", name: "New Hebrides Condominium", era: "1906–1980", region: "Asia & Oceania",
@@ -2306,11 +2216,6 @@ export const HISTORICAL_FLAGS: HistoricalEntity[] = [
     id: "konbaung", name: "Konbaung Dynasty", era: "1752–1885", region: "Asia & Oceania",
     flagUrl: fp("National_flag_of_Third_Burmese_Empire_(Konbaung_Dynasty).svg"), relatedCode: "MM",
     note: "The last dynasty of Burmese kings — the 'Third Burmese Empire' — whose peacock banner flew until the British annexed Burma after three Anglo-Burmese Wars.",
-  },
-  {
-    id: "federation-south-arabia", name: "Federation of South Arabia", era: "1962–1967", region: "Africa & Middle East",
-    flagUrl: fp("Flag_of_the_Federation_of_South_Arabia.svg"), relatedCode: "YE",
-    note: "A British-backed federation of Aden and the surrounding sultanates in the south of modern Yemen, dissolved when South Yemen won independence in 1967.",
   },
   {
     id: "belarusian-pr", name: "Belarusian People's Republic", era: "1918–1919", region: "Europe",
