@@ -1,4 +1,4 @@
-﻿import { useState, useCallback, useEffect, lazy, Suspense, Component } from "react"
+﻿import { useState, useCallback, useEffect, useRef, lazy, Suspense, Component } from "react"
 import type { ReactNode } from "react"
 import SplashScreen from "./components/SplashScreen"
 import Onboarding, { hasOnboarded } from "./components/Onboarding"
@@ -138,7 +138,27 @@ export default function App() {
   // The boxed "every 4th game" ad break, shown over the result screen.
   const [adBreak, setAdBreak] = useState(false)
 
-  useEffect(() => { saveState(appState) }, [appState])
+  // Persist on change — but SKIP the first run. The initial appState is exactly
+  // what we just loaded, so re-saving it can only ever hurt: if that load hit a
+  // transient localStorage error (iOS eviction, private mode, quota) loadState
+  // returns defaults, and an immediate save would overwrite intact data with an
+  // empty profile — the "my account reset" bug. Only write after a real change.
+  const firstSave = useRef(true)
+  useEffect(() => {
+    if (firstSave.current) { firstSave.current = false; return }
+    saveState(appState)
+  }, [appState])
+
+  // Keep state in sync when the same profile is open in another tab, or when the
+  // tab is restored after the OS evicted+reloaded it. Re-reading on focus means
+  // an external write (or recovery) is picked up instead of being clobbered.
+  useEffect(() => {
+    const resync = () => { if (document.visibilityState === "visible") setAppState(loadState()) }
+    const onStorage = (e: StorageEvent) => { if (e.key === null || e.key === "dailyglobe_v1") setAppState(loadState()) }
+    document.addEventListener("visibilitychange", resync)
+    window.addEventListener("storage", onStorage)
+    return () => { document.removeEventListener("visibilitychange", resync); window.removeEventListener("storage", onStorage) }
+  }, [])
 
   // Let any ad component open the Supporter screen without prop-drilling.
   useEffect(() => {

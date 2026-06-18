@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useRef } from "react"
 import type { ReactNode, CSSProperties } from "react"
 import { Compass, BookOpen } from "lucide-react"
 import { T, ACCENT, tint, FONT } from "../ui/tokens"
@@ -57,24 +57,41 @@ export default function Onboarding({ onDone }: { onDone: () => void }) {
   const last = i === SLIDES.length - 1
   const finish = () => { markOnboarded(); onDone() }
   const next = () => { if (last) finish(); else setI(i + 1) }
+  const prev = () => setI(p => Math.max(0, p - 1))
   const s = SLIDES[i]
+
+  // Swipe to advance / go back — threshold-based so taps on Skip/Next still
+  // register. Swipe left = next, swipe right = previous.
+  const touchX = useRef<number | null>(null)
+  const onTouchStart = (e: React.TouchEvent) => { touchX.current = e.touches[0].clientX }
+  const onTouchEnd = (e: React.TouchEvent) => {
+    if (touchX.current == null) return
+    const dx = e.changedTouches[0].clientX - touchX.current
+    touchX.current = null
+    if (Math.abs(dx) < 45) return
+    if (dx < 0) next(); else prev()
+  }
 
   return (
     <div style={{ position: "fixed", inset: 0, zIndex: 3000, background: tint(T.bg, 0.97),
       display: "flex", alignItems: "center", justifyContent: "center", padding: 24 }}>
-      <div style={{ width: "100%", maxWidth: 360, display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center", gap: 0 }}>
+      <div onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}
+        style={{ width: "100%", maxWidth: 360, display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center", gap: 0, touchAction: "pan-y" }}>
         <button onClick={finish} aria-label="Skip"
           style={{ position: "absolute", top: 16, right: 18, background: "transparent", border: "none", color: T.muted, fontSize: 14, fontWeight: 600, cursor: "pointer" }}>
           Skip
         </button>
 
-        <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 18, minHeight: 92, marginBottom: 22 }}>
-          {s.left && <div style={{ transform: "rotate(-8deg)" }}>{s.left}</div>}
-          <div style={{ lineHeight: 1, display: "flex", alignItems: "center", justifyContent: "center" }}>{s.center}</div>
-          {s.right && <div style={{ transform: "rotate(8deg)" }}>{s.right}</div>}
+        <div key={i} className="carto-onb-slide" style={{ width: "100%", display: "flex", flexDirection: "column", alignItems: "center" }}>
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 18, minHeight: 92, marginBottom: 22 }}>
+            {s.left && <div style={{ transform: "rotate(-8deg)" }}>{s.left}</div>}
+            <div style={{ lineHeight: 1, display: "flex", alignItems: "center", justifyContent: "center" }}>{s.center}</div>
+            {s.right && <div style={{ transform: "rotate(8deg)" }}>{s.right}</div>}
+          </div>
+          <h1 className="geo-display" style={{ color: T.text, fontWeight: 800, fontSize: 26, margin: 0, marginBottom: 12, fontFamily: FONT.display }}>{s.title}</h1>
+          <p style={{ color: T.muted, fontSize: 15, lineHeight: 1.55, margin: 0, marginBottom: 28 }}>{s.body}</p>
         </div>
-        <h1 className="geo-display" style={{ color: T.text, fontWeight: 800, fontSize: 26, margin: 0, marginBottom: 12, fontFamily: FONT.display }}>{s.title}</h1>
-        <p style={{ color: T.muted, fontSize: 15, lineHeight: 1.55, margin: 0, marginBottom: 28 }}>{s.body}</p>
+        <style>{`.carto-onb-slide{animation:onbSlide .28s ease}@keyframes onbSlide{from{opacity:0;transform:translateX(12px)}to{opacity:1;transform:translateX(0)}}@media (prefers-reduced-motion:reduce){.carto-onb-slide{animation:none}}`}</style>
 
         {/* progress dots */}
         <div style={{ display: "flex", gap: 7, marginBottom: 26 }}>

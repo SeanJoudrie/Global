@@ -111,7 +111,7 @@ export default function CodexScreen({ onBack, initialCode, embedded = false }: P
           <Search size={16} color={T.dim} strokeWidth={1.6} absoluteStrokeWidth />
           <input
             type="text"
-            placeholder="Search countries…"
+            placeholder="Search every flag…"
             value={search}
             onChange={e => setSearch(e.target.value)}
             className="flex-1 bg-transparent text-sm outline-none"
@@ -191,6 +191,9 @@ export default function CodexScreen({ onBack, initialCode, embedded = false }: P
           })
         )}
 
+        {/* Universal search — every other matching flag, behind a divider (G1) */}
+        {isSearching && <OtherFlagsResults query={search} />}
+
         {/* Soft divide: countries above, everything-else collections below */}
         {!isSearching && (
           <div aria-hidden className="flex items-center gap-3" style={{ margin: '28px 2px 6px' }}>
@@ -219,6 +222,10 @@ export default function CodexScreen({ onBack, initialCode, embedded = false }: P
         {!isSearching && <IdentityCodexSection />}
         {/* Ethnic & cultural flags — the full Commons "Cultural flags" gallery */}
         {!isSearching && <EthnicCodexSection />}
+        {/* Pan-national & ethnic — kept adjacent to Ethnic & Cultural (E4) */}
+        {!isSearching && <PanNationalCodexSection />}
+        {/* Micronations — its own standalone section (E5) */}
+        {!isSearching && <MicronationsCodexSection />}
         {/* Extinct states — the Commons "Flags of extinct states" gallery */}
         {!isSearching && <ExtinctStatesCodexSection />}
         {/* American city flags — beta, lots of municipal flags */}
@@ -659,6 +666,51 @@ function TerritoriesSection({ territories }: { territories: Territory[] }) {
   )
 }
 
+// Universal search results — every non-country flag (peoples, historical states,
+// organisations, subdivisions, cities…) matching the query, shown beneath the
+// country matches behind a divider so anything in the app is findable (G1).
+function OtherFlagsResults({ query }: { query: string }) {
+  const q = query.trim().toLowerCase()
+  const [openKey, setOpenKey] = useState<string | null>(null)
+  const matches = useMemo(() => {
+    if (!q) return []
+    const countryNames = new Set(FLAGS.map(f => f.name.toLowerCase()))
+    return ALL_FLAGS_AZ.filter(f => f.title.toLowerCase().includes(q) && !countryNames.has(f.title.toLowerCase())).slice(0, 60)
+  }, [q])
+  if (!matches.length) return null
+  return (
+    <div className="mt-4">
+      <div aria-hidden className="flex items-center gap-3" style={{ margin: '8px 2px 8px' }}>
+        <span style={{ flex: 1, height: 1, background: T.line }} />
+        <span className="geo-micro" style={{ fontSize: 8.5, color: T.dim }}>Former states &amp; other flags · {matches.length}</span>
+        <span style={{ flex: 1, height: 1, background: T.line }} />
+      </div>
+      <div className="space-y-1.5">
+        {matches.map(m => {
+          const open = openKey === m.title
+          return (
+            <button key={m.title} onClick={() => setOpenKey(o => o === m.title ? null : m.title)}
+              className="geo-tap w-full px-1.5 py-2.5 rounded-lg transition-all active:scale-[0.99] text-left"
+              style={{ background: open ? tint(ACCENT.codex, 0.07) : 'transparent', borderBottom: `1px solid ${tint(T.line, 0.55)}` }}>
+              <div className="flex items-center gap-3">
+                <div style={{ width: 46, height: 30, flexShrink: 0, borderRadius: 5, overflow: 'hidden', border: `1px solid ${T.line}`, background: T.surfaceHi }}>
+                  <img src={galleryThumb(m.url)} alt={m.title} loading="lazy" style={{ width: '100%', height: '100%', objectFit: 'contain' }}
+                    onError={e => { (e.target as HTMLImageElement).style.opacity = '0.3' }} />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <div className="font-semibold text-sm truncate" style={{ color: T.text }}>{m.title}</div>
+                </div>
+                <span style={{ color: ACCENT.codex, fontSize: 16, transition: 'transform 0.2s', transform: open ? 'rotate(90deg)' : 'rotate(0deg)', flexShrink: 0 }}>›</span>
+              </div>
+              {open && <p className="text-xs leading-relaxed mt-2.5" style={{ color: T.muted, lineHeight: 1.6 }}>{m.fact}</p>}
+            </button>
+          )
+        })}
+      </div>
+    </div>
+  )
+}
+
 // Per-category accent so each Identity subsection reads as its own colour —
 // pride red, pan-ethnic clay, indigenous ochre, separatist blue, micronations
 // green, civic plum. Palette tokens keep it legible across all three aesthetics
@@ -672,11 +724,75 @@ const CAT_COLORS: Record<string, string> = {
   'Civic & Ideological': T.violet,
 }
 
-// ── Identity flags browser (pride, ethnic, separatist, micronations, signal) ──
+// Micronations and Pan-National & Ethnic are surfaced as their own top-level
+// sections (E4/E5), so the main Identity browser excludes them — Pan-National
+// sits next to Ethnic & Cultural where it belongs, Micronations stands alone.
+const IDENTITY_MAIN_CATEGORIES = IDENTITY_CATEGORIES.filter(c => c !== 'Micronations' && c !== 'Pan-National & Ethnic')
+
+// A single Identity category as its own flat, collapsible section (one row's
+// description open at a time). Used for the standalone Micronations &
+// Pan-National sections.
+function IdentityFlatSection({ title, blurb, color, icon: Icon, flags }: { title: string; blurb: string; color: string; icon: IconType; flags: typeof IDENTITY_FLAGS }) {
+  const [open, setOpen] = useState(false)
+  const [openFlag, setOpenFlag] = useState<string | null>(null)
+  if (!flags.length) return null
+  return (
+    <div className="mt-5">
+      <button onClick={() => setOpen(o => !o)}
+        className="geo-tap w-full flex items-center justify-between px-1 py-3 transition-all active:scale-[0.99]"
+        style={{ background: 'transparent', borderBottom: `1px solid ${open ? tint(color, 0.45) : T.line}` }}>
+        <div className="text-left">
+          <h3 className="text-sm font-bold uppercase tracking-widest flex items-center gap-2" style={{ color }}>
+            <Icon size={15} color={color} strokeWidth={1.6} absoluteStrokeWidth /> {title}
+          </h3>
+          <p className="text-xs" style={{ color: T.dim }}>{blurb}</p>
+        </div>
+        <ChevronDown size={17} color={color} strokeWidth={1.6} absoluteStrokeWidth
+          style={{ transition: 'transform 0.2s', transform: open ? 'rotate(180deg)' : 'rotate(0deg)', flexShrink: 0 }} />
+      </button>
+      {open && (
+        <div className="mt-1.5 space-y-1.5">
+          {flags.map(f => {
+            const showNote = openFlag === f.id
+            return (
+              <button key={f.id} onClick={() => setOpenFlag(o => o === f.id ? null : f.id)}
+                className="geo-tap w-full px-1.5 py-2.5 rounded-lg transition-all active:scale-[0.99] text-left"
+                style={{ background: showNote ? tint(color, 0.07) : 'transparent', borderBottom: `1px solid ${tint(T.line, 0.55)}` }}>
+                <div className="flex items-center gap-3">
+                  <img src={f.flagUrl} alt={f.name}
+                    style={{ width: 46, height: 30, objectFit: 'contain', borderRadius: 5, border: `1px solid ${T.line}`, flexShrink: 0, background: T.surfaceHi }}
+                    onError={e => { (e.target as HTMLImageElement).style.opacity = '0.3' }} />
+                  <div className="flex-1 min-w-0">
+                    <div className="font-semibold text-sm truncate" style={{ color: T.text }}>{f.name}</div>
+                  </div>
+                  <span style={{ color, fontSize: 16, transition: 'transform 0.2s', transform: showNote ? 'rotate(90deg)' : 'rotate(0deg)' }}>›</span>
+                </div>
+                {showNote && <p className="text-xs leading-relaxed mt-2.5" style={{ color: T.muted, lineHeight: 1.65 }}>{f.note}</p>}
+              </button>
+            )
+          })}
+        </div>
+      )}
+    </div>
+  )
+}
+
+function PanNationalCodexSection() {
+  const flags = IDENTITY_FLAGS.filter(f => f.category === 'Pan-National & Ethnic')
+  return <IdentityFlatSection title="Pan-National &amp; Ethnic" blurb={`${flags.length} flags · kin to the peoples & cultures above`} color={T.warm} icon={Users} flags={flags} />
+}
+
+function MicronationsCodexSection() {
+  const flags = IDENTITY_FLAGS.filter(f => f.category === 'Micronations')
+  return <IdentityFlatSection title="Micronations" blurb={`${flags.length} self-declared nations`} color={T.green} icon={Crown} flags={flags} />
+}
+
+// ── Identity flags browser (pride, indigenous, separatist, civic) ──
 function IdentityCodexSection() {
   const [sectionOpen, setSectionOpen] = useState(false)
   const [openCat, setOpenCat] = useState<string | null>(null)
   const [openFlag, setOpenFlag] = useState<string | null>(null)
+  const mainCount = IDENTITY_FLAGS.filter(f => (IDENTITY_MAIN_CATEGORIES as readonly string[]).includes(f.category)).length
   return (
     <div className="mt-5">
       {/* Collapsed by default — countries come first; tap to reveal the extras */}
@@ -688,14 +804,14 @@ function IdentityCodexSection() {
           <h3 className="text-sm font-bold uppercase tracking-widest flex items-center gap-2" style={{ color: T.warm }}>
             <HeartHandshake size={15} color={T.warm} strokeWidth={1.6} absoluteStrokeWidth /> Identity &amp; Other Flags
           </h3>
-          <p className="text-xs" style={{ color: T.dim }}>{IDENTITY_FLAGS.length - SIGNAL_FLAGS.length} flags beyond countries</p>
+          <p className="text-xs" style={{ color: T.dim }}>{mainCount} flags beyond countries</p>
         </div>
         <ChevronDown size={17} color={T.warm} strokeWidth={1.6} absoluteStrokeWidth
           style={{ transition: 'transform 0.2s', transform: sectionOpen ? 'rotate(180deg)' : 'rotate(0deg)', flexShrink: 0 }} />
       </button>
 
       {sectionOpen && <div className="mt-3" />}
-      {sectionOpen && IDENTITY_CATEGORIES.map(cat => {
+      {sectionOpen && IDENTITY_MAIN_CATEGORIES.map(cat => {
         const flags = IDENTITY_FLAGS.filter(f => f.category === cat)
         const isOpen = openCat === cat
         const catColor = CAT_COLORS[cat] ?? T.warm
@@ -882,12 +998,12 @@ function splitParen(s: string): [string, string | null] {
 const cap = (s: string) => (s ? s[0].toUpperCase() + s.slice(1) : s)
 
 // One flag row — thumbnail, name; tap to reveal a description if it has one.
-function GalleryRow({ row, color }: { row: GRow; color: string }) {
-  const [open, setOpen] = useState(false)
+// Open state is owned by the parent section so only one row shows at a time.
+function GalleryRow({ row, color, open, onToggle }: { row: GRow; color: string; open: boolean; onToggle: () => void }) {
   const [err, setErr] = useState(false)
   const hasDetail = !!row.detail
   return (
-    <button onClick={() => hasDetail && setOpen(o => !o)}
+    <button onClick={() => hasDetail && onToggle()}
       className="geo-tap w-full px-1.5 py-2.5 rounded-lg transition-all active:scale-[0.99] text-left"
       style={{ background: open ? tint(color, 0.07) : 'transparent', borderBottom: `1px solid ${tint(T.line, 0.55)}`, cursor: hasDetail ? 'pointer' : 'default' }}>
       <div className="flex items-center gap-3">
@@ -907,7 +1023,10 @@ function GalleryRow({ row, color }: { row: GRow; color: string }) {
 }
 
 // A region sub-section — controlled open state so a section's "All" can drive it.
-function GalleryRegionBlock({ region, color, open, onToggle }: { region: GRegion; color: string; open: boolean; onToggle: () => void }) {
+function GalleryRegionBlock({ region, color, open, onToggle, keyPrefix, openRow, setOpenRow }: {
+  region: GRegion; color: string; open: boolean; onToggle: () => void
+  keyPrefix: string; openRow: string | null; setOpenRow: (k: string | null) => void
+}) {
   const Icon = region.icon
   const count = region.groups.reduce((n, g) => n + g.items.length, 0)
   return (
@@ -928,7 +1047,10 @@ function GalleryRegionBlock({ region, color, open, onToggle }: { region: GRegion
           {region.groups.map((g, gi) => (
             <div key={gi}>
               {g.label && <div style={{ fontSize: 8.5, fontWeight: 700, color: tint(color, 0.85), letterSpacing: '0.07em', textTransform: 'uppercase', margin: '9px 0 1px 4px' }}>{g.label}</div>}
-              {g.items.map((row, ii) => <GalleryRow key={ii} row={row} color={color} />)}
+              {g.items.map((row, ii) => {
+                const k = `${keyPrefix}-${gi}-${ii}`
+                return <GalleryRow key={ii} row={row} color={color} open={openRow === k} onToggle={() => setOpenRow(openRow === k ? null : k)} />
+              })}
             </div>
           ))}
         </div>
@@ -942,6 +1064,7 @@ function GalleryRegionBlock({ region, color, open, onToggle }: { region: GRegion
 function GallerySection({ title, icon: Icon, color, blurb, regions }: { title: string; icon: IconType; color: string; blurb: string; regions: GRegion[] }) {
   const [open, setOpen] = useState(false)
   const [openRegions, setOpenRegions] = useState<Set<number>>(new Set())
+  const [openRow, setOpenRow] = useState<string | null>(null)
   const allOpen = openRegions.size === regions.length
   const toggleAll = () => setOpenRegions(allOpen ? new Set() : new Set(regions.map((_, i) => i)))
   const toggleRegion = (i: number) => setOpenRegions(prev => {
@@ -970,7 +1093,7 @@ function GallerySection({ title, icon: Icon, color, blurb, regions }: { title: s
               {allOpen ? 'Collapse all' : 'Open all'}
             </button>
           </div>
-          {regions.map((r, i) => <GalleryRegionBlock key={i} region={r} color={color} open={openRegions.has(i)} onToggle={() => toggleRegion(i)} />)}
+          {regions.map((r, i) => <GalleryRegionBlock key={i} region={r} color={color} open={openRegions.has(i)} onToggle={() => toggleRegion(i)} keyPrefix={String(i)} openRow={openRow} setOpenRow={setOpenRow} />)}
         </div>
       )}
     </div>
@@ -986,7 +1109,7 @@ function EthnicCodexSection() {
       icon: galleryIcon(r.region),
       groups: r.groups.map(g => ({
         label: g.label,
-        items: g.items.map(it => ({ file: fp(it.file), title: it.name, detail: g.label ? `${g.label} — ${short}` : short })),
+        items: g.items.map(it => ({ file: fp(it.file), title: it.name, detail: it.note ?? g.note ?? (g.label ? `${g.label} — ${short}` : short) })),
       })),
     }
   })
@@ -2495,9 +2618,10 @@ const NO_SUBDIVISION_FLAG_COUNTRIES = new Set<string>([
   'AO', 'CM', 'ZA',
 ])
 
-function SubRegionTile({ sr, confirmedNoFlags }: { sr: SubRegion; confirmedNoFlags?: boolean }) {
-  return (
-    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4 }}>
+function SubRegionTile({ sr, confirmedNoFlags, onSelect, selected }: { sr: SubRegion; confirmedNoFlags?: boolean; onSelect?: (sr: SubRegion) => void; selected?: boolean }) {
+  const tappable = !!sr.flagUrl && !!onSelect
+  const inner = (
+    <>
       {sr.flagUrl
         ? <img
             src={sr.flagUrl}
@@ -2507,8 +2631,16 @@ function SubRegionTile({ sr, confirmedNoFlags }: { sr: SubRegion; confirmedNoFla
           />
         : (sr.noFlag || confirmedNoFlags) ? NO_FLAG_PLACEHOLDER : UNKNOWN_FLAG_PLACEHOLDER
       }
-      <span style={{ fontSize: 8.5, color: T.muted, textAlign: 'center', lineHeight: 1.2, wordBreak: 'break-word' }}>{sr.name}</span>
-    </div>
+      <span style={{ fontSize: 8.5, color: selected ? T.green : T.muted, textAlign: 'center', lineHeight: 1.2, wordBreak: 'break-word' }}>{sr.name}</span>
+    </>
+  )
+  const colStyle: React.CSSProperties = { display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4 }
+  if (!tappable) return <div style={colStyle}>{inner}</div>
+  return (
+    <button onClick={() => onSelect!(sr)} aria-expanded={selected} className="geo-tap active:scale-95"
+      style={{ ...colStyle, background: selected ? tint(T.green, 0.12) : 'transparent', border: `1px solid ${selected ? tint(T.green, 0.5) : 'transparent'}`, borderRadius: 6, padding: 3, cursor: 'pointer' }}>
+      {inner}
+    </button>
   )
 }
 
@@ -2518,10 +2650,37 @@ const SUBLABEL_STYLE: React.CSSProperties = {
 }
 const GRID_STYLE: React.CSSProperties = { display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: '10px 6px' }
 
+// Inline detail panel — a tapped subdivision shows a larger flag + a fact right
+// above the grid, so detailed flags become legible without leaving the page.
+function SubDetailPanel({ sr, onClose }: { sr: SubRegion; onClose: () => void }) {
+  return (
+    <div style={{ marginBottom: 14, padding: 12, borderRadius: 12, background: T.surface, border: `1px solid ${tint(T.green, 0.4)}` }}>
+      <div style={{ display: 'flex', gap: 12, alignItems: 'flex-start' }}>
+        {sr.flagUrl && (
+          <img src={sr.flagUrl} alt={sr.name}
+            style={{ width: 128, aspectRatio: '3/2', objectFit: 'contain', borderRadius: 6, border: `1px solid ${T.line}`, background: T.surfaceHi, flexShrink: 0 }} />
+        )}
+        <div style={{ flex: 1, minWidth: 0 }}>
+          <div className="font-semibold text-sm" style={{ color: T.text }}>{sr.name}</div>
+          <p className="text-xs" style={{ color: T.muted, lineHeight: 1.6, marginTop: 5 }}>
+            {curatedFact(sr.name) ?? `The flag of ${sr.name}.`}
+          </p>
+        </div>
+        <button onClick={onClose} aria-label="Close" className="geo-tap"
+          style={{ flexShrink: 0, color: T.dim, fontSize: 18, lineHeight: 1, background: 'none', border: 'none', cursor: 'pointer' }}>✕</button>
+      </div>
+    </div>
+  )
+}
+
 function SubdivisionGrid({ subRegions, headerLabel, memberLabel, confirmedNoFlags }: { subRegions: SubRegion[]; headerLabel?: string; memberLabel?: string; confirmedNoFlags?: boolean }) {
+  const [sel, setSel] = useState<SubRegion | null>(null)
+  const select = (sr: SubRegion) => setSel(p => (p?.code === sr.code ? null : sr))
+  const tile = (sr: SubRegion) => <SubRegionTile key={sr.code} sr={sr} confirmedNoFlags={confirmedNoFlags} onSelect={select} selected={sel?.code === sr.code} />
+  const panel = sel ? <SubDetailPanel sr={sel} onClose={() => setSel(null)} /> : null
   const hasGroups = subRegions.some(sr => sr.group)
   if (!hasGroups) {
-    return <div className="mt-3" style={GRID_STYLE}>{subRegions.map(sr => <SubRegionTile key={sr.code} sr={sr} confirmedNoFlags={confirmedNoFlags} />)}</div>
+    return <div className="mt-3">{panel}<div style={GRID_STYLE}>{subRegions.map(tile)}</div></div>
   }
   const groups: { label: string; items: SubRegion[] }[] = []
   for (const sr of subRegions) {
@@ -2532,6 +2691,7 @@ function SubdivisionGrid({ subRegions, headerLabel, memberLabel, confirmedNoFlag
   }
   return (
     <div className="mt-3" style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+      {panel}
       {groups.map(g => {
         // A "header" tile is the province/nation flag itself, shown on its own row on top.
         const headers = g.items.filter(s => s.groupHeader)
@@ -2549,11 +2709,11 @@ function SubdivisionGrid({ subRegions, headerLabel, memberLabel, confirmedNoFlag
             {headers.length > 0 && (
               <div style={{ marginBottom: 12 }}>
                 {headerLabel && <div style={SUBLABEL_STYLE}>{headerLabel}</div>}
-                <div style={GRID_STYLE}>{headers.map(sr => <SubRegionTile key={sr.code} sr={sr} confirmedNoFlags={confirmedNoFlags} />)}</div>
+                <div style={GRID_STYLE}>{headers.map(tile)}</div>
               </div>
             )}
             {headers.length > 0 && memberLabel && members.length > 0 && <div style={SUBLABEL_STYLE}>{memberLabel}</div>}
-            <div style={GRID_STYLE}>{members.map(sr => <SubRegionTile key={sr.code} sr={sr} confirmedNoFlags={confirmedNoFlags} />)}</div>
+            <div style={GRID_STYLE}>{members.map(tile)}</div>
           </div>
         )
       })}

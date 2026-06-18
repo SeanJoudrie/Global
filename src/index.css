@@ -213,8 +213,18 @@ body.aesthetic-carto { background: #FBF4E4; }
 }
 .carto-pulse { animation: cartoPulse 1.6s cubic-bezier(0.4,0,0.2,1) infinite; }
 
-/* Horizontal swipe rail (Netflix-style game shelves) — scrollbar hidden */
-.carto-rail { scrollbar-width: none; -ms-overflow-style: none; }
+/* Horizontal swipe rail (Netflix-style game shelves) — scrollbar hidden.
+   overscroll-behavior-x: contain stops a right-swipe near the left edge from
+   triggering the browser's back-gesture (the cause of "can't scroll left");
+   momentum + scroll-padding keep the first/last cards reachable. */
+.carto-rail {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  overscroll-behavior-x: contain;
+  -webkit-overflow-scrolling: touch;
+  scroll-padding-left: 16px;
+  scroll-padding-right: 16px;
+}
 .carto-rail::-webkit-scrollbar { display: none; }
 
 /* Transform-only entrance for drawers/tabs: fully visible at rest, the slide

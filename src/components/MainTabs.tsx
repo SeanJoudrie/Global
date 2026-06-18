@@ -234,9 +234,14 @@ function TodayTab({ state, dailyDone, launch, onNavigate, onGoCodex, onGoPlay, o
           border: `1px solid ${tint(ACCENT.today, 0.4)}`,
           background: `linear-gradient(150deg, ${tint(ACCENT.today, 0.16)}, ${T.surface} 72%)`,
           ...(IS_CARTO ? { ["--wash" as string]: tint(ACCENT.today, 0.45) } : {}) }}>
-        <span style={{ width: 48, height: 48, borderRadius: "50%", flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center",
-          background: tint(ACCENT.today, 0.14), border: `1px solid ${tint(ACCENT.today, 0.34)}` }}>
-          {IS_CARTO ? <LineIcon name="quickplay" size={23} color={ACCENT.today} /> : <span style={{ fontSize: 20 }}>⚡</span>}
+        <span style={{ position: "relative", width: 56, height: 42, flexShrink: 0 }}>
+          {["ke", "in", "br"].map((c, k) => (
+            <span key={c} style={{ position: "absolute", top: 6, left: 10, width: 36, height: 26, borderRadius: 5, overflow: "hidden",
+              border: `1.5px solid ${T.surface}`, transform: `translateX(${(k - 1) * 7}px) rotate(${(k - 1) * 7}deg)`,
+              boxShadow: `0 2px 6px -3px ${tint(T.text, 0.6)}`, zIndex: k }}>
+              <FlagImage code={c} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+            </span>
+          ))}
         </span>
         <div style={{ flex: 1, minWidth: 0 }}>
           <div className="geo-display" style={{ fontWeight: 800, fontSize: 19, letterSpacing: "-0.01em", color: T.text }}>Daily Expedition</div>
@@ -249,13 +254,35 @@ function TodayTab({ state, dailyDone, launch, onNavigate, onGoCodex, onGoPlay, o
         </span>
       </button>
 
-      {/* Daily rituals — Flag Gacha & Fun Fact, with their poster art */}
+      {/* Daily rituals — Flag Gacha & Fun Fact, each given a bespoke, eye-catching
+          card with its own accent, a faded watermark glyph and a clear CTA. */}
       <div>
         <SectionHeader title="Daily rituals" accent={ACCENT.today} />
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
-          {dailyRituals.map(e => (
-            <FlagTile key={e.id} id={e.id} title={e.title} subtitle={e.subtitle} accent={ACCENT[e.accent]} onClick={() => launch(e)} style={{ width: "100%" }} />
-          ))}
+          {dailyRituals.map(e => {
+            const isGacha = e.id === "gacha"
+            const accent = isGacha ? ACCENT.codex : ACCENT.learn
+            return (
+              <button key={e.id} onClick={() => launch(e)} className={`geo-tap ${IS_CARTO ? "carto-card" : ""}`}
+                style={{ position: "relative", overflow: "hidden", textAlign: "left", padding: "13px 14px", borderRadius: 16, minHeight: 104,
+                  display: "flex", flexDirection: "column",
+                  border: `1px solid ${tint(accent, 0.42)}`, background: `linear-gradient(155deg, ${tint(accent, 0.2)}, ${T.surface} 78%)`,
+                  ...(IS_CARTO ? { ["--wash" as string]: tint(accent, 0.5) } : {}) }}>
+                <span aria-hidden style={{ position: "absolute", top: -12, right: -10, opacity: 0.15, transform: "rotate(-12deg)", pointerEvents: "none" }}>
+                  <LineIcon name={e.id} size={66} color={accent} strokeWidth={1.1} />
+                </span>
+                <span style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", width: 34, height: 34, borderRadius: 10,
+                  background: tint(accent, 0.16), border: `1px solid ${tint(accent, 0.34)}`, marginBottom: 9 }}>
+                  <LineIcon name={e.id} size={18} color={accent} />
+                </span>
+                <div className="geo-display" style={{ fontWeight: 800, fontSize: 15, color: T.text, letterSpacing: "-0.01em" }}>{e.title}</div>
+                <div style={{ color: T.muted, fontSize: 11, marginTop: 2, lineHeight: 1.35 }}>{e.subtitle}</div>
+                <div style={{ display: "inline-flex", alignItems: "center", gap: 4, marginTop: "auto", paddingTop: 9, fontFamily: FONT.display, fontWeight: 700, fontSize: 11.5, color: accent }}>
+                  {isGacha ? "Pull now" : "Today's fact"} <span>→</span>
+                </div>
+              </button>
+            )
+          })}
         </div>
       </div>
 
@@ -314,7 +341,7 @@ function HeroDeck({ slides }: { slides: SlideData[] }) {
           if (!dragging.current) { axis.current = null; return }
           dragging.current = false
           const horiz = axis.current === "h"; axis.current = null
-          if (horiz && Math.abs(dx) > 64) commit(dx < 0 ? 1 : -1)
+          if (horiz && Math.abs(dx) > 48) commit(dx < 0 ? 1 : -1)
           else { if (!moved.current) cur.onClick?.(); setDx(0) }
         }}
         onPointerCancel={() => { dragging.current = false; axis.current = null; setDx(0) }}>
