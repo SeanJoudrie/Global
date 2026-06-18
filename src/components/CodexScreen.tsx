@@ -216,15 +216,16 @@ export default function CodexScreen({ onBack, initialCode, embedded = false }: P
 
         {/* Beyond-countries order: Mega Codex first (the "pick a random one"
             entry point), then the themed collections, signal flags last. */}
+        {/* Beyond-countries, ordered by likely-to-click (E8): A–Z up top, the
+            rich peoples/identity/micronation sets next, themed galleries, then
+            organisations and signal flags last. */}
         {/* Mega Codex A–Z — every flag in the app, alphabetical, up top */}
         {!isSearching && <MegaCodexSection />}
-        {/* Identity & other flags — pride, ethnic, separatist, micronations… */}
-        {!isSearching && <IdentityCodexSection />}
-        {/* Ethnic & cultural flags — the full Commons "Cultural flags" gallery */}
+        {/* Peoples & Cultures — ethnic/cultural + pan-national + indigenous */}
         {!isSearching && <EthnicCodexSection />}
-        {/* Pan-national & ethnic — kept adjacent to Ethnic & Cultural (E4) */}
-        {!isSearching && <PanNationalCodexSection />}
-        {/* Micronations — its own standalone section (E5) */}
+        {/* Movements & Identity — pride, separatist & civic causes */}
+        {!isSearching && <IdentityCodexSection />}
+        {/* Micronations — its own standalone section */}
         {!isSearching && <MicronationsCodexSection />}
         {/* Extinct states — the Commons "Flags of extinct states" gallery */}
         {!isSearching && <ExtinctStatesCodexSection />}
@@ -724,10 +725,11 @@ const CAT_COLORS: Record<string, string> = {
   'Civic & Ideological': T.violet,
 }
 
-// Micronations and Pan-National & Ethnic are surfaced as their own top-level
-// sections (E4/E5), so the main Identity browser excludes them — Pan-National
-// sits next to Ethnic & Cultural where it belongs, Micronations stands alone.
-const IDENTITY_MAIN_CATEGORIES = IDENTITY_CATEGORIES.filter(c => c !== 'Micronations' && c !== 'Pan-National & Ethnic')
+// "Movements & Identity" holds flags that stand for a cause or stance: Pride,
+// Separatist & Autonomous, Civic & Ideological. Pan-National & Ethnic and
+// Indigenous Peoples moved into "Peoples & Cultures"; Micronations stands alone.
+const IDENTITY_MAIN_CATEGORIES = IDENTITY_CATEGORIES.filter(c =>
+  c !== 'Micronations' && c !== 'Pan-National & Ethnic' && c !== 'Indigenous Peoples')
 
 // A single Identity category as its own flat, collapsible section (one row's
 // description open at a time). Used for the standalone Micronations &
@@ -777,11 +779,6 @@ function IdentityFlatSection({ title, blurb, color, icon: Icon, flags }: { title
   )
 }
 
-function PanNationalCodexSection() {
-  const flags = IDENTITY_FLAGS.filter(f => f.category === 'Pan-National & Ethnic')
-  return <IdentityFlatSection title="Pan-National &amp; Ethnic" blurb={`${flags.length} flags · kin to the peoples & cultures above`} color={T.warm} icon={Users} flags={flags} />
-}
-
 function MicronationsCodexSection() {
   const flags = IDENTITY_FLAGS.filter(f => f.category === 'Micronations')
   return <IdentityFlatSection title="Micronations" blurb={`${flags.length} self-declared nations`} color={T.green} icon={Crown} flags={flags} />
@@ -802,9 +799,9 @@ function IdentityCodexSection() {
         style={{ background: 'transparent', borderBottom: `1px solid ${sectionOpen ? tint(T.warm, 0.45) : T.line}` }}>
         <div className="text-left">
           <h3 className="text-sm font-bold uppercase tracking-widest flex items-center gap-2" style={{ color: T.warm }}>
-            <HeartHandshake size={15} color={T.warm} strokeWidth={1.6} absoluteStrokeWidth /> Identity &amp; Other Flags
+            <HeartHandshake size={15} color={T.warm} strokeWidth={1.6} absoluteStrokeWidth /> Movements &amp; Identity
           </h3>
-          <p className="text-xs" style={{ color: T.dim }}>{mainCount} flags beyond countries</p>
+          <p className="text-xs" style={{ color: T.dim }}>{mainCount} flags · pride, separatist & civic causes</p>
         </div>
         <ChevronDown size={17} color={T.warm} strokeWidth={1.6} absoluteStrokeWidth
           style={{ transition: 'transform 0.2s', transform: sectionOpen ? 'rotate(180deg)' : 'rotate(0deg)', flexShrink: 0 }} />
@@ -1100,9 +1097,16 @@ function GallerySection({ title, icon: Icon, color, blurb, regions }: { title: s
   )
 }
 
+// "Peoples & Cultures" — the full Commons ethnic/cultural gallery, merged with
+// the Pan-National & Ethnic and Indigenous Peoples identity flags (E2/E3): all
+// "flags of a people" now live under one top-level section.
 function EthnicCodexSection() {
-  const total = ETHNIC_FLAGS.reduce((n, r) => n + r.groups.reduce((m, g) => m + g.items.length, 0), 0)
-  const regions: GRegion[] = ETHNIC_FLAGS.map(r => {
+  const idRegion = (cat: string, label: string): GRegion => ({
+    label,
+    icon: CAT_ICONS[cat],
+    groups: [{ label: '', items: IDENTITY_FLAGS.filter(f => f.category === cat).map(f => ({ file: f.flagUrl, title: f.name, detail: f.note })) }],
+  })
+  const ethnicRegions: GRegion[] = ETHNIC_FLAGS.map(r => {
     const short = r.region.replace(/^Peoples of /, '')
     return {
       label: short,
@@ -1113,7 +1117,13 @@ function EthnicCodexSection() {
       })),
     }
   })
-  return <GallerySection title="Ethnic & Cultural Flags" icon={Users} color={T.gold} blurb={`${total} flags of peoples & cultures · by region`} regions={regions} />
+  const regions: GRegion[] = [
+    ...ethnicRegions,
+    idRegion('Pan-National & Ethnic', 'Pan-National & Ethnic'),
+    idRegion('Indigenous Peoples', 'Indigenous Peoples'),
+  ]
+  const total = regions.reduce((n, r) => n + r.groups.reduce((m, g) => m + g.items.length, 0), 0)
+  return <GallerySection title="Peoples &amp; Cultures" icon={Users} color={T.gold} blurb={`${total} flags of peoples, cultures & nations · by region`} regions={regions} />
 }
 
 function ExtinctStatesCodexSection() {
