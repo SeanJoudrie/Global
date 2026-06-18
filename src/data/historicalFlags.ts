@@ -2218,6 +2218,21 @@ export const HISTORICAL_FLAGS: HistoricalEntity[] = [
     note: "The Rashidi emirate centred on Ha'il in northern Arabia, the great rival of the House of Saud until Ibn Saud conquered it in 1921 and folded it into what became Saudi Arabia.",
   },
   {
+    id: "duchy-of-warsaw", name: "Duchy of Warsaw", era: "1807–1815", region: "Europe",
+    flagUrl: fp("Flag_of_the_Duchy_of_Warsaw.svg"), relatedCode: "PL",
+    note: "Napoleon's short-lived Polish client state, a partial restoration of Poland between the partitions; it kept Polish statehood alive until the Congress of Vienna dissolved it.",
+  },
+  {
+    id: "cretan-state", name: "Cretan State", era: "1898–1913", region: "Europe",
+    flagUrl: fp("Flag_of_Cretan_State.svg"), relatedCode: "GR",
+    note: "An autonomous state on Crete under nominal Ottoman suzerainty but Great-Power protection, flying a white-and-blue flag with a red canton, until the island united with Greece in 1913.",
+  },
+  {
+    id: "mountainous-republic-caucasus", name: "Mountainous Republic of the Northern Caucasus", era: "1917–1920", region: "Europe",
+    flagUrl: fp("Flag_of_the_Mountainous_Republic_of_the_Northern_Caucasus.svg"), relatedCode: "RU",
+    note: "A short-lived federation of Caucasian peoples that declared independence as the Russian Empire collapsed, before being absorbed by the Russian SFSR.",
+  },
+  {
     id: "belarusian-pr", name: "Belarusian People's Republic", era: "1918–1919", region: "Europe",
     flagUrl: fp("Flag_of_Belarus.svg"), relatedCode: "BY",
     note: "The white-red-white flag of the short-lived republic declared during WWI; suppressed by the Bolsheviks, it returned as independent Belarus's flag from 1991 to 1995.",
