@@ -987,6 +987,14 @@ function galleryIcon(name: string): IconType {
 // Commons full-size SVGs can be megabytes; FilePath ?width= renders a light
 // raster. row.file is always a ready URL (resolved by each section via fp()).
 const galleryThumb = (u: string) => (u.includes('Special:FilePath') && !u.includes('?') ? `${u}?width=240` : u)
+// Per-entry citation (K2): the Wikimedia Commons file-description page for a
+// flag, where its source and licence live. Only flags that resolve to Commons
+// get a link; local and self-hosted copies have no Commons page, so they get
+// none rather than a broken one.
+const commonsSource = (url: string): string | null => {
+  const m = url.match(/Special:FilePath\/([^?#]+)/)
+  return m ? `https://commons.wikimedia.org/wiki/File:${m[1]}` : null
+}
 const stripFlagOf = (s: string) => s.replace(/^Flag of (the )?/i, '')
 function splitParen(s: string): [string, string | null] {
   const m = s.match(/^(.*?)\s*\(([\s\S]*)\)\s*$/)
@@ -999,23 +1007,37 @@ const cap = (s: string) => (s ? s[0].toUpperCase() + s.slice(1) : s)
 function GalleryRow({ row, color, open, onToggle }: { row: GRow; color: string; open: boolean; onToggle: () => void }) {
   const [err, setErr] = useState(false)
   const hasDetail = !!row.detail
+  const source = commonsSource(row.file)
   return (
-    <button onClick={() => hasDetail && onToggle()}
-      className="geo-tap w-full px-1.5 py-2.5 rounded-lg transition-all active:scale-[0.99] text-left"
-      style={{ background: open ? tint(color, 0.07) : 'transparent', borderBottom: `1px solid ${tint(T.line, 0.55)}`, cursor: hasDetail ? 'pointer' : 'default' }}>
-      <div className="flex items-center gap-3">
-        <div style={{ width: 46, height: 30, flexShrink: 0, borderRadius: 5, overflow: 'hidden', border: `1px solid ${T.line}`, background: T.surfaceHi, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-          {err
-            ? <span style={{ fontSize: 7, color: T.dim }}>no img</span>
-            : <img src={galleryThumb(row.file)} alt={row.title} loading="lazy" onError={() => setErr(true)} style={{ width: '100%', height: '100%', objectFit: 'contain' }} />}
+    <div className="w-full rounded-lg transition-all"
+      style={{ background: open ? tint(color, 0.07) : 'transparent', borderBottom: `1px solid ${tint(T.line, 0.55)}` }}>
+      <button onClick={() => hasDetail && onToggle()}
+        className="geo-tap w-full px-1.5 py-2.5 text-left active:scale-[0.99]"
+        style={{ background: 'transparent', border: 'none', cursor: hasDetail ? 'pointer' : 'default' }}>
+        <div className="flex items-center gap-3">
+          <div style={{ width: 46, height: 30, flexShrink: 0, borderRadius: 5, overflow: 'hidden', border: `1px solid ${T.line}`, background: T.surfaceHi, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            {err
+              ? <span style={{ fontSize: 7, color: T.dim }}>no img</span>
+              : <img src={galleryThumb(row.file)} alt={row.title} loading="lazy" onError={() => setErr(true)} style={{ width: '100%', height: '100%', objectFit: 'contain' }} />}
+          </div>
+          <div className="flex-1 min-w-0">
+            <div className="font-semibold text-sm truncate" style={{ color: T.text }}>{row.title}</div>
+          </div>
+          {hasDetail && <span style={{ color, fontSize: 16, transition: 'transform 0.2s', transform: open ? 'rotate(90deg)' : 'rotate(0deg)', flexShrink: 0 }}>›</span>}
         </div>
-        <div className="flex-1 min-w-0">
-          <div className="font-semibold text-sm truncate" style={{ color: T.text }}>{row.title}</div>
+      </button>
+      {open && hasDetail && (
+        <div className="px-1.5 pb-2.5">
+          <p className="text-xs leading-relaxed" style={{ color: T.muted, lineHeight: 1.6 }}>{row.detail}</p>
+          {source && (
+            <a href={source} target="_blank" rel="noopener noreferrer"
+              className="text-xs inline-block mt-1.5" style={{ color: tint(color, 0.9), fontWeight: 600 }}>
+              Source: Wikimedia Commons ↗
+            </a>
+          )}
         </div>
-        {hasDetail && <span style={{ color, fontSize: 16, transition: 'transform 0.2s', transform: open ? 'rotate(90deg)' : 'rotate(0deg)', flexShrink: 0 }}>›</span>}
-      </div>
-      {open && hasDetail && <p className="text-xs leading-relaxed mt-2.5" style={{ color: T.muted, lineHeight: 1.6 }}>{row.detail}</p>}
-    </button>
+      )}
+    </div>
   )
 }
 
@@ -2753,8 +2775,19 @@ function SubDetailPanel({ sr, onClose }: { sr: SubRegion; onClose: () => void })
         <div style={{ flex: 1, minWidth: 0 }}>
           <div className="font-semibold text-sm" style={{ color: T.text }}>{sr.name}</div>
           <p className="text-xs" style={{ color: T.muted, lineHeight: 1.6, marginTop: 5 }}>
-            {curatedFact(sr.name) ?? `The flag of ${sr.name}.`}
+            {curatedFact(sr.name) ?? pickPhrase(sr.name, [
+              `The flag of ${sr.name}.`,
+              `${sr.name} — one of this country's subdivisions.`,
+              `The regional flag of ${sr.name}.`,
+              `The banner of ${sr.name}.`,
+            ])}
           </p>
+          {sr.flagUrl && commonsSource(sr.flagUrl) && (
+            <a href={commonsSource(sr.flagUrl)!} target="_blank" rel="noopener noreferrer"
+              className="text-xs inline-block" style={{ color: tint(T.green, 0.9), fontWeight: 600, marginTop: 6 }}>
+              Source: Wikimedia Commons ↗
+            </a>
+          )}
         </div>
         <button onClick={onClose} aria-label="Close" className="geo-tap"
           style={{ flexShrink: 0, color: T.dim, fontSize: 18, lineHeight: 1, background: 'none', border: 'none', cursor: 'pointer' }}>✕</button>
