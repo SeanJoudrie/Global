@@ -2143,6 +2143,41 @@ export const HISTORICAL_FLAGS: HistoricalEntity[] = [
     note: "A red flag with a central green stripe and the hammer, sickle and star, flown by Soviet Moldova before the country adopted a Romanian-style tricolor in 1990.",
   },
   {
+    id: "russian-sfsr", name: "Russian SFSR", era: "1954–1991", region: "Europe",
+    flagUrl: fp("Flag_of_the_Russian_Soviet_Federative_Socialist_Republic.svg"), relatedCode: "RU",
+    note: "The largest Soviet republic flew a red flag with a thin blue stripe down the hoist; the RSFSR was the core of the USSR and became the Russian Federation in 1991.",
+  },
+  {
+    id: "kazakh-ssr", name: "Kazakh SSR", era: "1936–1991", region: "Asia & Oceania",
+    flagUrl: fp("Flag_of_the_Kazakh_Soviet_Socialist_Republic.svg"), relatedCode: "KZ",
+    note: "A red Soviet flag with a turquoise lower band and the hammer, sickle and star, flown over Soviet Kazakhstan until its independence in 1991.",
+  },
+  {
+    id: "kirghiz-ssr", name: "Kirghiz SSR", era: "1936–1991", region: "Asia & Oceania",
+    flagUrl: fp("Flag_of_the_Kirghiz_Soviet_Socialist_Republic.svg"), relatedCode: "KG",
+    note: "The red flag of Soviet Kyrgyzstan, crossed at its centre by blue-and-white stripes, used until the republic became independent Kyrgyzstan.",
+  },
+  {
+    id: "tajik-ssr", name: "Tajik SSR", era: "1929–1991", region: "Asia & Oceania",
+    flagUrl: fp("Flag_of_the_Tajik_Soviet_Socialist_Republic.svg"), relatedCode: "TJ",
+    note: "A red flag with white and green horizontal bands beneath the hammer, sickle and star — the Soviet flag of Tajikistan, carved out of the Uzbek SSR in 1929.",
+  },
+  {
+    id: "turkmen-ssr", name: "Turkmen SSR", era: "1925–1991", region: "Asia & Oceania",
+    flagUrl: fp("Flag_of_the_Turkmen_Soviet_Socialist_Republic.svg"), relatedCode: "TM",
+    note: "A red Soviet flag crossed by two blue stripes, flown over Soviet Turkmenistan; the modern country adopted its green national flag in 1992.",
+  },
+  {
+    id: "uzbek-ssr", name: "Uzbek SSR", era: "1925–1991", region: "Asia & Oceania",
+    flagUrl: fp("Flag_of_the_Uzbek_Soviet_Socialist_Republic.svg"), relatedCode: "UZ",
+    note: "A red flag with a central blue band edged in white above and below the hammer, sickle and star — the Soviet flag of Uzbekistan until independence.",
+  },
+  {
+    id: "azerbaijan-ssr", name: "Azerbaijan SSR", era: "1920–1991", region: "Asia & Oceania",
+    flagUrl: fp("Flag_of_the_Azerbaijan_Soviet_Socialist_Republic.svg"), relatedCode: "AZ",
+    note: "The red Soviet flag of Azerbaijan with a blue lower band and the hammer, sickle and star, used until the republic restored its independence in 1991.",
+  },
+  {
     id: "belarusian-pr", name: "Belarusian People's Republic", era: "1918–1919", region: "Europe",
     flagUrl: fp("Flag_of_Belarus.svg"), relatedCode: "BY",
     note: "The white-red-white flag of the short-lived republic declared during WWI; suppressed by the Bolsheviks, it returned as independent Belarus's flag from 1991 to 1995.",
