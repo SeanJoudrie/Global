@@ -2298,6 +2298,21 @@ export const HISTORICAL_FLAGS: HistoricalEntity[] = [
     note: "A US-administered UN trust territory across Micronesia after the Second World War, which split into the modern Federated States of Micronesia, Marshall Islands, Palau and the Northern Marianas.",
   },
   {
+    id: "mughal-empire", name: "Mughal Empire", era: "1526–1857", region: "Asia & Oceania",
+    flagUrl: fp("Alam_of_the_Mughal_Empire.svg"), relatedCodes: ["IN", "PK", "BD"],
+    note: "One of history's great empires, ruling most of the Indian subcontinent at its height; its green 'Alam' banner bore a lion and rising sun. Builders of the Taj Mahal, the Mughals were finally deposed by the British after the 1857 rebellion.",
+  },
+  {
+    id: "konbaung", name: "Konbaung Dynasty", era: "1752–1885", region: "Asia & Oceania",
+    flagUrl: fp("National_flag_of_Third_Burmese_Empire_(Konbaung_Dynasty).svg"), relatedCode: "MM",
+    note: "The last dynasty of Burmese kings — the 'Third Burmese Empire' — whose peacock banner flew until the British annexed Burma after three Anglo-Burmese Wars.",
+  },
+  {
+    id: "federation-south-arabia", name: "Federation of South Arabia", era: "1962–1967", region: "Africa & Middle East",
+    flagUrl: fp("Flag_of_the_Federation_of_South_Arabia.svg"), relatedCode: "YE",
+    note: "A British-backed federation of Aden and the surrounding sultanates in the south of modern Yemen, dissolved when South Yemen won independence in 1967.",
+  },
+  {
     id: "belarusian-pr", name: "Belarusian People's Republic", era: "1918–1919", region: "Europe",
     flagUrl: fp("Flag_of_Belarus.svg"), relatedCode: "BY",
     note: "The white-red-white flag of the short-lived republic declared during WWI; suppressed by the Bolsheviks, it returned as independent Belarus's flag from 1991 to 1995.",
