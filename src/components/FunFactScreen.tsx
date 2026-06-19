@@ -80,7 +80,7 @@ export default function FunFactScreen({ onBack }: Props) {
 
   return (
     <div className="min-h-screen flex flex-col" style={{ background: T.bg, color: T.text }}>
-      <ScreenHeader title="Fun Facts" subtitle={cards.length ? `${cardIdx + 1} of ${cards.length}` : seg.label} onBack={onBack} />
+      <ScreenHeader title="Fun Facts" subtitle={cards.length ? `${(cardIdx % cards.length) + 1} of ${cards.length}` : seg.label} onBack={onBack} />
 
       {/* Segment picker — choose which pool of flags the facts come from */}
       <div className="px-5 pt-1">

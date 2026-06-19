@@ -771,7 +771,7 @@ export const HISTORICAL_FLAGS: HistoricalEntity[] = [
     note: "A green field with a white crescent, flown by the Al Saud state in central Arabia just before it conquered the Hejaz and became the Kingdom of Saudi Arabia.",
   },
   {
-    id: "bora-bora", name: "Kingdom of Bora Bora", era: "1837–1842", region: "Asia & Oceania", relatedCode: "PF",
+    id: "bora-bora", name: "Kingdom of Bora Bora", era: "1837–1842", region: "Asia & Oceania", relatedCode: "FR",
     flagUrl: fp("Flag_of_the_Kingdom_of_Bora_Bora_(1837-1842).svg"),
     note: "Red-and-white stripes with a canton of white stars, flown by the 19th-century Polynesian island kingdom before French annexation.",
   },
@@ -983,7 +983,7 @@ export const HISTORICAL_FLAGS: HistoricalEntity[] = [
     note: "A short-lived secessionist confederation of northeastern Brazilian provinces revolting against the new emperor; a sky-blue field with a shield reading 'Confederação'.",
   },
   {
-    id: "lares", name: "Republic of Puerto Rico (Lares)", era: "1868", region: "Americas", relatedCode: "PR",
+    id: "lares", name: "Republic of Puerto Rico (Lares)", era: "1868", region: "Americas", relatedCode: "US",
     flagUrl: fp("Flag_of_Lares.svg"),
     note: "The Grito de Lares revolutionary flag — a white cross dividing blue and red quarters with a white star — raised in the brief 1868 uprising against Spanish rule.",
   },
@@ -1004,12 +1004,12 @@ export const HISTORICAL_FLAGS: HistoricalEntity[] = [
   },
   // Oceania — Polynesian & Pacific kingdoms
   {
-    id: "rarotonga", name: "Kingdom of Rarotonga", era: "1858–1888", region: "Asia & Oceania", relatedCode: "CK",
+    id: "rarotonga", name: "Kingdom of Rarotonga", era: "1858–1888", region: "Asia & Oceania", relatedCode: "NZ",
     flagUrl: fp("Flag_of_Rarotonga_1858-1888.svg"),
     note: "Red-white-red with three blue stars, flown by the Cook Islands kingdom before it became a British protectorate, then part of New Zealand.",
   },
   {
-    id: "raiatea", name: "Kingdom of Raiatea", era: "1880–1888", region: "Asia & Oceania", relatedCode: "PF",
+    id: "raiatea", name: "Kingdom of Raiatea", era: "1880–1888", region: "Asia & Oceania", relatedCode: "FR",
     flagUrl: fp("Flag_of_the_Kingdom_of_Raiatea_(1880-1888).svg"),
     note: "A red-and-white striped flag with a small French tricolor canton, from the Leeward Islands kingdom that resisted French annexation for years.",
   },
@@ -1019,17 +1019,17 @@ export const HISTORICAL_FLAGS: HistoricalEntity[] = [
     note: "A tiny island kingdom off Sardinia ruled by the Bertoleoni family, sometimes called the smallest kingdom in the world. Its flag bears a gold star beneath a crown.",
   },
   {
-    id: "tubuai", name: "Kingdom of Tubuai", era: "1819–1881", region: "Asia & Oceania", relatedCode: "PF",
+    id: "tubuai", name: "Kingdom of Tubuai", era: "1819–1881", region: "Asia & Oceania", relatedCode: "FR",
     flagUrl: fp("Flag_of_Tubuai.svg"),
     note: "A white field with a red cross and four blue stars, the historic flag of a kingdom in the Austral Islands of the South Pacific.",
   },
   {
-    id: "rapa", name: "Kingdom of Rapa Iti", era: "1867–1887", region: "Asia & Oceania", relatedCode: "PF",
+    id: "rapa", name: "Kingdom of Rapa Iti", era: "1867–1887", region: "Asia & Oceania", relatedCode: "FR",
     flagUrl: fp("Flag_of_Rapa.svg"),
     note: "A remote Polynesian island kingdom whose flag carried a blue star beneath a crown with a French canton, before France absorbed it.",
   },
   {
-    id: "mangareva", name: "Kingdom of Mangareva", era: "1832–1844", region: "Asia & Oceania", relatedCode: "PF",
+    id: "mangareva", name: "Kingdom of Mangareva", era: "1832–1844", region: "Asia & Oceania", relatedCode: "FR",
     flagUrl: fp("Flag_of_the_Gambier_Islands.svg"),
     note: "The Gambier Islands kingdom flew a banded flag with corner stars, attributed to the French explorer Dumont d'Urville, before becoming a French protectorate.",
   },
@@ -1239,7 +1239,7 @@ export const HISTORICAL_FLAGS: HistoricalEntity[] = [
     note: "The three southern atolls of the Maldives broke away under Abdullah Afeef for four years; their blue-green-red flag carried a crescent and three stars before the rebellion collapsed.",
   },
   {
-    id: "huahine", name: "Kingdom of Huahine", era: "1846–1895", region: "Asia & Oceania", relatedCode: "PF",
+    id: "huahine", name: "Kingdom of Huahine", era: "1846–1895", region: "Asia & Oceania", relatedCode: "FR",
     flagUrl: fp("Flag_of_Huahine.svg"),
     note: "A Society Islands kingdom that resisted France longer than its neighbours; its red-and-white flag with a French canton reflected an uneasy protectorate before annexation.",
   },
@@ -1428,7 +1428,7 @@ export const HISTORICAL_FLAGS: HistoricalEntity[] = [
   // ── Asia & Oceania: former states (List of former sovereign states) ──
   {
     id: "kingdom-tahiti", name: "Kingdom of Tahiti", era: "1788–1880", region: "Asia & Oceania",
-    flagUrl: fp("Flag_of_the_Kingdom_of_Tahiti.svg"), relatedCode: "PF",
+    flagUrl: fp("Flag_of_the_Kingdom_of_Tahiti.svg"), relatedCode: "FR",
     note: "The Pōmare dynasty's red-white-red flag flew over the Society Islands kingdom until France annexed Tahiti in 1880, ending nearly a century of independent Polynesian rule.",
   },
   {
