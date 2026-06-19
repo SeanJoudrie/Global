@@ -302,6 +302,15 @@ export default function SettingsScreen({ onBack, onMegaCodex, onFlagCheck }: Pro
           <a href="/terms.html" target="_blank" rel="noopener" style={{ color: T.muted, textDecoration: 'underline' }}>Terms of Use</a>
         </div>
 
+        {/* Accuracy disclaimer — moved here from the Codex so it doesn't crowd
+            the galleries; the Codex leans on Wikipedia / Wikimedia Commons. */}
+        <div className="mt-5" style={{ padding: '10px 12px', borderRadius: 10, background: tint(T.amber, 0.07), border: `1px solid ${tint(T.amber, 0.28)}` }}>
+          <p className="text-xs" style={{ color: T.muted, lineHeight: 1.6, margin: 0 }}>
+            <strong style={{ color: T.text }}>A note on accuracy.</strong> Flags, names and dates in the Codex are sourced from Wikipedia and Wikimedia Commons. We do our best to get them right, but we're not an authoritative reference and small mistakes may slip through. Spot something off?{' '}
+            <a href="mailto:sjoudrie@gmail.com?subject=Globalio%20flag%20correction" style={{ color: T.amber, fontWeight: 600 }}>Tell us</a>{' '}and we'll fix it fast.
+          </p>
+        </div>
+
         {/* secret */}
         <button onClick={onMegaCodex}
           className="w-full mt-8 py-2.5 rounded-xl text-xs font-semibold transition-all active:scale-95"

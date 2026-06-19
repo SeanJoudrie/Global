@@ -1,6 +1,5 @@
 import { useState, useRef, lazy, Suspense } from "react"
 import type { ReactNode } from "react"
-import worldMap from "@svg-maps/world"
 import { FLAGS } from "../data/flags"
 import type { AppState } from "../utils/storage"
 import { todayString } from "../utils/prng"
@@ -15,38 +14,6 @@ import EarthLogo from "./EarthLogo"
 import { GamePoster } from "./GamePoster"
 import AdBox from "./AdBox"
 import { AD_SLOTS } from "../ads"
-
-// Faint antique world-map backdrop (Cartographer skin only). Fixed to the
-// viewport so it stays put while the page scrolls; heavily blurred, very low
-// opacity, and feathered on every edge so there's no hard boundary.
-//
-// Prefers a real map photo at /world-map.jpg (drop your vintage-map image into
-// public/ and it's used automatically); falls back to the vector world map
-// until that file exists.
-function MapBackdrop() {
-  const soft = "radial-gradient(108% 108% at 50% 44%, #000 0%, #000 38%, rgba(0,0,0,0.5) 64%, transparent 84%)"
-  const [usePhoto, setUsePhoto] = useState(true)
-  return (
-    <div aria-hidden style={{
-      position: "fixed", inset: 0, zIndex: 0, pointerEvents: "none",
-      opacity: usePhoto ? 0.13 : 0.1, filter: "blur(3px)",
-      WebkitMaskImage: soft, maskImage: soft,
-      display: "flex", alignItems: "center", justifyContent: "center", overflow: "hidden",
-    }}>
-      {usePhoto ? (
-        <img src="/world-map.jpg" alt="" onError={() => setUsePhoto(false)}
-          style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
-      ) : (
-        <svg viewBox={(worldMap as { viewBox: string }).viewBox} preserveAspectRatio="xMidYMid meet"
-          style={{ width: "172%", minWidth: 720, maxWidth: "none", display: "block" }}>
-          {(worldMap as { locations: { id: string; path: string }[] }).locations.map(l => (
-            <path key={l.id} d={l.path} fill="#8C7A5A" />
-          ))}
-        </svg>
-      )}
-    </div>
-  )
-}
 
 // The Codex tab renders the real Codex directly (no launcher page between).
 // Lazy so the dashboard bundle stays lean — same chunk App.tsx already splits.
@@ -70,13 +37,20 @@ const weekIdx = Math.floor(Date.now() / (7 * 86400000))
 // away instead of a re-swipe through the shelves. Separate key from AppState —
 // purely presentational, safe to lose.
 const RECENT_KEY = "globalio_recent_games"
+const PLAYS_KEY = "globalio_total_plays"
 function loadRecent(): string[] {
   try { return JSON.parse(localStorage.getItem(RECENT_KEY) || "[]") as string[] } catch { return [] }
+}
+// Total games ever launched — "Jump back in" stays hidden until you've played a
+// few, so a fresh user never sees a half-empty recents shelf.
+function loadPlayCount(): number {
+  try { return parseInt(localStorage.getItem(PLAYS_KEY) || "0", 10) || 0 } catch { return 0 }
 }
 function pushRecent(id: string) {
   try {
     const next = [id, ...loadRecent().filter(x => x !== id)].slice(0, 8)
     localStorage.setItem(RECENT_KEY, JSON.stringify(next))
+    localStorage.setItem(PLAYS_KEY, String(loadPlayCount() + 1))
   } catch { /* ignore */ }
 }
 
@@ -101,7 +75,7 @@ export default function MainTabs({ state, tab, onTab, onNavigate, onQuickPlay, o
 
   return (
     <div className={IS_CARTO ? "carto-paper" : "geo-grid"} style={{ position: "fixed", inset: 0, display: "flex", flexDirection: "column", zIndex: 1, background: IS_CARTO ? T.bg : undefined }}>
-      {IS_CARTO ? <MapBackdrop /> : <div className="geo-vignette" style={{ position: "absolute", inset: 0, pointerEvents: "none" }} />}
+      {!IS_CARTO && <div className="geo-vignette" style={{ position: "absolute", inset: 0, pointerEvents: "none" }} />}
 
       {/* ── Shared header: wordmark · live streak · system actions ── */}
       <header style={{ position: "relative", flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "space-between", padding: "16px 18px 6px" }}>
@@ -185,11 +159,9 @@ function TodayTab({ state, dailyDone, launch, onNavigate, onGoCodex, onGoPlay, o
           body: "Every country, region, historical and identity flag — tap any one to dig into its story.",
           cta: "Open the Codex", onClick: () => onGoCodex(),
           art: (
-            <div style={{ position: "relative", width: 88, height: 64, flexShrink: 0 }}>
-              {["za", "jp", "ch"].map((c, i) => (
-                <div key={c} style={{ position: "absolute", inset: 0, borderRadius: 6, overflow: "hidden", border: `1.5px solid ${T.surface}`,
-                  transform: `translate(${(i - 1) * 9}px, ${(i - 1) * 5}px) rotate(${(i - 1) * 6}deg)`,
-                  boxShadow: `0 3px 8px -4px ${tint(T.text, 0.6)}`, zIndex: i }}>
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 4, width: 84, height: 60, flexShrink: 0 }}>
+              {["za", "jp", "ch", "br"].map(c => (
+                <div key={c} style={{ borderRadius: 4, overflow: "hidden", border: `1px solid ${T.surface}`, boxShadow: `0 2px 5px -3px ${tint(T.text, 0.6)}` }}>
                   <FlagImage code={c} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
                 </div>
               ))}
@@ -199,11 +171,9 @@ function TodayTab({ state, dailyDone, launch, onNavigate, onGoCodex, onGoPlay, o
           body: "Flip through every team's flag, story and historical flags before kickoff.",
           cta: "Explore the field", onClick: () => onNavigate("worldcup"),
           art: (
-            <div style={{ position: "relative", width: 88, height: 64, flexShrink: 0 }}>
+            <div style={{ display: "flex", gap: 5, width: 92, height: 58, flexShrink: 0, alignItems: "center" }}>
               {["us", "mx", "ca"].map((c, i) => (
-                <div key={c} style={{ position: "absolute", inset: 0, borderRadius: 6, overflow: "hidden", border: `1.5px solid ${T.surface}`,
-                  transform: `translate(${(i - 1) * 9}px, ${(i - 1) * 5}px) rotate(${(i - 1) * 6}deg)`,
-                  boxShadow: `0 3px 8px -4px ${tint(T.text, 0.6)}`, zIndex: i }}>
+                <div key={c} style={{ flex: 1, height: i === 1 ? "100%" : "80%", borderRadius: 5, overflow: "hidden", border: `1.5px solid ${T.surface}`, boxShadow: `0 2px 6px -3px ${tint(T.text, 0.6)}` }}>
                   <FlagImage code={c} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
                 </div>
               ))}
@@ -364,25 +334,28 @@ function HeroDeck({ slides }: { slides: SlideData[] }) {
 function DeckSlide({ accent, eyebrow, title, body, cta, onClick, art, watermark, cover }: SlideData) {
   const disabled = !onClick
   if (cover) {
-    // Full-bleed flag poster — light text over a dark scrim, a distinct second
-    // format from the paper-card slides so the deck never looks monotonous.
+    // Flag-poster format: the flag fills the TOP of the card, fully visible with
+    // nothing over it, and the text lives in a solid caption panel below — a
+    // distinct second format from the paper-card slides, and legible (the old
+    // full-bleed version buried the flag under text).
     return (
       <div className={IS_CARTO ? "carto-card" : ""}
-        style={{ height: "100%", position: "relative", overflow: "hidden", borderRadius: 16, border: `1px solid ${tint(accent, 0.4)}` }}>
-        <FlagImage code={cover} style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
-        <div style={{ position: "absolute", inset: 0, background: "linear-gradient(90deg, rgba(12,16,20,0.82), rgba(12,16,20,0.34) 60%, rgba(12,16,20,0.08))" }} />
-        <div style={{ position: "relative", height: "100%", padding: 18, display: "flex", flexDirection: "column", justifyContent: "center", maxWidth: "80%" }}>
-          <div className="geo-micro" style={{ fontSize: 9, color: "rgba(255,255,255,0.82)", marginBottom: 7 }}>◦ {eyebrow}</div>
-          <div className="geo-display" style={{ fontWeight: 800, fontSize: 25, lineHeight: 1.06, letterSpacing: "-0.02em", color: "#fff", textShadow: "0 1px 10px rgba(0,0,0,0.55)", display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>
+        style={{ height: "100%", position: "relative", overflow: "hidden", borderRadius: 16, border: `1px solid ${tint(accent, 0.4)}`, background: T.surface }}>
+        <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "44%", overflow: "hidden" }}>
+          <FlagImage code={cover} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+        </div>
+        <div style={{ position: "absolute", left: 0, right: 0, bottom: 0, height: "56%", background: T.surface, borderTop: `1px solid ${tint(accent, 0.35)}`, padding: "11px 16px 14px", display: "flex", flexDirection: "column", justifyContent: "center" }}>
+          <div className="geo-micro" style={{ fontSize: 9, color: accent, marginBottom: 5 }}>◦ {eyebrow}</div>
+          <div className="geo-display" style={{ fontWeight: 800, fontSize: 21, lineHeight: 1.05, letterSpacing: "-0.02em", color: T.text, display: "-webkit-box", WebkitLineClamp: 1, WebkitBoxOrient: "vertical", overflow: "hidden" }}>
             {title}
           </div>
-          <div style={{ color: "rgba(255,255,255,0.92)", fontSize: 12.5, marginTop: 6, lineHeight: 1.5, textShadow: "0 1px 8px rgba(0,0,0,0.55)", display: "-webkit-box", WebkitLineClamp: 3, WebkitBoxOrient: "vertical", overflow: "hidden" }}>
+          <div style={{ color: T.muted, fontSize: 12, marginTop: 5, lineHeight: 1.45, display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>
             {body}
           </div>
           <button onClick={onClick} onPointerDown={e => e.stopPropagation()} disabled={disabled} className={disabled ? "" : "geo-tap"}
-            style={{ alignSelf: "flex-start", marginTop: 14, display: "inline-flex", alignItems: "center", gap: 8, padding: "11px 20px", borderRadius: 999, minHeight: 44, background: "#fff", color: "#16202a", cursor: disabled ? "default" : "pointer" }}>
-            <span style={{ fontFamily: FONT.display, fontWeight: 700, fontSize: 14.5 }}>{cta}</span>
-            {!disabled && <span style={{ fontSize: 15 }}>→</span>}
+            style={{ alignSelf: "flex-start", marginTop: 10, display: "inline-flex", alignItems: "center", gap: 8, padding: "9px 18px", borderRadius: 999, minHeight: 40, background: accent, color: T.onAccent, cursor: disabled ? "default" : "pointer" }}>
+            <span style={{ fontFamily: FONT.display, fontWeight: 700, fontSize: 14 }}>{cta}</span>
+            {!disabled && <span style={{ fontSize: 14 }}>→</span>}
           </button>
         </div>
       </div>
@@ -444,6 +417,7 @@ function PlayTab({ launch, state }: { launch: (e: Entry) => void; state: AppStat
   // Local personalization, all derived on-device from recently-played ids.
   const recentIds = loadRecent()
   const recents = recentIds.map(id => all.find(r => r.id === id)).filter((e): e is Entry => !!e)
+  const enoughPlays = loadPlayCount() >= 4
   const rec = recommendFor(recentIds)
   const discover = discoverGames(recentIds, dayIdx)
   // Trending deck — featured A-tier games lead, then a stable weekly rotation.
@@ -487,8 +461,9 @@ function PlayTab({ launch, state }: { launch: (e: Entry) => void; state: AppStat
         </div>
         <button onClick={shuffle} className="geo-tap" aria-label="Surprise me — play a random game"
           style={{ display: "flex", alignItems: "center", gap: 7, padding: "11px 16px", borderRadius: 999, flexShrink: 0,
-            background: tint(ACCENT.play, 0.12), border: `1px solid ${tint(ACCENT.play, 0.35)}`, color: ACCENT.play }}>
-          <ShuffleIcon size={15} color={ACCENT.play} strokeWidth={1.7} />
+            background: ACCENT.play, border: `1px solid ${ACCENT.play}`, color: T.onAccent,
+            boxShadow: `0 6px 16px -8px ${tint(ACCENT.play, 0.9)}` }}>
+          <ShuffleIcon size={15} color={T.onAccent} strokeWidth={1.9} />
           <span style={{ fontFamily: FONT.display, fontWeight: 700, fontSize: 13 }}>Surprise me</span>
         </button>
       </div>
@@ -538,8 +513,9 @@ function PlayTab({ launch, state }: { launch: (e: Entry) => void; state: AppStat
         {/* Trending this week — the swipeable flag-card deck (showpiece) */}
         <TrendingDeck games={trending} launch={launch} />
 
-        {/* Jump back in — your recent rotation, one tap away */}
-        {recents.length > 0 && (
+        {/* Jump back in — your recent rotation, one tap away (only after a few
+            plays, so it never shows up half-empty for a new user) */}
+        {enoughPlays && recents.length > 0 && (
           <div>
             <ShelfHead icon={<HistoryIcon size={15} color={ACCENT.play} strokeWidth={1.7} />} accent={ACCENT.play}
               title="Jump back in" reason="Pick up a recent game" />
@@ -767,7 +743,7 @@ function TrendingDeck({ games, launch }: { games: Entry[]; launch: (e: Entry) =>
           }}
           onPointerCancel={() => { dragging.current = false; axis.current = null; setDx(0) }}
           style={{
-            position: "absolute", left: 0, right: 0, top: 0, height: CARD_H, borderRadius: 18, overflow: "hidden", touchAction: "pan-y pinch-zoom", cursor: "grab",
+            position: "absolute", left: 0, right: 0, top: 0, height: CARD_H, borderRadius: 18, overflow: "hidden", touchAction: "pan-y", cursor: "grab",
             background: T.surface, border: `1px solid ${tint(accent, 0.5)}`,
             boxShadow: `0 2px 6px rgba(31,58,60,0.08), 0 22px 42px -22px ${tint(accent, 0.85)}`,
             transform: `translateX(${dx}px) rotate(${dx * 0.022}deg)`,
@@ -975,9 +951,11 @@ function YouTab({ state, learned, onNavigate, onSetUsername }: {
             <ModuleCard key={e.id} icon={e.icon} glyph={e.id} title={e.title} subtitle={e.subtitle} accent={ACCENT[e.accent]}
               progress={e.progress?.(state)} onClick={() => onNavigate(e.id)} />
           ))}
-          <GachaInline onOpen={() => onNavigate("gacha")} />
         </div>
       </div>
+
+      {/* Gacha collection — its own block, just beneath the explorer's tools */}
+      <GachaInline onOpen={() => onNavigate("gacha")} />
 
       {/* Support Globalio — a gentle, non-naggy CTA shown only to non-supporters */}
       {!state.premium && (
@@ -1026,7 +1004,7 @@ function FeedbackCard() {
         </span>
         <div style={{ flex: 1, minWidth: 0 }}>
           <div className="geo-display" style={{ fontWeight: 700, fontSize: 16, color: T.text }}>Send feedback or ideas</div>
-          <div style={{ color: T.muted, fontSize: 11.5, marginTop: 2, lineHeight: 1.4 }}>i'm a one-man operation, so i genuinely read every message — thanks for playing, and i'll do my best to make it happen 💛</div>
+          <div style={{ color: T.muted, fontSize: 11.5, marginTop: 2, lineHeight: 1.4 }}>i'm a one-man operation, so i genuinely read every message. thanks for playing, and i'll do my best to make it happen 💛</div>
         </div>
         <span style={{ color: ACCENT.learn, fontSize: 18, opacity: 0.7 }}>→</span>
       </div>
@@ -1043,16 +1021,17 @@ function GachaInline({ onOpen }: { onOpen: () => void }) {
     .map(c => FLAGS.find(f => f.code === c))
     .filter((f): f is typeof FLAGS[number] => !!f)
   return (
-    <div className={IS_CARTO ? "carto-card" : undefined}
-      style={{ padding: 11, borderRadius: 14, ...(IS_CARTO ? {} : { background: T.surface, border: `1px solid ${T.line}` }) }}>
+    // The whole card is one tap straight to the collection — no secondary
+    // "open" button to hunt for.
+    <button onClick={onOpen} className={`geo-tap ${IS_CARTO ? "carto-card" : ""}`}
+      style={{ width: "100%", textAlign: "left", cursor: "pointer", padding: 11, borderRadius: 14, ...(IS_CARTO ? {} : { background: T.surface, border: `1px solid ${T.line}` }) }}>
       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: flags.length ? 7 : 0 }}>
         <div className="geo-display" style={{ fontWeight: 700, fontSize: 13, color: T.text }}>
           Gacha Collection{flags.length ? <span style={{ color: T.dim, fontWeight: 600 }}> · {flags.length}/{FLAGS.length}</span> : null}
         </div>
-        <button onClick={onOpen} className="geo-tap"
-          style={{ fontSize: 11.5, fontWeight: 700, color: ACCENT.today, background: "none", border: "none", cursor: "pointer", fontFamily: FONT.display }}>
+        <span style={{ fontSize: 11.5, fontWeight: 700, color: ACCENT.today, fontFamily: FONT.display }}>
           {flags.length ? "Open →" : "Daily pull →"}
-        </button>
+        </span>
       </div>
       {flags.length === 0 ? (
         <div style={{ color: T.muted, fontSize: 11.5, marginTop: 4 }}>No pulls yet — grab your free daily pull.</div>
@@ -1066,6 +1045,6 @@ function GachaInline({ onOpen }: { onOpen: () => void }) {
           ))}
         </div>
       )}
-    </div>
+    </button>
   )
 }
