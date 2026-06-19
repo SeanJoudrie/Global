@@ -95,7 +95,7 @@ export default function CodexScreen({ onBack, initialCode, embedded = false }: P
   const isSearching = search.trim().length > 0
 
   return (
-    <div className={embedded ? '' : 'min-h-screen flex flex-col'} style={{ background: T.bg, color: T.text, position: 'relative', zIndex: 1 }}>
+    <div className={embedded ? 'carto-rise' : 'min-h-screen flex flex-col'} style={{ background: T.bg, color: T.text, position: 'relative', zIndex: 1 }}>
       {embedded || !onBack ? (
         <header style={{ padding: '14px 16px 10px' }}>
           <h1 className="geo-display" style={{ color: T.text, fontWeight: 700, fontSize: 20, letterSpacing: '-0.01em', lineHeight: 1.1, margin: 0 }}>Codex</h1>
@@ -111,7 +111,7 @@ export default function CodexScreen({ onBack, initialCode, embedded = false }: P
           <Search size={16} color={T.dim} strokeWidth={1.6} absoluteStrokeWidth />
           <input
             type="text"
-            placeholder="Search countries…"
+            placeholder="Search every flag…"
             value={search}
             onChange={e => setSearch(e.target.value)}
             className="flex-1 bg-transparent text-sm outline-none"
@@ -191,6 +191,9 @@ export default function CodexScreen({ onBack, initialCode, embedded = false }: P
           })
         )}
 
+        {/* Universal search — every other matching flag, behind a divider (G1) */}
+        {isSearching && <OtherFlagsResults query={search} />}
+
         {/* Soft divide: countries above, everything-else collections below */}
         {!isSearching && (
           <div aria-hidden className="flex items-center gap-3" style={{ margin: '28px 2px 6px' }}>
@@ -200,11 +203,30 @@ export default function CodexScreen({ onBack, initialCode, embedded = false }: P
           </div>
         )}
 
-        {/* Beyond-countries order: Identity, Ethnic, Extinct, Cities, Orgs, Signal */}
-        {/* Identity & other flags — pride, ethnic, separatist, micronations… */}
-        {!isSearching && <IdentityCodexSection />}
-        {/* Ethnic & cultural flags — the full Commons "Cultural flags" gallery */}
+        {/* Accuracy disclaimer — these collections lean on Wikipedia / Wikimedia
+            Commons, so we set expectations and invite corrections. */}
+        {!isSearching && (
+          <div style={{ margin: '4px 2px 10px', padding: '10px 12px', borderRadius: 10, background: tint(T.amber, 0.07), border: `1px solid ${tint(T.amber, 0.28)}` }}>
+            <p className="text-xs" style={{ color: T.muted, lineHeight: 1.6, margin: 0 }}>
+              <strong style={{ color: T.text }}>A note on accuracy.</strong> Flags, names and dates below are sourced from Wikipedia and Wikimedia Commons. We do our best to get them right, but we're not an authoritative reference and small mistakes may slip through. Spot something off?{' '}
+              <a href="mailto:sjoudrie@gmail.com?subject=Globalio%20flag%20correction" style={{ color: T.amber, fontWeight: 600 }}>Tell us</a>{' '}and we'll fix it fast.
+            </p>
+          </div>
+        )}
+
+        {/* Beyond-countries order: Mega Codex first (the "pick a random one"
+            entry point), then the themed collections, signal flags last. */}
+        {/* Beyond-countries, ordered by likely-to-click (E8): A–Z up top, the
+            rich peoples/identity/micronation sets next, themed galleries, then
+            organisations and signal flags last. */}
+        {/* Mega Codex A–Z — every flag in the app, alphabetical, up top */}
+        {!isSearching && <MegaCodexSection />}
+        {/* Peoples & Cultures — ethnic/cultural + pan-national + indigenous */}
         {!isSearching && <EthnicCodexSection />}
+        {/* Movements & Identity — pride, separatist & civic causes */}
+        {!isSearching && <IdentityCodexSection />}
+        {/* Micronations — its own standalone section */}
+        {!isSearching && <MicronationsCodexSection />}
         {/* Extinct states — the Commons "Flags of extinct states" gallery */}
         {!isSearching && <ExtinctStatesCodexSection />}
         {/* American city flags — beta, lots of municipal flags */}
@@ -213,8 +235,6 @@ export default function CodexScreen({ onBack, initialCode, embedded = false }: P
         {!isSearching && <OrgCodexSection />}
         {/* Maritime / signal alphabet — last of the themed sections */}
         {!isSearching && <SignalCodexSection />}
-        {/* Mega Codex A–Z — every flag in the app, alphabetical, at the very bottom */}
-        {!isSearching && <MegaCodexSection />}
         {/* Ad box — dormant until a publisher ID is set in src/ads.ts */}
         {!isSearching && <AdBox slot={AD_SLOTS.codexFooter} style={{ marginTop: 24 }} />}
       </div>
@@ -647,11 +667,129 @@ function TerritoriesSection({ territories }: { territories: Territory[] }) {
   )
 }
 
-// ── Identity flags browser (pride, ethnic, separatist, micronations, signal) ──
+// Universal search results — every non-country flag (peoples, historical states,
+// organisations, subdivisions, cities…) matching the query, shown beneath the
+// country matches behind a divider so anything in the app is findable (G1).
+function OtherFlagsResults({ query }: { query: string }) {
+  const q = query.trim().toLowerCase()
+  const [openKey, setOpenKey] = useState<string | null>(null)
+  const matches = useMemo(() => {
+    if (!q) return []
+    const countryNames = new Set(FLAGS.map(f => f.name.toLowerCase()))
+    return ALL_FLAGS_AZ.filter(f => f.title.toLowerCase().includes(q) && !countryNames.has(f.title.toLowerCase())).slice(0, 60)
+  }, [q])
+  if (!matches.length) return null
+  return (
+    <div className="mt-4">
+      <div aria-hidden className="flex items-center gap-3" style={{ margin: '8px 2px 8px' }}>
+        <span style={{ flex: 1, height: 1, background: T.line }} />
+        <span className="geo-micro" style={{ fontSize: 8.5, color: T.dim }}>Former states &amp; other flags · {matches.length}</span>
+        <span style={{ flex: 1, height: 1, background: T.line }} />
+      </div>
+      <div className="space-y-1.5">
+        {matches.map(m => {
+          const open = openKey === m.title
+          return (
+            <button key={m.title} onClick={() => setOpenKey(o => o === m.title ? null : m.title)}
+              className="geo-tap w-full px-1.5 py-2.5 rounded-lg transition-all active:scale-[0.99] text-left"
+              style={{ background: open ? tint(ACCENT.codex, 0.07) : 'transparent', borderBottom: `1px solid ${tint(T.line, 0.55)}` }}>
+              <div className="flex items-center gap-3">
+                <div style={{ width: 46, height: 30, flexShrink: 0, borderRadius: 5, overflow: 'hidden', border: `1px solid ${T.line}`, background: T.surfaceHi }}>
+                  <img src={galleryThumb(m.url)} alt={m.title} loading="lazy" style={{ width: '100%', height: '100%', objectFit: 'contain' }}
+                    onError={e => { (e.target as HTMLImageElement).style.opacity = '0.3' }} />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <div className="font-semibold text-sm truncate" style={{ color: T.text }}>{m.title}</div>
+                </div>
+                <span style={{ color: ACCENT.codex, fontSize: 16, transition: 'transform 0.2s', transform: open ? 'rotate(90deg)' : 'rotate(0deg)', flexShrink: 0 }}>›</span>
+              </div>
+              {open && <p className="text-xs leading-relaxed mt-2.5" style={{ color: T.muted, lineHeight: 1.6 }}>{m.fact}</p>}
+            </button>
+          )
+        })}
+      </div>
+    </div>
+  )
+}
+
+// Per-category accent so each Identity subsection reads as its own colour —
+// pride red, pan-ethnic clay, indigenous ochre, separatist blue, micronations
+// green, civic plum. Palette tokens keep it legible across all three aesthetics
+// (raw red/yellow would vanish on the light parchment skin).
+const CAT_COLORS: Record<string, string> = {
+  'Pride & LGBTQ+': T.danger,
+  'Pan-National & Ethnic': T.warm,
+  'Indigenous Peoples': T.amber,
+  'Separatist & Autonomous': T.cyan,
+  Micronations: T.green,
+  'Civic & Ideological': T.violet,
+}
+
+// "Movements & Identity" holds flags that stand for a cause or stance: Pride,
+// Separatist & Autonomous, Civic & Ideological. Pan-National & Ethnic and
+// Indigenous Peoples moved into "Peoples & Cultures"; Micronations stands alone.
+const IDENTITY_MAIN_CATEGORIES = IDENTITY_CATEGORIES.filter(c =>
+  c !== 'Micronations' && c !== 'Pan-National & Ethnic' && c !== 'Indigenous Peoples')
+
+// A single Identity category as its own flat, collapsible section (one row's
+// description open at a time). Used for the standalone Micronations &
+// Pan-National sections.
+function IdentityFlatSection({ title, blurb, color, icon: Icon, flags }: { title: string; blurb: string; color: string; icon: IconType; flags: typeof IDENTITY_FLAGS }) {
+  const [open, setOpen] = useState(false)
+  const [openFlag, setOpenFlag] = useState<string | null>(null)
+  if (!flags.length) return null
+  return (
+    <div className="mt-5">
+      <button onClick={() => setOpen(o => !o)}
+        className="geo-tap w-full flex items-center justify-between px-1 py-3 transition-all active:scale-[0.99]"
+        style={{ background: 'transparent', borderBottom: `1px solid ${open ? tint(color, 0.45) : T.line}` }}>
+        <div className="text-left">
+          <h3 className="text-sm font-bold uppercase tracking-widest flex items-center gap-2" style={{ color }}>
+            <Icon size={15} color={color} strokeWidth={1.6} absoluteStrokeWidth /> {title}
+          </h3>
+          <p className="text-xs" style={{ color: T.dim }}>{blurb}</p>
+        </div>
+        <ChevronDown size={17} color={color} strokeWidth={1.6} absoluteStrokeWidth
+          style={{ transition: 'transform 0.2s', transform: open ? 'rotate(180deg)' : 'rotate(0deg)', flexShrink: 0 }} />
+      </button>
+      {open && (
+        <div className="mt-1.5 space-y-1.5">
+          {flags.map(f => {
+            const showNote = openFlag === f.id
+            return (
+              <button key={f.id} onClick={() => setOpenFlag(o => o === f.id ? null : f.id)}
+                className="geo-tap w-full px-1.5 py-2.5 rounded-lg transition-all active:scale-[0.99] text-left"
+                style={{ background: showNote ? tint(color, 0.07) : 'transparent', borderBottom: `1px solid ${tint(T.line, 0.55)}` }}>
+                <div className="flex items-center gap-3">
+                  <img src={f.flagUrl} alt={f.name}
+                    style={{ width: 46, height: 30, objectFit: 'contain', borderRadius: 5, border: `1px solid ${T.line}`, flexShrink: 0, background: T.surfaceHi }}
+                    onError={e => { (e.target as HTMLImageElement).style.opacity = '0.3' }} />
+                  <div className="flex-1 min-w-0">
+                    <div className="font-semibold text-sm truncate" style={{ color: T.text }}>{f.name}</div>
+                  </div>
+                  <span style={{ color, fontSize: 16, transition: 'transform 0.2s', transform: showNote ? 'rotate(90deg)' : 'rotate(0deg)' }}>›</span>
+                </div>
+                {showNote && <p className="text-xs leading-relaxed mt-2.5" style={{ color: T.muted, lineHeight: 1.65 }}>{f.note}</p>}
+              </button>
+            )
+          })}
+        </div>
+      )}
+    </div>
+  )
+}
+
+function MicronationsCodexSection() {
+  const flags = IDENTITY_FLAGS.filter(f => f.category === 'Micronations')
+  return <IdentityFlatSection title="Micronations" blurb={`${flags.length} self-declared nations`} color={T.green} icon={Crown} flags={flags} />
+}
+
+// ── Identity flags browser (pride, indigenous, separatist, civic) ──
 function IdentityCodexSection() {
   const [sectionOpen, setSectionOpen] = useState(false)
   const [openCat, setOpenCat] = useState<string | null>(null)
   const [openFlag, setOpenFlag] = useState<string | null>(null)
+  const mainCount = IDENTITY_FLAGS.filter(f => (IDENTITY_MAIN_CATEGORIES as readonly string[]).includes(f.category)).length
   return (
     <div className="mt-5">
       {/* Collapsed by default — countries come first; tap to reveal the extras */}
@@ -661,31 +799,32 @@ function IdentityCodexSection() {
         style={{ background: 'transparent', borderBottom: `1px solid ${sectionOpen ? tint(T.warm, 0.45) : T.line}` }}>
         <div className="text-left">
           <h3 className="text-sm font-bold uppercase tracking-widest flex items-center gap-2" style={{ color: T.warm }}>
-            <HeartHandshake size={15} color={T.warm} strokeWidth={1.6} absoluteStrokeWidth /> Identity &amp; Other Flags
+            <HeartHandshake size={15} color={T.warm} strokeWidth={1.6} absoluteStrokeWidth /> Movements &amp; Identity
           </h3>
-          <p className="text-xs" style={{ color: T.dim }}>{IDENTITY_FLAGS.length - SIGNAL_FLAGS.length} flags beyond countries</p>
+          <p className="text-xs" style={{ color: T.dim }}>{mainCount} flags · pride, separatist & civic causes</p>
         </div>
         <ChevronDown size={17} color={T.warm} strokeWidth={1.6} absoluteStrokeWidth
           style={{ transition: 'transform 0.2s', transform: sectionOpen ? 'rotate(180deg)' : 'rotate(0deg)', flexShrink: 0 }} />
       </button>
 
       {sectionOpen && <div className="mt-3" />}
-      {sectionOpen && IDENTITY_CATEGORIES.map(cat => {
+      {sectionOpen && IDENTITY_MAIN_CATEGORIES.map(cat => {
         const flags = IDENTITY_FLAGS.filter(f => f.category === cat)
         const isOpen = openCat === cat
+        const catColor = CAT_COLORS[cat] ?? T.warm
         return (
           <div key={cat} className="mb-3">
             <button
               onClick={() => setOpenCat(o => o === cat ? null : cat)}
               aria-expanded={isOpen}
               className="geo-tap w-full flex items-center justify-between px-1 py-3 transition-all active:scale-[0.99]"
-              style={{ background: 'transparent', borderBottom: `1px solid ${isOpen ? tint(T.warm, 0.45) : T.line}` }}>
+              style={{ background: 'transparent', borderBottom: `1px solid ${isOpen ? tint(catColor, 0.45) : T.line}` }}>
               <div className="flex items-center gap-2.5">
-                {(() => { const Icon = CAT_ICONS[cat] ?? Users; return <Icon size={15} color={T.warm} strokeWidth={1.6} absoluteStrokeWidth /> })()}
-                <h3 className="text-sm font-bold uppercase tracking-widest" style={{ color: T.warm }}>{cat}</h3>
+                {(() => { const Icon = CAT_ICONS[cat] ?? Users; return <Icon size={15} color={catColor} strokeWidth={1.6} absoluteStrokeWidth /> })()}
+                <h3 className="text-sm font-bold uppercase tracking-widest" style={{ color: catColor }}>{cat}</h3>
                 <span className="text-xs" style={{ color: T.dim, fontFamily: FONT.mono, fontVariantNumeric: 'tabular-nums' }}>{flags.length}</span>
               </div>
-              <ChevronDown size={16} color={T.warm} strokeWidth={1.6} absoluteStrokeWidth
+              <ChevronDown size={16} color={catColor} strokeWidth={1.6} absoluteStrokeWidth
                 style={{ transition: 'transform 0.2s', transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)', flexShrink: 0 }} />
             </button>
             {isOpen && (
@@ -695,7 +834,7 @@ function IdentityCodexSection() {
                   return (
                     <button key={f.id} onClick={() => setOpenFlag(o => o === f.id ? null : f.id)}
                       className="geo-tap w-full px-1.5 py-2.5 rounded-lg transition-all active:scale-[0.99] text-left"
-                      style={{ background: showNote ? tint(T.warm, 0.07) : 'transparent', borderBottom: `1px solid ${tint(T.line, 0.55)}` }}>
+                      style={{ background: showNote ? tint(catColor, 0.07) : 'transparent', borderBottom: `1px solid ${tint(T.line, 0.55)}` }}>
                       <div className="flex items-center gap-3">
                         {f.noFlag ? (
                           <div style={{ width: 46, height: 30, borderRadius: 5, border: `1px dashed ${T.line}`, flexShrink: 0, background: T.surfaceHi, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
@@ -709,7 +848,7 @@ function IdentityCodexSection() {
                         <div className="flex-1 min-w-0">
                           <div className="font-semibold text-sm truncate" style={{ color: T.text }}>{f.name}</div>
                         </div>
-                        <span style={{ color: T.warm, fontSize: 16, transition: 'transform 0.2s', transform: showNote ? 'rotate(90deg)' : 'rotate(0deg)' }}>›</span>
+                        <span style={{ color: catColor, fontSize: 16, transition: 'transform 0.2s', transform: showNote ? 'rotate(90deg)' : 'rotate(0deg)' }}>›</span>
                       </div>
                       {showNote && (
                         <p className="text-xs leading-relaxed mt-2.5" style={{ color: T.muted, lineHeight: 1.65 }}>{f.note}</p>
@@ -848,6 +987,14 @@ function galleryIcon(name: string): IconType {
 // Commons full-size SVGs can be megabytes; FilePath ?width= renders a light
 // raster. row.file is always a ready URL (resolved by each section via fp()).
 const galleryThumb = (u: string) => (u.includes('Special:FilePath') && !u.includes('?') ? `${u}?width=240` : u)
+// Per-entry citation (K2): the Wikimedia Commons file-description page for a
+// flag, where its source and licence live. Only flags that resolve to Commons
+// get a link; local and self-hosted copies have no Commons page, so they get
+// none rather than a broken one.
+const commonsSource = (url: string): string | null => {
+  const m = url.match(/Special:FilePath\/([^?#]+)/)
+  return m ? `https://commons.wikimedia.org/wiki/File:${m[1]}` : null
+}
 const stripFlagOf = (s: string) => s.replace(/^Flag of (the )?/i, '')
 function splitParen(s: string): [string, string | null] {
   const m = s.match(/^(.*?)\s*\(([\s\S]*)\)\s*$/)
@@ -856,32 +1003,49 @@ function splitParen(s: string): [string, string | null] {
 const cap = (s: string) => (s ? s[0].toUpperCase() + s.slice(1) : s)
 
 // One flag row — thumbnail, name; tap to reveal a description if it has one.
-function GalleryRow({ row, color }: { row: GRow; color: string }) {
-  const [open, setOpen] = useState(false)
+// Open state is owned by the parent section so only one row shows at a time.
+function GalleryRow({ row, color, open, onToggle }: { row: GRow; color: string; open: boolean; onToggle: () => void }) {
   const [err, setErr] = useState(false)
   const hasDetail = !!row.detail
+  const source = commonsSource(row.file)
   return (
-    <button onClick={() => hasDetail && setOpen(o => !o)}
-      className="geo-tap w-full px-1.5 py-2.5 rounded-lg transition-all active:scale-[0.99] text-left"
-      style={{ background: open ? tint(color, 0.07) : 'transparent', borderBottom: `1px solid ${tint(T.line, 0.55)}`, cursor: hasDetail ? 'pointer' : 'default' }}>
-      <div className="flex items-center gap-3">
-        <div style={{ width: 46, height: 30, flexShrink: 0, borderRadius: 5, overflow: 'hidden', border: `1px solid ${T.line}`, background: T.surfaceHi, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-          {err
-            ? <span style={{ fontSize: 7, color: T.dim }}>no img</span>
-            : <img src={galleryThumb(row.file)} alt={row.title} loading="lazy" onError={() => setErr(true)} style={{ width: '100%', height: '100%', objectFit: 'contain' }} />}
+    <div className="w-full rounded-lg transition-all"
+      style={{ background: open ? tint(color, 0.07) : 'transparent', borderBottom: `1px solid ${tint(T.line, 0.55)}` }}>
+      <button onClick={() => hasDetail && onToggle()}
+        className="geo-tap w-full px-1.5 py-2.5 text-left active:scale-[0.99]"
+        style={{ background: 'transparent', border: 'none', cursor: hasDetail ? 'pointer' : 'default' }}>
+        <div className="flex items-center gap-3">
+          <div style={{ width: 46, height: 30, flexShrink: 0, borderRadius: 5, overflow: 'hidden', border: `1px solid ${T.line}`, background: T.surfaceHi, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            {err
+              ? <span style={{ fontSize: 7, color: T.dim }}>no img</span>
+              : <img src={galleryThumb(row.file)} alt={row.title} loading="lazy" onError={() => setErr(true)} style={{ width: '100%', height: '100%', objectFit: 'contain' }} />}
+          </div>
+          <div className="flex-1 min-w-0">
+            <div className="font-semibold text-sm truncate" style={{ color: T.text }}>{row.title}</div>
+          </div>
+          {hasDetail && <span style={{ color, fontSize: 16, transition: 'transform 0.2s', transform: open ? 'rotate(90deg)' : 'rotate(0deg)', flexShrink: 0 }}>›</span>}
         </div>
-        <div className="flex-1 min-w-0">
-          <div className="font-semibold text-sm truncate" style={{ color: T.text }}>{row.title}</div>
+      </button>
+      {open && hasDetail && (
+        <div className="px-1.5 pb-2.5">
+          <p className="text-xs leading-relaxed" style={{ color: T.muted, lineHeight: 1.6 }}>{row.detail}</p>
+          {source && (
+            <a href={source} target="_blank" rel="noopener noreferrer"
+              className="text-xs inline-block mt-1.5" style={{ color: tint(color, 0.9), fontWeight: 600 }}>
+              Source: Wikimedia Commons ↗
+            </a>
+          )}
         </div>
-        {hasDetail && <span style={{ color, fontSize: 16, transition: 'transform 0.2s', transform: open ? 'rotate(90deg)' : 'rotate(0deg)', flexShrink: 0 }}>›</span>}
-      </div>
-      {open && hasDetail && <p className="text-xs leading-relaxed mt-2.5" style={{ color: T.muted, lineHeight: 1.6 }}>{row.detail}</p>}
-    </button>
+      )}
+    </div>
   )
 }
 
 // A region sub-section — controlled open state so a section's "All" can drive it.
-function GalleryRegionBlock({ region, color, open, onToggle }: { region: GRegion; color: string; open: boolean; onToggle: () => void }) {
+function GalleryRegionBlock({ region, color, open, onToggle, keyPrefix, openRow, setOpenRow }: {
+  region: GRegion; color: string; open: boolean; onToggle: () => void
+  keyPrefix: string; openRow: string | null; setOpenRow: (k: string | null) => void
+}) {
   const Icon = region.icon
   const count = region.groups.reduce((n, g) => n + g.items.length, 0)
   return (
@@ -902,7 +1066,10 @@ function GalleryRegionBlock({ region, color, open, onToggle }: { region: GRegion
           {region.groups.map((g, gi) => (
             <div key={gi}>
               {g.label && <div style={{ fontSize: 8.5, fontWeight: 700, color: tint(color, 0.85), letterSpacing: '0.07em', textTransform: 'uppercase', margin: '9px 0 1px 4px' }}>{g.label}</div>}
-              {g.items.map((row, ii) => <GalleryRow key={ii} row={row} color={color} />)}
+              {g.items.map((row, ii) => {
+                const k = `${keyPrefix}-${gi}-${ii}`
+                return <GalleryRow key={ii} row={row} color={color} open={openRow === k} onToggle={() => setOpenRow(openRow === k ? null : k)} />
+              })}
             </div>
           ))}
         </div>
@@ -916,6 +1083,7 @@ function GalleryRegionBlock({ region, color, open, onToggle }: { region: GRegion
 function GallerySection({ title, icon: Icon, color, blurb, regions }: { title: string; icon: IconType; color: string; blurb: string; regions: GRegion[] }) {
   const [open, setOpen] = useState(false)
   const [openRegions, setOpenRegions] = useState<Set<number>>(new Set())
+  const [openRow, setOpenRow] = useState<string | null>(null)
   const allOpen = openRegions.size === regions.length
   const toggleAll = () => setOpenRegions(allOpen ? new Set() : new Set(regions.map((_, i) => i)))
   const toggleRegion = (i: number) => setOpenRegions(prev => {
@@ -944,40 +1112,76 @@ function GallerySection({ title, icon: Icon, color, blurb, regions }: { title: s
               {allOpen ? 'Collapse all' : 'Open all'}
             </button>
           </div>
-          {regions.map((r, i) => <GalleryRegionBlock key={i} region={r} color={color} open={openRegions.has(i)} onToggle={() => toggleRegion(i)} />)}
+          {regions.map((r, i) => <GalleryRegionBlock key={i} region={r} color={color} open={openRegions.has(i)} onToggle={() => toggleRegion(i)} keyPrefix={String(i)} openRow={openRow} setOpenRow={setOpenRow} />)}
         </div>
       )}
     </div>
   )
 }
 
+// "Peoples & Cultures" — the full Commons ethnic/cultural gallery, merged with
+// the Pan-National & Ethnic and Indigenous Peoples identity flags (E2/E3): all
+// "flags of a people" now live under one top-level section.
 function EthnicCodexSection() {
-  const total = ETHNIC_FLAGS.reduce((n, r) => n + r.groups.reduce((m, g) => m + g.items.length, 0), 0)
-  const regions: GRegion[] = ETHNIC_FLAGS.map(r => {
+  const idRegion = (cat: string, label: string): GRegion => ({
+    label,
+    icon: CAT_ICONS[cat],
+    groups: [{ label: '', items: IDENTITY_FLAGS.filter(f => f.category === cat).map(f => ({ file: f.flagUrl, title: f.name, detail: f.note })) }],
+  })
+  const ethnicRegions: GRegion[] = ETHNIC_FLAGS.map(r => {
     const short = r.region.replace(/^Peoples of /, '')
     return {
       label: short,
       icon: galleryIcon(r.region),
       groups: r.groups.map(g => ({
         label: g.label,
-        items: g.items.map(it => ({ file: fp(it.file), title: it.name, detail: g.label ? `${g.label} — ${short}` : short })),
+        items: g.items.map(it => ({ file: fp(it.file), title: it.name, detail: it.note ?? g.note ?? (g.label ? `${g.label} — ${short}` : short) })),
       })),
     }
   })
-  return <GallerySection title="Ethnic & Cultural Flags" icon={Users} color={T.gold} blurb={`${total} flags of peoples & cultures · by region`} regions={regions} />
+  const regions: GRegion[] = [
+    ...ethnicRegions,
+    idRegion('Pan-National & Ethnic', 'Pan-National & Ethnic'),
+    idRegion('Indigenous Peoples', 'Indigenous Peoples'),
+  ]
+  const total = regions.reduce((n, r) => n + r.groups.reduce((m, g) => m + g.items.length, 0), 0)
+  return <GallerySection title="Peoples &amp; Cultures" icon={Users} color={T.gold} blurb={`${total} flags of peoples, cultures & nations · by region`} regions={regions} />
 }
 
 function ExtinctStatesCodexSection() {
-  const total = EXTINCT_STATES.reduce((n, r) => n + r.items.length, 0)
+  // The curated extinct-states gallery, merged with every predecessor/historical
+  // flag — deduped against the gallery by name so a state that lives in both
+  // datasets (Two Sicilies, Ottoman, USSR, Yugoslavia, Ashanti, Tibet…) shows
+  // only once. Date-parentheses are stripped only when MATCHING the curated
+  // names, so distinct historical variants (e.g. two Qing flags) are preserved.
+  const norm = (s: string) => stripFlagOf(splitParen(s)[0]).toLowerCase().replace(/[^a-z0-9]+/g, '')
+  const curatedNames = new Set<string>()
+  const histBucket: Record<string, string> = {
+    Europe: 'Europe', Americas: 'Americas',
+    'Africa & Middle East': 'Africa', 'Asia & Oceania': 'Asia',
+  }
   const regions: GRegion[] = EXTINCT_STATES.map(r => ({
     label: r.region,
     icon: galleryIcon(r.region),
     groups: [{ label: '', items: r.items.map(it => {
       const [pre, paren] = splitParen(it.name)
+      curatedNames.add(norm(it.name))
       return { file: fp(it.file), title: stripFlagOf(pre), detail: paren ? cap(paren) + '.' : 'A former state.' }
     }) }],
   }))
-  return <GallerySection title="Extinct States" icon={Landmark} color={T.violet} blurb={`${total} flags of vanished states · by continent`} regions={regions} />
+  const byBucket: Record<string, GRow[]> = {}
+  HISTORICAL_FLAGS.forEach(h => {
+    if (curatedNames.has(norm(h.name))) return // already in the curated gallery — skip
+    const bucket = histBucket[h.region] ?? 'Europe'
+    const arr = byBucket[bucket] || (byBucket[bucket] = [])
+    arr.push({ file: h.flagUrl, title: h.name, detail: `${h.era} — ${h.note}` })
+  })
+  regions.forEach(rg => {
+    const extra = byBucket[rg.label]
+    if (extra && extra.length) rg.groups.push({ label: 'Predecessor & former states', items: extra })
+  })
+  const total = regions.reduce((n, rg) => n + rg.groups.reduce((m, g) => m + g.items.length, 0), 0)
+  return <GallerySection title="Extinct &amp; Former States" icon={Landmark} color={T.violet} blurb={`${total} flags of vanished & predecessor states · by continent`} regions={regions} />
 }
 
 function OrgCodexSection() {
@@ -2215,6 +2419,15 @@ const curatedFact = (title: string): string | undefined => {
   return undefined
 }
 
+// Deterministic phrasing picker: a given title always maps to the same variant
+// (stable across renders), but neighbouring tiles land on different phrasings so
+// the gallery reads naturally instead of one filled-in formula repeated en masse.
+const pickPhrase = (key: string, variants: string[]): string => {
+  let h = 0
+  for (let i = 0; i < key.length; i++) h = (h * 31 + key.charCodeAt(i)) >>> 0
+  return variants[h % variants.length]
+}
+
 interface MegaFlag { title: string; url: string; fact: string }
 function gatherAllFlags(): MegaFlag[] {
   const seen = new Set<string>()
@@ -2230,7 +2443,13 @@ function gatherAllFlags(): MegaFlag[] {
     seen.add(key); all.push({ title: t, url, fact: (fact || '').trim() || `A flag in the Globalio Codex.` })
   }
   FLAGS.forEach(f => push(f.name, f.flagUrl, f.funFact))
-  SUB_FLAGS.forEach(s => push(s.name, s.flagUrl, curatedFact(s.name) ?? `The flag of ${s.name}, a subdivision of ${s.countryName}.`))
+  SUB_FLAGS.forEach(s => push(s.name, s.flagUrl, curatedFact(s.name) ?? pickPhrase(s.name, [
+    `The flag of ${s.name}, a subdivision of ${s.countryName}.`,
+    `${s.name}, one of the administrative divisions of ${s.countryName}.`,
+    `A regional flag from ${s.countryName} — that of ${s.name}.`,
+    `The banner of ${s.name}, a region of ${s.countryName}.`,
+    `Flag of ${s.name}, part of ${s.countryName}.`,
+  ])))
   IDENTITY_FLAGS.forEach(f => push(f.name, f.flagUrl, f.note))
   US_CITY_FLAGS.forEach(f => push(f.name, f.flagUrl, f.note))
   ETHNIC_FLAGS.forEach(r => r.groups.forEach(g => g.items.forEach(it => {
@@ -2238,21 +2457,63 @@ function gatherAllFlags(): MegaFlag[] {
     // when it just repeats the people's own name.
     const seg = (g.label || "").split(" · ").pop() || ""
     const overlaps = !!seg && (seg.toLowerCase().includes(it.name.toLowerCase()) || it.name.toLowerCase().includes(seg.toLowerCase()))
+    const n = it.name
     const tmpl = seg && !overlaps
-      ? `The ${it.name} are an ethnic group of the ${seg}.`
-      : `The flag of the ${it.name}, an ethnic and cultural group.`
+      ? pickPhrase(n, [
+          `The ${n} are a people of the ${seg}.`,
+          `A flag of the ${n}, an ethnic group of the ${seg}.`,
+          `The ${n} — one of the peoples of the ${seg}.`,
+          `Flag of the ${n}, an ethnic and cultural group of the ${seg}.`,
+          `The ${n}, a people of the ${seg}.`,
+        ])
+      : pickPhrase(n, [
+          `The flag of the ${n}, an ethnic and cultural group.`,
+          `A banner of the ${n} people.`,
+          `The ${n}, a distinct ethnic and cultural community.`,
+          `Colours of the ${n}, an ethnic and cultural group.`,
+        ])
     push(it.name, fp(it.file), curatedFact(it.name) ?? tmpl)
   })))
   EXTINCT_STATES.forEach(r => r.items.forEach(it => {
     const title = stripFlagOf(splitParen(it.name)[0])
     const [, paren] = splitParen(it.name)
-    push(title, fp(it.file), curatedFact(title) ?? `A state that no longer exists${paren ? `, ${paren.replace(/^(de facto |nominally )/i, "")}` : ` in ${r.region}`}.`)
+    const p = paren ? paren.replace(/^(de facto |nominally )/i, "") : ""
+    const tmpl = p
+      ? pickPhrase(title, [
+          `A state that no longer exists, ${p}.`,
+          `A former state — ${p}.`,
+          `Once a state in its own right, ${p}; now vanished.`,
+          `A bygone state, ${p}.`,
+        ])
+      : pickPhrase(title, [
+          `A vanished state of ${r.region}.`,
+          `A former state of ${r.region}, now consigned to history.`,
+          `A state of ${r.region} that no longer exists.`,
+          `Once a sovereign entity in ${r.region}.`,
+        ])
+    push(title, fp(it.file), curatedFact(title) ?? tmpl)
   }))
   ORG_FLAGS.forEach(r => r.groups.forEach(g => g.items.forEach(it => {
     const title = stripFlagOf(it.name)
     const sports = /sport/i.test(r.region), former = /former/i.test(r.region)
     const scope = ["Africa", "Americas", "Asia", "Europe", "Oceania"].includes(g.label) ? ` operating across ${g.label}` : ""
-    const tmpl = former ? `A now-defunct international organisation.` : sports ? `An international sports federation.` : `An international organisation${scope}.`
+    const tmpl = former
+      ? pickPhrase(title, [
+          `A now-defunct international organisation.`,
+          `A former international body, since dissolved.`,
+          `An international organisation that no longer operates.`,
+        ])
+      : sports
+      ? pickPhrase(title, [
+          `An international sports federation.`,
+          `A governing body of international sport.`,
+          `An international sporting organisation.`,
+        ])
+      : pickPhrase(title, [
+          `An international organisation${scope}.`,
+          `An international body${scope}.`,
+          `A multinational organisation${scope}.`,
+        ])
     push(title, fp(it.file), curatedFact(title) ?? tmpl)
   })))
   Object.values(CODEX).forEach(e => e.flagHistory.forEach(h => { push(h.label, h.flagUrl, h.note); h.parallel?.forEach(p => push(p.label, p.flagUrl, p.note)) }))
@@ -2469,9 +2730,10 @@ const NO_SUBDIVISION_FLAG_COUNTRIES = new Set<string>([
   'AO', 'CM', 'ZA',
 ])
 
-function SubRegionTile({ sr, confirmedNoFlags }: { sr: SubRegion; confirmedNoFlags?: boolean }) {
-  return (
-    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4 }}>
+function SubRegionTile({ sr, confirmedNoFlags, onSelect, selected }: { sr: SubRegion; confirmedNoFlags?: boolean; onSelect?: (sr: SubRegion) => void; selected?: boolean }) {
+  const tappable = !!sr.flagUrl && !!onSelect
+  const inner = (
+    <>
       {sr.flagUrl
         ? <img
             src={sr.flagUrl}
@@ -2481,8 +2743,16 @@ function SubRegionTile({ sr, confirmedNoFlags }: { sr: SubRegion; confirmedNoFla
           />
         : (sr.noFlag || confirmedNoFlags) ? NO_FLAG_PLACEHOLDER : UNKNOWN_FLAG_PLACEHOLDER
       }
-      <span style={{ fontSize: 8.5, color: T.muted, textAlign: 'center', lineHeight: 1.2, wordBreak: 'break-word' }}>{sr.name}</span>
-    </div>
+      <span style={{ fontSize: 8.5, color: selected ? T.green : T.muted, textAlign: 'center', lineHeight: 1.2, wordBreak: 'break-word' }}>{sr.name}</span>
+    </>
+  )
+  const colStyle: React.CSSProperties = { display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4 }
+  if (!tappable) return <div style={colStyle}>{inner}</div>
+  return (
+    <button onClick={() => onSelect!(sr)} aria-expanded={selected} className="geo-tap active:scale-95"
+      style={{ ...colStyle, background: selected ? tint(T.green, 0.12) : 'transparent', border: `1px solid ${selected ? tint(T.green, 0.5) : 'transparent'}`, borderRadius: 6, padding: 3, cursor: 'pointer' }}>
+      {inner}
+    </button>
   )
 }
 
@@ -2492,10 +2762,48 @@ const SUBLABEL_STYLE: React.CSSProperties = {
 }
 const GRID_STYLE: React.CSSProperties = { display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: '10px 6px' }
 
+// Inline detail panel — a tapped subdivision shows a larger flag + a fact right
+// above the grid, so detailed flags become legible without leaving the page.
+function SubDetailPanel({ sr, onClose }: { sr: SubRegion; onClose: () => void }) {
+  return (
+    <div style={{ marginBottom: 14, padding: 12, borderRadius: 12, background: T.surface, border: `1px solid ${tint(T.green, 0.4)}` }}>
+      <div style={{ display: 'flex', gap: 12, alignItems: 'flex-start' }}>
+        {sr.flagUrl && (
+          <img src={sr.flagUrl} alt={sr.name}
+            style={{ width: 128, aspectRatio: '3/2', objectFit: 'contain', borderRadius: 6, border: `1px solid ${T.line}`, background: T.surfaceHi, flexShrink: 0 }} />
+        )}
+        <div style={{ flex: 1, minWidth: 0 }}>
+          <div className="font-semibold text-sm" style={{ color: T.text }}>{sr.name}</div>
+          <p className="text-xs" style={{ color: T.muted, lineHeight: 1.6, marginTop: 5 }}>
+            {curatedFact(sr.name) ?? pickPhrase(sr.name, [
+              `The flag of ${sr.name}.`,
+              `${sr.name} — one of this country's subdivisions.`,
+              `The regional flag of ${sr.name}.`,
+              `The banner of ${sr.name}.`,
+            ])}
+          </p>
+          {sr.flagUrl && commonsSource(sr.flagUrl) && (
+            <a href={commonsSource(sr.flagUrl)!} target="_blank" rel="noopener noreferrer"
+              className="text-xs inline-block" style={{ color: tint(T.green, 0.9), fontWeight: 600, marginTop: 6 }}>
+              Source: Wikimedia Commons ↗
+            </a>
+          )}
+        </div>
+        <button onClick={onClose} aria-label="Close" className="geo-tap"
+          style={{ flexShrink: 0, color: T.dim, fontSize: 18, lineHeight: 1, background: 'none', border: 'none', cursor: 'pointer' }}>✕</button>
+      </div>
+    </div>
+  )
+}
+
 function SubdivisionGrid({ subRegions, headerLabel, memberLabel, confirmedNoFlags }: { subRegions: SubRegion[]; headerLabel?: string; memberLabel?: string; confirmedNoFlags?: boolean }) {
+  const [sel, setSel] = useState<SubRegion | null>(null)
+  const select = (sr: SubRegion) => setSel(p => (p?.code === sr.code ? null : sr))
+  const tile = (sr: SubRegion) => <SubRegionTile key={sr.code} sr={sr} confirmedNoFlags={confirmedNoFlags} onSelect={select} selected={sel?.code === sr.code} />
+  const panel = sel ? <SubDetailPanel sr={sel} onClose={() => setSel(null)} /> : null
   const hasGroups = subRegions.some(sr => sr.group)
   if (!hasGroups) {
-    return <div className="mt-3" style={GRID_STYLE}>{subRegions.map(sr => <SubRegionTile key={sr.code} sr={sr} confirmedNoFlags={confirmedNoFlags} />)}</div>
+    return <div className="mt-3">{panel}<div style={GRID_STYLE}>{subRegions.map(tile)}</div></div>
   }
   const groups: { label: string; items: SubRegion[] }[] = []
   for (const sr of subRegions) {
@@ -2506,6 +2814,7 @@ function SubdivisionGrid({ subRegions, headerLabel, memberLabel, confirmedNoFlag
   }
   return (
     <div className="mt-3" style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+      {panel}
       {groups.map(g => {
         // A "header" tile is the province/nation flag itself, shown on its own row on top.
         const headers = g.items.filter(s => s.groupHeader)
@@ -2523,11 +2832,11 @@ function SubdivisionGrid({ subRegions, headerLabel, memberLabel, confirmedNoFlag
             {headers.length > 0 && (
               <div style={{ marginBottom: 12 }}>
                 {headerLabel && <div style={SUBLABEL_STYLE}>{headerLabel}</div>}
-                <div style={GRID_STYLE}>{headers.map(sr => <SubRegionTile key={sr.code} sr={sr} confirmedNoFlags={confirmedNoFlags} />)}</div>
+                <div style={GRID_STYLE}>{headers.map(tile)}</div>
               </div>
             )}
             {headers.length > 0 && memberLabel && members.length > 0 && <div style={SUBLABEL_STYLE}>{memberLabel}</div>}
-            <div style={GRID_STYLE}>{members.map(sr => <SubRegionTile key={sr.code} sr={sr} confirmedNoFlags={confirmedNoFlags} />)}</div>
+            <div style={GRID_STYLE}>{members.map(tile)}</div>
           </div>
         )
       })}

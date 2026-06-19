@@ -213,8 +213,18 @@ body.aesthetic-carto { background: #FBF4E4; }
 }
 .carto-pulse { animation: cartoPulse 1.6s cubic-bezier(0.4,0,0.2,1) infinite; }
 
-/* Horizontal swipe rail (Netflix-style game shelves) — scrollbar hidden */
-.carto-rail { scrollbar-width: none; -ms-overflow-style: none; }
+/* Horizontal swipe rail (Netflix-style game shelves) — scrollbar hidden.
+   overscroll-behavior-x: contain stops a right-swipe near the left edge from
+   triggering the browser's back-gesture (the cause of "can't scroll left");
+   momentum + scroll-padding keep the first/last cards reachable. */
+.carto-rail {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  overscroll-behavior-x: contain;
+  -webkit-overflow-scrolling: touch;
+  scroll-padding-left: 16px;
+  scroll-padding-right: 16px;
+}
 .carto-rail::-webkit-scrollbar { display: none; }
 
 /* Transform-only entrance for drawers/tabs: fully visible at rest, the slide
@@ -225,8 +235,25 @@ body.aesthetic-carto { background: #FBF4E4; }
 }
 .carto-slide-up { animation: cartoSlideUp 0.3s cubic-bezier(0.2,0.7,0.2,1) both; }
 
+/* Gentle fade-and-rise entrance for tab content. Opacity is only animated, so a
+   reduced-motion user (animation disabled below) sees it fully visible at rest. */
+@keyframes cartoRise {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.carto-rise { animation: cartoRise 0.34s cubic-bezier(0.2,0.7,0.2,1) both; }
+
+/* Stagger direct children (e.g. shelves, rows) for a soft cascade on entrance. */
+.carto-stagger > * { animation: cartoRise 0.36s cubic-bezier(0.2,0.7,0.2,1) both; }
+.carto-stagger > *:nth-child(1) { animation-delay: 0.02s; }
+.carto-stagger > *:nth-child(2) { animation-delay: 0.06s; }
+.carto-stagger > *:nth-child(3) { animation-delay: 0.10s; }
+.carto-stagger > *:nth-child(4) { animation-delay: 0.14s; }
+.carto-stagger > *:nth-child(5) { animation-delay: 0.18s; }
+.carto-stagger > *:nth-child(n+6) { animation-delay: 0.22s; }
+
 @media (prefers-reduced-motion: reduce) {
-  .carto-pulse, .carto-slide-up, .geo-foil::after,
+  .carto-pulse, .carto-slide-up, .carto-rise, .carto-stagger > *, .geo-foil::after,
   .animate-spin-slow, .animate-pulse-glow { animation: none; }
   .carto-card, .geo-tap { transition: none; }
 }

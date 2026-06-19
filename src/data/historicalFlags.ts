@@ -2143,6 +2143,81 @@ export const HISTORICAL_FLAGS: HistoricalEntity[] = [
     note: "A red flag with a central green stripe and the hammer, sickle and star, flown by Soviet Moldova before the country adopted a Romanian-style tricolor in 1990.",
   },
   {
+    id: "russian-sfsr", name: "Russian SFSR", era: "1954–1991", region: "Europe",
+    flagUrl: fp("Flag_of_the_Russian_Soviet_Federative_Socialist_Republic.svg"), relatedCode: "RU",
+    note: "The largest Soviet republic flew a red flag with a thin blue stripe down the hoist; the RSFSR was the core of the USSR and became the Russian Federation in 1991.",
+  },
+  {
+    id: "kazakh-ssr", name: "Kazakh SSR", era: "1936–1991", region: "Asia & Oceania",
+    flagUrl: fp("Flag_of_the_Kazakh_Soviet_Socialist_Republic.svg"), relatedCode: "KZ",
+    note: "A red Soviet flag with a turquoise lower band and the hammer, sickle and star, flown over Soviet Kazakhstan until its independence in 1991.",
+  },
+  {
+    id: "kirghiz-ssr", name: "Kirghiz SSR", era: "1936–1991", region: "Asia & Oceania",
+    flagUrl: fp("Flag_of_the_Kirghiz_Soviet_Socialist_Republic.svg"), relatedCode: "KG",
+    note: "The red flag of Soviet Kyrgyzstan, crossed at its centre by blue-and-white stripes, used until the republic became independent Kyrgyzstan.",
+  },
+  {
+    id: "tajik-ssr", name: "Tajik SSR", era: "1929–1991", region: "Asia & Oceania",
+    flagUrl: fp("Flag_of_the_Tajik_Soviet_Socialist_Republic.svg"), relatedCode: "TJ",
+    note: "A red flag with white and green horizontal bands beneath the hammer, sickle and star — the Soviet flag of Tajikistan, carved out of the Uzbek SSR in 1929.",
+  },
+  {
+    id: "turkmen-ssr", name: "Turkmen SSR", era: "1925–1991", region: "Asia & Oceania",
+    flagUrl: fp("Flag_of_the_Turkmen_Soviet_Socialist_Republic.svg"), relatedCode: "TM",
+    note: "A red Soviet flag crossed by two blue stripes, flown over Soviet Turkmenistan; the modern country adopted its green national flag in 1992.",
+  },
+  {
+    id: "uzbek-ssr", name: "Uzbek SSR", era: "1925–1991", region: "Asia & Oceania",
+    flagUrl: fp("Flag_of_the_Uzbek_Soviet_Socialist_Republic.svg"), relatedCode: "UZ",
+    note: "A red flag with a central blue band edged in white above and below the hammer, sickle and star — the Soviet flag of Uzbekistan until independence.",
+  },
+  {
+    id: "azerbaijan-ssr", name: "Azerbaijan SSR", era: "1920–1991", region: "Asia & Oceania",
+    flagUrl: fp("Flag_of_the_Azerbaijan_Soviet_Socialist_Republic.svg"), relatedCode: "AZ",
+    note: "The red Soviet flag of Azerbaijan with a blue lower band and the hammer, sickle and star, used until the republic restored its independence in 1991.",
+  },
+  {
+    id: "kazan-khanate", name: "Kazan Khanate", era: "1438–1552", region: "Europe",
+    flagUrl: fp("Banner_of_Kazan.svg"), relatedCode: "RU",
+    note: "A Tatar successor state of the Golden Horde on the Volga, conquered by Ivan the Terrible in 1552 — a turning point in Russia's eastward expansion.",
+  },
+  {
+    id: "sultanate-of-rum", name: "Sultanate of Rum", era: "1077–1308", region: "Africa & Middle East",
+    flagUrl: fp("Double-headed_eagle_of_the_Sultanate_of_Rum.svg"), relatedCode: "TR",
+    note: "The Seljuk Turkish sultanate that ruled much of Anatolia after the Battle of Manzikert, flying a double-headed eagle; its collapse opened the way for the rise of the Ottomans.",
+  },
+  {
+    id: "jabal-shammar", name: "Emirate of Jabal Shammar", era: "1836–1921", region: "Africa & Middle East",
+    flagUrl: fp("Flag_of_the_Emirate_of_Ha'il.svg"), relatedCode: "SA",
+    note: "The Rashidi emirate centred on Ha'il in northern Arabia, the great rival of the House of Saud until Ibn Saud conquered it in 1921 and folded it into what became Saudi Arabia.",
+  },
+  {
+    id: "us-ionian-islands", name: "United States of the Ionian Islands", era: "1815–1864", region: "Europe",
+    flagUrl: fp("Flag_of_the_United_States_of_the_Ionian_Islands.svg"), relatedCode: "GR",
+    note: "A British protectorate over the Ionian Islands, flying the Lion of St Mark on a Union-Jack-cantoned flag, until the islands were ceded to Greece in 1864.",
+  },
+  {
+    id: "new-hebrides", name: "New Hebrides Condominium", era: "1906–1980", region: "Asia & Oceania",
+    flagUrl: fp("Flag_of_New_Hebrides.svg"), relatedCode: "VU",
+    note: "The Anglo-French condominium that jointly governed the islands of modern Vanuatu from 1906 until independence in 1980 — famously run by two parallel colonial administrations at once.",
+  },
+  {
+    id: "ttpi", name: "Trust Territory of the Pacific Islands", era: "1947–1994", region: "Asia & Oceania",
+    flagUrl: fp("Flag_of_the_Trust_Territory_of_the_Pacific_Islands.svg"), relatedCodes: ["FM", "MH", "PW"],
+    note: "A US-administered UN trust territory across Micronesia after the Second World War, which split into the modern Federated States of Micronesia, Marshall Islands, Palau and the Northern Marianas.",
+  },
+  {
+    id: "mughal-empire", name: "Mughal Empire", era: "1526–1857", region: "Asia & Oceania",
+    flagUrl: fp("Alam_of_the_Mughal_Empire.svg"), relatedCodes: ["IN", "PK", "BD"],
+    note: "One of history's great empires, ruling most of the Indian subcontinent at its height; its green 'Alam' banner bore a lion and rising sun. Builders of the Taj Mahal, the Mughals were finally deposed by the British after the 1857 rebellion.",
+  },
+  {
+    id: "konbaung", name: "Konbaung Dynasty", era: "1752–1885", region: "Asia & Oceania",
+    flagUrl: fp("National_flag_of_Third_Burmese_Empire_(Konbaung_Dynasty).svg"), relatedCode: "MM",
+    note: "The last dynasty of Burmese kings — the 'Third Burmese Empire' — whose peacock banner flew until the British annexed Burma after three Anglo-Burmese Wars.",
+  },
+  {
     id: "belarusian-pr", name: "Belarusian People's Republic", era: "1918–1919", region: "Europe",
     flagUrl: fp("Flag_of_Belarus.svg"), relatedCode: "BY",
     note: "The white-red-white flag of the short-lived republic declared during WWI; suppressed by the Bolsheviks, it returned as independent Belarus's flag from 1991 to 1995.",

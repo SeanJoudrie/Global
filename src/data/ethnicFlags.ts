@@ -3,8 +3,8 @@
 // Commons image embedded in that gallery. Regenerate by re-parsing the gallery;
 // do not hand-edit individual rows. Surfaced in the Codex under 'Ethnic &
 // Cultural Flags'. fp() resolves each file to a Commons image URL.
-export interface EthnicFlagItem { name: string; file: string }
-export interface EthnicGroup { label: string; items: EthnicFlagItem[] }
+export interface EthnicFlagItem { name: string; file: string; note?: string }
+export interface EthnicGroup { label: string; items: EthnicFlagItem[]; note?: string }
 export interface EthnicRegion { region: string; groups: EthnicGroup[] }
 
 export const ETHNIC_FLAGS: EthnicRegion[] = [
@@ -1205,7 +1205,7 @@ export const ETHNIC_FLAGS: EthnicRegion[] = [
     ] },
   ] },
   { region: "Creole peoples", groups: [
-    { label: "English Creole peoples", items: [
+    { label: "English Creole peoples", note: "Communities across the anglophone Caribbean, West Africa and the Pacific whose shared identity grew from English-speaking colonial settlement and the African diaspora — most are now independent nations flying their own flags.", items: [
       { name: "Anglo-Métis", file: "Metis Red.svg" },
       { name: "Bahamians", file: "Flag of the Bahamas.svg" },
       { name: "Jamaicans", file: "Flag of Jamaica.svg" },
@@ -1233,7 +1233,7 @@ export const ETHNIC_FLAGS: EthnicRegion[] = [
       { name: "Gambians", file: "Flag of The Gambia.svg" },
       { name: "Malawians", file: "Flag of Malawi.svg" },
     ] },
-    { label: "French Creole peoples", items: [
+    { label: "French Creole peoples", note: "Peoples of the francophone Caribbean, the Indian Ocean islands and West & Central Africa whose creole cultures and languages emerged from French colonisation and the plantation era.", items: [
       { name: "Franco-Métis", file: "Metis Blue.svg" },
       { name: "Louisianese Creole people", file: "Louisiana_Creole_Flag.svg" },
       { name: "Haitians", file: "Flag of Haiti.svg" },
@@ -1254,7 +1254,7 @@ export const ETHNIC_FLAGS: EthnicRegion[] = [
       { name: "Brazzaville-Congolese people", file: "Flag of the Republic of the Congo.svg" },
       { name: "Kinshasa-Congolese people", file: "Flag of the Democratic Republic of the Congo.svg" },
     ] },
-    { label: "Dutch Creole peoples", items: [
+    { label: "Dutch Creole peoples", note: "Creole communities of the former Dutch colonial world — Suriname, the ABC islands of the Caribbean and parts of Southern Africa — shaped by Dutch settlement, trade and the plantation economy.", items: [
       { name: "Surinamese people", file: "Flag of Suriname.svg" },
       { name: "Arubans", file: "Flag of Aruba.svg" },
       { name: "Bonaireans", file: "Flag of Bonaire.svg" },
@@ -1262,14 +1262,14 @@ export const ETHNIC_FLAGS: EthnicRegion[] = [
       { name: "Basters", file: "Rehobothflag.svg" },
       { name: "Griqua people", file: "FlagGriekwalandEast.svg" },
     ] },
-    { label: "Spanish Creole peoples", items: [
+    { label: "Spanish Creole peoples", note: "Hispanophone creole communities stretching from Equatorial Guinea to the Philippines and the Caribbean, whose identities formed under centuries of Spanish colonial rule.", items: [
       { name: "Equatoguineans", file: "Flag of Equatorial Guinea.svg" },
       { name: "Caviteños", file: "Flag_of_Cavite_City.svg" },
       { name: "Zamboangueños", file: "Flag of Zamboanga.jpg" },
       { name: "Venezuelan Leeward Antilleans", file: "Federal dependencies of Venezuela's Flag.svg" },
       { name: "Palenqueros", file: "Flag of Mahates (Bolívar).svg" },
     ] },
-    { label: "Portuguese Creole peoples", items: [
+    { label: "Portuguese Creole peoples", note: "Lusophone creole peoples of Africa's Atlantic coast and islands, whose identities and Crioulo languages developed under Portuguese colonisation and Atlantic trade.", items: [
       { name: "Angolans", file: "Flag of Angola.svg" },
       { name: "Cape Verdeans", file: "Flag of Cape Verde.svg" },
       { name: "Mozambicans", file: "Flag of Mozambique.svg" },
@@ -1342,33 +1342,33 @@ export const ETHNIC_FLAGS: EthnicRegion[] = [
   ] },
   { region: "Historic peoples", groups: [
     { label: "", items: [
-      { name: "Romans", file: "Vexilloid of the Roman Empire.svg" },
-      { name: "Moldavians", file: "Flag of Moldavia.svg" },
-      { name: "Incas", file: "Bandera_de_Tupac_Amaru_II.svg" },
-      { name: "Moors", file: "Royal Standard of Nasrid Dynasty Kingdom of Grenade.svg" },
-      { name: "Norsemen", file: "Raven Banner.svg" },
-      { name: "Ottoman Turks", file: "Flag of the Ottoman Empire (1844–1922).svg" },
-      { name: "Anglo-Saxons", file: "White Dragon Flag of England.png" },
-      { name: "Polabian Slavs (Wends)", file: "Banner of Wends.png" },
-      { name: "Curonians and Semigallians", file: "Flag of Courland (state).svg" },
-      { name: "Wallachians", file: "Flag of Wallachia.svg" },
-      { name: "Prussian Germans", file: "Flagge Preußen - Provinz Ostpreußen.svg" },
-      { name: "Sudeten Germans", file: "Flag of Province Sudetenland.Svg" },
-      { name: "Prussians (Baltic)", file: "Reconst Flag of Prusa.svg" },
-      { name: "Soviet people", file: "Flag of the Soviet Union.svg" },
-      { name: "Goths", file: "Gothic Sunrise Flag.jpg" },
-      { name: "Bessarabia Germans", file: "Flag of Bessarabia Germans.svg" },
-      { name: "Latin Romans", file: "Labarum of the Roman Empire (purple).png" },
-      { name: "Byzantine Greeks", file: "Byzantine imperial flag, 14th century.svg" },
-      { name: "Charrúas", file: "Flag of the Charrúa People.svg" },
-      { name: "Rhodesians", file: "Flag of Rhodesia (1968–1979).svg" },
-      { name: "Chinese from West Borneo", file: "Lanfang Republic Reconstructed Flag.svg" },
-      { name: "Cilician Armenians", file: "Flag of the Rubenid Dynasty.svg" },
-      { name: "Danzig Germans", file: "Flag_of_the_Free_City_of_Danzig.svg" },
-      { name: "British subjecters", file: "British Empire flag (1930).svg" },
-      { name: "Old Poles", file: "Flag of the Kingdom of Poland.svg" },
-      { name: "Middle Poles", file: "Chorągiew królewska króla Zygmunta III Wazy.svg" },
-      { name: "Meryans", file: "Modern flag of Merya people.svg" },
+      { name: "Romans", file: "Vexilloid of the Roman Empire.svg", note: "The people of ancient Rome, whose republic and empire ruled the Mediterranean world for centuries; the SPQR vexilloid stood for 'the Senate and People of Rome'." },
+      { name: "Moldavians", file: "Flag of Moldavia.svg", note: "The people of the medieval Principality of Moldavia, an Eastern Orthodox realm between the Carpathians and the Dniester whose aurochs-head emblem survives in Moldova's symbols today." },
+      { name: "Incas", file: "Bandera_de_Tupac_Amaru_II.svg", note: "The Quechua people of the Inca Empire, the largest state of pre-Columbian America, centred on Cusco in the Andes until the Spanish conquest of the 1530s." },
+      { name: "Moors", file: "Royal Standard of Nasrid Dynasty Kingdom of Grenade.svg", note: "The Muslim peoples of medieval Iberia and North Africa; this is the standard of the Nasrid dynasty of Granada, the last Muslim kingdom in Spain until 1492." },
+      { name: "Norsemen", file: "Raven Banner.svg", note: "The seafaring peoples of early-medieval Scandinavia — the Vikings — whose raven banner was flown by Norse warlords across the North Atlantic." },
+      { name: "Ottoman Turks", file: "Flag of the Ottoman Empire (1844–1922).svg", note: "The ruling people of the Ottoman Empire, which spanned Southeast Europe, the Middle East and North Africa from the 14th century until 1922." },
+      { name: "Anglo-Saxons", file: "White Dragon Flag of England.png", note: "The Germanic peoples who settled early-medieval England; the white dragon is a modern emblem associated with them." },
+      { name: "Polabian Slavs (Wends)", file: "Banner of Wends.png", note: "The West Slavic 'Wends' who once lived between the Elbe and Oder rivers before being absorbed into the German lands during the medieval Ostsiedlung." },
+      { name: "Curonians and Semigallians", file: "Flag of Courland (state).svg", note: "Baltic peoples of the Courland and Semigallia regions of modern Latvia, conquered by the Livonian Order in the 13th century." },
+      { name: "Wallachians", file: "Flag of Wallachia.svg", note: "The people of the medieval Principality of Wallachia, a Romanian-speaking realm north of the Danube that later united with Moldavia to form Romania." },
+      { name: "Prussian Germans", file: "Flagge Preußen - Provinz Ostpreußen.svg", note: "The German population of East Prussia, the Baltic heartland of the Kingdom of Prussia, largely expelled after 1945." },
+      { name: "Sudeten Germans", file: "Flag of Province Sudetenland.Svg", note: "The ethnic Germans of the Czech borderlands (the Sudetenland), most of whom were expelled following the Second World War." },
+      { name: "Prussians (Baltic)", file: "Reconst Flag of Prusa.svg", note: "The original Old Prussians — a Baltic, non-German people whose language died out by the 18th century after the Teutonic conquest." },
+      { name: "Soviet people", file: "Flag of the Soviet Union.svg", note: "The supranational citizenry of the Soviet Union (1922–1991), an identity promoted across its fifteen republics." },
+      { name: "Goths", file: "Gothic Sunrise Flag.jpg", note: "The East Germanic people who migrated across late-antique Europe and founded kingdoms in Italy and Spain after the fall of Rome." },
+      { name: "Bessarabia Germans", file: "Flag of Bessarabia Germans.svg", note: "German colonists who settled Bessarabia (in modern Moldova and Ukraine) from 1814 until their resettlement in 1940." },
+      { name: "Latin Romans", file: "Labarum of the Roman Empire (purple).png", note: "The Latin-speaking Romans of the later empire; the labarum was the Christian military standard introduced by Constantine the Great." },
+      { name: "Byzantine Greeks", file: "Byzantine imperial flag, 14th century.svg", note: "The Greek-speaking, Orthodox Christian people of the Byzantine (Eastern Roman) Empire, which endured until the fall of Constantinople in 1453." },
+      { name: "Charrúas", file: "Flag of the Charrúa People.svg", note: "An Indigenous people of the grasslands of modern Uruguay and Argentina, largely destroyed in the 19th century." },
+      { name: "Rhodesians", file: "Flag of Rhodesia (1968–1979).svg", note: "The settler population of Rhodesia, the unrecognised white-minority state in what is now Zimbabwe (1965–1979)." },
+      { name: "Chinese from West Borneo", file: "Lanfang Republic Reconstructed Flag.svg", note: "Hakka Chinese miners of West Borneo who formed the Lanfang Republic, a self-governing kongsi federation that lasted from 1777 until Dutch annexation." },
+      { name: "Cilician Armenians", file: "Flag of the Rubenid Dynasty.svg", note: "The Armenians of the medieval Kingdom of Cilicia on the Mediterranean coast, an ally of the Crusaders under the Rubenid dynasty." },
+      { name: "Danzig Germans", file: "Flag_of_the_Free_City_of_Danzig.svg", note: "The German inhabitants of the Free City of Danzig (now Gdańsk, Poland), a semi-autonomous city-state between the World Wars." },
+      { name: "British subjecters", file: "British Empire flag (1930).svg", note: "Subjects of the British Empire — at its height the largest empire in history, spanning roughly a quarter of the globe." },
+      { name: "Old Poles", file: "Flag of the Kingdom of Poland.svg", note: "The people of the early Kingdom of Poland, whose crowned white-eagle banner remains Poland's national emblem." },
+      { name: "Middle Poles", file: "Chorągiew królewska króla Zygmunta III Wazy.svg", note: "Poles of the Polish–Lithuanian Commonwealth era; this royal banner belonged to King Sigismund III Vasa." },
+      { name: "Meryans", file: "Modern flag of Merya people.svg", note: "A Finnic people of central Russia, assimilated into the Russians centuries ago; the flag is a modern revival emblem." },
     ] },
   ] },
 ]

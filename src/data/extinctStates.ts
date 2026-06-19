@@ -39,6 +39,7 @@ export const EXTINCT_STATES: ExtinctRegion[] = [
   ] },
   { region: "Americas", items: [
     { name: "Flag of the First Republic of Acre (independent 1899–1900)", file: "Bandeira do Estado Independente do Acre.svg" },
+    { name: "Flag of the Second Republic of Acre (de facto 1900)", file: "Bandeira do Estado Independente do Acre.svg" },
     { name: "Flag of the Third Republic of Acre (independent January–November, 1903)", file: "Bandeira da Terceira República do Acre.svg" },
     { name: "Flag of Republic of Anguilla (de facto independent 1967–1969)", file: "Flag of Anguilla (1967-1969).svg" },
     { name: "Flag of the Kingdom of Araucanía and Patagonia (de facto independent 1862–1865)", file: "Flag of the Kingdom of Araucanía and Patagonia.svg" },
