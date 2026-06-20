@@ -47,7 +47,10 @@ function persist(s: Save) { try { localStorage.setItem(KEY, JSON.stringify(s)) }
 export default function FlagGachaScreen({ onBack }: Props) {
   const [save, setSave] = useState<Save>(load)
   const [reveal, setReveal] = useState<null | { flag: FlagRecord; dupe: boolean }>(null)
-  const [browse, setBrowse] = useState(false)
+  // Open straight into the collection when there's already something to see, so
+  // tapping "Gacha Collection" is one tap to the grid — not a pull screen with a
+  // second "View collection" button. New players (no pulls yet) start on pulls.
+  const [browse, setBrowse] = useState(() => save.collected.length > 0)
   const collected = useMemo(() => new Set(save.collected), [save.collected])
 
   const pull = () => {

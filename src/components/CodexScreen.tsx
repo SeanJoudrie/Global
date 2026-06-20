@@ -23,7 +23,7 @@ import { ScreenHeader } from './ui'
 import AdBox from './AdBox'
 import { AD_SLOTS } from '../ads'
 import { LineIcon } from './icons'
-import { Search, Anchor, ChevronDown, Castle, Sun, Mountain, Landmark, MoonStar, Sailboat, Rainbow, Users, Feather, MapPin, Crown, Vote, Building2, HeartHandshake } from 'lucide-react'
+import { Search, Anchor, ChevronDown, Castle, Sun, Mountain, Landmark, MoonStar, Sailboat, Rainbow, Users, Feather, MapPin, Crown, Vote, Building2 } from 'lucide-react'
 
 // Etched line icon per continent — cartographer style, never emoji.
 const REGION_ICONS: Record<string, typeof Castle> = {
@@ -203,16 +203,6 @@ export default function CodexScreen({ onBack, initialCode, embedded = false }: P
           </div>
         )}
 
-        {/* Accuracy disclaimer — these collections lean on Wikipedia / Wikimedia
-            Commons, so we set expectations and invite corrections. */}
-        {!isSearching && (
-          <div style={{ margin: '4px 2px 10px', padding: '10px 12px', borderRadius: 10, background: tint(T.amber, 0.07), border: `1px solid ${tint(T.amber, 0.28)}` }}>
-            <p className="text-xs" style={{ color: T.muted, lineHeight: 1.6, margin: 0 }}>
-              <strong style={{ color: T.text }}>A note on accuracy.</strong> Flags, names and dates below are sourced from Wikipedia and Wikimedia Commons. We do our best to get them right, but we're not an authoritative reference and small mistakes may slip through. Spot something off?{' '}
-              <a href="mailto:sjoudrie@gmail.com?subject=Globalio%20flag%20correction" style={{ color: T.amber, fontWeight: 600 }}>Tell us</a>{' '}and we'll fix it fast.
-            </p>
-          </div>
-        )}
 
         {/* Beyond-countries order: Mega Codex first (the "pick a random one"
             entry point), then the themed collections, signal flags last. */}
@@ -716,13 +706,17 @@ function OtherFlagsResults({ query }: { query: string }) {
 // pride red, pan-ethnic clay, indigenous ochre, separatist blue, micronations
 // green, civic plum. Palette tokens keep it legible across all three aesthetics
 // (raw red/yellow would vanish on the light parchment skin).
+// Descending warm→cool spectrum across the whole Beyond-Countries list so no two
+// adjacent sections share a hue (and nothing repeats the orange of the country
+// continents above). Mega Codex = red, Peoples = orange, then the causes step
+// down through amber/gold/chartreuse.
 const CAT_COLORS: Record<string, string> = {
-  'Pride & LGBTQ+': T.danger,
+  'Pride & LGBTQ+': T.amber,
   'Pan-National & Ethnic': T.warm,
   'Indigenous Peoples': T.amber,
-  'Separatist & Autonomous': T.cyan,
+  'Separatist & Autonomous': T.gold,
   Micronations: T.green,
-  'Civic & Ideological': T.violet,
+  'Civic & Ideological': T.chartreuse,
 }
 
 // "Movements & Identity" holds flags that stand for a cause or stance: Pride,
@@ -761,9 +755,15 @@ function IdentityFlatSection({ title, blurb, color, icon: Icon, flags }: { title
                 className="geo-tap w-full px-1.5 py-2.5 rounded-lg transition-all active:scale-[0.99] text-left"
                 style={{ background: showNote ? tint(color, 0.07) : 'transparent', borderBottom: `1px solid ${tint(T.line, 0.55)}` }}>
                 <div className="flex items-center gap-3">
-                  <img src={f.flagUrl} alt={f.name}
-                    style={{ width: 46, height: 30, objectFit: 'contain', borderRadius: 5, border: `1px solid ${T.line}`, flexShrink: 0, background: T.surfaceHi }}
-                    onError={e => { (e.target as HTMLImageElement).style.opacity = '0.3' }} />
+                  {f.noFlag ? (
+                    <div style={{ width: 46, height: 30, borderRadius: 5, border: `1px dashed ${T.line}`, flexShrink: 0, background: T.surfaceHi, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                      <span style={{ fontSize: 7.5, fontWeight: 700, color: T.dim, textAlign: 'center', lineHeight: 1.1, textTransform: 'uppercase', letterSpacing: '0.03em' }}>No flag</span>
+                    </div>
+                  ) : (
+                    <img src={f.flagUrl} alt={f.name}
+                      style={{ width: 46, height: 30, objectFit: 'contain', borderRadius: 5, border: `1px solid ${T.line}`, flexShrink: 0, background: T.surfaceHi }}
+                      onError={e => { (e.target as HTMLImageElement).style.opacity = '0.3' }} />
+                  )}
                   <div className="flex-1 min-w-0">
                     <div className="font-semibold text-sm truncate" style={{ color: T.text }}>{f.name}</div>
                   </div>
@@ -784,84 +784,22 @@ function MicronationsCodexSection() {
   return <IdentityFlatSection title="Micronations" blurb={`${flags.length} self-declared nations`} color={T.green} icon={Crown} flags={flags} />
 }
 
-// ── Identity flags browser (pride, indigenous, separatist, civic) ──
+// ── Identity / cause flags (E10) ──
+// No "Movements & Identity" wrapper any more: Pride, Separatist & Autonomous and
+// Civic & Ideological each stand as their own top-level section, like
+// Micronations — one row's description open at a time.
 function IdentityCodexSection() {
-  const [sectionOpen, setSectionOpen] = useState(false)
-  const [openCat, setOpenCat] = useState<string | null>(null)
-  const [openFlag, setOpenFlag] = useState<string | null>(null)
-  const mainCount = IDENTITY_FLAGS.filter(f => (IDENTITY_MAIN_CATEGORIES as readonly string[]).includes(f.category)).length
   return (
-    <div className="mt-5">
-      {/* Collapsed by default — countries come first; tap to reveal the extras */}
-      <button
-        onClick={() => setSectionOpen(o => !o)}
-        className="geo-tap w-full flex items-center justify-between px-1 py-3 transition-all active:scale-[0.99]"
-        style={{ background: 'transparent', borderBottom: `1px solid ${sectionOpen ? tint(T.warm, 0.45) : T.line}` }}>
-        <div className="text-left">
-          <h3 className="text-sm font-bold uppercase tracking-widest flex items-center gap-2" style={{ color: T.warm }}>
-            <HeartHandshake size={15} color={T.warm} strokeWidth={1.6} absoluteStrokeWidth /> Movements &amp; Identity
-          </h3>
-          <p className="text-xs" style={{ color: T.dim }}>{mainCount} flags · pride, separatist & civic causes</p>
-        </div>
-        <ChevronDown size={17} color={T.warm} strokeWidth={1.6} absoluteStrokeWidth
-          style={{ transition: 'transform 0.2s', transform: sectionOpen ? 'rotate(180deg)' : 'rotate(0deg)', flexShrink: 0 }} />
-      </button>
-
-      {sectionOpen && <div className="mt-3" />}
-      {sectionOpen && IDENTITY_MAIN_CATEGORIES.map(cat => {
+    <>
+      {IDENTITY_MAIN_CATEGORIES.map(cat => {
         const flags = IDENTITY_FLAGS.filter(f => f.category === cat)
-        const isOpen = openCat === cat
-        const catColor = CAT_COLORS[cat] ?? T.warm
+        if (!flags.length) return null
         return (
-          <div key={cat} className="mb-3">
-            <button
-              onClick={() => setOpenCat(o => o === cat ? null : cat)}
-              aria-expanded={isOpen}
-              className="geo-tap w-full flex items-center justify-between px-1 py-3 transition-all active:scale-[0.99]"
-              style={{ background: 'transparent', borderBottom: `1px solid ${isOpen ? tint(catColor, 0.45) : T.line}` }}>
-              <div className="flex items-center gap-2.5">
-                {(() => { const Icon = CAT_ICONS[cat] ?? Users; return <Icon size={15} color={catColor} strokeWidth={1.6} absoluteStrokeWidth /> })()}
-                <h3 className="text-sm font-bold uppercase tracking-widest" style={{ color: catColor }}>{cat}</h3>
-                <span className="text-xs" style={{ color: T.dim, fontFamily: FONT.mono, fontVariantNumeric: 'tabular-nums' }}>{flags.length}</span>
-              </div>
-              <ChevronDown size={16} color={catColor} strokeWidth={1.6} absoluteStrokeWidth
-                style={{ transition: 'transform 0.2s', transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)', flexShrink: 0 }} />
-            </button>
-            {isOpen && (
-              <div className="mt-1.5 space-y-1.5">
-                {flags.map(f => {
-                  const showNote = openFlag === f.id
-                  return (
-                    <button key={f.id} onClick={() => setOpenFlag(o => o === f.id ? null : f.id)}
-                      className="geo-tap w-full px-1.5 py-2.5 rounded-lg transition-all active:scale-[0.99] text-left"
-                      style={{ background: showNote ? tint(catColor, 0.07) : 'transparent', borderBottom: `1px solid ${tint(T.line, 0.55)}` }}>
-                      <div className="flex items-center gap-3">
-                        {f.noFlag ? (
-                          <div style={{ width: 46, height: 30, borderRadius: 5, border: `1px dashed ${T.line}`, flexShrink: 0, background: T.surfaceHi, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                            <span style={{ fontSize: 7.5, fontWeight: 700, color: T.dim, textAlign: 'center', lineHeight: 1.1, textTransform: 'uppercase', letterSpacing: '0.03em' }}>No flag</span>
-                          </div>
-                        ) : (
-                          <img src={f.flagUrl} alt={f.name}
-                            style={{ width: 46, height: 30, objectFit: 'contain', borderRadius: 5, border: `1px solid ${T.line}`, flexShrink: 0, background: T.surfaceHi }}
-                            onError={e => { (e.target as HTMLImageElement).style.opacity = '0.3' }} />
-                        )}
-                        <div className="flex-1 min-w-0">
-                          <div className="font-semibold text-sm truncate" style={{ color: T.text }}>{f.name}</div>
-                        </div>
-                        <span style={{ color: catColor, fontSize: 16, transition: 'transform 0.2s', transform: showNote ? 'rotate(90deg)' : 'rotate(0deg)' }}>›</span>
-                      </div>
-                      {showNote && (
-                        <p className="text-xs leading-relaxed mt-2.5" style={{ color: T.muted, lineHeight: 1.65 }}>{f.note}</p>
-                      )}
-                    </button>
-                  )
-                })}
-              </div>
-            )}
-          </div>
+          <IdentityFlatSection key={cat} title={cat} blurb={`${flags.length} flags`}
+            color={CAT_COLORS[cat] ?? T.amber} icon={CAT_ICONS[cat] ?? Users} flags={flags} />
         )
       })}
-    </div>
+    </>
   )
 }
 
@@ -1086,9 +1024,9 @@ function GallerySection({ title, icon: Icon, color, blurb, regions }: { title: s
   const [openRow, setOpenRow] = useState<string | null>(null)
   const allOpen = openRegions.size === regions.length
   const toggleAll = () => setOpenRegions(allOpen ? new Set() : new Set(regions.map((_, i) => i)))
-  const toggleRegion = (i: number) => setOpenRegions(prev => {
-    const n = new Set(prev); n.has(i) ? n.delete(i) : n.add(i); return n
-  })
+  // Accordion: opening a continent closes the others, so only one is ever open
+  // at a time (the "Open all" button is the explicit override).
+  const toggleRegion = (i: number) => setOpenRegions(prev => prev.has(i) ? new Set() : new Set([i]))
   return (
     <div className="mt-5">
       <button onClick={() => setOpen(o => !o)}
@@ -1145,7 +1083,7 @@ function EthnicCodexSection() {
     idRegion('Indigenous Peoples', 'Indigenous Peoples'),
   ]
   const total = regions.reduce((n, r) => n + r.groups.reduce((m, g) => m + g.items.length, 0), 0)
-  return <GallerySection title="Peoples &amp; Cultures" icon={Users} color={T.gold} blurb={`${total} flags of peoples, cultures & nations · by region`} regions={regions} />
+  return <GallerySection title="Peoples &amp; Cultures" icon={Users} color={T.warm} blurb={`${total} flags of peoples, cultures & nations · by region`} regions={regions} />
 }
 
 function ExtinctStatesCodexSection() {
@@ -1181,7 +1119,7 @@ function ExtinctStatesCodexSection() {
     if (extra && extra.length) rg.groups.push({ label: 'Predecessor & former states', items: extra })
   })
   const total = regions.reduce((n, rg) => n + rg.groups.reduce((m, g) => m + g.items.length, 0), 0)
-  return <GallerySection title="Extinct &amp; Former States" icon={Landmark} color={T.violet} blurb={`${total} flags of vanished & predecessor states · by continent`} regions={regions} />
+  return <GallerySection title="Extinct &amp; Former States" icon={Landmark} color={T.cyan} blurb={`${total} flags of vanished & predecessor states · by continent`} regions={regions} />
 }
 
 function OrgCodexSection() {
@@ -2678,12 +2616,12 @@ function MegaCodexSection() {
         className="geo-tap w-full flex items-center justify-between px-1 py-3 transition-all active:scale-[0.99]"
         style={{ background: 'transparent', borderBottom: `1px solid ${T.line}` }}>
         <div className="text-left">
-          <h3 className="text-sm font-bold uppercase tracking-widest flex items-center gap-2" style={{ color: ACCENT.codex }}>
-            <Search size={15} color={ACCENT.codex} strokeWidth={1.6} absoluteStrokeWidth /> Mega Codex A–Z
+          <h3 className="text-sm font-bold uppercase tracking-widest flex items-center gap-2" style={{ color: T.danger }}>
+            <Search size={15} color={T.danger} strokeWidth={1.6} absoluteStrokeWidth /> Mega Codex A–Z
           </h3>
           <p className="text-xs" style={{ color: T.dim }}>Every flag in the app · {ALL_FLAGS_AZ.length} · tap to open the wall</p>
         </div>
-        <span style={{ color: ACCENT.codex, fontSize: 18, flexShrink: 0 }}>›</span>
+        <span style={{ color: T.danger, fontSize: 18, flexShrink: 0 }}>›</span>
       </button>
       {open && <MegaCodexWall onClose={() => setOpen(false)} />}
     </div>

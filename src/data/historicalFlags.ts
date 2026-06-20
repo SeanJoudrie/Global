@@ -217,12 +217,12 @@ export const HISTORICAL_FLAGS: HistoricalEntity[] = [
 
   // ── Asia & Oceania ──────────────────────────────────────────────────────────
   {
-    id: "qing", name: "Qing Dynasty", era: "1889–1912", region: "Asia & Oceania",
+    id: "qing", name: "Qing Dynasty", era: "1889–1912", region: "Asia & Oceania", relatedCode: "CN",
     flagUrl: fp("Flag_of_the_Qing_dynasty_(1889-1912).svg"),
     note: "The 'Yellow Dragon Flag' shows the Azure Dragon chasing a flaming pearl. It began as a triangular naval ensign in 1862 and became China's first true national flag in 1889.",
   },
   {
-    id: "roc-fivecolor", name: "Republic of China (1912)", era: "1912–1928", region: "Asia & Oceania",
+    id: "roc-fivecolor", name: "Republic of China (1912)", era: "1912–1928", region: "Asia & Oceania", relatedCode: "CN",
     flagUrl: fp("Flag_of_the_Republic_of_China_1912-1928.svg"),
     note: "The five stripes stood for the Han, Manchu, Mongol, Hui, and Tibetan peoples under the 'Five Races Under One Union' ideal, until the KMT's Blue Sky flag replaced it in 1928.",
   },
@@ -237,7 +237,7 @@ export const HISTORICAL_FLAGS: HistoricalEntity[] = [
     note: "A white field bisected by a thick black stripe served as the standard of the Tokugawa bakufu, flown during the Sakoku period when Japan was largely closed to the world.",
   },
   {
-    id: "empire-japan", name: "Empire of Japan", era: "1870–1945", region: "Asia & Oceania",
+    id: "empire-japan", name: "Empire of Japan", era: "1870–1945", region: "Asia & Oceania", relatedCode: "JP",
     flagUrl: fp("War_flag_of_the_Imperial_Japanese_Army.svg"),
     note: "The 16-rayed Rising Sun was adopted as the Imperial Japanese Army's war flag in 1870; the rays-only design is still used today by the Maritime Self-Defense Force.",
   },
@@ -262,7 +262,7 @@ export const HISTORICAL_FLAGS: HistoricalEntity[] = [
     note: "The 'Heritage Flag' — three red stripes on yellow for the three regions of Vietnam. It is still flown by Vietnamese diaspora communities worldwide.",
   },
   {
-    id: "khmer-republic", name: "Khmer Republic", era: "1970–1975", region: "Asia & Oceania",
+    id: "khmer-republic", name: "Khmer Republic", era: "1970–1975", region: "Asia & Oceania", relatedCode: "KH",
     flagUrl: fp("Flag_of_the_Khmer_Republic.svg"),
     note: "Lon Nol's republic replaced the royal flag; its three white stars stand for the nation, religion, and republic. Angkor Wat has appeared on every Cambodian flag since the 1800s.",
   },
@@ -287,7 +287,7 @@ export const HISTORICAL_FLAGS: HistoricalEntity[] = [
     note: "The 'Snow Lion Flag' shows two snow lions holding a jewel before a sun over a snow mountain. Designed under the 13th Dalai Lama, it is banned in China today.",
   },
   {
-    id: "siam", name: "Siam", era: "1855–1916", region: "Asia & Oceania",
+    id: "siam", name: "Siam", era: "1855–1916", region: "Asia & Oceania", relatedCode: "TH",
     flagUrl: fp("Flag_of_Siam_(1855).svg"),
     note: "King Mongkut (Rama IV) placed a white royal elephant — a sacred symbol of royal power — on a plain red field after foreign traders couldn't distinguish Siam's earlier banner.",
   },
@@ -304,7 +304,7 @@ export const HISTORICAL_FLAGS: HistoricalEntity[] = [
     note: "Its blue-white-blue stripes survive almost unchanged in the flags of Honduras, Nicaragua, El Salvador, and Guatemala. White stood for the land between the two oceans.",
   },
   {
-    id: "empire-brazil", name: "Empire of Brazil", era: "1822–1889", region: "Americas",
+    id: "empire-brazil", name: "Empire of Brazil", era: "1822–1889", region: "Americas", relatedCode: "BR",
     flagUrl: fp("Flag_of_Brazil_(1870–1889).svg"),
     note: "A green field with a yellow rhombus bearing the imperial arms ringed by 20 stars. The republican coup of 1889 swapped the crowned arms for the celestial globe and 'Ordem e Progresso'.",
   },
@@ -349,7 +349,7 @@ export const HISTORICAL_FLAGS: HistoricalEntity[] = [
     note: "Red-white-red bands with a green hoist holding five white stars for its five departments. Yucatán declared independence from Mexico twice over centralist rule.",
   },
   {
-    id: "first-mexican-empire", name: "First Mexican Empire", era: "1821–1823", region: "Americas",
+    id: "first-mexican-empire", name: "First Mexican Empire", era: "1821–1823", region: "Americas", relatedCode: "MX",
     flagUrl: fp("First_flag_of_the_Mexican_Empire.svg"),
     note: "Agustín de Iturbide's empire flew the green-white-red tricolor with a crowned golden eagle. Removing the crown after the empire fell produced the basis of the republican flag.",
   },
@@ -387,12 +387,13 @@ export const HISTORICAL_FLAGS: HistoricalEntity[] = [
     note: "The Shia Ismaili Fatimids adopted green as their standard, and green's lasting association with Islam owes much to this dynasty. They founded Cairo as their capital.",
   },
   {
-    id: "ethiopian-empire", name: "Ethiopian Empire", era: "1897–1974", region: "Africa & Middle East",
+    id: "ethiopian-empire", name: "Ethiopian Empire", era: "1897–1974", region: "Africa & Middle East", relatedCode: "ET",
     flagUrl: fp("Flag_of_Ethiopia_(1897-1936;_1941-1974).svg"),
     note: "The crowned Lion of Judah symbolized the Solomonic dynasty's claimed descent from King Solomon and the Queen of Sheba. Its green-yellow-red became the model for Pan-African colors.",
   },
   {
     id: "kingdom-egypt", name: "Kingdom of Egypt", era: "1922–1953", region: "Africa & Middle East",
+    relatedCode: "EG",
     flagUrl: fp("Flag_of_Egypt_(1922-1958).svg"),
     note: "Adopted under King Fuad I in 1922; the green field's three stars are commonly said to represent Egypt, Nubia, and Sudan.",
   },
@@ -408,12 +409,12 @@ export const HISTORICAL_FLAGS: HistoricalEntity[] = [
     note: "The rising sun flew over the short-lived secessionist republic during the Nigerian Civil War: black mourned the slain, red the blood, green prosperity.",
   },
   {
-    id: "rhodesia", name: "Rhodesia", era: "1968–1979", region: "Africa & Middle East",
+    id: "rhodesia", name: "Rhodesia", era: "1968–1979", region: "Africa & Middle East", relatedCode: "ZW",
     flagUrl: fp("Flag_of_Rhodesia_(1968–1979).svg"),
     note: "Adopted after Ian Smith's white-minority government declared independence; the central colonial arms feature a golden lion and the ancient Great Zimbabwe bird.",
   },
   {
-    id: "apartheid-sa", name: "Apartheid South Africa", era: "1928–1994", region: "Africa & Middle East",
+    id: "apartheid-sa", name: "Apartheid South Africa", era: "1928–1994", region: "Africa & Middle East", relatedCode: "ZA",
     flagUrl: fp("Flag_of_South_Africa_(1928–1994).svg"),
     note: "Based on the Dutch Prinsenvlag, its white stripe carries three miniature flags — the Union Flag, the Orange Free State, and the Transvaal Vierkleur — for the territories of the Union.",
   },
@@ -456,22 +457,22 @@ export const HISTORICAL_FLAGS: HistoricalEntity[] = [
     note: "The plain blue field with a white cross was the official land flag from 1822. The blue-and-white striped version initially served only as the naval ensign.",
   },
   {
-    id: "cross-of-burgundy", name: "Cross of Burgundy", era: "1506–1785", region: "Europe",
+    id: "cross-of-burgundy", name: "Cross of Burgundy", era: "1506–1785", region: "Europe", relatedCode: "ES",
     flagUrl: fp("Flag_of_Cross_of_Burgundy.svg"),
     note: "The red saw-tooth saltire represents two crossed, roughly-pruned branches. It flew over Spanish armies and colonies across the Americas for nearly three centuries.",
   },
   {
-    id: "second-spanish-republic", name: "Second Spanish Republic", era: "1931–1939", region: "Europe",
+    id: "second-spanish-republic", name: "Second Spanish Republic", era: "1931–1939", region: "Europe", relatedCode: "ES",
     flagUrl: fp("Flag_of_the_Second_Spanish_Republic.svg"),
     note: "The republican tricolor added a purple lower band popularly linked to Castile, replacing the red-yellow monarchist flag until Franco's victory in 1939.",
   },
   {
-    id: "kingdom-italy", name: "Kingdom of Italy", era: "1861–1946", region: "Europe",
+    id: "kingdom-italy", name: "Kingdom of Italy", era: "1861–1946", region: "Europe", relatedCode: "IT",
     flagUrl: fp("Flag_of_Italy_(1861-1946).svg"),
     note: "The green-white-red tricolor charged with the crowned shield of the House of Savoy, flown through both World Wars until the 1946 referendum abolished the monarchy.",
   },
   {
-    id: "kingdom-france", name: "Kingdom of France", era: "987–1792", region: "Europe",
+    id: "kingdom-france", name: "Kingdom of France", era: "987–1792", region: "Europe", relatedCode: "FR",
     flagUrl: fp("Pavillon_royal_de_France.svg"),
     note: "The white field strewn with golden fleurs-de-lis was the banner of the Bourbon monarchy. White, not a tricolor, symbolized the king before the Revolution.",
   },
@@ -704,7 +705,7 @@ export const HISTORICAL_FLAGS: HistoricalEntity[] = [
     note: "The Napoleonic-era republic of Valais flew a vertical red-and-white field with stars for its districts, before being absorbed directly into France.",
   },
   {
-    id: "cispadane", name: "Cispadane Republic", era: "1796–1797", region: "Europe",
+    id: "cispadane", name: "Cispadane Republic", era: "1796–1797", region: "Europe", relatedCode: "IT",
     flagUrl: fp("Flag_of_the_Repubblica_Cispadana.svg"),
     note: "The first Italian horizontal red-white-green tricolor, with a central quiver of four arrows. Adopted on 7 January 1797, it is commemorated as Italy's Tricolour Day.",
   },
@@ -720,7 +721,7 @@ export const HISTORICAL_FLAGS: HistoricalEntity[] = [
     note: "The triangular saffron Nishan Sahib of Ranjit Singh's Punjab empire, which united the Sikh misls and held the Khyber Pass against Afghan invasion.",
   },
   {
-    id: "kandy", name: "Kingdom of Kandy", era: "1469–1815", region: "Asia & Oceania",
+    id: "kandy", name: "Kingdom of Kandy", era: "1469–1815", region: "Asia & Oceania", relatedCode: "LK",
     flagUrl: fp("King_of_Kandy.svg"),
     note: "A maroon field bordered in gold with a golden lion holding a kastane sword. The royal standard of Sri Lanka's last independent kingdom became the basis of the modern flag.",
   },
@@ -735,7 +736,7 @@ export const HISTORICAL_FLAGS: HistoricalEntity[] = [
     note: "The saffron flag of the Aryacakravarti kings of northern Sri Lanka, bearing the sacred bull Nandi, a crescent and sun, conch, and parasol.",
   },
   {
-    id: "formosa", name: "Republic of Formosa", era: "1895", region: "Asia & Oceania",
+    id: "formosa", name: "Republic of Formosa", era: "1895", region: "Asia & Oceania", relatedCode: "TW",
     flagUrl: fp("Flag_of_the_Republic_of_Formosa_(1895).svg"),
     note: "The 'Blue Ground Yellow Tiger Flag' of a republic that lasted from May to October 1895, declared on Taiwan to resist the Japanese takeover after the First Sino-Japanese War.",
   },
@@ -770,7 +771,7 @@ export const HISTORICAL_FLAGS: HistoricalEntity[] = [
     note: "A green field with a white crescent, flown by the Al Saud state in central Arabia just before it conquered the Hejaz and became the Kingdom of Saudi Arabia.",
   },
   {
-    id: "bora-bora", name: "Kingdom of Bora Bora", era: "1837–1842", region: "Asia & Oceania",
+    id: "bora-bora", name: "Kingdom of Bora Bora", era: "1837–1842", region: "Asia & Oceania", relatedCode: "FR",
     flagUrl: fp("Flag_of_the_Kingdom_of_Bora_Bora_(1837-1842).svg"),
     note: "Red-and-white stripes with a canton of white stars, flown by the 19th-century Polynesian island kingdom before French annexation.",
   },
@@ -791,22 +792,22 @@ export const HISTORICAL_FLAGS: HistoricalEntity[] = [
     note: "A short-lived Voortrekker republic in present-day KwaZulu-Natal, annexed by Britain in 1843; its flag was a Dutch-style design with a white hoist triangle.",
   },
   {
-    id: "far", name: "Federation of Arab Republics", era: "1972–1977", region: "Africa & Middle East",
+    id: "far", name: "Federation of Arab Republics", era: "1972–1977", region: "Africa & Middle East", relatedCode: "EG",
     flagUrl: fp("Flag_of_the_Federation_of_Arab_Republics.svg"),
     note: "The red-white-black Arab Liberation tricolor with a golden Hawk of Quraish, flown simultaneously as the national flag of all three members — Egypt, Libya, and Syria.",
   },
   {
-    id: "kingdom-libya", name: "Kingdom of Libya", era: "1951–1969", region: "Africa & Middle East",
+    id: "kingdom-libya", name: "Kingdom of Libya", era: "1951–1969", region: "Africa & Middle East", relatedCode: "LY",
     flagUrl: fp("Flag_of_Libya_(1951–1969).svg"),
     note: "A red-black-green triband with a double-height black band bearing a white crescent and star. Designed under King Idris and triumphantly restored after Gaddafi fell in 2011.",
   },
   {
-    id: "jamahiriya", name: "Libyan Arab Jamahiriya", era: "1977–2011", region: "Africa & Middle East",
+    id: "jamahiriya", name: "Libyan Arab Jamahiriya", era: "1977–2011", region: "Africa & Middle East", relatedCode: "LY",
     flagUrl: fp("Flag_of_Libya_(1977–2011).svg"),
     note: "A plain solid green field — the only single-color national flag in modern history. Gaddafi adopted it after Egypt's peace with Israel broke up the Federation of Arab Republics.",
   },
   {
-    id: "upper-volta", name: "Republic of Upper Volta", era: "1958–1984", region: "Africa & Middle East",
+    id: "upper-volta", name: "Republic of Upper Volta", era: "1958–1984", region: "Africa & Middle East", relatedCode: "BF",
     flagUrl: fp("Flag_of_Upper_Volta.svg"),
     note: "A black-white-red tricolor for the Black, White, and Red Volta rivers, flown until Thomas Sankara renamed the country Burkina Faso in 1984.",
   },
@@ -982,7 +983,7 @@ export const HISTORICAL_FLAGS: HistoricalEntity[] = [
     note: "A short-lived secessionist confederation of northeastern Brazilian provinces revolting against the new emperor; a sky-blue field with a shield reading 'Confederação'.",
   },
   {
-    id: "lares", name: "Republic of Puerto Rico (Lares)", era: "1868", region: "Americas",
+    id: "lares", name: "Republic of Puerto Rico (Lares)", era: "1868", region: "Americas", relatedCode: "US",
     flagUrl: fp("Flag_of_Lares.svg"),
     note: "The Grito de Lares revolutionary flag — a white cross dividing blue and red quarters with a white star — raised in the brief 1868 uprising against Spanish rule.",
   },
@@ -1003,12 +1004,12 @@ export const HISTORICAL_FLAGS: HistoricalEntity[] = [
   },
   // Oceania — Polynesian & Pacific kingdoms
   {
-    id: "rarotonga", name: "Kingdom of Rarotonga", era: "1858–1888", region: "Asia & Oceania",
+    id: "rarotonga", name: "Kingdom of Rarotonga", era: "1858–1888", region: "Asia & Oceania", relatedCode: "NZ",
     flagUrl: fp("Flag_of_Rarotonga_1858-1888.svg"),
     note: "Red-white-red with three blue stars, flown by the Cook Islands kingdom before it became a British protectorate, then part of New Zealand.",
   },
   {
-    id: "raiatea", name: "Kingdom of Raiatea", era: "1880–1888", region: "Asia & Oceania",
+    id: "raiatea", name: "Kingdom of Raiatea", era: "1880–1888", region: "Asia & Oceania", relatedCode: "FR",
     flagUrl: fp("Flag_of_the_Kingdom_of_Raiatea_(1880-1888).svg"),
     note: "A red-and-white striped flag with a small French tricolor canton, from the Leeward Islands kingdom that resisted French annexation for years.",
   },
@@ -1018,17 +1019,17 @@ export const HISTORICAL_FLAGS: HistoricalEntity[] = [
     note: "A tiny island kingdom off Sardinia ruled by the Bertoleoni family, sometimes called the smallest kingdom in the world. Its flag bears a gold star beneath a crown.",
   },
   {
-    id: "tubuai", name: "Kingdom of Tubuai", era: "1819–1881", region: "Asia & Oceania",
+    id: "tubuai", name: "Kingdom of Tubuai", era: "1819–1881", region: "Asia & Oceania", relatedCode: "FR",
     flagUrl: fp("Flag_of_Tubuai.svg"),
     note: "A white field with a red cross and four blue stars, the historic flag of a kingdom in the Austral Islands of the South Pacific.",
   },
   {
-    id: "rapa", name: "Kingdom of Rapa Iti", era: "1867–1887", region: "Asia & Oceania",
+    id: "rapa", name: "Kingdom of Rapa Iti", era: "1867–1887", region: "Asia & Oceania", relatedCode: "FR",
     flagUrl: fp("Flag_of_Rapa.svg"),
     note: "A remote Polynesian island kingdom whose flag carried a blue star beneath a crown with a French canton, before France absorbed it.",
   },
   {
-    id: "mangareva", name: "Kingdom of Mangareva", era: "1832–1844", region: "Asia & Oceania",
+    id: "mangareva", name: "Kingdom of Mangareva", era: "1832–1844", region: "Asia & Oceania", relatedCode: "FR",
     flagUrl: fp("Flag_of_the_Gambier_Islands.svg"),
     note: "The Gambier Islands kingdom flew a banded flag with corner stars, attributed to the French explorer Dumont d'Urville, before becoming a French protectorate.",
   },
@@ -1238,7 +1239,7 @@ export const HISTORICAL_FLAGS: HistoricalEntity[] = [
     note: "The three southern atolls of the Maldives broke away under Abdullah Afeef for four years; their blue-green-red flag carried a crescent and three stars before the rebellion collapsed.",
   },
   {
-    id: "huahine", name: "Kingdom of Huahine", era: "1846–1895", region: "Asia & Oceania",
+    id: "huahine", name: "Kingdom of Huahine", era: "1846–1895", region: "Asia & Oceania", relatedCode: "FR",
     flagUrl: fp("Flag_of_Huahine.svg"),
     note: "A Society Islands kingdom that resisted France longer than its neighbours; its red-and-white flag with a French canton reflected an uneasy protectorate before annexation.",
   },
@@ -1427,7 +1428,7 @@ export const HISTORICAL_FLAGS: HistoricalEntity[] = [
   // ── Asia & Oceania: former states (List of former sovereign states) ──
   {
     id: "kingdom-tahiti", name: "Kingdom of Tahiti", era: "1788–1880", region: "Asia & Oceania",
-    flagUrl: fp("Flag_of_the_Kingdom_of_Tahiti.svg"), relatedCode: "PF",
+    flagUrl: fp("Flag_of_the_Kingdom_of_Tahiti.svg"), relatedCode: "FR",
     note: "The Pōmare dynasty's red-white-red flag flew over the Society Islands kingdom until France annexed Tahiti in 1880, ending nearly a century of independent Polynesian rule.",
   },
   {
