@@ -10,8 +10,19 @@ export interface CityFlag {
   note: string
 }
 
+// Municipal flags are frequently enormous SVGs (detailed city seals — Yonkers is
+// 236 KB) that some browsers render slowly or not at all, and city flags use a
+// bare <img> with no fallback chain. When the file resolves to a live Commons
+// hotlink, ask Commons for a rasterised thumbnail instead: small, fast, reliable.
+const cf = (file: string): string => {
+  const url = fp(file)
+  return url.startsWith("https://commons.wikimedia.org/wiki/Special:FilePath/")
+    ? `${url}?width=512`
+    : url
+}
+
 const c = (id: string, name: string, state: string, file: string, note: string): CityFlag =>
-  ({ id, name, state, flagUrl: fp(file), note })
+  ({ id, name, state, flagUrl: cf(file), note })
 
 // Entries whose flagUrl is empty are dead Wikimedia links with no self-hostable
 // replacement; they are filtered out of US_CITY_FLAGS below so the quiz never

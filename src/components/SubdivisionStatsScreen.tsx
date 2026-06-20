@@ -1,8 +1,10 @@
 import { useState } from "react"
+import { Globe2 } from "lucide-react"
 import { SUB_CONTINENTS, SUB_FLAGS, countriesWithSubs } from "../data/subdivisions"
 import type { AppState } from "../utils/storage"
 import { T, ACCENT, FONT, tint } from "../ui/tokens"
 import { ScreenHeader } from "./ui"
+import FlagImage from "./FlagImage"
 
 interface Props { state: AppState; onBack: () => void }
 
@@ -33,7 +35,10 @@ export default function SubdivisionStatsScreen({ state, onBack }: Props) {
                 className="geo-tap w-full px-4 py-3.5 rounded-2xl transition-all active:scale-[0.98] text-left"
                 style={{ background: T.surface, border: `1px solid ${T.line}` }}>
                 <div className="flex items-center justify-between mb-2">
-                  <span className="geo-display font-bold" style={{ color: T.text }}>{c.emoji} {c.name}</span>
+                  <span className="geo-display font-bold flex items-center gap-2" style={{ color: T.text }}>
+                    <Globe2 size={18} strokeWidth={1.6} color={ACCENT.codex} absoluteStrokeWidth />
+                    {c.name}
+                  </span>
                   <span className="text-xs font-semibold" style={{ color: ACCENT.codex, fontFamily: FONT.mono, fontVariantNumeric: "tabular-nums" }}>{c.got} / {c.total} ›</span>
                 </div>
                 <div className="w-full h-2 rounded-full overflow-hidden" style={{ background: T.line }}>
@@ -60,8 +65,9 @@ export default function SubdivisionStatsScreen({ state, onBack }: Props) {
           return (
             <div key={c.code} className="px-4 py-2.5 rounded-xl" style={{ background: T.surface, border: `1px solid ${full ? tint(T.green, 0.4) : T.line}` }}>
               <div className="flex items-center justify-between mb-1.5">
-                <span className="text-sm font-semibold" style={{ color: T.text }}>
-                  {c.emoji} {c.name} {full && <span className="text-xs" style={{ color: T.green }}>✓</span>}
+                <span className="text-sm font-semibold flex items-center gap-2" style={{ color: T.text }}>
+                  <FlagImage code={c.code} style={{ width: 22, height: 15, objectFit: "cover", borderRadius: 3, border: `1px solid ${T.line}`, flexShrink: 0 }} />
+                  {c.name} {full && <span className="text-xs" style={{ color: T.green }}>✓</span>}
                 </span>
                 <span className="text-xs font-semibold" style={{ color: full ? T.green : ACCENT.codex, fontFamily: FONT.mono, fontVariantNumeric: "tabular-nums" }}>{got} / {c.total}</span>
               </div>

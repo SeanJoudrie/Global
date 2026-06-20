@@ -171,12 +171,27 @@ function TodayTab({ state, dailyDone, launch, onNavigate, onGoCodex, onGoPlay, o
           body: "Flip through every team's flag, story and historical flags before kickoff.",
           cta: "Explore the field", onClick: () => onNavigate("worldcup"),
           art: (
-            <div style={{ display: "flex", gap: 5, width: 92, height: 58, flexShrink: 0, alignItems: "center" }}>
-              {["us", "mx", "ca"].map((c, i) => (
-                <div key={c} style={{ flex: 1, height: i === 1 ? "100%" : "80%", borderRadius: 5, overflow: "hidden", border: `1.5px solid ${T.surface}`, boxShadow: `0 2px 6px -3px ${tint(T.text, 0.6)}` }}>
-                  <FlagImage code={c} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
-                </div>
-              ))}
+            <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 7, width: 108, flexShrink: 0 }}>
+              {/* The three hosts fanned out in a rainbow arc — each flag whole, none cropped. */}
+              <div style={{ position: "relative", width: 108, height: 42 }}>
+                {[
+                  { c: "us", x: 0, y: 13, r: -15 },
+                  { c: "mx", x: 37, y: 0, r: 0 },
+                  { c: "ca", x: 74, y: 13, r: 15 },
+                ].map(({ c, x, y, r }) => (
+                  <div key={c} style={{ position: "absolute", left: x, top: y, width: 34, height: 23,
+                    borderRadius: 4, overflow: "hidden", transform: `rotate(${r}deg)`,
+                    border: `1.5px solid ${T.surface}`, background: T.surfaceHi,
+                    boxShadow: `0 2px 6px -3px ${tint(T.text, 0.6)}` }}>
+                    <FlagImage code={c} style={{ width: "100%", height: "100%", objectFit: "contain", display: "block" }} />
+                  </div>
+                ))}
+              </div>
+              {/* Soccer ball + trophy — the tournament, in two etched symbols. */}
+              <div style={{ display: "flex", alignItems: "center", gap: 11, color: ACCENT.today }}>
+                <SoccerBall size={19} color={ACCENT.today} />
+                <LineIcon name="worldcup" size={19} color={ACCENT.today} />
+              </div>
             </div>
           ) },
         { accent: ACCENT.codex, eyebrow: `Flag of the Day · ${fotd.region}`, title: fotd.name,
@@ -267,6 +282,18 @@ interface SlideData {
 }
 const HERO_H = 238
 
+// Etched-line soccer ball to match the LineIcon family (lucide has no ball glyph).
+function SoccerBall({ size = 18, color = "currentColor" }: { size?: number; color?: string }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color}
+      strokeWidth={1.6} strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+      <circle cx="12" cy="12" r="9.5" />
+      <path d="M12 6.4 L16 9.3 L14.5 14 L9.5 14 L8 9.3 Z" />
+      <path d="M12 6.4 V2.6 M16 9.3 L19.6 8 M14.5 14 L17 17 M9.5 14 L7 17 M8 9.3 L4.4 8" />
+    </svg>
+  )
+}
+
 function HeroDeck({ slides }: { slides: SlideData[] }) {
   const n = slides.length
   const [idx, setIdx] = useState(0)
@@ -341,15 +368,16 @@ function DeckSlide({ accent, eyebrow, title, body, cta, onClick, art, watermark,
     return (
       <div className={IS_CARTO ? "carto-card" : ""}
         style={{ height: "100%", position: "relative", overflow: "hidden", borderRadius: 16, border: `1px solid ${tint(accent, 0.4)}`, background: T.surface }}>
-        <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "44%", overflow: "hidden" }}>
-          <FlagImage code={cover} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+        <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "44%", overflow: "hidden", background: T.surfaceHi, display: "flex", alignItems: "center", justifyContent: "center" }}>
+          {/* contain (not cover) so the whole flag reads — no cropped edges/emblems. */}
+          <FlagImage code={cover} style={{ width: "100%", height: "100%", objectFit: "contain", display: "block" }} />
         </div>
         <div style={{ position: "absolute", left: 0, right: 0, bottom: 0, height: "56%", background: T.surface, borderTop: `1px solid ${tint(accent, 0.35)}`, padding: "11px 16px 14px", display: "flex", flexDirection: "column", justifyContent: "center" }}>
           <div className="geo-micro" style={{ fontSize: 9, color: accent, marginBottom: 5 }}>◦ {eyebrow}</div>
           <div className="geo-display" style={{ fontWeight: 800, fontSize: 21, lineHeight: 1.05, letterSpacing: "-0.02em", color: T.text, display: "-webkit-box", WebkitLineClamp: 1, WebkitBoxOrient: "vertical", overflow: "hidden" }}>
             {title}
           </div>
-          <div style={{ color: T.muted, fontSize: 12, marginTop: 5, lineHeight: 1.45, display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>
+          <div style={{ color: T.muted, fontSize: 12, marginTop: 5, lineHeight: 1.45, display: "-webkit-box", WebkitLineClamp: 3, WebkitBoxOrient: "vertical", overflow: "hidden" }}>
             {body}
           </div>
           <button onClick={onClick} onPointerDown={e => e.stopPropagation()} disabled={disabled} className={disabled ? "" : "geo-tap"}

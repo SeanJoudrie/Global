@@ -31,6 +31,7 @@ const OddOneOutScreen = lazy(() => import("./components/OddOneOutScreen"))
 const TheCropScreen = lazy(() => import("./components/TheCropScreen"))
 const FlagDNAScreen = lazy(() => import("./components/FlagDNAScreen"))
 const BuildFlagScreen = lazy(() => import("./components/BuildFlagScreen"))
+const GeoPaintScreen = lazy(() => import("./components/GeoPaintScreen"))
 const ThePeelScreen = lazy(() => import("./components/ThePeelScreen"))
 const ConfusablesScreen = lazy(() => import("./components/ConfusablesScreen"))
 const TheComposerScreen = lazy(() => import("./components/TheComposerScreen"))
@@ -79,7 +80,7 @@ import type { Question } from "./utils/quiz"
 import { todayString } from "./utils/prng"
 import { loadTheme } from "./components/SettingsScreen"
 
-type Screen = "splash" | "home" | "flags" | "quiz" | "reversequiz" | "result" | "achievements" | "profile" | "flashcards" | "language" | "capitalquiz" | "challenge" | "codex" | "geo" | "gauntlet" | "tierlist" | "settings" | "oddoneout" | "thecrop" | "flagdna" | "buildflag" | "thepeel" | "lookalikes" | "composer" | "silhouette" | "flagfamilies" | "funfact" | "progressmap" | "historical" | "identity" | "provinceroulette" | "substumper" | "lineage" | "substats" | "megacodex" | "flagle" | "higherlower" | "deadoralive" | "frankenflag" | "describeit" | "flagbracket" | "realorbot" | "timeline" | "bordermap" | "borderchain" | "gacha" | "symbolhunt" | "twotruths" | "capitalmatch" | "oddborder" | "continentsort" | "statclash" | "uscityflags" | "prideroulette" | "flagdiag" | "worldcup" | "supporter"
+type Screen = "splash" | "home" | "flags" | "quiz" | "reversequiz" | "result" | "achievements" | "profile" | "flashcards" | "language" | "capitalquiz" | "challenge" | "codex" | "geo" | "gauntlet" | "tierlist" | "settings" | "oddoneout" | "thecrop" | "flagdna" | "buildflag" | "geopaint" | "thepeel" | "lookalikes" | "composer" | "silhouette" | "flagfamilies" | "funfact" | "progressmap" | "historical" | "identity" | "provinceroulette" | "substumper" | "lineage" | "substats" | "megacodex" | "flagle" | "higherlower" | "deadoralive" | "frankenflag" | "describeit" | "flagbracket" | "realorbot" | "timeline" | "bordermap" | "borderchain" | "gacha" | "symbolhunt" | "twotruths" | "capitalmatch" | "oddborder" | "continentsort" | "statclash" | "uscityflags" | "prideroulette" | "flagdiag" | "worldcup" | "supporter"
 
 interface ActiveQuiz {
   questions: Question[]
@@ -345,6 +346,7 @@ export default function App() {
       {screen === "thecrop"    && <TheCropScreen    onBack={() => setScreen("home")} />}
       {screen === "flagdna"    && <FlagDNAScreen     onBack={() => setScreen("home")} />}
       {screen === "buildflag"    && <BuildFlagScreen    onBack={() => setScreen("home")} />}
+      {screen === "geopaint"     && <GeoPaintScreen     onBack={() => setScreen("home")} />}
       {screen === "thepeel"      && <ThePeelScreen      onBack={() => setScreen("home")} />}
       {screen === "lookalikes"   && <ConfusablesScreen  onBack={() => setScreen("home")} />}
       {screen === "composer"     && <TheComposerScreen  onBack={() => setScreen("home")} />}

@@ -40,7 +40,13 @@ const SEGMENTS: { label: string; cards: FactCard[] }[] = [
   },
   {
     label: "Movements & Identity",
-    cards: IDENTITY_FLAGS.filter(f => f.category !== "Micronations" && f.flagUrl && !f.noFlag && f.note)
+    // Maritime/signal flags live in their own segment below — keep them out here.
+    cards: IDENTITY_FLAGS.filter(f => f.category !== "Micronations" && f.category !== "Maritime & Signal" && f.flagUrl && !f.noFlag && f.note)
+      .map(f => ({ name: f.name, sub: f.category, flagUrl: f.flagUrl as string, fact: f.note })),
+  },
+  {
+    label: "Maritime & Signal",
+    cards: IDENTITY_FLAGS.filter(f => f.category === "Maritime & Signal" && f.flagUrl && !f.noFlag && f.note)
       .map(f => ({ name: f.name, sub: f.category, flagUrl: f.flagUrl as string, fact: f.note })),
   },
   {
@@ -105,16 +111,16 @@ export default function FunFactScreen({ onBack }: Props) {
           <>
             <div className="w-full max-w-sm rounded-2xl overflow-hidden"
               style={{ border: `1px solid ${T.line}`, boxShadow: `0 6px 20px -10px ${tint(T.text, 0.5)}` }}>
-              {/* Flag image — show the whole flag (no zoom/crop) */}
-              <div style={{ position: "relative", aspectRatio: "3 / 2", background: T.surfaceHi }}>
+              {/* Flag image — show the whole flag (no zoom/crop, nothing covering it) */}
+              <div style={{ aspectRatio: "3 / 2", background: T.surfaceHi }}>
                 <img src={card.flagUrl} alt={card.name}
                   style={{ width: "100%", height: "100%", objectFit: "contain", display: "block" }}
                   onError={e => { (e.target as HTMLImageElement).style.opacity = "0.25" }} />
-                <div style={{ position: "absolute", bottom: 0, left: 0, right: 0,
-                  background: `linear-gradient(transparent, ${tint(T.text, 0.85)})`, padding: "28px 16px 12px" }}>
-                  <div className="text-xl font-black" style={{ color: T.bg, fontFamily: FONT.display }}>{card.name}</div>
-                  <div className="text-xs" style={{ color: tint(T.bg, 0.75) }}>{card.sub}</div>
-                </div>
+              </div>
+              {/* Name sits in a solid caption bar below the flag, never over it. */}
+              <div style={{ background: T.surfaceHi, borderTop: `1px solid ${T.line}`, padding: "10px 16px" }}>
+                <div className="text-xl font-black" style={{ color: T.text, fontFamily: FONT.display }}>{card.name}</div>
+                <div className="text-xs" style={{ color: T.muted }}>{card.sub}</div>
               </div>
 
               {/* Fact + optional tip toggle */}

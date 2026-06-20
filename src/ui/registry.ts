@@ -64,6 +64,7 @@ export const REGISTRY: Entry[] = [
   { id: "thepeel", title: "The Peel", subtitle: "Scratch to reveal", icon: "🖌️", tab: "play", group: "One Glance", size: "tile", accent: "challenge" },
   { id: "composer", title: "Tile Flipper", subtitle: "Reassemble the flag", icon: "🎴", tab: "play", group: "One Glance", size: "tile", accent: "challenge" },
   { id: "buildflag", title: "Build the Flag", subtitle: "Assemble the bands", icon: "🧩", tab: "play", group: "One Glance", size: "tile", accent: "challenge" },
+  { id: "geopaint", title: "GeoPaint", subtitle: "Colour-match the flag", icon: "🎨", tab: "play", group: "One Glance", size: "tile", accent: "challenge", featured: true },
   { id: "frankenflag", title: "Frankenflag", subtitle: "Name both halves", icon: "🧟", tab: "play", group: "One Glance", size: "tile", accent: "challenge", featured: true },
 
   // Spot It — eagle-eye difference & pattern hunting
