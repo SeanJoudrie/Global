@@ -1,0 +1,71 @@
+// GeoPaint — colour-matching puzzles. The player is shown a flag with one region
+// rendered in *their* current colour and must drive the HSL sliders until it
+// matches that region's true colour. Layouts are drawn as plain SVG (see
+// GeoPaintScreen) so we can paint any single region live; the `code` is only used
+// for the real-flag reveal after a guess.
+
+export type PaintLayout = "nordic" | "v3" | "h3" | "h2" | "disc"
+
+export interface PaintPuzzle {
+  name: string                    // country
+  code: string                    // ISO-2, for the reveal image
+  layout: PaintLayout
+  colors: Record<string, string>  // slotId -> true hex (the answer)
+  target: string                  // slotId the player must match
+  targetLabel: string             // human description, e.g. "the gold cross"
+}
+
+// Slot ids per layout:
+//   nordic → field, cross      v3 → left, center, right
+//   h3     → top, middle, bottom   h2 → top, bottom    disc → field, disc
+export const PAINT_PUZZLES: PaintPuzzle[] = [
+  // ── Nordic crosses ──────────────────────────────────────────────────────────
+  { name: "Sweden", code: "se", layout: "nordic",
+    colors: { field: "#006AA7", cross: "#FECC00" }, target: "cross", targetLabel: "the gold cross" },
+  { name: "Finland", code: "fi", layout: "nordic",
+    colors: { field: "#FFFFFF", cross: "#003580" }, target: "cross", targetLabel: "the blue cross" },
+  { name: "Denmark", code: "dk", layout: "nordic",
+    colors: { field: "#C8102E", cross: "#FFFFFF" }, target: "field", targetLabel: "the red field" },
+
+  // ── Vertical tricolours ──────────────────────────────────────────────────────
+  { name: "France", code: "fr", layout: "v3",
+    colors: { left: "#0055A4", center: "#FFFFFF", right: "#EF4135" }, target: "left", targetLabel: "the blue band" },
+  { name: "Italy", code: "it", layout: "v3",
+    colors: { left: "#008C45", center: "#F4F5F0", right: "#CD212A" }, target: "left", targetLabel: "the green band" },
+  { name: "Ireland", code: "ie", layout: "v3",
+    colors: { left: "#169B62", center: "#FFFFFF", right: "#FF883E" }, target: "right", targetLabel: "the orange band" },
+  { name: "Belgium", code: "be", layout: "v3",
+    colors: { left: "#000000", center: "#FDDA24", right: "#EF3340" }, target: "center", targetLabel: "the gold band" },
+  { name: "Romania", code: "ro", layout: "v3",
+    colors: { left: "#002B7F", center: "#FCD116", right: "#CE1126" }, target: "center", targetLabel: "the yellow band" },
+
+  // ── Horizontal tricolours ────────────────────────────────────────────────────
+  { name: "Germany", code: "de", layout: "h3",
+    colors: { top: "#000000", middle: "#DD0000", bottom: "#FFCE00" }, target: "middle", targetLabel: "the red stripe" },
+  { name: "Netherlands", code: "nl", layout: "h3",
+    colors: { top: "#AE1C28", middle: "#FFFFFF", bottom: "#21468B" }, target: "bottom", targetLabel: "the blue stripe" },
+  { name: "Russia", code: "ru", layout: "h3",
+    colors: { top: "#FFFFFF", middle: "#0039A6", bottom: "#D52B1E" }, target: "middle", targetLabel: "the blue stripe" },
+  { name: "Hungary", code: "hu", layout: "h3",
+    colors: { top: "#CE2939", middle: "#FFFFFF", bottom: "#477050" }, target: "bottom", targetLabel: "the green stripe" },
+  { name: "Lithuania", code: "lt", layout: "h3",
+    colors: { top: "#FDB913", middle: "#006A44", bottom: "#C1272D" }, target: "middle", targetLabel: "the green stripe" },
+  { name: "Spain", code: "es", layout: "h3",
+    colors: { top: "#AA151B", middle: "#F1BF00", bottom: "#AA151B" }, target: "middle", targetLabel: "the gold band" },
+
+  // ── Horizontal bicolours ─────────────────────────────────────────────────────
+  { name: "Indonesia", code: "id", layout: "h2",
+    colors: { top: "#FF0000", bottom: "#FFFFFF" }, target: "top", targetLabel: "the red half" },
+  { name: "Poland", code: "pl", layout: "h2",
+    colors: { top: "#FFFFFF", bottom: "#DC143C" }, target: "bottom", targetLabel: "the red half" },
+  { name: "Ukraine", code: "ua", layout: "h2",
+    colors: { top: "#0057B7", bottom: "#FFD700" }, target: "top", targetLabel: "the blue half" },
+
+  // ── Discs ────────────────────────────────────────────────────────────────────
+  { name: "Japan", code: "jp", layout: "disc",
+    colors: { field: "#FFFFFF", disc: "#BC002D" }, target: "disc", targetLabel: "the red disc" },
+  { name: "Bangladesh", code: "bd", layout: "disc",
+    colors: { field: "#006A4E", disc: "#F42A41" }, target: "field", targetLabel: "the green field" },
+  { name: "Palau", code: "pw", layout: "disc",
+    colors: { field: "#4AADD6", disc: "#FFDE00" }, target: "disc", targetLabel: "the gold disc" },
+]

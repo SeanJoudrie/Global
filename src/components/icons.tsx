@@ -8,6 +8,7 @@ import {
   MapPinned, Waypoints, Gift, ScanSearch, VenetianMask,
   Building2, Signpost, FolderTree, Scale,
   ChevronDown, ChevronLeft, Check, FlaskConical, Shuffle, Sparkles, Heart, TrendingUp, Pencil, Mail,
+  Pipette,
 } from "lucide-react"
 import type { LucideIcon } from "lucide-react"
 
@@ -21,6 +22,7 @@ const MAP: Record<string, LucideIcon> = {
   // play
   oddoneout: Search, thecrop: Crop, flagdna: Dna, silhouette: Moon, thepeel: Brush,
   lookalikes: Search, buildflag: Puzzle, composer: Palette, flagfamilies: Users, funfact: Lightbulb,
+  geopaint: Pipette,
   gauntlet: Swords, challenge: Medal, tierlist: Trophy,
   // codex
   codex: BookOpen, progressmap: Map, substats: BarChart3,
