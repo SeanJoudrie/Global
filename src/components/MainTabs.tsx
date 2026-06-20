@@ -449,7 +449,14 @@ function PlayTab({ launch, state }: { launch: (e: Entry) => void; state: AppStat
   const rec = recommendFor(recentIds)
   const discover = discoverGames(recentIds, dayIdx)
   // Trending deck — featured A-tier games lead, then a stable weekly rotation.
-  const trending = trendingGames(weekIdx)
+  // GeoPaint is pinned to the second card by request.
+  const trending = (() => {
+    const list = trendingGames(weekIdx)
+    const at = list.findIndex(e => e.id === "geopaint")
+    const gp = at >= 0 ? list.splice(at, 1)[0] : REGISTRY.find(e => e.id === "geopaint")
+    if (gp) list.splice(Math.min(1, list.length), 0, gp)
+    return list
+  })()
 
   const shuffle = () => launch(playable[Math.floor(Math.random() * playable.length)])
 
