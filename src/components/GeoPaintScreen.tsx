@@ -113,7 +113,7 @@ function Slider({ label, value, max, onChange, track, badge }: {
         <span className="text-xs font-semibold uppercase tracking-widest" style={{ color: T.muted }}>{label}</span>
         <span className="text-xs font-bold" style={{ color: T.text, fontFamily: FONT.mono, fontVariantNumeric: "tabular-nums" }}>{Math.round(value)}{badge}</span>
       </div>
-      <div style={{ height: 9, borderRadius: 999, background: track, border: `1px solid ${T.line}` }} />
+      <div style={{ height: 12, borderRadius: 999, background: track, border: `1px solid ${T.line}` }} />
       <input type="range" min={0} max={max} value={value}
         onChange={e => onChange(Number(e.target.value))}
         style={{ width: "100%", accentColor: ACC, marginTop: 4 }} />

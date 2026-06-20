@@ -296,6 +296,25 @@ function buildArt(id: string, accent: string, hero: boolean): { node: ReactNode;
         </div>
       ) }
 
+    case "geopaint": {
+      // The Stars & Stripes, recoloured with lime-green stripes — eye-catching,
+      // and a literal hint at the game: take a flag and repaint its colours.
+      const LIME = "#A3E635", NAVY = "#2B2D77"
+      const sh = 53 / 13 // stripe height in a 100×53 (flag-ratio) viewBox
+      return { bleed: true, node: (
+        <svg viewBox="0 0 100 53" preserveAspectRatio="none" style={{ width: "100%", height: "100%", display: "block" }}>
+          {Array.from({ length: 13 }, (_, i) => (
+            <rect key={i} x={0} y={i * sh} width={100} height={sh} fill={i % 2 === 0 ? LIME : "#FFFFFF"} />
+          ))}
+          <rect x={0} y={0} width={40} height={sh * 7} fill={NAVY} />
+          {Array.from({ length: 4 }).flatMap((_, r) =>
+            Array.from({ length: 5 }).map((_, c) => (
+              <circle key={`${r}-${c}`} cx={5 + c * 7.5} cy={4.5 + r * 6.4} r={1.25} fill="#FFFFFF" />
+            )))}
+        </svg>
+      ) }
+    }
+
     // ── Spot It ──
     case "oddoneout":
       // Three Nordic crosses and one impostor, ringed.
