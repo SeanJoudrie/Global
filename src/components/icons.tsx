@@ -22,7 +22,7 @@ const MAP: Record<string, LucideIcon> = {
   // play
   oddoneout: Search, thecrop: Crop, flagdna: Dna, silhouette: Moon, thepeel: Brush,
   lookalikes: Search, buildflag: Puzzle, composer: Palette, flagfamilies: Users, funfact: Lightbulb,
-  geopaint: Pipette,
+  geopaint: Pipette, sketchflag: Pencil, spoterror: ScanSearch, flagoutline: Crop,
   gauntlet: Swords, challenge: Medal, tierlist: Trophy,
   // codex
   codex: BookOpen, progressmap: Map, substats: BarChart3,

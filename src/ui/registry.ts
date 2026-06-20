@@ -65,6 +65,8 @@ export const REGISTRY: Entry[] = [
   { id: "composer", title: "Tile Flipper", subtitle: "Reassemble the flag", icon: "🎴", tab: "play", group: "One Glance", size: "tile", accent: "challenge" },
   { id: "buildflag", title: "Build the Flag", subtitle: "Assemble the bands", icon: "🧩", tab: "play", group: "One Glance", size: "tile", accent: "challenge" },
   { id: "geopaint", title: "GeoPaint", subtitle: "Colour-match the flag", icon: "🎨", tab: "play", group: "One Glance", size: "tile", accent: "challenge", featured: true },
+  { id: "sketchflag", title: "Sketch the Flag", subtitle: "Draw it from memory", icon: "✏️", tab: "play", group: "One Glance", size: "tile", accent: "play", featured: true },
+  { id: "flagoutline", title: "Flag Outline", subtitle: "Guess from the outlines", icon: "🔲", tab: "play", group: "One Glance", size: "tile", accent: "codex" },
   { id: "frankenflag", title: "Frankenflag", subtitle: "Name both halves", icon: "🧟", tab: "play", group: "One Glance", size: "tile", accent: "challenge", featured: true },
 
   // Spot It — eagle-eye difference & pattern hunting
@@ -73,6 +75,7 @@ export const REGISTRY: Entry[] = [
   { id: "flagdna", title: "Flag DNA", subtitle: "Guess by attributes", icon: "🧬", tab: "play", group: "Spot It", size: "tile", accent: "play" },
   { id: "symbolhunt", title: "Symbol Hunt", subtitle: "Find every flag with a symbol", icon: "🔎", tab: "play", group: "Spot It", size: "tile", accent: "play" },
   { id: "flagfamilies", title: "Flag Families", subtitle: "Sort into families", icon: "👪", tab: "play", group: "Spot It", size: "tile", accent: "play" },
+  { id: "spoterror", title: "Spot the Error", subtitle: "Find the wrong colour", icon: "🔺", tab: "play", group: "Spot It", size: "tile", accent: "play", featured: true },
 
   // Cartographer — maps, borders & shapes
   { id: "geo", title: "Geography", subtitle: "Identify countries by shape", icon: "🗺️", tab: "play", group: "Cartographer", size: "tile", accent: "learn" },
