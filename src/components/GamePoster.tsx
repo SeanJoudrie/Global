@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react"
 import type { CSSProperties, ReactNode } from "react"
 import worldMap from "@svg-maps/world"
-import { Pointer, MousePointer2, Search, Speech, Check, X, ArrowUp, ArrowDown, Heart, Swords } from "lucide-react"
+import { Pointer, MousePointer2, Search, Speech, Check, X, ArrowUp, ArrowDown, Heart, Swords, Pencil } from "lucide-react"
 import { SUB_FLAGS } from "../data/subdivisions"
 import { T, tint } from "../ui/tokens"
 import { LineIcon } from "./icons"
@@ -315,7 +315,44 @@ function buildArt(id: string, accent: string, hero: boolean): { node: ReactNode;
       ) }
     }
 
+    case "sketchflag":
+      // A half-drawn Japan: a dashed red circle on a white card, pencil in hand.
+      return { bleed: false, node: (
+        <div style={{ ...box, background: wash, display: "flex", alignItems: "center", justifyContent: "center" }}>
+          <div style={{ position: "relative", width: hero ? "52%" : "64%", aspectRatio: "3 / 2", borderRadius: 4, background: "#FFFFFF", border: `1px solid ${T.line}`, boxShadow: `0 3px 10px -4px ${tint(T.text, 0.6)}` }}>
+            <svg viewBox="0 0 100 67" preserveAspectRatio="none" style={{ position: "absolute", inset: 0, width: "100%", height: "100%" }}>
+              <circle cx="50" cy="33" r="17" fill="none" stroke="#C8102E" strokeWidth="4" strokeDasharray="4 4" strokeLinecap="round" />
+            </svg>
+            <Pencil size={hero ? 26 : 18} color={T.text} fill={T.surface} strokeWidth={1.5} style={{ position: "absolute", right: -6, bottom: -7, transform: "rotate(8deg)" }} />
+          </div>
+        </div>
+      ) }
+    case "flagoutline":
+      // A neon outline flag — vertical tricolour drawn as strokes only, with a ?.
+      return { bleed: true, node: (
+        <div style={{ ...box, background: "#0b0b10" }}>
+          <svg viewBox="0 0 300 200" preserveAspectRatio="none" style={{ width: "100%", height: "100%", display: "block" }}>
+            {[6, 104, 202].map(x => (
+              <rect key={x} x={x} y={6} width={92} height={188} fill="none" stroke={tint(accent, 0.85)} strokeWidth={3} rx={3} />
+            ))}
+            <text x="150" y="118" textAnchor="middle" fontSize="64" fontWeight="800" fill={tint(accent, 0.9)} fontFamily="'Playfair Display', Georgia, serif">?</text>
+          </svg>
+        </div>
+      ) }
+
     // ── Spot It ──
+    case "spoterror":
+      // Italy with the wrong middle band (blue, not white), ringed in red.
+      return { bleed: true, node: (
+        <div style={{ ...box }}>
+          <svg viewBox="0 0 300 200" preserveAspectRatio="none" style={{ width: "100%", height: "100%", display: "block" }}>
+            <rect x={0} y={0} width={100} height={200} fill="#008C45" />
+            <rect x={100} y={0} width={100} height={200} fill="#0047AB" />
+            <rect x={200} y={0} width={100} height={200} fill="#CD212A" />
+            <rect x={104} y={6} width={92} height={188} fill="none" stroke={T.danger} strokeWidth={8} rx={4} />
+          </svg>
+        </div>
+      ) }
     case "oddoneout":
       // Three Nordic crosses and one impostor, ringed.
       return { bleed: true, node: <FourGrid codes={["dk", "no", "se", "ch"]} ring={3} /> }
