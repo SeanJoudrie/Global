@@ -175,10 +175,42 @@ function FlagCanvas({
 }
 
 // ── Main screen ───────────────────────────────────────────────────────────────
-function randomPuzzle() { return PUZZLES[Math.floor(Math.random() * PUZZLES.length)] }
+// A puzzle's *visual identity*: layout + the colours its solution paints, in slot
+// order. Different countries can share one — Romania/Chad (blue-yellow-red v3),
+// Indonesia/Monaco (red-white h2) — so to the player they're the same picture.
+function visualKey(pz: BuildPuzzle): string {
+  const colors = pz.slots.map(s => pz.pieces.find(pc => pc.id === pz.solution[s])?.color ?? "")
+  return `${pz.layout}:${colors.join(",")}`
+}
+
+function shuffleArr<T>(arr: T[]): T[] {
+  const a = [...arr]
+  for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]] }
+  return a
+}
+
+// Deal puzzles from a reshuffling bag: every puzzle appears once before any
+// repeats, and never the same picture twice in a row. Module-level so the
+// no-repeat guarantee holds across games for the whole session.
+function makeDealer() {
+  let bag: BuildPuzzle[] = []
+  let lastKey = ""
+  return (): BuildPuzzle => {
+    if (bag.length === 0) bag = shuffleArr(PUZZLES)
+    let next = bag.pop() as BuildPuzzle
+    if (visualKey(next) === lastKey && bag.length > 0) {
+      const alt = bag.pop() as BuildPuzzle
+      bag.push(next)
+      next = alt
+    }
+    lastKey = visualKey(next)
+    return next
+  }
+}
+const dealPuzzle = makeDealer()
 
 export default function BuildFlagScreen({ onBack }: Props) {
-  const [puzzle, setPuzzle]  = useState<BuildPuzzle>(randomPuzzle)
+  const [puzzle, setPuzzle]  = useState<BuildPuzzle>(dealPuzzle)
   const [placed, setPlaced]   = useState<Record<string, string>>({})
   const [selected, setSelected] = useState<string | null>(null)
   const [dragging, setDragging] = useState<DragState | null>(null)
@@ -186,7 +218,7 @@ export default function BuildFlagScreen({ onBack }: Props) {
   const slotRefs = useRef<Record<string, HTMLDivElement | null>>({})
 
   const startNewGame = () => {
-    setPuzzle(randomPuzzle())
+    setPuzzle(dealPuzzle())
     setPlaced({})
     setSelected(null)
     setDragging(null)
