@@ -12,7 +12,7 @@ interface Props {
 const A = ACCENT.codex
 
 const SET_IDS = [
-  { id: 'world', label: 'World', emoji: '🌍' },
+  { id: 'world', label: 'World', emoji: '🌐' },
   { id: 'europe', label: 'Europe', emoji: '🏰' },
   { id: 'africa', label: 'Africa', emoji: '🌍' },
   { id: 'asia', label: 'Asia', emoji: '🏯' },
@@ -98,7 +98,7 @@ export default function AchievementsScreen({ state, onBack }: Props) {
                     <div className="text-sm" style={{ color: T.muted }}>{date}</div>
                     <div className="flex items-center gap-2">
                       <div className="flex gap-0.5">
-                        {result.answers.map((a, i) => (
+                        {(result.answers ?? []).map((a, i) => (
                           <span key={i} className="text-sm">{a === 'correct' ? '🟩' : '🟥'}</span>
                         ))}
                       </div>

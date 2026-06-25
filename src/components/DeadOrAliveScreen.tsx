@@ -24,7 +24,9 @@ function nextCard(): Card {
 export default function DeadOrAliveScreen({ onBack }: Props) {
   const [card, setCard] = useState<Card>(nextCard)
   const [streak, setStreak] = useState(0)
-  const [best, setBest] = useState(() => Number(localStorage.getItem("globalio_doa_best") ?? 0))
+  const [best, setBest] = useState(() => {
+    try { return Number(localStorage.getItem("globalio_doa_best") ?? 0) } catch { return 0 }
+  })
   const [reveal, setReveal] = useState<null | { correct: boolean }>(null)
 
   const guess = (guessAlive: boolean) => {
@@ -34,7 +36,7 @@ export default function DeadOrAliveScreen({ onBack }: Props) {
     if (correct) {
       const s = streak + 1
       setStreak(s)
-      if (s > best) { setBest(s); localStorage.setItem("globalio_doa_best", String(s)) }
+      if (s > best) { setBest(s); try { localStorage.setItem("globalio_doa_best", String(s)) } catch { /* ignore */ } }
     }
   }
 

@@ -27,17 +27,35 @@ interface Props {
 
 export default function CountryOutline({ code, fill = "#fff", className, style }: Props) {
   const path = PATHS.get(code.toLowerCase())
-  const ref = useRef<SVGPathElement>(null)
+  const pathRef = useRef<SVGPathElement>(null)
+  const svgRef = useRef<SVGSVGElement>(null)
   const [vb, setVb] = useState<string | null>(null)
   const [forCode, setForCode] = useState<string | null>(null)
 
   useLayoutEffect(() => {
-    if (!ref.current) return
-    const b = ref.current.getBBox()
-    if (b.width === 0 || b.height === 0) return
-    const pad = Math.max(b.width, b.height) * 0.08
-    setVb(`${b.x - pad} ${b.y - pad} ${b.width + pad * 2} ${b.height + pad * 2}`)
-    setForCode(code)
+    if (!path) return
+    const measure = (): boolean => {
+      const el = pathRef.current
+      if (!el) return false
+      let b: DOMRect
+      try { b = el.getBBox() } catch { return false }
+      // getBBox returns a 0×0 box when an ancestor is display:none. Don't latch
+      // a viewBox yet — re-measure when the element actually becomes visible,
+      // otherwise the outline stays at opacity:0 forever.
+      if (b.width === 0 || b.height === 0) return false
+      const pad = Math.max(b.width, b.height) * 0.08
+      setVb(`${b.x - pad} ${b.y - pad} ${b.width + pad * 2} ${b.height + pad * 2}`)
+      setForCode(code)
+      return true
+    }
+    if (measure()) return
+    const target = svgRef.current
+    if (!target || typeof IntersectionObserver === "undefined") return
+    const io = new IntersectionObserver(entries => {
+      if (entries.some(e => e.isIntersecting) && measure()) io.disconnect()
+    })
+    io.observe(target)
+    return () => io.disconnect()
   }, [code, path])
 
   if (!path) {
@@ -63,12 +81,13 @@ export default function CountryOutline({ code, fill = "#fff", className, style }
   const ready = forCode === code && vb != null
   return (
     <svg
+      ref={svgRef}
       viewBox={vb ?? "0 0 1010 666"}
       className={className}
       style={{ ...style, opacity: ready ? 1 : 0, transition: "opacity 0.2s" }}
       preserveAspectRatio="xMidYMid meet"
     >
-      <path ref={ref} d={path} fill={fill} />
+      <path ref={pathRef} d={path} fill={fill} />
     </svg>
   )
 }

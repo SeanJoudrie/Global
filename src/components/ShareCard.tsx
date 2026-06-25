@@ -34,11 +34,11 @@ export function shareText(result: ShareResult): string {
     grid,
     '',
     `Score: ${result.score}`,
-    result.streak ? `🔥 ${result.streak} day streak` : '',
+    ...(result.streak ? [`🔥 ${result.streak} day streak`] : []),
     '',
     'globalio.app',
-  ].filter(l => l !== undefined)
-  return lines.join('\n').replace(/\n\n\n/g, '\n\n')
+  ]
+  return lines.join('\n')
 }
 
 export default function ShareCard({ result, showCopyButton = true }: Props) {

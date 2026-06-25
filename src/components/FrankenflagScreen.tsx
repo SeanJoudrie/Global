@@ -74,7 +74,7 @@ function FlagInput({ placeholder, onPick, disabled }: {
   )
 }
 
-export default function FrankenflagScreen({ onBack }: Props) {
+function FrankenflagGame({ onBack, onReplay }: Props & { onReplay: () => void }) {
   const [rounds] = useState(buildRounds)
   const [idx, setIdx] = useState(0)
   const [topGuess, setTopGuess] = useState<FlagRecord | null>(null)
@@ -113,7 +113,7 @@ export default function FrankenflagScreen({ onBack }: Props) {
             <div className="text-sm" style={{ color: T.muted }}>halves identified</div>
           </div>
           <div className="flex flex-col gap-3">
-            <button onClick={() => window.location.reload()}
+            <button onClick={onReplay}
               className="w-full py-3.5 rounded-xl font-bold transition-all active:scale-95 geo-tap"
               style={{ background: ACCENT.play, color: T.onAccent, fontFamily: FONT.display }}>Play Again</button>
             <button onClick={onBack}
@@ -188,4 +188,9 @@ export default function FrankenflagScreen({ onBack }: Props) {
       </div>
     </div>
   )
+}
+
+export default function FrankenflagScreen({ onBack }: Props) {
+  const [replayKey, setReplayKey] = useState(0)
+  return <FrankenflagGame key={replayKey} onBack={onBack} onReplay={() => setReplayKey(k => k + 1)} />
 }

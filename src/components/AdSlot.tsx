@@ -1,4 +1,4 @@
-import { useEffect } from "react"
+import { useEffect, useRef } from "react"
 import { ADSENSE_CLIENT, ADS_ENABLED } from "../ads"
 import { isSupporter } from "../utils/storage"
 
@@ -26,10 +26,17 @@ declare global {
 // anywhere in the UI now and flip on later.
 export default function AdSlot({ slot, style }: { slot: string; style?: React.CSSProperties }) {
   const supporter = isSupporter()
+  // Push exactly once per mounted <ins>. Re-running push({}) (effect re-fire or
+  // StrictMode's double-invoke) fills the *next* unfilled <ins> on the page,
+  // desyncing units and throwing "All ins elements already have ads".
+  const pushed = useRef(false)
   useEffect(() => {
-    if (!ADS_ENABLED || !slot || supporter) return
+    if (!ADS_ENABLED || !slot || supporter || pushed.current) return
     ensureAdScript()
-    try { (window.adsbygoogle = window.adsbygoogle || []).push({}) } catch { /* AdSense not ready yet */ }
+    try {
+      (window.adsbygoogle = window.adsbygoogle || []).push({})
+      pushed.current = true
+    } catch { /* AdSense not ready yet */ }
   }, [slot, supporter])
 
   if (!ADS_ENABLED || !slot || supporter) return null

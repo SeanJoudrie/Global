@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { Trophy, Star, ThumbsUp, BookOpen, RotateCcw } from 'lucide-react'
 import { todayString } from '../utils/prng'
 import ShareCard from './ShareCard'
@@ -40,17 +41,12 @@ export default function ResultScreen({ score, total, answers, setLabel, streak, 
     streak,
   }
 
-  // Save share result on mount so profile can show it
-  // (called once when component renders)
-  if (onSaveShare) {
-    // use a ref-free approach: call on first render via the render itself
-    // This is intentional — we want to save immediately when the result screen shows
-  }
-
-  const handleHome = () => {
+  // Save the share result as soon as the result screen shows, so it persists no
+  // matter how the user leaves (Home, Play Again, or navigating away).
+  useEffect(() => {
     if (onSaveShare) onSaveShare(shareResult)
-    onHome()
-  }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   return (
     <div className="min-h-screen flex flex-col items-center px-5 py-8"
@@ -93,7 +89,7 @@ export default function ResultScreen({ score, total, answers, setLabel, streak, 
               Play Again
             </button>
           )}
-          <button onClick={handleHome}
+          <button onClick={onHome}
             className="w-full py-3.5 rounded-xl font-bold text-base transition-all active:scale-95"
             style={{ background: T.surface, border: `1px solid ${T.line}`, color: T.muted }}>
             ← Home

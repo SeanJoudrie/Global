@@ -134,7 +134,7 @@ export default function HomeCarousel({ onStartDaily, dailyDone, todayScore }: Pr
               <span style={{ fontSize: 13, color: "#B8A9E0" }}>correct today</span>
             </div>
             <div style={{ display: "flex", gap: 4, flexWrap: "wrap" }}>
-              {todayScore.answers.map((a, i) => <span key={i}>{a === "correct" ? "🟩" : "🟥"}</span>)}
+              {(todayScore.answers ?? []).map((a, i) => <span key={i}>{a === "correct" ? "🟩" : "🟥"}</span>)}
             </div>
           </div>
           <div style={{ fontSize: 11, color: "#B8A9E0" }}>Next puzzle in {formatCountdown()}</div>
