@@ -191,7 +191,7 @@ export default function LanguageQuizScreen({ onBack }: Props) {
 
       <div className="mx-5 mt-2 h-1.5 rounded-full overflow-hidden" style={{ background: T.line, zIndex: 1 }}>
         <div className="h-full rounded-full transition-all duration-500"
-          style={{ width: `${(idx / questions.length) * 100}%`, background: diff.border }} />
+          style={{ width: `${(answers.length / questions.length) * 100}%`, background: diff.border }} />
       </div>
 
       <div className="flex-1 flex flex-col px-5 py-4" style={{ zIndex: 1, position: "relative" }}>

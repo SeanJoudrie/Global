@@ -175,7 +175,7 @@ export default function GauntletScreen({ onBack }: Props) {
         {/* Survival progress */}
         <div style={{ width: '100%', height: 4, borderRadius: 999, background: T.line, overflow: 'hidden' }}>
           <div style={{
-            width: `${(idx / questions.length) * 100}%`, height: '100%',
+            width: `${((idx + (selected !== null ? 1 : 0)) / questions.length) * 100}%`, height: '100%',
             background: ACC,
             borderRadius: 999, transition: 'width 0.3s',
           }} />

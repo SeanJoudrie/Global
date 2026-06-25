@@ -172,7 +172,7 @@ export default function GeoQuizScreen({ onBack }: Props) {
       {/* Full-width progress bar */}
       <div className="mx-5 mb-3 h-1.5 rounded-full overflow-hidden" style={{ background: T.line }}>
         <div className="h-full rounded-full transition-all duration-500"
-          style={{ width: `${(idx / questions.length) * 100}%`, background: ACC }} />
+          style={{ width: `${(answers.length / questions.length) * 100}%`, background: ACC }} />
       </div>
 
       {/* Answer-mode toggle */}

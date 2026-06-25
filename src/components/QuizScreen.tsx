@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Lightbulb } from 'lucide-react'
 import type { Question } from '../utils/quiz'
 import { T, ACCENT, tint } from '../ui/tokens'
@@ -26,6 +26,10 @@ export default function QuizScreen({ questions, title, onFinish, onBack }: Props
   const q = questions[idx]
   const accent = ACCENT.play
 
+  // Track the answer-feedback animation timer so it can be cleared on unmount.
+  const animTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
+  useEffect(() => () => { if (animTimer.current) clearTimeout(animTimer.current) }, [])
+
   useEffect(() => {
     setAnswerState('idle')
     setSelectedIdx(null)
@@ -40,7 +44,8 @@ export default function QuizScreen({ questions, title, onFinish, onBack }: Props
     setSelectedIdx(choiceIdx)
     setAnswerState(isCorrect ? 'correct' : 'wrong')
     setAnimatingIdx(choiceIdx)
-    setTimeout(() => setAnimatingIdx(null), 500)
+    if (animTimer.current) clearTimeout(animTimer.current)
+    animTimer.current = setTimeout(() => setAnimatingIdx(null), 500)
     if (!isCorrect) setShowLightbulb(true)
     setAnswers(prev => [...prev, isCorrect ? 'correct' : 'wrong'])
   }
@@ -86,7 +91,7 @@ export default function QuizScreen({ questions, title, onFinish, onBack }: Props
 
       <div className="mx-5 mt-2 h-1.5 rounded-full overflow-hidden" style={{ background: T.line, zIndex: 1 }}>
         <div className="h-full rounded-full transition-all duration-500"
-          style={{ width: `${(idx / questions.length) * 100}%`, background: accent }} />
+          style={{ width: `${(answers.length / questions.length) * 100}%`, background: accent }} />
       </div>
 
       <div className="flex-1 flex flex-col items-center px-5 py-4" style={{ zIndex: 1 }}>
