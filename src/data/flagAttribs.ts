@@ -165,6 +165,7 @@ export const FLAG_ATTRIBS: Record<string, FlagAttribs> = {
   KR: a(['white','red','blue','black'], false, false, false, false, false ), // South Korea
   TJ: a(['red','white','green','yellow'], true, false, true,  true,  false ), // Tajikistan
   TH: a(['red','white','blue'],        true,  false, false, false, false ), // Thailand
+  TW: a(['red','blue','white'],        false, false, true,  false, false ), // Taiwan (blue sky, white sun)
   TL: a(['red','yellow','black','white'], false, false, true,  false, false ), // Timor-Leste
   TM: a(['green','white'],             false, false, true,  true,  false ), // Turkmenistan
   UZ: a(['blue','white','green'],      true,  false, true,  true,  false ), // Uzbekistan
@@ -213,6 +214,7 @@ export const FLAG_ATTRIBS: Record<string, FlagAttribs> = {
   RW: a(['blue','yellow','green'],     false, false, false, false, false ), // Rwanda
   ST: a(['green','yellow','black','red'], false, false, true,  false, false ), // São Tomé
   SN: a(['green','yellow','red'],      false, false, true,  false, false ), // Senegal
+  SC: a(['blue','yellow','red','white','green'], false, false, false, false, false ), // Seychelles
   SL: a(['green','white','blue'],      true,  false, false, false, false ), // Sierra Leone
   SO: a(['blue','white'],              false, false, true,  false, false ), // Somalia
   ZA: a(['green','yellow','red','blue','white','black'], false, false, false, false, false ), // South Africa

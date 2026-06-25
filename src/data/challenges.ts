@@ -1,4 +1,4 @@
-﻿export interface SubRegion {
+export interface SubRegion {
   code: string
   name: string
   flagUrl?: string

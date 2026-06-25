@@ -17,14 +17,21 @@ export function seededRandom(seed: string) {
   }
 }
 
-export function shuffleWithSeed<T>(arr: T[], seed: string): T[] {
-  const rng = seededRandom(seed)
+// Unbiased Fisher-Yates using a caller-supplied rng. Use this instead of
+// `arr.sort(() => rng() - 0.5)` — that idiom violates the comparator contract,
+// is non-uniform, AND is engine-dependent (so it breaks the per-date
+// determinism the seeded rng is supposed to guarantee).
+export function shuffleWithRng<T>(arr: T[], rng: () => number): T[] {
   const copy = [...arr]
   for (let i = copy.length - 1; i > 0; i--) {
     const j = Math.floor(rng() * (i + 1));
     [copy[i], copy[j]] = [copy[j], copy[i]]
   }
   return copy
+}
+
+export function shuffleWithSeed<T>(arr: T[], seed: string): T[] {
+  return shuffleWithRng(arr, seededRandom(seed))
 }
 
 export function todayString(): string {

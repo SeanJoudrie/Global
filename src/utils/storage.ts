@@ -60,7 +60,13 @@ export function loadState(): AppState {
 }
 
 export function saveState(state: AppState): void {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(state))
+  // Never let a storage failure (quota exceeded, Safari Private Mode, storage
+  // disabled) bubble out of the persist effect and white-screen the app.
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state))
+  } catch {
+    /* best-effort persistence — ignore */
+  }
 }
 
 export function markFlagLearned(state: AppState, code: string): AppState {

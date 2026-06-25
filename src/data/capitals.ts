@@ -1,4 +1,4 @@
-﻿export interface CapitalRecord {
+export interface CapitalRecord {
   code: string
   country: string
   capital: string
@@ -94,6 +94,7 @@ export const CAPITALS: CapitalRecord[] = [
   { code: "RW", country: "Rwanda", capital: "Kigali", region: "Africa" },
   { code: "ST", country: "Sao Tome and Principe", capital: "Sao Tome", region: "Africa" },
   { code: "SN", country: "Senegal", capital: "Dakar", region: "Africa" },
+  { code: "SC", country: "Seychelles", capital: "Victoria", region: "Africa" },
   { code: "SL", country: "Sierra Leone", capital: "Freetown", region: "Africa" },
   { code: "SO", country: "Somalia", capital: "Mogadishu", region: "Africa" },
   { code: "ZA", country: "South Africa", capital: "Pretoria", region: "Africa" },
@@ -131,6 +132,7 @@ export const CAPITALS: CapitalRecord[] = [
   { code: "SG", country: "Singapore", capital: "Singapore", region: "Asia" },
   { code: "LK", country: "Sri Lanka", capital: "Sri Jayawardenepura Kotte", region: "Asia" },
   { code: "KR", country: "South Korea", capital: "Seoul", region: "Asia" },
+  { code: "TW", country: "Taiwan", capital: "Taipei", region: "Asia" },
   { code: "TJ", country: "Tajikistan", capital: "Dushanbe", region: "Asia" },
   { code: "TH", country: "Thailand", capital: "Bangkok", region: "Asia" },
   { code: "TL", country: "Timor-Leste", capital: "Dili", region: "Asia" },
