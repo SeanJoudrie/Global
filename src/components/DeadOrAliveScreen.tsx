@@ -74,12 +74,13 @@ export default function DeadOrAliveScreen({ onBack }: Props) {
         <div style={{
           width: 300, height: 200, borderRadius: 14, overflow: "hidden",
           border: `2.5px solid ${border}`, background: "#fff", position: "relative",
+          transition: "border-color 0.2s ease",
         }}>
           <img src={card.flagUrl} alt="mystery flag"
             style={{ width: "100%", height: "100%", objectFit: "contain", display: "block" }}
             onError={e => { (e.target as HTMLImageElement).style.opacity = "0.15" }} />
           {reveal && (
-            <div style={{
+            <div className="animate-slide-up" style={{
               position: "absolute", bottom: 0, left: 0, right: 0,
               background: "linear-gradient(transparent,rgba(0,0,0,0.82))", padding: "26px 12px 10px", textAlign: "center",
             }}>

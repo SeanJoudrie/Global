@@ -90,7 +90,7 @@ function CapitalMatchGame({ onBack, onReplay }: Props & { onReplay: () => void }
                   style={{ display: "flex", alignItems: "center", gap: 8, padding: 7, borderRadius: 10, flex: 1,
                     background: isMatched ? tint(ACCENT.learn, 0.12) : T.surface,
                     border: `2px solid ${isMatched ? ACCENT.learn : isSel ? ACCENT.codex : T.line}`,
-                    opacity: isMatched ? 0.55 : 1 }}>
+                    opacity: isMatched ? 0.55 : 1, transition: "border-color 0.15s, background 0.15s, opacity 0.2s" }}>
                   <div style={{ width: 58, height: 39, borderRadius: 5, overflow: "hidden", flexShrink: 0, border: `1px solid ${T.line}` }}>
                     <FlagImage code={c.code} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
                   </div>

@@ -2,7 +2,7 @@ import { useState } from "react"
 import { FLAGS } from "../data/flags"
 import { STATS, STAT_CODES } from "../data/countryStats"
 import { neighborsOf } from "../data/borders"
-import { T, ACCENT, FONT } from "../ui/tokens"
+import { T, ACCENT, FONT, tint } from "../ui/tokens"
 import FlagImage from "./FlagImage"
 
 interface Props { onBack: () => void }
@@ -103,11 +103,17 @@ function StatClashGame({ onBack, onReplay }: Props & { onReplay: () => void }) {
   const card = (code: string) => {
     const isPick = reveal?.pick === code
     const isWinner = code === winner
-    let border = `1px solid ${T.lineHi}`
-    if (reveal) { if (isWinner) border = `3px solid ${ACCENT.codex}`; else if (isPick) border = `3px solid ${T.warm}` }
+    // Constant 2px border + an animated box-shadow ring for the reveal emphasis,
+    // so the highlight eases in instead of snapping the border width (reflow).
+    let borderColor = T.lineHi
+    let ring = "none"
+    if (reveal) {
+      if (isWinner) { borderColor = ACCENT.codex; ring = `0 0 0 3px ${tint(ACCENT.codex, 0.4)}` }
+      else if (isPick) { borderColor = T.warm; ring = `0 0 0 3px ${tint(T.warm, 0.35)}` }
+    }
     return (
       <button onClick={() => choose(code)} disabled={!!reveal} className="geo-tap"
-        style={{ flex: 1, borderRadius: 14, overflow: "hidden", border, background: T.surface, padding: 0, position: "relative" }}>
+        style={{ flex: 1, borderRadius: 14, overflow: "hidden", border: `2px solid ${borderColor}`, boxShadow: ring, background: T.surface, padding: 0, position: "relative", transition: "border-color 0.2s ease, box-shadow 0.2s ease" }}>
         <div style={{ aspectRatio: "3/2", background: "#fff" }}>
           <FlagImage code={code} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
         </div>

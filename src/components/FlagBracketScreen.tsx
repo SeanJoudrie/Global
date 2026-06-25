@@ -185,9 +185,12 @@ function BracketGame({ onBack, onReplay }: Props & { onReplay: () => void }) {
 
       <div className="flex-1 flex flex-col items-center justify-center px-5 gap-4">
         <p className="text-sm font-semibold" style={{ color: T.muted }}>Which flag is cooler?</p>
-        <FlagChoice flag={a} onPick={pick} />
-        <div className="text-sm font-black" style={{ color: ACCENT.play, fontFamily: FONT.display }}>VS</div>
-        <FlagChoice flag={b} onPick={pick} />
+        {/* Key by the matchup so each new pair fades in instead of hard-cutting. */}
+        <div key={`${field.length}-${pair}`} className="w-full flex flex-col items-center gap-4 animate-fade-in">
+          <FlagChoice flag={a} onPick={pick} />
+          <div className="text-sm font-black" style={{ color: ACCENT.play, fontFamily: FONT.display }}>VS</div>
+          <FlagChoice flag={b} onPick={pick} />
+        </div>
       </div>
     </div>
   )

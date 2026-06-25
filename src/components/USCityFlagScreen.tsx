@@ -89,14 +89,14 @@ function USCityFlagGame({ onBack, onReplay }: Props & { onReplay: () => void }) 
           {round.choices.map(c => {
             const isAnswer = c.id === round.target.id
             const isChosen = picked === c.id
-            let border = `1.5px solid ${T.line}`, bg = T.surface
+            let border = `2px solid ${T.line}`, bg = T.surface
             if (answered) {
               if (isAnswer) { border = `2px solid ${ACCENT.codex}`; bg = tint(ACCENT.codex, IS_CARTO ? 0.1 : 0.14) }
               else if (isChosen) { border = `2px solid ${T.warm}`; bg = tint(T.warm, IS_CARTO ? 0.1 : 0.14) }
             }
             return (
               <button key={c.id} onClick={() => choose(c.id)} disabled={answered} className="geo-tap"
-                style={{ padding: "12px 10px", borderRadius: 12, background: bg, border, color: T.text, fontSize: 13.5, fontWeight: 600, textAlign: "center" }}>
+                style={{ padding: "12px 10px", borderRadius: 12, background: bg, border, color: T.text, fontSize: 13.5, fontWeight: 600, textAlign: "center", transition: "background 0.2s ease, border-color 0.2s ease" }}>
                 {c.name}
               </button>
             )

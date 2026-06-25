@@ -218,7 +218,10 @@ export default function HomeCarousel({ onStartDaily, dailyDone, todayScore }: Pr
         onTouchStart={e => handleDragStart(e.touches[0].clientX)}
         onTouchEnd={e => handleDragEnd(e.changedTouches[0].clientX)}
       >
-        {slides[idx]}
+        {/* Key by idx so each slide fades in instead of hard-cutting. */}
+        <div key={idx} className="animate-fade-in" style={{ height: "100%" }}>
+          {slides[idx]}
+        </div>
       </div>
       <div style={{ display: "flex", justifyContent: "center", gap: 8, paddingBottom: 14 }}>
         {Array.from({ length: NUM }).map((_, i) => (
