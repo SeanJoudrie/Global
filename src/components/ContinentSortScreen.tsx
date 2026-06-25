@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import { FLAGS } from "../data/flags"
 import type { FlagRecord } from "../data/flags"
 import { T, ACCENT, FONT, tint, IS_CARTO } from "../ui/tokens"
@@ -32,13 +32,18 @@ function ContinentSortGame({ onBack, onReplay }: Props & { onReplay: () => void 
     return () => clearTimeout(id)
   }, [timeLeft, done])
 
+  // Track the auto-advance timer so it can be cancelled on unmount (navigating
+  // away mid-flash would otherwise setState on an unmounted component).
+  const advanceRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+  useEffect(() => () => { if (advanceRef.current) clearTimeout(advanceRef.current) }, [])
+
   const answered = picked !== null
   const choose = (r: string) => {
     if (answered || done) return
     setPicked(r)
     setAttempts(a => a + 1)
     if (r === flag.region) setCorrect(c => c + 1)
-    setTimeout(() => { setFlag(f => randomFlag(f)); setPicked(null) }, 430)
+    advanceRef.current = setTimeout(() => { setFlag(f => randomFlag(f)); setPicked(null) }, 430)
   }
 
   if (done) {

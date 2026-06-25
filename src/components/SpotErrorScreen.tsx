@@ -84,9 +84,10 @@ function ClickFlag({ layout, colors, onPick, picked, errorSlot, revealed }: {
 function makeRound(pz: PaintPuzzle) {
   const slots = Object.keys(pz.colors)
   const errorSlot = slots[Math.floor(Math.random() * slots.length)]
-  const trueHex = pz.colors[errorSlot]
-  const trueName = colorName(trueHex)
-  const choices = WRONG.filter(c => colorName(c) !== trueName)
+  // Exclude every region's colour, not just the corrupted slot's own — otherwise
+  // the "wrong" colour can match a neighbouring band, leaving no spottable error.
+  const usedNames = new Set(slots.map(s => colorName(pz.colors[s])))
+  const choices = WRONG.filter(c => !usedNames.has(colorName(c)))
   const wrongHex = choices[Math.floor(Math.random() * choices.length)]
   return { pz, errorSlot, wrongHex, shown: { ...pz.colors, [errorSlot]: wrongHex } }
 }

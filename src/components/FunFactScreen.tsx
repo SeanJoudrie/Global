@@ -81,8 +81,10 @@ export default function FunFactScreen({ onBack }: Props) {
     setCardIdx(0)
     setShowTip(false)
   }
-  const handleNext = () => { setCardIdx(i => i + 1); setShowTip(false) }
-  const handlePrev = () => { setCardIdx(i => Math.max(0, i - 1)); setShowTip(false) }
+  // Keep cardIdx within [0, cards.length) by wrapping both directions, so the
+  // "X of N" counter is exact and Prev/Next stay in sync after wrapping.
+  const handleNext = () => { setCardIdx(i => (i + 1) % cards.length); setShowTip(false) }
+  const handlePrev = () => { setCardIdx(i => (i - 1 + cards.length) % cards.length); setShowTip(false) }
 
   return (
     <div className="min-h-screen flex flex-col" style={{ background: T.bg, color: T.text }}>

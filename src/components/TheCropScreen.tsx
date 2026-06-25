@@ -28,6 +28,9 @@ function TheCropScreenGame({ onBack , onReplay }: Props & { onReplay: () => void
   const [showDrop, setShowDrop] = useState(false)
   const inputRef = useRef<HTMLInputElement>(null)
   const guessedCodes = useRef<Set<string>>(new Set())
+  // Set once the final miss is reached, to reject further guesses during the
+  // 800ms reveal delay (phase is still "playing" then).
+  const locked = useRef(false)
 
   const scaleIdx = Math.min(wrongGuesses, SCALES.length - 1)
   // On the reveal, zoom all the way out to 1× so the whole flag is visible.
@@ -43,7 +46,7 @@ function TheCropScreenGame({ onBack , onReplay }: Props & { onReplay: () => void
   }, [input])
 
   const submitGuess = (flag: FlagRecord) => {
-    if (phase !== "playing") return
+    if (phase !== "playing" || locked.current) return
     guessedCodes.current.add(flag.code)
     setInput("")
     setShowDrop(false)
@@ -56,6 +59,7 @@ function TheCropScreenGame({ onBack , onReplay }: Props & { onReplay: () => void
     const next = wrongGuesses + 1
     setWrongGuesses(next)
     if (next >= SCALES.length - 1) {
+      locked.current = true
       setTimeout(() => setPhase("result"), 800)
     }
     inputRef.current?.focus()

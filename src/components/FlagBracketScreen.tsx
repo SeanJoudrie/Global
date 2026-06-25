@@ -19,7 +19,14 @@ function fieldSize(n: number): number {
 
 interface Match { a: FlagRecord; b: FlagRecord; winnerCode: string; roundSize: number }
 
-const shuffle = <X,>(a: X[]): X[] => [...a].sort(() => Math.random() - 0.5)
+const shuffle = <X,>(a: X[]): X[] => {
+  const c = [...a]
+  for (let i = c.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [c[i], c[j]] = [c[j], c[i]]
+  }
+  return c
+}
 const roundName = (n: number) =>
   n === 2 ? "Final" : n === 4 ? "Semi-finals" : n === 8 ? "Quarter-finals" : n === 16 ? "Round of 16" : `Round of ${n}`
 

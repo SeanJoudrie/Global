@@ -95,7 +95,7 @@ function SilhouetteGame({ onBack, onReplay }: Props & { onReplay: () => void }) 
   }
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === "Enter" && matches.length >= 1) submitGuess(matches[0])
+    if (e.key === "Enter" && matches.length === 1) submitGuess(matches[0])
     if (e.key === "Escape") { setInput(""); setShowDrop(false) }
   }
 
