@@ -232,8 +232,8 @@ function FlagFamiliesScreenGame({ onBack , onReplay }: Props & { onReplay: () =>
         <img src={flag.flagUrl} alt={flag.name}
           style={{ width: FLAG_W, height: FLAG_H, objectFit: 'cover', display: 'block' }} />
         <div style={{ padding: '2px 4px', textAlign: 'center', width: '100%' }}>
-          <span style={{ fontSize: 9, color: T.muted, fontWeight: 600, display: 'block',
-            whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+          <span style={{ fontSize: 9, color: T.muted, fontWeight: 600, lineHeight: 1.05,
+            display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden', minHeight: '2.1em' }}>
             {flag.name}
           </span>
           {checked && inRow !== null && (

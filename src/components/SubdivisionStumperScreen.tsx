@@ -81,7 +81,7 @@ function SubdivisionStumperScreenGame({ onBack, onSubLearned , onReplay }: Props
 
       <div className="flex flex-col items-center px-5 gap-4">
         <div style={{ width: 280, height: 186, borderRadius: 14, overflow: "hidden", border: `2px solid ${tint(A, 0.3)}`, boxShadow: `0 6px 18px -10px ${tint(T.text, 0.5)}`, background: T.surfaceHi }}>
-          <img src={round.target.flagUrl} alt="subdivision flag" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+          <img src={round.target.flagUrl} alt="subdivision flag" style={{ width: "100%", height: "100%", objectFit: "contain", display: "block" }}
             onError={e => { (e.target as HTMLImageElement).style.opacity = "0.3" }} />
         </div>
         {/* answer sits right under the flag once you've guessed */}

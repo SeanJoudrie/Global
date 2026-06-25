@@ -283,9 +283,9 @@ function OddOneOutScreenGame({ onBack , onReplay }: Props & { onReplay: () => vo
                 {answered && (
                   <div style={{
                     position: 'absolute', bottom: 0, left: 0, right: 0,
-                    background: tint(T.text, 0.65), padding: '2px 4px', textAlign: 'center',
+                    background: tint(T.text, 0.65), padding: '3px 5px', textAlign: 'center',
                   }}>
-                    <span style={{ fontSize: 10, color: T.bg, fontWeight: 600 }}>{flag.name}</span>
+                    <span style={{ fontSize: 10, color: T.bg, fontWeight: 600, lineHeight: 1.15, display: 'block' }}>{flag.name}</span>
                   </div>
                 )}
               </button>

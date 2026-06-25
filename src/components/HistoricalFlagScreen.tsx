@@ -38,7 +38,7 @@ function FlagImg({ src, alt }: { src: string; alt: string }) {
   return (
     <div style={{ width: 300, height: 200, borderRadius: 12, overflow: "hidden", border: `2px solid ${tint(A, 0.3)}`, position: "relative", background: T.surfaceHi }}>
       <img src={src} alt={alt}
-        style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+        style={{ width: "100%", height: "100%", objectFit: "contain", display: "block" }}
         onError={e => {
           const el = e.target as HTMLImageElement
           el.style.display = "none"

@@ -109,7 +109,7 @@ export default function FlagleScreen({ onBack }: Props) {
           <div key={gi} className="grid w-full max-w-sm items-center" style={{ gridTemplateColumns: `1.4fr repeat(${COLS.length}, 1fr)`, gap: 3 }}>
             <div className="flex items-center gap-1.5 min-w-0">
               <img src={g.flag.flagUrl} alt="" style={{ width: 22, height: 14, objectFit: "cover", borderRadius: 2, flexShrink: 0 }} />
-              <span className="truncate" style={{ color: T.text, fontSize: 10, fontWeight: 600 }}>{g.flag.name}</span>
+              <span title={g.flag.name} style={{ color: T.text, fontSize: 10, fontWeight: 600, lineHeight: 1.1, display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>{g.flag.name}</span>
             </div>
             {COLS.map(c => (
               <div key={c.key} style={{

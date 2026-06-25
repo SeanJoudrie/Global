@@ -28,7 +28,7 @@ function SelectedChip({ flag, onClear }: { flag: FlagRecord; onClear: () => void
     <div className="px-3 py-2.5 rounded-xl flex items-center gap-3"
       style={{ background: T.surface, border: `1.5px solid ${tint(ACCENT.play, 0.45)}` }}>
       <img src={flag.flagUrl} alt="" style={{ width: 38, height: 25, objectFit: "cover", borderRadius: 4, flexShrink: 0 }} />
-      <span style={{ color: T.text, fontWeight: 700, fontSize: 17, flex: 1, lineHeight: 1.1 }}>{flag.name}</span>
+      <span style={{ color: T.text, fontWeight: 700, fontSize: 17, flex: 1, minWidth: 0, lineHeight: 1.1, display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>{flag.name}</span>
       <button onClick={onClear} aria-label="Clear"
         className="active:scale-90 transition-all"
         style={{ width: 26, height: 26, borderRadius: 999, background: T.surfaceHi, border: `1px solid ${T.line}`, color: T.muted, fontSize: 13, flexShrink: 0 }}>✕</button>

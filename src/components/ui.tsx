@@ -126,7 +126,7 @@ export function ModuleCard({ icon, glyph, title, subtitle, accent, progress, onC
         <div className="geo-display" style={{ color: T.text, fontWeight: 600, fontSize: 15, letterSpacing: "-0.01em" }}>
           {title}{mastered && <span style={{ marginLeft: 6 }}>👑</span>}
         </div>
-        <div style={{ color: T.muted, fontSize: 11.5, marginTop: 1, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{subtitle}</div>
+        <div style={{ color: T.muted, fontSize: 11.5, marginTop: 1, display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>{subtitle}</div>
       </div>
       {progress
         ? <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: 3 }}>
@@ -179,7 +179,7 @@ export function FlagTile({ id, title, subtitle, accent, onClick, style }:
         <GamePoster id={id} accent={accent} />
       </div>
       <div style={{ padding: "0 3px 3px" }}>
-        <div className="geo-display" style={{ color: T.text, fontWeight: 700, fontSize: 13, lineHeight: 1.14, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{title}</div>
+        <div className="geo-display" style={{ color: T.text, fontWeight: 700, fontSize: 13, lineHeight: 1.14, display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden", minHeight: "2.28em" }}>{title}</div>
         <div style={{ color: T.muted, fontSize: 10, marginTop: 2, lineHeight: 1.2, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{subtitle}</div>
       </div>
     </button>

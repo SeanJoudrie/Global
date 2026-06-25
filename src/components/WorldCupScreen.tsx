@@ -132,7 +132,7 @@ export default function WorldCupScreen({ onBack, onOpenCodex }: Props) {
                       onError={e => { (e.currentTarget.parentElement as HTMLElement).style.visibility = "hidden" }} />
                   </div>
                   <div style={{ padding: "7px 9px 9px" }}>
-                    <div className="geo-display" style={{ fontSize: 11, fontWeight: 600, color: T.text, lineHeight: 1.2, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{h.label}</div>
+                    <div className="geo-display" style={{ fontSize: 11, fontWeight: 600, color: T.text, lineHeight: 1.2, display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden", minHeight: "2.4em" }}>{h.label}</div>
                     <div style={{ fontFamily: FONT.mono, fontSize: 9.5, color: T.muted, marginTop: 1 }}>
                       {h.fromYear}{h.toYear ? `–${h.toYear}` : "–now"}
                     </div>
