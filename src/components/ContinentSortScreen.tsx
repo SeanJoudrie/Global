@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import { FLAGS } from "../data/flags"
 import type { FlagRecord } from "../data/flags"
 import { T, ACCENT, FONT, tint, IS_CARTO } from "../ui/tokens"
@@ -32,13 +32,18 @@ function ContinentSortGame({ onBack, onReplay }: Props & { onReplay: () => void 
     return () => clearTimeout(id)
   }, [timeLeft, done])
 
+  // Track the auto-advance timer so it can be cancelled on unmount (navigating
+  // away mid-flash would otherwise setState on an unmounted component).
+  const advanceRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+  useEffect(() => () => { if (advanceRef.current) clearTimeout(advanceRef.current) }, [])
+
   const answered = picked !== null
   const choose = (r: string) => {
     if (answered || done) return
     setPicked(r)
     setAttempts(a => a + 1)
     if (r === flag.region) setCorrect(c => c + 1)
-    setTimeout(() => { setFlag(f => randomFlag(f)); setPicked(null) }, 430)
+    advanceRef.current = setTimeout(() => { setFlag(f => randomFlag(f)); setPicked(null) }, 430)
   }
 
   if (done) {
@@ -77,14 +82,14 @@ function ContinentSortGame({ onBack, onReplay }: Props & { onReplay: () => void 
           {REGIONS.map(r => {
             const isCorrect = r === flag.region
             const isPick = picked === r
-            let bg = T.surface, border = `1.5px solid ${T.line}`
+            let bg = T.surface, border = `2px solid ${T.line}`
             if (answered) {
               if (isCorrect) { bg = tint(ACCENT.learn, IS_CARTO ? 0.12 : 0.16); border = `2px solid ${ACCENT.learn}` }
               else if (isPick) { bg = tint(T.warm, IS_CARTO ? 0.1 : 0.14); border = `2px solid ${T.warm}` }
             }
             return (
               <button key={r} onClick={() => choose(r)} disabled={answered} className="geo-tap"
-                style={{ padding: "14px 10px", borderRadius: 12, background: bg, border, color: T.text, fontFamily: FONT.display, fontWeight: 600, fontSize: 14 }}>
+                style={{ padding: "14px 10px", borderRadius: 12, background: bg, border, color: T.text, fontFamily: FONT.display, fontWeight: 600, fontSize: 14, transition: "background 0.2s ease, border-color 0.2s ease" }}>
                 {r}
               </button>
             )

@@ -129,7 +129,7 @@ function ProvinceRouletteScreenGame({ onBack, onSubLearned , onReplay }: Props &
           {step.choices.map(c => {
             const isAnswer = c === step.answer
             const isChosen = picked === c
-            let border = `1.5px solid ${T.line}`
+            let border = `2px solid ${T.line}`
             if (answered) { if (isAnswer) border = `2px solid ${T.green}`; else if (isChosen) border = `2px solid ${T.danger}` }
             return (
               <button key={c} onClick={() => choose(c)} disabled={answered}

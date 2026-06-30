@@ -24,7 +24,9 @@ function nextCard(): Card {
 export default function DeadOrAliveScreen({ onBack }: Props) {
   const [card, setCard] = useState<Card>(nextCard)
   const [streak, setStreak] = useState(0)
-  const [best, setBest] = useState(() => Number(localStorage.getItem("globalio_doa_best") ?? 0))
+  const [best, setBest] = useState(() => {
+    try { return Number(localStorage.getItem("globalio_doa_best") ?? 0) } catch { return 0 }
+  })
   const [reveal, setReveal] = useState<null | { correct: boolean }>(null)
 
   const guess = (guessAlive: boolean) => {
@@ -34,7 +36,7 @@ export default function DeadOrAliveScreen({ onBack }: Props) {
     if (correct) {
       const s = streak + 1
       setStreak(s)
-      if (s > best) { setBest(s); localStorage.setItem("globalio_doa_best", String(s)) }
+      if (s > best) { setBest(s); try { localStorage.setItem("globalio_doa_best", String(s)) } catch { /* ignore */ } }
     }
   }
 
@@ -72,12 +74,13 @@ export default function DeadOrAliveScreen({ onBack }: Props) {
         <div style={{
           width: 300, height: 200, borderRadius: 14, overflow: "hidden",
           border: `2.5px solid ${border}`, background: "#fff", position: "relative",
+          transition: "border-color 0.2s ease",
         }}>
           <img src={card.flagUrl} alt="mystery flag"
             style={{ width: "100%", height: "100%", objectFit: "contain", display: "block" }}
             onError={e => { (e.target as HTMLImageElement).style.opacity = "0.15" }} />
           {reveal && (
-            <div style={{
+            <div className="animate-slide-up" style={{
               position: "absolute", bottom: 0, left: 0, right: 0,
               background: "linear-gradient(transparent,rgba(0,0,0,0.82))", padding: "26px 12px 10px", textAlign: "center",
             }}>

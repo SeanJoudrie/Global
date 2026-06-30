@@ -168,7 +168,7 @@ export default function IdentityFlagScreen({ onBack }: Props) {
 
       <div className="mx-5 h-1.5 rounded-full overflow-hidden mb-4" style={{ background: T.line }}>
         <div className="h-full rounded-full transition-all duration-500"
-          style={{ width: `${(idx / ROUNDS) * 100}%`, background: activeMode?.gradient ?? A }} />
+          style={{ width: `${(scores.length / ROUNDS) * 100}%`, background: activeMode?.gradient ?? A }} />
       </div>
 
       <div className="flex flex-col items-center px-5 gap-4">

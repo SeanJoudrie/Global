@@ -1,6 +1,6 @@
 import { FLAGS } from '../data/flags'
 import type { FlagRecord } from '../data/flags'
-import { shuffleWithSeed, seededRandom } from './prng'
+import { shuffleWithSeed, shuffleWithRng, seededRandom } from './prng'
 
 export interface Question {
   target: FlagRecord
@@ -15,20 +15,20 @@ function getDistractors(target: FlagRecord, count: number, rngSeed: string): Fla
     .map(c => FLAGS.find(f => f.code === c))
     .filter((f): f is FlagRecord => !!f && f.code !== target.code)
 
-  const shuffledConfusables = [...confusables].sort(() => rng() - 0.5)
+  const shuffledConfusables = shuffleWithRng(confusables, rng)
   const picked: FlagRecord[] = shuffledConfusables.slice(0, count)
 
   if (picked.length < count) {
-    const sameRegion = FLAGS.filter(
+    const sameRegion = shuffleWithRng(FLAGS.filter(
       f => f.region === target.region && f.code !== target.code && !picked.find(p => p.code === f.code)
-    ).sort(() => rng() - 0.5)
+    ), rng)
     picked.push(...sameRegion.slice(0, count - picked.length))
   }
 
   if (picked.length < count) {
-    const rest = FLAGS.filter(
+    const rest = shuffleWithRng(FLAGS.filter(
       f => f.code !== target.code && !picked.find(p => p.code === f.code)
-    ).sort(() => rng() - 0.5)
+    ), rng)
     picked.push(...rest.slice(0, count - picked.length))
   }
 
@@ -39,7 +39,7 @@ export function buildQuestion(target: FlagRecord, seed: string): Question {
   const distractors = getDistractors(target, 3, seed)
   const allChoices = [target, ...distractors]
   const rng = seededRandom(seed + target.code + 'order')
-  const shuffled = [...allChoices].sort(() => rng() - 0.5)
+  const shuffled = shuffleWithRng(allChoices, rng)
   const correctIndex = shuffled.findIndex(f => f.code === target.code)
   return { target, choices: shuffled, correctIndex }
 }

@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react'
+import { useState, useRef, useMemo } from 'react'
 import { FLAGS, REGIONS, getFlagsByRegion } from '../data/flags'
 import type { Region } from '../data/flags'
 import { CHALLENGE_CONTINENTS } from '../data/challenges'
@@ -85,7 +85,12 @@ export default function FlashcardsScreen({ onBack, onQuizSet }: Props) {
   // ── Build the active deck of StudyCards ────────────────────────────────────
   const sourceFlags = selectedRegion === 'all' ? FLAGS : getFlagsByRegion(selectedRegion)
 
-  const countryCards: StudyCard[] = (() => {
+  // Build the country deck ONCE per (region, session). It reads loadRecent() to
+  // prioritise recently-studied flags, but flipping a card calls addToRecent(),
+  // which mutates that storage — so recomputing every render would reorder the
+  // deck under the user mid-session. Memoising freezes the order; "recent" only
+  // shapes the *next* session's deck.
+  const countryCards: StudyCard[] = useMemo(() => {
     const recentCodes = loadRecent()
     const recent = recentCodes.map(c => sourceFlags.find(f => f.code === c)).filter(Boolean) as typeof FLAGS
     const rest = shuffleWithSeed(
@@ -96,7 +101,8 @@ export default function FlashcardsScreen({ onBack, onQuizSet }: Props) {
       key: f.code, flagUrl: f.flagUrl, name: f.name, subtitle: f.region,
       funFact: f.funFact, tip: f.distinguishingTip,
     }))
-  })()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedRegion, sessionSeed])
 
   const subdivisionCards: StudyCard[] = (() => {
     if (!subContinent || !subCountry) return []

@@ -19,7 +19,14 @@ function fieldSize(n: number): number {
 
 interface Match { a: FlagRecord; b: FlagRecord; winnerCode: string; roundSize: number }
 
-const shuffle = <X,>(a: X[]): X[] => [...a].sort(() => Math.random() - 0.5)
+const shuffle = <X,>(a: X[]): X[] => {
+  const c = [...a]
+  for (let i = c.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [c[i], c[j]] = [c[j], c[i]]
+  }
+  return c
+}
 const roundName = (n: number) =>
   n === 2 ? "Final" : n === 4 ? "Semi-finals" : n === 8 ? "Quarter-finals" : n === 16 ? "Round of 16" : `Round of ${n}`
 
@@ -178,9 +185,12 @@ function BracketGame({ onBack, onReplay }: Props & { onReplay: () => void }) {
 
       <div className="flex-1 flex flex-col items-center justify-center px-5 gap-4">
         <p className="text-sm font-semibold" style={{ color: T.muted }}>Which flag is cooler?</p>
-        <FlagChoice flag={a} onPick={pick} />
-        <div className="text-sm font-black" style={{ color: ACCENT.play, fontFamily: FONT.display }}>VS</div>
-        <FlagChoice flag={b} onPick={pick} />
+        {/* Key by the matchup so each new pair fades in instead of hard-cutting. */}
+        <div key={`${field.length}-${pair}`} className="w-full flex flex-col items-center gap-4 animate-fade-in">
+          <FlagChoice flag={a} onPick={pick} />
+          <div className="text-sm font-black" style={{ color: ACCENT.play, fontFamily: FONT.display }}>VS</div>
+          <FlagChoice flag={b} onPick={pick} />
+        </div>
       </div>
     </div>
   )

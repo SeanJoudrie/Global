@@ -21,6 +21,10 @@ export function importProgress(code: string): boolean {
     const json = decodeURIComponent(escape(atob(trimmed.slice(MARK.length))))
     const data = JSON.parse(json) as Record<string, string>
     if (typeof data !== "object" || data === null) return false
+    // A backup is a full snapshot of localStorage, so a restore must fully
+    // *replace* local state — otherwise stale keys not present in the backup
+    // survive and merge into an inconsistent mix.
+    localStorage.clear()
     Object.entries(data).forEach(([k, v]) => localStorage.setItem(k, String(v)))
     return true
   } catch {

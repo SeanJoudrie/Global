@@ -2,6 +2,11 @@
   command = "npm run build"
   publish = "dist"
 
+# The content-page generator (scripts/prerender.mjs) imports the TypeScript data
+# directly via Node's native type stripping, which needs Node 22+.
+[build.environment]
+  NODE_VERSION = "22"
+
 [[redirects]]
   from = "/*"
   to = "/index.html"

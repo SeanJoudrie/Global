@@ -44,7 +44,7 @@ function buildRounds(): Round[] {
   })
 }
 
-export default function DescribeItScreen({ onBack }: Props) {
+function DescribeItGame({ onBack, onReplay }: Props & { onReplay: () => void }) {
   const [rounds] = useState(buildRounds)
   const [idx, setIdx] = useState(0)
   const [shown, setShown] = useState(2)         // clue lines revealed
@@ -102,7 +102,7 @@ export default function DescribeItScreen({ onBack }: Props) {
             </div>
           </div>
           <div className="flex flex-col gap-3">
-            <button onClick={() => window.location.reload()}
+            <button onClick={onReplay}
               className="w-full py-3.5 rounded-xl font-bold transition-all active:scale-95 geo-tap"
               style={{ background: ACCENT.play, color: T.onAccent, fontFamily: FONT.display }}>Play Again</button>
             <button onClick={onBack}
@@ -180,4 +180,9 @@ export default function DescribeItScreen({ onBack }: Props) {
       </div>
     </div>
   )
+}
+
+export default function DescribeItScreen({ onBack }: Props) {
+  const [replayKey, setReplayKey] = useState(0)
+  return <DescribeItGame key={replayKey} onBack={onBack} onReplay={() => setReplayKey(k => k + 1)} />
 }

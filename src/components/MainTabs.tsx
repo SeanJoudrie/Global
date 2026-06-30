@@ -374,7 +374,7 @@ function DeckSlide({ accent, eyebrow, title, body, cta, onClick, art, watermark,
         </div>
         <div style={{ position: "absolute", left: 0, right: 0, bottom: 0, height: "56%", background: T.surface, borderTop: `1px solid ${tint(accent, 0.35)}`, padding: "11px 16px 14px", display: "flex", flexDirection: "column", justifyContent: "center" }}>
           <div className="geo-micro" style={{ fontSize: 9, color: accent, marginBottom: 5 }}>◦ {eyebrow}</div>
-          <div className="geo-display" style={{ fontWeight: 800, fontSize: 21, lineHeight: 1.05, letterSpacing: "-0.02em", color: T.text, display: "-webkit-box", WebkitLineClamp: 1, WebkitBoxOrient: "vertical", overflow: "hidden" }}>
+          <div className="geo-display" style={{ fontWeight: 800, fontSize: 21, lineHeight: 1.05, letterSpacing: "-0.02em", color: T.text, display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>
             {title}
           </div>
           <div style={{ color: T.muted, fontSize: 12, marginTop: 5, lineHeight: 1.45, display: "-webkit-box", WebkitLineClamp: 3, WebkitBoxOrient: "vertical", overflow: "hidden" }}>
@@ -673,7 +673,7 @@ function ShelfHead({ icon, title, reason, accent, action }: {
           background: tint(accent, 0.12), border: `1px solid ${tint(accent, 0.28)}`, color: accent }}>{icon}</span>
         <div style={{ minWidth: 0 }}>
           <div className="geo-display" style={{ fontWeight: 700, fontSize: 16, letterSpacing: "-0.01em", color: T.text, lineHeight: 1.12, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{title}</div>
-          {reason && <div style={{ color: T.muted, fontSize: 11, marginTop: 1, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{reason}</div>}
+          {reason && <div style={{ color: T.muted, fontSize: 11, marginTop: 1, display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>{reason}</div>}
         </div>
       </div>
       {action}
@@ -727,7 +727,7 @@ function TrendingDeck({ games, launch }: { games: Entry[]; launch: (e: Entry) =>
         </div>
       </div>
       <div style={{ padding: "11px 16px 0" }}>
-        <div className="geo-display" style={{ color: T.text, fontWeight: 800, fontSize: 25, letterSpacing: "-0.02em", lineHeight: 1.02, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{g.title}</div>
+        <div className="geo-display" style={{ color: T.text, fontWeight: 800, fontSize: 25, letterSpacing: "-0.02em", lineHeight: 1.02, display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>{g.title}</div>
         <div style={{ color: T.muted, fontSize: 12.5, marginTop: 4, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{g.subtitle}</div>
       </div>
     </>

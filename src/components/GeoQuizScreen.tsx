@@ -172,7 +172,7 @@ export default function GeoQuizScreen({ onBack }: Props) {
       {/* Full-width progress bar */}
       <div className="mx-5 mb-3 h-1.5 rounded-full overflow-hidden" style={{ background: T.line }}>
         <div className="h-full rounded-full transition-all duration-500"
-          style={{ width: `${(idx / questions.length) * 100}%`, background: ACC }} />
+          style={{ width: `${(answers.length / questions.length) * 100}%`, background: ACC }} />
       </div>
 
       {/* Answer-mode toggle */}
@@ -259,7 +259,14 @@ export default function GeoQuizScreen({ onBack }: Props) {
                   onChange={e => { setInput(e.target.value); setShowDrop(true) }}
                   onFocus={() => setShowDrop(true)}
                   onBlur={() => setTimeout(() => setShowDrop(false), 150)}
-                  onKeyDown={e => { if (e.key === 'Enter' && matches.length >= 1) handleType(matches[0]) }}
+                  onKeyDown={e => {
+                    if (e.key !== 'Enter' || matches.length === 0) return
+                    // Prefer an exact name/code match so typing the full word
+                    // "Niger" submits Niger, not the substring match Nigeria.
+                    const qq = input.trim().toLowerCase()
+                    const exact = matches.find(m => m.name.toLowerCase() === qq || m.code.toLowerCase() === qq)
+                    handleType(exact ?? matches[0])
+                  }}
                   placeholder="Name the country…"
                   className="w-full px-4 py-3.5 rounded-2xl outline-none font-semibold"
                   style={{ background: T.surface, border: `1.5px solid ${T.line}`, color: T.text, fontSize: 15 }} />

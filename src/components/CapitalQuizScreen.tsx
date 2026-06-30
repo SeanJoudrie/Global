@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useEffect, useRef } from "react"
 import { Trophy, ThumbsUp, BookOpen } from "lucide-react"
 import { CAPITALS } from "../data/capitals"
 import type { CapitalRecord } from "../data/capitals"
@@ -69,12 +69,16 @@ export default function CapitalQuizScreen({ onBack }: Props) {
   const answered = selected !== null
   const score = answers.filter(a => a === "correct").length
 
+  const animTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
+  useEffect(() => () => { if (animTimer.current) clearTimeout(animTimer.current) }, [])
+
   const handleAnswer = (i: number) => {
     if (answered) return
     const isCorrect = i === q.correctIndex
     setSelected(i)
     setAnimating(i)
-    setTimeout(() => setAnimating(null), 500)
+    if (animTimer.current) clearTimeout(animTimer.current)
+    animTimer.current = setTimeout(() => setAnimating(null), 500)
     setAnswers(prev => [...prev, isCorrect ? "correct" : "wrong"])
   }
 
@@ -163,7 +167,7 @@ export default function CapitalQuizScreen({ onBack }: Props) {
 
       <div className="mx-5 mt-2 h-1.5 rounded-full overflow-hidden" style={{ background: T.line, zIndex: 1 }}>
         <div className="h-full rounded-full transition-all duration-500"
-          style={{ width: `${(idx / TOTAL) * 100}%`, background: ACC }} />
+          style={{ width: `${(answers.length / TOTAL) * 100}%`, background: ACC }} />
       </div>
 
       <div className="flex-1 flex flex-col items-center px-5 py-4" style={{ zIndex: 1 }}>

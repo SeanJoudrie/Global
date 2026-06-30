@@ -48,7 +48,30 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Cuneiform&family=Noto+Sans+Egyptian+Hieroglyphs&family=Noto+Sans+Gothic&family=Noto+Sans+Coptic&display=swap" rel="stylesheet" />
   </head>
   <body>
-    <div id="root"></div>
+    <!-- Crawlable first-paint content. React (createRoot().render) replaces #root
+         on mount, so users see the live app; search engines and the AdSense
+         crawler — which read the raw HTML before running JS — get real, indexable
+         content and links instead of an empty div. -->
+    <div id="root">
+      <main style="max-width:680px;margin:0 auto;padding:48px 24px;font-family:Inter,system-ui,sans-serif;color:#F5F3FF;text-align:center">
+        <h1 style="font-size:32px;font-weight:800;margin:0 0 12px">Globalio — Learn Every Flag in the World</h1>
+        <p style="font-size:17px;line-height:1.6;color:#B8A9E0;margin:0 0 8px">
+          A beautiful, free flag &amp; geography game with 50+ ways to play — daily
+          challenges, quizzes, a 2,000-flag codex, and games like Flagle, Flag
+          Bracket, Build-the-Flag and Odd One Out. No sign-up required.
+        </p>
+        <p style="font-size:15px;line-height:1.6;color:#B8A9E0;margin:0 0 20px">
+          Learn the flags, capitals, borders and history of all 197 countries of
+          the world, plus subdivisions, historical states and identity flags.
+        </p>
+        <nav style="display:flex;flex-wrap:wrap;gap:12px;justify-content:center;font-size:15px">
+          <a href="/flags/" style="color:#A78BFA">Browse all country flags</a>
+          <a href="/privacy.html" style="color:#A78BFA">Privacy</a>
+          <a href="/terms.html" style="color:#A78BFA">Terms</a>
+        </nav>
+        <p style="font-size:13px;color:#6b6375;margin-top:28px">Loading the game…</p>
+      </main>
+    </div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

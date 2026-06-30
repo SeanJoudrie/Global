@@ -38,7 +38,7 @@ function FlagImg({ src, alt }: { src: string; alt: string }) {
   return (
     <div style={{ width: 300, height: 200, borderRadius: 12, overflow: "hidden", border: `2px solid ${tint(A, 0.3)}`, position: "relative", background: T.surfaceHi }}>
       <img src={src} alt={alt}
-        style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+        style={{ width: "100%", height: "100%", objectFit: "contain", display: "block" }}
         onError={e => {
           const el = e.target as HTMLImageElement
           el.style.display = "none"
@@ -126,7 +126,7 @@ function HistoricalFlagScreenGame({ onBack, onReplay, region }: Props & { onRepl
 
       <div className="mx-5 h-1.5 rounded-full overflow-hidden mb-4" style={{ background: T.line }}>
         <div className="h-full rounded-full transition-all duration-500"
-          style={{ width: `${(idx / ROUNDS) * 100}%`, background: A }} />
+          style={{ width: `${(scores.length / ROUNDS) * 100}%`, background: A }} />
       </div>
 
       <div className="flex flex-col items-center px-5 gap-4">

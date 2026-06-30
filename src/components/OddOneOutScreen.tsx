@@ -68,8 +68,13 @@ const EU_MEMBERS    = new Set(['AT','BE','BG','HR','CY','CZ','DK','EE','FI','FR'
 const MEDITERR      = new Set(['ES','FR','IT','HR','ME','AL','GR','TR','SY','LB','IL','EG','LY','TN','DZ','MA','MT','CY'])
 const G20           = new Set(['AR','AU','BR','CA','CN','FR','DE','IN','ID','IT','JP','KR','MX','RU','SA','ZA','TR','GB','US'])
 const NATO          = new Set(['AL','BE','BG','CA','HR','CZ','DK','EE','FI','FR','DE','GR','HU','IS','IT','LV','LT','LU','ME','NL','MK','NO','PL','PT','RO','SK','SI','ES','TR','GB','US'])
-const RED_FLAG      = new Set(['CN','VN','TR','BA','AL','GE','TN','PK','MY','MV','AZ','TM','UZ','SG','AF','OM','BH','QA','MR','MO','TW'])
-const CRESCENT_STAR = new Set(['TR','PK','MY','TN','DZ','LY','MR','AZ','TM','UZ','KG','MV','SG','MS','SY','SD','DZ','TN','SO'])
+// These two categories ask about a VISUAL property, so they must be derived from
+// the same FLAG_ATTRIBS that the answer reveal trusts — not a hand-curated list.
+// Otherwise the complement (outPool) contains flags that still have the property,
+// and pickBlendingOutlier (which rewards shared palette/symbols) can hand back an
+// "odd one" that is itself red / has a star — an unsolvable round.
+const RED_FLAG      = new Set(FLAGS.filter(f => FLAG_ATTRIBS[f.code]?.colors.includes('red')).map(f => f.code))
+const CRESCENT_STAR = new Set(FLAGS.filter(f => { const a = FLAG_ATTRIBS[f.code]; return a?.crescent || a?.star }).map(f => f.code))
 
 function regionCat(region: FlagRecord['region'], label?: string): Category {
   const codes = new Set(FLAGS.filter(f => f.region === region).map(f => f.code))
@@ -90,7 +95,7 @@ const CATEGORIES: Category[] = [
   { id: 'mediterr',    question: 'Which country does NOT border the Mediterranean?',             themeLabel: 'Mediterranean countries',               codes: MEDITERR      },
   { id: 'g20',         question: 'Which country is NOT in the G20?',                             themeLabel: 'G20 nations',                           codes: G20           },
   { id: 'nato',        question: 'Which country is NOT a NATO member?',                          themeLabel: 'NATO members',                          codes: NATO          },
-  { id: 'red',         question: 'Which flag does NOT prominently feature red?',                 themeLabel: 'flags with prominent red',              codes: RED_FLAG      },
+  { id: 'red',         question: 'Which flag does NOT feature any red?',                          themeLabel: 'flags that feature red',                codes: RED_FLAG      },
   { id: 'crescent',    question: 'Which flag does NOT have a crescent or star symbol?',          themeLabel: 'crescent & star flags',                 codes: CRESCENT_STAR },
   regionCat('Europe'),
   regionCat('Africa'),
@@ -126,9 +131,15 @@ function buildRounds(count: number): Round[] {
     })
   }
 
-  // Fallback to region-based if we ran out
+  // Fallback: reuse any category that can actually produce a valid round. Guard
+  // against degenerate pools so we never loop forever or push a malformed round.
   while (rounds.length < count) {
-    const cat = CATEGORIES[CATEGORIES.length - 1]
+    const valid = CATEGORIES.filter(c => {
+      const inN = FLAGS.filter(f => c.codes.has(f.code)).length
+      return inN >= 3 && inN < FLAGS.length
+    })
+    if (valid.length === 0) break
+    const cat     = valid[Math.floor(Math.random() * valid.length)]
     const inPool  = FLAGS.filter(f => cat.codes.has(f.code))
     const outPool = FLAGS.filter(f => !cat.codes.has(f.code))
     const three   = [...inPool].sort(() => Math.random() - 0.5).slice(0, 3)
@@ -272,9 +283,9 @@ function OddOneOutScreenGame({ onBack , onReplay }: Props & { onReplay: () => vo
                 {answered && (
                   <div style={{
                     position: 'absolute', bottom: 0, left: 0, right: 0,
-                    background: tint(T.text, 0.65), padding: '2px 4px', textAlign: 'center',
+                    background: tint(T.text, 0.65), padding: '3px 5px', textAlign: 'center',
                   }}>
-                    <span style={{ fontSize: 10, color: T.bg, fontWeight: 600 }}>{flag.name}</span>
+                    <span style={{ fontSize: 10, color: T.bg, fontWeight: 600, lineHeight: 1.15, display: 'block' }}>{flag.name}</span>
                   </div>
                 )}
               </button>

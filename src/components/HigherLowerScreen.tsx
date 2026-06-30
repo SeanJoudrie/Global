@@ -91,7 +91,7 @@ export default function HigherLowerScreen({ onBack }: Props) {
         {/* Trait A — tap it to say "this one has more" */}
         <button onClick={() => answer(true)} disabled={!!reveal}
           className="geo-tap w-full max-w-sm rounded-2xl px-5 py-6 text-center"
-          style={{ background: reveal && q.answer ? tint(T.green, 0.18) : T.surface, border: `1.5px solid ${reveal && q.answer ? T.green : tint(ACCENT.play, 0.4)}`, cursor: reveal ? "default" : "pointer" }}>
+          style={{ background: reveal && q.answer ? tint(T.green, 0.18) : T.surface, border: `1.5px solid ${reveal && q.answer ? T.green : tint(ACCENT.play, 0.4)}`, cursor: reveal ? "default" : "pointer", transition: "background 0.2s ease, border-color 0.2s ease" }}>
           <div style={{ fontSize: 36 }}>{q.a.emoji}</div>
           <div className="geo-display" style={{ fontSize: 18, fontWeight: 700, marginTop: 4, color: T.text }}>{q.a.label}</div>
           {reveal && <div style={{ fontFamily: FONT.mono, fontSize: 24, fontWeight: 800, marginTop: 4, color: ACCENT.play }}>{q.a.count}</div>}
@@ -102,7 +102,7 @@ export default function HigherLowerScreen({ onBack }: Props) {
         {/* Trait B — tap it to say "this one has more" */}
         <button onClick={() => answer(false)} disabled={!!reveal}
           className="geo-tap w-full max-w-sm rounded-2xl px-5 py-6 text-center"
-          style={{ background: reveal && !q.answer ? tint(T.green, 0.18) : T.surface, border: `1.5px solid ${reveal && !q.answer ? T.green : tint(ACCENT.play, 0.4)}`, cursor: reveal ? "default" : "pointer" }}>
+          style={{ background: reveal && !q.answer ? tint(T.green, 0.18) : T.surface, border: `1.5px solid ${reveal && !q.answer ? T.green : tint(ACCENT.play, 0.4)}`, cursor: reveal ? "default" : "pointer", transition: "background 0.2s ease, border-color 0.2s ease" }}>
           <div style={{ fontSize: 36 }}>{q.b.emoji}</div>
           <div className="geo-display" style={{ fontSize: 18, fontWeight: 700, marginTop: 4, color: T.text }}>{q.b.label}</div>
           {reveal && <div style={{ fontFamily: FONT.mono, fontSize: 24, fontWeight: 800, marginTop: 4, color: ACCENT.play }}>{q.b.count}</div>}

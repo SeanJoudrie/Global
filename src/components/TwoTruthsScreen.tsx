@@ -210,14 +210,14 @@ function TwoTruthsGame({ onBack, onReplay }: Props & { onReplay: () => void }) {
         <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
           {round.stmts.map((s, i) => {
             const isLie = i === round.falseIdx
-            let border = `1.5px solid ${T.line}`, bg = T.surface
+            let border = `2px solid ${T.line}`, bg = T.surface
             if (answered) {
               if (isLie) { border = `2px solid ${T.warm}`; bg = tint(T.warm, IS_CARTO ? 0.1 : 0.14) }
               else if (i === picked) { border = `2px solid ${ACCENT.codex}` }
             }
             return (
               <button key={i} onClick={() => choose(i)} disabled={answered} className="geo-tap"
-                style={{ textAlign: "left", padding: "13px 15px", borderRadius: 12, background: bg, border, color: T.text, fontSize: 14, fontWeight: 500, display: "flex", alignItems: "center", gap: 10 }}>
+                style={{ textAlign: "left", padding: "13px 15px", borderRadius: 12, background: bg, border, color: T.text, fontSize: 14, fontWeight: 500, display: "flex", alignItems: "center", gap: 10, transition: "background 0.2s ease, border-color 0.2s ease" }}>
                 <span style={{ flex: 1 }}>{s.text}</span>
                 {answered && isLie && <span style={{ color: T.warm, fontWeight: 700, fontSize: 12 }}>LIE</span>}
                 {answered && !isLie && <span style={{ color: ACCENT.codex }}>✓</span>}

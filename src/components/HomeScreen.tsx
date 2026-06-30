@@ -208,7 +208,7 @@ export default function HomeScreen({
             <span className="text-2xl">🌐</span>
             <div className="text-left">
               <div className="font-bold" style={{ color: "#F5F3FF" }}>Guess the Language</div>
-              <div className="text-xs" style={{ color: "#B8A9E0" }}>76 languages · easy → extreme</div>
+              <div className="text-xs" style={{ color: "#B8A9E0" }}>88 languages · easy → extreme</div>
             </div>
           </div>
           <span style={{ color: "#F59E0B" }}>›</span>

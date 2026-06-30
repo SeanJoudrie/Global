@@ -118,7 +118,7 @@ function ThePeelScreenGame({ onBack , onReplay }: Props & { onReplay: () => void
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 2 }}>
             <div style={{ fontSize: 11, fontFamily: FONT.mono, fontVariantNumeric: "tabular-nums", color: T.dim }}>{revealed}%</div>
             <div style={{ width: 40, height: 5, borderRadius: 3, background: T.line, overflow: 'hidden' }}>
-              <div style={{ height: '100%', width: `${revealed}%`, background: revealed < 20 ? T.green : revealed < 50 ? T.gold : T.danger, transition: 'width 0.1s' }} />
+              <div style={{ height: '100%', width: '100%', transformOrigin: 'left', transform: `scaleX(${revealed / 100})`, background: revealed < 20 ? T.green : revealed < 50 ? T.gold : T.danger, transition: 'transform 0.1s' }} />
             </div>
           </div>
         } />

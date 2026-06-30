@@ -11,11 +11,11 @@ import { T, ACCENT, FONT, tint } from "../ui/tokens"
  */
 export default function AdBreakModal({ onContinue }: { onContinue: () => void }) {
   return (
-    <div style={{
+    <div className="animate-fade-in" style={{
       position: "fixed", inset: 0, zIndex: 100, display: "flex", alignItems: "center", justifyContent: "center",
       padding: 20, background: "rgba(0,0,0,0.6)", backdropFilter: "blur(3px)",
     }}>
-      <div className="w-full max-w-sm rounded-2xl" style={{ background: T.surface, border: `1px solid ${T.line}`, padding: 18 }}>
+      <div className="w-full max-w-sm rounded-2xl animate-slide-up" style={{ background: T.surface, border: `1px solid ${T.line}`, padding: 18 }}>
         <div className="text-center">
           <div className="geo-display" style={{ fontWeight: 800, fontSize: 18, color: T.text }}>Quick break 💛</div>
           <p style={{ color: T.muted, fontSize: 12.5, marginTop: 4, lineHeight: 1.5 }}>

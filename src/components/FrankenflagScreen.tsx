@@ -28,7 +28,7 @@ function SelectedChip({ flag, onClear }: { flag: FlagRecord; onClear: () => void
     <div className="px-3 py-2.5 rounded-xl flex items-center gap-3"
       style={{ background: T.surface, border: `1.5px solid ${tint(ACCENT.play, 0.45)}` }}>
       <img src={flag.flagUrl} alt="" style={{ width: 38, height: 25, objectFit: "cover", borderRadius: 4, flexShrink: 0 }} />
-      <span style={{ color: T.text, fontWeight: 700, fontSize: 17, flex: 1, lineHeight: 1.1 }}>{flag.name}</span>
+      <span style={{ color: T.text, fontWeight: 700, fontSize: 17, flex: 1, minWidth: 0, lineHeight: 1.1, display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>{flag.name}</span>
       <button onClick={onClear} aria-label="Clear"
         className="active:scale-90 transition-all"
         style={{ width: 26, height: 26, borderRadius: 999, background: T.surfaceHi, border: `1px solid ${T.line}`, color: T.muted, fontSize: 13, flexShrink: 0 }}>✕</button>
@@ -74,7 +74,7 @@ function FlagInput({ placeholder, onPick, disabled }: {
   )
 }
 
-export default function FrankenflagScreen({ onBack }: Props) {
+function FrankenflagGame({ onBack, onReplay }: Props & { onReplay: () => void }) {
   const [rounds] = useState(buildRounds)
   const [idx, setIdx] = useState(0)
   const [topGuess, setTopGuess] = useState<FlagRecord | null>(null)
@@ -113,7 +113,7 @@ export default function FrankenflagScreen({ onBack }: Props) {
             <div className="text-sm" style={{ color: T.muted }}>halves identified</div>
           </div>
           <div className="flex flex-col gap-3">
-            <button onClick={() => window.location.reload()}
+            <button onClick={onReplay}
               className="w-full py-3.5 rounded-xl font-bold transition-all active:scale-95 geo-tap"
               style={{ background: ACCENT.play, color: T.onAccent, fontFamily: FONT.display }}>Play Again</button>
             <button onClick={onBack}
@@ -188,4 +188,9 @@ export default function FrankenflagScreen({ onBack }: Props) {
       </div>
     </div>
   )
+}
+
+export default function FrankenflagScreen({ onBack }: Props) {
+  const [replayKey, setReplayKey] = useState(0)
+  return <FrankenflagGame key={replayKey} onBack={onBack} onReplay={() => setReplayKey(k => k + 1)} />
 }
