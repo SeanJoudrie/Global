@@ -234,6 +234,8 @@ export default function App() {
 
   useEffect(() => {
     document.body.classList.toggle("aesthetic-carto", AESTHETIC === "cartographer")
+    document.body.classList.toggle("aesthetic-original", AESTHETIC === "original")
+    document.body.classList.toggle("aesthetic-tactical", AESTHETIC === "tactical")
     const t = loadTheme()
     const r = document.documentElement.style
     r.setProperty('--bg-from', t.bgFrom)

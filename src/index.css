@@ -29,9 +29,24 @@
 }
 
 body {
-  background: linear-gradient(135deg, var(--bg-from) 0%, var(--bg-to) 100%);
+  /* Default to the cartographer parchment. This is render-blocking head CSS,
+     so it paints on the very first frame — before any JS runs — matching the
+     default shell and killing the purple flash on cold load. The non-default
+     aesthetics repaint via a body class set synchronously (index.html + App). */
+  background: #FBF4E4;
   min-height: 100vh;
+  color: #1F3A3C;
+}
+/* Deep-space original skin — the purple gradient lives here now, not on the
+   bare body, so it only shows for users who actually chose it. */
+body.aesthetic-original {
+  background: linear-gradient(135deg, var(--bg-from) 0%, var(--bg-to) 100%);
   color: #F5F3FF;
+}
+/* Tactical Geo-Codex — dark ink backdrop. */
+body.aesthetic-tactical {
+  background: #0A0E16;
+  color: #E9EFF8;
 }
 
 @keyframes spin-slow {
