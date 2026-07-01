@@ -48,6 +48,25 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Cuneiform&family=Noto+Sans+Egyptian+Hieroglyphs&family=Noto+Sans+Gothic&family=Noto+Sans+Coptic&display=swap" rel="stylesheet" />
   </head>
   <body>
+    <!-- Paint the correct shell colour on the very first frame. The aesthetic
+         class is otherwise only applied after React mounts, so the default
+         cartographer (cream) users would briefly see the purple gradient body
+         background below. This synchronous script runs before first paint and
+         matches App.tsx's own aesthetic resolution, killing that flash. -->
+    <script>
+      (function () {
+        try {
+          var a = localStorage.getItem("globalio_aesthetic");
+          if (a !== "tactical" && a !== "original") a = "cartographer";
+          if (a === "cartographer") {
+            document.body.classList.add("aesthetic-carto");
+            document.body.style.background = "#FBF4E4";
+          } else if (a === "tactical") {
+            document.body.style.background = "#0A0E16";
+          }
+        } catch (e) { /* localStorage blocked — fall back to CSS default */ }
+      })();
+    </script>
     <!-- Crawlable first-paint content. React (createRoot().render) replaces #root
          on mount, so users see the live app; search engines and the AdSense
          crawler — which read the raw HTML before running JS — get real, indexable
