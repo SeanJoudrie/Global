@@ -361,27 +361,31 @@ function HeroDeck({ slides }: { slides: SlideData[] }) {
 function DeckSlide({ accent, eyebrow, title, body, cta, onClick, art, watermark, cover }: SlideData) {
   const disabled = !onClick
   if (cover) {
-    // Flag-poster format: the flag fills the TOP of the card, fully visible with
-    // nothing over it, and the text lives in a solid caption panel below — a
-    // distinct second format from the paper-card slides, and legible (the old
-    // full-bleed version buried the flag under text).
+    // Flag-poster format: a fixed flag band up top (whole flag, never cropped),
+    // then a caption that flows top-down and pins its CTA to the bottom. Laid
+    // out with flexbox — NOT rigid 44/56% panels — so a long name or fact can
+    // never overflow a fixed box and get clipped: the text ellipsises within
+    // its own line-clamp and everything stays fully on-card.
     return (
       <div className={IS_CARTO ? "carto-card" : ""}
-        style={{ height: "100%", position: "relative", overflow: "hidden", borderRadius: 16, border: `1px solid ${tint(accent, 0.4)}`, background: T.surface }}>
-        <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "44%", overflow: "hidden", background: T.surfaceHi, display: "flex", alignItems: "center", justifyContent: "center" }}>
+        style={{ height: "100%", overflow: "hidden", borderRadius: 16, border: `1px solid ${tint(accent, 0.4)}`, background: T.surface, display: "flex", flexDirection: "column" }}>
+        <div style={{ height: 84, flexShrink: 0, overflow: "hidden", background: T.surfaceHi, borderBottom: `1px solid ${tint(accent, 0.35)}`, display: "flex", alignItems: "center", justifyContent: "center" }}>
           {/* contain (not cover) so the whole flag reads — no cropped edges/emblems. */}
-          <FlagImage code={cover} style={{ width: "100%", height: "100%", objectFit: "contain", display: "block" }} />
+          <FlagImage code={cover} style={{ maxWidth: "100%", maxHeight: "100%", objectFit: "contain", display: "block" }} />
         </div>
-        <div style={{ position: "absolute", left: 0, right: 0, bottom: 0, height: "56%", background: T.surface, borderTop: `1px solid ${tint(accent, 0.35)}`, padding: "11px 16px 14px", display: "flex", flexDirection: "column", justifyContent: "center" }}>
+        <div style={{ flex: 1, minHeight: 0, background: T.surface, padding: "10px 16px 12px", display: "flex", flexDirection: "column" }}>
           <div className="geo-micro" style={{ fontSize: 9, color: accent, marginBottom: 5 }}>◦ {eyebrow}</div>
-          <div className="geo-display" style={{ fontWeight: 800, fontSize: 21, lineHeight: 1.05, letterSpacing: "-0.02em", color: T.text, display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>
+          <div className="geo-display" style={{ flexShrink: 0, fontWeight: 800, fontSize: 20, lineHeight: 1.1, letterSpacing: "-0.02em", color: T.text, display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>
             {title}
           </div>
-          <div style={{ color: T.muted, fontSize: 12, marginTop: 5, lineHeight: 1.45, display: "-webkit-box", WebkitLineClamp: 3, WebkitBoxOrient: "vertical", overflow: "hidden" }}>
+          {/* Body is the flexible element: it grows to fill spare room but yields
+              it (clamping to fewer lines) when the title runs long, so the CTA
+              below is never pushed off the card. */}
+          <div style={{ flex: 1, minHeight: 0, color: T.muted, fontSize: 12, marginTop: 4, lineHeight: 1.4, display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>
             {body}
           </div>
           <button onClick={onClick} onPointerDown={e => e.stopPropagation()} disabled={disabled} className={disabled ? "" : "geo-tap"}
-            style={{ alignSelf: "flex-start", marginTop: 10, display: "inline-flex", alignItems: "center", gap: 8, padding: "9px 18px", borderRadius: 999, minHeight: 40, background: accent, color: T.onAccent, cursor: disabled ? "default" : "pointer" }}>
+            style={{ flexShrink: 0, alignSelf: "flex-start", marginTop: 8, display: "inline-flex", alignItems: "center", gap: 8, padding: "9px 18px", borderRadius: 999, minHeight: 40, background: accent, color: T.onAccent, cursor: disabled ? "default" : "pointer" }}>
             <span style={{ fontFamily: FONT.display, fontWeight: 700, fontSize: 14 }}>{cta}</span>
             {!disabled && <span style={{ fontSize: 14 }}>→</span>}
           </button>
