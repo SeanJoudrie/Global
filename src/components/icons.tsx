@@ -34,7 +34,7 @@ const MAP: Record<string, LucideIcon> = {
   flagle: LayoutGrid, realorbot: Bot, timeline: History, deadoralive: Skull,
   frankenflag: SplitSquareHorizontal, higherlower: ArrowUpDown, describeit: AlignLeft, flagbracket: Vote,
   bordermap: MapPinned, borderchain: Waypoints, gacha: Gift,
-  symbolhunt: ScanSearch, twotruths: VenetianMask,
+  symbolhunt: ScanSearch, twotruths: VenetianMask, forgery: ScanSearch,
   capitalmatch: Building2, oddborder: Signpost, continentsort: FolderTree, statclash: Scale,
   worldcup: Trophy,
 }

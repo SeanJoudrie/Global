@@ -484,6 +484,25 @@ function buildArt(id: string, accent: string, hero: boolean): { node: ReactNode;
           ))}
         </div>
       ) }
+    case "forgery":
+      // Two Italys side by side — one genuine, one mirrored so the red leads.
+      // (Italy isn't one of the in-game forgeries, so nothing is spoiled.)
+      return { bleed: false, node: (
+        <div style={{ ...box, background: wash, display: "flex", alignItems: "center", justifyContent: "center", gap: hero ? 12 : 7 }}>
+          <div style={{ position: "relative", width: hero ? "28%" : "34%" }}>
+            <MiniFlag code="it" />
+            <div style={{ position: "absolute", right: -5, top: -5, width: hero ? 18 : 14, height: hero ? 18 : 14, borderRadius: 999, background: T.surface, border: `1.5px solid ${T.green}`, color: T.green, display: "flex", alignItems: "center", justifyContent: "center" }}>
+              <Check size={hero ? 11 : 8} strokeWidth={3} />
+            </div>
+          </div>
+          <div style={{ position: "relative", width: hero ? "28%" : "34%" }}>
+            <MiniFlag code="it" style={{ transform: "scaleX(-1)" }} />
+            <div style={{ position: "absolute", right: -5, top: -5, width: hero ? 18 : 14, height: hero ? 18 : 14, borderRadius: 999, background: T.surface, border: `1.5px solid ${T.danger}`, color: T.danger, display: "flex", alignItems: "center", justifyContent: "center" }}>
+              <X size={hero ? 11 : 8} strokeWidth={3} />
+            </div>
+          </div>
+        </div>
+      ) }
     case "realorbot":
       // A Canada that's the wrong colour — clearly a bot's work. Zoomed in a
       // touch so the maple leaf owns the left; the bot seal sits to the right.
