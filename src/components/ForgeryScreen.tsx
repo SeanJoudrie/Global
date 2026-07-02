@@ -15,7 +15,7 @@ const saveBest = (n: number) => { try { localStorage.setItem(BEST_KEY, String(n)
 // A card is either a genuine country flag or one of the doctored forgeries.
 type Card = { fake: false; flag: FlagRecord } | { fake: true; forgery: FakeFlag }
 
-const REAL_COUNT = 15 // + all 5 forgeries = a 20-card round
+const REAL_COUNT = 11 // + all 9 forgeries = a 20-card round
 
 function shuffle<T>(arr: T[]): T[] {
   const a = arr.slice()

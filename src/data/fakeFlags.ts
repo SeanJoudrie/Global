@@ -42,6 +42,26 @@ export const FAKE_FLAGS: FakeFlag[] = [
     short: "A second star sneaked in",
     reason: "There's an extra star in the lower fly — the real flag has a single star, up by the hoist.",
   },
+  {
+    code: "mx", name: "Mexico", src: "/fakes/mx.svg",
+    short: "Green and red traded places",
+    reason: "The stripes run red–white–green — on the real flag, green leads at the hoist.",
+  },
+  {
+    code: "ma", name: "Morocco", src: "/fakes/ma.svg",
+    short: "The star was filled in",
+    reason: "The pentagram is solid green — the real star is an interlaced outline with red showing through.",
+  },
+  {
+    code: "pk", name: "Pakistan", src: "/fakes/pk.svg",
+    short: "The white stripe switched sides",
+    reason: "The white stripe sits at the fly end — it belongs at the hoist, before the green.",
+  },
+  {
+    code: "sy", name: "Syria", src: "/fakes/sy.svg",
+    short: "A star went missing",
+    reason: "Only two red stars — the new Syrian flag carries three.",
+  },
 ]
 
 export const FAKE_CODES = new Set(FAKE_FLAGS.map(f => f.code))
