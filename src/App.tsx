@@ -57,6 +57,7 @@ const FrankenflagScreen = lazy(() => import("./components/FrankenflagScreen"))
 const DescribeItScreen = lazy(() => import("./components/DescribeItScreen"))
 const FlagBracketScreen = lazy(() => import("./components/FlagBracketScreen"))
 const RealOrBotScreen = lazy(() => import("./components/RealOrBotScreen"))
+const ForgeryScreen = lazy(() => import("./components/ForgeryScreen"))
 const FlagTimelineScreen = lazy(() => import("./components/FlagTimelineScreen"))
 const BorderMapScreen = lazy(() => import("./components/BorderMapScreen"))
 const BorderChainScreen = lazy(() => import("./components/BorderChainScreen"))
@@ -83,7 +84,7 @@ import type { Question } from "./utils/quiz"
 import { todayString } from "./utils/prng"
 import { loadTheme } from "./components/SettingsScreen"
 
-type Screen = "splash" | "home" | "flags" | "quiz" | "reversequiz" | "result" | "achievements" | "profile" | "flashcards" | "language" | "capitalquiz" | "challenge" | "codex" | "geo" | "gauntlet" | "tierlist" | "settings" | "oddoneout" | "thecrop" | "flagdna" | "buildflag" | "geopaint" | "sketchflag" | "spoterror" | "flagoutline" | "thepeel" | "lookalikes" | "composer" | "silhouette" | "flagfamilies" | "funfact" | "progressmap" | "historical" | "identity" | "provinceroulette" | "substumper" | "lineage" | "substats" | "megacodex" | "flagle" | "higherlower" | "deadoralive" | "frankenflag" | "describeit" | "flagbracket" | "realorbot" | "timeline" | "bordermap" | "borderchain" | "gacha" | "symbolhunt" | "twotruths" | "capitalmatch" | "oddborder" | "continentsort" | "statclash" | "uscityflags" | "prideroulette" | "flagdiag" | "worldcup" | "supporter"
+type Screen = "splash" | "home" | "flags" | "quiz" | "reversequiz" | "result" | "achievements" | "profile" | "flashcards" | "language" | "capitalquiz" | "challenge" | "codex" | "geo" | "gauntlet" | "tierlist" | "settings" | "oddoneout" | "thecrop" | "flagdna" | "buildflag" | "geopaint" | "sketchflag" | "spoterror" | "flagoutline" | "thepeel" | "lookalikes" | "composer" | "silhouette" | "flagfamilies" | "funfact" | "progressmap" | "historical" | "identity" | "provinceroulette" | "substumper" | "lineage" | "substats" | "megacodex" | "flagle" | "higherlower" | "deadoralive" | "frankenflag" | "describeit" | "flagbracket" | "realorbot" | "forgery" | "timeline" | "bordermap" | "borderchain" | "gacha" | "symbolhunt" | "twotruths" | "capitalmatch" | "oddborder" | "continentsort" | "statclash" | "uscityflags" | "prideroulette" | "flagdiag" | "worldcup" | "supporter"
 
 interface ActiveQuiz {
   questions: Question[]
@@ -383,6 +384,7 @@ export default function App() {
       {screen === "describeit"   && <DescribeItScreen   onBack={() => setScreen("home")} />}
       {screen === "flagbracket"  && <FlagBracketScreen  onBack={() => setScreen("home")} />}
       {screen === "realorbot"    && <RealOrBotScreen    onBack={() => setScreen("home")} />}
+      {screen === "forgery"      && <ForgeryScreen      onBack={() => setScreen("home")} />}
       {screen === "timeline"     && <FlagTimelineScreen onBack={() => setScreen("home")} />}
       {screen === "bordermap"    && <BorderMapScreen    onBack={() => setScreen("home")} />}
       {screen === "borderchain"  && <BorderChainScreen  onBack={() => setScreen("home")} />}
