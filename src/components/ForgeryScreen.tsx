@@ -18,8 +18,8 @@ type Card = { fake: false; flag: FlagRecord } | { fake: true; forgery: FakeFlag 
 // The forgery library keeps growing, so each round draws a fresh hand of
 // fakes rather than dealing every one — rounds stay varied and the real:fake
 // ratio stays honest.
-const FAKE_COUNT = 7
-const REAL_COUNT = 13 // 13 + 7 = a 20-card round
+const REAL_COUNT = 11  // + FAKE_COUNT forgeries = a 20-card round
+const FAKE_COUNT = 9   // forgeries drawn per round from the larger pool
 
 function shuffle<T>(arr: T[]): T[] {
   const a = arr.slice()
@@ -30,9 +30,9 @@ function shuffle<T>(arr: T[]): T[] {
   return a
 }
 
-// Every forgery goes in every round; the genuine flags are drawn fresh each
-// time. The forged countries never appear as real cards in the same deck —
-// seeing the real Spain next to the doctored one would give the game away.
+// Each round draws a fresh handful of forgeries from the pool plus genuine flags
+// drawn fresh too. No forged country ever appears as a real card in the same
+// deck — seeing the real Spain next to the doctored one would give it away.
 function buildDeck(): Card[] {
   const forgeries = shuffle(FAKE_FLAGS).slice(0, FAKE_COUNT)
   const reals = shuffle(FLAGS.filter(f => !FAKE_CODES.has(f.code))).slice(0, REAL_COUNT)
@@ -51,6 +51,7 @@ interface Verdict { ok: boolean; text: string }
 
 function ForgeryGame({ onBack, onReplay }: Props & { onReplay: () => void }) {
   const deck = useMemo(buildDeck, [])
+  const roundForgeries = useMemo(() => deck.flatMap(c => (c.fake ? [c.forgery] : [])), [deck])
   const [i, setI] = useState(0)
   const [score, setScore] = useState(0)
   const [best, setBest] = useState(loadBest)
@@ -114,7 +115,6 @@ function ForgeryGame({ onBack, onReplay }: Props & { onReplay: () => void }) {
     : `translateX(${dx}px) rotate(${dx * 0.03}deg)`
 
   if (done) {
-    const roundForgeries = deck.filter((c): c is Card & { fake: true } => c.fake).map(c => c.forgery)
     const spotted = roundForgeries.filter(f => caught[f.code]).length
     return (
       <div className="min-h-screen flex flex-col items-center px-5 py-8" style={{ background: T.bg, overflowY: "auto" }}>

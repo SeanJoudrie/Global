@@ -72,6 +72,51 @@ export const FAKE_FLAGS: FakeFlag[] = [
     short: "Green and black traded places",
     reason: "The hoist and fly triangles are green — on the real flag they're black, with green top and bottom.",
   },
+  {
+    code: "de", name: "Germany", src: "/fakes/de.jpg",
+    short: "Red and black swapped places",
+    reason: "The bands run red–black–gold — Germany's tricolour is black on top, then red, then gold.",
+  },
+  {
+    code: "ar", name: "Argentina", src: "/fakes/ar.jpg",
+    short: "The sun lost its face",
+    reason: "The Sun of May is a blank golden disc — the real sun wears a human face.",
+  },
+  {
+    code: "cu", name: "Cuba", src: "/fakes/cu.jpg",
+    short: "The lone star gained a point",
+    reason: "The star has six points — Cuba's is a five-pointed star.",
+  },
+  {
+    code: "no", name: "Norway", src: "/fakes/no.jpg",
+    short: "The cross was centred",
+    reason: "The cross sits dead centre — Norway's Nordic cross is shifted toward the hoist.",
+  },
+  {
+    code: "bi", name: "Burundi", src: "/fakes/bi.jpg",
+    short: "A fourth star crept in",
+    reason: "The white roundel holds four stars — Burundi's carries three.",
+  },
+  {
+    code: "kr", name: "South Korea", src: "/fakes/kr.jpg",
+    short: "The taegeuk was flipped",
+    reason: "The central taegeuk shows blue over red — on the real flag the red half sits on top.",
+  },
+  {
+    code: "pa", name: "Panama", src: "/fakes/pa.jpg",
+    short: "The red star was upside down",
+    reason: "The star in the fly quarter points downward — on Panama's flag both stars stand upright.",
+  },
+  {
+    code: "gr", name: "Greece", src: "/fakes/gr.jpg",
+    short: "The canton was inverted",
+    reason: "The upper-hoist canton shows a blue cross on white — Greece flies a white cross on a blue field.",
+  },
+  {
+    code: "dz", name: "Algeria", src: "/fakes/dz.jpg",
+    short: "The star slipped off the crescent",
+    reason: "The star floats clear of the crescent — on Algeria's flag it nestles between the horns.",
+  },
 ]
 
 export const FAKE_CODES = new Set(FAKE_FLAGS.map(f => f.code))
