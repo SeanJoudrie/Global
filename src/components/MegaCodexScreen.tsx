@@ -75,7 +75,7 @@ export default function MegaCodexScreen({ onBack }: Props) {
   }
 
   return (
-    <div style={{ position: "fixed", inset: 0, maxWidth: 560, margin: "0 auto", background: T.void, color: T.text, zIndex: 1 }}>
+    <div style={{ position: "fixed", inset: 0, maxWidth: 720, margin: "0 auto", background: T.void, color: T.text, zIndex: 1 }}>
       <button onClick={onBack} aria-label="Back" className="geo-tap"
         style={{
           position: "fixed", top: 12, left: 12, zIndex: 50,

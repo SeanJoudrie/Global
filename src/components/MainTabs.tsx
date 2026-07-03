@@ -5,7 +5,7 @@ import type { AppState } from "../utils/storage"
 import { todayString } from "../utils/prng"
 import { openSupporter } from "../utils/supporterNav"
 import { T, ACCENT, FONT, tint, IS_CARTO } from "../ui/tokens"
-import { groupsFor, REGISTRY, recommendFor, discoverGames, trendingGames } from "../ui/registry"
+import { groupsFor, REGISTRY, recommendFor, discoverGames, trendingGames, topGames } from "../ui/registry"
 import type { Entry, TabKey } from "../ui/registry"
 import { TabBar, ModuleCard, FlagTile, StatPill, SectionHeader, ProgressRing } from "./ui"
 import { LineIcon, FlameIcon, ChevronDownIcon, FlaskIcon, SearchIcon, ShuffleIcon, CompassIcon, SparklesIcon, HistoryIcon, TrendingUpIcon, CrownIcon, PencilIcon, MailIcon } from "./icons"
@@ -74,7 +74,7 @@ export default function MainTabs({ state, tab, onTab, onNavigate, onQuickPlay, o
   const learned = state.learnedFlags.length
 
   return (
-    <div className={IS_CARTO ? "carto-paper" : "geo-grid"} style={{ position: "fixed", inset: 0, maxWidth: 560, margin: "0 auto", display: "flex", flexDirection: "column", zIndex: 1, background: IS_CARTO ? T.bg : undefined }}>
+    <div className={IS_CARTO ? "carto-paper" : "geo-grid"} style={{ position: "fixed", inset: 0, maxWidth: 720, margin: "0 auto", display: "flex", flexDirection: "column", zIndex: 1, background: IS_CARTO ? T.bg : undefined }}>
       {!IS_CARTO && <div className="geo-vignette" style={{ position: "absolute", inset: 0, pointerEvents: "none" }} />}
 
       {/* ── Shared header: wordmark · live streak · system actions ── */}
@@ -282,6 +282,10 @@ interface SlideData {
 }
 const HERO_H = 238
 
+// Desktop (fine-pointer) detection — gates the click arrows on the carousels
+// and other mouse affordances. Evaluated once; a device doesn't change class.
+const HAS_MOUSE = typeof window !== "undefined" && !!window.matchMedia && window.matchMedia("(pointer: fine)").matches
+
 // Etched-line soccer ball to match the LineIcon family (lucide has no ball glyph).
 function SoccerBall({ size = 18, color = "currentColor" }: { size?: number; color?: string }) {
   return (
@@ -345,6 +349,19 @@ function HeroDeck({ slides }: { slides: SlideData[] }) {
         }}>
           <DeckSlide {...cur} />
         </div>
+        {/* Mouse users can't swipe naturally — give them arrows (desktop only). */}
+        {HAS_MOUSE && [-1, 1].map(dir => (
+          <button key={dir} aria-label={dir < 0 ? "Previous" : "Next"}
+            onClick={() => commit(dir)} onPointerDown={e => e.stopPropagation()}
+            className="geo-tap"
+            style={{ position: "absolute", top: "50%", transform: "translateY(-50%)",
+              [dir < 0 ? "left" : "right"]: 6, zIndex: 5,
+              width: 32, height: 32, borderRadius: 999, display: "flex", alignItems: "center", justifyContent: "center",
+              background: `${T.surface}E6`, border: `1px solid ${T.line}`, color: T.muted,
+              boxShadow: `0 2px 8px -3px ${tint(T.text, 0.5)}`, fontSize: 18, lineHeight: 1 }}>
+            {dir < 0 ? "‹" : "›"}
+          </button>
+        ))}
       </div>
       <div style={{ display: "flex", justifyContent: "center", gap: 6, marginTop: 12 }} aria-hidden>
         {slides.map((_, i) => (
@@ -451,14 +468,20 @@ function PlayTab({ launch, state }: { launch: (e: Entry) => void; state: AppStat
   const rec = recommendFor(recentIds)
   const discover = discoverGames(recentIds, dayIdx)
   // Trending deck — featured A-tier games lead, then a stable weekly rotation.
-  // GeoPaint is pinned to the second card by request.
+  // Real or Bot is pinned to the opening card and GeoPaint to the second, both
+  // by request — the weekly shuffle only reorders everything behind them.
   const trending = (() => {
     const list = trendingGames(weekIdx)
-    const at = list.findIndex(e => e.id === "geopaint")
-    const gp = at >= 0 ? list.splice(at, 1)[0] : REGISTRY.find(e => e.id === "geopaint")
-    if (gp) list.splice(Math.min(1, list.length), 0, gp)
+    const pin = (id: string, pos: number) => {
+      const at = list.findIndex(e => e.id === id)
+      const it = at >= 0 ? list.splice(at, 1)[0] : REGISTRY.find(e => e.id === id)
+      if (it) list.splice(Math.min(pos, list.length), 0, it)
+    }
+    pin("geopaint", 0)
+    pin("realorbot", 0) // last pin wins the front
     return list
   })()
+  const top = topGames(dayIdx)
 
   const shuffle = () => launch(playable[Math.floor(Math.random() * playable.length)])
 
@@ -577,6 +600,18 @@ function PlayTab({ launch, state }: { launch: (e: Entry) => void; state: AppStat
             </Rail>
           </div>
         )}
+
+        {/* Top games — the hand-picked hit list, order reshuffled daily. These
+            also live in their own category shelves below; repetition is fine. */}
+        <div>
+          <ShelfHead icon={<LineIcon name="tierlist" size={15} color={T.amber} />} accent={T.amber}
+            title="Top games" reason="The all-star lineup · shuffled daily" />
+          <Rail>
+            {top.map(e => (
+              <FlagTile key={e.id} id={e.id} title={e.title} subtitle={e.subtitle} accent={ACCENT[e.accent]} onClick={() => launch(e)} />
+            ))}
+          </Rail>
+        </div>
 
         {/* The collections — every game, filed by appetite. Each shelf swipes.
             Learn the World leads with its live mastery line; the curriculum is

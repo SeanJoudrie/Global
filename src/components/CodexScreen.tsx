@@ -2501,8 +2501,13 @@ function MegaCodexWall({ onClose, initialSort = 'az' }: { onClose: () => void; i
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sort, shuffleKey])
 
-  const cols = Math.max(3, Math.floor((vw - MEGA_PAD * 2 + MEGA_GAP) / (MEGA_MIN_TILE + MEGA_GAP)))
-  const tileW = (vw - MEGA_PAD * 2 - MEGA_GAP * (cols - 1)) / cols
+  // The wall portals to <body>, so it escapes the app column — cap its own
+  // width to match (720) and never run wider than 6 tiles per row, or on a
+  // desktop monitor the grid computes dozens of columns of giant tiles and
+  // grinds the page down.
+  const wallW = Math.min(vw, 720)
+  const cols = Math.min(6, Math.max(3, Math.floor((wallW - MEGA_PAD * 2 + MEGA_GAP) / (MEGA_MIN_TILE + MEGA_GAP))))
+  const tileW = (wallW - MEGA_PAD * 2 - MEGA_GAP * (cols - 1)) / cols
   const rowH = tileW * (2 / 3) + MEGA_LABEL_H + MEGA_GAP
   const totalRows = Math.ceil(flags.length / cols)
   const totalHeight = MEGA_PAD * 2 + MEGA_BAR_H + totalRows * rowH
@@ -2534,7 +2539,7 @@ function MegaCodexWall({ onClose, initialSort = 'az' }: { onClose: () => void; i
   // resolve against that ancestor instead of the viewport — so without the
   // portal the wall (and its top sort bar) wouldn't actually cover the screen.
   return createPortal(
-    <div style={{ position: 'fixed', inset: 0, zIndex: 2000, background: T.bg, color: T.text }}>
+    <div style={{ position: 'fixed', inset: 0, maxWidth: 720, margin: '0 auto', zIndex: 2000, background: T.bg, color: T.text }}>
       <div ref={scrollRef} onScroll={onScroll}
         style={{ position: 'absolute', inset: 0, overflowY: 'auto', WebkitOverflowScrolling: 'touch' }}>
         <div style={{ height: totalHeight, position: 'relative' }}>

@@ -176,6 +176,48 @@ export default function App() {
   // purple gradient in index.css belonged to the retired "original" skin.
   useEffect(() => { document.body.style.background = T.void }, [])
 
+  // Desktop: make every horizontal rail mouse-draggable. Rails hide their
+  // scrollbars and rely on touch swiping, which leaves a plain mouse with no
+  // way to scroll sideways. Dragging any .carto-rail scrolls it; a real drag
+  // swallows the click so tiles don't launch when you were just scrolling.
+  useEffect(() => {
+    if (!window.matchMedia?.("(pointer: fine)").matches) return
+    let rail: HTMLElement | null = null
+    let startX = 0, startLeft = 0, moved = false
+    const down = (e: PointerEvent) => {
+      if (e.pointerType !== "mouse" || e.button !== 0) return
+      const r = (e.target as HTMLElement).closest?.(".carto-rail") as HTMLElement | null
+      if (!r || r.scrollWidth <= r.clientWidth + 4) return
+      rail = r; startX = e.clientX; startLeft = r.scrollLeft; moved = false
+    }
+    const move = (e: PointerEvent) => {
+      if (!rail) return
+      const dx = e.clientX - startX
+      if (!moved && Math.abs(dx) < 6) return
+      moved = true
+      rail.scrollLeft = startLeft - dx
+    }
+    const up = () => {
+      if (moved && rail) {
+        const r = rail
+        const swallow = (ev: Event) => { ev.stopPropagation(); ev.preventDefault() }
+        r.addEventListener("click", swallow, { capture: true, once: true })
+        window.setTimeout(() => r.removeEventListener("click", swallow, { capture: true }), 0)
+      }
+      rail = null
+    }
+    document.addEventListener("pointerdown", down, true)
+    document.addEventListener("pointermove", move, true)
+    document.addEventListener("pointerup", up, true)
+    document.addEventListener("pointercancel", up, true)
+    return () => {
+      document.removeEventListener("pointerdown", down, true)
+      document.removeEventListener("pointermove", move, true)
+      document.removeEventListener("pointerup", up, true)
+      document.removeEventListener("pointercancel", up, true)
+    }
+  }, [])
+
   const startDaily = useCallback(() => {
     const questions = buildDailyQuiz(todayString(), 10)
     setActiveQuiz({ questions, title: "Daily Game", isDaily: true, setId: "daily", setFlags: FLAGS })

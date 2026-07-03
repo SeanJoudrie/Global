@@ -186,3 +186,19 @@ export function trendingGames(weekSeed: number, count = 9): Entry[] {
     .map(x => x.r)
     .slice(0, count)
 }
+
+// The hand-picked hit list for the "Top games" shelf. Fixed membership (these
+// may also appear in their own category shelves — that's fine), order
+// reshuffled daily so the shelf stays fresh without ever hiding anything.
+const TOP_GAME_IDS = [
+  "realorbot", "forgery", "language", "spoterror", "historical", "thepeel",
+  "bordermap", "composer", "deadoralive", "lineage", "gauntlet",
+]
+export function topGames(daySeed: number): Entry[] {
+  return TOP_GAME_IDS
+    .map(id => REGISTRY.find(r => r.id === id))
+    .filter((e): e is Entry => !!e)
+    .map(r => ({ r, k: hash(`top:${r.id}:${daySeed}`) }))
+    .sort((a, b) => a.k - b.k)
+    .map(x => x.r)
+}

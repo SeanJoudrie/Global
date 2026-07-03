@@ -41,9 +41,17 @@ body {
    covers every in-flow screen rendered inside #root. */
 @media (min-width: 800px) {
   #root {
-    max-width: 560px;
+    max-width: 720px;
     margin: 0 auto;
   }
+}
+
+/* Desktop rails: touch swiping doesn't exist, the scrollbar is hidden, and a
+   plain mouse can't scroll sideways — so rails are mouse-draggable (handled
+   by the global drag-scroll in App) and advertise it with a grab cursor. */
+@media (pointer: fine) {
+  .carto-rail { cursor: grab; }
+  .carto-rail:active { cursor: grabbing; }
 }
 
 @keyframes spin-slow {
