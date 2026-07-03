@@ -74,7 +74,7 @@ export default function MainTabs({ state, tab, onTab, onNavigate, onQuickPlay, o
   const learned = state.learnedFlags.length
 
   return (
-    <div className={IS_CARTO ? "carto-paper" : "geo-grid"} style={{ position: "fixed", inset: 0, display: "flex", flexDirection: "column", zIndex: 1, background: IS_CARTO ? T.bg : undefined }}>
+    <div className={IS_CARTO ? "carto-paper" : "geo-grid"} style={{ position: "fixed", inset: 0, maxWidth: 560, margin: "0 auto", display: "flex", flexDirection: "column", zIndex: 1, background: IS_CARTO ? T.bg : undefined }}>
       {!IS_CARTO && <div className="geo-vignette" style={{ position: "absolute", inset: 0, pointerEvents: "none" }} />}
 
       {/* ── Shared header: wordmark · live streak · system actions ── */}
@@ -362,28 +362,30 @@ function DeckSlide({ accent, eyebrow, title, body, cta, onClick, art, watermark,
   const disabled = !onClick
   if (cover) {
     // Flag-poster format: the flag fills the TOP of the card, fully visible with
-    // nothing over it, and the text lives in a solid caption panel below — a
-    // distinct second format from the paper-card slides, and legible (the old
-    // full-bleed version buried the flag under text).
+    // nothing over it, and the text lives in a solid caption panel below.
+    // The caption sizes itself and the flag takes whatever height is left —
+    // the old fixed 44%/56% split let flexbox squash the title and body when
+    // the content ran tall, chopping text mid-glyph. Every caption row is
+    // flexShrink:0 so nothing can ever be vertically crushed again.
     return (
       <div className={IS_CARTO ? "carto-card" : ""}
-        style={{ height: "100%", position: "relative", overflow: "hidden", borderRadius: 16, border: `1px solid ${tint(accent, 0.4)}`, background: T.surface }}>
-        <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "44%", overflow: "hidden", background: T.surfaceHi, display: "flex", alignItems: "center", justifyContent: "center" }}>
+        style={{ height: "100%", overflow: "hidden", borderRadius: 16, border: `1px solid ${tint(accent, 0.4)}`, background: T.surface, display: "flex", flexDirection: "column" }}>
+        <div style={{ flex: 1, minHeight: 56, overflow: "hidden", background: T.surfaceHi, display: "flex", alignItems: "center", justifyContent: "center" }}>
           {/* contain (not cover) so the whole flag reads — no cropped edges/emblems. */}
           <FlagImage code={cover} style={{ width: "100%", height: "100%", objectFit: "contain", display: "block" }} />
         </div>
-        <div style={{ position: "absolute", left: 0, right: 0, bottom: 0, height: "56%", background: T.surface, borderTop: `1px solid ${tint(accent, 0.35)}`, padding: "11px 16px 14px", display: "flex", flexDirection: "column", justifyContent: "center" }}>
-          <div className="geo-micro" style={{ fontSize: 9, color: accent, marginBottom: 5 }}>◦ {eyebrow}</div>
-          <div className="geo-display" style={{ fontWeight: 800, fontSize: 21, lineHeight: 1.05, letterSpacing: "-0.02em", color: T.text, display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>
+        <div style={{ flexShrink: 0, background: T.surface, borderTop: `1px solid ${tint(accent, 0.35)}`, padding: "10px 16px 13px", display: "flex", flexDirection: "column" }}>
+          <div className="geo-micro" style={{ flexShrink: 0, fontSize: 9, color: accent, marginBottom: 5 }}>◦ {eyebrow}</div>
+          <div className="geo-display" style={{ flexShrink: 0, fontWeight: 800, fontSize: 20, lineHeight: 1.15, letterSpacing: "-0.02em", color: T.text, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
             {title}
           </div>
-          <div style={{ color: T.muted, fontSize: 12, marginTop: 5, lineHeight: 1.45, display: "-webkit-box", WebkitLineClamp: 3, WebkitBoxOrient: "vertical", overflow: "hidden" }}>
+          <div style={{ flexShrink: 0, color: T.muted, fontSize: 12, marginTop: 4, lineHeight: 1.4, display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>
             {body}
           </div>
           <button onClick={onClick} onPointerDown={e => e.stopPropagation()} disabled={disabled} className={disabled ? "" : "geo-tap"}
-            style={{ alignSelf: "flex-start", marginTop: 10, display: "inline-flex", alignItems: "center", gap: 8, padding: "9px 18px", borderRadius: 999, minHeight: 40, background: accent, color: T.onAccent, cursor: disabled ? "default" : "pointer" }}>
-            <span style={{ fontFamily: FONT.display, fontWeight: 700, fontSize: 14 }}>{cta}</span>
-            {!disabled && <span style={{ fontSize: 14 }}>→</span>}
+            style={{ flexShrink: 0, alignSelf: "flex-start", marginTop: 9, display: "inline-flex", alignItems: "center", gap: 8, padding: "8px 16px", borderRadius: 999, minHeight: 36, background: accent, color: T.onAccent, cursor: disabled ? "default" : "pointer" }}>
+            <span style={{ fontFamily: FONT.display, fontWeight: 700, fontSize: 13.5 }}>{cta}</span>
+            {!disabled && <span style={{ fontSize: 13.5 }}>→</span>}
           </button>
         </div>
       </div>
@@ -404,17 +406,17 @@ function DeckSlide({ accent, eyebrow, title, body, cta, onClick, art, watermark,
       )}
       <div style={{ position: "relative", height: "100%", display: "flex", alignItems: "center", gap: 14 }}>
         <div style={{ flex: 1, minWidth: 0, display: "flex", flexDirection: "column", justifyContent: "center" }}>
-          <div className="geo-micro" style={{ fontSize: 9, color: accent, marginBottom: 7 }}>◦ {eyebrow}</div>
-          <div className="geo-display" style={{ fontWeight: 800, fontSize: 25, lineHeight: 1.06, letterSpacing: "-0.02em", color: T.text, display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>
+          <div className="geo-micro" style={{ flexShrink: 0, fontSize: 9, color: accent, marginBottom: 7 }}>◦ {eyebrow}</div>
+          <div className="geo-display" style={{ flexShrink: 0, fontWeight: 800, fontSize: 25, lineHeight: 1.06, letterSpacing: "-0.02em", color: T.text, display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>
             {title}
           </div>
           <div style={{
-            color: T.muted, fontSize: 12.5, marginTop: 6, lineHeight: 1.5,
+            flexShrink: 0, color: T.muted, fontSize: 12.5, marginTop: 6, lineHeight: 1.5,
             display: "-webkit-box", WebkitLineClamp: 3, WebkitBoxOrient: "vertical", overflow: "hidden",
           }}>{body}</div>
           <button onClick={onClick} onPointerDown={e => e.stopPropagation()} disabled={disabled}
             className={disabled ? "" : "geo-tap"}
-            style={{ alignSelf: "flex-start", marginTop: 14, display: "inline-flex", alignItems: "center", gap: 8, padding: "11px 20px", borderRadius: 999, minHeight: 44, background: accent, color: T.onAccent, cursor: disabled ? "default" : "pointer" }}>
+            style={{ flexShrink: 0, alignSelf: "flex-start", marginTop: 14, display: "inline-flex", alignItems: "center", gap: 8, padding: "11px 20px", borderRadius: 999, minHeight: 44, background: accent, color: T.onAccent, cursor: disabled ? "default" : "pointer" }}>
             <span style={{ fontFamily: FONT.display, fontWeight: 700, fontSize: 14.5 }}>{cta}</span>
             {!disabled && <span style={{ fontSize: 15 }}>→</span>}
           </button>

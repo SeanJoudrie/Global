@@ -151,7 +151,7 @@ export default function FlagDiagnosticsScreen({ onBack }: Props) {
   }
 
   return (
-    <div style={{ position: "fixed", inset: 0, background: T.bg, color: T.text, zIndex: 1, display: "flex", flexDirection: "column" }}>
+    <div style={{ position: "fixed", inset: 0, maxWidth: 560, margin: "0 auto", background: T.bg, color: T.text, zIndex: 1, display: "flex", flexDirection: "column" }}>
       <ScreenHeader title="Dev test list" subtitle="Developer use only" onBack={onBack} />
       <div style={{ display: "flex", gap: 6, padding: "0 12px 10px" }}>
         {([["flags", `Flags (${ALL_FLAGS.length})`], ["missing", `Missing (${MISSING_FLAGS.length})`], ["notes", `Notes (${HISTORY_NOTES.length})`]] as const).map(([id, label]) => (

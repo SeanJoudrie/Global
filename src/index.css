@@ -34,6 +34,18 @@ body {
   color: #F5F3FF;
 }
 
+/* The app is a phone-first experience. On desktop, pin the whole thing to a
+   centred phone-width column — otherwise the Codex (and everything else)
+   stretches across the full monitor and becomes unusably huge. Fixed-position
+   shells (MainTabs etc.) carry their own matching maxWidth inline; this rule
+   covers every in-flow screen rendered inside #root. */
+@media (min-width: 800px) {
+  #root {
+    max-width: 560px;
+    margin: 0 auto;
+  }
+}
+
 @keyframes spin-slow {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }

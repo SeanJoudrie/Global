@@ -36,7 +36,7 @@ export default function WorldCupScreen({ onBack, onOpenCodex }: Props) {
   const history = (CODEX[team.code]?.flagHistory ?? []).filter(h => h.toYear !== null)
 
   return (
-    <div style={{ position: "fixed", inset: 0, background: T.bg, color: T.text, zIndex: 1, display: "flex", flexDirection: "column" }}>
+    <div style={{ position: "fixed", inset: 0, maxWidth: 560, margin: "0 auto", background: T.bg, color: T.text, zIndex: 1, display: "flex", flexDirection: "column" }}>
       <ScreenHeader title="World Cup 2026" subtitle={`${n} nations · flags, facts & history`} onBack={onBack}
         right={
           <span className="geo-mono" style={{ fontFamily: FONT.mono, fontVariantNumeric: "tabular-nums", fontSize: 13, color: T.muted, padding: "0 4px" }}>

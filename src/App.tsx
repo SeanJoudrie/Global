@@ -171,6 +171,11 @@ export default function App() {
     return () => setSupporterHandler(null)
   }, [])
 
+  // The page body behind the app column (visible in the desktop gutters and
+  // during screen transitions) follows the active palette — the old hardcoded
+  // purple gradient in index.css belonged to the retired "original" skin.
+  useEffect(() => { document.body.style.background = T.void }, [])
+
   const startDaily = useCallback(() => {
     const questions = buildDailyQuiz(todayString(), 10)
     setActiveQuiz({ questions, title: "Daily Game", isDaily: true, setId: "daily", setFlags: FLAGS })

@@ -15,7 +15,11 @@ const saveBest = (n: number) => { try { localStorage.setItem(BEST_KEY, String(n)
 // A card is either a genuine country flag or one of the doctored forgeries.
 type Card = { fake: false; flag: FlagRecord } | { fake: true; forgery: FakeFlag }
 
-const REAL_COUNT = 11 // + all 9 forgeries = a 20-card round
+// The forgery library keeps growing, so each round draws a fresh hand of
+// fakes rather than dealing every one — rounds stay varied and the real:fake
+// ratio stays honest.
+const FAKE_COUNT = 7
+const REAL_COUNT = 13 // 13 + 7 = a 20-card round
 
 function shuffle<T>(arr: T[]): T[] {
   const a = arr.slice()
@@ -30,10 +34,11 @@ function shuffle<T>(arr: T[]): T[] {
 // time. The forged countries never appear as real cards in the same deck —
 // seeing the real Spain next to the doctored one would give the game away.
 function buildDeck(): Card[] {
+  const forgeries = shuffle(FAKE_FLAGS).slice(0, FAKE_COUNT)
   const reals = shuffle(FLAGS.filter(f => !FAKE_CODES.has(f.code))).slice(0, REAL_COUNT)
   return shuffle([
     ...reals.map((flag): Card => ({ fake: false, flag })),
-    ...FAKE_FLAGS.map((forgery): Card => ({ fake: true, forgery })),
+    ...forgeries.map((forgery): Card => ({ fake: true, forgery })),
   ])
 }
 
@@ -109,7 +114,8 @@ function ForgeryGame({ onBack, onReplay }: Props & { onReplay: () => void }) {
     : `translateX(${dx}px) rotate(${dx * 0.03}deg)`
 
   if (done) {
-    const spotted = FAKE_FLAGS.filter(f => caught[f.code]).length
+    const roundForgeries = deck.filter((c): c is Card & { fake: true } => c.fake).map(c => c.forgery)
+    const spotted = roundForgeries.filter(f => caught[f.code]).length
     return (
       <div className="min-h-screen flex flex-col items-center px-5 py-8" style={{ background: T.bg, overflowY: "auto" }}>
         <div className="w-full max-w-sm" style={{ display: "flex", flexDirection: "column", gap: 14 }}>
@@ -119,7 +125,7 @@ function ForgeryGame({ onBack, onReplay }: Props & { onReplay: () => void }) {
               {score >= 18 ? "🔥 Eagle eyes!" : score >= 14 ? "👏 Sharp work!" : "Good try!"}
             </div>
             <div className="geo-display" style={{ color: T.text, fontWeight: 700, fontSize: 20, marginTop: 4 }}>
-              You spotted {spotted} of {FAKE_FLAGS.length} forgeries
+              You spotted {spotted} of {roundForgeries.length} forgeries
             </div>
             <div style={{ display: "flex", justifyContent: "center", gap: 28, marginTop: 16 }}>
               <div><div style={{ fontFamily: FONT.mono, fontWeight: 800, fontSize: 30, color: ACCENT.play }}>{score}<span style={{ fontSize: 15, color: T.muted }}>/{deck.length}</span></div><div className="geo-micro" style={{ fontSize: 8, color: T.muted }}>score</div></div>
@@ -130,7 +136,7 @@ function ForgeryGame({ onBack, onReplay }: Props & { onReplay: () => void }) {
           {/* recap: every forgery, what was doctored, and whether it slipped past */}
           <div style={{ borderRadius: 16, padding: "14px 16px", background: T.surface, border: `1px solid ${T.line}`, display: "flex", flexDirection: "column", gap: 12 }}>
             <div className="geo-micro" style={{ fontSize: 9, color: T.muted }}>The forgeries</div>
-            {FAKE_FLAGS.map(f => (
+            {roundForgeries.map(f => (
               <div key={f.code} style={{ display: "flex", gap: 10, alignItems: "flex-start" }}>
                 <img src={f.src} alt="" style={{ width: 54, height: 36, objectFit: "cover", borderRadius: 5, border: `1px solid ${T.line}`, flexShrink: 0 }} />
                 <div style={{ flex: 1, minWidth: 0 }}>

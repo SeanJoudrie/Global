@@ -62,6 +62,16 @@ export const FAKE_FLAGS: FakeFlag[] = [
     short: "A star went missing",
     reason: "Only two red stars — the new Syrian flag carries three.",
   },
+  {
+    code: "tr", name: "Turkey", src: "/fakes/tr.svg",
+    short: "The star lost its tilt",
+    reason: "The star sits perfectly upright — on the real flag it's tilted, with one point aimed away from the crescent.",
+  },
+  {
+    code: "jm", name: "Jamaica", src: "/fakes/jm.svg",
+    short: "Green and black traded places",
+    reason: "The hoist and fly triangles are green — on the real flag they're black, with green top and bottom.",
+  },
 ]
 
 export const FAKE_CODES = new Set(FAKE_FLAGS.map(f => f.code))
